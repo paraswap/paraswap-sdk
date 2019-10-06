@@ -28,6 +28,13 @@ body {
     }
   }
 
+  &.form .field {
+    > .selection.dropdown {
+      height: 51px;
+      line-height: normal;
+    }
+  }
+
   .button {
     letter-spacing: 1px;
   }
@@ -74,7 +81,9 @@ body {
 
       .pay-to {
         input {
-          font-size: 19.5px;
+          font-size: 13px;
+          padding: 15px 5px;
+          text-align: center;
         }
       }
     }

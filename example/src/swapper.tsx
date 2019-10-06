@@ -40,7 +40,10 @@ export default class Swapper extends React.Component<any, IState> {
     };
   }
 
-  shortenAddress = (address?: string) => address && `${address.slice(0, 10)}....${address.slice(27)}` || '';
+  isValidAddress(address: string) {
+    const provider = new Web3(web3.currentProvider);
+    return provider.utils.isAddress(address);
+  }
 
   private getDestAmount = () => {
     const {priceRoute, tokenTo} = this.state;
@@ -66,9 +69,12 @@ export default class Swapper extends React.Component<any, IState> {
   };
 
   private setSrcAmount = (value: string) => {
-    this.setState({srcAmount: this.getSrcAmount(value), priceRoute: undefined});
+    const srcAmount = this.getSrcAmount(value)
 
-    this.getBestPrice();
+    this.setState(
+      {srcAmount, priceRoute: undefined},
+      () => this.getBestPrice(srcAmount)
+    );
   };
 
   private updatePair = async (fromOrTo: 'from' | 'to', symbol: string) => {
@@ -79,7 +85,10 @@ export default class Swapper extends React.Component<any, IState> {
 
       const tokenFrom = this.state.tokens.find(t => t.symbol === symbol);
 
-      this.setState({tokenFrom, priceRoute: undefined});
+      this.setState(
+        {tokenFrom, priceRoute: undefined},
+        () => this.getBestPrice(this.state.srcAmount)
+      );
 
       if (symbol.toUpperCase() !== "ETH") {
         //await this.getSrcAllowance(tokenFrom!);
@@ -90,10 +99,11 @@ export default class Swapper extends React.Component<any, IState> {
         return null;
       }
 
-      this.setState({priceRoute: undefined, tokenTo: this.state.tokens.find(t => t.symbol === symbol)})
+      this.setState(
+        {priceRoute: undefined, tokenTo: this.state.tokens.find(t => t.symbol === symbol)},
+        () => this.getBestPrice(this.state.srcAmount)
+      );
     }
-
-    this.getBestPrice();
   };
 
   public getTokens = async () => {
@@ -117,11 +127,15 @@ export default class Swapper extends React.Component<any, IState> {
 
   };
 
-  getBestPrice = async () => {
+  getBestPrice = async (srcAmount: string) => {
     try {
       this.setState({loading: true});
 
-      const {tokenFrom, tokenTo, srcAmount} = this.state;
+      const {tokenFrom, tokenTo} = this.state;
+
+      if (!srcAmount) {
+        return;
+      }
 
       const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals);
 
@@ -155,7 +169,7 @@ export default class Swapper extends React.Component<any, IState> {
 
     await this.getTokens();
 
-    await this.getBestPrice();
+    await this.getBestPrice('1');
   }
 
   render() {
@@ -194,7 +208,7 @@ export default class Swapper extends React.Component<any, IState> {
 
           <Form.Field>
             <Dropdown
-              placeholder='Token From'
+              placeholder='From'
               search
               fluid
               selection
@@ -206,7 +220,7 @@ export default class Swapper extends React.Component<any, IState> {
 
           <Form.Field>
             <Dropdown
-              placeholder='Token To'
+              placeholder='To'
               search
               fluid
               selection
@@ -227,7 +241,7 @@ export default class Swapper extends React.Component<any, IState> {
             <Input
               className={'pay-to'}
               onChange={(e: any) => this.setState({payTo: e.target.value})}
-              value={this.shortenAddress(payTo)}
+              value={payTo}
               placeholder='Pay To'
             />
           </Form.Field>
@@ -235,7 +249,7 @@ export default class Swapper extends React.Component<any, IState> {
           <Form.Field>
             <Button
               loading={loading}
-              onClick={() => this.getBestPrice()} primary fluid>
+              onClick={() => this.getBestPrice(srcAmount)} primary fluid>
               GET RATES
             </Button>
           </Form.Field>
