@@ -1,0 +1,14 @@
+{
+  "name": "paraswap-sdk",
+  "version": "1.0.0",
+  "scripts": {},
+  "engines": {
+    "node": "11.15.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bignumber.js": "^8.1.1",
+    "dotenv": "^7.0.0"
+  },
+  "devDependencies": {}
+}

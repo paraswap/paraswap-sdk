@@ -1,0 +1,15 @@
+{
+  "name": "paraswap-sdk-example",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "11.15.0"
+  },
+  "dependencies": {
+    "dotenv": "^7.0.0"
+  },
+  "devDependencies": {
+  }
+}
