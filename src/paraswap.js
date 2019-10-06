@@ -16,7 +16,7 @@ class ParaSwap {
       try {
         const tokensURL = `${this.apiURL}/tokens/${this.network}`;
         const {data} = await axios.get(tokensURL);
-        return data;
+        return data.tokens;
       }
       catch (e) {
         return this.handleAPIError(e);
