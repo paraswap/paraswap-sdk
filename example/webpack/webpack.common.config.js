@@ -10,7 +10,7 @@ module.exports = (env = process.env, dirname = __dirname) => ({
     vendor: ['react', 'react-dom']
   },
   output: {
-    path: path.resolve(dirname, '..', 'dist/src'),
+    path: path.resolve(dirname, '..', 'dist'),
     filename: 'js/[name].bundle.js'
   },
   resolve: {

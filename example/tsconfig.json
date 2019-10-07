@@ -11,7 +11,6 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "strictNullChecks": true,
-    "sourceMap": true,
     "target": "es2015",
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -23,10 +22,10 @@
       "node_modules/@types"
     ]
   },
+  "exclude": [
+    "src/server.ts"
+  ],
   "include": [
-    "src/server/**/*",
-    "src/common/**/*",
-    "webpack/*",
-    "tests"
+    "src/**/*"
   ]
 }

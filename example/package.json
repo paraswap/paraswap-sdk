@@ -2,7 +2,9 @@
   "name": "paraswap-sdk-example",
   "version": "1.0.0",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --watch src/server ./src/server"
+    "dev": "NODE_ENV=development nodemon --watch src/server ./src/server",
+    "build": "NODE_ENV=production webpack -p --config ./webpack/webpack.production.config.js",
+    "start": "NODE_ENV=production && ts-node ./src/server.ts"
   },
   "engines": {
     "node": "11.15.0"
@@ -11,6 +13,7 @@
     "bignumber.js": "^8.1.1",
     "dotenv": "^7.0.0",
     "lodash": "^4.17.15",
+    "paraswap": "^1.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "0.87",
     "web3": "^1.2.1"
@@ -48,7 +51,7 @@
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.0.3",
-    "typescript": "^3.6.3",
+    "typescript": "3.6.3",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.2.3",
     "webpack-dev-middleware": "^3.7.2",

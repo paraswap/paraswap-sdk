@@ -1,14 +1,14 @@
-import * as express from 'express';
+import express = require('express');
 import * as http from 'http';
-import * as webpackDevMiddleware from 'webpack-dev-middleware';
-import * as webpack from 'webpack';
+import webpackDevMiddleware = require("webpack-dev-middleware");
+import webpack = require('webpack');
 
 const {PORT, NODE_ENV} = process.env;
 
 const port = PORT || 5555;
 
-export default class WebServer {
-  _httpServer: http.Server;
+class WebServer {
+  _httpServer?: http.Server;
 
   async start() {
 
@@ -24,7 +24,7 @@ export default class WebServer {
       let webpackConfig = require(`../webpack/webpack.development.config.js`);
       app.use(webpackDevMiddleware(webpack(webpackConfig), {publicPath: webpackConfig.output.publicPath}));
     } else {
-      app.use(express.static('dist/src/client'));
+      app.use(express.static('dist'));
     }
 
     this._httpServer.listen(port, () => {

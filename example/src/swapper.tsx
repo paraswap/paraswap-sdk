@@ -2,15 +2,12 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import BigNumber from "bignumber.js";
 import {Button, Dropdown, Form, Icon, Input, Message, Image} from "semantic-ui-react";
-import {OptimalRates, Token, User} from "./types";
-
+import {ParaSwap, APIError, Token, User, OptimalRates} from "paraswap";
 const Web3 = require('web3');
-
-const ParaSwap = require("../../src/paraswap");
 
 declare let web3: any;
 
-const apiURL = process.env.API_URL;
+const apiURL = process.env.API_URL || 'https://paraswap.io/api';
 
 const PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
 
@@ -27,7 +24,7 @@ interface IState {
 }
 
 export default class Swapper extends React.Component<any, IState> {
-  paraSwap: any;
+  paraSwap?: ParaSwap;
 
   constructor(props: any) {
     super(props);
@@ -110,7 +107,13 @@ export default class Swapper extends React.Component<any, IState> {
     try {
       this.setState({loading: true});
 
-      const tokens: Token[] = await this.paraSwap.getTokens();
+      const tokensOrError = await this.paraSwap!.getTokens();
+
+      if ((tokensOrError as APIError).error) {
+        return this.setState({error: (tokensOrError as APIError).error, loading: false});
+      }
+
+      const tokens: Token[] = tokensOrError as Token[];
 
       const tokenFrom = tokens.find(t => t.symbol === PAIR.from);
       const tokenTo = tokens.find(t => t.symbol === PAIR.to);
@@ -139,9 +142,15 @@ export default class Swapper extends React.Component<any, IState> {
 
       const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals);
 
-      const rate = await this.paraSwap.getRate(tokenFrom!.address, tokenTo!.address, _srcAmount);
+      const priceRouteOrError = await this.paraSwap!.getRate(tokenFrom!.address, tokenTo!.address, _srcAmount.toFixed(0));
 
-      this.setState({loading: false, priceRoute: rate.priceRoute});
+      if ((priceRouteOrError as APIError).error) {
+        return this.setState({error: (priceRouteOrError as APIError).error, loading: false});
+      }
+
+      const priceRoute = priceRouteOrError as OptimalRates;
+
+      this.setState({loading: false, priceRoute});
 
     } catch (e) {
       this.setState({error: e.toString(), loading: false});
@@ -161,8 +170,9 @@ export default class Swapper extends React.Component<any, IState> {
       const user = new User(addresses[0], Number(networkVersion));
       this.setState({user});
 
-      this.paraSwap = new ParaSwap(networkVersion, apiURL);
+      const network = Number(networkVersion)
 
+      this.paraSwap = new ParaSwap(network, apiURL);
     } else {
       this.paraSwap = new ParaSwap(1, apiURL);
     }
