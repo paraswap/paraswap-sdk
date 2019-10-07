@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "lib": ["es2017", "es7", "es6", "dom"],
+    "outDir": "./lib"
+  },
+  "include": [
+    "src/*"
+  ]
+}

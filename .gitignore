@@ -11,3 +11,5 @@ tmp
 .DS_Store
 
 docker
+
+lib

@@ -1,0 +1,7 @@
+node_modules
+src
+tests
+example
+tsconfig.json
+jest.config.js
+.idea

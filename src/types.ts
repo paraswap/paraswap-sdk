@@ -1,4 +1,7 @@
-import BigNumber from "./swapper";
+import BigNumber from "bignumber.js";
+
+export type Address = string;
+export type PriceString = string;
 
 export type Rate = {
   destAmount: string
