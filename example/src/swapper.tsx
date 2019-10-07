@@ -23,6 +23,7 @@ interface IState {
   payTo?: string,
   tokenFrom?: Token,
   tokenTo?: Token,
+  transactionHash?: string,
 }
 
 export default class Swapper extends React.Component<any, IState> {
@@ -37,7 +38,8 @@ export default class Swapper extends React.Component<any, IState> {
       loading: false,
       tokens: [],
       srcAmount: '1',
-      payTo: ''
+      payTo: '',
+      transactionHash: ''
     };
 
     this.provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
@@ -47,7 +49,7 @@ export default class Swapper extends React.Component<any, IState> {
     return this.provider.utils.isAddress(address);
   }
 
-  private getDestAmount = () => {
+  getDestAmount = () => {
     const {priceRoute, tokenTo} = this.state;
 
     if (!priceRoute) {
@@ -63,14 +65,14 @@ export default class Swapper extends React.Component<any, IState> {
     return destAmount.toFixed();
   };
 
-  private getSrcAmount = (value: string) => {
+  getSrcAmount = (value: string) => {
     if (_.isNaN(Number(value))) {
       return this.state.srcAmount;
     }
     return value;
   };
 
-  private setSrcAmount = (value: string) => {
+  setSrcAmount = (value: string) => {
     const srcAmount = this.getSrcAmount(value)
 
     this.setState(
@@ -79,7 +81,7 @@ export default class Swapper extends React.Component<any, IState> {
     );
   };
 
-  private updatePair = async (fromOrTo: 'from' | 'to', symbol: string) => {
+  updatePair = async (fromOrTo: 'from' | 'to', symbol: string) => {
     if (fromOrTo === 'from') {
       if (symbol === this.state.tokenTo!.symbol) {
         return null;
@@ -108,7 +110,18 @@ export default class Swapper extends React.Component<any, IState> {
     }
   };
 
-  public getTokens = async () => {
+  onPayToChanged = (e: any) => {
+    const payTo = e.target.value;
+    this.setState({payTo});
+
+    if (payTo && !this.isValidAddress(payTo)) {
+      this.setState({error: 'Invalid pay address'});
+    } else {
+      this.setState({error: ''});
+    }
+  };
+
+  getTokens = async () => {
     try {
       this.setState({loading: true});
 
@@ -179,13 +192,13 @@ export default class Swapper extends React.Component<any, IState> {
         return this.setState({error: (txParams as APIError).error, loading: false});
       }
 
-      console.log('txParams', txParams);
-
       await this.provider.eth.sendTransaction((txParams as Transaction), async (err: any, transactionHash: string) => {
         if (err) {
           return this.setState({error: err.toString(), loading: false});
         }
+
         console.log('transactionHash', transactionHash);
+        this.setState({transactionHash});
       });
 
       this.setState({loading: false});
@@ -222,7 +235,7 @@ export default class Swapper extends React.Component<any, IState> {
   }
 
   render() {
-    const {tokens, tokenFrom, tokenTo, srcAmount, priceRoute, payTo, loading, error} = this.state;
+    const {tokens, tokenFrom, tokenTo, srcAmount, priceRoute, payTo, loading, error, transactionHash} = this.state;
 
     const options = tokens.map((t: Token) => ({
       key: t.symbol,
@@ -241,6 +254,14 @@ export default class Swapper extends React.Component<any, IState> {
               <Message.Content>
                 <Message.Content>{error}</Message.Content>
               </Message.Content>
+            </Message>
+          ) : null
+        }
+
+        {
+          transactionHash ? (
+            <Message info>
+              <a target={'_blank'} href={`https://etherscan.io/tx/${transactionHash}`}>Track transaction</a>
             </Message>
           ) : null
         }
@@ -289,7 +310,7 @@ export default class Swapper extends React.Component<any, IState> {
           <Form.Field>
             <Input
               className={'pay-to'}
-              onChange={(e: any) => this.setState({payTo: e.target.value})}
+              onChange={this.onPayToChanged}
               value={payTo}
               placeholder='Pay To'
             />
