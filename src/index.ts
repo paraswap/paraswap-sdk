@@ -1,3 +1,3 @@
-export {Address, OptimalRates, PriceString, Token, User} from "./types";
+export {Address, OptimalRates, PriceString, Token, User, APIError, Transaction} from "./types";
 
 export {ParaSwap} from './paraswap';

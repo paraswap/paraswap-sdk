@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-import {Address, OptimalRates, PriceString} from "./types";
+import {Address, APIError, OptimalRates, PriceString, Token, Transaction} from "./types";
 
 export class ParaSwap {
   constructor(private network: number, private apiURL: string) {
   }
 
-  handleAPIError(error: Error) {
+  handleAPIError(error: Error): APIError {
     return {error: error.message};
   }
 
@@ -14,18 +14,17 @@ export class ParaSwap {
     try {
       const tokensURL = `${this.apiURL}/tokens/${this.network}`;
       const {data} = await axios.get(tokensURL);
-      return data.tokens;
+      return (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol));
     } catch (e) {
       return this.handleAPIError(new Error(e));
     }
   }
 
-  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString) {
+  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
     try {
       const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}`;
       const {data} = await axios.get(pricesURL);
-      return data;
-
+      return data.priceRoute as OptimalRates;
     } catch (e) {
       return this.handleAPIError(new Error(e));
     }
@@ -47,7 +46,7 @@ export class ParaSwap {
 
       const {data: transaction} = await axios.post(txURL, txConfig);
 
-      return transaction;
+      return transaction as Transaction;
     } catch (e) {
       return this.handleAPIError(new Error(e));
     }
