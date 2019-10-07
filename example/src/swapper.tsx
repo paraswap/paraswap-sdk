@@ -81,10 +81,15 @@ export default class Swapper extends React.Component<any, IState> {
     );
   };
 
-  updatePair = async (fromOrTo: 'from' | 'to', symbol: string) => {
+  swicth = () => {
+    const {tokenFrom, tokenTo} = this.state;
+    this.setState({tokenFrom: tokenTo, tokenTo: tokenFrom});
+  };
+
+  updatePair = (fromOrTo: 'from' | 'to', symbol: string) => {
     if (fromOrTo === 'from') {
       if (symbol === this.state.tokenTo!.symbol) {
-        return null;
+        this.swicth();
       }
 
       const tokenFrom = this.state.tokens.find(t => t.symbol === symbol);
@@ -100,7 +105,7 @@ export default class Swapper extends React.Component<any, IState> {
 
     } else {
       if (symbol === this.state.tokenFrom!.symbol) {
-        return null;
+        this.swicth();
       }
 
       this.setState(
