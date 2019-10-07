@@ -1,6 +1,6 @@
 {
-  "name": "paraswap-sdk",
-  "version": "1.0.1",
+  "name": "paraswap",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
