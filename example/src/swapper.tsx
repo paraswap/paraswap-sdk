@@ -2,14 +2,16 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import BigNumber from "bignumber.js";
 import {Button, Dropdown, Form, Icon, Input, Message, Image} from "semantic-ui-react";
-import {ParaSwap, APIError, Token, User, OptimalRates} from "paraswap";
-const Web3 = require('web3');
+import {ParaSwap, APIError, Token, User, OptimalRates, Transaction} from "paraswap";
+import Web3 = require("web3");
 
 declare let web3: any;
 
 const apiURL = process.env.API_URL || 'https://paraswap.io/api';
 
 const PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
+
+const PROVIDER_URL = `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`;
 
 interface IState {
   loading: boolean,
@@ -25,6 +27,7 @@ interface IState {
 
 export default class Swapper extends React.Component<any, IState> {
   paraSwap?: ParaSwap;
+  provider: Web3;
 
   constructor(props: any) {
     super(props);
@@ -34,12 +37,14 @@ export default class Swapper extends React.Component<any, IState> {
       loading: false,
       tokens: [],
       srcAmount: '1',
+      payTo: ''
     };
+
+    this.provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
   }
 
   isValidAddress(address: string) {
-    const provider = new Web3(web3.currentProvider);
-    return provider.utils.isAddress(address);
+    return this.provider.utils.isAddress(address);
   }
 
   private getDestAmount = () => {
@@ -132,7 +137,7 @@ export default class Swapper extends React.Component<any, IState> {
 
   getBestPrice = async (srcAmount: string) => {
     try {
-      this.setState({loading: true});
+      this.setState({loading: true, error: ''});
 
       const {tokenFrom, tokenTo} = this.state;
 
@@ -158,11 +163,44 @@ export default class Swapper extends React.Component<any, IState> {
     }
   };
 
-  swapOrPay = () => {
+  swapOrPay = async () => {
+    const {user, tokenFrom, tokenTo, srcAmount, priceRoute, payTo} = this.state;
 
+    try {
+      this.setState({loading: true, error: ''});
+
+      const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals).toFixed(0);
+
+      const txParams = await this.paraSwap!.buildTx(
+        tokenFrom!.address, tokenTo!.address, _srcAmount, priceRoute!.amount, priceRoute!, user!.address, payTo
+      );
+
+      if ((txParams as APIError).error) {
+        return this.setState({error: (txParams as APIError).error, loading: false});
+      }
+
+      console.log('txParams', txParams);
+
+      await this.provider.eth.sendTransaction((txParams as Transaction), async (err: any, transactionHash: string) => {
+        if (err) {
+          return this.setState({error: err.toString(), loading: false});
+        }
+        console.log('transactionHash', transactionHash);
+      });
+
+      this.setState({loading: false});
+    } catch (e) {
+      this.setState({error: e.toString(), loading: false});
+      console.error("ERROR", e);
+    }
   };
 
   async componentDidMount() {
+    this.paraSwap = new ParaSwap(1, apiURL);
+
+    await this.getTokens();
+    await this.getBestPrice('1');
+
     if (typeof web3 !== 'undefined') {
       const addresses = await web3.currentProvider.enable();
 
@@ -170,16 +208,17 @@ export default class Swapper extends React.Component<any, IState> {
       const user = new User(addresses[0], Number(networkVersion));
       this.setState({user});
 
-      const network = Number(networkVersion)
+      const network = Number(networkVersion);
 
       this.paraSwap = new ParaSwap(network, apiURL);
-    } else {
-      this.paraSwap = new ParaSwap(1, apiURL);
+
+      this.provider = new Web3(web3.currentProvider);
+
+      if (network !== 1) {
+        await this.getTokens();
+        await this.getBestPrice('1');
+      }
     }
-
-    await this.getTokens();
-
-    await this.getBestPrice('1');
   }
 
   render() {
