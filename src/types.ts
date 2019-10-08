@@ -4,6 +4,8 @@ export type Address = string;
 export type PriceString = string;
 export type NumberAsString = string;
 
+export type NetworkID = "1" | "3" | "42" | "4";
+
 export type APIError = {
   error: string
 }
@@ -36,7 +38,7 @@ export type OptimalRates = {
 };
 
 export class User {
-  constructor(public address: Address, public network: number) {
+  constructor(public address: Address, public network: NetworkID) {
   }
 }
 
@@ -45,7 +47,7 @@ export class Token {
     public address: Address,
     public decimals: number,
     public symbol: string,
-    public allowance?: BigNumber
+    public allowance?: string
   ) {
   }
 }

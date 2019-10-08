@@ -5,3 +5,4 @@ example
 tsconfig.json
 jest.config.js
 .idea
+.env
