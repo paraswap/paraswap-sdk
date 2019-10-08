@@ -28,6 +28,7 @@
   },
   "author": "ParaSwap",
   "description": "ParaSwap SDK",
+  "license": "MIT",
   "keywords": [
     "web3",
     "web3js",
