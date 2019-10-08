@@ -24,7 +24,7 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-8.3.0.tgz#2b9db1cd00f3891005c77b3a8d608b88a6d0aa4d"
   integrity sha512-C0QL9bmgUXTSuf8nDeGrpMjtJG7tPUr8wG6/wxPbP62tGwCwQtdMSJYfESowmY4P3Hn593f+8OzNY5bckcu/LQ==
 
-"@hapi/joi@^16.1.7":
+"@hapi/joi@16.1.7":
   version "16.1.7"
   resolved "https://registry.yarnpkg.com/@hapi/joi/-/joi-16.1.7.tgz#360857223a87bb1f5f67691537964c1b4908ed93"
   integrity sha512-anaIgnZhNooG3LJLrTFzgGALTiO97zRA1UkvQHm9KxxoSiIzCozB3RCNCpDnfhTJD72QlrHA8nwGmNgpFFCIeg==
@@ -117,9 +117,9 @@
     "@types/serve-static" "*"
 
 "@types/lodash@^4.14.141":
-  version "4.14.141"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.141.tgz#d81f4d0c562abe28713406b571ffb27692a82ae6"
-  integrity sha512-v5NYIi9qEbFEUpCyikmnOYe4YlP8BMUdTcNCAquAKzu+FA7rZ1onj9x80mbnDdOW/K5bFf3Tv5kJplP33+gAbQ==
+  version "4.14.142"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.142.tgz#52d5daff878e36e72e299bb9c5871fd6aee55829"
+  integrity sha512-ZhNS7c4D4WQ49Dr1FftQj7SwngRswOnPfxktmqSy5BettRCuum2q784jRwNTYfxH00r8+fEgRz6Da8j5DHNd1Q==
 
 "@types/memory-fs@*":
   version "0.3.2"
@@ -2758,13 +2758,22 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enhanced-resolve@4.1.0, enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0:
+enhanced-resolve@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.0.tgz#41c7e0bfdfe74ac1ffe1e57ad6a5c6c9f3742a7f"
   integrity sha512-F/7vkyTtyc/llOIn8oWclcB25KdRaiPBpZYDgJHgh/UHtpgT2p2eldQgtQnLtUvfMKPKxbRaQM/hHkvLHt1Vng==
   dependencies:
     graceful-fs "^4.1.2"
     memory-fs "^0.4.0"
+    tapable "^1.0.0"
+
+enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.1.tgz#2937e2b8066cd0fe7ce0990a98f0d71a35189f66"
+  integrity sha512-98p2zE+rL7/g/DzMHMTF4zZlCgeVdJ7yr6xzEpJRYwFYrGi9ANdn5DnJURg6RpBkyk60XYDnWIv51VfIhfNGuA==
+  dependencies:
+    graceful-fs "^4.1.2"
+    memory-fs "^0.5.0"
     tapable "^1.0.0"
 
 entities@^1.1.1:
@@ -3910,9 +3919,9 @@ homedir-polyfill@^1.0.1:
     parse-passwd "^1.0.0"
 
 hosted-git-info@^2.1.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.4.tgz#44119abaf4bc64692a16ace34700fed9c03e2546"
-  integrity sha512-pzXIvANXEFrc5oFFXRMkbLPQ2rXRoDERwDLyrcUxGhaZhgP54BBSl9Oheh7Vv0T090cszWBxPjkQQ5Sq1PbBRQ==
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.5.tgz#759cfcf2c4d156ade59b0b2dfabddc42a6b9c70c"
+  integrity sha512-kssjab8CvdXfcXMXVcvsXum4Hwdq9XGtRD3TteMEvEbq0LXyiNQr6AprqKqfeaDXze7SxWvRxdpwE6ku7ikLkg==
 
 html-comment-regex@^1.1.0:
   version "1.1.2"
@@ -5005,6 +5014,14 @@ memory-fs@^0.4.0, memory-fs@^0.4.1:
     errno "^0.1.3"
     readable-stream "^2.0.1"
 
+memory-fs@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.5.0.tgz#324c01288b88652966d161db77838720845a8e3c"
+  integrity sha512-jA0rdU5KoQMC0e6ppoNRtpp6vjFq6+NY7r8hywnC7V+1Xj/MtHwGIbB1QaK/dunyjWteJzmkpd7ooeWg10T7GA==
+  dependencies:
+    errno "^0.1.3"
+    readable-stream "^2.0.1"
+
 meow@^3.3.0, meow@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/meow/-/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
@@ -5817,15 +5834,17 @@ param-case@2.1.x:
   dependencies:
     no-case "^2.2.0"
 
-paraswap@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/paraswap/-/paraswap-1.0.2.tgz#c2bd1e33c1f3040b0a4d059a60c362dfd12090c4"
-  integrity sha512-cxqkoSJUWjiBqV9/hFfc1PM31d+bkRCADiwWzH8cx0VcOz29Jnky7nHi/HpnEiSqoskG8jldciM0FzpiOKt8wg==
+paraswap@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/paraswap/-/paraswap-1.0.5.tgz#43604390ca78b174813f51bad1d3cc1c1db3d36a"
+  integrity sha512-PJP4ZsKojqfaOclWqc7WbpnXCt9hxaueKOxbBrBD1aAENGA0vhIIIxf/3BepvyjHua/dnVfW7y0Ox3EMaGLBQQ==
   dependencies:
-    "@hapi/joi" "^16.1.7"
+    "@hapi/joi" "16.1.7"
+    "@types/web3" "^1.0.20"
     axios "0.18.1"
     bignumber.js "8.1.1"
     dotenv "7.0.0"
+    web3 "1.2.1"
 
 parse-asn1@^5.0.0:
   version "5.1.5"
@@ -8137,7 +8156,7 @@ web3-utils@1.2.1:
     underscore "1.9.1"
     utf8 "3.0.0"
 
-web3@^1.2.1:
+web3@1.2.1, web3@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/web3/-/web3-1.2.1.tgz#5d8158bcca47838ab8c2b784a2dee4c3ceb4179b"
   integrity sha512-nNMzeCK0agb5i/oTWNdQ1aGtwYfXzHottFP2Dz0oGIzavPMGSKyVlr8ibVb1yK5sJBjrWVnTdGaOC2zKDFuFRw==

@@ -59,6 +59,7 @@ module.exports = (env = process.env, dirname = __dirname) => ({
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
       'process.env.API_URL': JSON.stringify(env.API_URL),
+      'process.env.PROVIDER_URL': JSON.stringify(env.PROVIDER_URL),
     }),
     new Dotenv()
   ]

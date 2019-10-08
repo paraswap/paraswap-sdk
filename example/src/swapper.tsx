@@ -7,11 +7,10 @@ import Web3 = require("web3");
 
 declare let web3: any;
 
+const PROVIDER_URL = process.env.PROVIDER_URL;
 const apiURL = process.env.API_URL || 'https://paraswap.io/api';
 
 const PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
-
-const PROVIDER_URL = `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`;
 
 interface IState {
   loading: boolean,
@@ -42,7 +41,7 @@ export default class Swapper extends React.Component<any, IState> {
       transactionHash: ''
     };
 
-    this.provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
+    this.provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL!));
   }
 
   isValidAddress(address: string) {
@@ -86,6 +85,36 @@ export default class Swapper extends React.Component<any, IState> {
     this.setState({tokenFrom: tokenTo, tokenTo: tokenFrom});
   };
 
+  getAllowance = async (token: Token) => {
+    try {
+      const {user} = this.state;
+
+      this.setState({loading: true});
+
+      const allowance = await this.paraSwap!.getAllowance(user!.address, token.address, user!.network);
+
+      const tokenWithAllowance = new Token(token.address, token.decimals, token.symbol, allowance);
+
+      this.setState({tokenFrom: tokenWithAllowance});
+
+      this.setState({loading: false});
+    } catch (e) {
+      this.setState({error: e.toString(), loading: false});
+    }
+  };
+
+  needsAllowance = () => {
+    const {tokenFrom, priceRoute} = this.state;
+
+    if (tokenFrom!.symbol === 'ETH') {
+      return false;
+    }
+
+    return (
+      new BigNumber(priceRoute!.amount).isGreaterThan(new BigNumber(tokenFrom!.allowance!))
+    )
+  };
+
   updatePair = (fromOrTo: 'from' | 'to', symbol: string) => {
     if (fromOrTo === 'from') {
       if (symbol === this.state.tokenTo!.symbol) {
@@ -100,7 +129,7 @@ export default class Swapper extends React.Component<any, IState> {
       );
 
       if (symbol.toUpperCase() !== "ETH") {
-        //await this.getSrcAllowance(tokenFrom!);
+        this.getAllowance(tokenFrom!);
       }
 
     } else {
@@ -143,9 +172,6 @@ export default class Swapper extends React.Component<any, IState> {
 
       this.setState({tokens, tokenFrom, tokenTo, loading: false});
 
-      if (tokenFrom!.symbol.toUpperCase() !== "ETH") {
-        //await this.getSrcAllowance(tokenFrom!);
-      }
     } catch (e) {
       console.error(e);
       this.setState({error: e.toString(), loading: false});
@@ -177,7 +203,22 @@ export default class Swapper extends React.Component<any, IState> {
 
     } catch (e) {
       this.setState({error: e.toString(), loading: false});
-      console.error("ERROR", e);
+    }
+  };
+
+  setAllowance = async () => {
+    const {user, tokenFrom, srcAmount} = this.state;
+
+    try {
+      const amount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals).toFixed(0);
+
+      const transactionHash = await this.paraSwap!.approveToken(amount, user!.address, tokenFrom!.address, user!.network);
+
+      console.log('transactionHash', transactionHash);
+      this.setState({transactionHash});
+
+    } catch (e) {
+      this.setState({error: e.toString(), loading: false});
     }
   };
 
@@ -223,7 +264,7 @@ export default class Swapper extends React.Component<any, IState> {
       const addresses = await web3.currentProvider.enable();
 
       const {networkVersion} = web3.currentProvider;
-      const user = new User(addresses[0], Number(networkVersion));
+      const user = new User(addresses[0], networkVersion);
       this.setState({user});
 
       const network = Number(networkVersion);
@@ -330,14 +371,26 @@ export default class Swapper extends React.Component<any, IState> {
           </Form.Field>
 
           <Form.Field>
-            <Button
-              positive
-              disabled={loading || !priceRoute}
-              onClick={() => this.swapOrPay()} primary fluid>
-              {
-                payTo ? 'PAY' : 'SWAP'
-              }
-            </Button>
+            {
+              (tokenFrom && priceRoute && this.needsAllowance()) ? (
+                <Button
+                  positive
+                  disabled={loading || !priceRoute}
+                  onClick={() => this.setAllowance()} primary fluid>
+                  APPROVE TOKEN
+                </Button>
+              ) : (
+                <Button
+                  positive
+                  disabled={loading || !priceRoute}
+                  onClick={() => this.swapOrPay()} primary fluid>
+                  {
+                    payTo ? 'PAY' : 'SWAP'
+                  }
+                </Button>
+              )
+            }
+
           </Form.Field>
 
         </Form>
