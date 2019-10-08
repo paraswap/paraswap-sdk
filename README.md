@@ -14,7 +14,7 @@ You can also check a live example at: https://paraswap-sdk.netlify.com
 
 ---
 
-###To use ParaSwap SDK :
+### To use ParaSwap SDK :
 
 Install the lib using npm or yarn
 
@@ -22,7 +22,7 @@ Install the lib using npm or yarn
 yarn install paraswap
 ```
 
-#####Then on a Javascript file:
+##### Then on a Javascript file:
 
 ```javascript
 const {ParaSwap} = require("paraswap");
@@ -34,13 +34,13 @@ import {ParaSwap} from "paraswap";
 ```
 
 
-#####To retrieve the list all available tokens:
+##### To retrieve the list all available tokens:
 
 ```javascript
 const tokens = await paraSwap.getTokens();
 ```
 
-#####To get the rate of a token pair:
+##### To get the rate of a token pair:
 
 ```javascript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; //ETH
@@ -52,7 +52,7 @@ const priceRoute:OptimalRates = await paraSwap.getRate(srcToken, destToken, srcA
 Where priceRoute contains the rate and the distribution among exchanges, checkout the OptimalRates type for more details.
 
 
-#####To build and sign a transaction
+##### To build and sign a transaction
 
 ```javascript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
@@ -74,7 +74,7 @@ web3.eth.sendTransaction(txParams, async (err: Error, transactionHash: string) =
 
 ---
 
-###To run the example locally:
+### To run the example locally:
 
 Created an .env file with these 2 env variables:
 ```bash
