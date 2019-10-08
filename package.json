@@ -1,6 +1,6 @@
 {
   "name": "paraswap",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -25,5 +25,31 @@
     "jest": "24.9.0",
     "ts-jest": "24.1.0",
     "typescript": "3.6.3"
-  }
+  },
+  "author": "ParaSwap",
+  "description": "ParaSwap SDK",
+  "keywords": [
+    "web3",
+    "web3js",
+    "ethereum",
+    "crypto",
+    "blockchain",
+    "DEX",
+    "paraswap",
+    "ether",
+    "eth",
+    "dai",
+    "tokens",
+    "exchange",
+    "erc-20",
+    "erc20"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paraswap/paraswap-sdk"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": "mounir@paraswap.io"
 }
