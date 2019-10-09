@@ -14,6 +14,10 @@ You can also check a live example at: https://paraswap-sdk.netlify.com
 
 ---
 
+### API docs are available here :
+
+https://paraswapapi.docs.apiary.io
+
 ### To use ParaSwap SDK :
 
 Install the lib using npm or yarn
