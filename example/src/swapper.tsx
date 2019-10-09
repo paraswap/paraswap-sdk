@@ -8,7 +8,7 @@ import Web3 = require("web3");
 declare let web3: any;
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
-const apiURL = process.env.API_URL || 'https://paraswap.io/api';
+const apiURL = process.env.API_URL || 'https://paraswap.io/api/v1';
 
 const PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
 
