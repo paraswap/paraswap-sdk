@@ -10,7 +10,7 @@ We've built an example dApp that can found on the "example" folder
 
 You can also check a live example at: https://paraswap-sdk.netlify.com
 
-<img src="https://confident-gates-f84ddc.netlify.com/sdk-example.png" width="400px" >
+<img src="https://confident-gates-f84ddc.netlify.com/sdk-example.gif" width="400px" >
 
 ---
 
