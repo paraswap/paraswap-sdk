@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import BigNumber from "bignumber.js";
-import {Button, Dropdown, Form, Icon, Input, Message, Image} from "semantic-ui-react";
+import {Button, Dropdown, Form, Icon, Input, Message, Image, Segment} from "semantic-ui-react";
 import {ParaSwap, APIError, Token, User, OptimalRates, Transaction} from "../../src";
 import Web3 = require("web3");
 
@@ -292,7 +292,7 @@ export default class Swapper extends React.Component<any, IState> {
       text: t.symbol,
       value: t.symbol
     }));
-
+    
     return (
       <div>
         <Image src={require('./img/logo.png')}/>
@@ -355,6 +355,21 @@ export default class Swapper extends React.Component<any, IState> {
               value={this.getDestAmount()}
               placeholder='Amount'
             />
+          </Form.Field>
+
+          <Form.Field>
+            {
+              priceRoute ? (
+                <Segment.Group horizontal>
+                  {
+                    priceRoute.bestRoute.map(pr => (
+                      <Segment>{pr.exchange} {pr.percent}%</Segment>
+                    ))
+                  }
+                </Segment.Group>
+              ) : null
+            }
+
           </Form.Field>
 
           <Form.Field>
