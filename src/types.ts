@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js";
-
 export type Address = string;
 export type PriceString = string;
 export type NumberAsString = string;
@@ -20,7 +18,7 @@ export type Transaction = {
 
 export type Rate = {
   destAmount: PriceString
-  exchange: Address
+  exchange: string
   percent: NumberAsString
   srcAmount: PriceString
 }
@@ -34,7 +32,7 @@ export type OthersRate = {
 export type OptimalRates = {
   amount: PriceString,
   bestRoute: Rate[],
-  others: OthersRate[]
+  others?: OthersRate[]
 };
 
 export class User {

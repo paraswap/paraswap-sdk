@@ -4,6 +4,7 @@ import Web3 = require("web3");
 import {Address, APIError, NetworkID, OptimalRates, PriceString, Token, Transaction} from "./types";
 import * as ERC20_ABI from "./abi/erc20.json";
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
+import {ParaswapFeed} from "./paraswap-feed";
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
 declare let web3: any;
@@ -24,6 +25,10 @@ export class ParaSwap {
     } catch (e) {
       return this.handleAPIError(new Error(e));
     }
+  }
+
+  async getContractRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
+    return await new ParaswapFeed(1).getRate(srcToken, destToken, srcAmount);
   }
 
   async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {

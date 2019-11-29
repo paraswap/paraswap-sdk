@@ -2,13 +2,15 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import BigNumber from "bignumber.js";
 import {Button, Dropdown, Form, Icon, Input, Message, Image} from "semantic-ui-react";
-import {ParaSwap, APIError, Token, User, OptimalRates, Transaction} from "paraswap";
+import {ParaSwap, APIError, Token, User, OptimalRates, Transaction} from "../../src";
 import Web3 = require("web3");
 
 declare let web3: any;
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
 const apiURL = process.env.API_URL || 'https://paraswap.io/api/v1';
+
+const DEFAULT_ALLOWED_SLIPPAGE = 0.005;//0.5%
 
 const PAIR = {from: 'ETH', to: 'DAI', amount: '1'};
 
@@ -191,7 +193,7 @@ export default class Swapper extends React.Component<any, IState> {
 
       const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals);
 
-      const priceRouteOrError = await this.paraSwap!.getRate(tokenFrom!.address, tokenTo!.address, _srcAmount.toFixed(0));
+      const priceRouteOrError = await this.paraSwap!.getContractRate(tokenFrom!.address, tokenTo!.address, _srcAmount.toFixed(0));
 
       if ((priceRouteOrError as APIError).error) {
         return this.setState({error: (priceRouteOrError as APIError).error, loading: false});
@@ -202,7 +204,7 @@ export default class Swapper extends React.Component<any, IState> {
       this.setState({loading: false, priceRoute});
 
     } catch (e) {
-      this.setState({error: e.toString(), loading: false});
+      this.setState({error: "Price Feed Error", loading: false});
     }
   };
 
@@ -230,8 +232,10 @@ export default class Swapper extends React.Component<any, IState> {
 
       const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals).toFixed(0);
 
+      const minDestinationAmount = new BigNumber(priceRoute!.amount).multipliedBy(1 - DEFAULT_ALLOWED_SLIPPAGE);
+
       const txParams = await this.paraSwap!.buildTx(
-        tokenFrom!.address, tokenTo!.address, _srcAmount, priceRoute!.amount, priceRoute!, user!.address, payTo
+        tokenFrom!.address, tokenTo!.address, _srcAmount, minDestinationAmount.toFixed(), priceRoute!, user!.address, payTo
       );
 
       if ((txParams as APIError).error) {

@@ -1,0 +1,95 @@
+{
+  "1": {
+    "address": "0xaDDc7EC7dF4C87CA1f781a419A646b4416Da0D22",
+    "abi": [
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address"
+          }
+        ],
+        "name": "getBancorRelayer",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "name": "toToken",
+            "type": "address"
+          },
+          {
+            "name": "srcAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getBestPrice",
+        "outputs": [
+          {
+            "components": [
+              {
+                "name": "rate",
+                "type": "uint256"
+              },
+              {
+                "components": [
+                  {
+                    "name": "Uniswap",
+                    "type": "uint256"
+                  },
+                  {
+                    "name": "Bancor",
+                    "type": "uint256"
+                  },
+                  {
+                    "name": "Kyber",
+                    "type": "uint256"
+                  },
+                  {
+                    "name": "Oasis",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "distribution",
+                "type": "tuple"
+              }
+            ],
+            "name": "optimalRate",
+            "type": "tuple"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "version",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+  }
+}
