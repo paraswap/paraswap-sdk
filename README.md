@@ -44,7 +44,7 @@ import {ParaSwap} from "paraswap";
 const tokens = await paraSwap.getTokens();
 ```
 
-##### To get the rate of a token pair:
+##### To get the rate of a token pair using the API:
 
 ```javascript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; //ETH
@@ -55,7 +55,16 @@ const priceRoute:OptimalRates = await paraSwap.getRate(srcToken, destToken, srcA
 ```
 Where priceRoute contains the rate and the distribution among exchanges, checkout the OptimalRates type for more details.
 
+##### To get the rate of a token pair using the Price Feed Contract:
+```javascript
+const paraswapFeed = new ParaswapFeed(1);
+const priceRoute:OptimalRates = await paraswapFeed.getRate(srcToken, destToken, srcAmount);
 
+```
+This is a schema that describes the data flow from price query to executing a Swap:
+
+<img src="https://paraswap-achirecture.netlify.com/CoTraderParaSwapSDK.png" width="400px" >
+  
 ##### To build and sign a transaction
 
 ```javascript
