@@ -192,7 +192,7 @@ export default class Swapper extends React.Component<any, IState> {
       }
 
       const _srcAmount = new BigNumber(srcAmount).times(10 ** tokenFrom!.decimals);
-
+      
       const priceRouteOrError = await this.paraSwap!.getContractRate(tokenFrom!.address, tokenTo!.address, _srcAmount.toFixed(0));
 
       if ((priceRouteOrError as APIError).error) {
@@ -259,10 +259,6 @@ export default class Swapper extends React.Component<any, IState> {
   };
 
   async componentDidMount() {
-    this.paraSwap = new ParaSwap(1, apiURL);
-
-    await this.getTokens();
-    await this.getBestPrice('1');
 
     if (typeof web3 !== 'undefined') {
       const addresses = await web3.currentProvider.enable();
@@ -277,10 +273,14 @@ export default class Swapper extends React.Component<any, IState> {
 
       this.provider = new Web3(web3.currentProvider);
 
-      if (network !== 1) {
-        await this.getTokens();
-        await this.getBestPrice('1');
-      }
+      await this.getTokens();
+      await this.getBestPrice('1');
+    }
+    else {
+      this.paraSwap = new ParaSwap(1, apiURL);
+
+      await this.getTokens();
+      await this.getBestPrice('1');
     }
   }
 
@@ -292,7 +292,7 @@ export default class Swapper extends React.Component<any, IState> {
       text: t.symbol,
       value: t.symbol
     }));
-    
+
     return (
       <div>
         <Image src={require('./img/logo.png')}/>

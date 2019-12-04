@@ -28,7 +28,7 @@ export class ParaSwap {
   }
 
   async getContractRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
-    return await new ParaswapFeed(1).getRate(srcToken, destToken, srcAmount);
+    return await new ParaswapFeed(this.network).getRate(srcToken, destToken, srcAmount);
   }
 
   async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
