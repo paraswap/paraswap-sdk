@@ -41,7 +41,7 @@ export class ParaSwap {
     }
   }
 
-  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, payTo?: Address) {
+  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, payTo?: Address) {
     try {
       const txURL = `${this.apiURL}/transactions/${this.network}`;
 
@@ -52,6 +52,7 @@ export class ParaSwap {
         srcAmount,
         destAmount,
         userAddress,
+        referrer,
         payTo: payTo || ''
       };
 

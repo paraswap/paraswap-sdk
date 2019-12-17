@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import 'semantic-ui-css/semantic.min.css';
 import "./stylesheets/style.scss";
+import 'c3/c3.css';
 
 import Swapper from "./swapper";
 
