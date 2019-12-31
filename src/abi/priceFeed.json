@@ -1,7 +1,206 @@
 {
   "1": {
-    "address": "0xeF89C392Dc0D0e2D9baB78E32428a8420DCaacA7",
+    "address": "0xcc13a27ad24B8F3B5a83848DA4d688B512a4A871",
     "abi": [
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_exchange",
+            "type": "address"
+          }
+        ],
+        "name": "addExchange",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_exchanges",
+            "type": "address[]"
+          }
+        ],
+        "name": "addExchanges",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "pause",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "index",
+            "type": "uint256"
+          }
+        ],
+        "name": "removeExchange",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_aureliusAddress",
+            "type": "address"
+          }
+        ],
+        "name": "setAurelius",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_bancorAddress",
+            "type": "address"
+          }
+        ],
+        "name": "setBancor",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "unpause",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "name": "_aureliusAddress",
+            "type": "address"
+          },
+          {
+            "name": "_bancorAddress",
+            "type": "address"
+          },
+          {
+            "name": "_version",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "fallback"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "bancor",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "exchanges",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getAurelius",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
       {
         "constant": true,
         "inputs": [
@@ -70,6 +269,117 @@
             ],
             "name": "optimalRate",
             "type": "tuple"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "name": "toToken",
+            "type": "address"
+          },
+          {
+            "name": "srcAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getBestPriceSimple",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "index",
+            "type": "uint256"
+          }
+        ],
+        "name": "getExchange",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "name": "toToken",
+            "type": "address"
+          }
+        ],
+        "name": "getExchanges",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address[4]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "paused",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
           }
         ],
         "payable": false,

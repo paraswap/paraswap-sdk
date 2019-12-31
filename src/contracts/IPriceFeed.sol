@@ -15,5 +15,7 @@ interface IPriceFeed {
 
   function getBestPrice(address fromToken, address toToken, uint srcAmount) public view returns (OptimalRate memory optimalRate);
 
+  function getBestPriceSimple(address fromToken, address toToken, uint srcAmount) public view whenNotPaused returns (uint256);
+
   function getBancorRelayer(address token) external view returns (address);
 }
