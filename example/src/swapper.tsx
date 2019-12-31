@@ -268,6 +268,7 @@ export default class Swapper extends React.Component<any, IState> {
   };
 
   async componentDidMount() {
+    const {srcAmount} = this.state;
 
     if (typeof web3 !== 'undefined') {
       const addresses = await web3.currentProvider.enable();
@@ -283,12 +284,12 @@ export default class Swapper extends React.Component<any, IState> {
       this.provider = new Web3(web3.currentProvider);
 
       await this.getTokens();
-      await this.getBestPrice('1');
+      await this.getBestPrice(srcAmount);
     } else {
       this.paraSwap = new ParaSwap(1, apiURL);
 
       await this.getTokens();
-      await this.getBestPrice('1');
+      await this.getBestPrice(srcAmount);
     }
   }
 
