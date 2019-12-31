@@ -64,6 +64,8 @@ const priceRoute:OptimalRates = await paraswapFeed.getRate(srcToken, destToken, 
 This is a schema that describes the data flow from price query to executing a Swap:
 
 <img src="https://paraswap-achirecture.netlify.com/ParaSwapDeveloper.png" width="400px" >
+
+Also available at https://paraswap-achirecture.netlify.com
   
 ##### To build and sign a transaction
 
