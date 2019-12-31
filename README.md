@@ -63,7 +63,7 @@ const priceRoute:OptimalRates = await paraswapFeed.getRate(srcToken, destToken, 
 ```
 This is a schema that describes the data flow from price query to executing a Swap:
 
-<img src="https://paraswap-achirecture.netlify.com/CoTraderParaSwapSDK.png" width="400px" >
+<img src="https://paraswap-achirecture.netlify.com/ParaSwapDeveloper.png" width="400px" >
   
 ##### To build and sign a transaction
 
@@ -73,8 +73,9 @@ const destToken = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359';
 const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals
 const senderAddress = '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const payTo = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A'; // Useful in case of a payment
+const referrer = 'my-company-or-nick-name';
 
-const txParams = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, payTo);
+const txParams = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, payTo);
 
 web3.eth.sendTransaction(txParams, async (err: Error, transactionHash: string) => {
   if (err) {
