@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import Web3 = require("web3");
 
 import {Address, APIError, NetworkID, OptimalRates, PriceString, Token, Transaction} from "./types";
@@ -13,8 +13,12 @@ export class ParaSwap {
   constructor(private network: number, private apiURL: string) {
   }
 
-  handleAPIError(error: Error): APIError {
-    return {error: error.message};
+  handleAPIError(e: AxiosError): APIError {
+    if (e.response) {
+      const {data, status} = e.response!;
+      return {status, message: data.error};
+    }
+    return new Error(e.message);
   }
 
   async getTokens() {
@@ -23,7 +27,7 @@ export class ParaSwap {
       const {data} = await axios.get(tokensURL);
       return (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol));
     } catch (e) {
-      return this.handleAPIError(new Error(e));
+      return this.handleAPIError(e);
     }
   }
 
@@ -37,7 +41,7 @@ export class ParaSwap {
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;
     } catch (e) {
-      return this.handleAPIError(new Error(e));
+      return this.handleAPIError(e);
     }
   }
 
@@ -56,11 +60,11 @@ export class ParaSwap {
         payTo: payTo || ''
       };
 
-      const {data: transaction} = await axios.post(txURL, txConfig);
+      const {data} = await axios.post(txURL, txConfig);
 
-      return transaction as Transaction;
+      return data.transaction as Transaction;
     } catch (e) {
-      return this.handleAPIError(new Error(e));
+      return this.handleAPIError(e);
     }
   }
 

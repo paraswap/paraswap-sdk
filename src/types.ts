@@ -5,7 +5,8 @@ export type NumberAsString = string;
 export type NetworkID = "1" | "3" | "42" | "4";
 
 export type APIError = {
-  error: string
+  message: string,
+  status?: number,
 }
 
 export type Transaction = {
@@ -17,7 +18,7 @@ export type Transaction = {
 }
 
 export type Rate = {
-  destAmount: PriceString
+  amount: PriceString
   exchange: string
   percent: NumberAsString
   srcAmount: PriceString
