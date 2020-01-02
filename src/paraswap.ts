@@ -62,7 +62,7 @@ export class ParaSwap {
 
       const {data} = await axios.post(txURL, txConfig);
 
-      return data.transaction as Transaction;
+      return data as Transaction;
     } catch (e) {
       return this.handleAPIError(e);
     }
