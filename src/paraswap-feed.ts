@@ -4,7 +4,7 @@ import BigNumber from "bignumber.js";
 
 import {Address, APIError, OptimalRates, PriceString, Rate} from "./types";
 
-const PriceFeedAbi = require("./abi/priceFeed.json");
+import * as PriceFeedAbi from "./abi/priceFeed.json";
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
 
@@ -16,7 +16,7 @@ export class ParaswapFeed {
     try {
       const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL!));
 
-      const {abi, address} = PriceFeedAbi[this.network];
+      const {abi, address} = (PriceFeedAbi as any)[this.network];
 
       const contract = new provider.eth.Contract(abi, address);
 
