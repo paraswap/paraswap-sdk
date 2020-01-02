@@ -37,7 +37,7 @@ export class ParaswapFeed {
           const _srcAmount = percent.times(new BigNumber(srcAmount)).dividedBy(100).toFixed(0);
 
           acc.push({
-            destAmount: _destAmount,
+            amount: _destAmount,
             srcAmount: _srcAmount,
             percent: percent.toFixed(0),
             exchange,
@@ -49,7 +49,7 @@ export class ParaswapFeed {
       return {amount, bestRoute};
 
     } catch (error) {
-      return {error: new Error(error).message};
+      return {message: new Error(error).message};
     }
 
   }
