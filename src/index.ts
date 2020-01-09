@@ -1,4 +1,4 @@
-export {Address, OptimalRates, PriceString, Token, User, APIError, Transaction} from "./types";
+export {Address, OptimalRates, PriceString, Token, User, APIError, Transaction, UNLIMITED_ALLOWANCE, ETHER_ADDRESS} from "./types";
 
 export {ParaSwap} from './paraswap';
 

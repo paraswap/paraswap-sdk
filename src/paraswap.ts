@@ -1,16 +1,27 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosError} from 'axios';
 import Web3 = require("web3");
+import * as async from 'async';
 
-import {Address, APIError, EXCHANGES, NetworkID, OptimalRates, PriceString, Token, Transaction} from "./types";
-import * as ERC20_ABI from "./abi/erc20.json";
+import {
+  Address,
+  APIError,
+  ETHER_ADDRESS,
+  NetworkID,
+  OptimalRates,
+  PriceString,
+  Token,
+  Transaction,
+} from "./types";
+
+const ERC20_ABI = require('./abi/erc20.json');
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
 import {ParaswapFeed} from "./paraswap-feed";
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
 declare let web3: any;
 
 export class ParaSwap {
-  constructor(private network: number, private apiURL: string) {
+  constructor(private network: number, private apiURL: string, public web3Provider?: Web3) {
+
   }
 
   handleAPIError(e: AxiosError): APIError {
@@ -84,14 +95,48 @@ export class ParaSwap {
     return augustusContract.methods.getTokenTransferProxy().call();
   }
 
-  async getAllowance(userAddress: Address, tokenAddress: Address, network: NetworkID) {
-    const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL!));
+  async getAllowances(userAddress: Address, tokenAddresses: Address[], network: NetworkID) {
+    return new Promise(async (resolve, reject) => {
+      const spender = await this.getSpender(network, this.web3Provider!);
 
-    const spender = await this.getSpender(network, provider);
+      async.map(
+        tokenAddresses,
+        async (tokenAddress: Address, callback: any) => {
+          try {
+            const allowance = await this.getAllowance(userAddress, tokenAddress, network, spender);
+            callback(null, {tokenAddress, allowance});
+          } catch (e) {
+            console.error("ERROR_getAllowance", tokenAddress, e);
+            callback(null, {tokenAddress, allowance: '0'});
+          }
+        },
+        (error, results: any) => {
+          if (error) {
+            console.error("ERROR_getAllowances", error);
+            return reject({error});
+          }
+          resolve(results);
+        }
+      )
+    });
+  }
 
-    const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress);
+  async getAllowance(userAddress: Address, tokenAddress: Address, network: NetworkID, _spender?: string) {
+    if (tokenAddress.toLowerCase() === ETHER_ADDRESS) {
+      return '0';
+    }
+
+    const spender = _spender || await this.getSpender(network, this.web3Provider!);
+
+    const contract = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
     return contract.methods.allowance(userAddress, spender).call();
+  }
+
+  async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[], network: NetworkID): Promise<string[]> {
+    return await Promise.all(
+      tokenAddresses.map(tokenAddress => this.approveToken(amount, userAddress, tokenAddress, network))
+    )
   }
 
   async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address, network: NetworkID): Promise<string> {

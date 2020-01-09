@@ -1,6 +1,6 @@
 {
   "name": "paraswap",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@hapi/joi": "16.1.7",
+    "@types/async": "^3.0.3",
+    "async": "^3.1.0",
     "axios": "0.18.1",
     "bignumber.js": "8.1.1",
     "dotenv": "7.0.0",

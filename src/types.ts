@@ -1,8 +1,14 @@
+import BigNumber from "bignumber.js";
+
 export type Address = string;
 export type PriceString = string;
 export type NumberAsString = string;
 
 export type NetworkID = "1" | "3" | "42" | "4";
+
+export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+
+export const UNLIMITED_ALLOWANCE = new BigNumber(2).pow(256).minus(1).toFixed();
 
 export type APIError = {
   message: string,
@@ -62,4 +68,5 @@ export enum EXCHANGES {
   MakerDAO = "MakerDAO",
   CHAI = "Chai",
   PARASWAPPOOL = "ParaSwapPool",
+  AAVE = "Aave",
 }
