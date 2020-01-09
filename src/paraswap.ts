@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import Web3 = require("web3");
 
-import {Address, APIError, NetworkID, OptimalRates, PriceString, Token, Transaction} from "./types";
+import {Address, APIError, EXCHANGES, NetworkID, OptimalRates, PriceString, Token, Transaction} from "./types";
 import * as ERC20_ABI from "./abi/erc20.json";
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
 import {ParaswapFeed} from "./paraswap-feed";
@@ -35,9 +35,17 @@ export class ParaSwap {
     return await new ParaswapFeed(this.network).getRate(srcToken, destToken, srcAmount);
   }
 
-  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
+  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString, exchanges: string = ''): Promise<OptimalRates | APIError> {
     try {
-      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}`;
+      if (exchanges) {
+        const targetDEXs = exchanges.split(',');
+
+        if (!targetDEXs.length) {
+          throw new Error('Invalid DEX list');
+        }
+      }
+
+      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${exchanges}`;
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;
     } catch (e) {

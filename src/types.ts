@@ -50,3 +50,16 @@ export class Token {
   ) {
   }
 }
+
+export enum EXCHANGES {
+  KYBER = "Kyber",
+  UNISWAP = "Uniswap",
+  BANCOR = "Bancor",
+  Oasis = "Oasis",
+  COMPOUND = "Compound",
+  BZX = "Fulcrum",
+  ZEROX = "0x",
+  MakerDAO = "MakerDAO",
+  CHAI = "Chai",
+  PARASWAPPOOL = "ParaSwapPool",
+}
