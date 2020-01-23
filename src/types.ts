@@ -10,6 +10,10 @@ export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 export const UNLIMITED_ALLOWANCE = new BigNumber(2).pow(256).minus(1).toFixed();
 
+export type APIQuery = {
+  [name: string]: string | number | boolean
+}
+
 export type APIError = {
   message: string,
   status?: number,

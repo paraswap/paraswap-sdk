@@ -1,10 +1,12 @@
 import axios, {AxiosError} from 'axios';
 import Web3 = require("web3");
 import * as async from 'async';
+import * as qs from 'qs';
+import _ = require("lodash");
 
 import {
   Address,
-  APIError,
+  APIError, APIQuery,
   ETHER_ADDRESS,
   NetworkID,
   OptimalRates,
@@ -64,9 +66,11 @@ export class ParaSwap {
     }
   }
 
-  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, payTo?: Address) {
+  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, payTo?: Address, options: APIQuery = {}) {
     try {
-      const txURL = `${this.apiURL}/transactions/${this.network}`;
+      const query = _.isEmpty(options) ? '' : qs.stringify(options);
+
+      const txURL = `${this.apiURL}/transactions/${this.network}/?${query}`;
 
       const txConfig = {
         priceRoute,
