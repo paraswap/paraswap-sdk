@@ -30,11 +30,13 @@ yarn install paraswap
 
 ```javascript
 const {ParaSwap} = require("paraswap");
+const paraswap = new ParaSwap();
 ```
 ES6 or TypeScript
 
 ```typescript
 import {ParaSwap} from "paraswap";
+const paraswap = new ParaSwap();
 ```
 
 

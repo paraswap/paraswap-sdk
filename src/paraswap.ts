@@ -18,9 +18,10 @@ const ERC20_ABI = require('./abi/erc20.json');
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
 import {ParaswapFeed} from "./paraswap-feed";
 
-export class ParaSwap {
-  constructor(private network: number, private apiURL: string, public web3Provider?: any) {
+const API_URL = 'https://paraswap.io/api/v1';
 
+export class ParaSwap {
+  constructor(private network: number = 1, private apiURL: string = API_URL, public web3Provider?: any) {
   }
 
   handleAPIError(e: AxiosError): APIError {
