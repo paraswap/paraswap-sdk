@@ -1,6 +1,6 @@
 # ParaSwap SDK
 
-<img src="https://paraswap.io/public/images/800_200.png" width="400px" >
+<img src="https://paraswap-achirecture.netlify.com/logo.png" width="400px" >
 
 ---
 
