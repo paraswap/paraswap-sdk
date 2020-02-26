@@ -1,4 +1,3 @@
-import Web3 = require("web3");
 import _ = require("lodash");
 import BigNumber from "bignumber.js";
 
@@ -6,19 +5,15 @@ import {Address, APIError, OptimalRates, PriceString, Rate} from "./types";
 
 import * as PriceFeedAbi from "./abi/priceFeed.json";
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
-
 export class ParaswapFeed {
-  constructor(private network: number) {
+  constructor(private network: number, public web3Provider: any) {
   }
 
   async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
     try {
-      const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL!));
-
       const {abi, address} = (PriceFeedAbi as any)[this.network];
 
-      const contract = new provider.eth.Contract(abi, address);
+      const contract = new this.web3Provider.eth.Contract(abi, address);
 
       const result = await contract.methods.getBestPrice(
         srcToken,
