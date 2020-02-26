@@ -16,7 +16,6 @@ import {
 
 const ERC20_ABI = require('./abi/erc20.json');
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
-import {ParaswapFeed} from "./paraswap-feed";
 
 const API_URL = 'https://paraswap.io/api/v1';
 
@@ -40,10 +39,6 @@ export class ParaSwap {
     } catch (e) {
       return this.handleAPIError(e);
     }
-  }
-
-  async getContractRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
-    return await new ParaswapFeed(this.network).getRate(srcToken, destToken, srcAmount);
   }
 
   async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString, exchanges: string = ''): Promise<OptimalRates | APIError> {
