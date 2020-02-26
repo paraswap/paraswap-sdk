@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 
-import {ParaSwap, OptimalRates, Token, Transaction, APIError} from "../src";
+import {ParaSwap, OptimalRates, Token, APIError} from "../src";
 import BigNumber from "bignumber.js";
 
 dotenv.config();
