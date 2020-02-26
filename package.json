@@ -9,7 +9,7 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "engines": {
-    "node": "11.15.0"
+    "node": ">=10.15.0 <=12.16.1"
   },
   "dependencies": {
     "async": "^3.1.0",
