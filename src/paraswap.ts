@@ -1,5 +1,4 @@
 import axios, {AxiosError} from 'axios';
-import Web3 = require("web3");
 import * as async from 'async';
 import * as qs from 'qs';
 import _ = require("lodash");
@@ -19,10 +18,8 @@ const ERC20_ABI = require('./abi/erc20.json');
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
 import {ParaswapFeed} from "./paraswap-feed";
 
-declare let web3: any;
-
 export class ParaSwap {
-  constructor(private network: number, private apiURL: string, public web3Provider?: Web3) {
+  constructor(private network: number, private apiURL: string, public web3Provider?: any) {
 
   }
 
@@ -91,7 +88,7 @@ export class ParaSwap {
     }
   }
 
-  private async getSpender(network: NetworkID, provider: Web3): Promise<Address> {
+  private async getSpender(network: NetworkID, provider: any): Promise<Address> {
     const augustusAddress = AUGUSTUS_ABI.addresses[network];
 
     const augustusContract = new provider.eth.Contract(AUGUSTUS_ABI.abi, augustusAddress);
@@ -145,11 +142,9 @@ export class ParaSwap {
 
   async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address, network: NetworkID): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const provider = new Web3(web3.currentProvider);
+      const spender = await this.getSpender(network, this.web3Provider);
 
-      const spender = await this.getSpender(network, provider);
-
-      const contract: any = new provider.eth.Contract(ERC20_ABI, tokenAddress);
+      const contract: any = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
       return contract.methods.approve(spender, amount).send({from: userAddress},
         (err: any, txHash: string) => {
