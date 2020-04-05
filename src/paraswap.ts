@@ -84,7 +84,7 @@ export class ParaSwap {
     }
   }
 
-  private async getSpender(network: NetworkID, provider: any): Promise<Address> {
+  async getSpender(network: NetworkID, provider: any): Promise<Address> {
     const augustusAddress = AUGUSTUS_ABI.addresses[network];
 
     const augustusContract = new provider.eth.Contract(AUGUSTUS_ABI.abi, augustusAddress);
