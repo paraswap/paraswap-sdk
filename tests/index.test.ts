@@ -40,7 +40,7 @@ describe("ParaSwap SDL", () => {
   });
 
   test("Get_Rates", async () => {
-    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount);
+    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {excludeDEXS: "Bancor"});
 
     const priceRoute = ratesOrError as OptimalRates;
 

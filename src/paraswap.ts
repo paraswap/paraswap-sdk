@@ -9,7 +9,7 @@ import {
   ETHER_ADDRESS,
   NetworkID,
   OptimalRates,
-  PriceString,
+  PriceString, RateOptions,
   Token,
   Transaction,
 } from "./types";
@@ -41,17 +41,26 @@ export class ParaSwap {
     }
   }
 
-  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString, exchanges: string = ''): Promise<OptimalRates | APIError> {
-    try {
-      if (exchanges) {
-        const targetDEXs = exchanges.split(',');
+  private checkDexList(dexs?: string) {
+    if (dexs) {
+      const targetDEXs = dexs.split(',');
 
-        if (!targetDEXs.length) {
-          throw new Error('Invalid DEX list');
-        }
+      if (!targetDEXs.length) {
+        throw new Error('Invalid DEX list');
       }
+    }
+  }
 
-      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${exchanges}`;
+  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
+    try {
+
+      const {excludeDEXS, includeDEXS} = options || {};
+
+      this.checkDexList(includeDEXS);
+      this.checkDexList(excludeDEXS);
+
+      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${includeDEXS || ''}?excludeDEXS=${excludeDEXS || ''}`;
+
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;
     } catch (e) {

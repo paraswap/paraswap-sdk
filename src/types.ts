@@ -74,3 +74,8 @@ export enum EXCHANGES {
   PARASWAPPOOL = "ParaSwapPool",
   AAVE = "Aave",
 }
+
+export type RateOptions = {
+  excludeDEXS?: string,
+  includeDEXS?: string,
+}
