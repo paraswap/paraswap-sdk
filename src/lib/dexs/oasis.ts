@@ -1,7 +1,9 @@
+import {Weth} from "./weth";
+
 const DEX_PARAMS: any = {
   1: {
     otc: "0x794e6e91555438aFc3ccF1c5076A74F42133d08D",
-    weth: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    weth: Weth.getAddress(1),
     factory: "0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4"
   }
 };
