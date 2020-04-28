@@ -1,4 +1,4 @@
-import {Address} from "../../lib/types";
+import {Address} from "../types";
 
 export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'idleToken';
 export type TokenType = 'ETH' | 'ERC20';
