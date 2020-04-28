@@ -4,7 +4,7 @@ export type Address = string;
 export type PriceString = string;
 export type NumberAsString = string;
 
-export type NetworkID = "1" | "3" | "42" | "4";
+export type NetworkID = 1 | 3 | 42 | 4;
 
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
@@ -13,6 +13,18 @@ export const UNLIMITED_ALLOWANCE = new BigNumber(2).pow(256).minus(1).toFixed();
 export type APIQuery = {
   [name: string]: string | number | boolean
 }
+
+export type DexConf = { exchange: string, targetExchange?: string };
+
+export type Adapters = {
+  augustus: { exchange: Address }
+  [adapter: string]: DexConf
+};
+
+export type Allowance = {
+  tokenAddress: Address,
+  allowance: string
+};
 
 export type APIError = {
   message: string,
@@ -31,7 +43,8 @@ export type Rate = {
   amount: PriceString
   exchange: string
   percent: NumberAsString
-  srcAmount: PriceString
+  srcAmount: PriceString,
+  data?: any,
 }
 
 export type OthersRate = {
@@ -40,24 +53,29 @@ export type OthersRate = {
   unit: NumberAsString
 }
 
-export type OptimalRates = {
+export type OnChainOptimalRates = {
   amount: PriceString,
   bestRoute: Rate[],
   others?: OthersRate[]
 };
 
+export type OptimalRates = {
+  amount: PriceString,
+  bestRoute: Rate[],
+  multiRoute?: Rate[][],
+  others: OthersRate[],
+  fromUSD?: string,
+  toUSD?: string,
+  details?:
+    {
+      tokenFrom: Address,
+      tokenTo: Address,
+      srcAmount: PriceString
+    }
+};
+
 export class User {
   constructor(public address: Address, public network: NetworkID) {
-  }
-}
-
-export class Token {
-  constructor(
-    public address: Address,
-    public decimals: number,
-    public symbol: string,
-    public allowance?: string
-  ) {
   }
 }
 

@@ -1,29 +1,39 @@
 import axios, {AxiosError} from 'axios';
 import * as async from 'async';
 import * as qs from 'qs';
-import _ = require("lodash");
+import * as _ from 'lodash';
 
 import {
-  Address,
+  Adapters,
+  Address, Allowance,
   APIError, APIQuery,
   ETHER_ADDRESS,
   NetworkID,
   OptimalRates,
   PriceString, RateOptions,
-  Token,
   Transaction,
 } from "./types";
 
-import * as ERC20_ABI from "./abi/erc20.json";
-import * as AUGUSTUS_ABI from "./abi/augustus.json";
+import ERC20_ABI from "./abi/erc20.json";
+import AUGUSTUS_ABI from "./abi/augustus.json";
+import {Token} from "./lib/token";
+import {NULL_ADDRESS, TransactionBuilder} from "./lib/transaction-builder";
 
 const API_URL = 'https://paraswap.io/api/v1';
 
 export class ParaSwap {
-  constructor(private network: number = 1, private apiURL: string = API_URL, public web3Provider?: any) {
+  adapters?: Adapters;
+  tokens: Token[] = [];
+
+  constructor(private network: NetworkID = 1, private apiURL: string = API_URL, public web3Provider?: any) {
   }
 
-  handleAPIError(e: AxiosError): APIError {
+  setWeb3Provider(web3Provider: any) {
+    this.web3Provider = web3Provider;
+    return this;
+  }
+
+  private handleAPIError(e: AxiosError): APIError {
     if (e.response) {
       const {data, status} = e.response!;
       return {status, message: data.error};
@@ -35,7 +45,22 @@ export class ParaSwap {
     try {
       const tokensURL = `${this.apiURL}/tokens/${this.network}`;
       const {data} = await axios.get(tokensURL);
-      return (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol));
+      this.tokens = (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol));
+      return this.tokens;
+
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
+  async getAdapters() {
+    try {
+      const {data} = await axios.get(`${this.apiURL}/adapters/${this.network}`);
+
+      this.adapters = data;
+
+      return this.adapters;
+
     } catch (e) {
       return this.handleAPIError(e);
     }
@@ -68,7 +93,7 @@ export class ParaSwap {
     }
   }
 
-  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, payTo?: Address, options: APIQuery = {}) {
+  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, receiver?: Address, options: APIQuery = {}) {
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
 
@@ -82,7 +107,7 @@ export class ParaSwap {
         destAmount,
         userAddress,
         referrer,
-        payTo: payTo || ''
+        payTo: receiver || ''
       };
 
       const {data} = await axios.post(txURL, txConfig);
@@ -93,23 +118,56 @@ export class ParaSwap {
     }
   }
 
-  async getSpender(network: NetworkID, provider: any): Promise<Address> {
-    const augustusAddress = AUGUSTUS_ABI.addresses[network];
+  //Warning: ParaSwapPool is not supported when building locally
+  async buildTxLocally(srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS) {
+    if (!this.adapters) {
+      await this.getAdapters();
+    }
 
-    const augustusContract = new provider.eth.Contract(AUGUSTUS_ABI.abi, augustusAddress);
+    if (!this.tokens.length) {
+      await this.getTokens();
+    }
+
+    const transaction = new TransactionBuilder(this.network, this.web3Provider!, this.adapters!, this.tokens);
+
+    return transaction.buildTransaction(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver);
+  }
+
+  async getSpender(_provider?: any): Promise<Address | APIError> {
+    if (!this.adapters) {
+      const adaptersOrError = await this.getAdapters();
+
+      if ((adaptersOrError as APIError).message) {
+        return adaptersOrError as APIError;
+      }
+
+      this.adapters = adaptersOrError as Adapters;
+    }
+
+    const provider = this.web3Provider || _provider;
+
+    const augustusAddress = this.adapters.augustus.exchange;
+
+    const augustusContract = new provider.eth.Contract(AUGUSTUS_ABI, augustusAddress);
 
     return augustusContract.methods.getTokenTransferProxy().call();
   }
 
-  async getAllowances(userAddress: Address, tokenAddresses: Address[], network: NetworkID) {
+  async getAllowances(userAddress: Address, tokenAddresses: Address[]): Promise<Allowance[] | APIError> {
     return new Promise(async (resolve, reject) => {
-      const spender = await this.getSpender(network, this.web3Provider!);
+      const spenderOrError = await this.getSpender();
 
-      async.map(
+      if ((spenderOrError as APIError).message) {
+        return reject(spenderOrError as APIError);
+      }
+
+      const spender = spenderOrError as Address;
+
+      return async.map(
         tokenAddresses,
         async (tokenAddress: Address, callback: any) => {
           try {
-            const allowance = await this.getAllowance(userAddress, tokenAddress, network, spender);
+            const allowance = await this.getAllowance(userAddress, tokenAddress, spender);
             callback(null, {tokenAddress, allowance});
           } catch (e) {
             console.error("ERROR_getAllowance", tokenAddress, e);
@@ -119,7 +177,7 @@ export class ParaSwap {
         (error, results: any) => {
           if (error) {
             console.error("ERROR_getAllowances", error);
-            return reject({error});
+            return reject({message: error.message});
           }
           resolve(results);
         }
@@ -127,27 +185,27 @@ export class ParaSwap {
     });
   }
 
-  async getAllowance(userAddress: Address, tokenAddress: Address, network: NetworkID, _spender?: string) {
+  async getAllowance(userAddress: Address, tokenAddress: Address, _spender?: string) {
     if (tokenAddress.toLowerCase() === ETHER_ADDRESS) {
       return '0';
     }
 
-    const spender = _spender || await this.getSpender(network, this.web3Provider!);
+    const spender = _spender || await this.getSpender(this.web3Provider!);
 
     const contract = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
     return contract.methods.allowance(userAddress, spender).call();
   }
 
-  async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[], network: NetworkID): Promise<string[]> {
+  async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[]): Promise<string[]> {
     return await Promise.all(
-      tokenAddresses.map(tokenAddress => this.approveToken(amount, userAddress, tokenAddress, network))
+      tokenAddresses.map(tokenAddress => this.approveToken(amount, userAddress, tokenAddress))
     )
   }
 
-  async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address, network: NetworkID): Promise<string> {
+  async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const spender = await this.getSpender(network, this.web3Provider);
+      const spender = await this.getSpender();
 
       const contract: any = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
