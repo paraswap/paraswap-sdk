@@ -1,3 +1,5 @@
+import {Oasis} from "./dexs/oasis";
+
 const web3Coder = require('web3-eth-abi');
 import BigNumber from "bignumber.js";
 import _ from 'lodash';
@@ -51,9 +53,7 @@ export class TransactionBuilder {
         );
 
       case "oasis":
-        const otc = "0x794e6e91555438aFc3ccF1c5076A74F42133d08D";
-        const weth = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-        const factory = "0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4";
+        const {otc, weth, factory} = Oasis.getExchangeParams(this.network);
 
         return web3Coder.encodeParameter(
           {
