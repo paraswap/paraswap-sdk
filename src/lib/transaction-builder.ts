@@ -1,5 +1,3 @@
-import {Oasis} from "./dexs/oasis";
-
 const web3Coder = require('web3-eth-abi');
 import BigNumber from "bignumber.js";
 import _ from 'lodash';
@@ -8,6 +6,8 @@ import {Adapters, Address, OptimalRates} from "../types";
 import {Token} from "./token";
 import {Curve} from "./dexs/curve";
 import {ZeroXOrder} from "./dexs/zerox";
+import {Oasis} from "./dexs/oasis";
+
 import * as AUGUSTUS_ABI from "../abi/augustus.json";
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
