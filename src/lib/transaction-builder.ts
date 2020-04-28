@@ -2,7 +2,7 @@ const web3Coder = require('web3-eth-abi');
 import BigNumber from "bignumber.js";
 import _ from 'lodash';
 
-import {Adapters, Address, OptimalRates} from "../types";
+import {Adapters, Address, OptimalRates, Rate} from "../types";
 import {Token} from "./token";
 import {Curve} from "./dexs/curve";
 import {ZeroXOrder} from "./dexs/zerox";
@@ -171,30 +171,32 @@ export class TransactionBuilder {
     return this.dexConf[exchangeName.toLowerCase()].targetExchange;
   };
 
+  private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string) {
+    const exchangeName = route.exchange.toLowerCase();
+
+    const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data);
+
+    const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
+
+    const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
+
+    return {
+      exchange: this.dexConf[exchangeName].exchange,
+      targetExchange,
+      percent: Number(route.percent) * 100,
+      payload,
+      networkFee
+    }
+  }
+
   private getPath = (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string) => {
-    const {multiRoute, bestRoute} = priceRoute!;
+    const {multiRoute, bestRoute} = priceRoute;
 
     if (this.isMultiPath(priceRoute)) {
       return multiRoute!.map(_routes => {
         const {tokenFrom, tokenTo} = _routes[0].data;
 
-        const routes = _routes.map(route => {
-          const exchangeName = route.exchange.toString().toLowerCase();
-
-          const payload = this.getPayLoad(tokenFrom, tokenTo, exchangeName, route.data);
-
-          const targetExchange = this.getTargetExchange(tokenFrom, exchangeName, route.data.exchange);
-
-          const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
-
-          return {
-            exchange: this.dexConf[route.exchange.toString().toLowerCase()].exchange,
-            targetExchange,
-            percent: Number(route.percent) * 100,
-            payload,
-            networkFee
-          }
-        });
+        const routes = _routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice));
 
         return {
           from: tokenFrom,
@@ -203,27 +205,11 @@ export class TransactionBuilder {
         }
       });
     } else {
-      return bestRoute.map(route => {
-        const targetExchange = this.getTargetExchange(srcToken, route.exchange, route.data.exchange);
-
-        const payload = this.getPayLoad(srcToken, destToken, route.exchange, route.data);
-
-        const networkFee = this.networkFee(route.exchange, gasPrice, route.data);
-
-        const routes = [{
-          exchange: this.dexConf[route.exchange.toString().toLowerCase()].exchange,
-          targetExchange,
-          percent: Number(route.percent) * 100,
-          payload,
-          networkFee
-        }];
-
-        return {
-          from: srcToken,
-          to: destToken,
-          routes
-        }
-      });
+      return bestRoute.map(route => ({
+        from: srcToken,
+        to: destToken,
+        routes: [this.getRouteParams(srcToken, destToken, route, gasPrice)]
+      }));
     }
   };
 
