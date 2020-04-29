@@ -28,7 +28,7 @@ export class TransactionBuilder {
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
   private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string) => {
-    console.log("getPayLoad", exchange, networkFee);
+    console.log("getPayLoad", {exchange, data, networkFee});
 
     const srcToken = this.tokens!.find(t => t.address === fromToken);
     const destToken = this.tokens!.find(t => t.address === toToken);
