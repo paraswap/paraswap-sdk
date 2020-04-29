@@ -1,6 +1,6 @@
 const web3Coder = require('web3-eth-abi');
 import BigNumber from "bignumber.js";
-import _ from 'lodash';
+import _ = require('lodash');
 
 import {Adapters, Address, OptimalRates, Rate} from "../types";
 import {Token} from "./token";
@@ -8,7 +8,7 @@ import {Curve} from "./dexs/curve";
 import {ZeroXOrder} from "./dexs/zerox";
 import {Oasis} from "./dexs/oasis";
 
-import * as AUGUSTUS_ABI from "../abi/augustus.json";
+const AUGUSTUS_ABI = require("../abi/augustus.json");
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
@@ -27,7 +27,8 @@ export class TransactionBuilder {
 
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
-  private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any) => {
+  private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string) => {
+    console.log("getPayLoad", exchange, networkFee);
 
     const srcToken = this.tokens!.find(t => t.address === fromToken);
     const destToken = this.tokens!.find(t => t.address === toToken);
@@ -38,10 +39,21 @@ export class TransactionBuilder {
 
     switch (exchange.toLowerCase()) {
       case "0x":
+        return web3Coder.encodeParameter(
+          {
+            "ParentStruct": {
+              "orders": 'tuple[]',
+              "signatures": 'bytes[]',
+              "networkFee": 'uint256'
+            }
+          },
+          {
+            networkFee,
+            orders: ZeroXOrder.formatOrders(data.orders),
+            signatures: data.orders.map((o: any) => o.signature)
+          }
+        );
       case "paraswappool":
-        const orders = ZeroXOrder.formatOrders(data.orders);
-        const signatures = data.orders.map((o: any) => o.signature);
-
         return web3Coder.encodeParameter(
           {
             "ParentStruct": {
@@ -49,7 +61,7 @@ export class TransactionBuilder {
               "signatures": 'bytes[]'
             }
           },
-          {orders, signatures}
+          {orders: ZeroXOrder.formatOrders(data.orders), signatures: data.orders.map((o: any) => o.signature)}
         );
 
       case "oasis":
@@ -174,11 +186,11 @@ export class TransactionBuilder {
   private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string) {
     const exchangeName = route.exchange.toLowerCase();
 
-    const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data);
+    const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
+
+    const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
 
     const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
-
-    const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
 
     return {
       exchange: this.dexConf[exchangeName].exchange,
@@ -213,8 +225,10 @@ export class TransactionBuilder {
     }
   };
 
-  private getValue = (srcToken: Address, srcAmount: string, path: any) => {
-    const networkFees = _(path).map((p: any) => p.routes).flatten()
+  private getValue = (srcToken: Address, srcAmount: string, path: any[]) => {
+    const networkFees = _(path)
+      .map((p: any) => p.routes)
+      .flatten()
       .filter((r: any) => !!r.networkFee)
       .map((r: any) => r.networkFee)
       .reduce((acc: any, nf: string) => {
@@ -245,7 +259,8 @@ export class TransactionBuilder {
       expectedAmount,
       path,
       receiver,
-      referrer
+      referrer,
+      gasPrice
     });
 
     const value = this.getValue(srcToken.address!, srcAmount, path);

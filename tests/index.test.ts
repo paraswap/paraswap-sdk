@@ -21,7 +21,7 @@ const apiURL = process.env.API_URL || 'https://paraswap.io/api';
 const network = 1;
 const srcToken = ETH;
 const destToken = DAI;
-const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals
+const srcAmount = '10000000000000000'; //The source amount multiplied by its decimals
 const senderAddress = '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const referrer = 'sdk-test';
 const payTo = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A'; // Useful in case of a payment
@@ -112,6 +112,22 @@ describe("ParaSwap SDL", () => {
     expect(adapters.uniswap.targetExchange).toBeDefined();
     expect(adapters.kyber.exchange).toBeDefined();
     expect(adapters.kyber.targetExchange).toBeDefined();
+  });
+
+  test("Build_Tx_Locally", async () => {
+    const srcToken = new Token(ETH, 18, 'ETH');
+    const destToken = new Token(DAI, 18, 'DAI');
+
+    const ratesOrError = await paraSwap.getRate(srcToken.address, destToken.address, srcAmount, {includeDEXS: '0x'});
+    const priceRoute = ratesOrError as OptimalRates;
+
+    const destAmount = priceRoute.amount;
+
+    const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
+
+    const build = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice);
+
+    console.log('build',  build)
   });
 
   test("Get_Build_Tx", async () => {
