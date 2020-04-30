@@ -13,3 +13,5 @@ tmp
 docker
 
 build
+
+src/*.js
