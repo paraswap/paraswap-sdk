@@ -74,6 +74,11 @@
         "internalType": "address payable",
         "name": "feeWallet",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "gstHolder",
+        "type": "address"
       }
     ],
     "payable": false,
@@ -100,6 +105,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "initiator",
+        "type": "address"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -138,18 +149,31 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "fee",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
         "internalType": "string",
         "name": "referrer",
         "type": "string"
       }
     ],
     "name": "Swapped",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "donationPercentage",
+        "type": "uint256"
+      }
+    ],
+    "name": "Donation",
     "type": "event"
   },
   {
@@ -302,6 +326,21 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "gstHolder",
+        "type": "address"
+      }
+    ],
+    "name": "changeGSTHolder",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "paused",
@@ -354,21 +393,6 @@
       }
     ],
     "name": "ownerTransferTokens",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "mintGasTokens",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -460,6 +484,11 @@
         "internalType": "address payable",
         "name": "beneficiary",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "donationPercentage",
+        "type": "uint256"
       },
       {
         "internalType": "string",

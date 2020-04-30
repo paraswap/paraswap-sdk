@@ -49,7 +49,7 @@ export class TransactionBuilder {
           },
           {
             networkFee,
-            orders: ZeroXOrder.formatOrders(data.orders),
+            orders: ZeroXOrder.formatOrders(data.orders, true),
             signatures: data.orders.map((o: any) => o.signature)
           }
         );
@@ -274,6 +274,7 @@ export class TransactionBuilder {
       path,
       '1',
       receiver,
+      0,
       referrer
     ).encodeABI();
 
