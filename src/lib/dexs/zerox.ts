@@ -31,15 +31,14 @@ export class ZeroXOrder {
       takerAddress: order.takerAddress,
       feeRecipientAddress: order.feeRecipientAddress,
       senderAddress: order.senderAddress,
-      makerAssetData: order.makerAssetData,
-      takerAssetData: order.takerAssetData,
+      makerAssetAmount: new BigNumber(order.makerAssetAmount).toFixed(0),
+      takerAssetAmount: new BigNumber(order.takerAssetAmount).toFixed(0),
       makerFee: new BigNumber(order.makerFee).toFixed(0),
       takerFee: new BigNumber(order.takerFee).toFixed(0),
       expirationTimeSeconds: new BigNumber(order.expirationTimeSeconds).toFixed(0),
       salt: new BigNumber(order.salt).toFixed(0),
-      makerAssetAmount: new BigNumber(order.makerAssetAmount).toFixed(0),
-      takerAssetAmount: new BigNumber(order.takerAssetAmount).toFixed(0),
-
+      makerAssetData: order.makerAssetData,
+      takerAssetData: order.takerAssetData,
       ...feeAssetData,
     }
   }
