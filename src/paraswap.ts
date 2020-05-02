@@ -14,8 +14,9 @@ import {
   Transaction,
 } from "./types";
 
-const ERC20_ABI = require("./abi/erc20.json");
-const AUGUSTUS_ABI = require("./abi/augustus.json");
+import ERC20_ABI = require("./abi/erc20.json");
+import AUGUSTUS_ABI = require("./abi/augustus.json");
+
 import {Token} from "./lib/token";
 import {NULL_ADDRESS, TransactionBuilder} from "./lib/transaction-builder";
 
