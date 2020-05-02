@@ -97,3 +97,39 @@ export type RateOptions = {
   excludeDEXS?: string,
   includeDEXS?: string,
 }
+
+export type TransactionRoute = {
+  exchange: Address,
+  targetExchange: Address | undefined,
+  percent: NumberAsString,
+  payload: string,
+  networkFee: NumberAsString
+}
+
+export type TransactionPath = {
+  from: Address
+  to: Address
+  routes: TransactionRoute[]
+}
+
+export type TransactionParams = {
+  value: PriceString
+  fromToken: Address
+  toToken: Address
+  fromAmount: PriceString
+  toAmount: PriceString
+  expectedAmount: PriceString
+  path: TransactionPath[]
+  mintPrice: PriceString
+  beneficiary: Address
+  donationPercentage: NumberAsString
+  referrer: Address
+}
+
+export type TransactionData = {
+  from: Address,
+  to: Address,
+  data: string,
+  chainId: number,
+  value: PriceString
+}

@@ -119,7 +119,7 @@ export class ParaSwap {
   }
 
   //Warning: ParaSwapPool is not supported when building locally
-  async buildTxLocally(srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS, donatePercent: number = 0) {
+  async buildTxLocally(srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS, donatePercent: string = '0') {
     if (!this.adapters) {
       await this.getAdapters();
     }

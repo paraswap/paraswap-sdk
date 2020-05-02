@@ -2,7 +2,16 @@ const web3Coder = require('web3-eth-abi');
 import BigNumber from "bignumber.js";
 import _ = require('lodash');
 
-import {Adapters, Address, OptimalRates, Rate} from "../types";
+import {
+  Adapters,
+  Address,
+  NumberAsString,
+  OptimalRates,
+  PriceString,
+  Rate, TransactionData,
+  TransactionParams,
+  TransactionPath, TransactionRoute
+} from "../types";
 import {Token} from "./token";
 import {Curve} from "./dexs/curve";
 import {ZeroXOrder} from "./dexs/zerox";
@@ -27,13 +36,9 @@ export class TransactionBuilder {
 
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
-  private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string) => {
-    const srcToken = this.tokens!.find(t => t.address === fromToken);
-    const destToken = this.tokens!.find(t => t.address === toToken);
-
-    if (!srcToken || !destToken) {
-      return null;
-    }
+  private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string): string => {
+    const srcToken = this.tokens!.find(t => t.address === fromToken)!;
+    const destToken = this.tokens!.find(t => t.address === toToken)!;
 
     switch (exchange.toLowerCase()) {
       case "0x":
@@ -212,7 +217,7 @@ export class TransactionBuilder {
     return this.dexConf[exchangeName.toLowerCase()].targetExchange;
   };
 
-  private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string) {
+  private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string): TransactionRoute {
     const exchangeName = route.exchange.toLowerCase();
 
     const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
@@ -224,13 +229,13 @@ export class TransactionBuilder {
     return {
       exchange: this.dexConf[exchangeName].exchange,
       targetExchange,
-      percent: Number(route.percent) * 100,
+      percent: new BigNumber(route.percent).times(100).toFixed(0),
       payload,
       networkFee
     }
   }
 
-  private getPath = (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string) => {
+  private getPath = (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): TransactionPath[] => {
     const {multiRoute, bestRoute} = priceRoute;
     if (this.isMultiPath(priceRoute)) {
       return multiRoute!.map(_routes => {
@@ -238,15 +243,15 @@ export class TransactionBuilder {
 
         const routes = _routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice));
         return {
-          from: tokenFrom,
-          to: tokenTo,
+          from: <Address>tokenFrom,
+          to: <Address>tokenTo,
           routes
         }
       });
     } else {
       return bestRoute.map(route => ({
-        from: srcToken,
-        to: destToken,
+        from: <Address>srcToken,
+        to: <Address>destToken,
         routes: [this.getRouteParams(srcToken, destToken, route, gasPrice)]
       }));
     }
@@ -268,45 +273,40 @@ export class TransactionBuilder {
     return new BigNumber(value).plus(networkFees).toFixed();
   };
 
-  buildTransaction = (srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS, donatePercent: number = 0) => {
+  getTransactionParams = (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): TransactionParams => {
+    const path = this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
+
+    const expectedAmount = new BigNumber(priceRoute.amount).times(10 ** destToken.decimals).toFixed(0);
+
+    const value = this.getValue(srcToken.address!, srcAmount, path);
+
+    return {
+      value,
+      fromToken: srcToken.address,
+      toToken: destToken.address,
+      fromAmount: srcAmount,
+      toAmount: minDestinationAmount,
+      expectedAmount,
+      path,
+      mintPrice: '1',
+      beneficiary: receiver,
+      donationPercentage: new BigNumber(donatePercent).times(100).toFixed(0),
+      referrer
+    }
+  };
+
+  buildTransaction = (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): TransactionData => {
 
     const augustusAddress = this.dexConf.augustus.exchange;
 
     const augustusContract = new this.web3Provider.eth.Contract(AUGUSTUS_ABI, augustusAddress);
 
-    const path = this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
+    const {value, ...params} = this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
 
-    const expectedAmount = new BigNumber(priceRoute.amount).times(10 ** destToken.decimals).toFixed(0);
-
-    console.log('params', {
-      srcToken,
-      destToken,
-      srcAmount,
-      minDestinationAmount,
-      expectedAmount,
-      path,
-      receiver,
-      referrer,
-      gasPrice
-    });
-
-    const value = this.getValue(srcToken.address!, srcAmount, path);
-
-    const data = augustusContract.methods.multiSwap(
-      srcToken.address!,
-      destToken.address!,
-      srcAmount,
-      minDestinationAmount,
-      expectedAmount,
-      path,
-      1,
-      receiver,
-      donatePercent,
-      referrer
-    ).encodeABI();
+    const data = augustusContract.methods.multiSwap.apply(null, Object.values(params)).encodeABI();
 
     return {
-      from: userAddress!,
+      from: userAddress,
       to: augustusAddress,
       data,
       chainId: this.network,
