@@ -96,6 +96,8 @@ export enum EXCHANGES {
 export type RateOptions = {
   excludeDEXS?: string,
   includeDEXS?: string,
+  includeMPDEXS?: string,
+  excludeMPDEXS?: string,
 }
 
 export type TransactionRoute = {
