@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {
   Adapters,
   Address, Allowance,
-  APIError, APIQuery,
+  APIError, APIQuery, BuildOptions,
   ETHER_ADDRESS,
   NetworkID,
   OptimalRates,
@@ -94,7 +94,7 @@ export class ParaSwap {
     }
   }
 
-  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, receiver?: Address, options: APIQuery = {}) {
+  async buildTx(srcToken: Address, destToken: Address, srcAmount: PriceString, destAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: string, receiver?: Address, options: BuildOptions = {}) {
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
 

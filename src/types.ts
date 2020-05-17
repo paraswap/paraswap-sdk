@@ -138,3 +138,9 @@ export type TransactionData = {
   gas: NumberAsString,
 
 }
+
+export type BuildOptions = {
+  skipChecks?: boolean,
+  simple?: boolean,
+  getParams?: boolean,
+}
