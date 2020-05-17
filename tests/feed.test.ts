@@ -30,12 +30,11 @@ describe("ParaswapFeed SDL", () => {
 
   test("Get_Rates", async () => {
     const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount);
-    console.log("PRICE FROM FEED!!");
     console.log(ratesOrError);
 
-    const paraswapAPIPrice = await paraSwapAPI.getRate(srcToken, destToken, srcAmount);
-    console.log("PARASWAP API PRICE");
-    console.log(paraswapAPIPrice)
+    //const paraswapAPIPrice = await paraSwapAPI.getRate(srcToken, destToken, srcAmount);
+    //console.log("PARASWAP API PRICE");
+    //console.log(paraswapAPIPrice)
     /**const priceRoute = ratesOrError as OptimalRates;
 
     const {amount, bestRoute, others} = priceRoute;

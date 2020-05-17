@@ -33,6 +33,8 @@ describe("ParaSwap SDK", () => {
 
   beforeAll(async () => {
     paraSwap = new ParaSwap(network, apiURL).setWeb3Provider(provider);
+
+    paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
 
   afterAll(async done => {
@@ -50,7 +52,7 @@ describe("ParaSwap SDK", () => {
   });
 
   test("Get_Rates", async () => {
-    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {excludeDEXS: "Bancor"});
+    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {excludeDEXS: "Uniswap"});
 
     const priceRoute = ratesOrError as OptimalRates;
 
@@ -65,7 +67,7 @@ describe("ParaSwap SDK", () => {
 
     expect(typeof bestRoute[0].exchange).toBe('string');
 
-    expect(typeof bestRoute[0].percent).toBe('string');
+    expect(typeof bestRoute[0].percent).toBe('number');
     expect(new BigNumber(bestRoute[0].percent).isNaN()).toBe(false);
 
     expect(typeof bestRoute[0].srcAmount).toBe('string');
@@ -118,7 +120,7 @@ describe("ParaSwap SDK", () => {
     const srcToken = new Token(ETH, 18, 'ETH');
     const destToken = new Token(DAI, 18, 'DAI');
 
-    const ratesOrError = await paraSwap.getRate(srcToken.address, destToken.address, srcAmount, {excludeDEXS: '0x'});
+    const ratesOrError = await paraSwap.getRate(srcToken.address, destToken.address, srcAmount, {includeDEXS: 'Uniswap'});
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = priceRoute.amount;
@@ -127,11 +129,11 @@ describe("ParaSwap SDK", () => {
 
     const build = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice);
 
-    console.log('build',  build)
+    console.log('build', build)
   });
 
   test("Build_Tx", async () => {
-    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {includeDEXS: 'ParaSwapPool'});
+    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {includeDEXS: 'Uniswap'});
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = new BigNumber(priceRoute.amount).times(0.99).toFixed();
