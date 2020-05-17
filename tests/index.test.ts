@@ -21,14 +21,14 @@ const apiURL = process.env.API_URL || 'https://paraswap.io/api';
 const network = 1;
 const srcToken = ETH;
 const destToken = DAI;
-const srcAmount = '10000000000000000'; //The source amount multiplied by its decimals
+const srcAmount = (10 * 1e18).toString(); //The source amount multiplied by its decimals
 const senderAddress = '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const referrer = 'sdk-test';
-const payTo = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A'; // Useful in case of a payment
+const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A'; // Useful in case of a payment
 
 const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
 
-describe("ParaSwap SDL", () => {
+describe("ParaSwap SDK", () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
@@ -118,7 +118,7 @@ describe("ParaSwap SDL", () => {
     const srcToken = new Token(ETH, 18, 'ETH');
     const destToken = new Token(DAI, 18, 'DAI');
 
-    const ratesOrError = await paraSwap.getRate(srcToken.address, destToken.address, srcAmount, {includeDEXS: '0x'});
+    const ratesOrError = await paraSwap.getRate(srcToken.address, destToken.address, srcAmount, {excludeDEXS: '0x'});
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = priceRoute.amount;
@@ -130,12 +130,13 @@ describe("ParaSwap SDL", () => {
     console.log('build',  build)
   });
 
-  test("Get_Build_Tx", async () => {
-    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount);
+  test("Build_Tx", async () => {
+    const ratesOrError = await paraSwap.getRate(srcToken, destToken, srcAmount, {includeDEXS: 'ParaSwapPool'});
     const priceRoute = ratesOrError as OptimalRates;
 
-    const destAmount = priceRoute.amount;
-    const txOrError = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, payTo);
+    const destAmount = new BigNumber(priceRoute.amount).times(0.99).toFixed();
+
+    const txOrError = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer);
 
     const error = txOrError as APIError;
 

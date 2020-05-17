@@ -108,7 +108,7 @@ export class ParaSwap {
         destAmount,
         userAddress,
         referrer,
-        payTo: receiver || ''
+        receiver: receiver || ''
       };
 
       const {data} = await axios.post(txURL, txConfig);

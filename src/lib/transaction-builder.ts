@@ -1,4 +1,5 @@
 const web3Coder = require('web3-eth-abi');
+
 import BigNumber from "bignumber.js";
 import _ = require('lodash');
 
@@ -276,8 +277,6 @@ export class TransactionBuilder {
   getTransactionParams = (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): TransactionParams => {
     const path = this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
 
-    const expectedAmount = new BigNumber(priceRoute.amount).times(10 ** destToken.decimals).toFixed(0);
-
     const value = this.getValue(srcToken.address!, srcAmount, path);
 
     return {
@@ -286,7 +285,7 @@ export class TransactionBuilder {
       toToken: destToken.address,
       fromAmount: srcAmount,
       toAmount: minDestinationAmount,
-      expectedAmount,
+      expectedAmount: priceRoute.amount,
       path,
       mintPrice: '1',
       beneficiary: receiver,
@@ -295,22 +294,29 @@ export class TransactionBuilder {
     }
   };
 
-  buildTransaction = (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): TransactionData => {
+  estimateGas = async (swapMethodData: any, fromUser: Address, value: NumberAsString, gasPrice: NumberAsString): Promise<NumberAsString> => {
+    return await swapMethodData.estimateGas({from: fromUser, value, data: swapMethodData, gasPrice});
+  };
 
+  buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): Promise<TransactionData> => {
     const augustusAddress = this.dexConf.augustus.exchange;
 
     const augustusContract = new this.web3Provider.eth.Contract(AUGUSTUS_ABI, augustusAddress);
 
     const {value, ...params} = this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
 
-    const data = augustusContract.methods.multiSwap.apply(null, Object.values(params)).encodeABI();
+    const swapMethodData = augustusContract.methods.multiSwap.apply(null, Object.values(params));
+
+    const gas = await this.estimateGas(swapMethodData, userAddress, value, gasPrice);
 
     return {
       from: userAddress,
       to: augustusAddress,
-      data,
+      data: swapMethodData.encodeABI(),
       chainId: this.network,
-      value
+      value,
+      gas,
+      gasPrice,
     };
   }
 
