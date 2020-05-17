@@ -143,4 +143,5 @@ export type BuildOptions = {
   skipChecks?: boolean,
   simple?: boolean,
   getParams?: boolean,
+  gasPrice?: PriceString,
 }
