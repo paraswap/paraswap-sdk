@@ -5,8 +5,8 @@ import * as _ from 'lodash';
 
 import {
   Adapters,
-  Address, Allowance,
-  APIError, APIQuery, BuildOptions,
+  Address, AddressOrSymbol, Allowance,
+  APIError, BuildOptions,
   ETHER_ADDRESS,
   NetworkID,
   OptimalRates,
@@ -77,7 +77,33 @@ export class ParaSwap {
     }
   }
 
-  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
+  async getRateByRoutes(route: AddressOrSymbol[], srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
+    try {
+      const {excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS} = options || {};
+
+      this.checkDexList(includeDEXS);
+      this.checkDexList(excludeDEXS);
+      this.checkDexList(includeMPDEXS);
+      this.checkDexList(excludeMPDEXS);
+
+      if (route.length < 2) {
+        return {message: "Invalid Route"};
+      }
+
+      const query = _.isEmpty(options) ? '' : qs.stringify({excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS});
+
+      const pricesURL = `${this.apiURL}/prices/?route=${route.join('-')}&amount=${srcAmount}&${query}`;
+
+      const {data} = await axios.get(pricesURL);
+
+      return data.priceRoute as OptimalRates;
+
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
+  async getRate(srcToken: AddressOrSymbol, destToken: AddressOrSymbol, srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
     try {
 
       const {excludeDEXS, includeDEXS} = options || {};
@@ -85,7 +111,9 @@ export class ParaSwap {
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
 
-      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${includeDEXS || ''}?excludeDEXS=${excludeDEXS || ''}`;
+      const query = _.isEmpty(options) ? '' : qs.stringify({excludeDEXS, includeDEXS});
+
+      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/&${query}`;
 
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;

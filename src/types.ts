@@ -1,6 +1,8 @@
 import BigNumber from "bignumber.js";
 
+export type Symbol = string;
 export type Address = string;
+export type AddressOrSymbol = Address | Symbol;
 export type PriceString = string;
 export type NumberAsString = string;
 
