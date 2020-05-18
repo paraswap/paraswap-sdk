@@ -77,7 +77,7 @@ export class ParaSwap {
     }
   }
 
-  async getRateByRoutes(route: AddressOrSymbol[], srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
+  async getRateByRoute(route: AddressOrSymbol[], srcAmount: PriceString, options?: RateOptions): Promise<OptimalRates | APIError> {
     try {
       const {excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS} = options || {};
 
