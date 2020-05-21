@@ -14,7 +14,7 @@ import {
   Transaction,
 } from "./types";
 
-import * as ERC20_ABI from "./abi/erc20.json";
+import ERC20_ABI = require("./abi/erc20.json");
 import * as AUGUSTUS_ABI from "./abi/augustus.json";
 
 const API_URL = 'https://paraswap.io/api/v1';
