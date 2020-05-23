@@ -1,6 +1,6 @@
 import {Address} from "../types";
 
-export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'idleToken';
+export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'idleToken' | 'Chai' | 'bDAI';
 export type TokenType = 'ETH' | 'ERC20';
 
 export class Token {
