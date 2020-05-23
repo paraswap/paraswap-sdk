@@ -250,6 +250,14 @@ export class TransactionBuilder {
         }
       });
     } else {
+      const routes = bestRoute.map(route => this.getRouteParams(srcToken, destToken, route, gasPrice))
+      
+      return [{
+        from: <Address>srcToken,
+        to: <Address>destToken,
+        routes
+      }]
+
       return bestRoute.map(route => ({
         from: <Address>srcToken,
         to: <Address>destToken,
