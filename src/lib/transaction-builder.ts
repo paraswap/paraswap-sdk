@@ -298,7 +298,7 @@ export class TransactionBuilder {
     return await swapMethodData.estimateGas({from: fromUser, value, data: swapMethodData, gasPrice});
   };
 
-  buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): Promise<TransactionData> => {
+  buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString, ignoreGas: boolean): Promise<TransactionData> => {
     const augustusAddress = this.dexConf.augustus.exchange;
 
     const augustusContract = new this.web3Provider.eth.Contract(AUGUSTUS_ABI, augustusAddress);
@@ -307,7 +307,7 @@ export class TransactionBuilder {
 
     const swapMethodData = augustusContract.methods.multiSwap.apply(null, Object.values(params));
 
-    const gas = await this.estimateGas(swapMethodData, userAddress, value, gasPrice);
+    const gas = ignoreGas ? {} : {gas: await this.estimateGas(swapMethodData, userAddress, value, gasPrice)};
 
     return {
       from: userAddress,
@@ -315,7 +315,7 @@ export class TransactionBuilder {
       data: swapMethodData.encodeABI(),
       chainId: this.network,
       value,
-      gas,
+      ...gas,
       gasPrice,
     };
   }

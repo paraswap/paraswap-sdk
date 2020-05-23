@@ -135,8 +135,8 @@ export type TransactionData = {
   data: string,
   chainId: number,
   value: PriceString,
-  gasPrice: PriceString,
-  gas: NumberAsString,
+  gasPrice?: PriceString,
+  gas?: NumberAsString,
 
 }
 
