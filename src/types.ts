@@ -111,7 +111,6 @@ export type TransactionRoute = {
 }
 
 export type TransactionPath = {
-  from: Address
   to: Address
   routes: TransactionRoute[]
 }

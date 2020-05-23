@@ -24,7 +24,7 @@ export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 export const ZRX_GAZ_MULTIPLIER = 150000;
-const LENDING_DEXES = ["compound", "aave", "Fulcrum", "idle"];
+const LENDING_DEXES = ["compound", "Fulcrum", "idle"];
 
 export class TransactionBuilder {
   constructor(private network: number, private web3Provider: any, private dexConf: Adapters, private tokens: Token[]) {
@@ -137,7 +137,7 @@ export class TransactionBuilder {
           {cToken}
         );
 
-      case "aavee":
+      case "aave":
         const aToken = destToken.tokenType === "aToken" ? destToken.address! : srcToken.address!;
 
         return web3Coder.encodeParameter(
@@ -244,25 +244,17 @@ export class TransactionBuilder {
 
         const routes = _routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice));
         return {
-          from: <Address>tokenFrom,
           to: <Address>tokenTo,
           routes
         }
       });
     } else {
       const routes = bestRoute.map(route => this.getRouteParams(srcToken, destToken, route, gasPrice))
-      
+
       return [{
-        from: <Address>srcToken,
         to: <Address>destToken,
         routes
-      }]
-
-      return bestRoute.map(route => ({
-        from: <Address>srcToken,
-        to: <Address>destToken,
-        routes: [this.getRouteParams(srcToken, destToken, route, gasPrice)]
-      }));
+      }];
     }
   };
 
