@@ -20,7 +20,7 @@ import AUGUSTUS_ABI = require("./abi/augustus.json");
 import {Token} from "./lib/token";
 import {NULL_ADDRESS, TransactionBuilder} from "./lib/transaction-builder";
 
-const API_URL = 'https://paraswap.io/api/v1';
+const API_URL = 'https://api.paraswap.io/v2';
 
 export class ParaSwap {
   adapters?: Adapters;
