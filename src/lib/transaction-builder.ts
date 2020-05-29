@@ -124,7 +124,7 @@ export class TransactionBuilder {
           },
           {path}
         );
-
+        
       case "compound":
         const cToken = destToken.tokenType === "cToken" ? destToken.address! : srcToken.address!;
 
@@ -215,7 +215,7 @@ export class TransactionBuilder {
       return exchangeAddress;
     }
 
-    return this.dexConf[exchangeName.toLowerCase()].targetExchange;
+    return this.dexConf[exchangeName.toLowerCase()].targetExchange || NULL_ADDRESS;
   };
 
   private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string): TransactionRoute {
