@@ -124,7 +124,7 @@ export class TransactionBuilder {
           },
           {path}
         );
-        
+
       case "compound":
         const cToken = destToken.tokenType === "cToken" ? destToken.address! : srcToken.address!;
 
@@ -178,15 +178,19 @@ export class TransactionBuilder {
         try {
           const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol);
 
+          //TODO: This has no use since it's related to the old Curve Compound. Remove when updating the Curve contract
+          const deadline = 0;
+
           return web3Coder.encodeParameter(
             {
               "ParentStruct": {
                 "i": 'int128',
                 "j": 'int128',
+                "deadline": 'uint256',
                 "underlyingSwap": 'bool'
               }
             },
-            {i, j, underlyingSwap}
+            {i, j, deadline, underlyingSwap}
           );
 
         } catch (e) {
