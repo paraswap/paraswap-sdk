@@ -49,7 +49,7 @@ export class Curve {
       return [-1, -1, -1];
     }
 
-    const isUnderlyingSwap = (pool.name !== 'renBTC' || pool.name !== 'pax') && pool.underlying.includes(srcToken) && pool.underlying.includes(destToken);
+    const isUnderlyingSwap = (pool.name !== 'renBTC' && pool.name !== 'pax') && pool.underlying.includes(srcToken) && pool.underlying.includes(destToken);
 
     const fromIndex = isUnderlyingSwap ? pool.underlying.indexOf(srcToken) : pool.coins.indexOf(srcToken);
 
