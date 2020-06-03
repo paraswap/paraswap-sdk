@@ -23,6 +23,9 @@ const AUGUSTUS_ABI = require("../abi/augustus.json");
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
+//Gas units overhead in order to maximize the transaction success rate
+export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 20);
+
 export const ZRX_GAZ_MULTIPLIER = 150000;
 const LENDING_DEXES = ["compound", "Fulcrum", "idle"];
 
@@ -299,7 +302,11 @@ export class TransactionBuilder {
   };
 
   estimateGas = async (swapMethodData: any, fromUser: Address, value: NumberAsString, gasPrice: NumberAsString): Promise<NumberAsString> => {
-    return await swapMethodData.estimateGas({from: fromUser, value, data: swapMethodData, gasPrice});
+    const gas = await swapMethodData.estimateGas({from: fromUser, value, data: swapMethodData, gasPrice});
+
+    const gasOverhead = GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(new BigNumber(GAS_MULTIPLIER).dividedBy(100)) : 1;
+
+    return new BigNumber(gas).times(gasOverhead).toFixed(0);
   };
 
   buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString, ignoreGas: boolean): Promise<TransactionData> => {
