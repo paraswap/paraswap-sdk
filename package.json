@@ -17,7 +17,7 @@
     "bignumber.js": "8.1.1",
     "lodash": "^4.17.15",
     "qs": "^6.9.1",
-    "web3": "^1.2.7"
+    "web3": "1.2.7"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
