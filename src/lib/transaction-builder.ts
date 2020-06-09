@@ -177,6 +177,18 @@ export class TransactionBuilder {
           {iToken}
         );
 
+      case "uniswapv2":
+        console.log('uniswapV2', data.path);
+
+        return web3Coder.encodeParameter(
+          {
+            "ParentStruct": {
+              "path": 'address[]'
+            }
+          },
+          {path: data.path}
+        );
+
       case "curve":
         try {
           const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol);
@@ -233,7 +245,7 @@ export class TransactionBuilder {
     const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
 
     const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
-
+    
     return {
       exchange: this.dexConf[exchangeName].exchange,
       targetExchange,
