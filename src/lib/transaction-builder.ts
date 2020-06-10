@@ -178,8 +178,6 @@ export class TransactionBuilder {
         );
 
       case "uniswapv2":
-        console.log('uniswapV2', data.path);
-
         return web3Coder.encodeParameter(
           {
             "ParentStruct": {
@@ -245,7 +243,7 @@ export class TransactionBuilder {
     const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
 
     const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
-    
+
     return {
       exchange: this.dexConf[exchangeName].exchange,
       targetExchange,
@@ -297,6 +295,8 @@ export class TransactionBuilder {
     const path = this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
 
     const value = this.getValue(srcToken.address!, srcAmount, path);
+
+    console.log('path', path);
 
     return {
       value,
