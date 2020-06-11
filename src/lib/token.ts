@@ -26,7 +26,9 @@ export class Token {
     public mainConnector: string = '',
     public connectors: string[] = [],
     public network: number = 1,
-    public img?: string
+    public img?: string,
+    public allowance?: string,
+    public balance?: string,
   ) {
     this.connectors = this.connectors.length ? this.connectors : this.getConnectors();
 

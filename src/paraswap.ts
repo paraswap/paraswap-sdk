@@ -113,7 +113,7 @@ export class ParaSwap {
 
       const query = _.isEmpty(options) ? '' : qs.stringify({excludeDEXS, includeDEXS});
 
-      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/&${query}`;
+      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${query ? "$" + query : ""}`;
 
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;
@@ -226,17 +226,19 @@ export class ParaSwap {
     return contract.methods.allowance(userAddress, spender).call();
   }
 
-  async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[]): Promise<string[]> {
+  async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[], _provider?: any): Promise<string[]> {
     return await Promise.all(
-      tokenAddresses.map(tokenAddress => this.approveToken(amount, userAddress, tokenAddress))
+      tokenAddresses.map(tokenAddress => this.approveToken(amount, userAddress, tokenAddress, _provider))
     )
   }
 
-  async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address): Promise<string> {
+  async approveToken(amount: PriceString, userAddress: Address, tokenAddress: Address, _provider?: any): Promise<string> {
     return new Promise(async (resolve, reject) => {
       const spender = await this.getSpender();
 
-      const contract: any = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
+      const provider = _provider || this.web3Provider;
+
+      const contract: any = new provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
       return contract.methods.approve(spender, amount).send({from: userAddress},
         (err: any, txHash: string) => {
@@ -244,5 +246,25 @@ export class ParaSwap {
           resolve(txHash);
         });
     })
+  }
+
+  async getBalances(userAddress: Address): Promise<Token[] | APIError> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}`;
+
+        const {data} = await axios.get(tokensURL);
+        const tokens = (data.tokens as Token[]).map(t => {
+          let token = new Token(t.address, t.decimals, t.symbol);
+          token.balance = t.balance;
+          token.allowance = t.allowance;
+          return token;
+        });
+
+        resolve(tokens);
+      } catch (e) {
+        reject({error: e.message});
+      }
+    });
   }
 }
