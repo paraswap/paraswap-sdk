@@ -296,8 +296,6 @@ export class TransactionBuilder {
 
     const value = this.getValue(srcToken.address!, srcAmount, path);
 
-    console.log('path', path);
-
     return {
       value,
       fromToken: srcToken.address,

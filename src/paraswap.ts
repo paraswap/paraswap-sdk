@@ -114,7 +114,7 @@ export class ParaSwap {
 
       const query = _.isEmpty(options) ? '' : qs.stringify({excludeDEXS, includeDEXS});
 
-      const pricesURL = `${this.apiURL}/prices/${this.network}/${srcToken}/${destToken}/${srcAmount}/${query ? "$" + query : ""}`;
+      const pricesURL = `${this.apiURL}/prices/?from=${srcToken}&to=${destToken}&amount=${srcAmount}${query ? "&" + query : ""}`;
 
       const {data} = await axios.get(pricesURL);
       return data.priceRoute as OptimalRates;

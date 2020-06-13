@@ -16,11 +16,12 @@ const DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 const BAT = "0x0d8775f648430679a709e98d2b0cb6250d2887ef";
 const MANA = "0x0f5d2fb29fb7d3cfee444a200298f468908cc942";
 
+const API_URL = process.env.API_URL;
 const PROVIDER_URL = process.env.PROVIDER_URL;
 const network = 1;
 const srcToken = ETH;
 const destToken = DAI;
-const srcAmount = (10 * 1e18).toString(); //The source amount multiplied by its decimals
+const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
 const senderAddress = '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const referrer = 'sdk-test';
 const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A';
@@ -31,7 +32,7 @@ describe("ParaSwap SDK", () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
-    paraSwap = new ParaSwap(network).setWeb3Provider(provider);
+    paraSwap = new ParaSwap(network, API_URL).setWeb3Provider(provider);
 
     paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
@@ -51,7 +52,7 @@ describe("ParaSwap SDK", () => {
   });
 
   test("Get_Rates", async () => {
-    const ratesOrError = await paraSwap.getRate("ETH", "DAI", srcAmount, {excludeDEXS: "Uniswap"});
+    const ratesOrError = await paraSwap.getRate("ETH", "DAI", srcAmount, {includeDEXS: "Uniswap"});
 
     const priceRoute = ratesOrError as OptimalRates;
 
@@ -126,7 +127,7 @@ describe("ParaSwap SDK", () => {
 
     const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
 
-    const build = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice);
+    const build = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice, receiver, '0', true);
 
     console.log('build', build)
   });
