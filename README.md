@@ -23,19 +23,19 @@ https://paraswapv2.docs.apiary.io
 Install the lib using npm or yarn
 
 ```bash
-yarn install paraswap-v2
+yarn install paraswap
 ```
 
 ##### Then on a Javascript file:
 
 ```javascript
-const {ParaSwap} = require("paraswap-v2");
+const {ParaSwap} = require("paraswap");
 const paraswap = new ParaSwap();
 ```
 ES6 or TypeScript
 
 ```typescript
-import {ParaSwap} from "paraswap-v2";
+import {ParaSwap} from "paraswap";
 const paraswap = new ParaSwap();
 ```
 
@@ -117,7 +117,7 @@ NODE_ENV=production
 run 
 
 ```bash
-yarn install paraswap-v2
+yarn install paraswap
 ```
 
 For local developement you can run
