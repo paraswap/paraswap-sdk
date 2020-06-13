@@ -1,7 +1,7 @@
 import _ = require("lodash");
 import BigNumber from "bignumber.js";
 
-import {Address, APIError, OptimalRates, PriceString, Rate} from "./types";
+import {Address, APIError, OnChainOptimalRates, OptimalRates, PriceString, Rate} from "./types";
 
 import * as PriceFeedAbi from "./abi/priceFeed.json";
 
@@ -9,7 +9,7 @@ export class ParaswapFeed {
   constructor(private network: number, public web3Provider: any) {
   }
 
-  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OptimalRates | APIError> {
+  async getRate(srcToken: Address, destToken: Address, srcAmount: PriceString): Promise<OnChainOptimalRates | APIError> {
     try {
       const {abi, address} = (PriceFeedAbi as any)[this.network];
 

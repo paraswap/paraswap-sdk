@@ -1,237 +1,53 @@
 {
   "1": {
-    "address": "0xcc13a27ad24B8F3B5a83848DA4d688B512a4A871",
+    "address": "0x12295f06DA62693086F5DA45b78e20B778060853",
     "abi": [
       {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_exchange",
-            "type": "address"
-          }
-        ],
-        "name": "addExchange",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_exchanges",
-            "type": "address[]"
-          }
-        ],
-        "name": "addExchanges",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "pause",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "index",
-            "type": "uint256"
-          }
-        ],
-        "name": "removeExchange",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_aureliusAddress",
-            "type": "address"
-          }
-        ],
-        "name": "setAurelius",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_bancorAddress",
-            "type": "address"
-          }
-        ],
-        "name": "setBancor",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "unpause",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "name": "_aureliusAddress",
-            "type": "address"
-          },
-          {
-            "name": "_bancorAddress",
-            "type": "address"
-          },
-          {
-            "name": "_version",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "fallback"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "name": "previousOwner",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "bancor",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
         "constant": true,
         "inputs": [
           {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "name": "exchanges",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "getAurelius",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "token",
-            "type": "address"
-          }
-        ],
-        "name": "getBancorRelayer",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
+            "internalType": "address",
             "name": "fromToken",
             "type": "address"
           },
           {
+            "internalType": "address",
             "name": "toToken",
             "type": "address"
           },
           {
+            "internalType": "uint256",
+            "name": "srcAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getBestPriceSimple",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "toToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
             "name": "srcAmount",
             "type": "uint256"
           }
@@ -241,159 +57,41 @@
           {
             "components": [
               {
+                "internalType": "uint256",
                 "name": "rate",
                 "type": "uint256"
               },
               {
                 "components": [
                   {
+                    "internalType": "uint256",
                     "name": "Uniswap",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Bancor",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Kyber",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Oasis",
                     "type": "uint256"
                   }
                 ],
+                "internalType": "struct Types.RateDistribution",
                 "name": "distribution",
                 "type": "tuple"
               }
             ],
+            "internalType": "struct Types.OptimalRate",
             "name": "optimalRate",
             "type": "tuple"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "name": "toToken",
-            "type": "address"
-          },
-          {
-            "name": "srcAmount",
-            "type": "uint256"
-          }
-        ],
-        "name": "getBestPriceSimple",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "index",
-            "type": "uint256"
-          }
-        ],
-        "name": "getExchange",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "name": "toToken",
-            "type": "address"
-          }
-        ],
-        "name": "getExchanges",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address[4]"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "isOwner",
-        "outputs": [
-          {
-            "name": "",
-            "type": "bool"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "paused",
-        "outputs": [
-          {
-            "name": "",
-            "type": "bool"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "version",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
           }
         ],
         "payable": false,
@@ -403,21 +101,33 @@
     ]
   },
   "42": {
-    "address": "0xe7B08b5ce1594653d7Bc8457c42FaE1385160823",
+    "address": "",
     "abi": [
       {
         "constant": true,
         "inputs": [
           {
-            "name": "token",
+            "internalType": "address",
+            "name": "fromToken",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "toToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "srcAmount",
+            "type": "uint256"
           }
         ],
-        "name": "getBancorRelayer",
+        "name": "getBestPriceSimple",
         "outputs": [
           {
+            "internalType": "uint256",
             "name": "",
-            "type": "address"
+            "type": "uint256"
           }
         ],
         "payable": false,
@@ -428,14 +138,17 @@
         "constant": true,
         "inputs": [
           {
+            "internalType": "address",
             "name": "fromToken",
             "type": "address"
           },
           {
+            "internalType": "address",
             "name": "toToken",
             "type": "address"
           },
           {
+            "internalType": "uint256",
             "name": "srcAmount",
             "type": "uint256"
           }
@@ -445,48 +158,41 @@
           {
             "components": [
               {
+                "internalType": "uint256",
                 "name": "rate",
                 "type": "uint256"
               },
               {
                 "components": [
                   {
+                    "internalType": "uint256",
                     "name": "Uniswap",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Bancor",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Kyber",
                     "type": "uint256"
                   },
                   {
+                    "internalType": "uint256",
                     "name": "Oasis",
                     "type": "uint256"
                   }
                 ],
+                "internalType": "struct Types.RateDistribution",
                 "name": "distribution",
                 "type": "tuple"
               }
             ],
+            "internalType": "struct Types.OptimalRate",
             "name": "optimalRate",
             "type": "tuple"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "version",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
           }
         ],
         "payable": false,
