@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import {Token} from "./lib/token";
 
 export type Symbol = string;
 export type Address = string;
@@ -77,7 +78,7 @@ export type OptimalRates = {
 };
 
 export class User {
-  constructor(public address: Address, public network: NetworkID) {
+  constructor(public address: Address, public network: NetworkID = 1, public tokens?: Token[]) {
   }
 }
 
