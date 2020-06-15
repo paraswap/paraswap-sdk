@@ -138,12 +138,11 @@ export type TransactionData = {
   value: PriceString,
   gasPrice?: PriceString,
   gas?: NumberAsString,
-
 }
 
 export type BuildOptions = {
-  skipChecks?: boolean,
+  ignoreChecks?: boolean,
+  onlyParams?: boolean,
   simple?: boolean,
-  getParams?: boolean,
   gasPrice?: PriceString,
 }

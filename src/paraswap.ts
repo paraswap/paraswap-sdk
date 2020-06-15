@@ -149,7 +149,7 @@ export class ParaSwap {
   }
 
   //Warning: ParaSwapPool is not supported when building locally
-  async buildTxLocally(srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS, donatePercent: string = '0', ignoreGas: boolean = false, onlyParams: boolean = false) {
+  async buildTxLocally(srcToken: Token, destToken: Token, srcAmount: string, minDestinationAmount: string, priceRoute: OptimalRates, userAddress: string, referrer: string, gasPrice: string, receiver: string = NULL_ADDRESS, donatePercent: string = '0', options: BuildOptions = {}) {
     if (!this.adapters) {
       await this.getAdapters();
     }
@@ -160,11 +160,11 @@ export class ParaSwap {
 
     const transaction = new TransactionBuilder(this.network, this.web3Provider!, this.adapters!, this.tokens);
 
-    if (onlyParams) {
+    if (options.onlyParams) {
       return transaction.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent)
     }
 
-    return transaction.buildTransaction(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent, ignoreGas);
+    return transaction.buildTransaction(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent, !!options.ignoreChecks);
   }
 
   async getSpender(_provider?: any): Promise<Address | APIError> {

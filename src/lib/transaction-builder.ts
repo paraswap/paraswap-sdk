@@ -24,7 +24,7 @@ export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 //Gas units overhead in order to maximize the transaction success rate
-export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 20);
+export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 23);
 
 export const ZRX_GAZ_MULTIPLIER = 150000;
 const LENDING_DEXES = ["compound", "Fulcrum", "idle"];
