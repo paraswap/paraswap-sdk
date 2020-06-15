@@ -320,11 +320,11 @@ export class TransactionBuilder {
   };
 
   buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString, ignoreGas: boolean): Promise<TransactionData> => {
+    const {value, ...params} = this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
+
     const augustusAddress = this.dexConf.augustus.exchange;
 
     const augustusContract = new this.web3Provider.eth.Contract(AUGUSTUS_ABI, augustusAddress);
-
-    const {value, ...params} = this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
 
     const swapMethodData = augustusContract.methods.multiSwap.apply(null, Object.values(params));
 
