@@ -30,7 +30,6 @@ const pools: { [pool: string]: any } = {
     name: 'pax'
   },
   renBTC: {
-    underlying: ['renBTC', 'WBTC'],
     coins: ['renBTC', 'WBTC'],
     name: 'renBTC'
   }
@@ -40,8 +39,8 @@ export class Curve {
 
   static getPool(srcToken: string, destToken: string) {
     const pool = Object.keys(pools).find(p => (
-      (pools[p].underlying.includes(srcToken) && pools[p].underlying.includes(destToken)) ||
-      (pools[p].coins.includes(srcToken) && pools[p].coins.includes(destToken))
+      (pools[p].underlying && pools[p].underlying.includes(srcToken) && pools[p].underlying.includes(destToken)) ||
+      (pools[p].coins && pools[p].coins.includes(srcToken) && pools[p].coins.includes(destToken))
     ));
 
     return pool && pools[pool];
@@ -54,7 +53,10 @@ export class Curve {
       return [-1, -1, -1];
     }
 
-    const isUnderlyingSwap = (pool.name !== 'renBTC' || pool.name !== 'pax'|| pool.name !== 'sUSD') && pool.underlying.includes(srcToken) && pool.underlying.includes(destToken);
+    const isUnderlyingSwap = (
+      (pool.name !== 'pax' || pool.name !== 'sUSD') &&
+      (pool.underlying && pool.underlying.includes(srcToken) && pool.underlying.includes(destToken))
+    );
 
     const fromIndex = isUnderlyingSwap ? pool.underlying.indexOf(srcToken) : pool.coins.indexOf(srcToken);
 
