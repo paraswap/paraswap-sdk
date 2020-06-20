@@ -32,6 +32,10 @@ const pools: { [pool: string]: any } = {
   renBTC: {
     coins: ['renBTC', 'WBTC'],
     name: 'renBTC'
+  },
+  sBTC: {
+    coins: ['renBTC', 'WBTC', 'sBTC'],
+    name: 'sBTC'
   }
 };
 
