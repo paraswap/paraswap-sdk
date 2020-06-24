@@ -188,47 +188,46 @@ export class ParaSwap {
   }
 
   async getAllowances(userAddress: Address, tokenAddresses: Address[]): Promise<Allowance[] | APIError> {
-    return new Promise(async (resolve, reject) => {
-      const spenderOrError = await this.getSpender();
+    try {
+      const balancesOrError = await this.getBalances(userAddress);
 
-      if ((spenderOrError as APIError).message) {
-        return reject(spenderOrError as APIError);
+      if ((<APIError>balancesOrError).message) {
+        return <APIError>balancesOrError;
       }
 
-      const spender = spenderOrError as Address;
+      return (<Token[]>balancesOrError)
+        .filter(t => tokenAddresses.find(addr => addr.toLowerCase() === t.address.toLowerCase()))
+        .map(token => ({
+          tokenAddress: token.address,
+          allowance: token.allowance || '0'
+        }));
 
-      return async.map(
-        tokenAddresses,
-        async (tokenAddress: Address, callback: any) => {
-          try {
-            const allowance = await this.getAllowance(userAddress, tokenAddress, spender);
-            callback(null, {tokenAddress, allowance});
-          } catch (e) {
-            console.error("ERROR_getAllowance", tokenAddress, e);
-            callback(null, {tokenAddress, allowance: '0'});
-          }
-        },
-        (error, results: any) => {
-          if (error) {
-            console.error("ERROR_getAllowances", error);
-            return reject({message: error.message});
-          }
-          resolve(results);
-        }
-      )
-    });
+    } catch (e) {
+      return {message: e.message};
+    }
   }
 
-  async getAllowance(userAddress: Address, tokenAddress: Address, _spender?: string) {
-    if (tokenAddress.toLowerCase() === ETHER_ADDRESS) {
-      return '0';
+  async getAllowance(userAddress: Address, tokenAddress: Address): Promise<Allowance | APIError> {
+    try {
+
+      const allowanceOrError = await this.getAllowances(userAddress, [tokenAddress]);
+
+      if ((<APIError>allowanceOrError).message) {
+        return <APIError>allowanceOrError;
+      }
+
+      const allowances = allowanceOrError as Allowance[];
+
+      if (!allowances.length) {
+        return {message: "Not Found"};
+      }
+
+      return allowances[0];
+
+    } catch (e) {
+      return {message: e.message};
+
     }
-
-    const spender = _spender || await this.getSpender(this.web3Provider!);
-
-    const contract = new this.web3Provider!.eth.Contract(ERC20_ABI, tokenAddress);
-
-    return contract.methods.allowance(userAddress, spender).call();
   }
 
   async approveTokenBulk(amount: PriceString, userAddress: Address, tokenAddresses: Address[], _provider?: any): Promise<string[]> {
