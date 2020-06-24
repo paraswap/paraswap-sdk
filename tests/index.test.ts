@@ -1,9 +1,10 @@
 import * as dotenv from "dotenv";
 import Web3 from "web3";
 
-import {ParaSwap, OptimalRates, Token, APIError} from "../src";
+import {ParaSwap, OptimalRates, Token, APIError, Transaction} from "../src";
 import BigNumber from "bignumber.js";
 import {Adapters, Allowance} from "../src/types";
+import {NULL_ADDRESS} from "../src/lib/transaction-builder";
 
 dotenv.config();
 
@@ -55,9 +56,7 @@ describe("ParaSwap SDK", () => {
     const ratesOrError = await paraSwap.getRate("ETH", "DAI", srcAmount, {includeDEXS: "Uniswap"});
 
     const priceRoute = ratesOrError as OptimalRates;
-
-    console.log('priceRoute', priceRoute)
-
+    
     const {amount, bestRoute, others} = priceRoute;
 
     expect(typeof amount).toBe('string');
@@ -134,9 +133,9 @@ describe("ParaSwap SDK", () => {
 
     const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
 
-    const build = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice, receiver, '0', {ignoreChecks: true});
+    const transaction = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice, receiver, '0', {ignoreChecks: true});
 
-    console.log('build', build)
+    expect(typeof transaction).toBe("object");
   });
 
   test("Build_Tx", async () => {
@@ -145,12 +144,10 @@ describe("ParaSwap SDK", () => {
 
     const destAmount = new BigNumber(priceRoute.amount).times(0.99).toFixed();
 
-    const txOrError = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer);
+    const txOrError = await paraSwap.buildTx(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, undefined, {ignoreChecks: true});
 
-    const error = txOrError as APIError;
+    const transaction = txOrError as Transaction;
 
-    expect(typeof error.status).toBe("number");
-    expect(error.status).toBe(403);
-    expect(error.message).toBe('ETH_BALANCE_ERROR: Not Enough ETH Balance');
+    expect(typeof transaction).toBe("object");
   });
 });
