@@ -252,6 +252,17 @@ export class ParaSwap {
     })
   }
 
+  async getMarketNames(): Promise<string[] | APIError> {
+    try {
+      const {data} = await axios.get(`${this.apiURL}/adapters/list?namesOnly=true`);
+
+      return data;
+
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
   async getBalances(userAddress: Address): Promise<Token[] | APIError> {
     return new Promise(async (resolve, reject) => {
       try {

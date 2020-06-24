@@ -42,6 +42,11 @@ describe("ParaSwap SDK", () => {
     done();
   });
 
+  test("Get_Markets", async () => {
+    const markets = await paraSwap.getMarketNames();
+    expect((<string[]>markets).length).toBeGreaterThan(15);
+  });
+
   test("Get_Tokens", async () => {
     const tokensOrError = await paraSwap.getTokens();
 
@@ -56,7 +61,7 @@ describe("ParaSwap SDK", () => {
     const ratesOrError = await paraSwap.getRate("ETH", "DAI", srcAmount, {includeDEXS: "Uniswap"});
 
     const priceRoute = ratesOrError as OptimalRates;
-    
+
     const {amount, bestRoute, others} = priceRoute;
 
     expect(typeof amount).toBe('string');
