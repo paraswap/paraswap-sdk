@@ -33,7 +33,5 @@ export class Token {
     this.connectors = this.connectors.length ? this.connectors : this.getConnectors();
 
     this.tokenType = this.tokenType || (this.symbol.toUpperCase() === "ETH" ? "ETH" : "ERC20");
-
-    this.img = this.img || `https://paraswaptokens.s3.eu-west-3.amazonaws.com/${this.symbol}.png`;
   }
 }
