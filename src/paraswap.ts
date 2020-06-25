@@ -47,7 +47,7 @@ export class ParaSwap {
     try {
       const tokensURL = `${this.apiURL}/tokens/${this.network}`;
       const {data} = await axios.get(tokensURL);
-      this.tokens = (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol));
+      this.tokens = (data.tokens as Token[]).map(t => new Token(t.address, t.decimals, t.symbol, t.tokenType, t.mainConnector, t.connectors, t.network, t.img));
       return this.tokens;
 
     } catch (e) {
