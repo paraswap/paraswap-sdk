@@ -263,6 +263,21 @@ export class ParaSwap {
     }
   }
 
+  async getBalance(userAddress: Address, token: AddressOrSymbol): Promise<Token | APIError> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}/${token}`;
+
+        const {data} = await axios.get(tokensURL);
+
+        resolve(data.token);
+
+      } catch (e) {
+        reject({error: e.message});
+      }
+    });
+  }
+
   async getBalances(userAddress: Address): Promise<Token[] | APIError> {
     return new Promise(async (resolve, reject) => {
       try {

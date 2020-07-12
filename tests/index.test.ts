@@ -42,6 +42,11 @@ describe("ParaSwap SDK", () => {
     done();
   });
 
+  test("Get_Balance", async () => {
+    const balance = await paraSwap.getBalance(senderAddress, ETH);
+    expect(balance).toBeDefined();
+  });
+
   test("Get_Markets", async () => {
     const markets = await paraSwap.getMarketNames();
     expect((<string[]>markets).length).toBeGreaterThan(15);
