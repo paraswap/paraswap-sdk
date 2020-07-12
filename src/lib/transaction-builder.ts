@@ -17,6 +17,7 @@ import {Token} from "./token";
 import {Curve} from "./dexs/curve";
 import {ZeroXOrder} from "./dexs/zerox";
 import {Oasis} from "./dexs/oasis";
+import {Kyber} from "./dexs/kyber";
 
 const AUGUSTUS_ABI = require("../abi/augustus.json");
 
@@ -40,7 +41,7 @@ export class TransactionBuilder {
 
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
-  private getPayLoad = (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string): string => {
+  private getPayLoad = async(fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string): Promise<string> => {
     const srcToken = this.tokens!.find(t => t.address === fromToken)!;
     const destToken = this.tokens!.find(t => t.address === toToken)!;
 
@@ -115,7 +116,19 @@ export class TransactionBuilder {
           },
           {otc, weth, factory}
         );
-
+      case 'kyber':
+        const kyber = new Kyber(this.network, this.web3Provider);
+        const hint = await kyber.buildHint(fromToken, toToken);
+        const minConversionRateForBuy = 1;
+        return web3Coder.encodeParameter(
+          {
+            "ParentStruct": {
+              "minConversionRateForBuy": 'uint256',
+              "hint": "bytes"
+            }
+          },
+          { minConversionRateForBuy, hint}
+        );
       case "bancor":
         const {path} = data;
 
@@ -235,12 +248,12 @@ export class TransactionBuilder {
     return this.dexConf[exchangeName.toLowerCase()].targetExchange || NULL_ADDRESS;
   };
 
-  private getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string): TransactionRoute {
+  private async getRouteParams(srcToken: Address, destToken: Address, route: Rate, gasPrice: string): Promise<TransactionRoute> {
     const exchangeName = route.exchange.toLowerCase();
 
     const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
 
-    const payload = this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
+    const payload = await this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
 
     const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
 

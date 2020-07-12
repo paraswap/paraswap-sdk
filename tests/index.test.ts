@@ -136,7 +136,7 @@ describe("ParaSwap SDK", () => {
     const srcToken = new Token(ETH, 18, 'ETH');
     const destToken = new Token(DAI, 18, 'DAI');
 
-    const ratesOrError = await paraSwap.getRate(srcToken.symbol, destToken.symbol, srcAmount, {includeDEXS: 'Uniswap'});
+    const ratesOrError = await paraSwap.getRate(srcToken.symbol, destToken.symbol, srcAmount, {includeDEXS: 'Kyber'});
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = priceRoute.amount;
