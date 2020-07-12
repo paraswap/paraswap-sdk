@@ -1,14 +1,7 @@
-import { kyberStorageABI } from "../../abi/kyberStorage.json";
-import { kyberHintABI } from "../../abi/kyberHint.json";
+import kyberStorageABI from "../../abi/kyberStorage.json";
+import kyberHintABI from "../../abi/kyberHint.json";
 import {
-  Adapters,
-  Address,
-  NumberAsString,
-  OptimalRates,
-  PriceString,
-  Rate, TransactionData,
-  TransactionParams,
-  TransactionPath, TransactionRoute
+  Address
 } from "../../types";
 
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';

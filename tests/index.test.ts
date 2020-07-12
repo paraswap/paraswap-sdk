@@ -137,6 +137,7 @@ describe("ParaSwap SDK", () => {
     const destToken = new Token(DAI, 18, 'DAI');
 
     const ratesOrError = await paraSwap.getRate(srcToken.symbol, destToken.symbol, srcAmount, {includeDEXS: 'Kyber'});
+    console.log(ratesOrError)
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = priceRoute.amount;
@@ -144,7 +145,6 @@ describe("ParaSwap SDK", () => {
     const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
 
     const transaction = await paraSwap.buildTxLocally(srcToken, destToken, srcAmount, destAmount, priceRoute, senderAddress, referrer, gasPrice, receiver, '0', {ignoreChecks: true});
-
     expect(typeof transaction).toBe("object");
   });
 

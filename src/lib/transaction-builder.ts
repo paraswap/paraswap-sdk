@@ -254,7 +254,6 @@ export class TransactionBuilder {
     const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
 
     const payload = await this.getPayLoad(srcToken, destToken, exchangeName, route.data, networkFee);
-
     const targetExchange = this.getTargetExchange(srcToken, exchangeName, route.data.exchange);
 
     return {
@@ -266,27 +265,27 @@ export class TransactionBuilder {
     }
   }
 
-  private getPath = (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): TransactionPath[] => {
+  private getPath = async(srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): Promise<TransactionPath[]> => {
     const {multiRoute, bestRoute} = priceRoute;
     if (this.isMultiPath(priceRoute)) {
-      return multiRoute!.map(_routes => {
+      return await Promise.all(multiRoute!.map(async _routes => {
         const {tokenFrom, tokenTo} = _routes[0].data;
 
-        const routes = _routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice));
+        const routes = await Promise.all(_routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice)));
         return {
           to: <Address>tokenTo,
           routes
         }
-      });
+      }));
     } else {
-      const routes = bestRoute.map(route => this.getRouteParams(srcToken, destToken, route, gasPrice))
+      const routes = await Promise.all(bestRoute.map(async route => await this.getRouteParams(srcToken, destToken, route, gasPrice)));
 
       return [{
         to: <Address>destToken,
         routes
       }];
     }
-  };
+  }
 
   private getValue = (srcToken: Address, srcAmount: string, path: any[]) => {
     const networkFees = _(path)
@@ -304,8 +303,8 @@ export class TransactionBuilder {
     return new BigNumber(value).plus(networkFees).toFixed();
   };
 
-  getTransactionParams = (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): TransactionParams => {
-    const path = this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
+  getTransactionParams = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString): Promise<TransactionParams> => {
+    const path = await this.getPath(srcToken.address, destToken.address, priceRoute, gasPrice);
 
     const value = this.getValue(srcToken.address!, srcAmount, path);
 
@@ -333,7 +332,7 @@ export class TransactionBuilder {
   };
 
   buildTransaction = async (srcToken: Token, destToken: Token, srcAmount: PriceString, minDestinationAmount: PriceString, priceRoute: OptimalRates, userAddress: Address, referrer: Address, gasPrice: NumberAsString, receiver: Address = NULL_ADDRESS, donatePercent: NumberAsString, ignoreGas: boolean): Promise<TransactionData> => {
-    const {value, ...params} = this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
+    const {value, ...params} = await this.getTransactionParams(srcToken, destToken, srcAmount, minDestinationAmount, priceRoute, userAddress, referrer, gasPrice, receiver, donatePercent);
 
     const augustusAddress = this.dexConf.augustus.exchange;
 
