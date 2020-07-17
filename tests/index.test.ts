@@ -137,7 +137,7 @@ describe("ParaSwap SDK", () => {
     const destToken = new Token(DAI, 18, 'DAI');
 
     const ratesOrError = await paraSwap.getRate(srcToken.symbol, destToken.symbol, srcAmount, {includeDEXS: 'Kyber'});
-    console.log(ratesOrError)
+    console.log(JSON.stringify(ratesOrError))
     const priceRoute = ratesOrError as OptimalRates;
 
     const destAmount = priceRoute.amount;
