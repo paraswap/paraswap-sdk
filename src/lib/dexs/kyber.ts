@@ -39,7 +39,7 @@ export class Kyber {
     else {
       const srcExcludedReserves = await this.getKyberReservesToExclude(srcToken, true);
       const destExcludedReserves = await this.getKyberReservesToExclude(destToken, false);
-      return await kyberHintContract.methods.buildKyberHint(srcToken, 2, srcExcludedReserves, [], destToken, 2, destExcludedReserves, []).call();
+      return await kyberHintContract.methods.buildTokenToTokenHint(srcToken, 2, srcExcludedReserves, [], destToken, 2, destExcludedReserves, []).call();
     }
   }
 

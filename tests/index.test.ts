@@ -133,8 +133,8 @@ describe("ParaSwap SDK", () => {
   });
 
   test("Build_Tx_Locally", async () => {
-    const srcToken = new Token(ETH, 18, 'ETH');
-    const destToken = new Token(DAI, 18, 'DAI');
+    const srcToken = new Token(ETH, 18, 'DAI');
+    const destToken = new Token(DAI, 18, 'KNC');
 
     const ratesOrError = await paraSwap.getRate(srcToken.symbol, destToken.symbol, srcAmount, {includeDEXS: 'Kyber'});
     console.log(JSON.stringify(ratesOrError))
