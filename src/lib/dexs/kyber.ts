@@ -22,11 +22,11 @@ export class Kyber {
 
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
-  buildHint = async(srcToken: Address, destToken: Address)=>{
+  buildHint = async (srcToken: Address, destToken: Address) => {
     const kyberHintContract = new this.web3Provider.eth.Contract(kyberHintABI, DEX_PARAMS[this.network]['kyberHint']);
 
     //ethToToken
-    if (this.isETHAddress(srcToken)){
+    if (this.isETHAddress(srcToken)) {
       const excludedReserves = await this.getKyberReservesToExclude(destToken, false);
       return await kyberHintContract.methods.buildEthToTokenHint(destToken, 2, excludedReserves, []).call();
     }
@@ -43,16 +43,16 @@ export class Kyber {
     }
   }
 
-  private getKyberReservesToExclude = async(token: Address, isSrc: boolean) => {
+  private getKyberReservesToExclude = async (token: Address, isSrc: boolean) => {
     const kyberStorageContract = new this.web3Provider.eth.Contract(kyberStorageABI, DEX_PARAMS[this.network]['kyberStorage']);
 
-    if(isSrc) {
+    if (isSrc) {
       const srcTokenReserveIds = await kyberStorageContract.methods.getReserveIdsPerTokenSrc(token).call();
-      return srcTokenReserveIds.filter((srcTokenReserveId: string) => srcTokenReserveId.substring(0,4) === "0xbb");
-    }
-    else {
+      return srcTokenReserveIds.filter((srcTokenReserveId: string) => srcTokenReserveId.substring(0, 4) === "0xbb");
+
+    } else {
       const destTokenReserveIds = await kyberStorageContract.methods.getReserveIdsPerTokenDest(token).call();
-      return destTokenReserveIds.filter((destTokenReserveId: string) => destTokenReserveId.substring(0,4) === "0xbb");
+      return destTokenReserveIds.filter((destTokenReserveId: string) => destTokenReserveId.substring(0, 4) === "0xbb");
     }
   }
 }
