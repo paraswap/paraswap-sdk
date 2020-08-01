@@ -1,5 +1,5 @@
-import kyberStorageABI from "../../abi/kyberStorage.json";
-import kyberHintABI from "../../abi/kyberHint.json";
+import * as kyberStorageABI from "../../abi/kyberStorage.json";
+import * as kyberHintABI from "../../abi/kyberHint.json";
 import {
   Address
 } from "../../types";
@@ -23,7 +23,7 @@ export class Kyber {
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
   buildHint = async (srcToken: Address, destToken: Address) => {
-    const kyberHintContract = new this.web3Provider.eth.Contract(kyberHintABI, DEX_PARAMS[this.network]['kyberHint']);
+    const kyberHintContract = new this.web3Provider.eth.Contract(kyberHintABI, DEX_PARAMS[this.network].kyberHint);
 
     //ethToToken
     if (this.isETHAddress(srcToken)) {
