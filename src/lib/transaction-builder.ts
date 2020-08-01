@@ -27,7 +27,7 @@ export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 //Gas units overhead in order to maximize the transaction success rate
 export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 23);
 
-export const ZRX_GAZ_MULTIPLIER = 150000;
+export const ZRX_GAZ_MULTIPLIER = 70000;
 const LENDING_DEXES = ["compound", "Fulcrum", "idle"];
 
 export class TransactionBuilder {
