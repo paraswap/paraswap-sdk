@@ -141,6 +141,23 @@ export class TransactionBuilder {
           {path}
         );
 
+      case "balancer":
+        const {swaps} = data;
+
+        return web3Coder.encodeParameter(
+          {
+            "ParentStruct": {
+              "swaps[]": {
+                "pool": "address",
+                "tokenInParam": "uint",
+                "tokenOutParam": "uint",
+                "maxPrice": "uint",
+              }
+            }
+          },
+          {swaps}
+        );
+
       case "compound":
         const cToken = destToken.tokenType === "cToken" ? destToken.address! : srcToken.address!;
 
