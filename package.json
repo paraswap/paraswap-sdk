@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "engines": {
     "node": ">=10.15.0 <=12.16.1"

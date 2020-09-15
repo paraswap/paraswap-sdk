@@ -83,10 +83,10 @@ export class User {
 }
 
 export enum EXCHANGES {
-  KYBER = "Kyber",
   UNISWAP = "Uniswap",
+  KYBER = "Kyber",
   BANCOR = "Bancor",
-  Oasis = "Oasis",
+  OASIS = "Oasis",
   COMPOUND = "Compound",
   BZX = "Fulcrum",
   ZEROX = "0x",
@@ -94,6 +94,15 @@ export enum EXCHANGES {
   CHAI = "Chai",
   PARASWAPPOOL = "ParaSwapPool",
   AAVE = "Aave",
+  MULTIPATH = "MultiPath",
+  CURVE = "Curve",
+  BDAI = "BDai",
+  IDLE = "idle",
+  WETH = "Weth",
+  BETH = "Beth",
+  UNISWAPV2 = "UniswapV2",
+  BALANCER = "Balancer",
+  SUSHISWAP = "SushiSwap",
 }
 
 export type RateOptions = {
