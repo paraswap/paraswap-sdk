@@ -208,6 +208,7 @@ export class TransactionBuilder {
         );
 
       case "uniswapv2":
+      case "sushiswap":
         return web3Coder.encodeParameter(
           {
             "ParentStruct": {
