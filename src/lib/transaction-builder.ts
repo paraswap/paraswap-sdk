@@ -47,6 +47,7 @@ export class TransactionBuilder {
 
     switch (exchange.toLowerCase()) {
       case "0x":
+      case "0xApi":
         const orderData = ZeroXOrder.formatOrders(data.orders, true);
         const signatures = data.orders.map((o: any) => o.signature);
 
