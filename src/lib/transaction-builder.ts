@@ -81,6 +81,7 @@ export class TransactionBuilder {
           }
         );
       case "paraswappool":
+      case "paraswappoolv2":
         return web3Coder.encodeParameter(
           {
             "ParentStruct": {
