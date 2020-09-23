@@ -47,6 +47,7 @@ export class TransactionBuilder {
 
     switch (exchange.toLowerCase()) {
       case "0x":
+      case "0xapi":
         const orderData = ZeroXOrder.formatOrders(data.orders, true);
         const signatures = data.orders.map((o: any) => o.signature);
 
@@ -80,6 +81,7 @@ export class TransactionBuilder {
           }
         );
       case "paraswappool":
+      case "paraswappoolv2":
         return web3Coder.encodeParameter(
           {
             "ParentStruct": {
