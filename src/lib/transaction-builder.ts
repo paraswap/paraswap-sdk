@@ -41,7 +41,7 @@ export class TransactionBuilder {
 
   private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
-  private getPayLoad = async(fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string): Promise<string> => {
+  private getPayLoad = async (fromToken: Address, toToken: Address, exchange: string, data: any, networkFee: string): Promise<string> => {
     const srcToken = this.tokens!.find(t => t.address === fromToken)!;
     const destToken = this.tokens!.find(t => t.address === toToken)!;
 
@@ -129,7 +129,7 @@ export class TransactionBuilder {
               "hint": "bytes"
             }
           },
-          { minConversionRateForBuy, hint}
+          {minConversionRateForBuy, hint}
         );
       case "bancor":
         const {path} = data;
@@ -250,7 +250,7 @@ export class TransactionBuilder {
   };
 
   private networkFee = (exchange: string, gasPrice: string, payload: any) => {
-    if (exchange.toLowerCase() === '0x') {
+    if (exchange.toLowerCase() === '0x' || exchange.toLowerCase() === '0xapi') {
       return new BigNumber(gasPrice).times(ZRX_GAZ_MULTIPLIER).times(payload.orders.length).toFixed();
     }
     return '0';
@@ -285,7 +285,7 @@ export class TransactionBuilder {
     }
   }
 
-  private getPath = async(srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): Promise<TransactionPath[]> => {
+  private getPath = async (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): Promise<TransactionPath[]> => {
     const {multiRoute, bestRoute} = priceRoute;
     if (this.isMultiPath(priceRoute)) {
       return await Promise.all(multiRoute!.map(async _routes => {
@@ -319,6 +319,8 @@ export class TransactionBuilder {
       }, '0') || '0';
 
     const value = this.isETHAddress(srcToken) ? srcAmount : '0';
+
+    console.log('networkFees', networkFees)
 
     return new BigNumber(value).plus(networkFees).toFixed();
   };
