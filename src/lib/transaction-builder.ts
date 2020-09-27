@@ -320,8 +320,6 @@ export class TransactionBuilder {
 
     const value = this.isETHAddress(srcToken) ? srcAmount : '0';
 
-    console.log('networkFees', networkFees)
-
     return new BigNumber(value).plus(networkFees).toFixed();
   };
 
