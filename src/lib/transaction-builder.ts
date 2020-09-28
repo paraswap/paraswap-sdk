@@ -285,6 +285,13 @@ export class TransactionBuilder {
     }
   }
 
+  private getTotalNetworkFee(routes: TransactionRoute[]){
+    return routes.reduce((acc: string , route) => {
+      acc = new BigNumber(acc).plus(route.networkFee || '0').toFixed(0);
+      return acc;
+    }, '0');
+  }
+
   private getPath = async (srcToken: Address, destToken: Address, priceRoute: OptimalRates, gasPrice: string): Promise<TransactionPath[]> => {
     const {multiRoute, bestRoute} = priceRoute;
     if (this.isMultiPath(priceRoute)) {
@@ -292,8 +299,10 @@ export class TransactionBuilder {
         const {tokenFrom, tokenTo} = _routes[0].data;
 
         const routes = await Promise.all(_routes.map(route => this.getRouteParams(tokenFrom, tokenTo, route, gasPrice)));
+
         return {
           to: <Address>tokenTo,
+          totalNetworkFee: this.getTotalNetworkFee(routes),
           routes
         }
       }));
@@ -302,6 +311,7 @@ export class TransactionBuilder {
 
       return [{
         to: <Address>destToken,
+        totalNetworkFee: this.getTotalNetworkFee(routes),
         routes
       }];
     }

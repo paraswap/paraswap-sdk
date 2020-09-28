@@ -122,6 +122,7 @@ export type TransactionRoute = {
 
 export type TransactionPath = {
   to: Address
+  totalNetworkFee: string
   routes: TransactionRoute[]
 }
 
