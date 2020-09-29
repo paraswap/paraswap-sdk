@@ -1,5 +1,5 @@
-import * as kyberStorageABI from "../../abi/kyberStorage.json";
-import * as kyberHintABI from "../../abi/kyberHint.json";
+const kyberStorageABI = require("../../abi/kyberStorage.json");
+const kyberHintABI = require("../../abi/kyberHint.json");
 
 import {
   Address
