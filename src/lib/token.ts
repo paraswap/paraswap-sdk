@@ -1,7 +1,7 @@
 import {Address} from "../types";
 
 export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'idleToken' | 'Chai' | 'bDAI';
-export type TokenType = 'ETH' | 'ERC20';
+export type TokenType = 'ETH' | 'ERC20' | 'SYNTH';
 
 export class Token {
   getConnectors() {
