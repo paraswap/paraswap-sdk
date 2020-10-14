@@ -220,9 +220,30 @@ export class TransactionBuilder {
           {path: data.path}
         );
 
+      case "curve3":
+        try {
+          const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+
+          return web3Coder.encodeParameter(
+            {
+              "ParentStruct": {
+                "i": 'int128',
+                "j": 'int128',
+                "deadline": 'uint256',
+                "underlyingSwap": 'bool',
+                "v3": "bool"
+              }
+            },
+            {i, j, deadline: 0, underlyingSwap, v3: true}
+          );
+
+        } catch (e) {
+          console.error('Curve Error', e);
+          return '0x';
+        }
       case "curve":
         try {
-          const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol);
+          const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
 
           //TODO: This has no use since it's related to the old Curve Compound. Remove when updating the Curve contract
           const deadline = 0;
@@ -261,7 +282,7 @@ export class TransactionBuilder {
       return tokenFrom;
     }
 
-    if (exchangeName.toLowerCase() === 'curve') {
+    if (exchangeName.toLowerCase().match(/^curve(.*)/)) {
       return exchangeAddress;
     }
 
@@ -285,9 +306,9 @@ export class TransactionBuilder {
     }
   }
 
-  private getTotalNetworkFee(routes: TransactionRoute[]){
-    return routes.reduce((acc: string , route) => {
-      acc = new BigNumber(acc).plus(route.networkFee || '0').toFixed(0);
+  private getTotalNetworkFee(routes: TransactionRoute[]) {
+    return routes.reduce((acc: string, route) => {
+      acc = new BigNumber(acc).plus(route.networkFee || '0').toFixed(0);
       return acc;
     }, '0');
   }
