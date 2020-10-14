@@ -57,6 +57,8 @@ const pools: { [pool: string]: any } = {
 
 export class Curve {
 
+  static pools = pools;
+
   static getPool(srcToken: string, destToken: string, exchange: string) {
     const pool = Object.keys(pools).find(p => (
       pools[p].exchange === exchange && (
