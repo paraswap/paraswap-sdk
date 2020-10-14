@@ -12,10 +12,10 @@ import {
   BuildOptions,
   ETHER_ADDRESS,
   NetworkID,
-  OptimalRates,
   PriceString,
   RateOptions,
   Transaction,
+  OptimalRatesWithPartnerFees,
 } from './types';
 
 import ERC20_ABI = require('./abi/erc20.json');
@@ -24,6 +24,7 @@ import AUGUSTUS_ABI = require('./abi/augustus.json');
 
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
+import { SwapSide } from './constants';
 
 const API_URL = 'https://api.paraswap.io/v2';
 
@@ -99,9 +100,10 @@ export class ParaSwap {
 
   async getRateByRoute(
     route: AddressOrSymbol[],
-    srcAmount: PriceString,
+    amount: PriceString,
+    side: SwapSide,
     options?: RateOptions,
-  ): Promise<OptimalRates | APIError> {
+  ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
       const { excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS } =
         options || {};
@@ -126,11 +128,11 @@ export class ParaSwap {
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${srcAmount}&${query}`;
+      )}&amount=${amount}&${query}&side=${side}`;
 
       const { data } = await axios.get(pricesURL);
 
-      return data.priceRoute as OptimalRates;
+      return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
     }
@@ -139,9 +141,10 @@ export class ParaSwap {
   async getRate(
     srcToken: AddressOrSymbol,
     destToken: AddressOrSymbol,
-    srcAmount: PriceString,
+    amount: PriceString,
+    side: SwapSide,
     options?: RateOptions,
-  ): Promise<OptimalRates | APIError> {
+  ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
       const { excludeDEXS, includeDEXS } = options || {};
 
@@ -154,11 +157,11 @@ export class ParaSwap {
 
       const pricesURL = `${
         this.apiURL
-      }/prices/?from=${srcToken}&to=${destToken}&amount=${srcAmount}${
+      }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-      }`;
+      }&side=${side}`;
       const { data } = await axios.get(pricesURL);
-      return data.priceRoute as OptimalRates;
+      return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
     }
@@ -169,12 +172,13 @@ export class ParaSwap {
     destToken: Address,
     srcAmount: PriceString,
     destAmount: PriceString,
-    priceRoute: OptimalRates,
+    priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
     referrer: string,
     receiver?: Address,
     options: BuildOptions = {},
   ) {
+    const side = options.side ? options.side : SwapSide.SELL;
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
 
@@ -188,6 +192,7 @@ export class ParaSwap {
         destAmount,
         userAddress,
         referrer,
+        side,
         receiver: receiver || '',
       };
 
@@ -205,7 +210,7 @@ export class ParaSwap {
     destToken: Token,
     srcAmount: string,
     minDestinationAmount: string,
-    priceRoute: OptimalRates,
+    priceRoute: OptimalRatesWithPartnerFees,
     userAddress: string,
     referrer: string,
     gasPrice: string,
@@ -213,6 +218,9 @@ export class ParaSwap {
     donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
+    if (priceRoute.side == SwapSide.BUY) {
+      throw new Error('buildTxLocally: buy side not implemented');
+    }
     if (!this.adapters) {
       await this.getAdapters();
     }

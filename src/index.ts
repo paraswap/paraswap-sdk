@@ -3,10 +3,16 @@ import { NetworkID } from './types';
 export {
   Address,
   SimpleComputedRate,
+  SimpleComputedRateWithFeeSell,
+  SimpleComputedRateWithFeeBuy,
   SimpleComputedRateWithFee,
+  OptimalRates,
+  OptimalRateWithFeeSell,
+  OptimalRateWithFeeBuy,
   OptimalRate,
   OptimalRateWithFee,
-  OptimalRates,
+  OptimalRatesWithPartnerFeesSell,
+  OptimalRatesWithPartnerFeesBuy,
   OptimalRatesWithPartnerFees,
   PriceString,
   User,
@@ -18,6 +24,7 @@ export {
   NetworkID,
   Adapters,
   APIQuery,
+  BuildOptions,
 } from './types';
 
 export { Token } from './lib/token';

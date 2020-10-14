@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { Merge } from 'ts-essentials';
 import { Token } from './lib/token';
 import { SwapSide } from './constants';
 
@@ -71,15 +72,25 @@ type SimpleComputedRate = {
   data?: any;
 };
 
-type SimpleComputedRateWithFee = {
-  exchange: string;
-  rateWithoutFee: NumberAsString;
-  rate: NumberAsString;
-  slippage?: NumberAsString;
-  unitWithoutFee?: NumberAsString;
-  unit?: NumberAsString;
-  data?: any;
-};
+type SimpleComputedRateWithFeeSell = Merge<
+  SimpleComputedRate,
+  {
+    rateFeeDeducted: NumberAsString;
+    unitFeeDeducted?: NumberAsString;
+  }
+>;
+
+type SimpleComputedRateWithFeeBuy = Merge<
+  SimpleComputedRate,
+  {
+    rateNoFeeAdded: NumberAsString;
+    unitNoFeeAdded?: NumberAsString;
+  }
+>;
+
+type SimpleComputedRateWithFee =
+  | SimpleComputedRateWithFeeSell
+  | SimpleComputedRateWithFeeBuy;
 
 type OptimalRate = {
   exchange: string;
@@ -91,19 +102,25 @@ type OptimalRate = {
   data?: any;
 };
 
-type OptimalRateWithFee = {
-  exchange: string;
-  address?: string;
-  srcAmountWithoutFee?: NumberAsString;
-  srcAmount: NumberAsString;
-  destAmountWithoutFee: NumberAsString;
-  destAmount: NumberAsString;
-  percent: NumberAsString;
-  rate?: NumberAsString;
-  data?: any;
-};
+type OptimalRateWithFeeSell = Merge<
+  OptimalRate,
+  {
+    destAmountFeeDeducted: NumberAsString;
+  }
+>;
+
+type OptimalRateWithFeeBuy = Merge<
+  OptimalRate,
+  {
+    destAmountNoFeeAdded: NumberAsString;
+    // srcAmountWithoutFee?: NumberAsString;
+  }
+>;
+
+type OptimalRateWithFee = OptimalRateWithFeeSell | OptimalRateWithFeeBuy;
 
 type OptimalRates = {
+  blockNumber: number;
   destAmount: string;
   srcAmount: string;
   multiPath?: boolean;
@@ -118,31 +135,38 @@ type OptimalRates = {
     tokenTo: string;
     connector?: string;
     srcAmount: NumberAsString;
+    destAmount: NumberAsString;
   };
 };
 
-type OptimalRatesWithPartnerFees = {
-  srcAmountWithoutFee?: string;
-  srcAmount: string;
-  destAmountWithoutFee: string;
-  destAmount: string;
-  multiPath?: boolean;
-  bestRoute: OptimalRateWithFee[];
-  multiRoute?: OptimalRateWithFee[][];
-  others: SimpleComputedRateWithFee[];
-  fromUSDWithoutFee?: NumberAsString;
-  fromUSD?: NumberAsString;
-  toUSDWithoutFee?: NumberAsString;
-  toUSD?: NumberAsString;
-  side: SwapSide;
-  details?: {
-    tokenFrom: string;
-    tokenTo: string;
-    connector?: string;
-    srcAmount: NumberAsString;
-  };
-};
+type OptimalRatesWithPartnerFeesSell = Merge<
+  OptimalRates,
+  {
+    side: SwapSide.SELL;
+    destAmountFeeDeducted: string;
+    bestRoute: OptimalRateWithFeeSell[];
+    multiRoute?: OptimalRateWithFeeSell[][];
+    others: SimpleComputedRateWithFeeSell[];
+    toUSDFeeDeducted?: NumberAsString;
+  }
+>;
+type OptimalRatesWithPartnerFeesBuy = Merge<
+  OptimalRates,
+  {
+    side: SwapSide.BUY;
+    // srcAmountWithoutFee?: string;
+    destAmountNoFeeAdded: string;
+    bestRoute: OptimalRateWithFeeBuy[];
+    multiRoute?: OptimalRateWithFeeBuy[][];
+    others: SimpleComputedRateWithFeeBuy[];
+    // fromUSDWithoutFee?: NumberAsString;
+    toUSDNoFeeAdded?: NumberAsString;
+  }
+>;
 
+type OptimalRatesWithPartnerFees =
+  | OptimalRatesWithPartnerFeesSell
+  | OptimalRatesWithPartnerFeesBuy;
 class User {
   constructor(
     public address: Address,
@@ -250,6 +274,7 @@ type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
+  side?: SwapSide;
   gasPrice?: PriceString;
 };
 
@@ -272,11 +297,17 @@ export {
   OthersRate,
   OnChainOptimalRates,
   SimpleComputedRate,
+  SimpleComputedRateWithFeeSell,
+  SimpleComputedRateWithFeeBuy,
   SimpleComputedRateWithFee,
   OptimalRate,
   OptimalRateWithFee,
+  OptimalRateWithFeeSell,
+  OptimalRateWithFeeBuy,
   OptimalRates,
   OptimalRatesWithPartnerFees,
+  OptimalRatesWithPartnerFeesSell,
+  OptimalRatesWithPartnerFeesBuy,
   User,
   EXCHANGES,
   RateOptions,

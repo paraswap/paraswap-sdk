@@ -6,7 +6,6 @@ import {
   Adapters,
   Address,
   NumberAsString,
-  OptimalRates,
   PriceString,
   Rate,
   TransactionData,
@@ -15,6 +14,9 @@ import {
   TransactionSellParams,
   TransactionSellPath,
   TransactionRoute,
+  OptimalRatesWithPartnerFees,
+  OptimalRatesWithPartnerFeesSell,
+  OptimalRatesWithPartnerFeesBuy,
 } from '../types';
 import { Token } from './token';
 import { Curve } from './dexs/curve';
@@ -42,7 +44,7 @@ export class TransactionBuilder {
     private tokens: Token[],
   ) {}
 
-  isMultiPath = (priceRoute: OptimalRates) => {
+  isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
     return priceRoute.multiRoute && priceRoute.multiRoute.length;
   };
 
@@ -353,7 +355,7 @@ export class TransactionBuilder {
   private getSellPath = async (
     srcToken: Address,
     destToken: Address,
-    priceRoute: OptimalRates,
+    priceRoute: OptimalRatesWithPartnerFeesSell,
     gasPrice: string,
   ): Promise<TransactionSellPath[]> => {
     const { multiRoute, bestRoute } = priceRoute;
@@ -415,7 +417,7 @@ export class TransactionBuilder {
     destToken: Token,
     srcAmount: PriceString,
     minAmount: PriceString,
-    priceRoute: OptimalRates,
+    priceRoute: OptimalRatesWithPartnerFeesSell,
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
@@ -430,14 +432,13 @@ export class TransactionBuilder {
     );
 
     const value = this.getValue(srcToken.address!, srcAmount, path);
-    // TODO: where should we using WithFee or not?
     return {
       value,
       fromToken: srcToken.address,
       toToken: destToken.address,
       fromAmount: srcAmount,
       toAmount: minAmount,
-      expectedAmount: priceRoute.srcAmount,
+      expectedAmount: priceRoute.destAmount,
       path,
       mintPrice: '1',
       beneficiary: receiver,
@@ -472,7 +473,7 @@ export class TransactionBuilder {
     destToken: Token,
     amount: PriceString,
     minAmount: PriceString,
-    priceRoute: OptimalRates,
+    priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
@@ -480,8 +481,9 @@ export class TransactionBuilder {
     donatePercent: NumberAsString,
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
-    if (priceRoute.side == SwapSide.BUY)
+    if (priceRoute.side == SwapSide.BUY) {
       throw new Error('buildTransaction: Buy side not implemented');
+    }
     const { value, ...params } = await this.getTransactionSellParams(
       srcToken,
       destToken,
@@ -501,7 +503,6 @@ export class TransactionBuilder {
       AUGUSTUS_ABI,
       augustusAddress,
     );
-
     const swapMethodData = augustusContract.methods.multiSwap.apply(
       null,
       Object.values(params),

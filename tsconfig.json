@@ -11,7 +11,5 @@
     "lib": ["es2017", "es7", "es6", "dom"],
     "outDir": "./build"
   },
-  "include": [
-    "src/*"
-  ]
+  "include": ["src/*", "./src/abi/*.json"]
 }
