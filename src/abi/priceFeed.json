@@ -1,204 +1,98 @@
-{
-  "1": {
-    "address": "0x12295f06DA62693086F5DA45b78e20B778060853",
-    "abi": [
+[
+  {
+    "constant": true,
+    "inputs": [
       {
-        "constant": true,
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "toToken",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "srcAmount",
-            "type": "uint256"
-          }
-        ],
-        "name": "getBestPriceSimple",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
+        "internalType": "address",
+        "name": "fromToken",
+        "type": "address"
       },
       {
-        "constant": true,
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "toToken",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "srcAmount",
-            "type": "uint256"
-          }
-        ],
-        "name": "getBestPrice",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "rate",
-                "type": "uint256"
-              },
-              {
-                "components": [
-                  {
-                    "internalType": "uint256",
-                    "name": "Uniswap",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Bancor",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Kyber",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Oasis",
-                    "type": "uint256"
-                  }
-                ],
-                "internalType": "struct Types.RateDistribution",
-                "name": "distribution",
-                "type": "tuple"
-              }
-            ],
-            "internalType": "struct Types.OptimalRate",
-            "name": "optimalRate",
-            "type": "tuple"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
+        "internalType": "address",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "srcAmount",
+        "type": "uint256"
       }
-    ]
+    ],
+    "name": "getBestPriceSimple",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
-  "42": {
-    "address": "",
-    "abi": [
+  {
+    "constant": true,
+    "inputs": [
       {
-        "constant": true,
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "toToken",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "srcAmount",
-            "type": "uint256"
-          }
-        ],
-        "name": "getBestPriceSimple",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
+        "internalType": "address",
+        "name": "fromToken",
+        "type": "address"
       },
       {
-        "constant": true,
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "fromToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "toToken",
-            "type": "address"
-          },
+        "internalType": "address",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "srcAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBestPrice",
+    "outputs": [
+      {
+        "components": [
           {
             "internalType": "uint256",
-            "name": "srcAmount",
+            "name": "rate",
             "type": "uint256"
-          }
-        ],
-        "name": "getBestPrice",
-        "outputs": [
+          },
           {
             "components": [
               {
                 "internalType": "uint256",
-                "name": "rate",
+                "name": "Uniswap",
                 "type": "uint256"
               },
               {
-                "components": [
-                  {
-                    "internalType": "uint256",
-                    "name": "Uniswap",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Bancor",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Kyber",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "Oasis",
-                    "type": "uint256"
-                  }
-                ],
-                "internalType": "struct Types.RateDistribution",
-                "name": "distribution",
-                "type": "tuple"
+                "internalType": "uint256",
+                "name": "Bancor",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "Kyber",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "Oasis",
+                "type": "uint256"
               }
             ],
-            "internalType": "struct Types.OptimalRate",
-            "name": "optimalRate",
+            "internalType": "struct Types.RateDistribution",
+            "name": "distribution",
             "type": "tuple"
           }
         ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
+        "internalType": "struct Types.OptimalRate",
+        "name": "optimalRate",
+        "type": "tuple"
       }
-    ]
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   }
-}
+]

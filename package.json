@@ -6,7 +6,13 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "typegen": "typechain --target ethers-v5 --outDir ./src/abi/types \"./src/abi/*.json\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "engines": {
     "node": ">=10.15.0 <=12.16.1"
@@ -15,19 +21,25 @@
     "async": "^3.1.0",
     "axios": "0.18.1",
     "bignumber.js": "8.1.1",
+    "ethers": "^5.0.17",
     "lodash": "^4.17.15",
     "qs": "^6.9.1",
     "web3": "1.2.7"
   },
   "devDependencies": {
+    "@typechain/ethers-v5": "^2.0.0",
     "@types/async": "^3.0.3",
     "@types/dotenv": "6.1.1",
     "@types/jest": "24.0.18",
     "@types/lodash": "^4.14.149",
     "@types/qs": "^6.9.0",
     "dotenv": "7.0.0",
+    "husky": "^4.3.0",
     "jest": "24.9.0",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2",
     "ts-jest": "24.1.0",
+    "typechain": "^3.0.0",
     "typescript": "3.6.3"
   },
   "author": "ParaSwap",
