@@ -1,10 +1,21 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
+import qs from 'qs';
+import * as _ from 'lodash';
+import axios, { AxiosError } from 'axios';
 import { ParaSwap, OptimalRates, Token, APIError, Transaction } from '../src';
 import BigNumber from 'bignumber.js';
-import { Adapters, Allowance, OptimalRatesWithPartnerFees } from '../src/types';
-import { Erc20 } from '../src/abi/types/Erc20';
+import {
+  Adapters,
+  Allowance,
+  OptimalRatesWithPartnerFees,
+  AddressOrSymbol,
+  PriceString,
+  RateOptions,
+  Address,
+  BuildOptions,
+} from '../src/types';
 import { NULL_ADDRESS } from '../src/lib/transaction-builder';
 import { SwapSide } from '../src/constants';
 const erc20abi = require('../src/abi/erc20.json');
@@ -39,6 +50,55 @@ const ethersProvider = new ethers.providers.JsonRpcProvider(PROVIDER_URL);
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY).connect(
   ethersProvider,
 );
+
+async function getRateLegacy(
+  srcToken: AddressOrSymbol,
+  destToken: AddressOrSymbol,
+  amount: PriceString,
+  options?: RateOptions,
+): Promise<OptimalRatesWithPartnerFees | APIError> {
+  const { excludeDEXS, includeDEXS } = options || {};
+
+  const query = _.isEmpty(options)
+    ? ''
+    : qs.stringify({ excludeDEXS, includeDEXS });
+
+  const pricesURL = `${API_URL}/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
+    query ? '&' + query : ''
+  }`;
+  const { data } = await axios.get(pricesURL);
+  return data.priceRoute;
+}
+
+async function buildTxLegacy(
+  srcToken: Address,
+  destToken: Address,
+  srcAmount: PriceString,
+  destAmount: PriceString,
+  priceRoute: OptimalRatesWithPartnerFees,
+  userAddress: Address,
+  referrer: string,
+  receiver?: Address,
+  options: BuildOptions = {},
+) {
+  const query = _.isEmpty(options) ? '' : qs.stringify(options);
+
+  const txURL = `${API_URL}/transactions/1/?${query}`;
+
+  const txConfig = {
+    priceRoute,
+    srcToken,
+    destToken,
+    srcAmount,
+    destAmount,
+    userAddress,
+    referrer,
+    receiver: receiver || '',
+  };
+
+  const { data } = await axios.post(txURL, txConfig);
+  return data as Transaction;
+}
 
 describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
@@ -219,14 +279,42 @@ describe('ParaSwap SDK', () => {
 
     expect(typeof transaction).toBe('object');
   });
-  if (TESTING_ENV)
+  console.log(TESTING_ENV);
+  if (TESTING_ENV) {
+    test('Build_tx_legacy', async () => {
+      const ratesOrError = await paraSwap.getRate(
+        srcToken,
+        destToken,
+        srcAmount,
+        SwapSide.SELL,
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+      );
+      const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+      const destAmount = new BigNumber(priceRoute.destAmount)
+        .times(0.99)
+        .toFixed();
+
+      const txOrError = await paraSwap.buildTx(
+        srcToken,
+        destToken,
+        srcAmount,
+        destAmount,
+        priceRoute,
+        signer.address,
+        referrer,
+        undefined,
+        { ignoreChecks: true },
+      );
+      const transaction = txOrError as Transaction;
+      expect(typeof transaction).toBe('object');
+    });
     test('Build_and_Send_Tx', async () => {
       const ratesOrError = await paraSwap.getRate(
         srcToken,
         destToken,
         srcAmount,
         SwapSide.SELL,
-        { includeDEXS: 'Uniswap' },
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
       );
       const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
       const destAmount = new BigNumber(priceRoute.destAmount)
@@ -256,7 +344,7 @@ describe('ParaSwap SDK', () => {
         destToken,
         erc20abi,
         ethersProvider,
-      ) as Erc20;
+      );
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
       const txr = await signer.sendTransaction(transaction);
@@ -266,4 +354,95 @@ describe('ParaSwap SDK', () => {
       expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
       expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
     });
+    test('Build_and_Send_Tx_BUY', async () => {
+      const destAmount = srcAmount;
+      const ratesOrError = await paraSwap.getRate(
+        srcToken,
+        destToken,
+        destAmount,
+        SwapSide.BUY,
+        { includeDEXS: 'UniswapV2' },
+      );
+      const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+      console.log(priceRoute);
+      const _srcAmount = new BigNumber(priceRoute.srcAmount)
+        .times(0.99)
+        .toFixed(0);
+
+      const txOrError = await paraSwap.buildTx(
+        srcToken,
+        destToken,
+        _srcAmount,
+        destAmount,
+        priceRoute,
+        signer.address,
+        referrer,
+        undefined,
+        { ignoreChecks: true },
+      );
+      const _tx = txOrError as Transaction;
+      const transaction = {
+        ..._tx,
+        chainId: 1337,
+        gasPrice: '0x' + new BigNumber((<any>_tx).gasPrice).toString(16),
+        gasLimit: '0x' + new BigNumber(5000000).toString(16),
+        value: '0x' + new BigNumber(_tx.value).toString(16),
+      };
+      const toContract = new ethers.Contract(
+        destToken,
+        erc20abi,
+        ethersProvider,
+      );
+      const beforeFromBalance = await ethersProvider.getBalance(signer.address);
+      const beforeToBalance = await toContract.balanceOf(signer.address);
+      const txr = await signer.sendTransaction(transaction);
+      await txr.wait(1);
+      const afterFromBalance = await ethersProvider.getBalance(signer.address);
+      const afterToBalance = await toContract.balanceOf(signer.address);
+      expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
+      expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
+    });
+    test('Build_and_Send_Tx_Legacy', async () => {
+      const ratesOrError = await getRateLegacy(srcToken, destToken, srcAmount, {
+        includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
+      });
+      console.log('rates', ratesOrError);
+      const priceRoute = ratesOrError as any;
+      const destAmount = new BigNumber(priceRoute.amount).times(0.99).toFixed();
+
+      const txOrError = await buildTxLegacy(
+        srcToken,
+        destToken,
+        srcAmount,
+        destAmount,
+        priceRoute,
+        signer.address,
+        referrer,
+        undefined,
+        { ignoreChecks: true },
+      );
+      console.log('tx', txOrError);
+      const _tx = txOrError as Transaction;
+      const transaction = {
+        ..._tx,
+        chainId: 1337,
+        gasPrice: '0x' + new BigNumber((<any>_tx).gasPrice).toString(16),
+        gasLimit: '0x' + new BigNumber(5000000).toString(16),
+        value: '0x' + new BigNumber(_tx.value).toString(16),
+      };
+      const toContract = new ethers.Contract(
+        destToken,
+        erc20abi,
+        ethersProvider,
+      );
+      const beforeFromBalance = await ethersProvider.getBalance(signer.address);
+      const beforeToBalance = await toContract.balanceOf(signer.address);
+      const txr = await signer.sendTransaction(transaction);
+      await txr.wait(1);
+      const afterFromBalance = await ethersProvider.getBalance(signer.address);
+      const afterToBalance = await toContract.balanceOf(signer.address);
+      expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
+      expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
+    });
+  }
 });

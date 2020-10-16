@@ -178,7 +178,6 @@ export class ParaSwap {
     receiver?: Address,
     options: BuildOptions = {},
   ) {
-    const side = options.side ? options.side : SwapSide.SELL;
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
 
@@ -192,7 +191,6 @@ export class ParaSwap {
         destAmount,
         userAddress,
         referrer,
-        side,
         receiver: receiver || '',
       };
 
@@ -209,7 +207,7 @@ export class ParaSwap {
     srcToken: Token,
     destToken: Token,
     srcAmount: string,
-    minDestinationAmount: string,
+    minMaxAmount: string,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: string,
     referrer: string,
@@ -218,9 +216,6 @@ export class ParaSwap {
     donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
-    if (priceRoute.side == SwapSide.BUY) {
-      throw new Error('buildTxLocally: buy side not implemented');
-    }
     if (!this.adapters) {
       await this.getAdapters();
     }
@@ -237,25 +232,40 @@ export class ParaSwap {
     );
 
     if (options.onlyParams) {
-      return transaction.getTransactionSellParams(
-        srcToken,
-        destToken,
-        srcAmount,
-        minDestinationAmount,
-        priceRoute,
-        userAddress,
-        referrer,
-        gasPrice,
-        receiver,
-        donatePercent,
-      );
+      if (priceRoute.side === SwapSide.SELL) {
+        return transaction.getTransactionSellParams(
+          srcToken,
+          destToken,
+          srcAmount,
+          minMaxAmount,
+          priceRoute,
+          userAddress,
+          referrer,
+          gasPrice,
+          receiver,
+          donatePercent,
+        );
+      } else {
+        return transaction.getTransactionBuyParams(
+          srcToken,
+          destToken,
+          srcAmount,
+          minMaxAmount,
+          priceRoute,
+          userAddress,
+          referrer,
+          gasPrice,
+          receiver,
+          donatePercent,
+        );
+      }
     }
 
     return transaction.buildTransaction(
       srcToken,
       destToken,
       srcAmount,
-      minDestinationAmount,
+      minMaxAmount,
       priceRoute,
       userAddress,
       referrer,

@@ -12,12 +12,14 @@ import {
   TransactionBuyParams,
   TransactionBuyRoute,
   TransactionSellParams,
-  TransactionSellPath,
+  TransactionSellRoute,
+  TransactionPath,
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
 } from '../types';
+import Web3 from 'web3';
 import { Token } from './token';
 import { Curve } from './dexs/curve';
 import { ZeroXOrder } from './dexs/zerox';
@@ -47,7 +49,7 @@ bancor, curve
 export class TransactionBuilder {
   constructor(
     private network: number,
-    private web3Provider: any,
+    private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
   ) {}
@@ -335,7 +337,7 @@ export class TransactionBuilder {
     destToken: Address,
     route: Rate,
     gasPrice: string,
-  ): Promise<TransactionRoute> {
+  ): Promise<TransactionSellRoute> {
     const exchangeName = route.exchange.toLowerCase();
 
     const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
@@ -375,7 +377,7 @@ export class TransactionBuilder {
     destToken: Address,
     priceRoute: OptimalRatesWithPartnerFeesSell,
     gasPrice: string,
-  ): Promise<TransactionSellPath[]> => {
+  ): Promise<TransactionPath<TransactionSellRoute>[]> => {
     const { multiRoute, bestRoute } = priceRoute;
     if (this.isMultiPath(priceRoute)) {
       return await Promise.all(
@@ -413,16 +415,19 @@ export class TransactionBuilder {
     }
   };
 
-  private getValue = (srcToken: Address, srcAmount: string, path: any[]) => {
+  private getValue = (
+    srcToken: Address,
+    srcAmount: string,
+    path: TransactionPath<TransactionRoute>[],
+  ) => {
     const networkFees =
       _(path)
-        .map((p: any) => p.routes)
+        .map(p => p.routes)
         .flatten()
-        .filter((r: any) => !!r.networkFee)
-        .map((r: any) => r.networkFee)
-        .reduce((acc: any, nf: string) => {
-          acc = new BigNumber(acc).plus(nf);
-          return acc.toFixed();
+        .filter(r => !!r.networkFee)
+        .map(r => r.networkFee)
+        .reduce((acc: string, nf: string) => {
+          return new BigNumber(acc).plus(nf).toFixed();
         }, '0') || '0';
 
     const value = this.isETHAddress(srcToken) ? srcAmount : '0';
@@ -430,11 +435,104 @@ export class TransactionBuilder {
     return new BigNumber(value).plus(networkFees).toFixed();
   };
 
+  private async getBuyRouteParams(
+    srcToken: Address,
+    destToken: Address,
+    route: Rate,
+    gasPrice: string,
+  ): Promise<TransactionBuyRoute> {
+    const exchangeName = route.exchange.toLowerCase();
+
+    const networkFee = this.networkFee(exchangeName, gasPrice, route.data);
+
+    const payload = await this.getPayLoad(
+      srcToken,
+      destToken,
+      exchangeName,
+      route.data,
+      networkFee,
+      SwapSide.BUY,
+    );
+    const targetExchange = this.getTargetExchange(
+      srcToken,
+      exchangeName,
+      route.data.exchange,
+    );
+
+    return {
+      exchange: this.dexConf[exchangeName].exchange,
+      targetExchange,
+      fromAmount: route.srcAmount,
+      toAmount: route.destAmount,
+      payload,
+      networkFee,
+    };
+  }
+
+  getBuyPath = async (
+    srcToken: string,
+    destToken: string,
+    priceRoute: OptimalRatesWithPartnerFeesBuy,
+    gasPrice: string,
+  ): Promise<TransactionPath<TransactionBuyRoute>[]> => {
+    const routes = await Promise.all(
+      priceRoute.bestRoute.map(
+        async route =>
+          await this.getBuyRouteParams(srcToken, destToken, route, gasPrice),
+      ),
+    );
+
+    return [
+      {
+        to: <Address>destToken,
+        totalNetworkFee: this.getTotalNetworkFee(routes),
+        routes,
+      },
+    ];
+  };
+
+  getTransactionBuyParams = async (
+    srcToken: Token,
+    destToken: Token,
+    destAmount: PriceString,
+    maxAmountIn: PriceString,
+    priceRoute: OptimalRatesWithPartnerFeesBuy,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    receiver: Address = NULL_ADDRESS,
+    donatePercent: NumberAsString,
+  ): Promise<TransactionBuyParams> => {
+    const route = await this.getBuyPath(
+      srcToken.address,
+      destToken.address,
+      priceRoute,
+      gasPrice,
+    );
+
+    const value = this.getValue(srcToken.address!, destAmount, route);
+    return {
+      value,
+      fromToken: srcToken.address,
+      toToken: destToken.address,
+      fromAmount: maxAmountIn,
+      toAmount: destAmount,
+      expectedAmount: priceRoute.srcAmount,
+      // we keep route structure similar to sell
+      // in lieu of eventually having multihop with buy
+      route: route[0]!.routes,
+      mintPrice: '1',
+      beneficiary: receiver,
+      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
+      referrer,
+    };
+  };
+
   getTransactionSellParams = async (
     srcToken: Token,
     destToken: Token,
     srcAmount: PriceString,
-    minAmount: PriceString,
+    minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFeesSell,
     userAddress: Address,
     referrer: Address,
@@ -455,12 +553,12 @@ export class TransactionBuilder {
       fromToken: srcToken.address,
       toToken: destToken.address,
       fromAmount: srcAmount,
-      toAmount: minAmount,
+      toAmount: minAmountOut,
       expectedAmount: priceRoute.destAmount,
       path,
       mintPrice: '1',
       beneficiary: receiver,
-      donationPercentage: new BigNumber(donatePercent).times(100).toFixed(0),
+      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -490,7 +588,7 @@ export class TransactionBuilder {
     srcToken: Token,
     destToken: Token,
     amount: PriceString,
-    minAmount: PriceString,
+    minMaxAmount: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
     referrer: Address,
@@ -499,52 +597,93 @@ export class TransactionBuilder {
     donatePercent: NumberAsString,
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
-    if (priceRoute.side == SwapSide.BUY) {
-      throw new Error('buildTransaction: Buy side not implemented');
-    }
-    const { value, ...params } = await this.getTransactionSellParams(
-      srcToken,
-      destToken,
-      amount,
-      minAmount,
-      priceRoute,
-      userAddress,
-      referrer,
-      gasPrice,
-      receiver,
-      donatePercent,
-    );
-
     const augustusAddress = this.dexConf.augustus.exchange;
 
     const augustusContract = new this.web3Provider.eth.Contract(
       AUGUSTUS_ABI,
       augustusAddress,
     );
-    const swapMethodData = augustusContract.methods.multiSwap.apply(
-      null,
-      Object.values(params),
-    );
 
-    const gas = ignoreGas
-      ? {}
-      : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-          ),
-        };
+    if (priceRoute.side == SwapSide.SELL) {
+      const { value, ...params } = await this.getTransactionSellParams(
+        srcToken,
+        destToken,
+        amount,
+        minMaxAmount,
+        priceRoute,
+        userAddress,
+        referrer,
+        gasPrice,
+        receiver,
+        donatePercent,
+      );
 
-    return {
-      from: userAddress,
-      to: augustusAddress,
-      data: swapMethodData.encodeABI(),
-      chainId: this.network,
-      value,
-      ...gas,
-      gasPrice,
-    };
+      const swapMethodData = augustusContract.methods.multiSwap.apply(
+        null,
+        Object.values(params),
+      );
+
+      const gas = ignoreGas
+        ? {}
+        : {
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
+
+      return {
+        from: userAddress,
+        to: augustusAddress,
+        data: swapMethodData.encodeABI(),
+        chainId: this.network,
+        value,
+        ...gas,
+        gasPrice,
+      };
+    } else {
+      const { value, ...params } = await this.getTransactionBuyParams(
+        srcToken,
+        destToken,
+        amount,
+        minMaxAmount,
+        priceRoute,
+        userAddress,
+        referrer,
+        gasPrice,
+        receiver,
+        donatePercent,
+      );
+
+      const augustusAddress = this.dexConf.augustus.exchange;
+
+      const swapMethodData = augustusContract.methods.buy.apply(
+        null,
+        Object.values(params),
+      );
+
+      const gas = ignoreGas
+        ? {}
+        : {
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
+
+      return {
+        from: userAddress,
+        to: augustusAddress,
+        data: swapMethodData.encodeABI(),
+        chainId: this.network,
+        value,
+        ...gas,
+        gasPrice,
+      };
+    }
   };
 }

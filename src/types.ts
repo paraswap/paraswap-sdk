@@ -150,6 +150,7 @@ type OptimalRatesWithPartnerFeesSell = Merge<
     toUSDFeeDeducted?: NumberAsString;
   }
 >;
+
 type OptimalRatesWithPartnerFeesBuy = Merge<
   OptimalRates,
   {
@@ -167,6 +168,7 @@ type OptimalRatesWithPartnerFeesBuy = Merge<
 type OptimalRatesWithPartnerFees =
   | OptimalRatesWithPartnerFeesSell
   | OptimalRatesWithPartnerFeesBuy;
+
 class User {
   constructor(
     public address: Address,
@@ -212,25 +214,28 @@ type RateOptions = {
 type TransactionRoute = {
   exchange: Address;
   targetExchange: Address | undefined;
-  percent: NumberAsString;
   payload: string;
   networkFee: NumberAsString;
 };
 
-type TransactionSellPath = {
+type TransactionSellRoute = Merge<
+  TransactionRoute,
+  { percent: NumberAsString }
+>;
+
+type TransactionPath<T extends TransactionRoute> = {
   to: Address;
   totalNetworkFee: NumberAsString;
-  routes: TransactionRoute[];
+  routes: T[];
 };
 
-type TransactionBuyRoute = {
-  exchange: Address;
-  targetExchange: Address | undefined;
-  fromAmount: PriceString;
-  toAmount: PriceString;
-  payload: string;
-  networkFee: NumberAsString;
-};
+type TransactionBuyRoute = Merge<
+  TransactionRoute,
+  {
+    fromAmount: PriceString;
+    toAmount: PriceString;
+  }
+>;
 
 type TransactionBuyParams = {
   value: PriceString;
@@ -253,10 +258,10 @@ type TransactionSellParams = {
   fromAmount: PriceString;
   toAmount: PriceString;
   expectedAmount: PriceString;
-  path: TransactionSellPath[];
+  path: TransactionPath<TransactionSellRoute>[];
   mintPrice: PriceString;
   beneficiary: Address;
-  donationPercentage: NumberAsString;
+  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
@@ -274,7 +279,6 @@ type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
-  side?: SwapSide;
   gasPrice?: PriceString;
 };
 
@@ -312,7 +316,8 @@ export {
   EXCHANGES,
   RateOptions,
   TransactionRoute,
-  TransactionSellPath,
+  TransactionPath,
+  TransactionSellRoute,
   TransactionBuyRoute,
   TransactionBuyParams,
   TransactionSellParams,
