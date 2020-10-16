@@ -361,7 +361,7 @@ describe('ParaSwap SDK', () => {
         destToken,
         destAmount,
         SwapSide.BUY,
-        { includeDEXS: 'UniswapV2' },
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
       );
       const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
       console.log(priceRoute);
