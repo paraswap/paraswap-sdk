@@ -226,7 +226,6 @@ describe('ParaSwap SDK', () => {
       SwapSide.SELL,
       { includeDEXS: 'Kyber' },
     );
-    console.log(JSON.stringify(ratesOrError));
     const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
 
     const destAmount = priceRoute.destAmount;
@@ -279,7 +278,6 @@ describe('ParaSwap SDK', () => {
 
     expect(typeof transaction).toBe('object');
   });
-  console.log(TESTING_ENV);
   if (TESTING_ENV) {
     test('Build_tx_legacy', async () => {
       const ratesOrError = await paraSwap.getRate(
@@ -364,7 +362,6 @@ describe('ParaSwap SDK', () => {
         { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
       );
       const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
-      console.log(priceRoute);
       const _srcAmount = new BigNumber(priceRoute.srcAmount)
         .times(0.99)
         .toFixed(0);
@@ -406,7 +403,6 @@ describe('ParaSwap SDK', () => {
       const ratesOrError = await getRateLegacy(srcToken, destToken, srcAmount, {
         includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
       });
-      console.log('rates', ratesOrError);
       const priceRoute = ratesOrError as any;
       const destAmount = new BigNumber(priceRoute.amount).times(0.99).toFixed();
 
@@ -421,7 +417,6 @@ describe('ParaSwap SDK', () => {
         undefined,
         { ignoreChecks: true },
       );
-      console.log('tx', txOrError);
       const _tx = txOrError as Transaction;
       const transaction = {
         ..._tx,
