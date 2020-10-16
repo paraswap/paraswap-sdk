@@ -36,6 +36,14 @@ export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 23);
 export const ZRX_GAZ_MULTIPLIER = 70000;
 const LENDING_DEXES = ['compound', 'Fulcrum', 'idle'];
 
+/*
+BUY SUPPORTED:
+aave, balancer, bdai, beth, bzx, chai, compound, idle, kyber, oasis, uniswapv1, uniswapv2, weth, 0x v2, 0x v3
+
+NOT:
+bancor, curve
+*/
+
 export class TransactionBuilder {
   constructor(
     private network: number,
@@ -57,6 +65,7 @@ export class TransactionBuilder {
     exchange: string,
     data: any,
     networkFee: string,
+    side: SwapSide,
   ): Promise<string> => {
     const srcToken = this.tokens!.find(t => t.address === fromToken)!;
     const destToken = this.tokens!.find(t => t.address === toToken)!;
@@ -64,6 +73,7 @@ export class TransactionBuilder {
     switch (exchange.toLowerCase()) {
       case '0x':
       case '0xrfqt':
+        if (side == SwapSide.BUY) return '0x';
         const orderData = ZeroXOrder.formatOrders(data.orders, true);
         const signatures = data.orders.map((o: any) => o.signature);
 
@@ -98,6 +108,11 @@ export class TransactionBuilder {
         );
       case 'paraswappool':
       case 'paraswappool2':
+        if (
+          side == SwapSide.BUY &&
+          exchange.toLocaleLowerCase() == 'paraswappool2'
+        )
+          return '0x';
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
@@ -151,6 +166,7 @@ export class TransactionBuilder {
           { minConversionRateForBuy, hint },
         );
       case 'bancor':
+        if (side == SwapSide.BUY) return '0x';
         const { path } = data;
 
         return web3Coder.encodeParameter(
@@ -251,6 +267,7 @@ export class TransactionBuilder {
         );
 
       case 'curve':
+        if (side == SwapSide.BUY) return '0x';
         try {
           const [i, j, underlyingSwap] = Curve.getSwapIndexes(
             srcToken.symbol,
@@ -329,6 +346,7 @@ export class TransactionBuilder {
       exchangeName,
       route.data,
       networkFee,
+      SwapSide.SELL,
     );
     const targetExchange = this.getTargetExchange(
       srcToken,
