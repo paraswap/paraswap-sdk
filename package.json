@@ -24,7 +24,7 @@
     "lodash": "^4.17.15",
     "qs": "^6.9.1",
     "ts-essentials": "^7.0.0",
-    "web3": "1.2.7"
+    "web3": "1.3.0"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
