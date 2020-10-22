@@ -191,6 +191,7 @@ enum EXCHANGES {
   AAVE = "Aave",
   MULTIPATH = "MultiPath",
   CURVE = "Curve",
+  CURVE3 = "Curve3",
   BDAI = "BDai",
   IDLE = "idle",
   WETH = "Weth",
