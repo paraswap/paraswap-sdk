@@ -131,6 +131,7 @@ type OptimalRates = {
   toUSD?: NumberAsString;
   side: SwapSide;
   details?: {
+    routes?: string[];
     tokenFrom: string;
     tokenTo: string;
     connector?: string;
@@ -178,31 +179,31 @@ class User {
 }
 
 enum EXCHANGES {
-  UNISWAP = "Uniswap",
-  KYBER = "Kyber",
-  BANCOR = "Bancor",
-  OASIS = "Oasis",
-  COMPOUND = "Compound",
-  BZX = "Fulcrum",
-  ZEROX = "0x",
-  MakerDAO = "MakerDAO",
-  CHAI = "Chai",
-  PARASWAPPOOL = "ParaSwapPool",
-  AAVE = "Aave",
-  MULTIPATH = "MultiPath",
-  CURVE = "Curve",
-  CURVE3 = "Curve3",
-  BDAI = "BDai",
-  IDLE = "idle",
-  WETH = "Weth",
-  BETH = "Beth",
-  UNISWAPV2 = "UniswapV2",
-  BALANCER = "Balancer",
-  ZEROX_RFQT = "0xRFQt",
-  PARASWAPPOOL2 = "ParaSwapPool2",
-  SUSHISWAP = "SushiSwap",
-  SYNTHETIX = "Synthetix",
-  SYNTHETIX_DEPOT = "SynthetixDepot",
+  UNISWAP = 'Uniswap',
+  KYBER = 'Kyber',
+  BANCOR = 'Bancor',
+  OASIS = 'Oasis',
+  COMPOUND = 'Compound',
+  BZX = 'Fulcrum',
+  ZEROX = '0x',
+  MakerDAO = 'MakerDAO',
+  CHAI = 'Chai',
+  PARASWAPPOOL = 'ParaSwapPool',
+  AAVE = 'Aave',
+  MULTIPATH = 'MultiPath',
+  CURVE = 'Curve',
+  CURVE3 = 'Curve3',
+  BDAI = 'BDai',
+  IDLE = 'idle',
+  WETH = 'Weth',
+  BETH = 'Beth',
+  UNISWAPV2 = 'UniswapV2',
+  BALANCER = 'Balancer',
+  ZEROX_RFQT = '0xRFQt',
+  PARASWAPPOOL2 = 'ParaSwapPool2',
+  SUSHISWAP = 'SushiSwap',
+  SYNTHETIX = 'Synthetix',
+  SYNTHETIX_DEPOT = 'SynthetixDepot',
 }
 
 type RateOptions = {
