@@ -14,9 +14,6 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "engines": {
-    "node": ">=10.15.0 <=12.19.0"
-  },
   "dependencies": {
     "async": "^3.1.0",
     "axios": "0.18.1",
