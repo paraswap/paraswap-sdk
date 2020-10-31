@@ -142,7 +142,7 @@ export class ParaSwap {
     srcToken: AddressOrSymbol,
     destToken: AddressOrSymbol,
     amount: PriceString,
-    side: SwapSide,
+    side: SwapSide = SwapSide.SELL,
     options?: RateOptions,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
