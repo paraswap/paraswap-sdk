@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import * as async from 'async';
 import * as qs from 'qs';
 import * as _ from 'lodash';
+import Web3 from 'web3';
 
 import {
   Adapters,
@@ -36,7 +37,11 @@ export class ParaSwap {
     private network: NetworkID = 1,
     private apiURL: string = API_URL,
     public web3Provider?: any,
-  ) {}
+  ) {
+    if (web3Provider && !web3Provider.eth) {
+      this.web3Provider = new Web3(web3Provider);
+    }
+  }
 
   setWeb3Provider(web3Provider: any) {
     this.web3Provider = web3Provider;
