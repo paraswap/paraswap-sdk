@@ -44,7 +44,11 @@ export class ParaSwap {
   }
 
   setWeb3Provider(web3Provider: any) {
-    this.web3Provider = web3Provider;
+    if (!web3Provider.eth) {
+      this.web3Provider = new Web3(web3Provider);
+    } else {
+      this.web3Provider = web3Provider;
+    }
     return this;
   }
 
