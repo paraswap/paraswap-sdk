@@ -1,4 +1,4 @@
-const pools: { [pool: string]: any } = {
+const _pools: { [pool: string]: any } = {
   Compound: {
     underlying: ['DAI', 'USDC'],
     coins: ['cDAI', 'cUSDC'],
@@ -57,21 +57,27 @@ const pools: { [pool: string]: any } = {
 
 export class Curve {
 
-  static pools = pools;
+  pools: { [pool: string]: any };
 
-  static getPool(srcToken: string, destToken: string, exchange: string) {
-    const pool = Object.keys(pools).find(p => (
-      pools[p].exchange === exchange && (
-        (pools[p].underlying && pools[p].underlying.includes(srcToken) && pools[p].underlying.includes(destToken)) ||
-        (pools[p].coins && pools[p].coins.includes(srcToken) && pools[p].coins.includes(destToken))
-      )
-    ));
-
-    return pool && pools[pool];
+  constructor(){
+    this.pools = _pools;
   }
 
-  static getSwapIndexes = (srcToken: string, destToken: string, exchange: string) => {
-    const pool = Curve.getPool(srcToken, destToken, exchange);
+  getPool(srcToken: string, destToken: string, exchange: string) {
+    const pool = Object.keys(this.pools).find(p => {
+      return (
+        this.pools[p].exchange === exchange && (
+          (this.pools[p].underlying && this.pools[p].underlying.includes(srcToken) && this.pools[p].underlying.includes(destToken)) ||
+          (this.pools[p].coins && this.pools[p].coins.includes(srcToken) && this.pools[p].coins.includes(destToken))
+        )
+      )
+    });
+
+    return pool && this.pools[pool];
+  }
+
+  getSwapIndexes = (srcToken: string, destToken: string, exchange: string) => {
+    const pool = this.getPool(srcToken, destToken, exchange);
 
     if (!pool) {
       return [-1, -1, -1];

@@ -22,6 +22,7 @@ import {
 import Web3 from 'web3';
 import {Token} from './token';
 import {Curve} from './dexs/curve';
+import {Swerve} from './dexs/swerve';
 import {ZeroXOrder} from './dexs/zerox';
 import {Oasis} from './dexs/oasis';
 import {Kyber} from './dexs/kyber';
@@ -260,6 +261,7 @@ export class TransactionBuilder {
 
       case 'uniswapv2':
       case 'sushiswap':
+      case 'defiswap':
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
@@ -270,7 +272,9 @@ export class TransactionBuilder {
         );
       case "curve3":
         try {
-          const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+          const [i, j, underlyingSwap] = new Curve().getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+
+          console.log('curve3', [i, j, underlyingSwap])
 
           return web3Coder.encodeParameter(
             {
@@ -289,9 +293,12 @@ export class TransactionBuilder {
           console.error('Curve Error', e);
           return '0x';
         }
+      case "swerve":
       case "curve":
         try {
-          const [i, j, underlyingSwap] = Curve.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+          const dex = exchange.toLowerCase() === "swerve" ? new Swerve : new Curve;
+
+          const [i, j, underlyingSwap] = dex.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
 
           //TODO: This has no use since it's related to the old Curve Compound. Remove when updating the Curve contract
           const deadline = 0;
@@ -340,7 +347,7 @@ export class TransactionBuilder {
       return tokenFrom;
     }
 
-    if (exchangeName.toLowerCase().match(/^curve(.*)/)) {
+    if (exchangeName.toLowerCase().match(/^curve(.*)/) || exchangeName.toLowerCase() === 'swerve') {
       return exchangeAddress;
     }
 
