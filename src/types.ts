@@ -123,6 +123,7 @@ type OptimalRates = {
   blockNumber: number;
   destAmount: string;
   srcAmount: string;
+  priceWithSlippage?: string;
   multiPath?: boolean;
   bestRoute: OptimalRate[];
   multiRoute?: OptimalRate[][];
