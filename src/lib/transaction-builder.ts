@@ -1,4 +1,5 @@
 const web3Coder = require('web3-eth-abi');
+import Web3 from 'web3';
 
 import BigNumber from 'bignumber.js';
 import _ = require('lodash');
@@ -17,9 +18,8 @@ import {
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
-  OptimalRatesWithPartnerFeesBuy,
+  OptimalRatesWithPartnerFeesBuy, EXCHANGES,
 } from '../types';
-import Web3 from 'web3';
 import {Token} from './token';
 import {Curve} from './dexs/curve';
 import {Swerve} from './dexs/swerve';
@@ -27,6 +27,8 @@ import {ZeroXOrder} from './dexs/zerox';
 import {Oasis} from './dexs/oasis';
 import {Kyber} from './dexs/kyber';
 import {SwapSide} from '../constants';
+
+import {Swapper, PTypes} from "../../../paraswap-lib/src";
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -48,12 +50,20 @@ bancor, curve
 */
 
 export class TransactionBuilder {
+  augustusContract: any;
+
   constructor(
     private network: number,
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
   ) {
+    const augustusAddress = this.dexConf.augustus.exchange;
+
+    this.augustusContract = new this.web3Provider.eth.Contract(
+      AUGUSTUS_ABI,
+      augustusAddress,
+    );
   }
 
   isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
@@ -422,7 +432,7 @@ export class TransactionBuilder {
         }),
       );
     } else {
-      const routes:TransactionSellRoute[] = await Promise.all(
+      const routes: TransactionSellRoute[] = await Promise.all(
         bestRoute.map(
           async (route: any) =>
             await this.getSellRouteParams(srcToken, destToken, route, gasPrice),
@@ -571,9 +581,7 @@ export class TransactionBuilder {
       gasPrice,
     );
 
-    const value = this.getValue(srcToken.address!, srcAmount, path);
     return {
-      value,
       fromToken: srcToken.address,
       toToken: destToken.address,
       fromAmount: srcAmount,
@@ -608,6 +616,57 @@ export class TransactionBuilder {
     return new BigNumber(gas).times(gasOverhead).toFixed(0);
   };
 
+  async getSimpleSellParams(
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: string,
+    toAmount: string,
+    priceRoute: OptimalRatesWithPartnerFeesSell,
+    referrer: string,
+    gasPrice: string,
+    beneficiary: string = NULL_ADDRESS,
+  ) {
+
+    const swapper = new Swapper(1, this.web3Provider, this.augustusContract);
+
+    // @ts-ignore
+    const exchangeData: PTypes.DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
+      switch (br.exchange) {
+        case EXCHANGES.UNISWAP:
+          return {
+            exchange: EXCHANGES.UNISWAP,
+            data: {
+              srcAmount: br.srcAmount,
+              minDestToken: "1",
+              exchange: br.data.path[0],
+              deadline: 0,
+              minEthBought: "1",
+            }
+          }
+      }
+    });
+
+    const {callees, values, calldata, startIndexes} = await swapper.buildSwap(srcToken.address, destToken.address, srcAmount, toAmount, exchangeData);
+
+    return {
+      fromToken: srcToken.address,
+      toToken: destToken.address,
+      fromAmount: srcAmount,
+      toAmount,
+      expectedAmount: priceRoute.destAmount,
+      callees,
+      exchangeData: calldata,
+      startIndexes,
+      values,
+      beneficiary,
+      referrer
+    };
+  }
+
+  shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees, useSimple: boolean) {
+    return (useSimple && priceRoute.bestRoute.length === 1 && !priceRoute.multiRoute?.length);
+  }
+
   buildTransaction = async (
     srcToken: Token,
     destToken: Token,
@@ -620,29 +679,44 @@ export class TransactionBuilder {
     receiver: Address = NULL_ADDRESS,
     donatePercent: NumberAsString,
     ignoreGas: boolean,
+    useSimple: boolean = true
   ): Promise<TransactionData> => {
-    const augustusAddress = this.dexConf.augustus.exchange;
-
-    const augustusContract = new this.web3Provider.eth.Contract(
-      AUGUSTUS_ABI,
-      augustusAddress,
-    );
-
     if (priceRoute.side == SwapSide.SELL) {
-      const {value, ...params} = await this.getTransactionSellParams(
-        srcToken,
-        destToken,
-        amount,
-        minMaxAmount,
+      const path = await this.getSellPath(
+        srcToken.address,
+        destToken.address,
         priceRoute,
-        userAddress,
-        referrer,
         gasPrice,
-        receiver,
-        donatePercent,
       );
 
-      const swapMethodData = augustusContract.methods.multiSwap.apply(
+      const value = this.getValue(srcToken.address!, amount, path);
+
+      const params = (this.shouldUseSimpleSwap(priceRoute, useSimple)) ?
+        await this.getSimpleSellParams(
+          srcToken,
+          destToken,
+          amount,
+          minMaxAmount,
+          priceRoute,
+          referrer,
+          receiver
+        ) :
+        await this.getTransactionSellParams(
+          srcToken,
+          destToken,
+          amount,
+          minMaxAmount,
+          priceRoute,
+          userAddress,
+          referrer,
+          gasPrice,
+          receiver,
+          donatePercent,
+        );
+
+      const swapMethod = this.shouldUseSimpleSwap(priceRoute, useSimple) ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
+
+      const swapMethodData = swapMethod.apply(
         null,
         Object.values(params),
       );
@@ -660,7 +734,7 @@ export class TransactionBuilder {
 
       return {
         from: userAddress,
-        to: augustusAddress,
+        to: this.augustusContract._address,
         data: swapMethodData.encodeABI(),
         chainId: this.network,
         value,
@@ -681,9 +755,7 @@ export class TransactionBuilder {
         donatePercent,
       );
 
-      const augustusAddress = this.dexConf.augustus.exchange;
-
-      const swapMethodData = augustusContract.methods.buy.apply(
+      const swapMethodData = this.augustusContract.methods.buy.apply(
         null,
         Object.values(params),
       );
@@ -701,7 +773,7 @@ export class TransactionBuilder {
 
       return {
         from: userAddress,
-        to: augustusAddress,
+        to: this.augustusContract._address,
         data: swapMethodData.encodeABI(),
         chainId: this.network,
         value,
