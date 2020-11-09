@@ -634,14 +634,12 @@ export class TransactionBuilder {
       switch (br.exchange) {
         case EXCHANGES.UNISWAP:
           return {
-            exchange: EXCHANGES.UNISWAP,
-            data: {
-              srcAmount: br.srcAmount,
-              minDestToken: "1",
-              exchange: br.data.path[0],
-              deadline: 0,
-              minEthBought: "1",
-            }
+            name: EXCHANGES.UNISWAP,
+            srcAmount: br.srcAmount,
+            destAmount: "1",
+            exchange: br.data.path[0],
+            deadline: 0,
+            minEthBought: "1",
           }
       }
     });
