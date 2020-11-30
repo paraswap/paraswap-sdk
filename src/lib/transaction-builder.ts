@@ -20,13 +20,13 @@ import {
   OptimalRatesWithPartnerFeesBuy,
 } from '../types';
 import Web3 from 'web3';
-import {Token} from './token';
-import {Curve} from './dexs/curve';
-import {Swerve} from './dexs/swerve';
-import {ZeroXOrder} from './dexs/zerox';
-import {Oasis} from './dexs/oasis';
-import {Kyber} from './dexs/kyber';
-import {SwapSide} from '../constants';
+import { Token } from './token';
+import { Curve } from './dexs/curve';
+import { Swerve } from './dexs/swerve';
+import { ZeroXOrder } from './dexs/zerox';
+import { Oasis } from './dexs/oasis';
+import { Kyber } from './dexs/kyber';
+import { SwapSide } from '../constants';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -53,8 +53,7 @@ export class TransactionBuilder {
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
-  ) {
-  }
+  ) {}
 
   isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
     return priceRoute.multiRoute && priceRoute.multiRoute.length;
@@ -144,7 +143,7 @@ export class TransactionBuilder {
         );
 
       case 'oasis':
-        const {otc, weth, factory} = Oasis.getExchangeParams(this.network);
+        const { otc, weth, factory } = Oasis.getExchangeParams(this.network);
 
         return web3Coder.encodeParameter(
           {
@@ -154,7 +153,7 @@ export class TransactionBuilder {
               factory: 'address',
             },
           },
-          {otc, weth, factory},
+          { otc, weth, factory },
         );
       case 'kyber':
         const kyber = new Kyber(this.network, this.web3Provider);
@@ -167,11 +166,11 @@ export class TransactionBuilder {
               hint: 'bytes',
             },
           },
-          {minConversionRateForBuy, hint},
+          { minConversionRateForBuy, hint },
         );
       case 'bancor':
         if (side == SwapSide.BUY) return '0x';
-        const {path} = data;
+        const { path } = data;
 
         return web3Coder.encodeParameter(
           {
@@ -179,11 +178,11 @@ export class TransactionBuilder {
               path: 'address[]',
             },
           },
-          {path},
+          { path },
         );
 
       case 'balancer':
-        const {swaps} = data;
+        const { swaps } = data;
 
         return web3Coder.encodeParameter(
           {
@@ -196,7 +195,7 @@ export class TransactionBuilder {
               },
             },
           },
-          {swaps},
+          { swaps },
         );
 
       case 'compound':
@@ -211,7 +210,7 @@ export class TransactionBuilder {
               cToken: 'address',
             },
           },
-          {cToken},
+          { cToken },
         );
 
       case 'aave':
@@ -226,7 +225,7 @@ export class TransactionBuilder {
               aToken: 'address',
             },
           },
-          {aToken},
+          { aToken },
         );
 
       case 'idle':
@@ -241,7 +240,7 @@ export class TransactionBuilder {
               idleToken: 'address',
             },
           },
-          {idleToken},
+          { idleToken },
         );
 
       case 'fulcrum':
@@ -256,7 +255,7 @@ export class TransactionBuilder {
               iToken: 'address',
             },
           },
-          {iToken},
+          { iToken },
         );
 
       case 'uniswapv2':
@@ -268,37 +267,45 @@ export class TransactionBuilder {
               path: 'address[]',
             },
           },
-          {path: data.path},
+          { path: data.path },
         );
-      case "curve3":
+      case 'curve3':
         try {
-          const [i, j, underlyingSwap] = new Curve().getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+          const [i, j, underlyingSwap] = new Curve().getSwapIndexes(
+            srcToken.symbol,
+            destToken.symbol,
+            data.exchange,
+          );
 
-          console.log('curve3', [i, j, underlyingSwap])
+          console.log('curve3', [i, j, underlyingSwap]);
 
           return web3Coder.encodeParameter(
             {
-              "ParentStruct": {
-                "i": 'int128',
-                "j": 'int128',
-                "deadline": 'uint256',
-                "underlyingSwap": 'bool',
-                "v3": "bool"
-              }
+              ParentStruct: {
+                i: 'int128',
+                j: 'int128',
+                deadline: 'uint256',
+                underlyingSwap: 'bool',
+                v3: 'bool',
+              },
             },
-            {i, j, deadline: 0, underlyingSwap, v3: true}
+            { i, j, deadline: 0, underlyingSwap, v3: true },
           );
-
         } catch (e) {
           console.error('Curve Error', e);
           return '0x';
         }
-      case "swerve":
-      case "curve":
+      case 'swerve':
+      case 'curve':
         try {
-          const dex = exchange.toLowerCase() === "swerve" ? new Swerve : new Curve;
+          const dex =
+            exchange.toLowerCase() === 'swerve' ? new Swerve() : new Curve();
 
-          const [i, j, underlyingSwap] = dex.getSwapIndexes(srcToken.symbol, destToken.symbol, data.exchange);
+          const [i, j, underlyingSwap] = dex.getSwapIndexes(
+            srcToken.symbol,
+            destToken.symbol,
+            data.exchange,
+          );
 
           //TODO: This has no use since it's related to the old Curve Compound. Remove when updating the Curve contract
           const deadline = 0;
@@ -312,7 +319,7 @@ export class TransactionBuilder {
                 underlyingSwap: 'bool',
               },
             },
-            {i, j, deadline, underlyingSwap},
+            { i, j, deadline, underlyingSwap },
           );
         } catch (e) {
           console.error('Curve Error', e);
@@ -325,7 +332,10 @@ export class TransactionBuilder {
   };
 
   private networkFee = (exchange: string, gasPrice: string, payload: any) => {
-    if (exchange.toLowerCase() === '0x' || exchange.toLowerCase() === '0xrfqt') {
+    if (
+      exchange.toLowerCase() === '0x' ||
+      exchange.toLowerCase() === '0xrfqt'
+    ) {
       return new BigNumber(gasPrice)
         .times(ZRX_GAZ_MULTIPLIER)
         .times(payload.orders.length)
@@ -347,7 +357,10 @@ export class TransactionBuilder {
       return tokenFrom;
     }
 
-    if (exchangeName.toLowerCase().match(/^curve(.*)/) || exchangeName.toLowerCase() === 'swerve') {
+    if (
+      exchangeName.toLowerCase().match(/^curve(.*)/) ||
+      exchangeName.toLowerCase() === 'swerve'
+    ) {
       return exchangeAddress;
     }
 
@@ -402,11 +415,11 @@ export class TransactionBuilder {
     priceRoute: OptimalRatesWithPartnerFeesSell,
     gasPrice: string,
   ): Promise<TransactionPath<TransactionSellRoute>[]> => {
-    const {multiRoute, bestRoute} = priceRoute;
+    const { multiRoute, bestRoute } = priceRoute;
     if (this.isMultiPath(priceRoute)) {
       return await Promise.all(
         multiRoute!.map(async (_routes: any) => {
-          const {tokenFrom, tokenTo} = _routes[0].data;
+          const { tokenFrom, tokenTo } = _routes[0].data;
 
           const routes: TransactionSellRoute[] = await Promise.all(
             _routes.map((route: any) =>
@@ -422,7 +435,7 @@ export class TransactionBuilder {
         }),
       );
     } else {
-      const routes:TransactionSellRoute[] = await Promise.all(
+      const routes: TransactionSellRoute[] = await Promise.all(
         bestRoute.map(
           async (route: any) =>
             await this.getSellRouteParams(srcToken, destToken, route, gasPrice),
@@ -534,7 +547,7 @@ export class TransactionBuilder {
       gasPrice,
     );
 
-    const value = this.getValue(srcToken.address!, destAmount, route);
+    const value = this.getValue(srcToken.address!, maxAmountIn, route);
     return {
       value,
       fromToken: srcToken.address,
@@ -629,7 +642,7 @@ export class TransactionBuilder {
     );
 
     if (priceRoute.side == SwapSide.SELL) {
-      const {value, ...params} = await this.getTransactionSellParams(
+      const { value, ...params } = await this.getTransactionSellParams(
         srcToken,
         destToken,
         amount,
@@ -650,13 +663,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
 
       return {
         from: userAddress,
@@ -668,7 +681,7 @@ export class TransactionBuilder {
         gasPrice,
       };
     } else {
-      const {value, ...params} = await this.getTransactionBuyParams(
+      const { value, ...params } = await this.getTransactionBuyParams(
         srcToken,
         destToken,
         amount,
@@ -691,13 +704,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
 
       return {
         from: userAddress,
