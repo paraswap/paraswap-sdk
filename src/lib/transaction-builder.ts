@@ -331,6 +331,26 @@ export class TransactionBuilder {
     }
   };
 
+  private applySlippageForBuy(exchange: string) {
+    switch (exchange.toLowerCase()) {
+      case 'oasis':
+      case 'kyber':
+      case 'balancer':
+      case 'uniswap':
+      case 'uniswapv2':
+      case 'sushiswap':
+      case 'defiswap':
+        return true;
+      /*
+       * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
+       * fulcrum (bzx), chai, weth, bdai, beth
+       * Not supported for buy: bancor, curve, swerve
+       */
+      default:
+        return false;
+    }
+  }
+
   private networkFee = (exchange: string, gasPrice: string, payload: any) => {
     if (
       exchange.toLowerCase() === '0x' ||
@@ -477,6 +497,7 @@ export class TransactionBuilder {
     destToken: Address,
     route: Rate,
     gasPrice: string,
+    slippageFactor: BigNumber,
   ): Promise<TransactionBuyRoute> {
     const exchangeName = route.exchange.toLowerCase();
 
@@ -499,7 +520,11 @@ export class TransactionBuilder {
     return {
       exchange: this.dexConf[exchangeName].exchange,
       targetExchange,
-      fromAmount: route.srcAmount,
+      fromAmount: this.applySlippageForBuy(exchangeName)
+        ? new BigNumber(route.srcAmount)
+            .times(slippageFactor)
+            .toFixed(0, BigNumber.ROUND_DOWN)
+        : route.srcAmount,
       toAmount: route.destAmount,
       payload,
       networkFee,
@@ -511,11 +536,18 @@ export class TransactionBuilder {
     destToken: string,
     priceRoute: OptimalRatesWithPartnerFeesBuy,
     gasPrice: string,
+    slippageFactor: BigNumber,
   ): Promise<TransactionPath<TransactionBuyRoute>[]> => {
     const routes: TransactionBuyRoute[] = await Promise.all(
       priceRoute.bestRoute.map(
         async (route: any) =>
-          await this.getBuyRouteParams(srcToken, destToken, route, gasPrice),
+          await this.getBuyRouteParams(
+            srcToken,
+            destToken,
+            route,
+            gasPrice,
+            slippageFactor,
+          ),
       ),
     );
 
@@ -540,11 +572,15 @@ export class TransactionBuilder {
     receiver: Address = NULL_ADDRESS,
     donatePercent: NumberAsString,
   ): Promise<TransactionBuyParams> => {
+    const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
+      priceRoute.srcAmount,
+    );
     const route = await this.getBuyPath(
       srcToken.address,
       destToken.address,
       priceRoute,
       gasPrice,
+      slippageFactor,
     );
 
     const value = this.getValue(srcToken.address!, maxAmountIn, route);
