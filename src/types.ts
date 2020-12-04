@@ -112,8 +112,8 @@ type OptimalRateWithFeeSell = Merge<
 type OptimalRateWithFeeBuy = Merge<
   OptimalRate,
   {
+    srcAmountNoFeeAdded: NumberAsString;
     destAmountNoFeeAdded: NumberAsString;
-    // srcAmountWithoutFee?: NumberAsString;
   }
 >;
 
@@ -157,12 +157,12 @@ type OptimalRatesWithPartnerFeesBuy = Merge<
   OptimalRates,
   {
     side: SwapSide.BUY;
-    // srcAmountWithoutFee?: string;
+    srcAmountNoFeeAdded: string;
     destAmountNoFeeAdded: string;
     bestRoute: OptimalRateWithFeeBuy[];
     multiRoute?: OptimalRateWithFeeBuy[][];
     others: SimpleComputedRateWithFeeBuy[];
-    // fromUSDWithoutFee?: NumberAsString;
+    fromUSDNoFeeAdded?: NumberAsString;
     toUSDNoFeeAdded?: NumberAsString;
   }
 >;
