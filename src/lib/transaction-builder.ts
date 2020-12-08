@@ -111,11 +111,6 @@ export class TransactionBuilder {
         );
       case 'paraswappool':
       case 'paraswappool2':
-        if (
-          side == SwapSide.BUY &&
-          exchange.toLocaleLowerCase() == 'paraswappool2'
-        )
-          return '0x';
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
