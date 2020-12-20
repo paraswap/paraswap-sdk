@@ -378,7 +378,8 @@ export class TransactionBuilder {
 
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
-      exchangeName.toLowerCase() === 'swerve'
+      exchangeName.toLowerCase() === 'swerve' ||
+      exchangeName.toLowerCase() === 'shell'
     ) {
       return exchangeAddress;
     }
