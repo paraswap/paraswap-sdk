@@ -53,8 +53,7 @@ export class TransactionBuilder {
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
-  ) {
-  }
+  ) {}
 
   isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
     return priceRoute.multiRoute && priceRoute.multiRoute.length;
@@ -336,18 +335,25 @@ export class TransactionBuilder {
       case 'uniswapv2':
       case 'sushiswap':
       case 'defiswap':
+      case 'shell':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
        * fulcrum (bzx), chai, weth, bdai, beth
-       * Not supported for buy: bancor, curve, swerve
+       * Not supported for buy: bancor, curve, swerve, cofix
        */
       default:
         return false;
     }
   }
 
-  private networkFee = (exchange: string, srcToken: Address, destToken: Address, gasPrice: string, payload: any) => {
+  private networkFee = (
+    exchange: string,
+    srcToken: Address,
+    destToken: Address,
+    gasPrice: string,
+    payload: any,
+  ) => {
     switch (exchange.toLowerCase()) {
       case '0x':
       case '0xrfqt':
@@ -357,7 +363,9 @@ export class TransactionBuilder {
           .toFixed();
       case 'cofix':
         const fee = new BigNumber(1e18).dividedBy(100);
-        return (this.isETHAddress(srcToken) || this.isETHAddress(destToken)) ? fee.toFixed(0) : fee.times(2).toFixed(0);
+        return this.isETHAddress(srcToken) || this.isETHAddress(destToken)
+          ? fee.toFixed(0)
+          : fee.times(2).toFixed(0);
       default:
         return '0';
     }
@@ -397,7 +405,13 @@ export class TransactionBuilder {
   ): Promise<TransactionSellRoute> {
     const exchangeName = route.exchange.toLowerCase();
 
-    const networkFee = this.networkFee(exchangeName, srcToken, destToken, gasPrice, route.data);
+    const networkFee = this.networkFee(
+      exchangeName,
+      srcToken,
+      destToken,
+      gasPrice,
+      route.data,
+    );
 
     const payload = await this.getPayLoad(
       srcToken,
@@ -501,7 +515,13 @@ export class TransactionBuilder {
   ): Promise<TransactionBuyRoute> {
     const exchangeName = route.exchange.toLowerCase();
 
-    const networkFee = this.networkFee(exchangeName, srcToken, destToken, gasPrice, route.data);
+    const networkFee = this.networkFee(
+      exchangeName,
+      srcToken,
+      destToken,
+      gasPrice,
+      route.data,
+    );
 
     const payload = await this.getPayLoad(
       srcToken,
@@ -522,8 +542,8 @@ export class TransactionBuilder {
       targetExchange,
       fromAmount: this.applySlippageForBuy(exchangeName)
         ? new BigNumber(route.srcAmount)
-          .times(slippageFactor)
-          .toFixed(0, BigNumber.ROUND_DOWN)
+            .times(slippageFactor)
+            .toFixed(0, BigNumber.ROUND_DOWN)
         : route.srcAmount,
       toAmount: route.destAmount,
       payload,
@@ -699,13 +719,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
 
       return {
         from: userAddress,
@@ -740,13 +760,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+            ),
+          };
 
       return {
         from: userAddress,
