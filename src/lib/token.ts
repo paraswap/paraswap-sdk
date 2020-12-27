@@ -1,6 +1,6 @@
-import {Address} from "../types";
+import { Address } from '../types';
 
-export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'idleToken' | 'Chai' | 'bDAI';
+export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'aToken2' | 'idleToken' | 'Chai' | 'bDAI';
 export type TokenType = 'ETH' | 'ERC20' | 'SYNTH';
 
 export class Token {
@@ -32,6 +32,6 @@ export class Token {
   ) {
     this.connectors = this.connectors.length ? this.connectors : this.getConnectors();
 
-    this.tokenType = this.tokenType || (this.symbol.toUpperCase() === "ETH" ? "ETH" : "ERC20");
+    this.tokenType = this.tokenType || (this.symbol.toUpperCase() === 'ETH' ? 'ETH' : 'ERC20');
   }
 }

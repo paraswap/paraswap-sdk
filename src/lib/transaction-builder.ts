@@ -208,6 +208,21 @@ export class TransactionBuilder {
           { cToken },
         );
 
+      case 'aave2':
+        const aToken2 =
+          destToken.tokenType === 'aToken2'
+            ? destToken.address!
+            : srcToken.address!;
+
+        return web3Coder.encodeParameter(
+          {
+            ParentStruct: {
+              aToken: 'address',
+            },
+          },
+          { aToken: aToken2 },
+        );
+
       case 'aave':
         const aToken =
           destToken.tokenType === 'aToken'
