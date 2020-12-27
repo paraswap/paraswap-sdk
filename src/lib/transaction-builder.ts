@@ -21,8 +21,6 @@ import {
 } from '../types';
 import Web3 from 'web3';
 import { Token } from './token';
-import { Curve } from './dexs/curve';
-import { Swerve } from './dexs/swerve';
 import { ZeroXOrder } from './dexs/zerox';
 import { Oasis } from './dexs/oasis';
 import { Kyber } from './dexs/kyber';
@@ -53,7 +51,8 @@ export class TransactionBuilder {
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
-  ) {}
+  ) {
+  }
 
   isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
     return priceRoute.multiRoute && priceRoute.multiRoute.length;
@@ -280,14 +279,10 @@ export class TransactionBuilder {
           { path: data.path },
         );
       case 'curve3':
+      case 'swerve':
+      case 'curve':
         try {
-          const [i, j, underlyingSwap] = new Curve().getSwapIndexes(
-            srcToken.symbol,
-            destToken.symbol,
-            data.exchange,
-          );
-
-          console.log('curve3', [i, j, underlyingSwap]);
+          const { i, j, deadline, underlyingSwap, v3 } = data;
 
           return web3Coder.encodeParameter(
             {
@@ -299,37 +294,7 @@ export class TransactionBuilder {
                 v3: 'bool',
               },
             },
-            { i, j, deadline: 0, underlyingSwap, v3: true },
-          );
-        } catch (e) {
-          console.error('Curve Error', e);
-          return '0x';
-        }
-      case 'swerve':
-      case 'curve':
-        try {
-          const dex =
-            exchange.toLowerCase() === 'swerve' ? new Swerve() : new Curve();
-
-          const [i, j, underlyingSwap] = dex.getSwapIndexes(
-            srcToken.symbol,
-            destToken.symbol,
-            data.exchange,
-          );
-
-          //TODO: This has no use since it's related to the old Curve Compound. Remove when updating the Curve contract
-          const deadline = 0;
-
-          return web3Coder.encodeParameter(
-            {
-              ParentStruct: {
-                i: 'int128',
-                j: 'int128',
-                deadline: 'uint256',
-                underlyingSwap: 'bool',
-              },
-            },
-            { i, j, deadline, underlyingSwap },
+            { i, j, deadline, underlyingSwap, v3 },
           );
         } catch (e) {
           console.error('Curve Error', e);
@@ -557,8 +522,8 @@ export class TransactionBuilder {
       targetExchange,
       fromAmount: this.applySlippageForBuy(exchangeName)
         ? new BigNumber(route.srcAmount)
-            .times(slippageFactor)
-            .toFixed(0, BigNumber.ROUND_DOWN)
+          .times(slippageFactor)
+          .toFixed(0, BigNumber.ROUND_DOWN)
         : route.srcAmount,
       toAmount: route.destAmount,
       payload,
@@ -734,13 +699,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-            gas: await this.estimateGas(
-              swapMethodData,
-              userAddress,
-              value,
-              gasPrice,
-            ),
-          };
+          gas: await this.estimateGas(
+            swapMethodData,
+            userAddress,
+            value,
+            gasPrice,
+          ),
+        };
 
       return {
         from: userAddress,
@@ -775,13 +740,13 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-            gas: await this.estimateGas(
-              swapMethodData,
-              userAddress,
-              value,
-              gasPrice,
-            ),
-          };
+          gas: await this.estimateGas(
+            swapMethodData,
+            userAddress,
+            value,
+            gasPrice,
+          ),
+        };
 
       return {
         from: userAddress,
