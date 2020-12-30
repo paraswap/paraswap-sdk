@@ -176,17 +176,42 @@ export class TransactionBuilder {
 
       case 'balancer':
         const { swaps } = data;
-
         return web3Coder.encodeParameter(
           {
-            ParentStruct: {
-              'swaps[]': {
-                pool: 'address',
-                tokenInParam: 'uint',
-                tokenOutParam: 'uint',
-                maxPrice: 'uint',
+            name: 'ParentStruct',
+            type: 'tuple',
+            components: [
+              {
+                name: 'swaps',
+                type: 'tuple[][]',
+                components: [
+                  {
+                    name: 'pool',
+                    type: 'address',
+                  },
+                  {
+                    name: 'tokenIn',
+                    type: 'address',
+                  },
+                  {
+                    name: 'tokenOut',
+                    type: 'address',
+                  },
+                  {
+                    name: 'swapAmount',
+                    type: 'uint',
+                  },
+                  {
+                    name: 'limitReturnAmount',
+                    type: 'uint',
+                  },
+                  {
+                    name: 'maxPrice',
+                    type: 'uint',
+                  },
+                ],
               },
-            },
+            ],
           },
           { swaps },
         );
@@ -708,7 +733,7 @@ export class TransactionBuilder {
               userAddress,
               value,
               gasPrice,
-              this.multiSwapSteps(priceRoute),
+              this.multiSwapSteps(priceRoute)
             ),
           };
 
