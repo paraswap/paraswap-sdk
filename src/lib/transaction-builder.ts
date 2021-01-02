@@ -270,6 +270,7 @@ export class TransactionBuilder {
       case 'uniswapv2':
       case 'sushiswap':
       case 'defiswap':
+      case 'linkswap':
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
