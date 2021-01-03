@@ -54,8 +54,8 @@ export class TransactionBuilder {
   ) {
   }
 
-  isMultiPath = (priceRoute: OptimalRatesWithPartnerFees) => {
-    return priceRoute.multiRoute && priceRoute.multiRoute.length;
+  multiSwapSteps = (priceRoute: OptimalRatesWithPartnerFees) => {
+    return priceRoute.multiRoute && priceRoute.multiRoute.length || 1;
   };
 
   private isETHAddress = (address: string) =>
@@ -431,7 +431,9 @@ export class TransactionBuilder {
     gasPrice: string,
   ): Promise<TransactionPath<TransactionSellRoute>[]> => {
     const { multiRoute, bestRoute } = priceRoute;
-    if (this.isMultiPath(priceRoute)) {
+    const isMultiPath = this.multiSwapSteps(priceRoute) > 1;
+
+    if (isMultiPath) {
       return await Promise.all(
         multiRoute!.map(async (_routes: any) => {
           const { tokenFrom, tokenTo } = _routes[0].data;
@@ -642,6 +644,7 @@ export class TransactionBuilder {
     fromUser: Address,
     value: NumberAsString,
     gasPrice: NumberAsString,
+    multiSwapSteps: number,
   ): Promise<NumberAsString> => {
     const gas = await swapMethodData.estimateGas({
       from: fromUser,
@@ -650,9 +653,11 @@ export class TransactionBuilder {
       gasPrice,
     });
 
+    const multiplier = new BigNumber(GAS_MULTIPLIER).times(multiSwapSteps);
+
     const gasOverhead =
       GAS_MULTIPLIER > 0
-        ? new BigNumber(1).plus(new BigNumber(GAS_MULTIPLIER).dividedBy(100))
+        ? new BigNumber(1).plus(multiplier.dividedBy(100))
         : 1;
 
     return new BigNumber(gas).times(gasOverhead).toFixed(0);
@@ -705,6 +710,7 @@ export class TransactionBuilder {
             userAddress,
             value,
             gasPrice,
+            this.multiSwapSteps(priceRoute),
           ),
         };
 
@@ -746,6 +752,7 @@ export class TransactionBuilder {
             userAddress,
             value,
             gasPrice,
+            this.multiSwapSteps(priceRoute),
           ),
         };
 
