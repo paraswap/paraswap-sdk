@@ -597,7 +597,7 @@ export class TransactionBuilder {
       // we keep route structure similar to sell
       // in lieu of eventually having multihop with buy
       route: route[0]!.routes,
-      mintPrice: '1',
+      mintPrice: '0',
       beneficiary: receiver,
       donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
@@ -632,7 +632,7 @@ export class TransactionBuilder {
       toAmount: minAmountOut,
       expectedAmount: priceRoute.destAmount,
       path,
-      mintPrice: '1',
+      mintPrice: '0',
       beneficiary: receiver,
       donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
