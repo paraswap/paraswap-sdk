@@ -51,11 +51,10 @@ export class TransactionBuilder {
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
-  ) {
-  }
+  ) {}
 
   multiSwapSteps = (priceRoute: OptimalRatesWithPartnerFees) => {
-    return priceRoute.multiRoute && priceRoute.multiRoute.length || 1;
+    return (priceRoute.multiRoute && priceRoute.multiRoute.length) || 1;
   };
 
   private isETHAddress = (address: string) =>
@@ -316,6 +315,7 @@ export class TransactionBuilder {
       case 'uniswapv2':
       case 'sushiswap':
       case 'defiswap':
+      case 'linkswap':
       case 'shell':
         return true;
       /*
@@ -525,8 +525,8 @@ export class TransactionBuilder {
       targetExchange,
       fromAmount: this.applySlippageForBuy(exchangeName)
         ? new BigNumber(route.srcAmount)
-          .times(slippageFactor)
-          .toFixed(0, BigNumber.ROUND_DOWN)
+            .times(slippageFactor)
+            .toFixed(0, BigNumber.ROUND_DOWN)
         : route.srcAmount,
       toAmount: route.destAmount,
       payload,
@@ -656,9 +656,7 @@ export class TransactionBuilder {
     const multiplier = new BigNumber(GAS_MULTIPLIER).times(multiSwapSteps);
 
     const gasOverhead =
-      GAS_MULTIPLIER > 0
-        ? new BigNumber(1).plus(multiplier.dividedBy(100))
-        : 1;
+      GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(multiplier.dividedBy(100)) : 1;
 
     return new BigNumber(gas).times(gasOverhead).toFixed(0);
   };
@@ -705,14 +703,14 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-            this.multiSwapSteps(priceRoute),
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+              this.multiSwapSteps(priceRoute),
+            ),
+          };
 
       return {
         from: userAddress,
@@ -747,14 +745,14 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-            this.multiSwapSteps(priceRoute),
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+              this.multiSwapSteps(priceRoute),
+            ),
+          };
 
       return {
         from: userAddress,
