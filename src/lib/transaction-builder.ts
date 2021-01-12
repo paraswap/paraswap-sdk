@@ -618,13 +618,10 @@ export class TransactionBuilder {
       toToken: destToken.address,
       fromAmount: maxAmountIn,
       toAmount: destAmount,
-      expectedAmount: priceRoute.srcAmount,
       // we keep route structure similar to sell
       // in lieu of eventually having multihop with buy
       route: route[0]!.routes,
-      mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -657,9 +654,7 @@ export class TransactionBuilder {
       toAmount: minAmountOut,
       expectedAmount: priceRoute.destAmount,
       path,
-      mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -720,10 +715,7 @@ export class TransactionBuilder {
         donatePercent,
       );
 
-      const swapMethodData = augustusContract.methods.multiSwap.apply(
-        null,
-        Object.values(params),
-      );
+      const swapMethodData = augustusContract.methods.multiSwap(params);
 
       const gas = ignoreGas
         ? {}
@@ -733,7 +725,7 @@ export class TransactionBuilder {
               userAddress,
               value,
               gasPrice,
-              this.multiSwapSteps(priceRoute)
+              this.multiSwapSteps(priceRoute),
             ),
           };
 
@@ -762,10 +754,7 @@ export class TransactionBuilder {
 
       const augustusAddress = this.dexConf.augustus.exchange;
 
-      const swapMethodData = augustusContract.methods.buy.apply(
-        null,
-        Object.values(params),
-      );
+      const swapMethodData = augustusContract.methods.buy(params);
 
       const gas = ignoreGas
         ? {}

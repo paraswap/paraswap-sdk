@@ -246,11 +246,8 @@ type TransactionBuyParams = {
   toToken: Address | undefined;
   fromAmount: PriceString;
   toAmount: PriceString;
-  expectedAmount: PriceString;
   route: TransactionBuyRoute[];
-  mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
@@ -262,9 +259,7 @@ type TransactionSellParams = {
   toAmount: PriceString;
   expectedAmount: PriceString;
   path: TransactionPath<TransactionSellRoute>[];
-  mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
