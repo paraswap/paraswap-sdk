@@ -216,40 +216,15 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "fromToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "toToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fromAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "toAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedAmount",
-        "type": "uint256"
-      },
-      {
         "components": [
           {
-            "internalType": "address payable",
-            "name": "exchange",
+            "internalType": "contract IERC20",
+            "name": "fromToken",
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "targetExchange",
+            "internalType": "contract IERC20",
+            "name": "toToken",
             "type": "address"
           },
           {
@@ -263,29 +238,56 @@
             "type": "uint256"
           },
           {
-            "internalType": "bytes",
-            "name": "payload",
-            "type": "bytes"
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
           },
           {
-            "internalType": "uint256",
-            "name": "networkFee",
-            "type": "uint256"
+            "internalType": "string",
+            "name": "referrer",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address payable",
+                "name": "exchange",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "targetExchange",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "fromAmount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "toAmount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "payload",
+                "type": "bytes"
+              },
+              {
+                "internalType": "uint256",
+                "name": "networkFee",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Utils.BuyRoute[]",
+            "name": "route",
+            "type": "tuple[]"
           }
         ],
-        "internalType": "struct Utils.BuyRoute[]",
-        "name": "route",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "address payable",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "referrer",
-        "type": "string"
+        "internalType": "struct Utils.BuyData",
+        "name": "data",
+        "type": "tuple"
       }
     ],
     "name": "buy",
@@ -393,88 +395,95 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "fromToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "toToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fromAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "toAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedAmount",
-        "type": "uint256"
-      },
-      {
         "components": [
           {
-            "internalType": "address",
-            "name": "to",
+            "internalType": "contract IERC20",
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "toToken",
             "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "totalNetworkFee",
+            "name": "fromAmount",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "toAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expectedAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "referrer",
+            "type": "string"
           },
           {
             "components": [
               {
-                "internalType": "address payable",
-                "name": "exchange",
-                "type": "address"
-              },
-              {
                 "internalType": "address",
-                "name": "targetExchange",
+                "name": "to",
                 "type": "address"
               },
               {
                 "internalType": "uint256",
-                "name": "percent",
+                "name": "totalNetworkFee",
                 "type": "uint256"
               },
               {
-                "internalType": "bytes",
-                "name": "payload",
-                "type": "bytes"
-              },
-              {
-                "internalType": "uint256",
-                "name": "networkFee",
-                "type": "uint256"
+                "components": [
+                  {
+                    "internalType": "address payable",
+                    "name": "exchange",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "targetExchange",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "percent",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "payload",
+                    "type": "bytes"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "networkFee",
+                    "type": "uint256"
+                  }
+                ],
+                "internalType": "struct Utils.Route[]",
+                "name": "routes",
+                "type": "tuple[]"
               }
             ],
-            "internalType": "struct Utils.Route[]",
-            "name": "routes",
+            "internalType": "struct Utils.Path[]",
+            "name": "path",
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct Utils.Path[]",
-        "name": "path",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "address payable",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "referrer",
-        "type": "string"
+        "internalType": "struct Utils.SellData",
+        "name": "data",
+        "type": "tuple"
       }
     ],
     "name": "multiSwap",
@@ -599,7 +608,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "expectedAmount",
+        "name": "toAmount",
         "type": "uint256"
       },
       {

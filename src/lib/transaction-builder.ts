@@ -1,3 +1,5 @@
+import { Uniswap } from './dexs/uniswap';
+
 const web3Coder = require('web3-eth-abi');
 import Web3 from 'web3';
 
@@ -27,7 +29,8 @@ import { Oasis } from './dexs/oasis';
 import { Kyber } from './dexs/kyber';
 import { SwapSide } from '../constants';
 
-import { Swapper, PTypes } from '../../../paraswap-lib/src';
+import { Swapper } from './swapper';
+import { DEXData } from './dexs/dex-types';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -610,7 +613,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -636,7 +638,6 @@ export class TransactionBuilder {
       route: route[0]!.routes,
       mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -651,7 +652,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionSellParams> => {
     const path = await this.getSellPath(
       srcToken.address,
@@ -669,7 +669,6 @@ export class TransactionBuilder {
       path,
       mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -710,17 +709,10 @@ export class TransactionBuilder {
     const swapper = new Swapper(this.network, this.web3Provider, this.augustusContract);
 
     // @ts-ignore
-    const exchangeData: PTypes.DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
+    const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
       switch (br.exchange) {
         case EXCHANGES.UNISWAP:
-          return {
-            name: EXCHANGES.UNISWAP,
-            srcAmount: br.srcAmount,
-            destAmount: '1',
-            exchange: br.data.path[0],
-            deadline: 0,
-            minEthBought: '1',
-          };
+          return Uniswap.getDexData(br);
       }
     });
 
@@ -741,8 +733,8 @@ export class TransactionBuilder {
     };
   }
 
-  shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees, useSimple: boolean) {
-    return (useSimple && priceRoute.bestRoute.length === 1 && !priceRoute.multiRoute?.length);
+  shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees) {
+    return ((priceRoute.multiRoute || []).length <= 1);
   }
 
   buildTransaction = async (
@@ -755,9 +747,7 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
     ignoreGas: boolean,
-    useSimple: boolean = true,
   ): Promise<TransactionData> => {
     if (priceRoute.side == SwapSide.SELL) {
       const path = await this.getSellPath(
@@ -769,7 +759,9 @@ export class TransactionBuilder {
 
       const value = this.getValue(srcToken.address!, amount, path);
 
-      const params = (this.shouldUseSimpleSwap(priceRoute, useSimple)) ?
+      const shouldUseSimpleSwap = this.shouldUseSimpleSwap(priceRoute);
+
+      const params = shouldUseSimpleSwap ?
         await this.getSimpleSellParams(
           srcToken,
           destToken,
@@ -789,10 +781,9 @@ export class TransactionBuilder {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
 
-      const swapMethod = this.shouldUseSimpleSwap(priceRoute, useSimple) ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
+      const swapMethod = shouldUseSimpleSwap ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
 
       const swapMethodData = swapMethod.apply(
         null,
@@ -830,7 +821,6 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        donatePercent,
       );
 
       const swapMethodData = this.augustusContract.methods.buy.apply(
@@ -849,7 +839,7 @@ export class TransactionBuilder {
             this.multiSwapSteps(priceRoute),
           ),
         };
-      
+
       return {
         from: userAddress,
         to: this.augustusContract._address,

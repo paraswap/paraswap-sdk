@@ -250,7 +250,6 @@ type TransactionBuyParams = {
   route: TransactionBuyRoute[];
   mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
@@ -263,7 +262,6 @@ type TransactionSellParams = {
   path: TransactionPath<TransactionSellRoute>[];
   mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 

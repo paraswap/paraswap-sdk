@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios';
+import axios, { AxiosError } from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -21,9 +21,9 @@ import ERC20_ABI = require('./abi/erc20.json');
 
 import AUGUSTUS_ABI = require('./abi/augustus.json');
 
-import {Token} from './lib/token';
-import {NULL_ADDRESS, TransactionBuilder} from './lib/transaction-builder';
-import {SwapSide} from './constants';
+import { Token } from './lib/token';
+import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
+import { SwapSide } from './constants';
 
 const API_URL = 'https://api.paraswap.io/v2';
 
@@ -52,8 +52,8 @@ export class ParaSwap {
 
   private handleAPIError(e: AxiosError): APIError {
     if (e.response) {
-      const {data, status} = e.response!;
-      return {status, message: data.error};
+      const { data, status } = e.response!;
+      return { status, message: data.error };
     }
     return new Error(e.message);
   }
@@ -61,7 +61,7 @@ export class ParaSwap {
   async getTokens() {
     try {
       const tokensURL = `${this.apiURL}/tokens/${this.network}`;
-      const {data} = await axios.get(tokensURL);
+      const { data } = await axios.get(tokensURL);
       this.tokens = (data.tokens as Token[]).map(
         t =>
           new Token(
@@ -83,7 +83,7 @@ export class ParaSwap {
 
   async getAdapters() {
     try {
-      const {data} = await axios.get(
+      const { data } = await axios.get(
         `${this.apiURL}/adapters/${this.network}`,
       );
 
@@ -112,7 +112,7 @@ export class ParaSwap {
     options?: RateOptions,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
-      const {excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS} =
+      const { excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS } =
       options || {};
 
       this.checkDexList(includeDEXS);
@@ -121,7 +121,7 @@ export class ParaSwap {
       this.checkDexList(excludeMPDEXS);
 
       if (route.length < 2) {
-        return {message: 'Invalid Route'};
+        return { message: 'Invalid Route' };
       }
 
       const query = _.isEmpty(options)
@@ -137,7 +137,7 @@ export class ParaSwap {
         '-',
       )}&amount=${amount}&${query}&side=${side}`;
 
-      const {data} = await axios.get(pricesURL);
+      const { data } = await axios.get(pricesURL);
 
       return data.priceRoute;
     } catch (e) {
@@ -153,21 +153,21 @@ export class ParaSwap {
     options?: RateOptions,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
-      const {excludeDEXS, includeDEXS} = options || {};
+      const { excludeDEXS, includeDEXS } = options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
 
       const query = _.isEmpty(options)
         ? ''
-        : qs.stringify({excludeDEXS, includeDEXS});
+        : qs.stringify({ excludeDEXS, includeDEXS });
 
       const pricesURL = `${
         this.apiURL
-        }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
+      }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-        }&side=${side}`;
-      const {data} = await axios.get(pricesURL);
+      }&side=${side}`;
+      const { data } = await axios.get(pricesURL);
       return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
@@ -201,7 +201,7 @@ export class ParaSwap {
         receiver: receiver || '',
       };
 
-      const {data} = await axios.post(txURL, txConfig);
+      const { data } = await axios.post(txURL, txConfig);
 
       return data as Transaction;
     } catch (e) {
@@ -220,7 +220,6 @@ export class ParaSwap {
     referrer: string,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
-    donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
     if (!this.adapters) {
@@ -250,7 +249,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       } else {
         return transaction.getTransactionBuyParams(
@@ -263,7 +261,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       }
     }
@@ -278,7 +275,6 @@ export class ParaSwap {
       referrer,
       gasPrice,
       receiver,
-      donatePercent,
       !!options.ignoreChecks,
     );
   }
@@ -328,7 +324,7 @@ export class ParaSwap {
           allowance: token.allowance || '0',
         }));
     } catch (e) {
-      return {message: e.message};
+      return { message: e.message };
     }
   }
 
@@ -348,12 +344,12 @@ export class ParaSwap {
       const allowances = allowanceOrError as Allowance[];
 
       if (!allowances.length) {
-        return {message: 'Not Found'};
+        return { message: 'Not Found' };
       }
 
       return allowances[0];
     } catch (e) {
-      return {message: e.message};
+      return { message: e.message };
     }
   }
 
@@ -385,7 +381,7 @@ export class ParaSwap {
 
       return contract.methods
         .approve(spender, amount)
-        .send({from: userAddress}, (err: any, txHash: string) => {
+        .send({ from: userAddress }, (err: any, txHash: string) => {
           if (err) return reject(err.message);
           resolve(txHash);
         });
@@ -394,7 +390,7 @@ export class ParaSwap {
 
   async getMarketNames(): Promise<string[] | APIError> {
     try {
-      const {data} = await axios.get(
+      const { data } = await axios.get(
         `${this.apiURL}/adapters/list?namesOnly=true`,
       );
 
@@ -412,11 +408,11 @@ export class ParaSwap {
       try {
         const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}/${token}`;
 
-        const {data} = await axios.get(tokensURL);
+        const { data } = await axios.get(tokensURL);
 
         resolve(data.token);
       } catch (e) {
-        reject({error: e.message});
+        reject({ error: e.message });
       }
     });
   }
@@ -426,7 +422,7 @@ export class ParaSwap {
       try {
         const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}`;
 
-        const {data} = await axios.get(tokensURL);
+        const { data } = await axios.get(tokensURL);
         const tokens = (data.tokens as Token[]).map(t => {
           let token = new Token(t.address, t.decimals, t.symbol);
           token.balance = t.balance;
@@ -436,7 +432,7 @@ export class ParaSwap {
 
         resolve(tokens);
       } catch (e) {
-        reject({error: e.message});
+        reject({ error: e.message });
       }
     });
   }
