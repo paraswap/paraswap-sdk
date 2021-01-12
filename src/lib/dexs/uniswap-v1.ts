@@ -5,7 +5,7 @@ import Adapter from './adapter';
 import { Address, EXCHANGES, OptimalRate } from '../../types';
 import { UniswapDEXData, DexParams } from './dex-types';
 
-export class Uniswap extends Adapter {
+export class UniswapV1 extends Adapter {
 
   static getDexData(optimalRate: OptimalRate): UniswapDEXData {
     return {

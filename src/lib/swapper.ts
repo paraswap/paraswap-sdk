@@ -1,6 +1,6 @@
 import { DEXData, DexParams, SwapData, ExchangeData } from './dexs/dex-types';
 import { Address, EXCHANGES } from '../types';
-import { Uniswap } from './dexs/uniswap';
+import { UniswapV1 } from './dexs/uniswap-v1';
 
 export class Swapper {
   constructor(private network: number, private web3Provider: any, private augustus: any) {
@@ -43,7 +43,7 @@ export class Swapper {
     for (let i = 0; i < exchangeData.length; i++) {
       switch (exchangeData[i].name) {
         case EXCHANGES.UNISWAP:
-          const uniswapReturnVal = await new Uniswap(this.network, this.web3Provider, this.augustus).buildSwap(
+          const uniswapReturnVal = await new UniswapV1(this.network, this.web3Provider, this.augustus).buildSwap(
             srcToken,
             destToken,
             exchangeData[i]

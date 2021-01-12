@@ -1,4 +1,4 @@
-import { Uniswap } from './dexs/uniswap';
+import { UniswapV1 } from './dexs/uniswap-v1';
 
 const web3Coder = require('web3-eth-abi');
 import Web3 from 'web3';
@@ -712,7 +712,7 @@ export class TransactionBuilder {
     const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
       switch (br.exchange) {
         case EXCHANGES.UNISWAP:
-          return Uniswap.getDexData(br);
+          return UniswapV1.getDexData(br);
       }
     });
 
