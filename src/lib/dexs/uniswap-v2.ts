@@ -26,21 +26,14 @@ export class UniswapV2 extends Adapter {
         ETHER_ADDRESS,
         ...data.path.slice(1),
       ];
-    } else if (this.isETHAddress(destToken)) {
-      return [
-        ...data.path.slice(0, data.path.length - 1),
-        ETHER_ADDRESS,
-      ];
     }
     return data.path;
   }
 
-  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
+  protected async swap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
     const router = this.getRouter(data);
 
     const path = this.pathWithETH(srcToken, destToken, data);
-
-    console.log('swap', { ...data, path });
 
     const calldata = router.methods.swap(
       data.srcAmount,
@@ -48,27 +41,25 @@ export class UniswapV2 extends Adapter {
       path,
     ).encodeABI();
 
+    const value = this.isETHAddress(srcToken) ? data.srcAmount : '0';
+
     return {
       callees: [data.router],
       calldata: [calldata],
-      values: [data.srcAmount],
+      values: [value],
     };
+  }
+
+  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
+    return this.swap(srcToken, destToken, data);
   }
 
   protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return {
-      callees: [],
-      calldata: [],
-      values: ['0'],
-    };
+    return this.swap(srcToken, destToken, data);
   }
 
   protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return {
-      callees: [],
-      calldata: [],
-      values: ['0'],
-    };
+    return this.swap(srcToken, destToken, data);
   }
 
 }
