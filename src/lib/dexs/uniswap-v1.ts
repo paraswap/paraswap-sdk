@@ -3,11 +3,11 @@ import UNISWAP_V1_FACTORY_ABI = require('../../abi/uniswap.v1.factory.json');
 
 import Adapter from './adapter';
 import { Address, EXCHANGES, OptimalRate } from '../../types';
-import { UniswapDEXData, DexParams } from './dex-types';
+import { UniswapV1DEXData, DexParams } from './dex-types';
 
 export class UniswapV1 extends Adapter {
 
-  static getDexData(optimalRate: OptimalRate): UniswapDEXData {
+  static getDexData(optimalRate: OptimalRate): UniswapV1DEXData {
     return {
       name: EXCHANGES.UNISWAP,
       srcAmount: optimalRate.srcAmount,
@@ -28,7 +28,7 @@ export class UniswapV1 extends Adapter {
     return block.timestamp + 600;
   }
 
-  async getExchange(srcToken: Address, destToken: Address, data: UniswapDEXData) {
+  async getExchange(srcToken: Address, destToken: Address, data: UniswapV1DEXData) {
     if (data.exchange) return data.exchange;
 
     const uniswapFactory = new this.web3Provider.eth.Contract(UNISWAP_V1_FACTORY_ABI, data.factory);
@@ -38,13 +38,13 @@ export class UniswapV1 extends Adapter {
     return await uniswapFactory.methods.getExchange(token).call();
   }
 
-  async getExchangeContract(srcToken: Address, destToken: Address, data: UniswapDEXData) {
+  async getExchangeContract(srcToken: Address, destToken: Address, data: UniswapV1DEXData) {
     const exchangeAddress = data.exchange || await this.getExchange(srcToken, destToken, data);
 
     return new this.web3Provider.eth.Contract(UNISWAP_V1_EXCHANGE_ABI, exchangeAddress);
   }
 
-  async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapDEXData): Promise<DexParams> {
+  async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
     const deadline = data.deadline || await this.getDeadline();
@@ -58,7 +58,7 @@ export class UniswapV1 extends Adapter {
     };
   }
 
-  async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapDEXData): Promise<DexParams> {
+  async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
     const deadline = data.deadline || await this.getDeadline();
@@ -83,7 +83,7 @@ export class UniswapV1 extends Adapter {
     };
   }
 
-  async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapDEXData): Promise<DexParams> {
+  async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
     const deadline = data.deadline || await this.getDeadline();

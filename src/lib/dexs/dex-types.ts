@@ -10,7 +10,7 @@ export type DEXData = {
   destAmount: string
 }
 
-export type UniswapDEXData = DEXData & {
+export type UniswapV1DEXData = DEXData & {
   exchange: string,
   factory?: string,
   deadline: number,
