@@ -222,7 +222,6 @@ export class ParaSwap {
     referrer: string,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
-    donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
     if (!this.adapters) {
@@ -252,7 +251,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       } else {
         return transaction.getTransactionBuyParams(
@@ -265,7 +263,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       }
     }
@@ -280,7 +277,6 @@ export class ParaSwap {
       referrer,
       gasPrice,
       receiver,
-      donatePercent,
       !!options.ignoreChecks,
     );
   }

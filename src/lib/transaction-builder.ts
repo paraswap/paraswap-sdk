@@ -598,7 +598,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -636,7 +635,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionSellParams> => {
     const path = await this.getSellPath(
       srcToken.address,
@@ -691,7 +689,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
     const augustusAddress = this.dexConf.augustus.exchange;
@@ -712,7 +709,6 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        donatePercent,
       );
 
       const swapMethodData = augustusContract.methods.multiSwap(params);
@@ -749,7 +745,6 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        donatePercent,
       );
 
       const augustusAddress = this.dexConf.augustus.exchange;

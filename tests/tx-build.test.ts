@@ -15,7 +15,6 @@ async function buildTxLocally(paraSwap: ParaSwap, params: any) {
     params.referrer,
     params.gasPrice,
     params.receiver,
-    params.donatePercent,
     params.options,
   );
 }
