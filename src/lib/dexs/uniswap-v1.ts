@@ -19,15 +19,6 @@ export class UniswapV1 extends Adapter {
     };
   }
 
-  async getBlock() {
-    return this.web3Provider.eth.getBlock('latest');
-  }
-
-  async getDeadline() {
-    const block = await this.getBlock();
-    return block.timestamp + 600;
-  }
-
   async getExchange(srcToken: Address, destToken: Address, data: UniswapV1DEXData) {
     if (data.exchange) return data.exchange;
 

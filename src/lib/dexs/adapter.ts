@@ -1,6 +1,6 @@
-import { Address, OptimalRate } from '../../types';
+import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
 import { DEXData, DexParams } from './dex-types';
-import { ETHER_ADDRESS } from './kyber';
+import {Weth} from "./weth";
 
 export default abstract class Adapter {
   constructor(protected network: number, protected web3Provider: any, protected augustus: any) {
@@ -8,9 +8,20 @@ export default abstract class Adapter {
 
   isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
+  isWETHAddress = (address: string, network: number) => address.toLowerCase() === Weth.getAddress(network).toLowerCase();
+
   static getDexData(_: OptimalRate): DEXData {
     throw new Error('not implemented!');
   };
+
+  async getBlock() {
+    return this.web3Provider.eth.getBlock('latest');
+  }
+
+  async getDeadline() {
+    const block = await this.getBlock();
+    return block.timestamp + 600;
+  }
 
   async buildSwap(srcToken: Address, destToken: Address, data: Required<DEXData>): Promise<DexParams> {
     try {

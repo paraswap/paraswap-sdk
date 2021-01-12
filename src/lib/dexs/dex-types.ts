@@ -1,3 +1,5 @@
+import { Address } from '../../types';
+
 export type DexParams = {
   callees: string[],
   calldata: string[],
@@ -15,6 +17,12 @@ export type UniswapV1DEXData = DEXData & {
   factory?: string,
   deadline: number,
   minEthBought: string,
+}
+
+export type UniswapV2DEXData = DEXData & {
+  exchange?: Address,
+  path: Address[],
+  router: Address,
 }
 
 export type ExchangeData = {

@@ -31,6 +31,7 @@ import { SwapSide } from '../constants';
 
 import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
+import { UniswapV2 } from './dexs/uniswap-v2';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -713,6 +714,8 @@ export class TransactionBuilder {
       switch (br.exchange) {
         case EXCHANGES.UNISWAP:
           return UniswapV1.getDexData(br);
+        case EXCHANGES.UNISWAPV2:
+          return UniswapV2.getDexData(br);
       }
     });
 
