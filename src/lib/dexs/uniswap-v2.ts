@@ -52,20 +52,11 @@ export class UniswapV2 extends Adapter {
       destToken,
       data,
       swapData,
-      data.router
-    )
+      data.router,
+    );
   }
 
-  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
+  async buildSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
     return this._swap(srcToken, destToken, data);
   }
-
-  protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return this._swap(srcToken, destToken, data);
-  }
-
-  protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return this._swap(srcToken, destToken, data);
-  }
-
 }

@@ -40,13 +40,15 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || await this.getDeadline();
 
-    const calldata = uniswapExchange.methods.ethToTokenSwapInput(data.destAmount, deadline).encodeABI();
+    const swapData = uniswapExchange.methods.ethToTokenSwapInput(data.destAmount, deadline).encodeABI();
 
-    return {
-      callees: [uniswapExchange._address],
-      calldata: [calldata],
-      values: [data.srcAmount],
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address
+    );
   }
 
   async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
@@ -54,24 +56,19 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || await this.getDeadline();
 
-    const approveData = this.augustus.methods.approve(
-      srcToken,
-      uniswapExchange._address,
-      data.srcAmount
-    ).encodeABI();
-
-    const calldata = uniswapExchange.methods.tokenToEthSwapInput(
+    const swapData = uniswapExchange.methods.tokenToEthSwapInput(
       data.srcAmount,
       data.destAmount,
       deadline
     ).encodeABI();
 
-
-    return {
-      callees: [this.augustus._address, uniswapExchange._address],
-      calldata: [approveData, calldata],
-      values: ["0", "0"]
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address
+    );
   }
 
   async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
@@ -79,13 +76,7 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || await this.getDeadline();
 
-    const approveData = this.augustus.methods.approve(
-      srcToken,
-      uniswapExchange._address,
-      data.srcAmount
-    ).encodeABI();
-
-    const calldata = uniswapExchange.methods.tokenToTokenSwapInput(
+    const swapData = uniswapExchange.methods.tokenToTokenSwapInput(
       data.srcAmount,
       data.destAmount,
       data.minEthBought,
@@ -93,11 +84,13 @@ export class UniswapV1 extends Adapter {
       destToken
     ).encodeABI();
 
-    return {
-      callees: [this.augustus._address, uniswapExchange._address],
-      calldata: [approveData, calldata],
-      values: ["0", "0"]
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address
+    );
   }
 
 }

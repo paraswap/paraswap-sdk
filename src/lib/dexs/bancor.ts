@@ -41,15 +41,7 @@ export class Bancor extends Adapter {
     );
   }
 
-  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: BancorDEXData): Promise<DexParams> {
+  async buildSwap(srcToken: Address, destToken: Address, data: Required<BancorDEXData>): Promise<DexParams> {
     return this._swap(srcToken, destToken, data);
-  };
-
-  protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: BancorDEXData): Promise<DexParams> {
-    return this._swap(srcToken, destToken, data);
-  };
-
-  protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: BancorDEXData): Promise<DexParams> {
-    return this._swap(srcToken, destToken, data);
-  };
+  }
 }
