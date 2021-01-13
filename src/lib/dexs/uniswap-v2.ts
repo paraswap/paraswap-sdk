@@ -6,9 +6,9 @@ import UNISWAP_V2_ROUTER_ABI = require('../../abi/uniswap.v2.router.json');
 import { ETHER_ADDRESS } from '../transaction-builder';
 
 export class UniswapV2 extends Adapter {
-  static getDexData(optimalRate: OptimalRate): UniswapV2DEXData {
+  static getDexData(optimalRate: OptimalRate, name: string): UniswapV2DEXData {
     return {
-      name: EXCHANGES.UNISWAPV2,
+      name,
       srcAmount: optimalRate.srcAmount,
       destAmount: '1',
       path: optimalRate.data.path,
@@ -26,7 +26,13 @@ export class UniswapV2 extends Adapter {
         ETHER_ADDRESS,
         ...data.path.slice(1),
       ];
+    } else if (this.isETHAddress(destToken)) {
+      return [
+        ...data.path.slice(0, data.path.length - 1),
+        ETHER_ADDRESS,
+      ];
     }
+
     return data.path;
   }
 
@@ -35,18 +41,28 @@ export class UniswapV2 extends Adapter {
 
     const path = this.pathWithETH(srcToken, destToken, data);
 
-    const calldata = router.methods.swap(
+    const approveData = this.augustus.methods.approve(
+      srcToken,
+      data.router,
+      data.srcAmount,
+    ).encodeABI();
+
+    const swapData = router.methods.swap(
       data.srcAmount,
       data.destAmount,
       path,
     ).encodeABI();
 
-    const value = this.isETHAddress(srcToken) ? data.srcAmount : '0';
+    const callees = this.isETHAddress(srcToken) ? [data.router] : [this.augustus._address, data.router];
+
+    const calldata = this.isETHAddress(srcToken) ? [swapData] : [approveData, swapData];
+
+    const values = this.isETHAddress(srcToken) ? [data.srcAmount] : ['0', '0'];
 
     return {
-      callees: [data.router],
-      calldata: [calldata],
-      values: [value],
+      callees,
+      calldata,
+      values,
     };
   }
 

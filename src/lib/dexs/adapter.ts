@@ -10,7 +10,7 @@ export default abstract class Adapter {
 
   isWETHAddress = (address: string, network: number) => address.toLowerCase() === Weth.getAddress(network).toLowerCase();
 
-  static getDexData(_: OptimalRate): DEXData {
+  static getDexData(_: OptimalRate, __: string): DEXData {
     throw new Error('not implemented!');
   };
 

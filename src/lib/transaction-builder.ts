@@ -711,11 +711,14 @@ export class TransactionBuilder {
 
     // @ts-ignore
     const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
-      switch (br.exchange) {
-        case EXCHANGES.UNISWAP:
-          return UniswapV1.getDexData(br);
-        case EXCHANGES.UNISWAPV2:
-          return UniswapV2.getDexData(br);
+      switch (br.exchange.toLowerCase()) {
+        case "uniswap":
+          return UniswapV1.getDexData(br, br.exchange);
+        case 'uniswapv2':
+        case 'sushiswap':
+        case 'defiswap':
+        case 'linkswap':
+          return UniswapV2.getDexData(br, br.exchange);
       }
     });
 

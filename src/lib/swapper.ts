@@ -10,7 +10,7 @@ export class Swapper {
   private buildExchangeData(dataObject: DexParams): ExchangeData {
     const calldata = dataObject.calldata;
 
-    let concatenatedCallData = "0x";
+    let concatenatedCallData = '0x';
 
     let startIndex = [0];
 
@@ -38,16 +38,18 @@ export class Swapper {
     let dataObject: DexParams = {
       callees: [],
       calldata: [],
-      values: []
+      values: [],
     };
+
+    console.log('exchangeData', exchangeData);
 
     for (let i = 0; i < exchangeData.length; i++) {
       switch (exchangeData[i].name.toLowerCase()) {
-        case "uniswap":
+        case 'uniswap':
           const uniswapV1 = await new UniswapV1(this.network, this.web3Provider, this.augustus).buildSwap(
             srcToken,
             destToken,
-            exchangeData[i]
+            exchangeData[i],
           );
 
           dataObject.callees = dataObject.callees.concat(uniswapV1.callees);
@@ -55,14 +57,14 @@ export class Swapper {
           dataObject.values = dataObject.values.concat(uniswapV1.values);
           break;
 
-        case "uniswapv2":
-        case "sushiswap":
-        case "defiswap":
-        case "linkswap":
+        case 'uniswapv2':
+        case 'sushiswap':
+        case 'defiswap':
+        case 'linkswap':
           const uniswapV2 = await new UniswapV2(this.network, this.web3Provider, this.augustus).buildSwap(
             srcToken,
             destToken,
-            exchangeData[i]
+            exchangeData[i],
           );
 
           dataObject.callees = dataObject.callees.concat(uniswapV2.callees);
@@ -71,14 +73,14 @@ export class Swapper {
 
           break;
         default:
-          throw new Error("Unsupported Exchange: " + exchangeData[i].name)
+          throw new Error('Unsupported Exchange: ' + exchangeData[i].name);
       }
     }
 
     const returnData = this.buildExchangeData(dataObject);
 
     if (!returnData) {
-      throw new Error("Operation failed!!");
+      throw new Error('Operation failed!!');
     }
 
     return {
@@ -86,7 +88,7 @@ export class Swapper {
       srcToken,
       destToken,
       srcAmount,
-      minDestinationAmount
+      minDestinationAmount,
     };
   }
 

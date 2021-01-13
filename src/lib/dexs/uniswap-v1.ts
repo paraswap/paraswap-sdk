@@ -7,9 +7,9 @@ import { UniswapV1DEXData, DexParams } from './dex-types';
 
 export class UniswapV1 extends Adapter {
 
-  static getDexData(optimalRate: OptimalRate): UniswapV1DEXData {
+  static getDexData(optimalRate: OptimalRate, name: string): UniswapV1DEXData {
     return {
-      name: EXCHANGES.UNISWAP,
+      name,
       srcAmount: optimalRate.srcAmount,
       destAmount: '1',
       exchange: optimalRate.data.exchange,
@@ -55,8 +55,8 @@ export class UniswapV1 extends Adapter {
     const deadline = data.deadline || await this.getDeadline();
 
     const approveData = this.augustus.methods.approve(
-      data.exchange,
       srcToken,
+      uniswapExchange._address,
       data.srcAmount
     ).encodeABI();
 
@@ -80,8 +80,8 @@ export class UniswapV1 extends Adapter {
     const deadline = data.deadline || await this.getDeadline();
 
     const approveData = this.augustus.methods.approve(
-      data.exchange,
       srcToken,
+      uniswapExchange._address,
       data.srcAmount
     ).encodeABI();
 
