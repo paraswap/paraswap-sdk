@@ -126,6 +126,8 @@ type OptimalRates = {
   priceWithSlippage?: string;
   multiPath?: boolean;
   bestRoute: OptimalRate[];
+  bestRouteGasCostUSD?: NumberAsString;
+  bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
   others: SimpleComputedRate[];
   fromUSD?: NumberAsString;
