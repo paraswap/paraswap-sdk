@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import * as async from 'async';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -11,12 +10,12 @@ import {
   Allowance,
   APIError,
   BuildOptions,
-  ETHER_ADDRESS,
   NetworkID,
   PriceString,
   RateOptions,
   Transaction,
   OptimalRatesWithPartnerFees,
+  EXCHANGES,
 } from './types';
 
 import ERC20_ABI = require('./abi/erc20.json');

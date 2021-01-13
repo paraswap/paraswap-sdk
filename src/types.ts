@@ -252,7 +252,6 @@ type TransactionBuyParams = {
 };
 
 type TransactionSellParams = {
-  value: PriceString;
   fromToken: Address;
   toToken: Address;
   fromAmount: PriceString;
