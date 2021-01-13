@@ -39,6 +39,14 @@ export type KyberDEXData = DEXData & {
   hint?: string,
 }
 
+export type CurveDexData = DEXData & {
+  minConversionRate: string,
+  exchange: string,
+  "i": number,
+  "j": number,
+  "underlyingSwap": boolean,
+}
+
 export type BancorDEXData = DEXData & {
   minDestToken: string,
   path: Address[],
