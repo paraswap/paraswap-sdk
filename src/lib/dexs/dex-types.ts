@@ -25,6 +25,12 @@ export type UniswapV2DEXData = DEXData & {
   router: Address,
 }
 
+export type KyberDEXData = DEXData & {
+  minConversionRate: string,
+  maxDestAmount?: string,
+  hint?: string,
+}
+
 export type ExchangeData = {
   callees: string[],
   values: string[]
