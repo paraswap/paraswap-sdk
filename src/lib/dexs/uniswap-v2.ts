@@ -1,5 +1,5 @@
 import Adapter from './adapter';
-import { Address, EXCHANGES, OptimalRate } from '../../types';
+import { Address, OptimalRate } from '../../types';
 import { DexParams, UniswapV2DEXData } from './dex-types';
 
 import UNISWAP_V2_ROUTER_ABI = require('../../abi/uniswap.v2.router.json');
@@ -36,16 +36,10 @@ export class UniswapV2 extends Adapter {
     return data.path;
   }
 
-  protected async swap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
+  private async _swap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
     const router = this.getRouter(data);
 
     const path = this.pathWithETH(srcToken, destToken, data);
-
-    const approveData = this.augustus.methods.approve(
-      srcToken,
-      data.router,
-      data.srcAmount,
-    ).encodeABI();
 
     const swapData = router.methods.swap(
       data.srcAmount,
@@ -53,29 +47,25 @@ export class UniswapV2 extends Adapter {
       path,
     ).encodeABI();
 
-    const callees = this.isETHAddress(srcToken) ? [data.router] : [this.augustus._address, data.router];
-
-    const calldata = this.isETHAddress(srcToken) ? [swapData] : [approveData, swapData];
-
-    const values = this.isETHAddress(srcToken) ? [data.srcAmount] : ['0', '0'];
-
-    return {
-      callees,
-      calldata,
-      values,
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      data.router
+    )
   }
 
   protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return this.swap(srcToken, destToken, data);
+    return this._swap(srcToken, destToken, data);
   }
 
   protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return this.swap(srcToken, destToken, data);
+    return this._swap(srcToken, destToken, data);
   }
 
   protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV2DEXData): Promise<DexParams> {
-    return this.swap(srcToken, destToken, data);
+    return this._swap(srcToken, destToken, data);
   }
 
 }
