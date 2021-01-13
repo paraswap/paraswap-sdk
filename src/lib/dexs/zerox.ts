@@ -126,7 +126,7 @@ export class Zerox extends Adapter {
     const wethContract = new this.web3Provider.eth.Contract(ERC20_ABI, wethToken);
     const depositWethData = wethContract.methods.deposit().encodeABI();
 
-    const wethToTokenData = this.getTokenToTokenSwapData(srcToken, data);
+    const wethToTokenData = this.getTokenToTokenSwapData(wethToken, data);
 
     return {
       callees: [wethToken, ...wethToTokenData.callees],
@@ -138,7 +138,7 @@ export class Zerox extends Adapter {
   protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: ZeroXEXData): Promise<DexParams> {
     const wethToken = Weth.getAddress(this.network);
     const wethToTokenData = await this.getTokenToTokenSwapData(srcToken, data);
-    const withdrawWethData = this.augustus.contract.methods.withdrawAllWETH(wethToken).encodeABI();
+    const withdrawWethData = this.augustus.methods.withdrawAllWETH(wethToken).encodeABI();
 
     return {
       callees: [...wethToTokenData.callees, this.augustus._address],
@@ -148,6 +148,6 @@ export class Zerox extends Adapter {
   };
 
   protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: ZeroXEXData): Promise<DexParams> {
-    throw new Error('not implemented!');
+    return this.tokenToEthSwap(srcToken, destToken, data);
   };
 }
