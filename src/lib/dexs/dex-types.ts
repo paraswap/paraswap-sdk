@@ -31,6 +31,12 @@ export type KyberDEXData = DEXData & {
   hint?: string,
 }
 
+export type BancorDEXData = DEXData & {
+  minDestToken: string,
+  path: Address[],
+  bancorNetwork?: string
+}
+
 export type ExchangeData = {
   callees: string[],
   values: string[]
