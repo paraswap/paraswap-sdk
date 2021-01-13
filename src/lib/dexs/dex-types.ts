@@ -12,6 +12,14 @@ export type DEXData = {
   destAmount: string
 }
 
+export type ZeroXEXData = DEXData & {
+  minConversionRate: string,
+  orders: any[],
+  signatures: any[],
+  networkFees?: string,
+  isV3: boolean
+}
+
 export type UniswapV1DEXData = DEXData & {
   exchange: string,
   factory?: string,

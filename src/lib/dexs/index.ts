@@ -4,6 +4,7 @@ import { UniswapV2 } from './uniswap-v2';
 import { UniswapV1 } from './uniswap-v1';
 import { Kyber } from './kyber';
 import { Bancor } from './bancor';
+import { Zerox } from './zerox';
 
 const DEXS: { [dex: string]: typeof Adapter } = {
   'uniswap': UniswapV1,
@@ -13,6 +14,7 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   'linkswap': UniswapV2,
   'kyber': Kyber,
   'bancor': Bancor,
+  'paraswappool': Zerox
 };
 
 export { DEXS };

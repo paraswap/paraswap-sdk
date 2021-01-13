@@ -1,5 +1,5 @@
 import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
-import { DEXData, DexParams, UniswapV2DEXData } from './dex-types';
+import { DEXData, DexParams } from './dex-types';
 import { Weth } from './weth';
 
 export default class Adapter {
