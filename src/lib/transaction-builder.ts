@@ -1,5 +1,3 @@
-import { UniswapV1 } from './dexs/uniswap-v1';
-
 const web3Coder = require('web3-eth-abi');
 import Web3 from 'web3';
 
@@ -20,7 +18,7 @@ import {
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
-  OptimalRatesWithPartnerFeesBuy, EXCHANGES,
+  OptimalRatesWithPartnerFeesBuy, OptimalRate,
 } from '../types';
 
 import { Token } from './token';
@@ -31,7 +29,7 @@ import { SwapSide } from '../constants';
 
 import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
-import { UniswapV2 } from './dexs/uniswap-v2';
+import { DEXS } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -709,16 +707,13 @@ export class TransactionBuilder {
 
     const swapper = new Swapper(this.network, this.web3Provider, this.augustusContract);
 
-    // @ts-ignore
     const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
-      switch (br.exchange.toLowerCase()) {
-        case "uniswap":
-          return UniswapV1.getDexData(br, br.exchange);
-        case 'uniswapv2':
-        case 'sushiswap':
-        case 'defiswap':
-        case 'linkswap':
-          return UniswapV2.getDexData(br, br.exchange);
+      const Dex = DEXS[br.exchange.toLowerCase()];
+
+      if (Dex) {
+        return Dex.getDexData(br, br.exchange);
+      } else {
+        throw new Error('Unsupported Exchange: ' + br.exchange);
       }
     });
 

@@ -1,8 +1,8 @@
 import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
 import { DEXData, DexParams } from './dex-types';
-import {Weth} from "./weth";
+import { Weth } from './weth';
 
-export default abstract class Adapter {
+export default class Adapter {
   constructor(protected network: number, protected web3Provider: any, protected augustus: any) {
   }
 
@@ -37,9 +37,15 @@ export default abstract class Adapter {
     }
   };
 
-  protected abstract async ethToTokenSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams>;
+  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams> {
+    throw new Error('not implemented!');
+  };
 
-  protected abstract async tokenToEthSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams>;
+  protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams> {
+    throw new Error('not implemented!');
+  };
 
-  protected abstract async tokenToTokenSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams>;
+  protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams> {
+    throw new Error('not implemented!');
+  };
 }

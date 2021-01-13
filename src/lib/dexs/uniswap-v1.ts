@@ -2,7 +2,7 @@ import UNISWAP_V1_EXCHANGE_ABI = require('../../abi/uniswap.v1.exchange.json');
 import UNISWAP_V1_FACTORY_ABI = require('../../abi/uniswap.v1.factory.json');
 
 import Adapter from './adapter';
-import { Address, EXCHANGES, OptimalRate } from '../../types';
+import { Address, OptimalRate } from '../../types';
 import { UniswapV1DEXData, DexParams } from './dex-types';
 
 export class UniswapV1 extends Adapter {
