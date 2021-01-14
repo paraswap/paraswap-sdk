@@ -8,6 +8,7 @@ import { Zerox } from './zerox';
 import { Curve } from './curve';
 import { Aave } from './aave';
 import { Compound } from './compound';
+import { Weth } from './weth';
 
 const DEXS: { [dex: string]: typeof Adapter } = {
   'uniswap': UniswapV1,

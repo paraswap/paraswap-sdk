@@ -1,14 +1,11 @@
 import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
 import { DEXData, DexParams } from './dex-types';
-import { Weth } from './weth';
 
 export default class Adapter {
   constructor(protected network: number, protected web3Provider: any, protected augustus?: any) {
   }
 
   isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
-
-  isWETHAddress = (address: string, network: number) => address.toLowerCase() === Weth.getAddress(network).toLowerCase();
 
   static getDexData(_: OptimalRate, __: string): DEXData {
     throw new Error('not implemented!');
