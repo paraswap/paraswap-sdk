@@ -20,7 +20,7 @@ export default class Adapter {
     return { callee: this.augustus._address, calldata, value: '0' };
   }
 
-  protected async swap(srcToken: Address, destToken: Address, data: DEXData, swapData: string, swapExchange: Address): Promise<DexParams> {
+  protected swap(srcToken: Address, destToken: Address, data: DEXData, swapData: string, swapExchange: Address): DexParams {
     const approveCallData = this.getApproveCallData(srcToken, data.srcAmount, swapExchange);
 
     const callees = this.isETHAddress(srcToken) ? [swapExchange] : [approveCallData.callee, swapExchange];

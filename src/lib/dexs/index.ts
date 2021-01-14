@@ -18,6 +18,8 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   'paraswappool': Zerox,
   'curve': Curve,
   'curve3': Curve,
+  'aave': Aave,
+  'aave2': Aave,
 };
 
 export { DEXS };

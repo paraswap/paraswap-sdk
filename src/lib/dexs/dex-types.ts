@@ -39,6 +39,11 @@ export type KyberDEXData = DEXData & {
   hint?: string,
 }
 
+export type AaveDexData = DEXData & {
+  fromAToken: boolean,
+  isV2: boolean
+}
+
 export type CurveDexData = DEXData & {
   minConversionRate: string,
   exchange: string,
