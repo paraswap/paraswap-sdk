@@ -44,6 +44,10 @@ export type AaveDexData = DEXData & {
   isV2: boolean
 }
 
+export type CompoundDEXData = DEXData & {
+  fromCToken: boolean
+}
+
 export type CurveDexData = DEXData & {
   minConversionRate: string,
   exchange: string,

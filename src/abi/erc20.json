@@ -1,6 +1,21 @@
 [
   {
     "constant": false,
+    "inputs": [
+      {
+        "name": "mintAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function",
+    "signature": "0x1249c58b"
+  },
+  {
+    "constant": false,
     "inputs": [],
     "name": "deposit",
     "outputs": [],
@@ -19,7 +34,7 @@
     ],
     "name": "redeem",
     "outputs": [],
-    "payable": false,
+    "payable": true,
     "stateMutability": "nonpayable",
     "type": "function"
   },
