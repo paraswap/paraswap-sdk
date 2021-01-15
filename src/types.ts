@@ -252,12 +252,10 @@ type TransactionBuyParams = {
   route: TransactionBuyRoute[];
   mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
 type TransactionSellParams = {
-  value: PriceString;
   fromToken: Address;
   toToken: Address;
   fromAmount: PriceString;
@@ -266,8 +264,21 @@ type TransactionSellParams = {
   path: TransactionPath<TransactionSellRoute>[];
   mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
+};
+
+type SimpleSwapTransactionParams = {
+  fromToken: Address,
+  toToken: Address,
+  fromAmount: string,
+  toAmount: string,
+  expectedAmount: string,
+  callees: string[],
+  exchangeData: string,
+  startIndexes: number[],
+  values: string[],
+  beneficiary: Address,
+  referrer: string,
 };
 
 type TransactionData = {
@@ -326,6 +337,7 @@ export {
   TransactionBuyRoute,
   TransactionBuyParams,
   TransactionSellParams,
+  SimpleSwapTransactionParams,
   TransactionData,
   BuildOptions,
 };

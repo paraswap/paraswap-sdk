@@ -1,8 +1,16 @@
 [
   {
     "inputs": [
-      { "internalType": "address", "name": "whitelist", "type": "address" },
-      { "internalType": "address", "name": "gasToken", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "whitelist",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "gasToken",
+        "type": "address"
+      },
       {
         "internalType": "address",
         "name": "partnerRegistry",
@@ -13,7 +21,11 @@
         "name": "feeWallet",
         "type": "address"
       },
-      { "internalType": "address", "name": "gstHolder", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "gstHolder",
+        "type": "address"
+      }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -59,37 +71,12 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "expectedAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
         "internalType": "string",
         "name": "referrer",
         "type": "string"
       }
     ],
     "name": "Bought",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "donationBasisPoints",
-        "type": "uint256"
-      }
-    ],
-    "name": "Donation",
     "type": "event"
   },
   {
@@ -136,7 +123,12 @@
     "name": "OwnershipTransferred",
     "type": "event"
   },
-  { "anonymous": false, "inputs": [], "name": "Paused", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "Paused",
+    "type": "event"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -192,36 +184,47 @@
     "name": "Swapped",
     "type": "event"
   },
-  { "anonymous": false, "inputs": [], "name": "Unpaused", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "Unpaused",
+    "type": "event"
+  },
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "fromToken",
+        "internalType": "address",
+        "name": "token",
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "toToken",
+        "internalType": "address",
+        "name": "to",
         "type": "address"
       },
-      { "internalType": "uint256", "name": "fromAmount", "type": "uint256" },
-      { "internalType": "uint256", "name": "toAmount", "type": "uint256" },
       {
         "internalType": "uint256",
-        "name": "expectedAmount",
+        "name": "amount",
         "type": "uint256"
-      },
+      }
+    ],
+    "name": "approve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "components": [
           {
-            "internalType": "address payable",
-            "name": "exchange",
+            "internalType": "contract IERC20",
+            "name": "fromToken",
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "targetExchange",
+            "internalType": "contract IERC20",
+            "name": "toToken",
             "type": "address"
           },
           {
@@ -229,102 +232,20 @@
             "name": "fromAmount",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "toAmount", "type": "uint256" },
-          { "internalType": "bytes", "name": "payload", "type": "bytes" },
-          { "internalType": "uint256", "name": "networkFee", "type": "uint256" }
-        ],
-        "internalType": "struct Utils.BuyRoute[]",
-        "name": "route",
-        "type": "tuple[]"
-      },
-      { "internalType": "uint256", "name": "mintPrice", "type": "uint256" },
-      {
-        "internalType": "address payable",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "donationBasisPoints",
-        "type": "uint256"
-      },
-      { "internalType": "string", "name": "referrer", "type": "string" }
-    ],
-    "name": "buy",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "gstHolder", "type": "address" }
-    ],
-    "name": "changeGSTHolder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getFeeWallet",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPartnerRegistry",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTokenTransferProxy",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getVersion",
-    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getWhitelistAddress",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "fromToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "toToken",
-        "type": "address"
-      },
-      { "internalType": "uint256", "name": "fromAmount", "type": "uint256" },
-      { "internalType": "uint256", "name": "toAmount", "type": "uint256" },
-      {
-        "internalType": "uint256",
-        "name": "expectedAmount",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          { "internalType": "address", "name": "to", "type": "address" },
           {
             "internalType": "uint256",
-            "name": "totalNetworkFee",
+            "name": "toAmount",
             "type": "uint256"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "referrer",
+            "type": "string"
           },
           {
             "components": [
@@ -340,63 +261,253 @@
               },
               {
                 "internalType": "uint256",
-                "name": "percent",
+                "name": "fromAmount",
                 "type": "uint256"
               },
-              { "internalType": "bytes", "name": "payload", "type": "bytes" },
+              {
+                "internalType": "uint256",
+                "name": "toAmount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "payload",
+                "type": "bytes"
+              },
               {
                 "internalType": "uint256",
                 "name": "networkFee",
                 "type": "uint256"
               }
             ],
-            "internalType": "struct Utils.Route[]",
-            "name": "routes",
+            "internalType": "struct Utils.BuyRoute[]",
+            "name": "route",
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct Utils.Path[]",
-        "name": "path",
-        "type": "tuple[]"
-      },
-      { "internalType": "uint256", "name": "mintPrice", "type": "uint256" },
-      {
-        "internalType": "address payable",
-        "name": "beneficiary",
-        "type": "address"
-      },
+        "internalType": "struct Utils.BuyData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "name": "buy",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "donationBasisPoints",
+        "name": "",
         "type": "uint256"
-      },
-      { "internalType": "string", "name": "referrer", "type": "string" }
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "gstHolder",
+        "type": "address"
+      }
+    ],
+    "name": "changeGSTHolder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFeeWallet",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getGasMintPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPartnerRegistry",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTokenTransferProxy",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVersion",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWhitelistAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "fromToken",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "toToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fromAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "toAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expectedAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "referrer",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "totalNetworkFee",
+                "type": "uint256"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address payable",
+                    "name": "exchange",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "targetExchange",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "percent",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "payload",
+                    "type": "bytes"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "networkFee",
+                    "type": "uint256"
+                  }
+                ],
+                "internalType": "struct Utils.Route[]",
+                "name": "routes",
+                "type": "tuple[]"
+              }
+            ],
+            "internalType": "struct Utils.Path[]",
+            "name": "path",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Utils.SellData",
+        "name": "data",
+        "type": "tuple"
+      }
     ],
     "name": "multiSwap",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "token", "type": "address" },
+    "outputs": [
       {
-        "internalType": "address payable",
-        "name": "destination",
+        "internalType": "address",
+        "name": "",
         "type": "address"
-      },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      }
     ],
-    "name": "ownerTransferTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -409,7 +520,13 @@
   {
     "inputs": [],
     "name": "paused",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -436,6 +553,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "gasMintPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "setGasMintPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "partnerRegistry",
         "type": "address"
@@ -448,7 +578,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "whitelisted", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "whitelisted",
+        "type": "address"
+      }
     ],
     "name": "setWhitelistAddress",
     "outputs": [],
@@ -457,9 +591,163 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "contract IERC20",
+        "name": "fromToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fromAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "toAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "callees",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "exchangeData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "startIndexes",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address payable",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "referrer",
+        "type": "string"
+      }
+    ],
+    "name": "simplBuy",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "fromToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fromAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "toAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expectedAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "callees",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "exchangeData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "startIndexes",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address payable",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "referrer",
+        "type": "string"
+      }
+    ],
+    "name": "simpleSwap",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "destination",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -471,5 +759,21 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "stateMutability": "payable", "type": "receive" }
+  {
+    "inputs": [
+      {
+        "internalType": "contract IWETH",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawAllWETH",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
 ]

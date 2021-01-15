@@ -1,4 +1,7 @@
+import { Cofix } from './dexs/cofix';
+
 const web3Coder = require('web3-eth-abi');
+import Web3 from 'web3';
 
 import BigNumber from 'bignumber.js';
 import _ = require('lodash');
@@ -17,14 +20,18 @@ import {
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
-  OptimalRatesWithPartnerFeesBuy,
+  OptimalRatesWithPartnerFeesBuy, OptimalRate, SimpleSwapTransactionParams,
 } from '../types';
-import Web3 from 'web3';
+
 import { Token } from './token';
 import { ZeroXOrder } from './dexs/zerox';
 import { Oasis } from './dexs/oasis';
 import { Kyber } from './dexs/kyber';
 import { SwapSide } from '../constants';
+
+import { Swapper } from './swapper';
+import { DEXData } from './dexs/dex-types';
+import { DEXS } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -46,16 +53,24 @@ bancor, curve
 */
 
 export class TransactionBuilder {
+  augustusContract: any;
+
   constructor(
     private network: number,
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
   ) {
+    const augustusAddress = this.dexConf.augustus.exchange;
+
+    this.augustusContract = new this.web3Provider.eth.Contract(
+      AUGUSTUS_ABI,
+      augustusAddress,
+    );
   }
 
   multiSwapSteps = (priceRoute: OptimalRatesWithPartnerFees) => {
-    return priceRoute.multiRoute && priceRoute.multiRoute.length || 1;
+    return (priceRoute.multiRoute && priceRoute.multiRoute.length) || 1;
   };
 
   private isETHAddress = (address: string) =>
@@ -177,17 +192,42 @@ export class TransactionBuilder {
 
       case 'balancer':
         const { swaps } = data;
-
         return web3Coder.encodeParameter(
           {
-            ParentStruct: {
-              'swaps[]': {
-                pool: 'address',
-                tokenInParam: 'uint',
-                tokenOutParam: 'uint',
-                maxPrice: 'uint',
+            name: 'ParentStruct',
+            type: 'tuple',
+            components: [
+              {
+                name: 'swaps',
+                type: 'tuple[][]',
+                components: [
+                  {
+                    name: 'pool',
+                    type: 'address',
+                  },
+                  {
+                    name: 'tokenIn',
+                    type: 'address',
+                  },
+                  {
+                    name: 'tokenOut',
+                    type: 'address',
+                  },
+                  {
+                    name: 'swapAmount',
+                    type: 'uint',
+                  },
+                  {
+                    name: 'limitReturnAmount',
+                    type: 'uint',
+                  },
+                  {
+                    name: 'maxPrice',
+                    type: 'uint',
+                  },
+                ],
               },
-            },
+            ],
           },
           { swaps },
         );
@@ -316,6 +356,7 @@ export class TransactionBuilder {
       case 'uniswapv2':
       case 'sushiswap':
       case 'defiswap':
+      case 'linkswap':
       case 'shell':
         return true;
       /*
@@ -343,10 +384,7 @@ export class TransactionBuilder {
           .times(payload.orders.length)
           .toFixed();
       case 'cofix':
-        const fee = new BigNumber(1e18).dividedBy(100);
-        return this.isETHAddress(srcToken) || this.isETHAddress(destToken)
-          ? fee.toFixed(0)
-          : fee.times(2).toFixed(0);
+        return new Cofix(this.network, this.web3Provider).getNetworkFees(srcToken, destToken);
       default:
         return '0';
     }
@@ -469,6 +507,13 @@ export class TransactionBuilder {
     }
   };
 
+  private getSimpleSwapValue = (params: SimpleSwapTransactionParams) => {
+    return params.values.reduce((acc, value) => {
+      acc = new BigNumber(acc).plus(value).toFixed(0);
+      return acc;
+    }, '0');
+  };
+
   private getValue = (
     srcToken: Address,
     srcAmount: string,
@@ -573,7 +618,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -597,9 +641,8 @@ export class TransactionBuilder {
       // we keep route structure similar to sell
       // in lieu of eventually having multihop with buy
       route: route[0]!.routes,
-      mintPrice: '1',
+      mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -614,7 +657,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
   ): Promise<TransactionSellParams> => {
     const path = await this.getSellPath(
       srcToken.address,
@@ -623,18 +665,15 @@ export class TransactionBuilder {
       gasPrice,
     );
 
-    const value = this.getValue(srcToken.address!, srcAmount, path);
     return {
-      value,
       fromToken: srcToken.address,
       toToken: destToken.address,
       fromAmount: srcAmount,
       toAmount: minAmountOut,
       expectedAmount: priceRoute.destAmount,
       path,
-      mintPrice: '1',
+      mintPrice: '0',
       beneficiary: receiver,
-      donationBasisPoints: new BigNumber(donatePercent).times(100).toFixed(0),
       referrer,
     };
   };
@@ -656,12 +695,54 @@ export class TransactionBuilder {
     const multiplier = new BigNumber(GAS_MULTIPLIER).times(multiSwapSteps);
 
     const gasOverhead =
-      GAS_MULTIPLIER > 0
-        ? new BigNumber(1).plus(multiplier.dividedBy(100))
-        : 1;
+      GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(multiplier.dividedBy(100)) : 1;
 
     return new BigNumber(gas).times(gasOverhead).toFixed(0);
   };
+
+  async getSimpleSellParams(
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: string,
+    toAmount: string,
+    priceRoute: OptimalRatesWithPartnerFeesSell,
+    referrer: string,
+    gasPrice: string,
+    beneficiary: string = NULL_ADDRESS,
+  ): Promise<SimpleSwapTransactionParams> {
+
+    const swapper = new Swapper(this.network, this.web3Provider, this.augustusContract);
+
+    const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
+      const Dex = DEXS[br.exchange.toLowerCase()];
+
+      if (Dex) {
+        return Dex.getDexData(br, br.exchange);
+      } else {
+        throw new Error('Unsupported Exchange: ' + br.exchange);
+      }
+    });
+
+    const { callees, values, calldata, startIndexes } = await swapper.buildSwap(srcToken.address, destToken.address, srcAmount, toAmount, exchangeData);
+
+    return {
+      fromToken: srcToken.address,
+      toToken: destToken.address,
+      fromAmount: srcAmount,
+      toAmount,
+      expectedAmount: priceRoute.destAmount,
+      callees,
+      exchangeData: calldata,
+      startIndexes,
+      values,
+      beneficiary,
+      referrer,
+    };
+  }
+
+  shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees) {
+    return ((priceRoute.multiRoute || []).length <= 1);
+  }
 
   buildTransaction = async (
     srcToken: Token,
@@ -673,31 +754,47 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    donatePercent: NumberAsString,
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
-    const augustusAddress = this.dexConf.augustus.exchange;
-
-    const augustusContract = new this.web3Provider.eth.Contract(
-      AUGUSTUS_ABI,
-      augustusAddress,
-    );
+    const shouldUseSimpleSwap = this.shouldUseSimpleSwap(priceRoute);
 
     if (priceRoute.side == SwapSide.SELL) {
-      const { value, ...params } = await this.getTransactionSellParams(
-        srcToken,
-        destToken,
-        amount,
-        minMaxAmount,
+      const path = shouldUseSimpleSwap ? [] : await this.getSellPath(
+        srcToken.address,
+        destToken.address,
         priceRoute,
-        userAddress,
-        referrer,
         gasPrice,
-        receiver,
-        donatePercent,
       );
 
-      const swapMethodData = augustusContract.methods.multiSwap.apply(
+      const params = shouldUseSimpleSwap ?
+        await this.getSimpleSellParams(
+          srcToken,
+          destToken,
+          amount,
+          minMaxAmount,
+          priceRoute,
+          referrer,
+          receiver,
+        ) :
+        await this.getTransactionSellParams(
+          srcToken,
+          destToken,
+          amount,
+          minMaxAmount,
+          priceRoute,
+          userAddress,
+          referrer,
+          gasPrice,
+          receiver,
+        );
+
+      const value = shouldUseSimpleSwap ?
+        this.getSimpleSwapValue(<SimpleSwapTransactionParams>params) :
+        this.getValue(srcToken.address!, amount, path);
+
+      const swapMethod = shouldUseSimpleSwap ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
+
+      const swapMethodData = swapMethod.apply(
         null,
         Object.values(params),
       );
@@ -716,7 +813,7 @@ export class TransactionBuilder {
 
       return {
         from: userAddress,
-        to: augustusAddress,
+        to: this.augustusContract._address,
         data: swapMethodData.encodeABI(),
         chainId: this.network,
         value,
@@ -734,12 +831,9 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        donatePercent,
       );
 
-      const augustusAddress = this.dexConf.augustus.exchange;
-
-      const swapMethodData = augustusContract.methods.buy.apply(
+      const swapMethodData = this.augustusContract.methods.buy.apply(
         null,
         Object.values(params),
       );
@@ -758,7 +852,7 @@ export class TransactionBuilder {
 
       return {
         from: userAddress,
-        to: augustusAddress,
+        to: this.augustusContract._address,
         data: swapMethodData.encodeABI(),
         chainId: this.network,
         value,

@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import * as async from 'async';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -11,12 +10,11 @@ import {
   Allowance,
   APIError,
   BuildOptions,
-  ETHER_ADDRESS,
   NetworkID,
   PriceString,
   RateOptions,
   Transaction,
-  OptimalRatesWithPartnerFees,
+  OptimalRatesWithPartnerFees, EXCHANGES,
 } from './types';
 
 import ERC20_ABI = require('./abi/erc20.json');
@@ -115,7 +113,7 @@ export class ParaSwap {
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
       const { excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS } =
-        options || {};
+      options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
@@ -129,11 +127,11 @@ export class ParaSwap {
       const query = _.isEmpty(options)
         ? ''
         : qs.stringify({
-            excludeDEXS,
-            includeDEXS,
-            includeMPDEXS,
-            excludeMPDEXS,
-          });
+          excludeDEXS,
+          includeDEXS,
+          includeMPDEXS,
+          excludeMPDEXS,
+        });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
@@ -222,7 +220,6 @@ export class ParaSwap {
     referrer: string,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
-    donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
     if (!this.adapters) {
@@ -252,7 +249,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       } else {
         return transaction.getTransactionBuyParams(
@@ -265,7 +261,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       }
     }
@@ -280,7 +275,6 @@ export class ParaSwap {
       referrer,
       gasPrice,
       receiver,
-      donatePercent,
       !!options.ignoreChecks,
     );
   }
