@@ -192,42 +192,17 @@ export class TransactionBuilder {
 
       case 'balancer':
         const { swaps } = data;
+
         return web3Coder.encodeParameter(
           {
-            name: 'ParentStruct',
-            type: 'tuple',
-            components: [
-              {
-                name: 'swaps',
-                type: 'tuple[][]',
-                components: [
-                  {
-                    name: 'pool',
-                    type: 'address',
-                  },
-                  {
-                    name: 'tokenIn',
-                    type: 'address',
-                  },
-                  {
-                    name: 'tokenOut',
-                    type: 'address',
-                  },
-                  {
-                    name: 'swapAmount',
-                    type: 'uint',
-                  },
-                  {
-                    name: 'limitReturnAmount',
-                    type: 'uint',
-                  },
-                  {
-                    name: 'maxPrice',
-                    type: 'uint',
-                  },
-                ],
+            ParentStruct: {
+              'swaps[]': {
+                pool: 'address',
+                tokenInParam: 'uint',
+                tokenOutParam: 'uint',
+                maxPrice: 'uint',
               },
-            ],
+            },
           },
           { swaps },
         );
