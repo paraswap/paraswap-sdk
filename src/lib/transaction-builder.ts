@@ -1,3 +1,5 @@
+import { Cofix } from './dexs/cofix';
+
 const web3Coder = require('web3-eth-abi');
 import Web3 from 'web3';
 
@@ -18,7 +20,7 @@ import {
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
-  OptimalRatesWithPartnerFeesBuy, OptimalRate,
+  OptimalRatesWithPartnerFeesBuy, OptimalRate, SimpleSwapTransactionParams,
 } from '../types';
 
 import { Token } from './token';
@@ -382,10 +384,7 @@ export class TransactionBuilder {
           .times(payload.orders.length)
           .toFixed();
       case 'cofix':
-        const fee = new BigNumber(1e18).dividedBy(100);
-        return this.isETHAddress(srcToken) || this.isETHAddress(destToken)
-          ? fee.toFixed(0)
-          : fee.times(2).toFixed(0);
+        return new Cofix(this.network, this.web3Provider).getNetworkFees(srcToken, destToken);
       default:
         return '0';
     }
@@ -506,6 +505,13 @@ export class TransactionBuilder {
         },
       ];
     }
+  };
+
+  private getSimpleSwapValue = (params: SimpleSwapTransactionParams) => {
+    return params.values.reduce((acc, value) => {
+      acc = new BigNumber(acc).plus(value).toFixed(0);
+      return acc;
+    }, '0');
   };
 
   private getValue = (
@@ -703,7 +709,7 @@ export class TransactionBuilder {
     referrer: string,
     gasPrice: string,
     beneficiary: string = NULL_ADDRESS,
-  ) {
+  ): Promise<SimpleSwapTransactionParams> {
 
     const swapper = new Swapper(this.network, this.web3Provider, this.augustusContract);
 
@@ -760,8 +766,6 @@ export class TransactionBuilder {
         gasPrice,
       );
 
-      const value = this.getValue(srcToken.address!, amount, path);
-
       const params = shouldUseSimpleSwap ?
         await this.getSimpleSellParams(
           srcToken,
@@ -784,6 +788,10 @@ export class TransactionBuilder {
           receiver,
         );
 
+      const value = shouldUseSimpleSwap ?
+        this.getSimpleSwapValue(<SimpleSwapTransactionParams>params) :
+        this.getValue(srcToken.address!, amount, path);
+
       const swapMethod = shouldUseSimpleSwap ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
 
       const swapMethodData = swapMethod.apply(
@@ -802,6 +810,7 @@ export class TransactionBuilder {
             this.multiSwapSteps(priceRoute),
           ),
         };
+
       return {
         from: userAddress,
         to: this.augustusContract._address,

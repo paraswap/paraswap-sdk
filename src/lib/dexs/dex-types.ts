@@ -53,6 +53,11 @@ export type ShellDEXData = DEXData & {
   deadline?: number
 }
 
+export type CofixDEXData = DEXData & {
+  exchange: Address,
+  deadline?: number
+}
+
 export type BalancerDEXData = DEXData & {
   exchangeProxy: Address,
   swaps: {

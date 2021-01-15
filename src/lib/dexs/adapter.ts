@@ -1,5 +1,6 @@
 import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
 import { DEXData, DexParams } from './dex-types';
+import BigNumber from 'bignumber.js';
 
 export default class Adapter {
   constructor(protected network: number, protected web3Provider: any, protected augustus?: any) {
@@ -10,6 +11,10 @@ export default class Adapter {
   static getDexData(_: OptimalRate, __: string): DEXData {
     throw new Error('not implemented!');
   };
+
+  getNetworkFees(srcToken: Address, destToken: Address) {
+    return '0';
+  }
 
   getApproveCallData(srcToken: Address, srcAmount: string, exchange: Address) {
     const calldata = this.augustus.methods.approve(srcToken, exchange, srcAmount).encodeABI();
@@ -24,7 +29,11 @@ export default class Adapter {
 
     const calldata = this.isETHAddress(srcToken) ? [swapData] : [approveCallData.calldata, swapData];
 
-    const values = this.isETHAddress(srcToken) ? [data.srcAmount] : ['0', '0'];
+    const networkFees = this.getNetworkFees(srcToken, destToken);
+
+    const value = new BigNumber(data.srcAmount).plus(networkFees).toFixed(0);
+
+    const values = this.isETHAddress(srcToken) ? [value] : ['0', networkFees];
 
     return {
       callees,
