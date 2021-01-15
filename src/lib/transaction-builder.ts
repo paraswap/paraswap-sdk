@@ -42,7 +42,7 @@ export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 23);
 
 export const ZRX_GAZ_MULTIPLIER = 70000;
-const LENDING_DEXES = ['compound', 'Fulcrum', 'idle'];
+const LENDING_DEXES = ['compound', 'Fulcrum', 'idle', 'aave', 'aave2'];
 
 /*
 BUY SUPPORTED:
