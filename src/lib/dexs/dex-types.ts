@@ -48,6 +48,11 @@ export type CompoundDEXData = DEXData & {
   fromCToken: boolean
 }
 
+export type ShellDEXData = DEXData & {
+  exchange: Address,
+  deadline?: number
+}
+
 export type BalancerDEXData = DEXData & {
   exchangeProxy: Address,
   swaps: {

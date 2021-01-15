@@ -10,6 +10,7 @@ import { Aave } from './aave';
 import { Compound } from './compound';
 import { Weth } from './weth';
 import { Balancer } from './balancer';
+import { Shell } from './shell';
 
 const DEXS: { [dex: string]: typeof Adapter } = {
   'uniswap': UniswapV1,
@@ -27,6 +28,7 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   'compound': Compound,
   'weth': Weth,
   'balancer': Balancer,
+  'shell': Shell,
 };
 
 export { DEXS };

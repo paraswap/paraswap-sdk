@@ -39,7 +39,7 @@ export default class Adapter {
 
   async getDeadline() {
     const block = await this.getBlock();
-    return block.timestamp + 600;
+    return <number>block.timestamp + 600;
   }
 
   async buildSwap(srcToken: Address, destToken: Address, data: Required<DEXData>): Promise<DexParams> {
