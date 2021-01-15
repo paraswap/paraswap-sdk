@@ -24,6 +24,7 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   'aave': Aave,
   'aave2': Aave,
   'compound': Compound,
+  'weth': Weth,
 };
 
 export { DEXS };
