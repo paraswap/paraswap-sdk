@@ -48,12 +48,22 @@ export type CompoundDEXData = DEXData & {
   fromCToken: boolean
 }
 
+export type BalancerDEXData = DEXData & {
+  exchangeProxy: Address,
+  swaps: {
+    pool: Address,
+    tokenInParam: string,
+    tokenOutParam: string,
+    maxPrice: string
+  }[]
+}
+
 export type CurveDexData = DEXData & {
   minConversionRate: string,
   exchange: string,
-  "i": number,
-  "j": number,
-  "underlyingSwap": boolean,
+  'i': number,
+  'j': number,
+  'underlyingSwap': boolean,
 }
 
 export type BancorDEXData = DEXData & {

@@ -750,8 +750,10 @@ export class TransactionBuilder {
     receiver: Address = NULL_ADDRESS,
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
+    const shouldUseSimpleSwap = this.shouldUseSimpleSwap(priceRoute);
+
     if (priceRoute.side == SwapSide.SELL) {
-      const path = await this.getSellPath(
+      const path = shouldUseSimpleSwap ? [] : await this.getSellPath(
         srcToken.address,
         destToken.address,
         priceRoute,
@@ -759,8 +761,6 @@ export class TransactionBuilder {
       );
 
       const value = this.getValue(srcToken.address!, amount, path);
-
-      const shouldUseSimpleSwap = this.shouldUseSimpleSwap(priceRoute);
 
       const params = shouldUseSimpleSwap ?
         await this.getSimpleSellParams(

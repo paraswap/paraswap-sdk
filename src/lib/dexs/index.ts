@@ -9,6 +9,7 @@ import { Curve } from './curve';
 import { Aave } from './aave';
 import { Compound } from './compound';
 import { Weth } from './weth';
+import { Balancer } from './balancer';
 
 const DEXS: { [dex: string]: typeof Adapter } = {
   'uniswap': UniswapV1,
@@ -25,6 +26,7 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   'aave2': Aave,
   'compound': Compound,
   'weth': Weth,
+  'balancer': Balancer,
 };
 
 export { DEXS };
