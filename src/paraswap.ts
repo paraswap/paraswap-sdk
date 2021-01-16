@@ -14,7 +14,7 @@ import {
   PriceString,
   RateOptions,
   Transaction,
-  OptimalRatesWithPartnerFees, EXCHANGES,
+  OptimalRatesWithPartnerFees,
 } from './types';
 
 import ERC20_ABI = require('./abi/erc20.json');
@@ -237,19 +237,32 @@ export class ParaSwap {
       this.tokens,
     );
 
+    console.log("options.forceMultiSwap", options.forceMultiSwap)
+
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return transaction.getTransactionSellParams(
-          srcToken,
-          destToken,
-          srcAmount,
-          minMaxAmount,
-          priceRoute,
-          userAddress,
-          referrer,
-          gasPrice,
-          receiver,
-        );
+        return options.forceMultiSwap ?
+          transaction.getTransactionSellParams(
+            srcToken,
+            destToken,
+            srcAmount,
+            minMaxAmount,
+            priceRoute,
+            userAddress,
+            referrer,
+            gasPrice,
+            receiver,
+          ) :
+          transaction.getSimpleSellParams(
+            srcToken,
+            destToken,
+            srcAmount,
+            minMaxAmount,
+            priceRoute,
+            referrer,
+            gasPrice,
+            receiver,
+          );
       } else {
         return transaction.getTransactionBuyParams(
           srcToken,
@@ -261,6 +274,7 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
+          !!options.forceMultiSwap,
         );
       }
     }
@@ -276,6 +290,7 @@ export class ParaSwap {
       gasPrice,
       receiver,
       !!options.ignoreChecks,
+      !!options.forceMultiSwap,
     );
   }
 

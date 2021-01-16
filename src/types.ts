@@ -181,34 +181,6 @@ class User {
   ) {}
 }
 
-enum EXCHANGES {
-  UNISWAP = 'Uniswap',
-  KYBER = 'Kyber',
-  BANCOR = 'Bancor',
-  OASIS = 'Oasis',
-  COMPOUND = 'Compound',
-  BZX = 'Fulcrum',
-  ZEROX = '0x',
-  MakerDAO = 'MakerDAO',
-  CHAI = 'Chai',
-  PARASWAPPOOL = 'ParaSwapPool',
-  AAVE = 'Aave',
-  MULTIPATH = 'MultiPath',
-  CURVE = 'Curve',
-  CURVE3 = 'Curve3',
-  BDAI = 'BDai',
-  IDLE = 'idle',
-  WETH = 'Weth',
-  BETH = 'Beth',
-  UNISWAPV2 = 'UniswapV2',
-  BALANCER = 'Balancer',
-  ZEROX_RFQT = '0xRFQt',
-  PARASWAPPOOL2 = 'ParaSwapPool2',
-  SUSHISWAP = 'SushiSwap',
-  SYNTHETIX = 'Synthetix',
-  SYNTHETIX_DEPOT = 'SynthetixDepot',
-}
-
 type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
@@ -250,7 +222,6 @@ type TransactionBuyParams = {
   toAmount: PriceString;
   expectedAmount: PriceString;
   route: TransactionBuyRoute[];
-  mintPrice: PriceString;
   beneficiary: Address;
   referrer: Address;
 };
@@ -262,7 +233,6 @@ type TransactionSellParams = {
   toAmount: PriceString;
   expectedAmount: PriceString;
   path: TransactionPath<TransactionSellRoute>[];
-  mintPrice: PriceString;
   beneficiary: Address;
   referrer: Address;
 };
@@ -294,6 +264,7 @@ type TransactionData = {
 type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
+  forceMultiSwap?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
 };
@@ -329,7 +300,6 @@ export {
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
   User,
-  EXCHANGES,
   RateOptions,
   TransactionRoute,
   TransactionPath,

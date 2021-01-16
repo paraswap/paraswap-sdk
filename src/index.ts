@@ -20,7 +20,6 @@ export {
   Transaction,
   UNLIMITED_ALLOWANCE,
   ETHER_ADDRESS,
-  EXCHANGES,
   NetworkID,
   Adapters,
   APIQuery,

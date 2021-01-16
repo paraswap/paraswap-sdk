@@ -593,6 +593,7 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
+    forceMultiSwap: boolean
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -616,7 +617,6 @@ export class TransactionBuilder {
       // we keep route structure similar to sell
       // in lieu of eventually having multihop with buy
       route: route[0]!.routes,
-      mintPrice: '0',
       beneficiary: receiver,
       referrer,
     };
@@ -646,10 +646,9 @@ export class TransactionBuilder {
       fromAmount: srcAmount,
       toAmount: minAmountOut,
       expectedAmount: priceRoute.destAmount,
-      path,
-      mintPrice: '0',
       beneficiary: receiver,
       referrer,
+      path,
     };
   };
 
@@ -716,7 +715,11 @@ export class TransactionBuilder {
   }
 
   shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees) {
-    return ((priceRoute.multiRoute || []).length <= 1);
+    const notAMultiRoute = ((priceRoute.multiRoute || []).length <= 1);
+
+    const missingDEX = !!(<any>priceRoute.bestRoute).find((br: any) => !DEXS[br.exchange.toLowerCase()]);
+
+    return notAMultiRoute && !missingDEX;
   }
 
   buildTransaction = async (
@@ -730,8 +733,9 @@ export class TransactionBuilder {
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
     ignoreGas: boolean,
+    forceMultiSwap: boolean,
   ): Promise<TransactionData> => {
-    const shouldUseSimpleSwap = this.shouldUseSimpleSwap(priceRoute);
+    const shouldUseSimpleSwap = forceMultiSwap ? false : this.shouldUseSimpleSwap(priceRoute);
 
     if (priceRoute.side == SwapSide.SELL) {
       const path = shouldUseSimpleSwap ? [] : await this.getSellPath(
@@ -767,11 +771,15 @@ export class TransactionBuilder {
         this.getSimpleSwapValue(<SimpleSwapTransactionParams>params) :
         this.getValue(srcToken.address!, amount, path);
 
-      const swapMethod = shouldUseSimpleSwap ? this.augustusContract.methods.simpleSwap : this.augustusContract.methods.multiSwap;
+      const swapMethod = shouldUseSimpleSwap ?
+        this.augustusContract.methods.simpleSwap :
+        this.augustusContract.methods.multiSwap;
+
+      const contractParams = shouldUseSimpleSwap ? params : { data: params };
 
       const swapMethodData = swapMethod.apply(
         null,
-        Object.values(params),
+        Object.values(contractParams),
       );
 
       const gas = ignoreGas
@@ -806,6 +814,7 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
+        forceMultiSwap
       );
 
       const swapMethodData = this.augustusContract.methods.buy.apply(
