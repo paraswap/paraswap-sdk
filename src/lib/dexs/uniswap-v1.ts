@@ -2,13 +2,13 @@ import UNISWAP_V1_EXCHANGE_ABI = require('../../abi/uniswap.v1.exchange.json');
 import UNISWAP_V1_FACTORY_ABI = require('../../abi/uniswap.v1.factory.json');
 
 import Adapter from './adapter';
-import { Address, EXCHANGES, OptimalRate } from '../../types';
+import { Address, OptimalRate } from '../../types';
 import { UniswapV1DEXData, DexParams } from './dex-types';
 
 export class UniswapV1 extends Adapter {
-  static getDexData(optimalRate: OptimalRate): UniswapV1DEXData {
+  static getDexData(optimalRate: OptimalRate, name: string): UniswapV1DEXData {
     return {
-      name: EXCHANGES.UNISWAP,
+      name,
       srcAmount: optimalRate.srcAmount,
       destAmount: '1',
       exchange: optimalRate.data.exchange,
@@ -62,15 +62,17 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || (await this.getDeadline());
 
-    const calldata = uniswapExchange.methods
+    const swapData = uniswapExchange.methods
       .ethToTokenSwapInput(data.destAmount, deadline)
       .encodeABI();
 
-    return {
-      callees: [uniswapExchange._address],
-      calldata: [calldata],
-      values: [data.srcAmount],
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address,
+    );
   }
 
   async tokenToEthSwap(
@@ -86,19 +88,17 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || (await this.getDeadline());
 
-    const approveData = this.augustus.methods
-      .approve(data.exchange, srcToken, data.srcAmount)
-      .encodeABI();
-
-    const calldata = uniswapExchange.methods
+    const swapData = uniswapExchange.methods
       .tokenToEthSwapInput(data.srcAmount, data.destAmount, deadline)
       .encodeABI();
 
-    return {
-      callees: [this.augustus._address, uniswapExchange._address],
-      calldata: [approveData, calldata],
-      values: ['0', '0'],
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address,
+    );
   }
 
   async tokenToTokenSwap(
@@ -114,11 +114,7 @@ export class UniswapV1 extends Adapter {
 
     const deadline = data.deadline || (await this.getDeadline());
 
-    const approveData = this.augustus.methods
-      .approve(data.exchange, srcToken, data.srcAmount)
-      .encodeABI();
-
-    const calldata = uniswapExchange.methods
+    const swapData = uniswapExchange.methods
       .tokenToTokenSwapInput(
         data.srcAmount,
         data.destAmount,
@@ -128,10 +124,12 @@ export class UniswapV1 extends Adapter {
       )
       .encodeABI();
 
-    return {
-      callees: [this.augustus._address, uniswapExchange._address],
-      calldata: [approveData, calldata],
-      values: ['0', '0'],
-    };
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      uniswapExchange._address,
+    );
   }
 }

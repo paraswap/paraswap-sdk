@@ -126,6 +126,8 @@ type OptimalRates = {
   priceWithSlippage?: string;
   multiPath?: boolean;
   bestRoute: OptimalRate[];
+  bestRouteGasCostUSD?: NumberAsString;
+  bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
   others: SimpleComputedRate[];
   fromUSD?: NumberAsString;
@@ -262,6 +264,20 @@ type TransactionSellParams = {
   referrer: Address;
 };
 
+type SimpleSwapTransactionParams = {
+  fromToken: Address;
+  toToken: Address;
+  fromAmount: string;
+  toAmount: string;
+  expectedAmount: string;
+  callees: string[];
+  exchangeData: string;
+  startIndexes: number[];
+  values: string[];
+  beneficiary: Address;
+  referrer: string;
+};
+
 type TransactionData = {
   from: Address;
   to: Address;
@@ -318,6 +334,7 @@ export {
   TransactionBuyRoute,
   TransactionBuyParams,
   TransactionSellParams,
+  SimpleSwapTransactionParams,
   TransactionData,
   BuildOptions,
 };

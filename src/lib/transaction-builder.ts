@@ -1,4 +1,4 @@
-import { UniswapV1 } from './dexs/uniswap-v1';
+import { Cofix } from './dexs/cofix';
 
 const web3Coder = require('web3-eth-abi');
 import Web3 from 'web3';
@@ -21,7 +21,8 @@ import {
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
-  EXCHANGES,
+  OptimalRate,
+  SimpleSwapTransactionParams,
 } from '../types';
 
 import { Token } from './token';
@@ -32,7 +33,7 @@ import { SwapSide } from '../constants';
 
 import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
-import { UniswapV2 } from './dexs/uniswap-v2';
+import { DEXS } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 
@@ -385,10 +386,10 @@ export class TransactionBuilder {
           .times(payload.orders.length)
           .toFixed();
       case 'cofix':
-        const fee = new BigNumber(1e18).dividedBy(100);
-        return this.isETHAddress(srcToken) || this.isETHAddress(destToken)
-          ? fee.toFixed(0)
-          : fee.times(2).toFixed(0);
+        return new Cofix(this.network, this.web3Provider).getNetworkFees(
+          srcToken,
+          destToken,
+        );
       default:
         return '0';
     }
@@ -509,6 +510,13 @@ export class TransactionBuilder {
         },
       ];
     }
+  };
+
+  private getSimpleSwapValue = (params: SimpleSwapTransactionParams) => {
+    return params.values.reduce((acc, value) => {
+      acc = new BigNumber(acc).plus(value).toFixed(0);
+      return acc;
+    }, '0');
   };
 
   private getValue = (
@@ -703,21 +711,21 @@ export class TransactionBuilder {
     referrer: string,
     gasPrice: string,
     beneficiary: string = NULL_ADDRESS,
-  ) {
+  ): Promise<SimpleSwapTransactionParams> {
     const swapper = new Swapper(
       this.network,
       this.web3Provider,
       this.augustusContract,
     );
 
-    // @ts-ignore
     const exchangeData: DEXData[] = priceRoute.bestRoute.map(
       (br: OptimalRate) => {
-        switch (br.exchange) {
-          case EXCHANGES.UNISWAP:
-            return UniswapV1.getDexData(br);
-          case EXCHANGES.UNISWAPV2:
-            return UniswapV2.getDexData(br);
+        const Dex = DEXS[br.exchange.toLowerCase()];
+
+        if (Dex) {
+          return Dex.getDexData(br, br.exchange);
+        } else {
+          throw new Error('Unsupported Exchange: ' + br.exchange);
         }
       },
     );
@@ -762,16 +770,8 @@ export class TransactionBuilder {
     ignoreGas: boolean,
   ): Promise<TransactionData> => {
     if (priceRoute.side == SwapSide.SELL) {
-      const path = await this.getSellPath(
-        srcToken.address,
-        destToken.address,
-        priceRoute,
-        gasPrice,
-      );
-
-      const value = this.getValue(srcToken.address!, amount, path);
-
       let swapMethodData: any;
+      let value: NumberAsString;
 
       if (this.shouldUseSimpleSwap(priceRoute)) {
         const params = await this.getSimpleSellParams(
@@ -784,11 +784,20 @@ export class TransactionBuilder {
           receiver,
         );
 
+        value = this.getSimpleSwapValue(params);
+
         swapMethodData = this.augustusContract.methods.simpleSwap.apply(
           null,
           Object.values(params),
         );
       } else {
+        const path = await this.getSellPath(
+          srcToken.address,
+          destToken.address,
+          priceRoute,
+          gasPrice,
+        );
+
         const params = await this.getTransactionSellParams(
           srcToken,
           destToken,
@@ -800,6 +809,8 @@ export class TransactionBuilder {
           gasPrice,
           receiver,
         );
+
+        value = this.getValue(srcToken.address!, amount, path);
 
         swapMethodData = this.augustusContract.methods.multiSwap(params);
       }
