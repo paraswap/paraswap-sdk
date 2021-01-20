@@ -20,6 +20,16 @@ const ZRX_EXCHANGE_ERC20PROXY: any = {
   1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
 };
 
+enum OrderStatus {
+  INVALID,                     // Default value
+  INVALID_MAKER_ASSET_AMOUNT,  // Order does not have a valid maker asset amount
+  INVALID_TAKER_ASSET_AMOUNT,  // Order does not have a valid taker asset amount
+  FILLABLE,                    // Order is fillable
+  EXPIRED,                     // Order has already expired
+  FULLY_FILLED,                // Order is fully filled
+  CANCELLED                    // Order has been cancelled
+}
+
 export interface ZeroXSignedOrder {
   senderAddress: string;
   makerAddress: string;
@@ -37,6 +47,26 @@ export interface ZeroXSignedOrder {
   makerFeeAssetData: string;
   takerFeeAssetData: string;
   signature: string;
+}
+
+export interface IzXSignedOrderV3 {
+  exchangeAddress: string;
+  makerAddress: string;
+  takerAddress: string;
+  feeRecipientAddress: string;
+  senderAddress: string;
+  makerAssetAmount: BigNumber;
+  takerAssetAmount: BigNumber;
+  makerFee: BigNumber;
+  takerFee: BigNumber;
+  expirationTimeSeconds: BigNumber;
+  salt: BigNumber;
+  makerAssetData: string;
+  takerAssetData: string;
+  signature: string;
+  chainId: number;
+  makerFeeAssetData: string;
+  takerFeeAssetData: string;
 }
 
 export class ZeroXOrder extends Adapter {
@@ -107,7 +137,17 @@ export class Zerox extends Adapter {
     return abiEncoder.encode([orders, takerAssetFillAmount, signatures]);
   }
 
-  private getTokenToTokenSwapData = (srcToken: Address, data: ZeroXEXData) => {
+  async isFillable(order: IzXSignedOrderV3, provider: any) {
+    const orderInfo = await this.getOrderInfo(order, provider);
+    return Number(orderInfo.orderStatus) === OrderStatus.FILLABLE;
+  }
+
+  async getOrderInfo(order: IzXSignedOrderV3, provider: any) {
+    const contract = new this.web3Provider.eth.Contract(ZRX_V3_ABI, ZRX_EXCHANGE[this.network].v3);
+    return contract.methods.getOrderInfo(order).call();
+  }
+
+  private getTokenToTokenSwapData(srcToken: Address, data: ZeroXEXData) {
     const approveCallData = this.getApproveCallData(srcToken, data.srcAmount, ZRX_EXCHANGE_ERC20PROXY[this.network]);
 
     const assetSwapperData = this.buildSwapData(data);
@@ -143,7 +183,7 @@ export class Zerox extends Adapter {
     return {
       callees: [...wethToTokenData.callees, this.augustus._address],
       calldata: [...wethToTokenData.calldata, withdrawWethData],
-      values: [...wethToTokenData.values, "0"],
+      values: [...wethToTokenData.values, '0'],
     };
   };
 

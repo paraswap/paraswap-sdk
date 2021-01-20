@@ -237,8 +237,6 @@ export class ParaSwap {
       this.tokens,
     );
 
-    console.log("options.forceMultiSwap", options.forceMultiSwap)
-
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
         return options.forceMultiSwap ?
