@@ -593,7 +593,7 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    forceMultiSwap: boolean
+    forceMultiSwap: boolean,
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -714,14 +714,6 @@ export class TransactionBuilder {
     };
   }
 
-  shouldUseSimpleSwap(priceRoute: OptimalRatesWithPartnerFees) {
-    const notAMultiRoute = ((priceRoute.multiRoute || []).length <= 1);
-
-    const missingDEX = !!(<any>priceRoute.bestRoute).find((br: any) => !DEXS[br.exchange.toLowerCase()]);
-
-    return notAMultiRoute && !missingDEX;
-  }
-
   buildTransaction = async (
     srcToken: Token,
     destToken: Token,
@@ -735,7 +727,7 @@ export class TransactionBuilder {
     ignoreGas: boolean,
     forceMultiSwap: boolean,
   ): Promise<TransactionData> => {
-    const shouldUseSimpleSwap = forceMultiSwap ? false : this.shouldUseSimpleSwap(priceRoute);
+    const shouldUseSimpleSwap = !forceMultiSwap
 
     if (priceRoute.side == SwapSide.SELL) {
       const path = shouldUseSimpleSwap ? [] : await this.getSellPath(
@@ -814,7 +806,7 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        forceMultiSwap
+        forceMultiSwap,
       );
 
       const swapMethodData = this.augustusContract.methods.buy.apply(

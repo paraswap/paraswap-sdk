@@ -24,6 +24,7 @@ import AUGUSTUS_ABI = require('./abi/augustus.json');
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
 import { SwapSide } from './constants';
+import { DEXS } from './lib/dexs';
 
 const API_URL = 'https://api.paraswap.io/v2';
 
@@ -209,6 +210,14 @@ export class ParaSwap {
     }
   }
 
+  shouldUseMultiSwap(priceRoute: OptimalRatesWithPartnerFees) {
+    const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
+
+    const missingDEX = !!(<any>priceRoute.bestRoute).find((br: any) => !DEXS[br.exchange.toLowerCase()]);
+
+    return isAMultiRoute || missingDEX;
+  }
+
   //Warning: ParaSwapPool is not supported when building locally
   async buildTxLocally(
     srcToken: Token,
@@ -237,9 +246,11 @@ export class ParaSwap {
       this.tokens,
     );
 
+    const forceMultiSwap = options.forceMultiSwap ? true : this.shouldUseMultiSwap(priceRoute);
+
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return options.forceMultiSwap ?
+        return forceMultiSwap ?
           transaction.getTransactionSellParams(
             srcToken,
             destToken,
@@ -272,7 +283,7 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          !!options.forceMultiSwap,
+          forceMultiSwap,
         );
       }
     }
@@ -288,7 +299,7 @@ export class ParaSwap {
       gasPrice,
       receiver,
       !!options.ignoreChecks,
-      !!options.forceMultiSwap,
+      forceMultiSwap,
     );
   }
 
