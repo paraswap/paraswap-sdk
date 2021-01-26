@@ -20,7 +20,10 @@ import {
   TransactionRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
-  OptimalRatesWithPartnerFeesBuy, OptimalRate, SimpleSwapTransactionParams,
+  OptimalRatesWithPartnerFeesBuy,
+  OptimalRate,
+  SimpleSwapTransactionParams,
+  LegacyTransactionSellParams,
 } from '../types';
 
 import { Token } from './token';
@@ -34,6 +37,7 @@ import { DEXData } from './dexs/dex-types';
 import { DEXS } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
+const AUGUSTUS_LEGACY_ABI = require('../abi/augustus-legacy.json');
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
@@ -60,11 +64,14 @@ export class TransactionBuilder {
     private web3Provider: Web3,
     private dexConf: Adapters,
     private tokens: Token[],
+    private useLegacy: boolean,
   ) {
     const augustusAddress = this.dexConf.augustus.exchange;
 
+    const abi = useLegacy ? AUGUSTUS_LEGACY_ABI : AUGUSTUS_ABI;
+
     this.augustusContract = new this.web3Provider.eth.Contract(
-      AUGUSTUS_ABI,
+      abi,
       augustusAddress,
     );
   }
@@ -359,7 +366,10 @@ export class TransactionBuilder {
           .times(payload.orders.length)
           .toFixed();
       case 'cofix':
-        return new Cofix(this.network, this.web3Provider).getNetworkFees(srcToken, destToken);
+        return new Cofix(this.network, this.web3Provider).getNetworkFees(
+          srcToken,
+          destToken,
+        );
       default:
         return '0';
     }
@@ -545,8 +555,8 @@ export class TransactionBuilder {
       targetExchange,
       fromAmount: this.applySlippageForBuy(exchangeName)
         ? new BigNumber(route.srcAmount)
-          .times(slippageFactor)
-          .toFixed(0, BigNumber.ROUND_DOWN)
+            .times(slippageFactor)
+            .toFixed(0, BigNumber.ROUND_DOWN)
         : route.srcAmount,
       toAmount: route.destAmount,
       payload,
@@ -593,7 +603,6 @@ export class TransactionBuilder {
     referrer: Address,
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
-    forceMultiSwap: boolean,
   ): Promise<TransactionBuyParams> => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -684,20 +693,31 @@ export class TransactionBuilder {
     gasPrice: string,
     beneficiary: string = NULL_ADDRESS,
   ): Promise<SimpleSwapTransactionParams> {
+    const swapper = new Swapper(
+      this.network,
+      this.web3Provider,
+      this.augustusContract,
+    );
 
-    const swapper = new Swapper(this.network, this.web3Provider, this.augustusContract);
+    const exchangeData: DEXData[] = priceRoute.bestRoute.map(
+      (br: OptimalRate) => {
+        const Dex = DEXS[br.exchange.toLowerCase()];
 
-    const exchangeData: DEXData[] = priceRoute.bestRoute.map((br: OptimalRate) => {
-      const Dex = DEXS[br.exchange.toLowerCase()];
+        if (Dex) {
+          return Dex.getDexData(br, br.exchange);
+        } else {
+          throw new Error('Unsupported Exchange: ' + br.exchange);
+        }
+      },
+    );
 
-      if (Dex) {
-        return Dex.getDexData(br, br.exchange);
-      } else {
-        throw new Error('Unsupported Exchange: ' + br.exchange);
-      }
-    });
-
-    const { callees, values, calldata, startIndexes } = await swapper.buildSwap(srcToken.address, destToken.address, srcAmount, toAmount, exchangeData);
+    const { callees, values, calldata, startIndexes } = await swapper.buildSwap(
+      srcToken.address,
+      destToken.address,
+      srcAmount,
+      toAmount,
+      exchangeData,
+    );
 
     return {
       fromToken: srcToken.address,
@@ -725,49 +745,71 @@ export class TransactionBuilder {
     gasPrice: NumberAsString,
     receiver: Address = NULL_ADDRESS,
     ignoreGas: boolean,
-    forceMultiSwap: boolean,
+    useMultiSwap: boolean,
+    useAugustusLegacy: boolean,
   ): Promise<TransactionData> => {
-    const shouldUseSimpleSwap = !forceMultiSwap
-
     if (priceRoute.side == SwapSide.SELL) {
-      const path = shouldUseSimpleSwap ? [] : await this.getSellPath(
-        srcToken.address,
-        destToken.address,
-        priceRoute,
-        gasPrice,
-      );
+      const path =
+        useMultiSwap || useAugustusLegacy
+          ? await this.getSellPath(
+              srcToken.address,
+              destToken.address,
+              priceRoute,
+              gasPrice,
+            )
+          : [];
 
-      const params = shouldUseSimpleSwap ?
-        await this.getSimpleSellParams(
-          srcToken,
-          destToken,
-          amount,
-          minMaxAmount,
-          priceRoute,
-          referrer,
-          receiver,
-        ) :
-        await this.getTransactionSellParams(
-          srcToken,
-          destToken,
-          amount,
-          minMaxAmount,
-          priceRoute,
-          userAddress,
-          referrer,
-          gasPrice,
-          receiver,
-        );
+      const params =
+        useMultiSwap || useAugustusLegacy
+          ? await this.getTransactionSellParams(
+              srcToken,
+              destToken,
+              amount,
+              minMaxAmount,
+              priceRoute,
+              userAddress,
+              referrer,
+              gasPrice,
+              receiver,
+            )
+          : await this.getSimpleSellParams(
+              srcToken,
+              destToken,
+              amount,
+              minMaxAmount,
+              priceRoute,
+              referrer,
+              receiver,
+            );
 
-      const value = shouldUseSimpleSwap ?
-        this.getSimpleSwapValue(<SimpleSwapTransactionParams>params) :
-        this.getValue(srcToken.address!, amount, path);
+      const value =
+        useMultiSwap || useAugustusLegacy
+          ? this.getValue(srcToken.address!, amount, path)
+          : this.getSimpleSwapValue(<SimpleSwapTransactionParams>params);
 
-      const swapMethod = shouldUseSimpleSwap ?
-        this.augustusContract.methods.simpleSwap :
-        this.augustusContract.methods.multiSwap;
+      const swapMethod =
+        useMultiSwap || useAugustusLegacy
+          ? this.augustusContract.methods.multiSwap
+          : this.augustusContract.methods.simpleSwap;
 
-      const contractParams = shouldUseSimpleSwap ? params : { data: params };
+      const legacyParams: LegacyTransactionSellParams = {
+        fromToken: params.fromToken,
+        toToken: params.toToken,
+        fromAmount: params.fromAmount,
+        toAmount: params.toAmount,
+        expectedAmount: params.expectedAmount,
+        path: (<TransactionSellParams>params).path,
+        mintPrice: '0',
+        beneficiary: params.beneficiary,
+        donationBasisPoints: '0',
+        referrer: params.referrer,
+      };
+
+      const contractParams = useAugustusLegacy
+        ? legacyParams
+        : useMultiSwap
+        ? { data: params }
+        : params;
 
       const swapMethodData = swapMethod.apply(
         null,
@@ -777,14 +819,14 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-            this.multiSwapSteps(priceRoute),
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+              this.multiSwapSteps(priceRoute),
+            ),
+          };
 
       return {
         from: userAddress,
@@ -806,7 +848,6 @@ export class TransactionBuilder {
         referrer,
         gasPrice,
         receiver,
-        forceMultiSwap,
       );
 
       const swapMethodData = this.augustusContract.methods.buy.apply(
@@ -817,14 +858,14 @@ export class TransactionBuilder {
       const gas = ignoreGas
         ? {}
         : {
-          gas: await this.estimateGas(
-            swapMethodData,
-            userAddress,
-            value,
-            gasPrice,
-            this.multiSwapSteps(priceRoute),
-          ),
-        };
+            gas: await this.estimateGas(
+              swapMethodData,
+              userAddress,
+              value,
+              gasPrice,
+              this.multiSwapSteps(priceRoute),
+            ),
+          };
 
       return {
         from: userAddress,

@@ -226,6 +226,19 @@ type TransactionBuyParams = {
   referrer: Address;
 };
 
+type LegacyTransactionSellParams = {
+  fromToken: Address;
+  toToken: Address;
+  fromAmount: PriceString;
+  toAmount: PriceString;
+  expectedAmount: PriceString;
+  path: TransactionPath<TransactionSellRoute>[];
+  mintPrice: string;
+  beneficiary: Address;
+  donationBasisPoints: string;
+  referrer: Address;
+};
+
 type TransactionSellParams = {
   fromToken: Address;
   toToken: Address;
@@ -238,17 +251,17 @@ type TransactionSellParams = {
 };
 
 type SimpleSwapTransactionParams = {
-  fromToken: Address,
-  toToken: Address,
-  fromAmount: string,
-  toAmount: string,
-  expectedAmount: string,
-  callees: string[],
-  exchangeData: string,
-  startIndexes: number[],
-  values: string[],
-  beneficiary: Address,
-  referrer: string,
+  fromToken: Address;
+  toToken: Address;
+  fromAmount: string;
+  toAmount: string;
+  expectedAmount: string;
+  callees: string[];
+  exchangeData: string;
+  startIndexes: number[];
+  values: string[];
+  beneficiary: Address;
+  referrer: string;
 };
 
 type TransactionData = {
@@ -267,6 +280,7 @@ type BuildOptions = {
   forceMultiSwap?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
+  useAugustusLegacy?: boolean;
 };
 
 export {
@@ -287,6 +301,7 @@ export {
   Rate,
   OthersRate,
   OnChainOptimalRates,
+  LegacyTransactionSellParams,
   SimpleComputedRate,
   SimpleComputedRateWithFeeSell,
   SimpleComputedRateWithFeeBuy,

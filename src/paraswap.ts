@@ -114,7 +114,7 @@ export class ParaSwap {
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
       const { excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS } =
-      options || {};
+        options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
@@ -128,11 +128,11 @@ export class ParaSwap {
       const query = _.isEmpty(options)
         ? ''
         : qs.stringify({
-          excludeDEXS,
-          includeDEXS,
-          includeMPDEXS,
-          excludeMPDEXS,
-        });
+            excludeDEXS,
+            includeDEXS,
+            includeMPDEXS,
+            excludeMPDEXS,
+          });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
@@ -213,7 +213,9 @@ export class ParaSwap {
   shouldUseMultiSwap(priceRoute: OptimalRatesWithPartnerFees) {
     const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
 
-    const missingDEX = !!(<any>priceRoute.bestRoute).find((br: any) => !DEXS[br.exchange.toLowerCase()]);
+    const missingDEX = !!(<any>priceRoute.bestRoute).find(
+      (br: any) => !DEXS[br.exchange.toLowerCase()],
+    );
 
     return isAMultiRoute || missingDEX;
   }
@@ -244,34 +246,37 @@ export class ParaSwap {
       this.web3Provider!,
       this.adapters!,
       this.tokens,
+      !!options.useAugustusLegacy,
     );
 
-    const forceMultiSwap = options.forceMultiSwap ? true : this.shouldUseMultiSwap(priceRoute);
+    const forceMultiSwap = options.forceMultiSwap
+      ? true
+      : this.shouldUseMultiSwap(priceRoute);
 
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return forceMultiSwap ?
-          transaction.getTransactionSellParams(
-            srcToken,
-            destToken,
-            srcAmount,
-            minMaxAmount,
-            priceRoute,
-            userAddress,
-            referrer,
-            gasPrice,
-            receiver,
-          ) :
-          transaction.getSimpleSellParams(
-            srcToken,
-            destToken,
-            srcAmount,
-            minMaxAmount,
-            priceRoute,
-            referrer,
-            gasPrice,
-            receiver,
-          );
+        return forceMultiSwap
+          ? transaction.getTransactionSellParams(
+              srcToken,
+              destToken,
+              srcAmount,
+              minMaxAmount,
+              priceRoute,
+              userAddress,
+              referrer,
+              gasPrice,
+              receiver,
+            )
+          : transaction.getSimpleSellParams(
+              srcToken,
+              destToken,
+              srcAmount,
+              minMaxAmount,
+              priceRoute,
+              referrer,
+              gasPrice,
+              receiver,
+            );
       } else {
         return transaction.getTransactionBuyParams(
           srcToken,
@@ -283,7 +288,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          forceMultiSwap,
         );
       }
     }
@@ -300,6 +304,7 @@ export class ParaSwap {
       receiver,
       !!options.ignoreChecks,
       forceMultiSwap,
+      !!options.useAugustusLegacy,
     );
   }
 
