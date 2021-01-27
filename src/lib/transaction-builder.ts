@@ -779,6 +779,7 @@ export class TransactionBuilder {
               minMaxAmount,
               priceRoute,
               referrer,
+              gasPrice,
               receiver,
             );
 
