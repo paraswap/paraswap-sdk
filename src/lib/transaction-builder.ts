@@ -293,13 +293,25 @@ export class TransactionBuilder {
       case 'sushiswap':
       case 'defiswap':
       case 'linkswap':
+        const _path = data.path.map((token: string, i: number) => {
+          if (
+            (i === 0 &&
+              fromToken.toLowerCase() === ETHER_ADDRESS.toLowerCase()) ||
+            (i === data.path.length - 1 &&
+              toToken.toLowerCase() === ETHER_ADDRESS.toLowerCase())
+          ) {
+            return ETHER_ADDRESS;
+          }
+          return token;
+        });
+
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
               path: 'address[]',
             },
           },
-          { path: data.path },
+          { path: _path },
         );
       case 'curve3':
       case 'swerve':
