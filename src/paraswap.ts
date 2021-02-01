@@ -255,7 +255,7 @@ export class ParaSwap {
 
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return forceMultiSwap
+        return (forceMultiSwap || options.useAugustusLegacy)
           ? transaction.getTransactionSellParams(
               srcToken,
               destToken,
