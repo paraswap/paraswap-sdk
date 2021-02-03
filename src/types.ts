@@ -181,34 +181,6 @@ class User {
   ) {}
 }
 
-enum EXCHANGES {
-  UNISWAP = 'Uniswap',
-  KYBER = 'Kyber',
-  BANCOR = 'Bancor',
-  OASIS = 'Oasis',
-  COMPOUND = 'Compound',
-  BZX = 'Fulcrum',
-  ZEROX = '0x',
-  MakerDAO = 'MakerDAO',
-  CHAI = 'Chai',
-  PARASWAPPOOL = 'ParaSwapPool',
-  AAVE = 'Aave',
-  MULTIPATH = 'MultiPath',
-  CURVE = 'Curve',
-  CURVE3 = 'Curve3',
-  BDAI = 'BDai',
-  IDLE = 'idle',
-  WETH = 'Weth',
-  BETH = 'Beth',
-  UNISWAPV2 = 'UniswapV2',
-  BALANCER = 'Balancer',
-  ZEROX_RFQT = '0xRFQt',
-  PARASWAPPOOL2 = 'ParaSwapPool2',
-  SUSHISWAP = 'SushiSwap',
-  SYNTHETIX = 'Synthetix',
-  SYNTHETIX_DEPOT = 'SynthetixDepot',
-}
-
 type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
@@ -250,24 +222,46 @@ type TransactionBuyParams = {
   toAmount: PriceString;
   expectedAmount: PriceString;
   route: TransactionBuyRoute[];
-  mintPrice: PriceString;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
   referrer: Address;
 };
 
-type TransactionSellParams = {
-  value: PriceString;
+type LegacyTransactionSellParams = {
   fromToken: Address;
   toToken: Address;
   fromAmount: PriceString;
   toAmount: PriceString;
   expectedAmount: PriceString;
   path: TransactionPath<TransactionSellRoute>[];
-  mintPrice: PriceString;
+  mintPrice: string;
   beneficiary: Address;
-  donationBasisPoints: NumberAsString;
+  donationBasisPoints: string;
   referrer: Address;
+};
+
+type TransactionSellParams = {
+  fromToken: Address;
+  toToken: Address;
+  fromAmount: PriceString;
+  toAmount: PriceString;
+  expectedAmount: PriceString;
+  path: TransactionPath<TransactionSellRoute>[];
+  beneficiary: Address;
+  referrer: Address;
+};
+
+type SimpleSwapTransactionParams = {
+  fromToken: Address;
+  toToken: Address;
+  fromAmount: string;
+  toAmount: string;
+  expectedAmount: string;
+  callees: string[];
+  exchangeData: string;
+  startIndexes: number[];
+  values: string[];
+  beneficiary: Address;
+  referrer: string;
 };
 
 type TransactionData = {
@@ -283,8 +277,10 @@ type TransactionData = {
 type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
+  forceMultiSwap?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
+  useAugustusLegacy?: boolean;
 };
 
 export {
@@ -305,6 +301,7 @@ export {
   Rate,
   OthersRate,
   OnChainOptimalRates,
+  LegacyTransactionSellParams,
   SimpleComputedRate,
   SimpleComputedRateWithFeeSell,
   SimpleComputedRateWithFeeBuy,
@@ -318,7 +315,6 @@ export {
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
   User,
-  EXCHANGES,
   RateOptions,
   TransactionRoute,
   TransactionPath,
@@ -326,6 +322,7 @@ export {
   TransactionBuyRoute,
   TransactionBuyParams,
   TransactionSellParams,
+  SimpleSwapTransactionParams,
   TransactionData,
   BuildOptions,
 };

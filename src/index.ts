@@ -20,12 +20,13 @@ export {
   Transaction,
   UNLIMITED_ALLOWANCE,
   ETHER_ADDRESS,
-  EXCHANGES,
   NetworkID,
   Adapters,
   APIQuery,
   BuildOptions,
 } from './types';
+
+export { DEXS } from './lib/dexs';
 
 export { Token } from './lib/token';
 

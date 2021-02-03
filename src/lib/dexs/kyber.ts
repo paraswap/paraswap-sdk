@@ -1,30 +1,39 @@
-const kyberStorageABI = require("../../abi/kyberStorage.json");
-const kyberHintABI = require("../../abi/kyberHint.json");
+import Adapter from './adapter';
 
-import {
-  Address
-} from "../../types";
+import KYBER_STORAGE_ABI = require('../../abi/kyberStorage.json');
+import KYBER_HINT_ABI = require('../../abi/kyberHint.json');
+import KYBER_PROXY_ABI = require('../../abi/kyberProxy.json');
 
-export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+import { Address, OptimalRate } from '../../types';
+import { DexParams, KyberDEXData } from './dex-types';
 
+const MAX_DEST_AMOUNT = '57896044618658097711785492504343953926634992332820282019728792003956564819968';
+const KYBER_FEE_WALLET = '0x52262274dF4dB2586407F95454dea18eC1153662';
+
+const KYBER_PROXY: any = {
+  1: '0x818E6FECD516Ecc3849DAf6845e3EC868087B755',
+};
 
 const DEX_PARAMS: any = {
   1: {
-    kyberStorage: "0xC8fb12402cB16970F3C5F4b48Ff68Eb9D1289301",
-    kyberHint: "0xa1C0Fa73c39CFBcC11ec9Eb1Afc665aba9996E2C"
-  }
+    kyberStorage: '0xC8fb12402cB16970F3C5F4b48Ff68Eb9D1289301',
+    kyberHint: '0xa1C0Fa73c39CFBcC11ec9Eb1Afc665aba9996E2C',
+  },
 };
 
-export class Kyber {
+export class Kyber extends Adapter {
 
-  constructor(private network: number = 1, private web3Provider: any) {
-
+  static getDexData(optimalRate: OptimalRate, name: string): KyberDEXData {
+    return {
+      name,
+      srcAmount: optimalRate.srcAmount,
+      destAmount: '1',
+      minConversionRate: '1',
+    };
   }
 
-  private isETHAddress = (address: string) => address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
-
-  buildHint = async (srcToken: Address, destToken: Address) => {
-    const kyberHintContract = new this.web3Provider.eth.Contract(kyberHintABI, DEX_PARAMS[this.network].kyberHint);
+  async buildHint(srcToken: Address, destToken: Address) {
+    const kyberHintContract = new this.web3Provider.eth.Contract(KYBER_HINT_ABI, DEX_PARAMS[this.network].kyberHint);
 
     //ethToToken
     if (this.isETHAddress(srcToken)) {
@@ -42,18 +51,49 @@ export class Kyber {
       const destExcludedReserves = await this.getKyberReservesToExclude(destToken, false);
       return await kyberHintContract.methods.buildTokenToTokenHint(srcToken, 2, srcExcludedReserves, [], destToken, 2, destExcludedReserves, []).call();
     }
-  }
+  };
 
   private getKyberReservesToExclude = async (token: Address, isSrc: boolean) => {
-    const kyberStorageContract = new this.web3Provider.eth.Contract(kyberStorageABI, DEX_PARAMS[this.network]['kyberStorage']);
+    const kyberStorageContract = new this.web3Provider.eth.Contract(KYBER_STORAGE_ABI, DEX_PARAMS[this.network]['kyberStorage']);
 
     if (isSrc) {
       const srcTokenReserveIds = await kyberStorageContract.methods.getReserveIdsPerTokenSrc(token).call();
-      return srcTokenReserveIds.filter((srcTokenReserveId: string) => srcTokenReserveId.substring(0, 4) === "0xbb");
+      return srcTokenReserveIds.filter((srcTokenReserveId: string) => srcTokenReserveId.substring(0, 4) === '0xbb');
 
     } else {
       const destTokenReserveIds = await kyberStorageContract.methods.getReserveIdsPerTokenDest(token).call();
-      return destTokenReserveIds.filter((destTokenReserveId: string) => destTokenReserveId.substring(0, 4) === "0xbb");
+      return destTokenReserveIds.filter((destTokenReserveId: string) => destTokenReserveId.substring(0, 4) === '0xbb');
     }
+  };
+
+  private _swap(srcToken: Address, destToken: Address, data: KyberDEXData) {
+    data.maxDestAmount = data.maxDestAmount || MAX_DEST_AMOUNT;
+    data.hint = data.hint || '0x';
+
+    const kyberContract = new this.web3Provider.eth.Contract(KYBER_PROXY_ABI, KYBER_PROXY[this.network]);
+
+    const swapData = kyberContract.methods.tradeWithHint(
+      srcToken,
+      data.srcAmount,
+      destToken,
+      this.augustus._address,
+      data.maxDestAmount,
+      data.minConversionRate,
+      KYBER_FEE_WALLET,
+      data.hint,
+    ).encodeABI();
+
+    return super.swap(
+      srcToken,
+      destToken,
+      data,
+      swapData,
+      KYBER_PROXY[this.network],
+    );
+  };
+
+  async buildSwap(srcToken: Address, destToken: Address, data: KyberDEXData): Promise<DexParams> {
+    return this._swap(srcToken, destToken, data);
   }
+
 }

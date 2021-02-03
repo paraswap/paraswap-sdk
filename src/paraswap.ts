@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import * as async from 'async';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -11,7 +10,6 @@ import {
   Allowance,
   APIError,
   BuildOptions,
-  ETHER_ADDRESS,
   NetworkID,
   PriceString,
   RateOptions,
@@ -26,8 +24,9 @@ import AUGUSTUS_ABI = require('./abi/augustus.json');
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
 import { SwapSide } from './constants';
+import { DEXS } from './lib/dexs';
 
-const API_URL = 'https://api.paraswap.io/v2';
+const API_URL = 'https://apiv2.paraswap.io/v2';
 
 export class ParaSwap {
   adapters?: Adapters;
@@ -211,6 +210,16 @@ export class ParaSwap {
     }
   }
 
+  shouldUseMultiSwap(priceRoute: OptimalRatesWithPartnerFees) {
+    const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
+
+    const missingDEX = !!(<any>priceRoute.bestRoute).find(
+      (br: any) => !DEXS[br.exchange.toLowerCase()],
+    );
+
+    return isAMultiRoute || missingDEX;
+  }
+
   //Warning: ParaSwapPool is not supported when building locally
   async buildTxLocally(
     srcToken: Token,
@@ -222,7 +231,6 @@ export class ParaSwap {
     referrer: string,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
-    donatePercent: string = '0',
     options: BuildOptions = {},
   ) {
     if (!this.adapters) {
@@ -238,22 +246,37 @@ export class ParaSwap {
       this.web3Provider!,
       this.adapters!,
       this.tokens,
+      !!options.useAugustusLegacy,
     );
+
+    const forceMultiSwap = options.forceMultiSwap
+      ? true
+      : this.shouldUseMultiSwap(priceRoute);
 
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return transaction.getTransactionSellParams(
-          srcToken,
-          destToken,
-          srcAmount,
-          minMaxAmount,
-          priceRoute,
-          userAddress,
-          referrer,
-          gasPrice,
-          receiver,
-          donatePercent,
-        );
+        return (forceMultiSwap || options.useAugustusLegacy)
+          ? transaction.getTransactionSellParams(
+              srcToken,
+              destToken,
+              srcAmount,
+              minMaxAmount,
+              priceRoute,
+              userAddress,
+              referrer,
+              gasPrice,
+              receiver,
+            )
+          : transaction.getSimpleSellParams(
+              srcToken,
+              destToken,
+              srcAmount,
+              minMaxAmount,
+              priceRoute,
+              referrer,
+              gasPrice,
+              receiver,
+            );
       } else {
         return transaction.getTransactionBuyParams(
           srcToken,
@@ -265,7 +288,6 @@ export class ParaSwap {
           referrer,
           gasPrice,
           receiver,
-          donatePercent,
         );
       }
     }
@@ -280,8 +302,9 @@ export class ParaSwap {
       referrer,
       gasPrice,
       receiver,
-      donatePercent,
       !!options.ignoreChecks,
+      forceMultiSwap,
+      !!options.useAugustusLegacy,
     );
   }
 
