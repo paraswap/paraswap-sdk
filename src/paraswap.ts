@@ -26,7 +26,7 @@ import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
 import { SwapSide } from './constants';
 import { DEXS } from './lib/dexs';
 
-const API_URL = 'https://api.paraswap.io/v2';
+const API_URL = 'https://apiv2.paraswap.io/v2';
 
 export class ParaSwap {
   adapters?: Adapters;
