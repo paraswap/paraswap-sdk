@@ -21,13 +21,13 @@ const ZRX_EXCHANGE_ERC20PROXY: any = {
 };
 
 enum OrderStatus {
-  INVALID,                     // Default value
-  INVALID_MAKER_ASSET_AMOUNT,  // Order does not have a valid maker asset amount
-  INVALID_TAKER_ASSET_AMOUNT,  // Order does not have a valid taker asset amount
-  FILLABLE,                    // Order is fillable
-  EXPIRED,                     // Order has already expired
-  FULLY_FILLED,                // Order is fully filled
-  CANCELLED                    // Order has been cancelled
+  INVALID, // Default value
+  INVALID_MAKER_ASSET_AMOUNT, // Order does not have a valid maker asset amount
+  INVALID_TAKER_ASSET_AMOUNT, // Order does not have a valid taker asset amount
+  FILLABLE, // Order is fillable
+  EXPIRED, // Order has already expired
+  FULLY_FILLED, // Order is fully filled
+  CANCELLED, // Order has been cancelled
 }
 
 export interface ZeroXSignedOrder {
@@ -71,10 +71,12 @@ export interface IzXSignedOrderV3 {
 
 export class ZeroXOrder extends Adapter {
   static formatOrder(order: ZeroXSignedOrder, isV3: boolean) {
-    const feeAssetData = isV3 ? {
-      makerFeeAssetData: order.makerFeeAssetData,
-      takerFeeAssetData: order.takerFeeAssetData,
-    } : {};
+    const feeAssetData = isV3
+      ? {
+          makerFeeAssetData: order.makerFeeAssetData,
+          takerFeeAssetData: order.takerFeeAssetData,
+        }
+      : {};
 
     return {
       makerAddress: order.makerAddress,
@@ -85,7 +87,9 @@ export class ZeroXOrder extends Adapter {
       takerAssetAmount: new BigNumber(order.takerAssetAmount).toFixed(0),
       makerFee: new BigNumber(order.makerFee).toFixed(0),
       takerFee: new BigNumber(order.takerFee).toFixed(0),
-      expirationTimeSeconds: new BigNumber(order.expirationTimeSeconds).toFixed(0),
+      expirationTimeSeconds: new BigNumber(order.expirationTimeSeconds).toFixed(
+        0,
+      ),
       salt: new BigNumber(order.salt).toFixed(0),
       makerAssetData: order.makerAssetData,
       takerAssetData: order.takerAssetData,
@@ -99,7 +103,6 @@ export class ZeroXOrder extends Adapter {
 }
 
 export class Zerox extends Adapter {
-
   static getDexData(optimalRate: OptimalRate, name: string): ZeroXEXData {
     return {
       name,
@@ -111,14 +114,18 @@ export class Zerox extends Adapter {
       networkFees: optimalRate.data.networkFees || '0',
       isV3: !!optimalRate.data.isV3,
     };
-  };
+  }
 
   getABI(data: ZeroXEXData) {
     return <any>(data.isV3 ? ZRX_V3_ABI : ZRX_V2_ABI);
   }
 
   getExchange(data: ZeroXEXData) {
-    return <any>(data.isV3 ? ZRX_EXCHANGE[this.network].v3 : ZRX_EXCHANGE[this.network].v2);
+    return <any>(
+      (data.isV3
+        ? ZRX_EXCHANGE[this.network].v3
+        : ZRX_EXCHANGE[this.network].v2)
+    );
   }
 
   private buildSwapData(data: ZeroXEXData) {
@@ -130,10 +137,11 @@ export class Zerox extends Adapter {
 
     const signatures = data.orders.map((o: any) => o.signature);
 
-    const methodAbi = zrxABI.find((m: any) => m.name === 'marketSellOrdersNoThrow');
+    const methodAbi = zrxABI.find(
+      (m: any) => m.name === 'marketSellOrdersNoThrow',
+    );
 
     const abiEncoder = new AbiEncoder.Method(methodAbi);
-
     return abiEncoder.encode([orders, takerAssetFillAmount, signatures]);
   }
 
@@ -143,12 +151,19 @@ export class Zerox extends Adapter {
   }
 
   async getOrderInfo(order: IzXSignedOrderV3, provider: any) {
-    const contract = new this.web3Provider.eth.Contract(ZRX_V3_ABI, ZRX_EXCHANGE[this.network].v3);
+    const contract = new this.web3Provider.eth.Contract(
+      ZRX_V3_ABI,
+      ZRX_EXCHANGE[this.network].v3,
+    );
     return contract.methods.getOrderInfo(order).call();
   }
 
   private getTokenToTokenSwapData(srcToken: Address, data: ZeroXEXData) {
-    const approveCallData = this.getApproveCallData(srcToken, data.srcAmount, ZRX_EXCHANGE_ERC20PROXY[this.network]);
+    const approveCallData = this.getApproveCallData(
+      srcToken,
+      data.srcAmount,
+      ZRX_EXCHANGE_ERC20PROXY[this.network],
+    );
 
     const assetSwapperData = this.buildSwapData(data);
 
@@ -159,11 +174,18 @@ export class Zerox extends Adapter {
       calldata: [approveCallData.calldata, assetSwapperData],
       values: ['0', networkFees],
     };
-  };
+  }
 
-  protected async ethToTokenSwap(srcToken: Address, destToken: Address, data: ZeroXEXData): Promise<DexParams> {
+  protected async ethToTokenSwap(
+    srcToken: Address,
+    destToken: Address,
+    data: ZeroXEXData,
+  ): Promise<DexParams> {
     const wethToken = Weth.getAddress(this.network);
-    const wethContract = new this.web3Provider.eth.Contract(ERC20_ABI, wethToken);
+    const wethContract = new this.web3Provider.eth.Contract(
+      ERC20_ABI,
+      wethToken,
+    );
     const depositWethData = wethContract.methods.deposit().encodeABI();
 
     const wethToTokenData = this.getTokenToTokenSwapData(wethToken, data);
@@ -173,21 +195,31 @@ export class Zerox extends Adapter {
       calldata: [depositWethData, ...wethToTokenData.calldata],
       values: [data.srcAmount, ...wethToTokenData.values],
     };
-  };
+  }
 
-  protected async tokenToEthSwap(srcToken: Address, destToken: Address, data: ZeroXEXData): Promise<DexParams> {
+  protected async tokenToEthSwap(
+    srcToken: Address,
+    destToken: Address,
+    data: ZeroXEXData,
+  ): Promise<DexParams> {
     const wethToken = Weth.getAddress(this.network);
     const wethToTokenData = await this.getTokenToTokenSwapData(srcToken, data);
-    const withdrawWethData = this.augustus.methods.withdrawAllWETH(wethToken).encodeABI();
+    const withdrawWethData = this.augustus.methods
+      .withdrawAllWETH(wethToken)
+      .encodeABI();
 
     return {
       callees: [...wethToTokenData.callees, this.augustus._address],
       calldata: [...wethToTokenData.calldata, withdrawWethData],
       values: [...wethToTokenData.values, '0'],
     };
-  };
+  }
 
-  protected async tokenToTokenSwap(srcToken: Address, destToken: Address, data: ZeroXEXData): Promise<DexParams> {
+  protected async tokenToTokenSwap(
+    srcToken: Address,
+    destToken: Address,
+    data: ZeroXEXData,
+  ): Promise<DexParams> {
     return this.tokenToEthSwap(srcToken, destToken, data);
-  };
+  }
 }
