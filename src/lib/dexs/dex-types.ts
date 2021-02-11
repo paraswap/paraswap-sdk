@@ -17,7 +17,7 @@ export type ZeroXEXData = DEXData & {
   orders: any[];
   signatures: any[];
   networkFees?: string;
-  isV3: boolean;
+  version: number;
 };
 
 export type UniswapV1DEXData = DEXData & {

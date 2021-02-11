@@ -98,7 +98,7 @@ export class TransactionBuilder {
       case '0x':
       case '0xrfqt':
         if (side == SwapSide.BUY) return '0x';
-        const orderData = ZeroXOrder.formatOrders(data.orders, true);
+        const orderData = ZeroXOrder.formatOrders(data.orders, 3);
         const signatures = data.orders.map((o: any) => o.signature);
 
         return web3Coder.encodeParameter(
