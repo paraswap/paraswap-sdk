@@ -1,27 +1,20 @@
 import { Address } from '../types';
 
-export type LendingToken = 'cToken' | 'iToken' | 'aToken' | 'aToken2' | 'idleToken' | 'Chai' | 'bDAI';
+export type LendingToken =
+  | 'cToken'
+  | 'iToken'
+  | 'aToken'
+  | 'aToken2'
+  | 'idleToken'
+  | 'Chai'
+  | 'bDAI';
 export type TokenType = 'ETH' | 'ERC20' | 'SYNTH';
 
 export class Token {
-  getConnectors() {
-    const DAI = this.network === 1 ? 'DAI' : 'SAI';
-
-    if (this.symbol === 'ETH') {
-      return [DAI, 'USDC'];
-    }
-
-    if (this.symbol === 'DAI') {
-      return ['ETH', 'USDC'];
-    }
-
-    return this.mainConnector ? [this.mainConnector] : ['ETH', DAI];
-  }
-
   constructor(
     public address: Address,
     public decimals: number,
-    public symbol: string,
+    public symbol?: string,
     public tokenType: LendingToken | TokenType = 'ERC20',
     public mainConnector: string = '',
     public connectors: string[] = [],
@@ -30,8 +23,14 @@ export class Token {
     public allowance?: string,
     public balance?: string,
   ) {
-    this.connectors = this.connectors.length ? this.connectors : this.getConnectors();
+    this.connectors = this.connectors.length
+      ? this.connectors
+      : this.mainConnector
+      ? [this.mainConnector]
+      : ['ETH'];
 
-    this.tokenType = this.tokenType || (this.symbol.toUpperCase() === 'ETH' ? 'ETH' : 'ERC20');
+    this.tokenType =
+      this.tokenType ||
+      (this.symbol && this.symbol.toUpperCase() === 'ETH' ? 'ETH' : 'ERC20');
   }
 }
