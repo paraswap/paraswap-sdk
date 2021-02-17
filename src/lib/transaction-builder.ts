@@ -158,7 +158,35 @@ export class TransactionBuilder {
             signatures: data.orders.map((o: any) => o.signature),
           },
         );
-
+      case '0xv4':
+        return web3Coder.encodeParameter(
+          {
+            ParentStruct: {
+              order: {
+                makerToken: 'address',
+                takerToken: 'address',
+                makerAmount: 'uint128',
+                takerAmount: 'uint128',
+                maker: 'address',
+                taker: 'address',
+                txOrigin: 'address',
+                pool: 'bytes32',
+                expiry: 'uint64',
+                salt: 'uint256',
+              },
+              signature: {
+                signatureType: 'uint8',
+                v: 'uint8',
+                r: 'bytes32',
+                s: 'bytes32',
+              },
+            },
+          },
+          {
+            order: data.orders[0],
+            signature: data.signatures[0],
+          },
+        );
       case 'oasis':
         const { otc, weth, factory } = Oasis.getExchangeParams(this.network);
 
