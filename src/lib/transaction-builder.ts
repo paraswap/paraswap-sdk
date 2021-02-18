@@ -34,7 +34,7 @@ import { SwapSide } from '../constants';
 
 import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
-import { DEXS } from './dexs';
+import { getDEX } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 const AUGUSTUS_LEGACY_ABI = require('../abi/augustus-legacy.json');
@@ -716,7 +716,7 @@ export class TransactionBuilder {
 
     const exchangeData: DEXData[] = priceRoute.bestRoute.map(
       (br: OptimalRate) => {
-        const Dex = DEXS[br.exchange.toLowerCase()];
+        const Dex = getDEX(br.exchange.toLowerCase());
 
         if (Dex) {
           return Dex.getDexData(br, br.exchange);
