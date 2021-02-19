@@ -867,7 +867,7 @@ export class TransactionBuilder {
 
       const swapMethodData = this.augustusContract.methods.buy.apply(
         null,
-        Object.values(params),
+        Object.values({ data: params }),
       );
 
       const gas = ignoreGas
