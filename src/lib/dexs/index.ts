@@ -13,25 +13,29 @@ import { Balancer } from './balancer';
 import { Shell } from './shell';
 import { Cofix } from './cofix';
 
-const DEXS: { [dex: string]: typeof Adapter } = {
-  'uniswap': UniswapV1,
-  'uniswapv2': UniswapV2,
-  'sushiswap': UniswapV2,
-  'defiswap': UniswapV2,
-  'linkswap': UniswapV2,
-  'kyber': Kyber,
-  'bancor': Bancor,
-  'paraswappool': Zerox,
-  'zerox': Zerox,
-  'curve': Curve,
-  'curve3': Curve,
-  'aave': Aave,
-  'aave2': Aave,
-  'compound': Compound,
-  'weth': Weth,
-  'balancer': Balancer,
-  'shell': Shell,
-  'cofix': Cofix,
+export const DEXS: { [dex: string]: typeof Adapter } = {
+  uniswap: UniswapV1,
+  uniswapv2: UniswapV2,
+  sushiswap: UniswapV2,
+  defiswap: UniswapV2,
+  linkswap: UniswapV2,
+  kyber: Kyber,
+  bancor: Bancor,
+  paraswappool: Zerox,
+  zerox: Zerox,
+  curve: Curve,
+  curve3: Curve,
+  aave: Aave,
+  aave2: Aave,
+  compound: Compound,
+  weth: Weth,
+  balancer: Balancer,
+  shell: Shell,
+  cofix: Cofix,
 };
 
-export { DEXS };
+export function getDEX(dex: string): typeof Adapter {
+  return dex.toLowerCase().match(/^paraswappool(.*)/)
+    ? DEXS.paraswappool
+    : DEXS[dex];
+}

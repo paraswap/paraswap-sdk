@@ -34,7 +34,7 @@ import { SwapSide } from '../constants';
 
 import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
-import { DEXS } from './dexs';
+import { getDEX } from './dexs';
 
 const AUGUSTUS_ABI = require('../abi/augustus.json');
 const AUGUSTUS_LEGACY_ABI = require('../abi/augustus-legacy.json');
@@ -94,6 +94,34 @@ export class TransactionBuilder {
     const srcToken = this.tokens!.find(t => t.address === fromToken)!;
     const destToken = this.tokens!.find(t => t.address === toToken)!;
 
+    if (exchange.toLowerCase().match(/^paraswappool(.*)/)) {
+      return web3Coder.encodeParameter(
+        {
+          ParentStruct: {
+            'orders[]': {
+              makerAddress: 'address', // Address that created the order.
+              takerAddress: 'address', // Address that is allowed to fill the order. If set to 0, any address is allowed to fill the order.
+              feeRecipientAddress: 'address', // Address that will recieve fees when order is filled.
+              senderAddress: 'address', // Address that is allowed to call Exchange contract methods that affect this order. If set to 0, any address is allowed to call these methods.
+              makerAssetAmount: 'uint256', // Amount of makerAsset being offered by maker. Must be greater than 0.
+              takerAssetAmount: 'uint256', // Amount of takerAsset being bid on by maker. Must be greater than 0.
+              makerFee: 'uint256', // Fee paid to feeRecipient by maker when order is filled.
+              takerFee: 'uint256', // Fee paid to feeRecipient by taker when order is filled.
+              expirationTimeSeconds: 'uint256', // Timestamp in seconds at which order expires.
+              salt: 'uint256', // Arbitrary number to facilitate uniqueness of the order's hash.
+              makerAssetData: 'bytes', // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The leading bytes4 references the id of the asset proxy.
+              takerAssetData: 'bytes',
+            },
+            signatures: 'bytes[]',
+          },
+        },
+        {
+          orders: ZeroXOrder.formatOrders(data.orders),
+          signatures: data.orders.map((o: any) => o.signature),
+        },
+      );
+    }
+
     switch (exchange.toLowerCase()) {
       case '0x':
       case '0xrfqt':
@@ -128,33 +156,6 @@ export class TransactionBuilder {
             orders: orderData,
             signatures: signatures,
             networkFee,
-          },
-        );
-      case 'paraswappool':
-      case 'paraswappool2':
-        return web3Coder.encodeParameter(
-          {
-            ParentStruct: {
-              'orders[]': {
-                makerAddress: 'address', // Address that created the order.
-                takerAddress: 'address', // Address that is allowed to fill the order. If set to 0, any address is allowed to fill the order.
-                feeRecipientAddress: 'address', // Address that will recieve fees when order is filled.
-                senderAddress: 'address', // Address that is allowed to call Exchange contract methods that affect this order. If set to 0, any address is allowed to call these methods.
-                makerAssetAmount: 'uint256', // Amount of makerAsset being offered by maker. Must be greater than 0.
-                takerAssetAmount: 'uint256', // Amount of takerAsset being bid on by maker. Must be greater than 0.
-                makerFee: 'uint256', // Fee paid to feeRecipient by maker when order is filled.
-                takerFee: 'uint256', // Fee paid to feeRecipient by taker when order is filled.
-                expirationTimeSeconds: 'uint256', // Timestamp in seconds at which order expires.
-                salt: 'uint256', // Arbitrary number to facilitate uniqueness of the order's hash.
-                makerAssetData: 'bytes', // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The leading bytes4 references the id of the asset proxy.
-                takerAssetData: 'bytes',
-              },
-              signatures: 'bytes[]',
-            },
-          },
-          {
-            orders: ZeroXOrder.formatOrders(data.orders),
-            signatures: data.orders.map((o: any) => o.signature),
           },
         );
 
@@ -715,7 +716,7 @@ export class TransactionBuilder {
 
     const exchangeData: DEXData[] = priceRoute.bestRoute.map(
       (br: OptimalRate) => {
-        const Dex = DEXS[br.exchange.toLowerCase()];
+        const Dex = getDEX(br.exchange.toLowerCase());
 
         if (Dex) {
           return Dex.getDexData(br, br.exchange);
