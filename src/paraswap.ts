@@ -24,7 +24,7 @@ import AUGUSTUS_ABI = require('./abi/augustus.json');
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
 import { SwapSide } from './constants';
-import { DEXS } from './lib/dexs';
+import { getDEX } from './lib/dexs';
 
 const API_URL = 'https://apiv2.paraswap.io/v2';
 
@@ -214,7 +214,7 @@ export class ParaSwap {
     const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
 
     const missingDEX = !!(<any>priceRoute.bestRoute).find(
-      (br: any) => !DEXS[br.exchange.toLowerCase()],
+      (br: any) => !getDEX(br.exchange.toLowerCase()),
     );
 
     return isAMultiRoute || missingDEX;
@@ -255,7 +255,7 @@ export class ParaSwap {
 
     if (options.onlyParams) {
       if (priceRoute.side === SwapSide.SELL) {
-        return (forceMultiSwap || options.useAugustusLegacy)
+        return forceMultiSwap || options.useAugustusLegacy
           ? transaction.getTransactionSellParams(
               srcToken,
               destToken,

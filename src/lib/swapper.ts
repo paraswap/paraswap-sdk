@@ -1,10 +1,13 @@
 import { DEXData, DexParams, SwapData, ExchangeData } from './dexs/dex-types';
 import { Address } from '../types';
-import { DEXS } from './dexs';
+import { getDEX } from './dexs';
 
 export class Swapper {
-  constructor(private network: number, private web3Provider: any, private augustus: any) {
-  }
+  constructor(
+    private network: number,
+    private web3Provider: any,
+    private augustus: any,
+  ) {}
 
   private buildExchangeData(dataObject: DexParams): ExchangeData {
     const calldata = dataObject.calldata;
@@ -29,7 +32,7 @@ export class Swapper {
       calldata: concatenatedCallData,
       startIndexes: startIndex,
     };
-  };
+  }
 
   appendToDataObject(dataObject: DexParams, dexData: DexParams) {
     dataObject.callees = dataObject.callees.concat(dexData.callees);
@@ -39,7 +42,13 @@ export class Swapper {
     return dataObject;
   }
 
-  async buildSwap(srcToken: Address, destToken: Address, srcAmount: string, minDestinationAmount: string, exchangeData: DEXData[]): Promise<SwapData> {
+  async buildSwap(
+    srcToken: Address,
+    destToken: Address,
+    srcAmount: string,
+    minDestinationAmount: string,
+    exchangeData: DEXData[],
+  ): Promise<SwapData> {
     //TODO: add data validation
 
     let dataObject: DexParams = {
@@ -49,19 +58,18 @@ export class Swapper {
     };
 
     for (let i = 0; i < exchangeData.length; i++) {
-      const Dex = DEXS[exchangeData[i].name.toLowerCase()];
+      const Dex = getDEX(exchangeData[i].name.toLowerCase());
 
       if (Dex) {
-        const dexData = await new Dex(this.network, this.web3Provider, this.augustus).buildSwap(
-          srcToken,
-          destToken,
-          exchangeData[i],
-        );
+        const dexData = await new Dex(
+          this.network,
+          this.web3Provider,
+          this.augustus,
+        ).buildSwap(srcToken, destToken, exchangeData[i]);
         dataObject = this.appendToDataObject(dataObject, dexData);
       } else {
         throw new Error('Unsupported Exchange: ' + exchangeData[i].name);
       }
-
     }
 
     const returnData = this.buildExchangeData(dataObject);
@@ -78,5 +86,4 @@ export class Swapper {
       minDestinationAmount,
     };
   }
-
 }
