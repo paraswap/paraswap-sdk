@@ -154,21 +154,38 @@ export class ParaSwap {
     options?: RateOptions,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
-      const { excludeDEXS, includeDEXS } = options || {};
+      const {
+        excludeDEXS,
+        includeDEXS,
+        includeMPDEXS,
+        excludeMPDEXS,
+        referrer,
+      } = options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
+      this.checkDexList(includeMPDEXS);
+      this.checkDexList(excludeMPDEXS);
 
       const query = _.isEmpty(options)
         ? ''
-        : qs.stringify({ excludeDEXS, includeDEXS });
+        : qs.stringify({
+            excludeDEXS,
+            includeDEXS,
+            includeMPDEXS,
+            excludeMPDEXS,
+          });
 
       const pricesURL = `${
         this.apiURL
       }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
         query ? '&' + query : ''
       }&side=${side}`;
-      const { data } = await axios.get(pricesURL);
+      const { data } = await axios.get(pricesURL, {
+        headers: {
+          'X-Partner': referrer || 'paraswap.io',
+        },
+      });
       return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
