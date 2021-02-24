@@ -35,24 +35,6 @@ export class DODO extends Adapter {
   }
 
   private _swap(srcToken: Address, destToken: Address, data: DODODexData) {
-    let callees = [];
-    let calldata = [];
-    let values = [];
-
-    if (!this.isETHAddress(srcToken)) {
-      const approveCallData = this.getApproveCallData(
-        srcToken,
-        data.srcAmount,
-        DODOAproveAddress[this.network],
-      );
-      callees.push(approveCallData.callee);
-      calldata.push(approveCallData.calldata);
-      values.push(approveCallData.value);
-      values.push('0');
-    } else {
-      values.push(data.srcAmount);
-    }
-
     const dodoContract = new this.web3Provider.eth.Contract(
       DODOProxyAbi,
       DODOV2ProxyAddress[this.network],
@@ -71,14 +53,25 @@ export class DODO extends Adapter {
       )
       .encodeABI();
 
-    callees.push(DODOV2ProxyAddress[this.network]);
-    calldata.push(swapData);
+    if (!this.isETHAddress(srcToken)) {
+      const approveCallData = this.getApproveCallData(
+        srcToken,
+        data.srcAmount,
+        DODOAproveAddress[this.network],
+      );
 
-    return {
-      callees,
-      calldata,
-      values,
-    };
+      return {
+        callees: [approveCallData.callee, DODOV2ProxyAddress[this.network]],
+        calldata: [approveCallData.calldata, swapData],
+        values: [approveCallData.value, '0'],
+      };
+    } else {
+      return {
+        callees: [DODOV2ProxyAddress[this.network]],
+        calldata: [swapData],
+        values: [data.srcAmount],
+      };
+    }
   }
 
   async buildSwap(
