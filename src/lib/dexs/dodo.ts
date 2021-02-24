@@ -19,7 +19,7 @@ export class DODO extends Adapter {
   static getDexData(optimalRate: OptimalRate, name: string): DODODexData {
     const {
       srcAmount,
-      data: { exchange, tokenFrom, tokenTo },
+      data: { exchange, tokenFrom, tokenTo, dodoPairs, directions },
     } = optimalRate;
     return {
       name,
@@ -27,8 +27,8 @@ export class DODO extends Adapter {
       toToken: tokenTo,
       srcAmount,
       destAmount: '1',
-      dodoPairs: [exchange],
-      directions: '0',
+      dodoPairs,
+      directions,
       isIncentive: false,
       deadLine: MAX_UINT,
     };
