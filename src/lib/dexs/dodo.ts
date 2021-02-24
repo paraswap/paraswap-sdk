@@ -11,8 +11,8 @@ const DODOV2ProxyAddress: { [network: number]: Address } = {
   1: '0xa356867fdcea8e71aeaf87805808803806231fdc',
 };
 
-const DODOAproveProxyAddress: { [network: number]: Address } = {
-  1: '0x335ac99bb3e51bdbf22025f092ebc1cf2c5cc619',
+const DODOAproveAddress: { [network: number]: Address } = {
+  1: '0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149',
 };
 
 export class DODO extends Adapter {
@@ -43,7 +43,7 @@ export class DODO extends Adapter {
       const approveCallData = this.getApproveCallData(
         srcToken,
         data.srcAmount,
-        DODOAproveProxyAddress[this.network],
+        DODOAproveAddress[this.network],
       );
       callees.push(approveCallData.callee);
       calldata.push(approveCallData.calldata);
