@@ -25,7 +25,11 @@ const ZRX_ABI: any = {
 };
 
 const ZRX_EXCHANGE_ERC20PROXY: any = {
-  1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+  1: {
+    1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+    2: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+    4: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+  },
 };
 
 enum OrderStatus {
@@ -204,7 +208,7 @@ export class Zerox extends Adapter {
     const approveCallData = this.getApproveCallData(
       srcToken,
       data.srcAmount,
-      ZRX_EXCHANGE_ERC20PROXY[this.network],
+      ZRX_EXCHANGE_ERC20PROXY[this.network][data.version],
     );
 
     const assetSwapperData = this.buildSwapData(data);
