@@ -262,6 +262,12 @@ export class Zerox extends Adapter {
     destToken: Address,
     data: ZeroXEXData,
   ): Promise<DexParams> {
-    return this.tokenToEthSwap(srcToken, destToken, data);
+    const swapData = await this.getTokenToTokenSwapData(srcToken, data);
+
+    return {
+      callees: [...swapData.callees],
+      calldata: [...swapData.calldata],
+      values: [...swapData.values],
+    };
   }
 }

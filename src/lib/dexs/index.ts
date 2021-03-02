@@ -13,7 +13,7 @@ import { Balancer } from './balancer';
 import { Shell } from './shell';
 import { Cofix } from './cofix';
 
-const DEXS: { [dex: string]: typeof Adapter } = {
+export const DEXS: { [dex: string]: typeof Adapter } = {
   uniswap: UniswapV1,
   uniswapv2: UniswapV2,
   sushiswap: UniswapV2,
@@ -35,4 +35,8 @@ const DEXS: { [dex: string]: typeof Adapter } = {
   cofix: Cofix,
 };
 
-export { DEXS };
+export function getDEX(dex: string): typeof Adapter {
+  return dex.toLowerCase().match(/^paraswappool(.*)/)
+    ? DEXS.paraswappool
+    : DEXS[dex];
+}

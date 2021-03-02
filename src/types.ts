@@ -186,6 +186,7 @@ type RateOptions = {
   includeDEXS?: string;
   includeMPDEXS?: string;
   excludeMPDEXS?: string;
+  referrer?: string;
 };
 
 type TransactionRoute = {
