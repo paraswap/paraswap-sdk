@@ -77,15 +77,6 @@ export type CurveDexData = DEXData & {
   underlyingSwap: boolean;
 };
 
-export type DODODexData = DEXData & {
-  fromToken: Address;
-  toToken: Address;
-  dodoPairs: Address[];
-  directions: string;
-  isIncentive: boolean;
-  deadLine: string;
-};
-
 export type BancorDEXData = DEXData & {
   minDestToken: string;
   path: Address[];

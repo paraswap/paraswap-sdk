@@ -200,6 +200,7 @@ export class TransactionBuilder {
 
       case 'balancer':
         const { swaps } = data;
+
         return web3Coder.encodeParameter(
           {
             ParentStruct: {
@@ -212,18 +213,6 @@ export class TransactionBuilder {
             },
           },
           { swaps },
-        );
-
-      case 'dodov1':
-        const { dodoPairs, directions } = data;
-        return web3Coder.encodeParameter(
-          {
-            ParentStruct: {
-              dodoPairs: 'address[]',
-              directions: 'uint256',
-            },
-          },
-          { dodoPairs, directions },
         );
 
       case 'compound':
@@ -451,7 +440,6 @@ export class TransactionBuilder {
       networkFee,
       SwapSide.SELL,
     );
-
     const targetExchange = this.getTargetExchange(
       srcToken,
       exchangeName,
