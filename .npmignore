@@ -6,3 +6,7 @@ tsconfig.json
 jest.config.js
 .idea
 .env
+.editorconfig
+.prettierrc
+apiary.apib
+.vscode
