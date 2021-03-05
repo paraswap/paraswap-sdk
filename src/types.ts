@@ -119,16 +119,23 @@ type OptimalRateWithFeeBuy = Merge<
 
 type OptimalRateWithFee = OptimalRateWithFeeSell | OptimalRateWithFeeBuy;
 
+type OptimalRoute = {
+  percent: NumberAsString;
+  route: OptimalRate[][];
+};
+
 type OptimalRates = {
   blockNumber: number;
   destAmount: string;
   srcAmount: string;
   priceWithSlippage?: string;
   multiPath?: boolean;
+  giantPath?: boolean;
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
+  giantRoute?: OptimalRoute[];
   others: SimpleComputedRate[];
   fromUSD?: NumberAsString;
   toUSD?: NumberAsString;
