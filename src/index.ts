@@ -9,6 +9,7 @@ export {
   OptimalRateWithFeeSell,
   OptimalRateWithFeeBuy,
   OptimalRates,
+  OptimalRoute,
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
