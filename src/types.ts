@@ -322,6 +322,7 @@ export {
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
+  OptimalRoute,
   User,
   RateOptions,
   TransactionRoute,
