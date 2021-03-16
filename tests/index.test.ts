@@ -18,6 +18,7 @@ import {
 } from '../src/types';
 import { NULL_ADDRESS } from '../src/lib/transaction-builder';
 import { SwapSide } from '../src/constants';
+import { assert } from 'ts-essentials';
 const erc20abi = require('../src/abi/erc20.json');
 
 dotenv.config();
@@ -219,6 +220,9 @@ describe('ParaSwap SDK', () => {
     const srcToken = new Token(ETH, 18, 'DAI');
     const destToken = new Token(DAI, 18, 'KNC');
 
+    assert(srcToken.symbol, 'token should have a symbol');
+    assert(destToken.symbol, 'token should have a symbol');
+
     const ratesOrError = await paraSwap.getRate(
       srcToken.symbol,
       destToken.symbol,
@@ -242,8 +246,6 @@ describe('ParaSwap SDK', () => {
       referrer,
       gasPrice,
       receiver,
-      '0',
-      { ignoreChecks: true },
     );
     expect(typeof transaction).toBe('object');
   });

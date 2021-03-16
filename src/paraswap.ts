@@ -111,47 +111,8 @@ export class ParaSwap {
     amount: PriceString,
     side: SwapSide,
     options?: RateOptions,
-  ): Promise<OptimalRatesWithPartnerFees | APIError> {
-    try {
-      const { excludeDEXS, includeDEXS, includeMPDEXS, excludeMPDEXS } =
-        options || {};
-
-      this.checkDexList(includeDEXS);
-      this.checkDexList(excludeDEXS);
-      this.checkDexList(includeMPDEXS);
-      this.checkDexList(excludeMPDEXS);
-
-      if (route.length < 2) {
-        return { message: 'Invalid Route' };
-      }
-
-      const query = _.isEmpty(options)
-        ? ''
-        : qs.stringify({
-            excludeDEXS,
-            includeDEXS,
-            includeMPDEXS,
-            excludeMPDEXS,
-          });
-
-      const pricesURL = `${this.apiURL}/prices/?route=${route.join(
-        '-',
-      )}&amount=${amount}&${query}&side=${side}`;
-
-      const { data } = await axios.get(pricesURL);
-
-      return data.priceRoute;
-    } catch (e) {
-      return this.handleAPIError(e);
-    }
-  }
-
-  async getRate(
-    srcToken: AddressOrSymbol,
-    destToken: AddressOrSymbol,
-    amount: PriceString,
-    side: SwapSide = SwapSide.SELL,
-    options?: RateOptions,
+    srcDecimals?: number,
+    destDecimals?: number,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
     try {
       const {
@@ -167,14 +128,66 @@ export class ParaSwap {
       this.checkDexList(includeMPDEXS);
       this.checkDexList(excludeMPDEXS);
 
-      const query = _.isEmpty(options)
-        ? ''
-        : qs.stringify({
-            excludeDEXS,
-            includeDEXS,
-            includeMPDEXS,
-            excludeMPDEXS,
-          });
+      if (route.length < 2) {
+        return { message: 'Invalid Route' };
+      }
+
+      const query = qs.stringify({
+        excludeDEXS,
+        includeDEXS,
+        includeMPDEXS,
+        excludeMPDEXS,
+        fromDecimals: srcDecimals,
+        toDecimals: destDecimals,
+      });
+
+      const pricesURL = `${this.apiURL}/prices/?route=${route.join(
+        '-',
+      )}&amount=${amount}&${query}&side=${side}`;
+
+      const { data } = await axios.get(pricesURL, {
+        headers: {
+          'X-Partner': referrer || 'paraswap.io',
+        },
+      });
+
+      return data.priceRoute;
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
+  async getRate(
+    srcToken: AddressOrSymbol,
+    destToken: AddressOrSymbol,
+    amount: PriceString,
+    side: SwapSide = SwapSide.SELL,
+    options?: RateOptions,
+    srcDecimals?: number,
+    destDecimals?: number,
+  ): Promise<OptimalRatesWithPartnerFees | APIError> {
+    try {
+      const {
+        excludeDEXS,
+        includeDEXS,
+        includeMPDEXS,
+        excludeMPDEXS,
+        referrer,
+      } = options || {};
+
+      this.checkDexList(includeDEXS);
+      this.checkDexList(excludeDEXS);
+      this.checkDexList(includeMPDEXS);
+      this.checkDexList(excludeMPDEXS);
+
+      const query = qs.stringify({
+        excludeDEXS,
+        includeDEXS,
+        includeMPDEXS,
+        excludeMPDEXS,
+        fromDecimals: srcDecimals,
+        toDecimals: destDecimals,
+      });
 
       const pricesURL = `${
         this.apiURL
@@ -202,6 +215,8 @@ export class ParaSwap {
     referrer: string,
     receiver?: Address,
     options: BuildOptions = {},
+    srcDecimals?: number,
+    destDecimals?: number,
   ) {
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
@@ -217,6 +232,8 @@ export class ParaSwap {
         userAddress,
         referrer,
         receiver: receiver || '',
+        srcDecimals,
+        destDecimals,
       };
 
       const { data } = await axios.post(txURL, txConfig);
