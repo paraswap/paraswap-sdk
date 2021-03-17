@@ -23,6 +23,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   kyber: Kyber,
   bancor: Bancor,
   paraswappool: Zerox,
+  paraswappool3: Zerox,
   zerox: Zerox,
   curve: Curve,
   curve3: Curve,

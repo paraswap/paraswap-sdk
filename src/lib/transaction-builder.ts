@@ -95,38 +95,67 @@ export class TransactionBuilder {
     const destToken = this.tokens!.find(t => t.address === toToken)!;
 
     if (exchange.toLowerCase().match(/^paraswappool(.*)/)) {
-      return web3Coder.encodeParameter(
-        {
-          ParentStruct: {
-            'orders[]': {
-              makerAddress: 'address', // Address that created the order.
-              takerAddress: 'address', // Address that is allowed to fill the order. If set to 0, any address is allowed to fill the order.
-              feeRecipientAddress: 'address', // Address that will recieve fees when order is filled.
-              senderAddress: 'address', // Address that is allowed to call Exchange contract methods that affect this order. If set to 0, any address is allowed to call these methods.
-              makerAssetAmount: 'uint256', // Amount of makerAsset being offered by maker. Must be greater than 0.
-              takerAssetAmount: 'uint256', // Amount of takerAsset being bid on by maker. Must be greater than 0.
-              makerFee: 'uint256', // Fee paid to feeRecipient by maker when order is filled.
-              takerFee: 'uint256', // Fee paid to feeRecipient by taker when order is filled.
-              expirationTimeSeconds: 'uint256', // Timestamp in seconds at which order expires.
-              salt: 'uint256', // Arbitrary number to facilitate uniqueness of the order's hash.
-              makerAssetData: 'bytes', // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The leading bytes4 references the id of the asset proxy.
-              takerAssetData: 'bytes',
+      return data.version === 4
+        ? web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                order: {
+                  makerToken: 'address',
+                  takerToken: 'address',
+                  makerAmount: 'uint128',
+                  takerAmount: 'uint128',
+                  maker: 'address',
+                  taker: 'address',
+                  txOrigin: 'address',
+                  pool: 'bytes32',
+                  expiry: 'uint64',
+                  salt: 'uint256',
+                },
+                signature: {
+                  signatureType: 'uint8',
+                  v: 'uint8',
+                  r: 'bytes32',
+                  s: 'bytes32',
+                },
+              },
             },
-            signatures: 'bytes[]',
-          },
-        },
-        {
-          orders: ZeroXOrder.formatOrders(data.orders),
-          signatures: data.orders.map((o: any) => o.signature),
-        },
-      );
+            {
+              order: ZeroXOrder.formatOrders(data.orders, 4)[0],
+              signature: data.orders[0].signature,
+            },
+          )
+        : web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                'orders[]': {
+                  makerAddress: 'address', // Address that created the order.
+                  takerAddress: 'address', // Address that is allowed to fill the order. If set to 0, any address is allowed to fill the order.
+                  feeRecipientAddress: 'address', // Address that will recieve fees when order is filled.
+                  senderAddress: 'address', // Address that is allowed to call Exchange contract methods that affect this order. If set to 0, any address is allowed to call these methods.
+                  makerAssetAmount: 'uint256', // Amount of makerAsset being offered by maker. Must be greater than 0.
+                  takerAssetAmount: 'uint256', // Amount of takerAsset being bid on by maker. Must be greater than 0.
+                  makerFee: 'uint256', // Fee paid to feeRecipient by maker when order is filled.
+                  takerFee: 'uint256', // Fee paid to feeRecipient by taker when order is filled.
+                  expirationTimeSeconds: 'uint256', // Timestamp in seconds at which order expires.
+                  salt: 'uint256', // Arbitrary number to facilitate uniqueness of the order's hash.
+                  makerAssetData: 'bytes', // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The leading bytes4 references the id of the asset proxy.
+                  takerAssetData: 'bytes',
+                },
+                signatures: 'bytes[]',
+              },
+            },
+            {
+              orders: ZeroXOrder.formatOrders(data.orders),
+              signatures: data.orders.map((o: any) => o.signature),
+            },
+          );
     }
 
     switch (exchange.toLowerCase()) {
       case '0x':
       case '0xrfqt':
         if (side == SwapSide.BUY) return '0x';
-        const orderData = ZeroXOrder.formatOrders(data.orders, true);
+        const orderData = ZeroXOrder.formatOrders(data.orders, 3);
         const signatures = data.orders.map((o: any) => o.signature);
 
         return web3Coder.encodeParameter(
@@ -158,7 +187,6 @@ export class TransactionBuilder {
             networkFee,
           },
         );
-
       case 'oasis':
         const { otc, weth, factory } = Oasis.getExchangeParams(this.network);
 

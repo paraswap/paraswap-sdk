@@ -8,16 +8,28 @@ import { Weth } from './weth';
 import ERC20_ABI = require('../../abi/erc20.json');
 import ZRX_V2_ABI = require('../../abi/zrx.v2.json');
 import ZRX_V3_ABI = require('../../abi/zrx.v3.json');
+import ZRX_V4_ABI = require('../../abi/zrx.v4.json');
 
 const ZRX_EXCHANGE: any = {
   1: {
-    v2: '0x080bf510fcbf18b91105470639e9561022937712',
-    v3: '0x61935CbDd02287B511119DDb11Aeb42F1593b7Ef',
+    2: '0x080bf510fcbf18b91105470639e9561022937712',
+    3: '0x61935CbDd02287B511119DDb11Aeb42F1593b7Ef',
+    4: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
   },
 };
 
+const ZRX_ABI: any = {
+  2: ZRX_V2_ABI,
+  3: ZRX_V3_ABI,
+  4: ZRX_V4_ABI,
+};
+
 const ZRX_EXCHANGE_ERC20PROXY: any = {
-  1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+  1: {
+    1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+    2: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
+    4: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+  },
 };
 
 enum OrderStatus {
@@ -49,6 +61,19 @@ export interface ZeroXSignedOrder {
   signature: string;
 }
 
+export interface ZeroXSignedOrderV4 {
+  makerToken: string;
+  takerToken: string;
+  makerAmount: BigNumber;
+  takerAmount: BigNumber;
+  maker: string;
+  taker: string;
+  txOrigin: string;
+  pool: string;
+  expiry: BigNumber;
+  salt: BigNumber;
+}
+
 export interface IzXSignedOrderV3 {
   exchangeAddress: string;
   makerAddress: string;
@@ -70,13 +95,29 @@ export interface IzXSignedOrderV3 {
 }
 
 export class ZeroXOrder extends Adapter {
-  static formatOrder(order: ZeroXSignedOrder, isV3: boolean) {
-    const feeAssetData = isV3
-      ? {
-          makerFeeAssetData: order.makerFeeAssetData,
-          takerFeeAssetData: order.takerFeeAssetData,
-        }
-      : {};
+  static formatOrderV4(order: ZeroXSignedOrderV4, version: number) {
+    return {
+      makerToken: order.makerToken,
+      takerToken: order.takerToken,
+      makerAmount: new BigNumber(order.makerAmount).toFixed(),
+      takerAmount: new BigNumber(order.takerAmount).toFixed(),
+      maker: order.maker,
+      taker: order.taker,
+      txOrigin: order.txOrigin,
+      pool: order.pool,
+      expiry: new BigNumber(order.expiry).toFixed(),
+      salt: new BigNumber(order.salt).toFixed(),
+    };
+  }
+
+  static formatOrderV23(order: ZeroXSignedOrder, version: number) {
+    const feeAssetData =
+      version === 3
+        ? {
+            makerFeeAssetData: order.makerFeeAssetData,
+            takerFeeAssetData: order.takerFeeAssetData,
+          }
+        : {};
 
     return {
       makerAddress: order.makerAddress,
@@ -97,8 +138,17 @@ export class ZeroXOrder extends Adapter {
     };
   }
 
-  static formatOrders(orders: ZeroXSignedOrder[], isV3: boolean = false) {
-    return orders.map(o => ZeroXOrder.formatOrder(o, isV3));
+  static formatOrders(
+    orders: (ZeroXSignedOrder | ZeroXSignedOrderV4)[],
+    version: number = 2,
+  ) {
+    return version === 4
+      ? orders.map(o =>
+          ZeroXOrder.formatOrderV4(o as ZeroXSignedOrderV4, version),
+        )
+      : orders.map(o =>
+          ZeroXOrder.formatOrderV23(o as ZeroXSignedOrder, version),
+        );
   }
 }
 
@@ -112,38 +162,33 @@ export class Zerox extends Adapter {
       orders: optimalRate.data.orders,
       signatures: optimalRate.data.orders.map((o: any) => o.signature),
       networkFees: optimalRate.data.networkFees || '0',
-      isV3: !!optimalRate.data.isV3,
+      version: optimalRate.data.version || 2,
     };
   }
 
-  getABI(data: ZeroXEXData) {
-    return <any>(data.isV3 ? ZRX_V3_ABI : ZRX_V2_ABI);
-  }
-
   getExchange(data: ZeroXEXData) {
-    return <any>(
-      (data.isV3
-        ? ZRX_EXCHANGE[this.network].v3
-        : ZRX_EXCHANGE[this.network].v2)
-    );
+    return ZRX_EXCHANGE[this.network][data.version];
   }
 
-  private buildSwapData(data: ZeroXEXData) {
-    const zrxABI = this.getABI(data);
-
-    const orders = ZeroXOrder.formatOrders(data.orders);
-
+  buildSwapData(data: ZeroXEXData) {
+    const zrxABI = ZRX_ABI[data.version];
+    const orders = ZeroXOrder.formatOrders(data.orders, data.version);
     const takerAssetFillAmount = new BigNumber(data.srcAmount);
-
-    const signatures = data.orders.map((o: any) => o.signature);
+    const signatures = data.signatures;
 
     const methodAbi = zrxABI.find(
-      (m: any) => m.name === 'marketSellOrdersNoThrow',
+      (m: any) =>
+        m.name ===
+        (data.version === 4 ? 'fillRfqOrder' : 'marketSellOrdersNoThrow'),
     );
 
     const abiEncoder = new AbiEncoder.Method(methodAbi);
-
-    return abiEncoder.encode([orders, takerAssetFillAmount, signatures]);
+    // TODO: fillLimitOrder only accepts one order, find something that can accept multiple orders
+    return abiEncoder.encode(
+      data.version === 4
+        ? [orders[0], signatures[0], takerAssetFillAmount]
+        : [orders, takerAssetFillAmount, signatures],
+    );
   }
 
   async isFillable(order: IzXSignedOrderV3, provider: any) {
@@ -154,7 +199,7 @@ export class Zerox extends Adapter {
   async getOrderInfo(order: IzXSignedOrderV3, provider: any) {
     const contract = new this.web3Provider.eth.Contract(
       ZRX_V3_ABI,
-      ZRX_EXCHANGE[this.network].v3,
+      ZRX_EXCHANGE[this.network][3],
     );
     return contract.methods.getOrderInfo(order).call();
   }
@@ -163,7 +208,7 @@ export class Zerox extends Adapter {
     const approveCallData = this.getApproveCallData(
       srcToken,
       data.srcAmount,
-      ZRX_EXCHANGE_ERC20PROXY[this.network],
+      ZRX_EXCHANGE_ERC20PROXY[this.network][data.version],
     );
 
     const assetSwapperData = this.buildSwapData(data);
