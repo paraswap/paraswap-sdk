@@ -118,15 +118,13 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludeMethods,
+        excludePools,
         referrer,
       } = options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
-      this.checkDexList(includeMPDEXS);
-      this.checkDexList(excludeMPDEXS);
 
       if (route.length < 2) {
         return { message: 'Invalid Route' };
@@ -135,8 +133,8 @@ export class ParaSwap {
       const query = qs.stringify({
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePools,
+        excludeMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
@@ -170,21 +168,19 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePools,
+        excludeMethods,
         referrer,
       } = options || {};
 
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
-      this.checkDexList(includeMPDEXS);
-      this.checkDexList(excludeMPDEXS);
 
       const query = qs.stringify({
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePools,
+        excludeMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });

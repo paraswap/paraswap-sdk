@@ -191,8 +191,8 @@ class User {
 type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
-  includeMPDEXS?: string;
-  excludeMPDEXS?: string;
+  excludePools?: string;
+  excludeMethods?: string;
   referrer?: string;
 };
 
