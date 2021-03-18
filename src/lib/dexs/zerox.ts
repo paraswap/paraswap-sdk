@@ -114,9 +114,9 @@ export class ZeroXOrder extends Adapter {
     const feeAssetData =
       version === 3
         ? {
-            makerFeeAssetData: order.makerFeeAssetData,
-            takerFeeAssetData: order.takerFeeAssetData,
-          }
+          makerFeeAssetData: order.makerFeeAssetData,
+          takerFeeAssetData: order.takerFeeAssetData,
+        }
         : {};
 
     return {
@@ -144,11 +144,11 @@ export class ZeroXOrder extends Adapter {
   ) {
     return version === 4
       ? orders.map(o =>
-          ZeroXOrder.formatOrderV4(o as ZeroXSignedOrderV4, version),
-        )
+        ZeroXOrder.formatOrderV4(o as ZeroXSignedOrderV4, version),
+      )
       : orders.map(o =>
-          ZeroXOrder.formatOrderV23(o as ZeroXSignedOrder, version),
-        );
+        ZeroXOrder.formatOrderV23(o as ZeroXSignedOrder, version),
+      );
   }
 }
 
@@ -204,8 +204,8 @@ export class Zerox extends Adapter {
     return contract.methods.getOrderInfo(order).call();
   }
 
-  private getTokenToTokenSwapData(srcToken: Address, data: ZeroXEXData) {
-    const approveCallData = this.getApproveCallData(
+  private async getTokenToTokenSwapData(srcToken: Address, data: ZeroXEXData) {
+    const approveCallData = await this.getApproveCallData(
       srcToken,
       data.srcAmount,
       ZRX_EXCHANGE_ERC20PROXY[this.network][data.version],
@@ -215,10 +215,14 @@ export class Zerox extends Adapter {
 
     const networkFees = data.networkFees || '0';
 
+    const callees = approveCallData ? [this.augustus._address, this.getExchange(data)] : [this.getExchange(data)];
+    const calldata = approveCallData ? [approveCallData.calldata, assetSwapperData] : [assetSwapperData];
+    const values = approveCallData ? ['0', networkFees] : [networkFees];
+
     return {
-      callees: [this.augustus._address, this.getExchange(data)],
-      calldata: [approveCallData.calldata, assetSwapperData],
-      values: ['0', networkFees],
+      callees,
+      calldata,
+      values,
     };
   }
 
@@ -234,7 +238,7 @@ export class Zerox extends Adapter {
     );
     const depositWethData = wethContract.methods.deposit().encodeABI();
 
-    const wethToTokenData = this.getTokenToTokenSwapData(wethToken, data);
+    const wethToTokenData = await this.getTokenToTokenSwapData(wethToken, data);
 
     return {
       callees: [wethToken, ...wethToTokenData.callees],

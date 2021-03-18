@@ -34,7 +34,7 @@ export class DODO extends Adapter {
     };
   }
 
-  private _swap(srcToken: Address, destToken: Address, data: DODODexData) {
+  private async _swap(srcToken: Address, destToken: Address, data: DODODexData) {
     const dodoContract = new this.web3Provider.eth.Contract(
       DODOProxyAbi,
       DODOV2ProxyAddress[this.network],
@@ -54,16 +54,20 @@ export class DODO extends Adapter {
       .encodeABI();
 
     if (!this.isETHAddress(srcToken)) {
-      const approveCallData = this.getApproveCallData(
+      const approveCallData = await this.getApproveCallData(
         srcToken,
         data.srcAmount,
         DODOAproveAddress[this.network],
       );
 
+      const callees = approveCallData ? [approveCallData.callee, DODOV2ProxyAddress[this.network]] : [DODOV2ProxyAddress[this.network]];
+      const calldata = approveCallData ? [approveCallData.calldata, swapData] : [swapData];
+      const values = approveCallData ? ['0', '0'] : ['0'];
+
       return {
-        callees: [approveCallData.callee, DODOV2ProxyAddress[this.network]],
-        calldata: [approveCallData.calldata, swapData],
-        values: [approveCallData.value, '0'],
+        callees,
+        calldata,
+        values,
       };
     } else {
       return {

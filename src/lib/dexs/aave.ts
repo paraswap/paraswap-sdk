@@ -36,7 +36,7 @@ export class Aave extends Adapter {
     };
   }
 
-  private _swap(srcToken: Address, destToken: Address, data: AaveDexData): DexParams {
+  private async _swap(srcToken: Address, destToken: Address, data: AaveDexData): Promise<DexParams> {
     if (data.isV2) {
 
       if (this.isETHAddress(srcToken)) {
@@ -103,17 +103,21 @@ export class Aave extends Adapter {
         );
 
       } else {
-        const approveCallData = this.getApproveCallData(srcToken, data.srcAmount, SPENDER[this.network]);
+        const approveCallData = await this.getApproveCallData(srcToken, data.srcAmount, SPENDER[this.network]);
 
         const lpContract = new this.web3Provider.eth.Contract(AAVE_LENDING_POOL_ABI_V1, aaveLendingPool.v1[this.network]);
         const swapData = lpContract.methods.deposit(srcToken, data.srcAmount, REF_CODE).encodeABI();
 
-        const mintValue = this.isETHAddress(srcToken) ? data.srcAmount : "0";
+        const mintValue = this.isETHAddress(srcToken) ? data.srcAmount : '0';
+
+        const callees = approveCallData ? [this.augustus._address, aaveLendingPool.v1[this.network]] : [aaveLendingPool.v1[this.network]];
+        const calldata = approveCallData ? [approveCallData.calldata, swapData] : [swapData];
+        const values = approveCallData ? ['0', mintValue] : [mintValue];
 
         return {
-          callees: [this.augustus._address, aaveLendingPool.v1[this.network]],
-          calldata: [approveCallData.calldata, swapData],
-          values: ['0', mintValue],
+          callees,
+          calldata,
+          values,
         };
       }
     }
