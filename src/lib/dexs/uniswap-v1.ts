@@ -38,7 +38,7 @@ export class UniswapV1 extends Adapter {
   async ethToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
-    const deadline = data.deadline || await this.getDeadline();
+    const deadline = data.deadline || this.getDeadline();
 
     const swapData = uniswapExchange.methods.ethToTokenSwapInput(data.destAmount, deadline).encodeABI();
 
@@ -47,19 +47,19 @@ export class UniswapV1 extends Adapter {
       destToken,
       data,
       swapData,
-      uniswapExchange._address
+      uniswapExchange._address,
     );
   }
 
   async tokenToEthSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
-    const deadline = data.deadline || await this.getDeadline();
+    const deadline = data.deadline || this.getDeadline();
 
     const swapData = uniswapExchange.methods.tokenToEthSwapInput(
       data.srcAmount,
       data.destAmount,
-      deadline
+      deadline,
     ).encodeABI();
 
     return super.swap(
@@ -67,21 +67,21 @@ export class UniswapV1 extends Adapter {
       destToken,
       data,
       swapData,
-      uniswapExchange._address
+      uniswapExchange._address,
     );
   }
 
   async tokenToTokenSwap(srcToken: Address, destToken: Address, data: UniswapV1DEXData): Promise<DexParams> {
     const uniswapExchange = await this.getExchangeContract(srcToken, destToken, data);
 
-    const deadline = data.deadline || await this.getDeadline();
+    const deadline = data.deadline || this.getDeadline();
 
     const swapData = uniswapExchange.methods.tokenToTokenSwapInput(
       data.srcAmount,
       data.destAmount,
       data.minEthBought,
       deadline,
-      destToken
+      destToken,
     ).encodeABI();
 
     return super.swap(
@@ -89,7 +89,7 @@ export class UniswapV1 extends Adapter {
       destToken,
       data,
       swapData,
-      uniswapExchange._address
+      uniswapExchange._address,
     );
   }
 

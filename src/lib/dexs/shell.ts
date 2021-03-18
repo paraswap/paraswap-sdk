@@ -17,7 +17,7 @@ export class Shell extends Adapter {
   async buildSwap(srcToken: Address, destToken: Address, data: ShellDEXData): Promise<DexParams> {
     const contract = new this.web3Provider.eth.Contract(SHELL_ABI, data.exchange);
 
-    const deadline = data.deadline || await this.getDeadline();
+    const deadline = data.deadline || this.getDeadline();
 
     const swapData = contract.methods.originSwap(
       srcToken,

@@ -46,9 +46,8 @@ export default class Adapter {
     return this.web3Provider.eth.getBlock('latest');
   }
 
-  async getDeadline() {
-    const block = await this.getBlock();
-    return <number>block.timestamp + 600;
+  getDeadline() {
+    return Math.floor(new Date().getTime() / 1000) + 60 * 60;
   }
 
   async buildSwap(srcToken: Address, destToken: Address, data: Required<DEXData>): Promise<DexParams> {
