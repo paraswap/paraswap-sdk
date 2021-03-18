@@ -14,7 +14,7 @@ export class Compound extends Adapter {
     };
   }
 
-  private _swap(srcToken: Address, destToken: Address, data: CompoundDEXData): DexParams {
+  private async _swap(srcToken: Address, destToken: Address, data: CompoundDEXData): Promise<DexParams> {
     const cToken = data.fromCToken ? srcToken : destToken;
 
     const cContract = this.isETHAddress(srcToken) ?

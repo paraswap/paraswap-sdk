@@ -27,7 +27,7 @@ export class Cofix extends Adapter {
   private async getFillMethod(srcToken: Address, destToken: Address, data: CofixDEXData) {
     const contract = new this.web3Provider.eth.Contract(COFIX_ABI, data.exchange);
 
-    const deadline = data.deadline || await this.getDeadline();
+    const deadline = data.deadline || this.getDeadline();
 
     if (this.isETHAddress(srcToken)) {
       return contract.methods.swapExactETHForTokens(
