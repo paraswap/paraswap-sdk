@@ -2,7 +2,6 @@ import { Address, ETHER_ADDRESS, OptimalRate } from '../../types';
 import { DEXData, DexParams } from './dex-types';
 import BigNumber from 'bignumber.js';
 import ERC20_ABI = require('../../abi/erc20.json');
-import { all } from 'async';
 import { MAX_UINT } from '../../constants';
 
 export default class Adapter {
