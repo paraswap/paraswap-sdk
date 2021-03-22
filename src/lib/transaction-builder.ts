@@ -305,6 +305,9 @@ export class TransactionBuilder {
       case 'sushiswap':
       case 'defiswap':
       case 'linkswap':
+      case 'pancakeswap':
+      case 'julswap':
+      case 'streetswap':
         const _path = this.useLegacy
           ? data.path
           : data.path.map((token: string, i: number) => {
@@ -330,6 +333,8 @@ export class TransactionBuilder {
       case 'curve3':
       case 'swerve':
       case 'curve':
+      case 'acryptos':
+      case 'beltfi':
         try {
           const { i, j, deadline, underlyingSwap, v3 } = data;
 
@@ -414,10 +419,16 @@ export class TransactionBuilder {
       return tokenFrom;
     }
 
+    const _poolSpecificExchanges = [
+      'swerve',
+      'shell',
+      'acryptos',
+      'beltfi',
+      'curve',
+    ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
-      exchangeName.toLowerCase() === 'swerve' ||
-      exchangeName.toLowerCase() === 'shell'
+      _poolSpecificExchanges.includes(exchangeName.toLowerCase())
     ) {
       return exchangeAddress;
     }
