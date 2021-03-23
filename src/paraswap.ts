@@ -141,7 +141,7 @@ export class ParaSwap {
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${amount}&${query}&side=${side}`;
+      )}&amount=${amount}&${query}&side=${side}&network={this.network}`;
 
       const { data } = await axios.get(pricesURL, {
         headers: {
@@ -189,7 +189,7 @@ export class ParaSwap {
         this.apiURL
       }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-      }&side=${side}`;
+      }&side=${side}&network=${this.network}`;
       const { data } = await axios.get(pricesURL, {
         headers: {
           'X-Partner': referrer || 'paraswap.io',
