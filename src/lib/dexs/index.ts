@@ -36,6 +36,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   aave2: Aave,
   compound: Compound,
   weth: Weth,
+  wbnb: Weth,
   balancer: Balancer,
   shell: Shell,
   cofix: Cofix,

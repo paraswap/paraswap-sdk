@@ -399,6 +399,9 @@ export class TransactionBuilder {
       case 'defiswap':
       case 'linkswap':
       case 'shell':
+      case 'pancakeswap':
+      case 'julswap':
+      case 'streetswap':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
