@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { Merge } from 'ts-essentials';
 import { Token } from './lib/token';
-import { SwapSide } from './constants';
+import { SwapSide, ContractMethod } from './constants';
 
 type Symbol = string;
 type Address = string;
@@ -133,6 +133,7 @@ type OptimalRates = {
   giantPath?: boolean;
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
+  contractMethod: ContractMethod;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
   giantRoute?: OptimalRoute[];
