@@ -46,5 +46,5 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
 export function getDEX(dex: string): typeof Adapter {
   return dex.toLowerCase().match(/^paraswappool(.*)/)
     ? DEXS.paraswappool
-    : DEXS[dex];
+    : DEXS[dex.toLowerCase()];
 }

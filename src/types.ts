@@ -134,6 +134,7 @@ type OptimalRates = {
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
   contractMethod: ContractMethod;
+  adapterVersion?: string;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
   giantRoute?: OptimalRoute[];
@@ -193,7 +194,7 @@ type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
   excludePools?: string;
-  excludeMethods?: string;
+  excludePricingMethods?: string;
   referrer?: string;
 };
 
@@ -286,10 +287,8 @@ type TransactionData = {
 type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
-  forceMultiSwap?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
-  useAugustusLegacy?: boolean;
 };
 
 export {

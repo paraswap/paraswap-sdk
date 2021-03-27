@@ -23,7 +23,11 @@ import AUGUSTUS_ABI = require('./abi/augustus.json');
 
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
-import { SwapSide } from './constants';
+import {
+  SwapSide,
+  latestAugustusVersion,
+  AdapterAugustusVersionMap,
+} from './constants';
 import { getDEX } from './lib/dexs';
 
 const API_URL = 'https://apiv2.paraswap.io/v2';
@@ -118,7 +122,7 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        excludeMethods,
+        excludePricingMethods,
         excludePools,
         referrer,
       } = options || {};
@@ -134,7 +138,7 @@ export class ParaSwap {
         excludeDEXS,
         includeDEXS,
         excludePools,
-        excludeMethods,
+        excludePricingMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
@@ -169,7 +173,7 @@ export class ParaSwap {
         excludeDEXS,
         includeDEXS,
         excludePools,
-        excludeMethods,
+        excludePricingMethods,
         referrer,
       } = options || {};
 
@@ -180,7 +184,7 @@ export class ParaSwap {
         excludeDEXS,
         includeDEXS,
         excludePools,
-        excludeMethods,
+        excludePricingMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
@@ -240,16 +244,6 @@ export class ParaSwap {
     }
   }
 
-  shouldUseMultiSwap(priceRoute: OptimalRatesWithPartnerFees) {
-    const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
-
-    const missingDEX = !!(<any>priceRoute.bestRoute).find(
-      (br: any) => !getDEX(br.exchange.toLowerCase()),
-    );
-
-    return isAMultiRoute || missingDEX;
-  }
-
   //Warning: ParaSwapPool is not supported when building locally
   async buildTxLocally(
     srcToken: Token,
@@ -263,6 +257,7 @@ export class ParaSwap {
     receiver: string = NULL_ADDRESS,
     options: BuildOptions = {},
   ) {
+    // TODO: fix me for multiple adapter version!
     if (!this.adapters) {
       await this.getAdapters();
     }
@@ -271,56 +266,19 @@ export class ParaSwap {
       await this.getTokens();
     }
 
+    const augustusVersion =
+      (priceRoute.adapterVersion &&
+        AdapterAugustusVersionMap[priceRoute.adapterVersion]) ||
+      latestAugustusVersion;
+
+    // Todo: can be a member
     const transaction = new TransactionBuilder(
       this.network,
       this.web3Provider!,
       this.adapters!,
       this.tokens,
-      !!options.useAugustusLegacy,
+      augustusVersion,
     );
-
-    const forceMultiSwap = options.forceMultiSwap
-      ? true
-      : this.shouldUseMultiSwap(priceRoute);
-
-    if (options.onlyParams) {
-      if (priceRoute.side === SwapSide.SELL) {
-        return forceMultiSwap || options.useAugustusLegacy
-          ? transaction.getTransactionSellParams(
-              srcToken,
-              destToken,
-              srcAmount,
-              minMaxAmount,
-              priceRoute,
-              userAddress,
-              referrer,
-              gasPrice,
-              receiver,
-            )
-          : transaction.getSimpleSellParams(
-              srcToken,
-              destToken,
-              srcAmount,
-              minMaxAmount,
-              priceRoute,
-              referrer,
-              gasPrice,
-              receiver,
-            );
-      } else {
-        return transaction.getTransactionBuyParams(
-          srcToken,
-          destToken,
-          srcAmount,
-          minMaxAmount,
-          priceRoute,
-          userAddress,
-          referrer,
-          gasPrice,
-          receiver,
-        );
-      }
-    }
 
     return transaction.buildTransaction(
       srcToken,
@@ -333,8 +291,8 @@ export class ParaSwap {
       gasPrice,
       receiver,
       !!options.ignoreChecks,
-      forceMultiSwap,
-      !!options.useAugustusLegacy,
+      augustusVersion,
+      !!options.onlyParams,
     );
   }
 

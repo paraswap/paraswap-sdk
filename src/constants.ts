@@ -17,6 +17,24 @@ export enum ContractMethod {
   megaSwap = 'megaSwap',
 }
 
+export enum AugustusVersion {
+  v2 = 2,
+  v3 = 3,
+  v4 = 4,
+}
+
+export const AdapterAugustusVersionMap: {
+  [adapterVersion: string]: AugustusVersion;
+} = {
+  ['2.0.0']: AugustusVersion.v2,
+  ['2.1.0']: AugustusVersion.v2,
+  ['2.2.0']: AugustusVersion.v2,
+  ['3.0.0']: AugustusVersion.v3,
+  ['4.0.0']: AugustusVersion.v4,
+};
+
+export const latestAugustusVersion = AugustusVersion.v3;
+
 export const priceFeedNetworks = {
   1: '0x12295f06DA62693086F5DA45b78e20B778060853',
   42: '',
