@@ -811,7 +811,9 @@ export class TransactionBuilder {
             referrer,
           };
 
-    const method = this.augustusContract.buy.bind(this.augustusContract);
+    const method = this.augustusContract.methods.buy.bind(
+      this.augustusContract,
+    );
     const value = this.getValue(srcToken.address, maxAmountIn, route);
 
     return {
@@ -864,7 +866,9 @@ export class TransactionBuilder {
             path,
           };
 
-    const method = this.augustusContract.multiswap.bind(this.augustusContract);
+    const method = this.augustusContract.methods.multiSwap.bind(
+      this.augustusContract,
+    );
     const value = this.getValue(srcToken.address, srcAmount, path);
 
     return {
