@@ -289,6 +289,7 @@ type BuildOptions = {
   onlyParams?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
+  useReduxToken?: boolean;
 };
 
 export {

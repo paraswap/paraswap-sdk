@@ -19,7 +19,7 @@ import {
 
 import ERC20_ABI = require('./abi/erc20.json');
 
-import AUGUSTUS_ABI = require('./abi/augustus.json');
+import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
@@ -249,7 +249,7 @@ export class ParaSwap {
     srcToken: Token,
     destToken: Token,
     srcAmount: string,
-    minMaxAmount: string,
+    destAmount: string,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: string,
     referrer: string,
@@ -284,7 +284,7 @@ export class ParaSwap {
       srcToken,
       destToken,
       srcAmount,
-      minMaxAmount,
+      destAmount,
       priceRoute,
       userAddress,
       referrer,
@@ -293,6 +293,7 @@ export class ParaSwap {
       !!options.ignoreChecks,
       augustusVersion,
       !!options.onlyParams,
+      !!options.useReduxToken,
     );
   }
 

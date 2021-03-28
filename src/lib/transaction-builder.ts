@@ -24,6 +24,7 @@ import {
   OptimalRate,
   SimpleSwapTransactionParams,
   LegacyTransactionSellParams,
+  ETHER_ADDRESS,
 } from '../types';
 
 import { Token } from './token';
@@ -36,17 +37,26 @@ import { Swapper } from './swapper';
 import { DEXData } from './dexs/dex-types';
 import { getDEX } from './dexs';
 
-const AUGUSTUS_ABI = require('../abi/augustus.json');
-const AUGUSTUS_LEGACY_ABI = require('../abi/augustus-legacy.json');
+const AUGUSTUS_V2_ABI = require('../abi/augustus-v2.json');
+const AUGUSTUS_V3_ABI = require('../abi/augustus-v3.json');
+const AUGUSTUS_V4_ABI = require('../abi/augustus-v4.json');
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
-export const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 //Gas units overhead in order to maximize the transaction success rate
 export const GAS_MULTIPLIER = Number(process.env.GAS_MULTIPLIER || 23);
 
 export const ZRX_GAZ_MULTIPLIER = 70000;
 const LENDING_DEXES = ['compound', 'Fulcrum', 'idle', 'aave', 'aave2'];
+const UNISWAPV2_FORKS = [
+  'uniswapv2',
+  'sushiswap',
+  'defiswap',
+  'linkswap',
+  'pancakeswap',
+  'julswap',
+  'streetswap',
+];
 
 /*
 BUY SUPPORTED:
@@ -58,8 +68,9 @@ bancor, curve
 
 // TODO: add augustus v4 abi
 const AugustusAbi: { [version: number]: any } = {
-  [AugustusVersion.v2]: AUGUSTUS_LEGACY_ABI,
-  [AugustusVersion.v3]: AUGUSTUS_ABI,
+  [AugustusVersion.v2]: AUGUSTUS_V2_ABI,
+  [AugustusVersion.v3]: AUGUSTUS_V3_ABI,
+  [AugustusVersion.v4]: AUGUSTUS_V4_ABI,
 };
 
 export class TransactionBuilder {
@@ -76,7 +87,9 @@ export class TransactionBuilder {
         userAddress: Address,
         referrer: Address,
         gasPrice: NumberAsString,
+        useReduxToken: boolean,
         receiver?: Address,
+        version?: AugustusVersion,
       ) => any;
     };
   };
@@ -124,6 +137,22 @@ export class TransactionBuilder {
           this,
         ),
         [ContractMethod.buy.toLowerCase()]: this.getBuyTx.bind(this),
+        [ContractMethod.simpleBuy.toLowerCase()]: this.getSimpleBuyTx.bind(
+          this,
+        ),
+        [ContractMethod.megaSwap.toLowerCase()]: this.getMegaSwapTx.bind(this),
+        [ContractMethod.swapOnUniswap.toLowerCase()]: this.getSwapOnUniswapTx.bind(
+          this,
+        ),
+        [ContractMethod.buyOnUniswap.toLowerCase()]: this.getBuyOnUniswapTx.bind(
+          this,
+        ),
+        [ContractMethod.swapOnUniswapFork.toLowerCase()]: this.getSwapOnUniswapForkTx.bind(
+          this,
+        ),
+        [ContractMethod.buyOnUniswapFork.toLowerCase()]: this.getBuyOnUniswapForkTx.bind(
+          this,
+        ),
       },
     };
   }
@@ -743,6 +772,7 @@ export class TransactionBuilder {
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
   ) => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
@@ -788,6 +818,7 @@ export class TransactionBuilder {
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
   ) => {
     const path = await this.getSellPath(
@@ -827,7 +858,9 @@ export class TransactionBuilder {
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
     beneficiary: Address = NULL_ADDRESS,
+    version?: AugustusVersion,
   ) => {
     const exchangeData: DEXData[] = (priceRoute as OptimalRatesWithPartnerFeesSell).bestRoute.map(
       (br: OptimalRate) => {
@@ -854,6 +887,8 @@ export class TransactionBuilder {
       exchangeData,
     );
 
+    const redux = version === AugustusVersion.v4 ? { useReduxToken } : {};
+
     const params = {
       fromToken: srcToken.address,
       toToken: destToken.address,
@@ -866,6 +901,7 @@ export class TransactionBuilder {
       values,
       beneficiary,
       referrer,
+      ...redux,
     };
 
     const method = this.augustusContract.methods.simpleSwap.bind(
@@ -888,6 +924,7 @@ export class TransactionBuilder {
     userAddress: Address,
     referrer: Address,
     gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
   ) => {
     const path = await this.getSellPath(
@@ -920,11 +957,294 @@ export class TransactionBuilder {
     };
   };
 
+  getSimpleBuyTx = async (
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: PriceString,
+    minAmountOut: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    // const exchangeData: DEXData[] = (priceRoute as OptimalRatesWithPartnerFeesBuy).bestRoute.map(
+    //   (br: OptimalRate) => {
+    //     const Dex = getDEX(br.exchange);
+    //     if (Dex) {
+    //       return Dex.getDexData(br, br.exchange);
+    //     } else {
+    //       throw new Error('Unsupported Exchange: ' + br.exchange);
+    //     }
+    //   },
+    // );
+    // const {
+    //   callees,
+    //   values,
+    //   calldata,
+    //   startIndexes,
+    // } = await this.swapper.buildSwap(
+    //   srcToken.address,
+    //   destToken.address,
+    //   srcAmount,
+    //   toAmount,
+    //   exchangeData,
+    // );
+    // const redux = version === AugustusVersion.v4 ? {useReduxToken} : {};
+    // const params = {
+    //   fromToken: srcToken.address,
+    //   toToken: destToken.address,
+    //   fromAmount: srcAmount,
+    //   toAmount,
+    //   expectedAmount: priceRoute.destAmount,
+    //   callees,
+    //   exchangeData: calldata,
+    //   startIndexes,
+    //   values,
+    //   beneficiary,
+    //   referrer,
+    //   ...redux
+    // };
+    // const method = this.augustusContract.methods.simpleBuy.bind(
+    //   this.augustusContract,
+    // );
+    // const value = this.getSimpleSwapValue(values);
+    // return {
+    //   method,
+    //   value,
+    //   params,
+    // };
+  };
+
+  getMegaSwapTx = async (
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: PriceString,
+    minAmountOut: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    // TODO: add implementation
+    return;
+  };
+
+  fixUniswapPath = (
+    srcToken: Token,
+    destToken: Token,
+    path: Address[],
+  ): Address[] => {
+    let _path = _.clone(path);
+    _path[0] = this.isETHAddress(srcToken.address) ? ETHER_ADDRESS : _path[0];
+    _path[path.length - 1] = this.isETHAddress(destToken.address)
+      ? ETHER_ADDRESS
+      : _path[path.length - 1];
+    return _path;
+  };
+
+  getSwapOnUniswapTx = async (
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: PriceString,
+    minAmountOut: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    if (
+      !(
+        priceRoute.bestRoute[0].exchange.toLowerCase() === 'uniswapv2' &&
+        priceRoute.bestRoute[0].data.path
+      )
+    )
+      throw new Error(
+        `TransactionBuilder_getSwapOnUniswapTx: Invalid contractMethod or priceRoute.`,
+      );
+
+    const path = this.fixUniswapPath(
+      srcToken,
+      destToken,
+      priceRoute.bestRoute[0].data.path,
+    );
+
+    // TODO: fix referrer
+    const params = {
+      amountIn: srcAmount,
+      amountOutMin: minAmountOut,
+      path,
+      referrer: 1,
+    };
+
+    const method = this.augustusContract.methods.swapOnUniswap.bind(
+      this.augustusContract,
+    );
+    const value = this.isETHAddress(srcToken.address) ? srcAmount : '0';
+    return {
+      method,
+      value,
+      params,
+    };
+  };
+
+  getBuyOnUniswapTx = async (
+    srcToken: Token,
+    destToken: Token,
+    dstAmount: PriceString,
+    maxAmountIn: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    if (
+      !(
+        priceRoute.bestRoute[0].exchange.toLowerCase() === 'uniswapv2' &&
+        priceRoute.bestRoute[0].data.path
+      )
+    )
+      throw new Error(
+        `TransactionBuilder_getBuyOnUniswapTx: Invalid contractMethod or priceRoute.`,
+      );
+
+    const path = this.fixUniswapPath(
+      srcToken,
+      destToken,
+      priceRoute.bestRoute[0].data.path,
+    );
+
+    // TODO: fix referrer
+    const params = {
+      amountInMax: maxAmountIn,
+      amountOut: dstAmount,
+      path,
+      referrer: 1,
+    };
+
+    const method = this.augustusContract.methods.buyOnUniswap.bind(
+      this.augustusContract,
+    );
+    const value = this.isETHAddress(srcToken.address) ? maxAmountIn : '0';
+    return {
+      method,
+      value,
+      params,
+    };
+  };
+
+  getSwapOnUniswapForkTx = async (
+    srcToken: Token,
+    destToken: Token,
+    srcAmount: PriceString,
+    minAmountOut: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    if (
+      !(
+        UNISWAPV2_FORKS.includes(
+          priceRoute.bestRoute[0].exchange.toLowerCase(),
+        ) && priceRoute.bestRoute[0].data.path
+      )
+    )
+      throw new Error(
+        `TransactionBuilder_getSwapOnUniswapForkTx: Invalid contractMethod or priceRoute.`,
+      );
+
+    const path = this.fixUniswapPath(
+      srcToken,
+      destToken,
+      priceRoute.bestRoute[0].data.path,
+    );
+
+    // TODO: fix referrer
+    const params = {
+      factory: priceRoute.bestRoute[0].data.factory,
+      initCode: priceRoute.bestRoute[0].data.initCode,
+      amountIn: srcAmount,
+      amountOutMin: minAmountOut,
+      path,
+      referrer: 1,
+    };
+
+    const method = this.augustusContract.methods.swapOnUniswapFork.bind(
+      this.augustusContract,
+    );
+    const value = this.isETHAddress(srcToken.address) ? srcAmount : '0';
+    return {
+      method,
+      value,
+      params,
+    };
+  };
+
+  getBuyOnUniswapForkTx = async (
+    srcToken: Token,
+    destToken: Token,
+    dstAmount: PriceString,
+    maxAmountIn: PriceString,
+    priceRoute: OptimalRatesWithPartnerFees,
+    userAddress: Address,
+    referrer: Address,
+    gasPrice: NumberAsString,
+    useReduxToken: boolean = false,
+    receiver: Address = NULL_ADDRESS,
+  ) => {
+    if (
+      !(
+        UNISWAPV2_FORKS.includes(
+          priceRoute.bestRoute[0].exchange.toLowerCase(),
+        ) && priceRoute.bestRoute[0].data.path
+      )
+    )
+      throw new Error(
+        `TransactionBuilder_getBuyOnUniswapForkTx: Invalid contractMethod or priceRoute.`,
+      );
+
+    const path = this.fixUniswapPath(
+      srcToken,
+      destToken,
+      priceRoute.bestRoute[0].data.path,
+    );
+
+    // TODO: fix referrer
+    const params = {
+      factory: priceRoute.bestRoute[0].data.factory,
+      initCode: priceRoute.bestRoute[0].data.initCode,
+      amountInMax: maxAmountIn,
+      amountOut: dstAmount,
+      path,
+      referrer: 1,
+    };
+
+    const method = this.augustusContract.methods.buyOnUniswapFork.bind(
+      this.augustusContract,
+    );
+    const value = this.isETHAddress(srcToken.address) ? maxAmountIn : '0';
+    return {
+      method,
+      value,
+      params,
+    };
+  };
+
   buildTransaction = async (
     srcToken: Token,
     destToken: Token,
-    amount: PriceString,
-    minMaxAmount: PriceString,
+    srcAmount: PriceString,
+    destAmount: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
     referrer: Address,
@@ -933,6 +1253,7 @@ export class TransactionBuilder {
     ignoreGas: boolean,
     version: AugustusVersion,
     onlyParams: boolean = false,
+    useReduxToken: boolean = false,
   ) => {
     if (
       !(
@@ -943,6 +1264,15 @@ export class TransactionBuilder {
       throw new Error(
         'TransactionBuilder_buildTransaction unsupported version or contractMethod',
       );
+
+    const amount =
+      priceRoute.side.toLowerCase() === SwapSide.SELL.toLowerCase()
+        ? srcAmount
+        : destAmount;
+    const minMaxAmount =
+      priceRoute.side.toLowerCase() === SwapSide.SELL.toLowerCase()
+        ? destAmount
+        : srcAmount;
 
     const partialTx = await this.buildersMap[version][
       priceRoute.contractMethod.toLowerCase()
@@ -955,7 +1285,9 @@ export class TransactionBuilder {
       userAddress,
       referrer,
       gasPrice,
+      useReduxToken,
       receiver,
+      version,
     );
 
     if (onlyParams) return partialTx.params;
