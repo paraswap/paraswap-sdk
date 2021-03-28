@@ -774,6 +774,7 @@ export class TransactionBuilder {
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
+    version: AugustusVersion = AugustusVersion.v4,
   ) => {
     const slippageFactor = new BigNumber(maxAmountIn).dividedBy(
       priceRoute.srcAmount,
@@ -786,18 +787,29 @@ export class TransactionBuilder {
       slippageFactor,
     );
 
-    const params = {
-      fromToken: srcToken.address,
-      toToken: destToken.address,
-      fromAmount: maxAmountIn,
-      toAmount: destAmount,
-      expectedAmount: priceRoute.srcAmount,
-      // we keep route structure similar to sell
-      // in lieu of eventually having multihop with buy
-      route: route[0]!.routes,
-      beneficiary: receiver,
-      referrer,
-    };
+    const params =
+      version === AugustusVersion.v4
+        ? {
+            fromToken: srcToken.address,
+            fromAmount: maxAmountIn,
+            toAmount: destAmount,
+            beneficiary: receiver,
+            referrer,
+            useReduxToken,
+            route: route[0]!.routes,
+          }
+        : {
+            fromToken: srcToken.address,
+            toToken: destToken.address,
+            fromAmount: maxAmountIn,
+            toAmount: destAmount,
+            expectedAmount: priceRoute.srcAmount,
+            // we keep route structure similar to sell
+            // in lieu of eventually having multihop with buy
+            route: route[0]!.routes,
+            beneficiary: receiver,
+            referrer,
+          };
 
     const method = this.augustusContract.buy.bind(this.augustusContract);
     const value = this.getValue(srcToken.address, maxAmountIn, route);
@@ -820,6 +832,7 @@ export class TransactionBuilder {
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
+    version: AugustusVersion = AugustusVersion.v4,
   ) => {
     const path = await this.getSellPath(
       srcToken.address,
@@ -828,16 +841,28 @@ export class TransactionBuilder {
       gasPrice,
     );
 
-    const params = {
-      fromToken: srcToken.address,
-      toToken: destToken.address,
-      fromAmount: srcAmount,
-      toAmount: minAmountOut,
-      expectedAmount: priceRoute.destAmount,
-      beneficiary: receiver,
-      referrer,
-      path,
-    };
+    const params =
+      version === AugustusVersion.v4
+        ? {
+            fromToken: srcToken.address,
+            fromAmount: srcAmount,
+            toAmount: minAmountOut,
+            expectedAmount: priceRoute.destAmount,
+            beneficiary: receiver,
+            referrer,
+            useReduxToken,
+            path,
+          }
+        : {
+            fromToken: srcToken.address,
+            toToken: destToken.address,
+            fromAmount: srcAmount,
+            toAmount: minAmountOut,
+            expectedAmount: priceRoute.destAmount,
+            beneficiary: receiver,
+            referrer,
+            path,
+          };
 
     const method = this.augustusContract.multiswap.bind(this.augustusContract);
     const value = this.getValue(srcToken.address, srcAmount, path);
