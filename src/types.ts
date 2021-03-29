@@ -224,6 +224,11 @@ type TransactionBuyRoute = Merge<
   }
 >;
 
+type TransactionMegaPath<T extends TransactionRoute> = {
+  fromAmountPercent: NumberAsString;
+  path: TransactionPath<T>[];
+};
+
 type TransactionBuyParams = {
   value: PriceString;
   fromToken: Address | undefined;
@@ -328,6 +333,7 @@ export {
   RateOptions,
   TransactionRoute,
   TransactionPath,
+  TransactionMegaPath,
   TransactionSellRoute,
   TransactionBuyRoute,
   TransactionBuyParams,
