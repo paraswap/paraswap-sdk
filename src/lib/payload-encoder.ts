@@ -203,11 +203,11 @@ export class PayloadEncoder {
     priceRoute: OptimalRatesWithPartnerFeesSell,
     gasPrice: string,
   ): Promise<TransactionMegaPath<TransactionSellRoute>[]> => {
-    const { multiRoute, giantRoute, bestRoute } = priceRoute;
-    const isGiantPath = giantRoute && giantRoute.length !== 0;
+    const { multiRoute, megaRoute, bestRoute } = priceRoute;
+    const isGiantPath = megaRoute && megaRoute.length !== 0;
     const isMultiPath = multiRoute && multiRoute.length !== 0;
     return isGiantPath
-      ? this.encodeSellMegaPath(giantRoute!, gasPrice)
+      ? this.encodeSellMegaPath(megaRoute!, gasPrice)
       : this.encodeSellMegaPath(
           [
             {

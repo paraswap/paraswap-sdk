@@ -130,14 +130,14 @@ type OptimalRates = {
   srcAmount: string;
   priceWithSlippage?: string;
   multiPath?: boolean;
-  giantPath?: boolean;
+  megaPath?: boolean;
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
   contractMethod: ContractMethod;
   adapterVersion?: string;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
-  giantRoute?: OptimalRoute[];
+  megaRoute?: OptimalRoute[];
   others: SimpleComputedRate[];
   fromUSD?: NumberAsString;
   toUSD?: NumberAsString;
