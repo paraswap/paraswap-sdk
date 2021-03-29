@@ -363,6 +363,7 @@ export class TransactionBuilder {
       case 'curve':
       case 'acryptos':
       case 'beltfi':
+      case 'ellipsis':
         try {
           const { i, j, deadline, underlyingSwap, v3 } = data;
 
@@ -456,6 +457,7 @@ export class TransactionBuilder {
       'acryptos',
       'beltfi',
       'curve',
+      'ellipsis',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
