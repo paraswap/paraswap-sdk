@@ -31,6 +31,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   curve: Curve,
   curve3: Curve,
   acryptos: Curve,
+  ellipsis: Curve,
   beltfi: Curve,
   aave: Aave,
   aave2: Aave,

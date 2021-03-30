@@ -301,6 +301,7 @@ export class PayloadEncoder {
       'acryptos',
       'beltfi',
       'curve',
+      'ellipsis',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -595,6 +596,7 @@ export class PayloadEncoder {
       case 'curve':
       case 'acryptos':
       case 'beltfi':
+      case 'ellipsis':
         try {
           const { i, j, deadline, underlyingSwap, v3 } = data;
 
