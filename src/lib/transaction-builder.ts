@@ -247,6 +247,7 @@ export class TransactionBuilder {
       version === AugustusVersion.v4
         ? {
             fromToken: srcToken.address,
+            toToken: destToken.address,
             fromAmount: maxAmountIn,
             toAmount: destAmount,
             beneficiary: receiver,
