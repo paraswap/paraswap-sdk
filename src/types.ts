@@ -134,7 +134,7 @@ type OptimalRates = {
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
   contractMethod: ContractMethod;
-  adapterVersion?: string;
+  adapterVersion: string;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
   megaRoute?: OptimalRoute[];
