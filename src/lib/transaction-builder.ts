@@ -521,7 +521,7 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
