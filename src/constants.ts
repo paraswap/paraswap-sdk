@@ -17,6 +17,12 @@ export enum ContractMethod {
   megaSwap = 'megaSwap',
 }
 
+export enum PricingMethod {
+  megapath = 'megapath',
+  multipath = 'multipath',
+  simplepath = 'simplepath',
+}
+
 export enum AugustusVersion {
   v2 = 2,
   v3 = 3,

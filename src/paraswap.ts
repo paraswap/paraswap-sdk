@@ -122,12 +122,27 @@ export class ParaSwap {
         excludeDEXS,
         includeDEXS,
         excludePricingMethods,
+        excludeContractMethods,
+        includeContractMethods,
+        adapterVersion,
         excludePools,
         referrer,
       } = options || {};
 
+      // TODO: all use typed enum for include/excludeDEXS
+      // TODO: check the semver validity for the adapterVersion
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
+
+      const _excludePricingMethods = excludePricingMethods
+        ? excludePricingMethods.join(',')
+        : '';
+      const _excludeContractMethods = excludeContractMethods
+        ? excludeContractMethods.join(',')
+        : '';
+      const _includeContractMethods = includeContractMethods
+        ? includeContractMethods.join(',')
+        : '';
 
       if (route.length < 2) {
         return { message: 'Invalid Route' };
@@ -137,7 +152,10 @@ export class ParaSwap {
         excludeDEXS,
         includeDEXS,
         excludePools,
-        excludePricingMethods,
+        version: adapterVersion,
+        excludePricingMethods: _excludePricingMethods,
+        excludeContractMethods: _excludeContractMethods,
+        includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
@@ -163,7 +181,7 @@ export class ParaSwap {
     destToken: AddressOrSymbol,
     amount: PriceString,
     side: SwapSide = SwapSide.SELL,
-    options?: RateOptions,
+    options: RateOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
@@ -171,19 +189,37 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        excludePools,
         excludePricingMethods,
+        excludeContractMethods,
+        includeContractMethods,
+        adapterVersion,
+        excludePools,
         referrer,
-      } = options || {};
+      } = options;
 
+      // TODO: all use typed enum for include/excludeDEXS
+      // TODO: check the semver validity for the adapterVersion
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
+
+      const _excludePricingMethods = excludePricingMethods
+        ? excludePricingMethods.join(',')
+        : undefined;
+      const _excludeContractMethods = excludeContractMethods
+        ? excludeContractMethods.join(',')
+        : undefined;
+      const _includeContractMethods = includeContractMethods
+        ? includeContractMethods.join(',')
+        : undefined;
 
       const query = qs.stringify({
         excludeDEXS,
         includeDEXS,
         excludePools,
-        excludePricingMethods,
+        version: adapterVersion,
+        excludePricingMethods: _excludePricingMethods,
+        excludeContractMethods: _excludeContractMethods,
+        includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });

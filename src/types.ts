@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { Merge } from 'ts-essentials';
 import { Token } from './lib/token';
-import { SwapSide, ContractMethod } from './constants';
+import { SwapSide, ContractMethod, PricingMethod } from './constants';
 
 type Symbol = string;
 type Address = string;
@@ -194,7 +194,10 @@ type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
   excludePools?: string;
-  excludePricingMethods?: string;
+  excludePricingMethods?: PricingMethod[];
+  excludeContractMethods?: ContractMethod[];
+  includeContractMethods?: ContractMethod[];
+  adapterVersion?: string;
   referrer?: string;
 };
 
