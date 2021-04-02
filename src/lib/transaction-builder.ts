@@ -554,7 +554,7 @@ export class TransactionBuilder {
       amountIn: srcAmount,
       amountOutMin: minAmountOut,
       path,
-      referrer: referrerIndex || 1,
+      referrer: referrerIndex || 0,
     };
 
     const method = this.augustusContract.methods.swapOnUniswap.bind(
@@ -601,7 +601,7 @@ export class TransactionBuilder {
       amountInMax: maxAmountIn,
       amountOut: dstAmount,
       path,
-      referrer: referrerIndex || 1,
+      referrer: referrerIndex || 0,
     };
 
     const method = this.augustusContract.methods.buyOnUniswap.bind(
@@ -651,7 +651,7 @@ export class TransactionBuilder {
       amountIn: srcAmount,
       amountOutMin: minAmountOut,
       path,
-      referrer: referrerIndex || 1,
+      referrer: referrerIndex || 0,
     };
 
     const method = this.augustusContract.methods.swapOnUniswapFork.bind(
@@ -701,7 +701,7 @@ export class TransactionBuilder {
       amountInMax: maxAmountIn,
       amountOut: dstAmount,
       path,
-      referrer: referrerIndex || 1,
+      referrer: referrerIndex || 0,
     };
 
     const method = this.augustusContract.methods.buyOnUniswapFork.bind(
