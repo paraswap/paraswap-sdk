@@ -238,7 +238,7 @@ type TransactionBuyParams = {
   expectedAmount: PriceString;
   route: TransactionBuyRoute[];
   beneficiary: Address;
-  referrer: Address;
+  referrer: string;
 };
 
 type LegacyTransactionSellParams = {
@@ -251,7 +251,7 @@ type LegacyTransactionSellParams = {
   mintPrice: string;
   beneficiary: Address;
   donationBasisPoints: string;
-  referrer: Address;
+  referrer: string;
 };
 
 type TransactionSellParams = {
@@ -262,7 +262,7 @@ type TransactionSellParams = {
   expectedAmount: PriceString;
   path: TransactionPath<TransactionSellRoute>[];
   beneficiary: Address;
-  referrer: Address;
+  referrer: string;
 };
 
 type SimpleSwapTransactionParams = {
