@@ -28,7 +28,6 @@ import {
   latestAugustusVersion,
   AdapterAugustusVersionMap,
 } from './constants';
-import { getDEX } from './lib/dexs';
 
 const API_URL = 'https://apiv2.paraswap.io/v2';
 
@@ -253,6 +252,7 @@ export class ParaSwap {
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: string,
     referrer: string,
+    referrerIndex: number,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
     options: BuildOptions = {},
@@ -288,6 +288,7 @@ export class ParaSwap {
       priceRoute,
       userAddress,
       referrer,
+      referrerIndex,
       gasPrice,
       receiver,
       !!options.ignoreChecks,

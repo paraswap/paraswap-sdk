@@ -74,7 +74,8 @@ export class TransactionBuilder {
         minMaxAmount: PriceString,
         priceRoute: OptimalRatesWithPartnerFees,
         userAddress: Address,
-        referrer: Address,
+        referrer: string,
+        referrerIndex: number,
         gasPrice: NumberAsString,
         useReduxToken: boolean,
         receiver?: Address,
@@ -226,7 +227,8 @@ export class TransactionBuilder {
     maxAmountIn: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -287,7 +289,8 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -342,7 +345,8 @@ export class TransactionBuilder {
     toAmount: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     beneficiary: Address = NULL_ADDRESS,
@@ -408,7 +412,8 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -429,7 +434,7 @@ export class TransactionBuilder {
       mintPrice: '0',
       beneficiary: receiver,
       donationBasisPoints: '0',
-      referrer: referrer,
+      referrer,
     };
 
     const method = this.augustusContract.methods.multiSwap.bind(
@@ -467,7 +472,8 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -522,7 +528,8 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -543,12 +550,11 @@ export class TransactionBuilder {
       priceRoute.bestRoute[0].data.path,
     );
 
-    // TODO: fix referrer
     const params = {
       amountIn: srcAmount,
       amountOutMin: minAmountOut,
       path,
-      referrer: 1,
+      referrer: referrerIndex || 1,
     };
 
     const method = this.augustusContract.methods.swapOnUniswap.bind(
@@ -569,7 +575,8 @@ export class TransactionBuilder {
     maxAmountIn: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -590,12 +597,11 @@ export class TransactionBuilder {
       priceRoute.bestRoute[0].data.path,
     );
 
-    // TODO: fix referrer
     const params = {
       amountInMax: maxAmountIn,
       amountOut: dstAmount,
       path,
-      referrer: 1,
+      referrer: referrerIndex || 1,
     };
 
     const method = this.augustusContract.methods.buyOnUniswap.bind(
@@ -616,7 +622,8 @@ export class TransactionBuilder {
     minAmountOut: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -638,14 +645,13 @@ export class TransactionBuilder {
       priceRoute.bestRoute[0].data.path,
     );
 
-    // TODO: fix referrer
     const params = {
       factory: priceRoute.bestRoute[0].data.factory,
       initCode: priceRoute.bestRoute[0].data.initCode,
       amountIn: srcAmount,
       amountOutMin: minAmountOut,
       path,
-      referrer: 1,
+      referrer: referrerIndex || 1,
     };
 
     const method = this.augustusContract.methods.swapOnUniswapFork.bind(
@@ -666,7 +672,8 @@ export class TransactionBuilder {
     maxAmountIn: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     useReduxToken: boolean = false,
     receiver: Address = NULL_ADDRESS,
@@ -688,14 +695,13 @@ export class TransactionBuilder {
       priceRoute.bestRoute[0].data.path,
     );
 
-    // TODO: fix referrer
     const params = {
       factory: priceRoute.bestRoute[0].data.factory,
       initCode: priceRoute.bestRoute[0].data.initCode,
       amountInMax: maxAmountIn,
       amountOut: dstAmount,
       path,
-      referrer: 1,
+      referrer: referrerIndex || 1,
     };
 
     const method = this.augustusContract.methods.buyOnUniswapFork.bind(
@@ -716,7 +722,8 @@ export class TransactionBuilder {
     destAmount: PriceString,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: Address,
-    referrer: Address,
+    referrer: string,
+    referrerIndex: number,
     gasPrice: NumberAsString,
     receiver: Address,
     ignoreGas: boolean,
@@ -753,6 +760,7 @@ export class TransactionBuilder {
       priceRoute,
       userAddress,
       referrer,
+      referrerIndex,
       gasPrice,
       useReduxToken,
       receiver,
