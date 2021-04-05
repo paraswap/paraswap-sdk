@@ -39,7 +39,7 @@ export const AdapterAugustusVersionMap: {
   ['4.0.0']: AugustusVersion.v4,
 };
 
-export const latestAugustusVersion = AugustusVersion.v3;
+export const latestAugustusVersion = AugustusVersion.v4;
 
 export const priceFeedNetworks = {
   1: '0x12295f06DA62693086F5DA45b78e20B778060853',
