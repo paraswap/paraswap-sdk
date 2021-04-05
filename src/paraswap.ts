@@ -19,12 +19,15 @@ import {
 
 import ERC20_ABI = require('./abi/erc20.json');
 
-import AUGUSTUS_ABI = require('./abi/augustus.json');
+import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 
 import { Token } from './lib/token';
 import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
-import { SwapSide } from './constants';
-import { getDEX } from './lib/dexs';
+import {
+  SwapSide,
+  latestAugustusVersion,
+  AdapterAugustusVersionMap,
+} from './constants';
 
 const API_URL = 'https://apiv2.paraswap.io/v2';
 
@@ -118,15 +121,28 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePricingMethods,
+        excludeContractMethods,
+        includeContractMethods,
+        adapterVersion,
+        excludePools,
         referrer,
       } = options || {};
 
+      // TODO: all use typed enum for include/excludeDEXS
+      // TODO: check the semver validity for the adapterVersion
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
-      this.checkDexList(includeMPDEXS);
-      this.checkDexList(excludeMPDEXS);
+
+      const _excludePricingMethods = excludePricingMethods
+        ? excludePricingMethods.join(',')
+        : '';
+      const _excludeContractMethods = excludeContractMethods
+        ? excludeContractMethods.join(',')
+        : '';
+      const _includeContractMethods = includeContractMethods
+        ? includeContractMethods.join(',')
+        : '';
 
       if (route.length < 2) {
         return { message: 'Invalid Route' };
@@ -135,15 +151,18 @@ export class ParaSwap {
       const query = qs.stringify({
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePools,
+        version: adapterVersion,
+        excludePricingMethods: _excludePricingMethods,
+        excludeContractMethods: _excludeContractMethods,
+        includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${amount}&${query}&side=${side}`;
+      )}&amount=${amount}&${query}&side=${side}&network={this.network}`;
 
       const { data } = await axios.get(pricesURL, {
         headers: {
@@ -162,7 +181,7 @@ export class ParaSwap {
     destToken: AddressOrSymbol,
     amount: PriceString,
     side: SwapSide = SwapSide.SELL,
-    options?: RateOptions,
+    options: RateOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
   ): Promise<OptimalRatesWithPartnerFees | APIError> {
@@ -170,21 +189,37 @@ export class ParaSwap {
       const {
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePricingMethods,
+        excludeContractMethods,
+        includeContractMethods,
+        adapterVersion,
+        excludePools,
         referrer,
-      } = options || {};
+      } = options;
 
+      // TODO: all use typed enum for include/excludeDEXS
+      // TODO: check the semver validity for the adapterVersion
       this.checkDexList(includeDEXS);
       this.checkDexList(excludeDEXS);
-      this.checkDexList(includeMPDEXS);
-      this.checkDexList(excludeMPDEXS);
+
+      const _excludePricingMethods = excludePricingMethods
+        ? excludePricingMethods.join(',')
+        : undefined;
+      const _excludeContractMethods = excludeContractMethods
+        ? excludeContractMethods.join(',')
+        : undefined;
+      const _includeContractMethods = includeContractMethods
+        ? includeContractMethods.join(',')
+        : undefined;
 
       const query = qs.stringify({
         excludeDEXS,
         includeDEXS,
-        includeMPDEXS,
-        excludeMPDEXS,
+        excludePools,
+        version: adapterVersion,
+        excludePricingMethods: _excludePricingMethods,
+        excludeContractMethods: _excludeContractMethods,
+        includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
       });
@@ -193,7 +228,7 @@ export class ParaSwap {
         this.apiURL
       }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-      }&side=${side}`;
+      }&side=${side}&network=${this.network}`;
       const { data } = await axios.get(pricesURL, {
         headers: {
           'X-Partner': referrer || 'paraswap.io',
@@ -244,29 +279,21 @@ export class ParaSwap {
     }
   }
 
-  shouldUseMultiSwap(priceRoute: OptimalRatesWithPartnerFees) {
-    const isAMultiRoute = (priceRoute.multiRoute || []).length > 1;
-
-    const missingDEX = !!(<any>priceRoute.bestRoute).find(
-      (br: any) => !getDEX(br.exchange.toLowerCase()),
-    );
-
-    return isAMultiRoute || missingDEX;
-  }
-
   //Warning: ParaSwapPool is not supported when building locally
   async buildTxLocally(
     srcToken: Token,
     destToken: Token,
     srcAmount: string,
-    minMaxAmount: string,
+    destAmount: string,
     priceRoute: OptimalRatesWithPartnerFees,
     userAddress: string,
     referrer: string,
+    referrerIndex: number,
     gasPrice: string,
     receiver: string = NULL_ADDRESS,
     options: BuildOptions = {},
   ) {
+    // TODO: fix me for multiple adapter version!
     if (!this.adapters) {
       await this.getAdapters();
     }
@@ -275,70 +302,35 @@ export class ParaSwap {
       await this.getTokens();
     }
 
+    const augustusVersion =
+      (priceRoute.adapterVersion &&
+        AdapterAugustusVersionMap[priceRoute.adapterVersion]) ||
+      latestAugustusVersion;
+
+    // Todo: can be a member
     const transaction = new TransactionBuilder(
       this.network,
       this.web3Provider!,
       this.adapters!,
       this.tokens,
-      !!options.useAugustusLegacy,
+      augustusVersion,
     );
-
-    const forceMultiSwap = options.forceMultiSwap
-      ? true
-      : this.shouldUseMultiSwap(priceRoute);
-
-    if (options.onlyParams) {
-      if (priceRoute.side === SwapSide.SELL) {
-        return forceMultiSwap || options.useAugustusLegacy
-          ? transaction.getTransactionSellParams(
-              srcToken,
-              destToken,
-              srcAmount,
-              minMaxAmount,
-              priceRoute,
-              userAddress,
-              referrer,
-              gasPrice,
-              receiver,
-            )
-          : transaction.getSimpleSellParams(
-              srcToken,
-              destToken,
-              srcAmount,
-              minMaxAmount,
-              priceRoute,
-              referrer,
-              gasPrice,
-              receiver,
-            );
-      } else {
-        return transaction.getTransactionBuyParams(
-          srcToken,
-          destToken,
-          srcAmount,
-          minMaxAmount,
-          priceRoute,
-          userAddress,
-          referrer,
-          gasPrice,
-          receiver,
-        );
-      }
-    }
 
     return transaction.buildTransaction(
       srcToken,
       destToken,
       srcAmount,
-      minMaxAmount,
+      destAmount,
       priceRoute,
       userAddress,
       referrer,
+      referrerIndex,
       gasPrice,
       receiver,
       !!options.ignoreChecks,
-      forceMultiSwap,
-      !!options.useAugustusLegacy,
+      augustusVersion,
+      !!options.onlyParams,
+      !!options.useReduxToken,
     );
   }
 

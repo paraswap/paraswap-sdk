@@ -8,6 +8,7 @@ const addresses: any = {
   3: '0xc778417e063141139fce010982780140aa0cd5ab',
   4: '0xc778417e063141139fce010982780140aa0cd5ab',
   42: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
+  56: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
 };
 
 export class Weth extends Adapter {
@@ -29,20 +30,17 @@ export class Weth extends Adapter {
     return { address, contract };
   }
 
-  async buildSwap(srcToken: Address, destToken: Address, data: DEXData): Promise<DexParams> {
+  async buildSwap(
+    srcToken: Address,
+    destToken: Address,
+    data: DEXData,
+  ): Promise<DexParams> {
     const { address, contract } = this.getWeth();
 
-    const swapData = this.isETHAddress(srcToken) ?
-      contract.methods.deposit().encodeABI() :
-      contract.methods.withdraw(data.srcAmount).encodeABI();
+    const swapData = this.isETHAddress(srcToken)
+      ? contract.methods.deposit().encodeABI()
+      : contract.methods.withdraw(data.srcAmount).encodeABI();
 
-    return this.swap(
-      srcToken,
-      destToken,
-      data,
-      swapData,
-      address,
-    );
+    return this.swap(srcToken, destToken, data, swapData, address);
   }
-
 }

@@ -20,6 +20,9 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   sushiswap: UniswapV2,
   defiswap: UniswapV2,
   linkswap: UniswapV2,
+  pancakeswap: UniswapV2,
+  julswap: UniswapV2,
+  streetswap: UniswapV2,
   kyber: Kyber,
   bancor: Bancor,
   paraswappool: Zerox,
@@ -27,10 +30,14 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   zerox: Zerox,
   curve: Curve,
   curve3: Curve,
+  acryptos: Curve,
+  ellipsis: Curve,
+  beltfi: Curve,
   aave: Aave,
   aave2: Aave,
   compound: Compound,
   weth: Weth,
+  wbnb: Weth,
   balancer: Balancer,
   shell: Shell,
   cofix: Cofix,
@@ -40,5 +47,5 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
 export function getDEX(dex: string): typeof Adapter {
   return dex.toLowerCase().match(/^paraswappool(.*)/)
     ? DEXS.paraswappool
-    : DEXS[dex];
+    : DEXS[dex.toLowerCase()];
 }

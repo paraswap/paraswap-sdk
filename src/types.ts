@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { Merge } from 'ts-essentials';
 import { Token } from './lib/token';
-import { SwapSide } from './constants';
+import { SwapSide, ContractMethod, PricingMethod } from './constants';
 
 type Symbol = string;
 type Address = string;
@@ -9,7 +9,7 @@ type AddressOrSymbol = Address | Symbol;
 type PriceString = string;
 type NumberAsString = string;
 
-type NetworkID = 1 | 3 | 42 | 4;
+type NetworkID = 1 | 3 | 42 | 4 | 56;
 
 const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
@@ -119,16 +119,25 @@ type OptimalRateWithFeeBuy = Merge<
 
 type OptimalRateWithFee = OptimalRateWithFeeSell | OptimalRateWithFeeBuy;
 
+type OptimalRoute = {
+  percent: NumberAsString;
+  route: OptimalRate[][];
+};
+
 type OptimalRates = {
   blockNumber: number;
   destAmount: string;
   srcAmount: string;
   priceWithSlippage?: string;
   multiPath?: boolean;
+  megaPath?: boolean;
   bestRoute: OptimalRate[];
   bestRouteGasCostUSD?: NumberAsString;
+  contractMethod: ContractMethod;
+  adapterVersion: string;
   bestRouteGas?: NumberAsString;
   multiRoute?: OptimalRate[][];
+  megaRoute?: OptimalRoute[];
   others: SimpleComputedRate[];
   fromUSD?: NumberAsString;
   toUSD?: NumberAsString;
@@ -184,8 +193,11 @@ class User {
 type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
-  includeMPDEXS?: string;
-  excludeMPDEXS?: string;
+  excludePools?: string;
+  excludePricingMethods?: PricingMethod[];
+  excludeContractMethods?: ContractMethod[];
+  includeContractMethods?: ContractMethod[];
+  adapterVersion?: string;
   referrer?: string;
 };
 
@@ -215,6 +227,11 @@ type TransactionBuyRoute = Merge<
   }
 >;
 
+type TransactionMegaPath<T extends TransactionRoute> = {
+  fromAmountPercent: NumberAsString;
+  path: TransactionPath<T>[];
+};
+
 type TransactionBuyParams = {
   value: PriceString;
   fromToken: Address | undefined;
@@ -224,7 +241,7 @@ type TransactionBuyParams = {
   expectedAmount: PriceString;
   route: TransactionBuyRoute[];
   beneficiary: Address;
-  referrer: Address;
+  referrer: string;
 };
 
 type LegacyTransactionSellParams = {
@@ -237,7 +254,7 @@ type LegacyTransactionSellParams = {
   mintPrice: string;
   beneficiary: Address;
   donationBasisPoints: string;
-  referrer: Address;
+  referrer: string;
 };
 
 type TransactionSellParams = {
@@ -248,7 +265,7 @@ type TransactionSellParams = {
   expectedAmount: PriceString;
   path: TransactionPath<TransactionSellRoute>[];
   beneficiary: Address;
-  referrer: Address;
+  referrer: string;
 };
 
 type SimpleSwapTransactionParams = {
@@ -278,10 +295,9 @@ type TransactionData = {
 type BuildOptions = {
   ignoreChecks?: boolean;
   onlyParams?: boolean;
-  forceMultiSwap?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
-  useAugustusLegacy?: boolean;
+  useReduxToken?: boolean;
 };
 
 export {
@@ -315,10 +331,12 @@ export {
   OptimalRatesWithPartnerFees,
   OptimalRatesWithPartnerFeesSell,
   OptimalRatesWithPartnerFeesBuy,
+  OptimalRoute,
   User,
   RateOptions,
   TransactionRoute,
   TransactionPath,
+  TransactionMegaPath,
   TransactionSellRoute,
   TransactionBuyRoute,
   TransactionBuyParams,

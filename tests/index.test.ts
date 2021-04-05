@@ -244,6 +244,7 @@ describe('ParaSwap SDK', () => {
       priceRoute,
       senderAddress,
       referrer,
+      undefined,
       gasPrice,
       receiver,
     );
