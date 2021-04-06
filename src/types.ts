@@ -9,7 +9,7 @@ type AddressOrSymbol = Address | Symbol;
 type PriceString = string;
 type NumberAsString = string;
 
-type NetworkID = 1 | 3 | 42 | 4 | 56;
+type NetworkID = 1 | 3 | 42 | 4 | 56 | 137;
 
 const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
