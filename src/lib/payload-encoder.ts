@@ -271,6 +271,8 @@ export class PayloadEncoder {
       case 'pancakeswap':
       case 'julswap':
       case 'streetswap':
+      case 'quickswap':
+      case 'cometh':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
