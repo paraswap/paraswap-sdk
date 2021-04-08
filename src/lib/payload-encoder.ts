@@ -323,8 +323,12 @@ export class PayloadEncoder {
     networkFee: string,
     side: SwapSide,
   ): Promise<string> => {
-    const srcToken = this.tokens!.find(t => t.address === fromToken)!;
-    const destToken = this.tokens!.find(t => t.address === toToken)!;
+    const srcToken = this.tokens!.find(
+      t => t.address.toLowerCase() === fromToken.toLowerCase(),
+    )!;
+    const destToken = this.tokens!.find(
+      t => t.address.toLowerCase() === toToken.toLowerCase(),
+    )!;
 
     if (exchange.toLowerCase().match(/^paraswappool(.*)/)) {
       return data.version === 4
