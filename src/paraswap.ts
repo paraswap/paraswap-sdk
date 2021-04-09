@@ -29,7 +29,7 @@ import {
   AdapterAugustusVersionMap,
 } from './constants';
 
-const API_URL = 'https://apiv2.paraswap.io/v2';
+const API_URL = 'https://apiv4.paraswap.io/v2';
 
 export class ParaSwap {
   adapters?: Adapters;
