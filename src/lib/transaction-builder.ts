@@ -45,7 +45,10 @@ const UNISWAPV2_FORKS = [
   'pancakeswap',
   'julswap',
   'streetswap',
+  'quickswap',
+  'cometh',
 ];
+const UNISWAPV2_ALIAS = ['uniswapv2', 'pancakeswap', 'quickswap'];
 
 /*
 BUY SUPPORTED:
@@ -536,8 +539,10 @@ export class TransactionBuilder {
   ) => {
     if (
       !(
-        priceRoute.bestRoute[0].exchange.toLowerCase() === 'uniswapv2' &&
-        priceRoute.bestRoute[0].data.path
+        UNISWAPV2_ALIAS.some(
+          ex =>
+            ex.toLowerCase() === priceRoute.bestRoute[0].exchange.toLowerCase(),
+        ) && priceRoute.bestRoute[0].data.path
       )
     )
       throw new Error(
@@ -583,8 +588,10 @@ export class TransactionBuilder {
   ) => {
     if (
       !(
-        priceRoute.bestRoute[0].exchange.toLowerCase() === 'uniswapv2' &&
-        priceRoute.bestRoute[0].data.path
+        UNISWAPV2_ALIAS.some(
+          ex =>
+            ex.toLowerCase() === priceRoute.bestRoute[0].exchange.toLowerCase(),
+        ) && priceRoute.bestRoute[0].data.path
       )
     )
       throw new Error(
