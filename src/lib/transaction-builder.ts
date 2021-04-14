@@ -162,7 +162,7 @@ export class TransactionBuilder {
     address.toLowerCase() === ETHER_ADDRESS.toLowerCase();
 
   private getSimpleSwapValue = (values: NumberAsString[]) => {
-    return values.reduce((acc, v) => acc.plus(v), new BigNumber(0)).toString();
+    return values.reduce((acc, v) => acc.plus(v), new BigNumber(0)).toFixed(0);
   };
 
   private getMegaValue = (
@@ -181,7 +181,7 @@ export class TransactionBuilder {
         new BigNumber('0'),
       );
     const value = this.isETHAddress(srcToken) ? srcAmount : '0';
-    return networkFees.plus(value).toFixed();
+    return networkFees.plus(value).toFixed(0);
   };
 
   private getValue = (
@@ -198,7 +198,7 @@ export class TransactionBuilder {
         new BigNumber('0'),
       );
     const value = this.isETHAddress(srcToken) ? srcAmount : '0';
-    return new BigNumber(value).plus(networkFees).toFixed();
+    return new BigNumber(value).plus(networkFees).toFixed(0);
   };
 
   estimateGas = async (
@@ -780,6 +780,7 @@ export class TransactionBuilder {
       null,
       Object.values(partialTx.params),
     );
+
     const gas = ignoreGas
       ? {}
       : {
