@@ -41,6 +41,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   compound: Compound,
   weth: Weth,
   wbnb: Weth,
+  wmatic: Weth,
   balancer: Balancer,
   shell: Shell,
   cofix: Cofix,
