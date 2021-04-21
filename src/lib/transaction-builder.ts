@@ -220,7 +220,14 @@ export class TransactionBuilder {
     const gasOverhead =
       GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(multiplier.dividedBy(100)) : 1;
 
-    return new BigNumber(gas).times(gasOverhead).toFixed(0);
+    // There is some issue with curve on polygon which is making the gas to be underestimate
+    // This is just a hack to bump the gas to avoid `out of gas`
+    const networkOverhead = this.network === 137 ? 200000 : 0;
+
+    return new BigNumber(gas)
+      .times(gasOverhead)
+      .plus(networkOverhead)
+      .toFixed(0);
   };
 
   getBuyTx = async (
