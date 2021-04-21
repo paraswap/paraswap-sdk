@@ -207,6 +207,7 @@ export class TransactionBuilder {
     value: NumberAsString,
     gasPrice: NumberAsString,
     multiSwapSteps: number,
+    useReduxToken: boolean,
   ): Promise<NumberAsString> => {
     const gas = await swapMethodData.estimateGas({
       from: fromUser,
@@ -220,14 +221,19 @@ export class TransactionBuilder {
     const gasOverhead =
       GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(multiplier.dividedBy(100)) : 1;
 
-    // There is some issue with curve on polygon which is making the gas to be underestimate
-    // This is just a hack to bump the gas to avoid `out of gas`
+    // There is some issue with curve on polygon which is making the
+    // gas to be underestimated This is just a hack to bump the gas to avoid `out of gas`
     const networkOverhead = this.network === 137 ? 200000 : 0;
 
-    return new BigNumber(gas)
+    const gasLimit = new BigNumber(gas)
       .times(gasOverhead)
-      .plus(networkOverhead)
-      .toFixed(0);
+      .plus(networkOverhead);
+
+    const gasLimitWithREDUX = useReduxToken
+      ? gasLimit.times(1.25).plus(25000)
+      : gasLimit;
+
+    return gasLimitWithREDUX.toFixed(0);
   };
 
   getBuyTx = async (
@@ -797,6 +803,7 @@ export class TransactionBuilder {
             partialTx.value,
             gasPrice,
             this.payloadEncoder.multiSwapSteps(priceRoute),
+            useReduxToken,
           ),
         };
 
