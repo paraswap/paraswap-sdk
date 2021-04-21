@@ -221,7 +221,13 @@ export class TransactionBuilder {
     const gasOverhead =
       GAS_MULTIPLIER > 0 ? new BigNumber(1).plus(multiplier.dividedBy(100)) : 1;
 
-    const gasLimit = new BigNumber(gas).times(gasOverhead);
+    // There is some issue with curve on polygon which is making the
+    // gas to be underestimated This is just a hack to bump the gas to avoid `out of gas`
+    const networkOverhead = this.network === 137 ? 200000 : 0;
+
+    const gasLimit = new BigNumber(gas)
+      .times(gasOverhead)
+      .plus(networkOverhead);
 
     const gasLimitWithREDUX = useReduxToken
       ? gasLimit.times(1.25).plus(25000)
