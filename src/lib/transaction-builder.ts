@@ -230,7 +230,7 @@ export class TransactionBuilder {
       .plus(networkOverhead);
 
     const gasLimitWithREDUX = useReduxToken
-      ? gasLimit.times(1.25).plus(25000)
+      ? gasLimit.minus(21000).times(1.25).plus(25000).plus(21000)
       : gasLimit;
 
     return gasLimitWithREDUX.toFixed(0);
@@ -794,18 +794,43 @@ export class TransactionBuilder {
       Object.values(partialTx.params),
     );
 
-    const gas = ignoreGas
-      ? {}
-      : {
-          gas: await this.estimateGas(
-            method,
-            userAddress,
-            partialTx.value,
-            gasPrice,
-            this.payloadEncoder.multiSwapSteps(priceRoute),
-            useReduxToken,
-          ),
-        };
+    const gas: { gas?: NumberAsString } = {};
+    if (!ignoreGas) {
+      let methodNoRedux = method;
+
+      if (useReduxToken) {
+        const partialTxNoRedux = await this.buildersMap[version][
+          priceRoute.contractMethod.toLowerCase()
+        ](
+          srcToken,
+          destToken,
+          amount,
+          minMaxAmount,
+          priceRoute,
+          userAddress,
+          referrer,
+          referrerIndex,
+          gasPrice,
+          false, // useReduxToken
+          receiver,
+          version,
+        );
+
+        methodNoRedux = partialTxNoRedux.method.apply(
+          null,
+          Object.values(partialTxNoRedux.params),
+        );
+      }
+
+      gas.gas = await this.estimateGas(
+        methodNoRedux,
+        userAddress,
+        partialTx.value,
+        gasPrice,
+        this.payloadEncoder.multiSwapSteps(priceRoute),
+        useReduxToken,
+      );
+    }
 
     // Fix augustus address for multiple versions!
     return {
