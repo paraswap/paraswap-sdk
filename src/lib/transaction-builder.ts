@@ -43,8 +43,10 @@ const UNISWAPV2_FORKS = [
   'defiswap',
   'linkswap',
   'pancakeswap',
+  'pancakeswapv2',
   'julswap',
   'streetswap',
+  'bakeryswap',
   'quickswap',
   'cometh',
 ];

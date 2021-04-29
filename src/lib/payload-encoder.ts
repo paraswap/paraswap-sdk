@@ -269,6 +269,8 @@ export class PayloadEncoder {
       case 'linkswap':
       case 'shell':
       case 'pancakeswap':
+      case 'pancakeswapv2':
+      case 'bakeryswap':
       case 'julswap':
       case 'streetswap':
       case 'quickswap':
@@ -572,6 +574,8 @@ export class PayloadEncoder {
       case 'defiswap':
       case 'linkswap':
       case 'pancakeswap':
+      case 'pancakeswapv2':
+      case 'bakeryswap':
       case 'julswap':
       case 'streetswap':
       case 'quickswap':
