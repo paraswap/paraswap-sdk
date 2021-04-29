@@ -77,6 +77,14 @@ export type CurveDexData = DEXData & {
   underlyingSwap: boolean;
 };
 
+export type NerveDexData = DEXData & {
+  minConversionRate: string;
+  exchange: string;
+  i: number;
+  j: number;
+  deadline: number;
+};
+
 export type DODODexData = DEXData & {
   fromToken: Address;
   toToken: Address;
