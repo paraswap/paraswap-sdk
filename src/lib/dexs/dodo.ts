@@ -9,10 +9,12 @@ const MAX_UINT =
 // We use dodo-v2 proxy as the new proxy supports both v1 and v2
 const DODOV2ProxyAddress: { [network: number]: Address } = {
   1: '0xa356867fdcea8e71aeaf87805808803806231fdc',
+  56: '0x8F8Dd7DB1bDA5eD3da8C9daf3bfa471c12d58486',
 };
 
 const DODOAproveAddress: { [network: number]: Address } = {
   1: '0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149',
+  56: '0xa128Ba44B2738A558A1fdC06d6303d52D3Cef8c1',
 };
 
 export class DODO extends Adapter {
@@ -34,7 +36,11 @@ export class DODO extends Adapter {
     };
   }
 
-  private async _swap(srcToken: Address, destToken: Address, data: DODODexData) {
+  private async _swap(
+    srcToken: Address,
+    destToken: Address,
+    data: DODODexData,
+  ) {
     const dodoContract = new this.web3Provider.eth.Contract(
       DODOProxyAbi,
       DODOV2ProxyAddress[this.network],
@@ -60,8 +66,12 @@ export class DODO extends Adapter {
         DODOAproveAddress[this.network],
       );
 
-      const callees = approveCallData ? [approveCallData.callee, DODOV2ProxyAddress[this.network]] : [DODOV2ProxyAddress[this.network]];
-      const calldata = approveCallData ? [approveCallData.calldata, swapData] : [swapData];
+      const callees = approveCallData
+        ? [approveCallData.callee, DODOV2ProxyAddress[this.network]]
+        : [DODOV2ProxyAddress[this.network]];
+      const calldata = approveCallData
+        ? [approveCallData.calldata, swapData]
+        : [swapData];
       const values = approveCallData ? ['0', '0'] : ['0'];
 
       return {
