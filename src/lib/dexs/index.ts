@@ -13,6 +13,7 @@ import { Balancer } from './balancer';
 import { Shell } from './shell';
 import { Cofix } from './cofix';
 import { DODO } from './dodo';
+import { DODOV2 } from './dodov2';
 
 export const DEXS: { [dex: string]: typeof Adapter } = {
   uniswap: UniswapV1,
@@ -48,6 +49,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   shell: Shell,
   cofix: Cofix,
   dodov1: DODO,
+  dodov2: DODOV2,
 };
 
 export function getDEX(dex: string): typeof Adapter {
