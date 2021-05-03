@@ -393,7 +393,7 @@ export class PayloadEncoder {
 
     switch (exchange.toLowerCase()) {
       case '0x':
-      case '0xrfqt':
+      case '0xrfqt': {
         if (side == SwapSide.BUY) return '0x';
         const orderData = ZeroXOrder.formatOrders(data.orders, 3);
         const signatures = data.orders.map((o: any) => o.signature);
@@ -427,7 +427,8 @@ export class PayloadEncoder {
             networkFee,
           },
         );
-      case 'oasis':
+      }
+      case 'oasis': {
         const { otc, weth, factory } = Oasis.getExchangeParams(this.network);
 
         return web3Coder.encodeParameter(
@@ -440,7 +441,8 @@ export class PayloadEncoder {
           },
           { otc, weth, factory },
         );
-      case 'kyber':
+      }
+      case 'kyber': {
         const kyber = new Kyber(this.network, this.web3Provider);
         const hint = await kyber.buildHint(fromToken, toToken);
         const minConversionRateForBuy = 1;
@@ -453,7 +455,8 @@ export class PayloadEncoder {
           },
           { minConversionRateForBuy, hint },
         );
-      case 'bancor':
+      }
+      case 'bancor': {
         if (side == SwapSide.BUY) return '0x';
         const { path } = data;
 
@@ -465,8 +468,8 @@ export class PayloadEncoder {
           },
           { path },
         );
-
-      case 'balancer':
+      }
+      case 'balancer': {
         const { swaps } = data;
         return web3Coder.encodeParameter(
           {
@@ -481,8 +484,8 @@ export class PayloadEncoder {
           },
           { swaps },
         );
-
-      case 'dodov1':
+      }
+      case 'dodov1': {
         const { dodoPairs, directions } = data;
         return web3Coder.encodeParameter(
           {
@@ -493,8 +496,20 @@ export class PayloadEncoder {
           },
           { dodoPairs, directions },
         );
-
-      case 'compound':
+      }
+      case 'dodov2': {
+        const { dodoPairs, directions } = data;
+        return web3Coder.encodeParameter(
+          {
+            ParentStruct: {
+              dodoPairs: 'address[]',
+              directions: 'uint256',
+            },
+          },
+          { dodoPairs, directions },
+        );
+      }
+      case 'compound': {
         const cToken =
           destToken.tokenType === 'cToken'
             ? destToken.address!
@@ -508,8 +523,8 @@ export class PayloadEncoder {
           },
           { cToken },
         );
-
-      case 'aave2':
+      }
+      case 'aave2': {
         const aToken2 =
           destToken.tokenType === 'aToken2'
             ? destToken.address!
@@ -523,8 +538,8 @@ export class PayloadEncoder {
           },
           { aToken: aToken2 },
         );
-
-      case 'aave':
+      }
+      case 'aave': {
         const aToken =
           destToken.tokenType === 'aToken'
             ? destToken.address!
@@ -538,8 +553,8 @@ export class PayloadEncoder {
           },
           { aToken },
         );
-
-      case 'idle':
+      }
+      case 'idle': {
         const idleToken =
           destToken.tokenType === 'idleToken'
             ? destToken.address!
@@ -553,8 +568,8 @@ export class PayloadEncoder {
           },
           { idleToken },
         );
-
-      case 'fulcrum':
+      }
+      case 'fulcrum': {
         const iToken =
           destToken.tokenType === 'iToken'
             ? destToken.address!
@@ -568,7 +583,7 @@ export class PayloadEncoder {
           },
           { iToken },
         );
-
+      }
       case 'uniswapv2':
       case 'sushiswap':
       case 'defiswap':
@@ -579,7 +594,7 @@ export class PayloadEncoder {
       case 'julswap':
       case 'streetswap':
       case 'quickswap':
-      case 'cometh':
+      case 'cometh': {
         const _path =
           this.augustusVersion === AugustusVersion.v2
             ? data.path
@@ -603,12 +618,13 @@ export class PayloadEncoder {
           },
           { path: _path },
         );
+      }
       case 'curve3':
       case 'swerve':
       case 'curve':
       case 'acryptos':
       case 'beltfi':
-      case 'ellipsis':
+      case 'ellipsis': {
         try {
           const { i, j, deadline, underlyingSwap, v3 } = data;
 
@@ -628,7 +644,7 @@ export class PayloadEncoder {
           console.error('Curve Error', e);
           return '0x';
         }
-
+      }
       default:
         return '0x';
     }
