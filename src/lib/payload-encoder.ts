@@ -306,6 +306,7 @@ export class PayloadEncoder {
       'beltfi',
       'curve',
       'ellipsis',
+      'nerve',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -642,6 +643,24 @@ export class PayloadEncoder {
           );
         } catch (e) {
           console.error('Curve Error', e);
+          return '0x';
+        }
+      }
+      case 'nerve': {
+        try {
+          const {i, j, deadline} = data;
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                i: 'int128',
+                j: 'int128',
+                deadline: 'uint256',
+              },
+            },
+            {i, j, deadline},
+          );
+        } catch (e) {
+          console.error('Nerve Error', e);
           return '0x';
         }
       }
