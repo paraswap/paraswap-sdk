@@ -44,6 +44,7 @@ const UNISWAPV2_FORKS = [
   'linkswap',
   'pancakeswap',
   'pancakeswapv2',
+  'apeswap',
   'julswap',
   'streetswap',
   'bakeryswap',
