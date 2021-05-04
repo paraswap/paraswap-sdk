@@ -307,6 +307,7 @@ export class PayloadEncoder {
       'curve',
       'ellipsis',
       'nerve',
+      'saddle',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -646,9 +647,10 @@ export class PayloadEncoder {
           return '0x';
         }
       }
+      case 'saddle':
       case 'nerve': {
         try {
-          const {i, j, deadline} = data;
+          const { i, j, deadline } = data;
           return web3Coder.encodeParameter(
             {
               ParentStruct: {
@@ -657,7 +659,7 @@ export class PayloadEncoder {
                 deadline: 'uint256',
               },
             },
-            {i, j, deadline},
+            { i, j, deadline },
           );
         } catch (e) {
           console.error('Nerve Error', e);

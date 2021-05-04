@@ -52,6 +52,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   dodov1: DODO,
   dodov2: DODOV2,
   nerve: Nerve,
+  saddle: Nerve,
 };
 
 export function getDEX(dex: string): typeof Adapter {
