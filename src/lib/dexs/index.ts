@@ -24,6 +24,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   linkswap: UniswapV2,
   pancakeswap: UniswapV2,
   pancakeswapv2: UniswapV2,
+  apeswap: UniswapV2,
   julswap: UniswapV2,
   streetswap: UniswapV2,
   bakeryswap: UniswapV2,

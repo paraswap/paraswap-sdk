@@ -270,6 +270,7 @@ export class PayloadEncoder {
       case 'shell':
       case 'pancakeswap':
       case 'pancakeswapv2':
+      case 'apeswap':
       case 'bakeryswap':
       case 'julswap':
       case 'streetswap':
@@ -591,6 +592,7 @@ export class PayloadEncoder {
       case 'linkswap':
       case 'pancakeswap':
       case 'pancakeswapv2':
+      case 'apeswap':
       case 'bakeryswap':
       case 'julswap':
       case 'streetswap':
@@ -648,7 +650,7 @@ export class PayloadEncoder {
       }
       case 'nerve': {
         try {
-          const {i, j, deadline} = data;
+          const { i, j, deadline } = data;
           return web3Coder.encodeParameter(
             {
               ParentStruct: {
@@ -657,7 +659,7 @@ export class PayloadEncoder {
                 deadline: 'uint256',
               },
             },
-            {i, j, deadline},
+            { i, j, deadline },
           );
         } catch (e) {
           console.error('Nerve Error', e);
