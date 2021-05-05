@@ -16,6 +16,9 @@ const ZRX_EXCHANGE: any = {
     3: '0x61935CbDd02287B511119DDb11Aeb42F1593b7Ef',
     4: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
   },
+  56: {
+    2: '0x3F93C3D9304a70c9104642AB8cD37b1E2a7c203A',
+  },
 };
 
 const ZRX_ABI: any = {
@@ -29,6 +32,9 @@ const ZRX_EXCHANGE_ERC20PROXY: any = {
     1: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
     2: '0x95E6F48254609A6ee006F7D493c8e5fB97094ceF',
     4: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+  },
+  56: {
+    2: '0xCF21d4b7a265FF779accBA55Ace0F56C8cE6e379',
   },
 };
 
@@ -114,9 +120,9 @@ export class ZeroXOrder extends Adapter {
     const feeAssetData =
       version === 3
         ? {
-          makerFeeAssetData: order.makerFeeAssetData,
-          takerFeeAssetData: order.takerFeeAssetData,
-        }
+            makerFeeAssetData: order.makerFeeAssetData,
+            takerFeeAssetData: order.takerFeeAssetData,
+          }
         : {};
 
     return {
@@ -144,11 +150,11 @@ export class ZeroXOrder extends Adapter {
   ) {
     return version === 4
       ? orders.map(o =>
-        ZeroXOrder.formatOrderV4(o as ZeroXSignedOrderV4, version),
-      )
+          ZeroXOrder.formatOrderV4(o as ZeroXSignedOrderV4, version),
+        )
       : orders.map(o =>
-        ZeroXOrder.formatOrderV23(o as ZeroXSignedOrder, version),
-      );
+          ZeroXOrder.formatOrderV23(o as ZeroXSignedOrder, version),
+        );
   }
 }
 
@@ -215,8 +221,12 @@ export class Zerox extends Adapter {
 
     const networkFees = data.networkFees || '0';
 
-    const callees = approveCallData ? [this.augustus._address, this.getExchange(data)] : [this.getExchange(data)];
-    const calldata = approveCallData ? [approveCallData.calldata, assetSwapperData] : [assetSwapperData];
+    const callees = approveCallData
+      ? [this.augustus._address, this.getExchange(data)]
+      : [this.getExchange(data)];
+    const calldata = approveCallData
+      ? [approveCallData.calldata, assetSwapperData]
+      : [assetSwapperData];
     const values = approveCallData ? ['0', networkFees] : [networkFees];
 
     return {
