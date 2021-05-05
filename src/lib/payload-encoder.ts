@@ -308,6 +308,7 @@ export class PayloadEncoder {
       'curve',
       'ellipsis',
       'nerve',
+      'saddle',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -648,6 +649,7 @@ export class PayloadEncoder {
           return '0x';
         }
       }
+      case 'saddle':
       case 'nerve': {
         try {
           const { i, j, deadline } = data;
