@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
-import type { ContractOptions } from 'web3-eth-contract';
+import type { SendOptions } from 'web3-eth-contract';
 
 import {
   Adapters,
@@ -434,25 +434,24 @@ export class ParaSwap {
     userAddress: Address,
     tokenAddress: Address,
     _provider?: any,
-    contractOptions?: ContractOptions,
+    sendOptions?: Omit<SendOptions, 'from'>,
   ): Promise<string> {
     return new Promise(async (resolve, reject) => {
       const spender = await this.getSpender();
 
       const provider = _provider || this.web3Provider;
 
-      const contract: any = new provider!.eth.Contract(
-        ERC20_ABI,
-        tokenAddress,
-        contractOptions,
-      );
+      const contract: any = new provider!.eth.Contract(ERC20_ABI, tokenAddress);
 
       return contract.methods
         .approve(spender, amount)
-        .send({ from: userAddress }, (err: any, txHash: string) => {
-          if (err) return reject(err.message);
-          resolve(txHash);
-        });
+        .send(
+          { from: userAddress, ...sendOptions },
+          (err: any, txHash: string) => {
+            if (err) return reject(err.message);
+            resolve(txHash);
+          },
+        );
     });
   }
 
