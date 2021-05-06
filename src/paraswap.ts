@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
+import type { ContractOptions } from 'web3-eth-contract';
 
 import {
   Adapters,
@@ -433,13 +434,18 @@ export class ParaSwap {
     userAddress: Address,
     tokenAddress: Address,
     _provider?: any,
+    contractOptions?: ContractOptions,
   ): Promise<string> {
     return new Promise(async (resolve, reject) => {
       const spender = await this.getSpender();
 
       const provider = _provider || this.web3Provider;
 
-      const contract: any = new provider!.eth.Contract(ERC20_ABI, tokenAddress);
+      const contract: any = new provider!.eth.Contract(
+        ERC20_ABI,
+        tokenAddress,
+        contractOptions,
+      );
 
       return contract.methods
         .approve(spender, amount)
