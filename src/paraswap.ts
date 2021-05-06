@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -271,7 +271,14 @@ export class ParaSwap {
         destDecimals,
       };
 
-      const { data } = await axios.post(txURL, txConfig);
+      const config: AxiosRequestConfig = {};
+      if (referrer) {
+        config.headers = {
+          'X-Partner': referrer,
+        };
+      }
+
+      const { data } = await axios.post(txURL, txConfig, config);
 
       return data as Transaction;
     } catch (e) {
