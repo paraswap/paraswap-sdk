@@ -25,7 +25,7 @@ import { ZeroXOrder } from './dexs/zerox';
 import { Token } from './token';
 import { Oasis } from './dexs/oasis';
 import { Kyber } from './dexs/kyber';
-import { SwapSide, ContractMethod, AugustusVersion } from '../constants';
+import { SwapSide, AugustusVersion } from '../constants';
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -276,6 +276,7 @@ export class PayloadEncoder {
       case 'streetswap':
       case 'quickswap':
       case 'cometh':
+      case 'uniswapv3':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
@@ -665,6 +666,29 @@ export class PayloadEncoder {
           );
         } catch (e) {
           console.error('Nerve Error', e);
+          return '0x';
+        }
+      }
+      case 'uniswapv3': {
+        try {
+          const { fee, deadline, sqrtPriceLimitX96 } = data;
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                fee: 'uint24',
+                deadline: 'uint256',
+                sqrtPriceLimitX96: 'uint160',
+              },
+            },
+            {
+              fee,
+              deadline:
+                deadline || Math.floor(new Date().getTime() / 1000) + 60 * 60,
+              sqrtPriceLimitX96: sqrtPriceLimitX96 || 0,
+            },
+          );
+        } catch (e) {
+          console.error('uniswapv3 Error', e);
           return '0x';
         }
       }
