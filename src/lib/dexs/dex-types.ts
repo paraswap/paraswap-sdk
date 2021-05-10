@@ -1,4 +1,4 @@
-import { Address } from '../../types';
+import { Address, NumberAsString } from '../../types';
 
 export type DexParams = {
   callees: string[];
@@ -31,6 +31,13 @@ export type UniswapV2DEXData = DEXData & {
   exchange?: Address;
   path: Address[];
   router: Address;
+};
+
+export type UniswapV3DEXData = DEXData & {
+  // ExactInputSingleParams
+  fee: number;
+  deadline?: number;
+  sqrtPriceLimitX96?: NumberAsString;
 };
 
 export type KyberDEXData = DEXData & {
