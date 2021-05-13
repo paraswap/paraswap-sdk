@@ -277,6 +277,7 @@ export class PayloadEncoder {
       case 'quickswap':
       case 'cometh':
       case 'uniswapv3':
+      case 'dfyn':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
@@ -599,7 +600,8 @@ export class PayloadEncoder {
       case 'julswap':
       case 'streetswap':
       case 'quickswap':
-      case 'cometh': {
+      case 'cometh':
+      case 'dfyn': {
         const _path =
           this.augustusVersion === AugustusVersion.v2
             ? data.path
