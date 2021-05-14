@@ -31,6 +31,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   bakeryswap: UniswapV2,
   quickswap: UniswapV2,
   cometh: UniswapV2,
+  dfyn: UniswapV2,
   kyber: Kyber,
   bancor: Bancor,
   paraswappool: Zerox,
