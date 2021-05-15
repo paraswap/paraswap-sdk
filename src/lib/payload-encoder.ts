@@ -692,6 +692,26 @@ export class PayloadEncoder {
           return '0x';
         }
       }
+      case 'smoothy': {
+        try {
+          const { i, j } = data;
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                i: 'uint256',
+                j: 'uint256',
+              },
+            },
+            {
+              i,
+              j,
+            },
+          );
+        } catch (e) {
+          console.error('smoothy Error', e);
+          return '0x';
+        }
+      }
       default:
         return '0x';
     }
