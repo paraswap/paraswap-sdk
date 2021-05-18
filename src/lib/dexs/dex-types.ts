@@ -92,6 +92,12 @@ export type NerveDexData = DEXData & {
   deadline: number;
 };
 
+export type SmoothyDexData = DEXData & {
+  i: number;
+  j: number;
+  exchange: string;
+};
+
 export type DODODexData = DEXData & {
   fromToken: Address;
   toToken: Address;

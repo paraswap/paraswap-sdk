@@ -16,6 +16,7 @@ import { DODO } from './dodo';
 import { DODOV2 } from './dodov2';
 import { Nerve } from './nerve';
 import { UniswapV3 } from './uniswap-v3';
+import { Smoothy } from './smoothy';
 
 export const DEXS: { [dex: string]: typeof Adapter } = {
   uniswap: UniswapV1,
@@ -57,6 +58,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   nerve: Nerve,
   saddle: Nerve,
   uniswapv3: UniswapV3,
+  smoothy: Smoothy,
 };
 
 export function getDEX(dex: string): typeof Adapter {
