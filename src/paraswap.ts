@@ -163,7 +163,7 @@ export class ParaSwap {
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${amount}&${query}&side=${side}&network={this.network}`;
+      )}&amount=${amount}&${query}&side=${side}&network=${this.network}`;
 
       const { data } = await axios.get(pricesURL, {
         headers: {
