@@ -311,6 +311,7 @@ export class PayloadEncoder {
       'ellipsis',
       'nerve',
       'saddle',
+      'oneinchlp',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
