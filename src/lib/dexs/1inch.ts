@@ -16,13 +16,13 @@ export class OneInch extends Adapter {
 
   static getDexData(optimalRate: OptimalRate, name: string): OneInchData {
     const {
-      data: { poolAddress },
+      data: { exchange },
     } = optimalRate;
     return {
       name,
       srcAmount: optimalRate.srcAmount,
-      destAmount: optimalRate.destAmount,
-      exchange: poolAddress,
+      destAmount: '1',
+      exchange: exchange,
     };
   }
 
