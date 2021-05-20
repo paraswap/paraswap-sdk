@@ -84,7 +84,7 @@ export type CurveDexData = DEXData & {
   underlyingSwap: boolean;
 };
 
-export type OneInchData = DEXData & { poolAddress: string };
+export type OneInchData = DEXData & { exchange: string };
 
 export type NerveDexData = DEXData & {
   minConversionRate: string;

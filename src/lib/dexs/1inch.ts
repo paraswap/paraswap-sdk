@@ -15,7 +15,6 @@ export class OneInch extends Adapter {
   }
 
   static getDexData(optimalRate: OptimalRate, name: string): OneInchData {
-    console.log('1inch: In getDexData!!!!!!', optimalRate);
     const {
       data: { poolAddress },
     } = optimalRate;
@@ -23,24 +22,29 @@ export class OneInch extends Adapter {
       name,
       srcAmount: optimalRate.srcAmount,
       destAmount: optimalRate.destAmount,
-      poolAddress,
+      exchange: poolAddress,
     };
   }
 
   private _swap(srcToken: Address, destToken: Address, data: OneInchData) {
-    console.log('1inch: In _swap!!!!! ', data);
-    const { poolAddress } = data;
+    const { exchange } = data;
 
     const oneInchContract = new this.web3Provider.eth.Contract(
       ONE_INCH_ABI,
-      poolAddress,
+      exchange,
     );
 
     const swapData = oneInchContract.methods
-      .swap(srcToken, destToken, data.srcAmount, data.destAmount, NULL_ADDRESS)
+      .swap(
+        this.isETHAddress(srcToken) ? NULL_ADDRESS : srcToken,
+        this.isETHAddress(destToken) ? NULL_ADDRESS : destToken,
+        data.srcAmount,
+        data.destAmount,
+        NULL_ADDRESS,
+      )
       .encodeABI();
 
-    return super.swap(srcToken, destToken, data, swapData, poolAddress);
+    return super.swap(srcToken, destToken, data, swapData, exchange);
   }
 
   async buildSwap(
@@ -48,7 +52,6 @@ export class OneInch extends Adapter {
     destToken: Address,
     data: OneInchData,
   ): Promise<DexParams> {
-    console.log('1inch: In buildSwap', data);
     return this._swap(srcToken, destToken, data);
   }
 }

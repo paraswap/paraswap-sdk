@@ -65,7 +65,6 @@ export default class Adapter {
     swapData: string,
     swapExchange: Address,
   ): Promise<DexParams> {
-    console.log('1inch: in swap, ', data, 'swap exhange -> ', swapExchange);
     const approveCallData = await this.getApproveCallData(
       srcToken,
       data.srcAmount,
