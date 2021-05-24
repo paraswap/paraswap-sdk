@@ -1,3 +1,4 @@
+import { OneInch } from './1inch';
 import Adapter from './adapter';
 
 import { UniswapV2 } from './uniswap-v2';
@@ -62,6 +63,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   uniswapv3: UniswapV3,
   smoothy: Smoothy,
   omm1: OneBit,
+  oneinchlp: OneInch,
 };
 
 export function getDEX(dex: string): typeof Adapter {
