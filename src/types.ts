@@ -143,6 +143,8 @@ type OptimalRates = {
   toUSD?: NumberAsString;
   side: SwapSide;
   spender?: Address;
+  maxImpact?: number;
+  maxUSDImpact?: number;
   details?: {
     routes?: string[];
     tokenFrom: string;

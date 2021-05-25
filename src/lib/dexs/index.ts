@@ -1,3 +1,4 @@
+import { OneInch } from './1inch';
 import Adapter from './adapter';
 
 import { UniswapV2 } from './uniswap-v2';
@@ -16,6 +17,8 @@ import { DODO } from './dodo';
 import { DODOV2 } from './dodov2';
 import { Nerve } from './nerve';
 import { UniswapV3 } from './uniswap-v3';
+import { Smoothy } from './smoothy';
+import { OneBit } from './onebit';
 
 export const DEXS: { [dex: string]: typeof Adapter } = {
   uniswap: UniswapV1,
@@ -30,6 +33,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   streetswap: UniswapV2,
   bakeryswap: UniswapV2,
   quickswap: UniswapV2,
+  pantherswap: UniswapV2,
   cometh: UniswapV2,
   dfyn: UniswapV2,
   kyber: Kyber,
@@ -57,6 +61,9 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   nerve: Nerve,
   saddle: Nerve,
   uniswapv3: UniswapV3,
+  smoothy: Smoothy,
+  omm1: OneBit,
+  oneinchlp: OneInch,
 };
 
 export function getDEX(dex: string): typeof Adapter {

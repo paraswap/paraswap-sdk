@@ -84,12 +84,20 @@ export type CurveDexData = DEXData & {
   underlyingSwap: boolean;
 };
 
+export type OneInchData = DEXData & { exchange: string };
+
 export type NerveDexData = DEXData & {
   minConversionRate: string;
   exchange: string;
   i: number;
   j: number;
   deadline: number;
+};
+
+export type SmoothyDexData = DEXData & {
+  i: number;
+  j: number;
+  exchange: string;
 };
 
 export type DODODexData = DEXData & {

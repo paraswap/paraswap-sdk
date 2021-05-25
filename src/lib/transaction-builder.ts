@@ -51,6 +51,7 @@ const UNISWAPV2_FORKS = [
   'quickswap',
   'cometh',
   'dfyn',
+  'pantherswap',
 ];
 const UNISWAPV2_ALIAS = ['uniswapv2', 'pancakeswap', 'quickswap'];
 

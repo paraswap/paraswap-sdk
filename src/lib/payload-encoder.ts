@@ -278,6 +278,7 @@ export class PayloadEncoder {
       case 'cometh':
       case 'uniswapv3':
       case 'dfyn':
+      case 'pantherswap':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
@@ -311,6 +312,7 @@ export class PayloadEncoder {
       'ellipsis',
       'nerve',
       'saddle',
+      'oneinchlp',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -601,7 +603,8 @@ export class PayloadEncoder {
       case 'streetswap':
       case 'quickswap':
       case 'cometh':
-      case 'dfyn': {
+      case 'dfyn':
+      case 'pantherswap': {
         const _path =
           this.augustusVersion === AugustusVersion.v2
             ? data.path
@@ -691,6 +694,26 @@ export class PayloadEncoder {
           );
         } catch (e) {
           console.error('uniswapv3 Error', e);
+          return '0x';
+        }
+      }
+      case 'smoothy': {
+        try {
+          const { i, j } = data;
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                i: 'uint256',
+                j: 'uint256',
+              },
+            },
+            {
+              i,
+              j,
+            },
+          );
+        } catch (e) {
+          console.error('smoothy Error', e);
           return '0x';
         }
       }
