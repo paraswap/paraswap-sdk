@@ -431,8 +431,7 @@ export class TransactionBuilder {
 
     if (
       !(
-        this.checkSimpleSwapAmounts(exchangeData, srcAmount) &&
-        this.checkSimpleSwapAmounts(exchangeData, value)
+        this.checkSimpleSwapAmounts(exchangeData, srcAmount)
       )
     ) {
       throw new Error('Param Mismatch');
