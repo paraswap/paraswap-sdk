@@ -434,7 +434,7 @@ export class TransactionBuilder {
         this.checkSimpleSwapAmounts(exchangeData, srcAmount)
       )
     ) {
-      throw new Error('Param Mismatch');
+      throw new Error('srcAmount Mismatch');
     }
 
     return {
