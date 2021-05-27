@@ -359,6 +359,15 @@ export class TransactionBuilder {
     };
   };
 
+  checkSimpleSwapAmounts(exchangeData: DEXData[], srcAmount: PriceString) {
+    const sum = exchangeData.reduce((acc: PriceString, data: DEXData) => {
+      acc = new BigNumber(acc).plus(data.srcAmount).toFixed();
+      return acc;
+    }, '0');
+
+    return new BigNumber(sum).isEqualTo(srcAmount);
+  }
+
   getSimpleSwapTx = async (
     srcToken: Token,
     destToken: Token,
@@ -419,6 +428,16 @@ export class TransactionBuilder {
       this.augustusContract,
     );
     const value = this.getSimpleSwapValue(values);
+
+    if (
+      !(
+        this.checkSimpleSwapAmounts(exchangeData, srcAmount) &&
+        this.checkSimpleSwapAmounts(exchangeData, value)
+      )
+    ) {
+      throw new Error('Param Mismatch');
+    }
+
     return {
       method,
       value,
