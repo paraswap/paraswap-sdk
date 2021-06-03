@@ -7,6 +7,7 @@ import { Kyber } from './kyber';
 import { Bancor } from './bancor';
 import { Zerox } from './zerox';
 import { Curve } from './curve';
+import { CurveV2 } from './curve-v2';
 import { Aave } from './aave';
 import { Compound } from './compound';
 import { Weth } from './weth';
@@ -43,6 +44,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   zerox: Zerox,
   curve: Curve,
   curve3: Curve,
+  curvev2: CurveV2,
   swerve: Curve,
   acryptos: Curve,
   ellipsis: Curve,

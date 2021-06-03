@@ -309,6 +309,7 @@ export class PayloadEncoder {
       'acryptos',
       'beltfi',
       'curve',
+      'curvev2',
       'ellipsis',
       'nerve',
       'saddle',
@@ -629,6 +630,24 @@ export class PayloadEncoder {
           { path: _path },
         );
       }
+      case 'curvev2':
+        try {
+          const { i, j, underlyingSwap } = data;
+
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                i: 'uint256',
+                j: 'uint256',
+                underlyingSwap: 'bool',
+              },
+            },
+            { i, j, underlyingSwap },
+          );
+        } catch (e) {
+          console.error('Curve Error', e);
+          return '0x';
+        }
       case 'curve3':
       case 'swerve':
       case 'curve':
