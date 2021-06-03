@@ -4,19 +4,9 @@
 
 ---
 
-You can use this SDK in order to swap or pay using ERC-20 tokens.
-
-We've built an example dApp that can found here https://github.com/paraswap/demo-dapp
-
-You can also check a live example at: https://paraswap-sdk.netlify.com
-
-<img src="https://paraswap-achirecture.netlify.com/sdk-example.gif" width="400px" >
-
----
-
 ### API docs are available here :
 
-https://paraswapv2.docs.apiary.io
+https://developers.paraswap.network
 
 ### To use ParaSwap SDK :
 
