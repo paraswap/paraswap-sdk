@@ -240,6 +240,18 @@
   {
     "stateMutability": "payable",
     "type": "function",
+    "name": "exchange_underlying",
+    "inputs": [
+      { "name": "i", "type": "uint256" },
+      { "name": "j", "type": "uint256" },
+      { "name": "dx", "type": "uint256" },
+      { "name": "min_dy", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "payable",
+    "type": "function",
     "name": "exchange",
     "inputs": [
       { "name": "i", "type": "uint256" },

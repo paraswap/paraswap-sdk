@@ -32,13 +32,9 @@ export class CurveV2 extends Adapter {
       CURVE_ABI,
       exchange,
     );
-    const defaultArgs = [
-      i,
-      j,
-      data.srcAmount,
-      data.minConversionRate,
-      this.isETHAddress(srcToken),
-    ];
+    let defaultArgs: any[] = [i, j, data.srcAmount, data.minConversionRate];
+    // Only non underlyingSwaps in mainnet have an option to directly deposit ETH
+    if (!underlyingSwap && this.isETHAddress(srcToken)) defaultArgs.push(true);
     const swapMethod = underlyingSwap
       ? curveContract.methods.exchange_underlying
       : curveContract.methods.exchange;
