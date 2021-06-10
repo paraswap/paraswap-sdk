@@ -59,21 +59,20 @@ export class CurveV2 extends Adapter {
     destToken: Address,
     data: CurveDexData,
   ): Promise<DexParams> {
-    const approveCallData = await this.getApproveCallData(
+    const tokenToTokenSwapParams = await this.tokenToTokenSwap(
       srcToken,
-      data.srcAmount,
-      data.exchange,
+      destToken,
+      data,
     );
-    const swapCallData = this.getCallData(srcToken, destToken, data);
     const wethToken = Weth.getAddress(this.network);
     const withdrawWethData = this.augustus.methods
       .withdrawAllWETH(wethToken)
       .encodeABI();
 
     return {
-      callees: [approveCallData!.callee, data.exchange, this.augustus._address],
-      calldata: [approveCallData!.calldata, swapCallData, withdrawWethData],
-      values: [approveCallData!.value, '0', '0'],
+      callees: [...tokenToTokenSwapParams.callees, this.augustus._address],
+      calldata: [...tokenToTokenSwapParams.calldata, withdrawWethData],
+      values: [...tokenToTokenSwapParams.values, '0'],
     };
   }
 
@@ -88,10 +87,18 @@ export class CurveV2 extends Adapter {
       data.exchange,
     );
     const swapCallData = this.getCallData(srcToken, destToken, data);
-    return {
-      callees: [approveCallData!.callee, data.exchange],
-      calldata: [approveCallData!.calldata, swapCallData],
-      values: [approveCallData!.value, '0'],
-    };
+    if (approveCallData) {
+      return {
+        callees: [approveCallData!.callee, data.exchange],
+        calldata: [approveCallData!.calldata, swapCallData],
+        values: [approveCallData!.value, '0'],
+      };
+    } else {
+      return {
+        callees: [data.exchange],
+        calldata: [swapCallData],
+        values: ['0'],
+      };
+    }
   }
 }
