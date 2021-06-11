@@ -1,5 +1,6 @@
 const web3Coder = require('web3-eth-abi');
 import BigNumber from 'bignumber.js';
+import { utils } from 'ethers';
 import Web3 from 'web3';
 import _ = require('lodash');
 
@@ -715,6 +716,24 @@ export class PayloadEncoder {
           );
         } catch (e) {
           console.error('smoothy Error', e);
+          return '0x';
+        }
+      }
+      case 'mstable': {
+        try {
+          const { opType } = data;
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                opType: 'bytes',
+              },
+            },
+            {
+              opType: Web3.utils.asciiToHex(opType),
+            },
+          );
+        } catch (e) {
+          console.error('mstable Error', e);
           return '0x';
         }
       }
