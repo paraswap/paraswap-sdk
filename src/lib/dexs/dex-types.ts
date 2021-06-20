@@ -1,3 +1,5 @@
+import { Contract } from 'web3-eth-contract';
+
 import { Address, NumberAsString } from '../../types';
 
 export type DexParams = {
@@ -25,6 +27,10 @@ export type UniswapV1DEXData = DEXData & {
   factory?: string;
   deadline: number;
   minEthBought: string;
+};
+
+export type OMM1EXData = DEXData & {
+  exchange: Address;
 };
 
 export type UniswapV2DEXData = DEXData & {

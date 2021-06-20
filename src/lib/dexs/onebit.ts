@@ -1,45 +1,34 @@
 import Adapter from './adapter';
 import { Address, OptimalRate } from '../../types';
-import { Contract } from 'web3-eth-contract';
-import { DexParams, DEXData } from './dex-types';
+import { DexParams, OMM1EXData } from './dex-types';
 import { Weth } from './weth';
 
 import ONEBITP_ABI = require('../../abi/onebit.abi.json');
 import ERC20_ABI = require('../../abi/erc20.json');
 
-const ONEBIT_ADDRESSES: { [networkid: number]: Address } = {
-  1: '0x39D085e13D7876ca3311f0aFFB42778799d24F09',
-};
-
 export class OneBit extends Adapter {
-  router: Contract;
-  swapRouterAddress: Address;
+  static getDexData(optimalRate: OptimalRate, name: string): OMM1EXData {
+    const exchange = optimalRate.data.router;
 
-  constructor(
-    protected network: number,
-    protected web3Provider: any,
-    protected augustus?: any,
-  ) {
-    super(network, web3Provider, augustus);
-    this.swapRouterAddress = ONEBIT_ADDRESSES[this.network];
-    this.router = new this.web3Provider.eth.Contract(
-      ONEBITP_ABI,
-      this.swapRouterAddress,
-    );
-  }
-
-  static getDexData(optimalRate: OptimalRate, name: string): DEXData {
     return {
       name,
       srcAmount: optimalRate.srcAmount,
       destAmount: '1',
+      exchange,
     };
+  }
+
+  getRouter(data: OMM1EXData) {
+    return new this.web3Provider.eth.Contract(
+      ONEBITP_ABI,
+      data.exchange,
+    );
   }
 
   protected async ethToTokenSwap(
     srcToken: Address,
     destToken: Address,
-    data: DEXData,
+    data: OMM1EXData,
   ): Promise<DexParams> {
     const wethToken = Weth.getAddress(this.network);
     const wethContract = new this.web3Provider.eth.Contract(
@@ -64,7 +53,7 @@ export class OneBit extends Adapter {
   protected async tokenToEthSwap(
     srcToken: Address,
     destToken: Address,
-    data: DEXData,
+    data: OMM1EXData,
   ): Promise<DexParams> {
     const wethToken = Weth.getAddress(this.network);
     const wethToTokenData = await this.getTokenToTokenSwapData(
@@ -86,7 +75,7 @@ export class OneBit extends Adapter {
   protected async tokenToTokenSwap(
     srcToken: Address,
     destToken: Address,
-    data: DEXData,
+    data: OMM1EXData,
   ): Promise<DexParams> {
     const swapData = await this.getTokenToTokenSwapData(
       srcToken,
@@ -104,19 +93,19 @@ export class OneBit extends Adapter {
   private async getTokenToTokenSwapData(
     srcToken: Address,
     destToken: Address,
-    data: DEXData,
+    data: OMM1EXData,
   ) {
     const approveCallData = await this.getApproveCallData(
       srcToken,
       data.srcAmount,
-      this.swapRouterAddress,
+      data.exchange,
     );
 
     const assetSwapperData = this.buildSwapData(srcToken, destToken, data);
 
     const callees = approveCallData
-      ? [this.augustus._address, this.swapRouterAddress]
-      : [this.swapRouterAddress];
+      ? [this.augustus._address, data.exchange]
+      : [data.exchange];
 
     const calldata = approveCallData
       ? [approveCallData.calldata, assetSwapperData]
@@ -133,8 +122,8 @@ export class OneBit extends Adapter {
     };
   }
 
-  private buildSwapData(srcToken: Address, destToken: Address, data: DEXData) {
-    return this.router.methods
+  private buildSwapData(srcToken: Address, destToken: Address, data: OMM1EXData) {
+    return this.getRouter(data).methods
       .swapTokensWithTrust(
         srcToken,
         destToken,
