@@ -8,20 +8,20 @@ import ERC20_ABI = require('../../abi/erc20.json');
 
 export class OneBit extends Adapter {
   static getDexData(optimalRate: OptimalRate, name: string): OMM1EXData {
-    const swapRouterAddress = optimalRate.data.router;
+    const exchange = optimalRate.data.router;
 
     return {
       name,
       srcAmount: optimalRate.srcAmount,
       destAmount: '1',
-      swapRouterAddress,
+      exchange,
     };
   }
 
   getRouter(data: OMM1EXData) {
     return new this.web3Provider.eth.Contract(
       ONEBITP_ABI,
-      data.swapRouterAddress,
+      data.exchange,
     );
   }
 
@@ -98,14 +98,14 @@ export class OneBit extends Adapter {
     const approveCallData = await this.getApproveCallData(
       srcToken,
       data.srcAmount,
-      data.swapRouterAddress,
+      data.exchange,
     );
 
     const assetSwapperData = this.buildSwapData(srcToken, destToken, data);
 
     const callees = approveCallData
-      ? [this.augustus._address, data.swapRouterAddress]
-      : [data.swapRouterAddress];
+      ? [this.augustus._address, data.exchange]
+      : [data.exchange];
 
     const calldata = approveCallData
       ? [approveCallData.calldata, assetSwapperData]

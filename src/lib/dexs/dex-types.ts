@@ -30,8 +30,7 @@ export type UniswapV1DEXData = DEXData & {
 };
 
 export type OMM1EXData = DEXData & {
-  exchange?: Address;
-  swapRouterAddress: Address,
+  exchange: Address;
 };
 
 export type UniswapV2DEXData = DEXData & {
