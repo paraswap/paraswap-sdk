@@ -722,14 +722,21 @@ export class PayloadEncoder {
       case 'mstable': {
         try {
           const { opType } = data;
+          const type = ['swap', 'mint', 'redeem'].indexOf(opType);
+          if (type === undefined) {
+            throw new Error(
+              `mStable: Invalid OpType ${opType}, Should be one of ['mint', 'swap', 'redeem']`,
+            );
+          }
+
           return web3Coder.encodeParameter(
             {
               ParentStruct: {
-                opType: 'bytes',
+                opType: 'uint',
               },
             },
             {
-              opType: Web3.utils.asciiToHex(opType),
+              opType: type,
             },
           );
         } catch (e) {
