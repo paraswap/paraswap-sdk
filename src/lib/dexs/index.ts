@@ -1,5 +1,6 @@
 import { OneInch } from './1inch';
 import Adapter from './adapter';
+import { mStable } from './mStable';
 
 import { UniswapV2 } from './uniswap-v2';
 import { UniswapV1 } from './uniswap-v1';
@@ -66,6 +67,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   smoothy: Smoothy,
   omm1: OneBit,
   oneinchlp: OneInch,
+  mstable: mStable,
 };
 
 export function getDEX(dex: string): typeof Adapter {

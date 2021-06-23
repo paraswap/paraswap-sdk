@@ -1,5 +1,6 @@
 const web3Coder = require('web3-eth-abi');
 import BigNumber from 'bignumber.js';
+import { utils } from 'ethers';
 import Web3 from 'web3';
 import _ = require('lodash');
 
@@ -314,6 +315,7 @@ export class PayloadEncoder {
       'nerve',
       'saddle',
       'oneinchlp',
+      'mstable',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
@@ -733,6 +735,31 @@ export class PayloadEncoder {
           );
         } catch (e) {
           console.error('smoothy Error', e);
+          return '0x';
+        }
+      }
+      case 'mstable': {
+        try {
+          const { opType } = data;
+          const type = ['swap', 'mint', 'redeem'].indexOf(opType);
+          if (type === undefined) {
+            throw new Error(
+              `mStable: Invalid OpType ${opType}, Should be one of ['mint', 'swap', 'redeem']`,
+            );
+          }
+
+          return web3Coder.encodeParameter(
+            {
+              ParentStruct: {
+                opType: 'uint',
+              },
+            },
+            {
+              opType: type,
+            },
+          );
+        } catch (e) {
+          console.error('mstable Error', e);
           return '0x';
         }
       }

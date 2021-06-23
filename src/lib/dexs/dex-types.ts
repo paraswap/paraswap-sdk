@@ -92,6 +92,17 @@ export type CurveDexData = DEXData & {
 
 export type OneInchData = DEXData & { exchange: string };
 
+export type mStableData = DEXData & {
+  exchange: string;
+  opType: mStableOpTypes;
+  isAssetContract: boolean;
+};
+export enum mStableOpTypes {
+  Mint = 'mint',
+  Redeem = 'redeem',
+  Swap = 'swap',
+}
+
 export type NerveDexData = DEXData & {
   minConversionRate: string;
   exchange: string;
