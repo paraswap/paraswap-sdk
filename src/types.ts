@@ -297,6 +297,7 @@ type TransactionData = {
 
 type BuildOptions = {
   ignoreChecks?: boolean;
+  ignoreGasEstimate?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
