@@ -324,6 +324,10 @@ export class ParaSwap {
       augustusVersion,
     );
 
+    const ignoreGasCheck = !!(
+      options.ignoreChecks || options.ignoreGasEstimate
+    );
+
     return transaction.buildTransaction(
       srcToken,
       destToken,
@@ -335,7 +339,7 @@ export class ParaSwap {
       referrerIndex,
       gasPrice,
       receiver,
-      !!options.ignoreChecks,
+      ignoreGasCheck,
       augustusVersion,
       !!options.onlyParams,
       !!options.useReduxToken,
