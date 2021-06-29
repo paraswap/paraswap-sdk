@@ -607,6 +607,7 @@ export class PayloadEncoder {
       case 'quickswap':
       case 'cometh':
       case 'dfyn':
+      case 'mdex':
       case 'pantherswap': {
         const _path =
           this.augustusVersion === AugustusVersion.v2

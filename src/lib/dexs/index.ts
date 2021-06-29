@@ -68,6 +68,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   omm1: OneBit,
   oneinchlp: OneInch,
   mstable: mStable,
+  mdex: UniswapV2,
 };
 
 export function getDEX(dex: string): typeof Adapter {
