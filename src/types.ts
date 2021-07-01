@@ -34,6 +34,7 @@ type Allowance = {
 type APIError = {
   message: string;
   status?: number;
+  data?: any;
 };
 
 type Transaction = {
@@ -202,6 +203,8 @@ type RateOptions = {
   includeContractMethods?: ContractMethod[];
   adapterVersion?: string;
   referrer?: string;
+  maxImpact?: number;
+  maxUSDImpact?: number;
 };
 
 type TransactionRoute = {
