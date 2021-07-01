@@ -34,6 +34,7 @@ type Allowance = {
 type APIError = {
   message: string;
   status?: number;
+  data?: any;
 };
 
 type Transaction = {

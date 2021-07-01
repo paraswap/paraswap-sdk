@@ -58,7 +58,7 @@ export class ParaSwap {
   private handleAPIError(e: AxiosError): APIError {
     if (e.response) {
       const { data, status } = e.response!;
-      return { status, message: data.error };
+      return { status, message: data.error, data };
     }
     return new Error(e.message);
   }
