@@ -202,6 +202,8 @@ type RateOptions = {
   includeContractMethods?: ContractMethod[];
   adapterVersion?: string;
   referrer?: string;
+  maxImpact?: number;
+  maxUSDImpact?: number;
 };
 
 type TransactionRoute = {
