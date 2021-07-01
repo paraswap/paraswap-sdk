@@ -128,6 +128,8 @@ export class ParaSwap {
         adapterVersion,
         excludePools,
         referrer,
+        maxImpact,
+        maxUSDImpact,
       } = options || {};
 
       // TODO: all use typed enum for include/excludeDEXS
@@ -159,6 +161,8 @@ export class ParaSwap {
         includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
+        maxImpact,
+        maxUSDImpact,
       });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
@@ -196,6 +200,8 @@ export class ParaSwap {
         adapterVersion,
         excludePools,
         referrer,
+        maxImpact,
+        maxUSDImpact,
       } = options;
 
       // TODO: all use typed enum for include/excludeDEXS
@@ -223,6 +229,8 @@ export class ParaSwap {
         includeContractMethods: _includeContractMethods,
         fromDecimals: srcDecimals,
         toDecimals: destDecimals,
+        maxImpact,
+        maxUSDImpact,
       });
 
       const pricesURL = `${
