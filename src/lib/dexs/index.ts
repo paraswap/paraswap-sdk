@@ -36,6 +36,8 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   bakeryswap: UniswapV2,
   quickswap: UniswapV2,
   pantherswap: UniswapV2,
+  mdex: UniswapV2,
+  waultfinance: UniswapV2,
   cometh: UniswapV2,
   dfyn: UniswapV2,
   kyber: Kyber,
@@ -68,7 +70,6 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   omm1: OneBit,
   oneinchlp: OneInch,
   mstable: mStable,
-  mdex: UniswapV2,
 };
 
 export function getDEX(dex: string): typeof Adapter {

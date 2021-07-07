@@ -52,6 +52,7 @@ const UNISWAPV2_FORKS = [
   'cometh',
   'dfyn',
   'pantherswap',
+  'waultfinance',
 ];
 const UNISWAPV2_ALIAS = ['uniswapv2', 'pancakeswap', 'quickswap'];
 
@@ -429,11 +430,7 @@ export class TransactionBuilder {
     );
     const value = this.getSimpleSwapValue(values);
 
-    if (
-      !(
-        this.checkSimpleSwapAmounts(exchangeData, srcAmount)
-      )
-    ) {
+    if (!this.checkSimpleSwapAmounts(exchangeData, srcAmount)) {
       throw new Error('srcAmount Mismatch');
     }
 
