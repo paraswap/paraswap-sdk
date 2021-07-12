@@ -283,6 +283,7 @@ export class PayloadEncoder {
       case 'mdex':
       case 'waultfinance':
       case 'shibaswap':
+      case 'sakeswap':
         return true;
       /*
        * 0x(v2/v3), 0xrfqt, paraswappool, paraswappool2, compound, aave, idle,
@@ -613,6 +614,7 @@ export class PayloadEncoder {
       case 'mdex':
       case 'waultfinance':
       case 'shibaswap':
+      case 'sakeswap':
       case 'pantherswap': {
         const _path =
           this.augustusVersion === AugustusVersion.v2
