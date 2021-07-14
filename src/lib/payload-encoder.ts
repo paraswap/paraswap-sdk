@@ -283,6 +283,7 @@ export class PayloadEncoder {
       case 'mdex':
       case 'waultfinance':
       case 'shibaswap':
+      case 'coinswap':
       case 'sakeswap':
         return true;
       /*
@@ -614,6 +615,7 @@ export class PayloadEncoder {
       case 'mdex':
       case 'waultfinance':
       case 'shibaswap':
+      case 'coinswap':
       case 'sakeswap':
       case 'pantherswap': {
         const _path =

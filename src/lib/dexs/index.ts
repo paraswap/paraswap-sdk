@@ -39,6 +39,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   mdex: UniswapV2,
   waultfinance: UniswapV2,
   shibaswap: UniswapV2,
+  coinswap: UniswapV2,
   sakeswap: UniswapV2,
   cometh: UniswapV2,
   dfyn: UniswapV2,
