@@ -55,6 +55,7 @@ const UNISWAPV2_FORKS = [
   'waultfinance',
   'shibaswap',
   'coinswap',
+  'sakeswap',
 ];
 const UNISWAPV2_ALIAS = ['uniswapv2', 'pancakeswap', 'quickswap'];
 
