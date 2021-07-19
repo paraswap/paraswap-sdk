@@ -69,6 +69,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   dodov2: DODOV2,
   nerve: Nerve,
   saddle: Nerve,
+  ironv2: Nerve,
   uniswapv3: UniswapV3,
   smoothy: Smoothy,
   omm1: OneBit,

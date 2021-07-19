@@ -320,6 +320,7 @@ export class PayloadEncoder {
       'ellipsis',
       'nerve',
       'saddle',
+      'ironv2',
       'oneinchlp',
       'mstable',
     ];
@@ -689,6 +690,7 @@ export class PayloadEncoder {
         }
       }
       case 'saddle':
+      case 'ironv2':
       case 'nerve': {
         try {
           const { i, j, deadline } = data;
