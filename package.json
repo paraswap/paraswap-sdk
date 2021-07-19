@@ -7,7 +7,10 @@
     "build": "tsc",
     "test": "jest",
     "prepare": "npm run build",
-    "typegen": "typechain --target ethers-v5 --outDir ./src/abi/types \"./src/abi/*.json\""
+    "typegen": "typechain --target ethers-v5 --outDir ./src/abi/types \"./src/abi/*.json\"",
+    "bump:patch": "npm version patch && git push --tags && npm publish",
+    "bump:minor": "npm version minor && git push --tags && npm publish",
+    "bump:major": "npm version major && git push --tags && npm publish"
   },
   "husky": {
     "hooks": {
