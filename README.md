@@ -13,7 +13,7 @@ https://developers.paraswap.network
 Install the lib using npm or yarn
 
 ```bash
-yarn install paraswap
+yarn add paraswap
 ```
 
 ##### Then on a Javascript file:
