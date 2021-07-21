@@ -281,6 +281,7 @@ export class PayloadEncoder {
       case 'dfyn':
       case 'pantherswap':
       case 'mdex':
+      case 'biswap':
       case 'waultfinance':
       case 'shibaswap':
       case 'coinswap':
@@ -615,6 +616,7 @@ export class PayloadEncoder {
       case 'cometh':
       case 'dfyn':
       case 'mdex':
+      case 'biswap':
       case 'waultfinance':
       case 'shibaswap':
       case 'coinswap':
