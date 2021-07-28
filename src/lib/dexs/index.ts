@@ -1,7 +1,8 @@
-import { OneInch } from './1inch';
 import Adapter from './adapter';
-import { mStable } from './mStable';
 
+import { OneInch } from './1inch';
+import { BProtocol } from './bProtocol';
+import { mStable } from './mStable';
 import { UniswapV2 } from './uniswap-v2';
 import { UniswapV1 } from './uniswap-v1';
 import { Kyber } from './kyber';
@@ -76,6 +77,7 @@ export const DEXS: { [dex: string]: typeof Adapter } = {
   omm1: OneBit,
   oneinchlp: OneInch,
   mstable: mStable,
+  bprotocol: BProtocol,
 };
 
 export function getDEX(dex: string): typeof Adapter {
