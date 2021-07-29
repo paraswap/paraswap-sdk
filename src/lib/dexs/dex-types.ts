@@ -92,6 +92,8 @@ export type CurveDexData = DEXData & {
 
 export type OneInchData = DEXData & { exchange: string };
 
+export type BProtocolData = DEXData & { exchange: string };
+
 export type mStableData = DEXData & {
   exchange: string;
   opType: mStableOpTypes;

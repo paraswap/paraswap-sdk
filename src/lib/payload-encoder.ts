@@ -324,6 +324,7 @@ export class PayloadEncoder {
       'ironv2',
       'oneinchlp',
       'mstable',
+      'bprotocol',
     ];
     if (
       exchangeName.toLowerCase().match(/^curve(.*)/) ||
