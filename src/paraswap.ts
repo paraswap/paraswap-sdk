@@ -23,12 +23,7 @@ import ERC20_ABI = require('./abi/erc20.json');
 import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 
 import { Token } from './lib/token';
-import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
-import {
-  SwapSide,
-  latestAugustusVersion,
-  AdapterAugustusVersionMap,
-} from './constants';
+import { SwapSide } from './constants';
 
 const API_URL = 'https://apiv4.paraswap.io/v2';
 
@@ -293,65 +288,6 @@ export class ParaSwap {
     } catch (e) {
       return this.handleAPIError(e);
     }
-  }
-
-  //Warning: ParaSwapPool is not supported when building locally
-  async buildTxLocally(
-    srcToken: Token,
-    destToken: Token,
-    srcAmount: string,
-    destAmount: string,
-    priceRoute: OptimalRatesWithPartnerFees,
-    userAddress: string,
-    referrer: string,
-    referrerIndex: number,
-    gasPrice: string,
-    receiver: string = NULL_ADDRESS,
-    options: BuildOptions = {},
-  ) {
-    // TODO: fix me for multiple adapter version!
-    if (!this.adapters) {
-      await this.getAdapters();
-    }
-
-    if (!this.tokens.length) {
-      await this.getTokens();
-    }
-
-    const augustusVersion =
-      (priceRoute.adapterVersion &&
-        AdapterAugustusVersionMap[priceRoute.adapterVersion]) ||
-      latestAugustusVersion;
-
-    // Todo: can be a member
-    const transaction = new TransactionBuilder(
-      this.network,
-      this.web3Provider!,
-      this.adapters!,
-      this.tokens,
-      augustusVersion,
-    );
-
-    const ignoreGasCheck = !!(
-      options.ignoreChecks || options.ignoreGasEstimate
-    );
-
-    return transaction.buildTransaction(
-      srcToken,
-      destToken,
-      srcAmount,
-      destAmount,
-      priceRoute,
-      userAddress,
-      referrer,
-      referrerIndex,
-      gasPrice,
-      receiver,
-      ignoreGasCheck,
-      augustusVersion,
-      !!options.onlyParams,
-      !!options.useReduxToken,
-    );
   }
 
   async getSpender(_provider?: any): Promise<Address | APIError> {

@@ -25,8 +25,6 @@ export {
   BuildOptions,
 } from './types';
 
-export { getDEX, DEXS } from './lib/dexs';
-
 export { Token } from './lib/token';
 
 export { ParaSwap } from './paraswap';
