@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import qs from 'qs';
 import * as _ from 'lodash';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { ParaSwap, OptimalRates, Token, APIError, Transaction } from '../src';
 import BigNumber from 'bignumber.js';
 import {
@@ -16,8 +16,7 @@ import {
   Address,
   BuildOptions,
 } from '../src/types';
-import { NULL_ADDRESS } from '../src/lib/transaction-builder';
-import { SwapSide } from '../src/constants';
+import { SwapSide } from '../src';
 import { assert } from 'ts-essentials';
 const erc20abi = require('../src/abi/erc20.json');
 
@@ -214,41 +213,6 @@ describe('ParaSwap SDK', () => {
     expect(adapters.uniswap.targetExchange).toBeDefined();
     expect(adapters.kyber.exchange).toBeDefined();
     expect(adapters.kyber.targetExchange).toBeDefined();
-  });
-
-  test('Build_Tx_Locally', async () => {
-    const srcToken = new Token(ETH, 18, 'DAI');
-    const destToken = new Token(DAI, 18, 'KNC');
-
-    assert(srcToken.symbol, 'token should have a symbol');
-    assert(destToken.symbol, 'token should have a symbol');
-
-    const ratesOrError = await paraSwap.getRate(
-      srcToken.symbol,
-      destToken.symbol,
-      srcAmount,
-      SwapSide.SELL,
-      { includeDEXS: 'Kyber' },
-    );
-    const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
-
-    const destAmount = priceRoute.destAmount;
-
-    const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
-
-    const transaction = await paraSwap.buildTxLocally(
-      srcToken,
-      destToken,
-      srcAmount,
-      destAmount,
-      priceRoute,
-      senderAddress,
-      referrer,
-      undefined,
-      gasPrice,
-      receiver,
-    );
-    expect(typeof transaction).toBe('object');
   });
 
   test('Build_Tx', async () => {

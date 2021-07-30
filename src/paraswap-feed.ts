@@ -5,7 +5,6 @@ import {
   Address,
   APIError,
   OnChainOptimalRates,
-  OptimalRates,
   PriceString,
   Rate,
 } from './types';

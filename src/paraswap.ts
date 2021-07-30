@@ -41,6 +41,24 @@ export class ParaSwap {
     }
   }
 
+  private handleAPIError(e: AxiosError): APIError {
+    if (e.response) {
+      const { data, status } = e.response!;
+      return { status, message: data.error, data };
+    }
+    return new Error(e.message);
+  }
+
+  private checkDexList(dexs?: string) {
+    if (dexs) {
+      const targetDEXs = dexs.split(',');
+
+      if (!targetDEXs.length) {
+        throw new Error('Invalid DEX list');
+      }
+    }
+  }
+
   setWeb3Provider(web3Provider: any) {
     if (!web3Provider.eth) {
       this.web3Provider = new Web3(web3Provider);
@@ -48,14 +66,6 @@ export class ParaSwap {
       this.web3Provider = web3Provider;
     }
     return this;
-  }
-
-  private handleAPIError(e: AxiosError): APIError {
-    if (e.response) {
-      const { data, status } = e.response!;
-      return { status, message: data.error, data };
-    }
-    return new Error(e.message);
   }
 
   async getTokens() {
@@ -92,16 +102,6 @@ export class ParaSwap {
       return this.adapters;
     } catch (e) {
       return this.handleAPIError(e);
-    }
-  }
-
-  private checkDexList(dexs?: string) {
-    if (dexs) {
-      const targetDEXs = dexs.split(',');
-
-      if (!targetDEXs.length) {
-        throw new Error('Invalid DEX list');
-      }
     }
   }
 
