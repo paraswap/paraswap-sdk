@@ -17,7 +17,6 @@ import {
   BuildOptions,
 } from '../src/types';
 import { SwapSide } from '../src';
-import { assert } from 'ts-essentials';
 const erc20abi = require('../src/abi/erc20.json');
 
 dotenv.config();

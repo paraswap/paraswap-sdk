@@ -207,104 +207,12 @@ type RateOptions = {
   maxUSDImpact?: number;
 };
 
-type TransactionRoute = {
-  exchange: Address;
-  targetExchange: Address | undefined;
-  payload: string;
-  networkFee: NumberAsString;
-};
-
-type TransactionSellRoute = Merge<
-  TransactionRoute,
-  { percent: NumberAsString }
->;
-
-type TransactionPath<T extends TransactionRoute> = {
-  to: Address;
-  totalNetworkFee: NumberAsString;
-  routes: T[];
-};
-
-type TransactionBuyRoute = Merge<
-  TransactionRoute,
-  {
-    fromAmount: PriceString;
-    toAmount: PriceString;
-  }
->;
-
-type TransactionMegaPath<T extends TransactionRoute> = {
-  fromAmountPercent: NumberAsString;
-  path: TransactionPath<T>[];
-};
-
-type TransactionBuyParams = {
-  value: PriceString;
-  fromToken: Address | undefined;
-  toToken: Address | undefined;
-  fromAmount: PriceString;
-  toAmount: PriceString;
-  expectedAmount: PriceString;
-  route: TransactionBuyRoute[];
-  beneficiary: Address;
-  referrer: string;
-};
-
-type LegacyTransactionSellParams = {
-  fromToken: Address;
-  toToken: Address;
-  fromAmount: PriceString;
-  toAmount: PriceString;
-  expectedAmount: PriceString;
-  path: TransactionPath<TransactionSellRoute>[];
-  mintPrice: string;
-  beneficiary: Address;
-  donationBasisPoints: string;
-  referrer: string;
-};
-
-type TransactionSellParams = {
-  fromToken: Address;
-  toToken: Address;
-  fromAmount: PriceString;
-  toAmount: PriceString;
-  expectedAmount: PriceString;
-  path: TransactionPath<TransactionSellRoute>[];
-  beneficiary: Address;
-  referrer: string;
-};
-
-type SimpleSwapTransactionParams = {
-  fromToken: Address;
-  toToken: Address;
-  fromAmount: string;
-  toAmount: string;
-  expectedAmount: string;
-  callees: string[];
-  exchangeData: string;
-  startIndexes: number[];
-  values: string[];
-  beneficiary: Address;
-  referrer: string;
-};
-
-type TransactionData = {
-  from: Address;
-  to: Address;
-  data: string;
-  chainId: number;
-  value: PriceString;
-  gasPrice?: PriceString;
-  gas?: NumberAsString;
-};
-
 type BuildOptions = {
   ignoreChecks?: boolean;
   ignoreGasEstimate?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
   gasPrice?: PriceString;
-  useReduxToken?: boolean;
 };
 
 export {
@@ -325,7 +233,6 @@ export {
   Rate,
   OthersRate,
   OnChainOptimalRates,
-  LegacyTransactionSellParams,
   SimpleComputedRate,
   SimpleComputedRateWithFeeSell,
   SimpleComputedRateWithFeeBuy,
@@ -341,14 +248,5 @@ export {
   OptimalRoute,
   User,
   RateOptions,
-  TransactionRoute,
-  TransactionPath,
-  TransactionMegaPath,
-  TransactionSellRoute,
-  TransactionBuyRoute,
-  TransactionBuyParams,
-  TransactionSellParams,
-  SimpleSwapTransactionParams,
-  TransactionData,
   BuildOptions,
 };
