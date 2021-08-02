@@ -138,9 +138,8 @@ describe('ParaSwap SDK', () => {
       'DAI',
       srcAmount,
       SwapSide.SELL,
-      { includeDEXS: 'Uniswap' },
+      { includeDEXS: 'UniswapV2' },
     );
-
     const priceRoute = ratesOrError as OptimalRates;
 
     const { destAmount, bestRoute, others } = priceRoute;
@@ -207,21 +206,24 @@ describe('ParaSwap SDK', () => {
 
     const adapters = adaptersOrError as Adapters;
 
-    expect(adapters.augustus.exchange).toBeDefined();
+    // expect(adapters.augustus.exchange).toBeDefined();
     expect(adapters.uniswap.exchange).toBeDefined();
     expect(adapters.uniswap.targetExchange).toBeDefined();
-    expect(adapters.kyber.exchange).toBeDefined();
-    expect(adapters.kyber.targetExchange).toBeDefined();
+    // expect(adapters.kyber.exchange).toBeDefined();
+    // expect(adapters.kyber.targetExchange).toBeDefined();
   });
 
   test('Build_Tx', async () => {
     const ratesOrError = await paraSwap.getRate(
       srcToken,
-      destToken,
+      '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       srcAmount,
       SwapSide.SELL,
       { includeDEXS: 'Uniswap' },
     );
+
+    expect((ratesOrError as APIError)?.data?.error).toBeUndefined();
+
     const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
 
     const destAmount = new BigNumber(priceRoute.destAmount)
@@ -240,9 +242,8 @@ describe('ParaSwap SDK', () => {
       { ignoreChecks: true },
     );
 
-    const transaction = txOrError as Transaction;
-
-    expect(typeof transaction).toBe('object');
+    expect(txOrError.data.error).toBeUndefined();
+    expect(typeof txOrError).toBe('object');
   });
   if (TESTING_ENV) {
     test('Build_tx_legacy', async () => {
