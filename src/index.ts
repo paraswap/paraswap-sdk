@@ -29,6 +29,4 @@ export { Token } from './lib/token';
 
 export { ParaSwap } from './paraswap';
 
-export { ParaswapFeed } from './paraswap-feed';
-
 export * from './constants';
