@@ -15,8 +15,10 @@ import {
   PriceString,
   RateOptions,
   Transaction,
-  OptimalRatesWithPartnerFees,
+  // OptimalRatesWithPartnerFees,
 } from './types';
+
+import { OptimalRate } from 'paraswap-core';
 
 import ERC20_ABI = require('./abi/erc20.json');
 
@@ -108,11 +110,12 @@ export class ParaSwap {
   async getRateByRoute(
     route: AddressOrSymbol[],
     amount: PriceString,
-    side: SwapSide,
+    userAddress: Address,
+    side: SwapSide = SwapSide.SELL,
     options?: RateOptions,
     srcDecimals?: number,
     destDecimals?: number,
-  ): Promise<OptimalRatesWithPartnerFees | APIError> {
+  ): Promise<OptimalRate | APIError> {
     try {
       const {
         excludeDEXS,
@@ -158,6 +161,7 @@ export class ParaSwap {
         toDecimals: destDecimals,
         maxImpact,
         maxUSDImpact,
+        userAddress,
       });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
@@ -180,11 +184,12 @@ export class ParaSwap {
     srcToken: AddressOrSymbol,
     destToken: AddressOrSymbol,
     amount: PriceString,
+    userAddress: Address,
     side: SwapSide = SwapSide.SELL,
     options: RateOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
-  ): Promise<OptimalRatesWithPartnerFees | APIError> {
+  ): Promise<OptimalRate | APIError> {
     try {
       const {
         excludeDEXS,
@@ -226,6 +231,7 @@ export class ParaSwap {
         toDecimals: destDecimals,
         maxImpact,
         maxUSDImpact,
+        userAddress,
       });
 
       const pricesURL = `${
@@ -249,13 +255,15 @@ export class ParaSwap {
     destToken: Address,
     srcAmount: PriceString,
     destAmount: PriceString,
-    priceRoute: OptimalRatesWithPartnerFees,
+    priceRoute: OptimalRate,
     userAddress: Address,
     referrer: string,
     receiver?: Address,
     options: BuildOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
+    permit?: string,
+    deadline?: string,
   ) {
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
@@ -270,9 +278,11 @@ export class ParaSwap {
         destAmount,
         userAddress,
         referrer,
-        receiver: receiver || '',
+        receiver,
         srcDecimals,
         destDecimals,
+        permit,
+        deadline,
       };
 
       const config: AxiosRequestConfig = {};
