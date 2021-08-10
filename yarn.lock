@@ -4821,7 +4821,7 @@ p-try@^2.0.0:
 
 "paraswap-core@https://github.com/paraswap/paraswap-core#master":
   version "1.0.1"
-  resolved "https://github.com/paraswap/paraswap-core#21bf6a4a91aa1ffc8a54394761ce9a03302ea657"
+  resolved "https://github.com/paraswap/paraswap-core#e4f7e2da3f1b561d5358c2fdf6904eaaea5131a0"
 
 parent-module@^1.0.0:
   version "1.0.1"
