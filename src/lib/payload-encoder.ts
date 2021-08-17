@@ -673,7 +673,7 @@ export class PayloadEncoder {
       case 'beltfi':
       case 'ellipsis': {
         try {
-          const { i, j, deadline, underlyingSwap, v3 } = data;
+          const { i, j, deadline, underlyingSwap } = data;
 
           return web3Coder.encodeParameter(
             {
@@ -682,10 +682,9 @@ export class PayloadEncoder {
                 j: 'int128',
                 deadline: 'uint256',
                 underlyingSwap: 'bool',
-                v3: 'bool',
               },
             },
-            { i, j, deadline, underlyingSwap, v3 },
+            { i, j, deadline, underlyingSwap },
           );
         } catch (e) {
           console.error('Curve Error', e);
