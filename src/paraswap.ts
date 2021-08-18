@@ -125,7 +125,7 @@ export class ParaSwap {
         includeContractMethods,
         adapterVersion,
         excludePools,
-        referrer,
+        partner,
         maxImpact,
         maxUSDImpact,
       } = options || {};
@@ -157,8 +157,8 @@ export class ParaSwap {
         excludePricingMethods: _excludePricingMethods,
         excludeContractMethods: _excludeContractMethods,
         includeContractMethods: _includeContractMethods,
-        fromDecimals: srcDecimals,
-        toDecimals: destDecimals,
+        srcDecimals,
+        destDecimals,
         maxImpact,
         maxUSDImpact,
         userAddress,
@@ -166,13 +166,11 @@ export class ParaSwap {
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${amount}&${query}&side=${side}&network=${this.network}`;
+      )}&amount=${amount}&${query}&side=${side}&network=${
+        this.network
+      }&partner=${partner || 'paraswap.io'}`;
 
-      const { data } = await axios.get(pricesURL, {
-        headers: {
-          'X-Partner': referrer || 'paraswap.io',
-        },
-      });
+      const { data } = await axios.get(pricesURL);
 
       return data.priceRoute;
     } catch (e) {
@@ -199,7 +197,7 @@ export class ParaSwap {
         includeContractMethods,
         adapterVersion,
         excludePools,
-        referrer,
+        partner,
         maxImpact,
         maxUSDImpact,
       } = options;
@@ -227,8 +225,8 @@ export class ParaSwap {
         excludePricingMethods: _excludePricingMethods,
         excludeContractMethods: _excludeContractMethods,
         includeContractMethods: _includeContractMethods,
-        fromDecimals: srcDecimals,
-        toDecimals: destDecimals,
+        srcDecimals,
+        destDecimals,
         maxImpact,
         maxUSDImpact,
         userAddress,
@@ -236,14 +234,12 @@ export class ParaSwap {
 
       const pricesURL = `${
         this.apiURL
-      }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
+      }/prices/?srcToken=${srcToken}&destToken=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-      }&side=${side}&network=${this.network}`;
-      const { data } = await axios.get(pricesURL, {
-        headers: {
-          'X-Partner': referrer || 'paraswap.io',
-        },
-      });
+      }&side=${side}&network=${this.network}&partner=${
+        partner || 'paraswap.io'
+      }`;
+      const { data } = await axios.get(pricesURL);
       return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
@@ -257,7 +253,9 @@ export class ParaSwap {
     destAmount: PriceString,
     priceRoute: OptimalRate,
     userAddress: Address,
-    referrer: string,
+    partner?: string,
+    partnerAddress?: string,
+    partnerFeePercent?: number,
     receiver?: Address,
     options: BuildOptions = {},
     srcDecimals?: number,
@@ -277,7 +275,9 @@ export class ParaSwap {
         srcAmount,
         destAmount,
         userAddress,
-        referrer,
+        partner,
+        partnerAddress,
+        partnerFeePercent,
         receiver,
         srcDecimals,
         destDecimals,
@@ -285,14 +285,7 @@ export class ParaSwap {
         deadline,
       };
 
-      const config: AxiosRequestConfig = {};
-      if (referrer) {
-        config.headers = {
-          'X-Partner': referrer,
-        };
-      }
-
-      const { data } = await axios.post(txURL, txConfig, config);
+      const { data } = await axios.post(txURL, txConfig);
 
       return data as Transaction;
     } catch (e) {

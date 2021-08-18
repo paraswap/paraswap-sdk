@@ -202,7 +202,7 @@ type RateOptions = {
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
   adapterVersion?: string;
-  referrer?: string;
+  partner?: string;
   maxImpact?: number;
   maxUSDImpact?: number;
 };
