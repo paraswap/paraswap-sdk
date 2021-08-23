@@ -27,7 +27,7 @@ import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 import { Token } from './lib/token';
 import { SwapSide } from './constants';
 
-const API_URL = 'https://apiv4.paraswap.io/v2';
+const API_URL = 'https://apiv5.paraswap.io';
 
 export class ParaSwap {
   adapters?: Adapters;
