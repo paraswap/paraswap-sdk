@@ -5,7 +5,6 @@ import Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
 
 import {
-  Adapters,
   Address,
   AddressOrSymbol,
   Allowance,
@@ -30,9 +29,6 @@ import { SwapSide } from './constants';
 const API_URL = 'https://apiv5.paraswap.io';
 
 export class ParaSwap {
-  adapters?: Adapters;
-  tokens: Token[] = [];
-
   constructor(
     private network: NetworkID = 1,
     private apiURL: string = API_URL,
@@ -74,7 +70,7 @@ export class ParaSwap {
     try {
       const tokensURL = `${this.apiURL}/tokens/${this.network}`;
       const { data } = await axios.get(tokensURL);
-      this.tokens = (data.tokens as Token[]).map(
+      const tokens = (data.tokens as Token[]).map(
         t =>
           new Token(
             t.address,
@@ -87,7 +83,7 @@ export class ParaSwap {
             t.img,
           ),
       );
-      return this.tokens;
+      return tokens;
     } catch (e) {
       return this.handleAPIError(e);
     }
@@ -98,10 +94,7 @@ export class ParaSwap {
       const { data } = await axios.get(
         `${this.apiURL}/adapters/${this.network}`,
       );
-
-      this.adapters = data;
-
-      return this.adapters;
+      return data;
     } catch (e) {
       return this.handleAPIError(e);
     }
@@ -293,27 +286,15 @@ export class ParaSwap {
     }
   }
 
-  async getSpender(_provider?: any): Promise<Address | APIError> {
-    if (!this.adapters) {
-      const adaptersOrError = await this.getAdapters();
-
-      if ((adaptersOrError as APIError).message) {
-        return adaptersOrError as APIError;
-      }
-
-      this.adapters = adaptersOrError as Adapters;
+  async getTokenTransferProxy(_provider?: any): Promise<Address | APIError> {
+    try {
+      const { data } = await axios.get(
+        `${this.apiURL}/adapters/contracts?network=${this.network}`,
+      );
+      return data.TokenTransferProxy;
+    } catch (e) {
+      return this.handleAPIError(e);
     }
-
-    const provider = this.web3Provider || _provider;
-
-    const augustusAddress = this.adapters.augustus.exchange;
-
-    const augustusContract = new provider.eth.Contract(
-      AUGUSTUS_ABI,
-      augustusAddress,
-    );
-
-    return augustusContract.methods.getTokenTransferProxy().call();
   }
 
   async getAllowances(
@@ -388,7 +369,7 @@ export class ParaSwap {
     sendOptions?: Omit<SendOptions, 'from'>,
   ): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const spender = await this.getSpender();
+      const spender = await this.getTokenTransferProxy();
 
       const provider = _provider || this.web3Provider;
 
