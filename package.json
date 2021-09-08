@@ -1,6 +1,6 @@
 {
   "name": "paraswap",
-  "version": "4.28.1",
+  "version": "5.0.0-alpha.1",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -15,14 +15,14 @@
     }
   },
   "dependencies": {
-    "@0x/utils": "^4.5.2",
     "async": "^3.1.0",
     "axios": "0.21.1",
     "bignumber.js": "8.1.1",
     "lodash": "4.17.21",
     "qs": "^6.9.1",
     "ts-essentials": "^7.0.0",
-    "web3": "^1.5.0"
+    "web3": "^1.5.0",
+    "paraswap-core": "1.0.2"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",

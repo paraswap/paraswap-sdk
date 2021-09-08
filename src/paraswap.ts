@@ -5,7 +5,6 @@ import Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
 
 import {
-  Adapters,
   Address,
   AddressOrSymbol,
   Allowance,
@@ -15,27 +14,21 @@ import {
   PriceString,
   RateOptions,
   Transaction,
-  OptimalRatesWithPartnerFees,
+  // OptimalRatesWithPartnerFees,
 } from './types';
+
+import { OptimalRate } from 'paraswap-core';
 
 import ERC20_ABI = require('./abi/erc20.json');
 
 import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 
 import { Token } from './lib/token';
-import { NULL_ADDRESS, TransactionBuilder } from './lib/transaction-builder';
-import {
-  SwapSide,
-  latestAugustusVersion,
-  AdapterAugustusVersionMap,
-} from './constants';
+import { SwapSide } from './constants';
 
-const API_URL = 'https://apiv4.paraswap.io/v2';
+const API_URL = 'https://apiv5.paraswap.io';
 
 export class ParaSwap {
-  adapters?: Adapters;
-  tokens: Token[] = [];
-
   constructor(
     private network: NetworkID = 1,
     private apiURL: string = API_URL,
@@ -46,58 +39,12 @@ export class ParaSwap {
     }
   }
 
-  setWeb3Provider(web3Provider: any) {
-    if (!web3Provider.eth) {
-      this.web3Provider = new Web3(web3Provider);
-    } else {
-      this.web3Provider = web3Provider;
-    }
-    return this;
-  }
-
   private handleAPIError(e: AxiosError): APIError {
     if (e.response) {
       const { data, status } = e.response!;
       return { status, message: data.error, data };
     }
     return new Error(e.message);
-  }
-
-  async getTokens() {
-    try {
-      const tokensURL = `${this.apiURL}/tokens/${this.network}`;
-      const { data } = await axios.get(tokensURL);
-      this.tokens = (data.tokens as Token[]).map(
-        t =>
-          new Token(
-            t.address,
-            t.decimals,
-            t.symbol,
-            t.tokenType,
-            t.mainConnector,
-            t.connectors,
-            t.network,
-            t.img,
-          ),
-      );
-      return this.tokens;
-    } catch (e) {
-      return this.handleAPIError(e);
-    }
-  }
-
-  async getAdapters() {
-    try {
-      const { data } = await axios.get(
-        `${this.apiURL}/adapters/${this.network}`,
-      );
-
-      this.adapters = data;
-
-      return this.adapters;
-    } catch (e) {
-      return this.handleAPIError(e);
-    }
   }
 
   private checkDexList(dexs?: string) {
@@ -110,14 +57,58 @@ export class ParaSwap {
     }
   }
 
+  setWeb3Provider(web3Provider: any) {
+    if (!web3Provider.eth) {
+      this.web3Provider = new Web3(web3Provider);
+    } else {
+      this.web3Provider = web3Provider;
+    }
+    return this;
+  }
+
+  async getTokens() {
+    try {
+      const tokensURL = `${this.apiURL}/tokens/${this.network}`;
+      const { data } = await axios.get(tokensURL);
+      const tokens = (data.tokens as Token[]).map(
+        t =>
+          new Token(
+            t.address,
+            t.decimals,
+            t.symbol,
+            t.tokenType,
+            t.mainConnector,
+            t.connectors,
+            t.network,
+            t.img,
+          ),
+      );
+      return tokens;
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
+  async getAdapters() {
+    try {
+      const { data } = await axios.get(
+        `${this.apiURL}/adapters/${this.network}`,
+      );
+      return data;
+    } catch (e) {
+      return this.handleAPIError(e);
+    }
+  }
+
   async getRateByRoute(
     route: AddressOrSymbol[],
     amount: PriceString,
-    side: SwapSide,
+    userAddress: Address,
+    side: SwapSide = SwapSide.SELL,
     options?: RateOptions,
     srcDecimals?: number,
     destDecimals?: number,
-  ): Promise<OptimalRatesWithPartnerFees | APIError> {
+  ): Promise<OptimalRate | APIError> {
     try {
       const {
         excludeDEXS,
@@ -127,7 +118,7 @@ export class ParaSwap {
         includeContractMethods,
         adapterVersion,
         excludePools,
-        referrer,
+        partner,
         maxImpact,
         maxUSDImpact,
       } = options || {};
@@ -159,21 +150,20 @@ export class ParaSwap {
         excludePricingMethods: _excludePricingMethods,
         excludeContractMethods: _excludeContractMethods,
         includeContractMethods: _includeContractMethods,
-        fromDecimals: srcDecimals,
-        toDecimals: destDecimals,
+        srcDecimals,
+        destDecimals,
         maxImpact,
         maxUSDImpact,
+        userAddress,
       });
 
       const pricesURL = `${this.apiURL}/prices/?route=${route.join(
         '-',
-      )}&amount=${amount}&${query}&side=${side}&network=${this.network}`;
+      )}&amount=${amount}&${query}&side=${side}&network=${
+        this.network
+      }&partner=${partner || 'paraswap.io'}`;
 
-      const { data } = await axios.get(pricesURL, {
-        headers: {
-          'X-Partner': referrer || 'paraswap.io',
-        },
-      });
+      const { data } = await axios.get(pricesURL);
 
       return data.priceRoute;
     } catch (e) {
@@ -185,11 +175,12 @@ export class ParaSwap {
     srcToken: AddressOrSymbol,
     destToken: AddressOrSymbol,
     amount: PriceString,
+    userAddress: Address,
     side: SwapSide = SwapSide.SELL,
     options: RateOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
-  ): Promise<OptimalRatesWithPartnerFees | APIError> {
+  ): Promise<OptimalRate | APIError> {
     try {
       const {
         excludeDEXS,
@@ -199,7 +190,7 @@ export class ParaSwap {
         includeContractMethods,
         adapterVersion,
         excludePools,
-        referrer,
+        partner,
         maxImpact,
         maxUSDImpact,
       } = options;
@@ -227,22 +218,21 @@ export class ParaSwap {
         excludePricingMethods: _excludePricingMethods,
         excludeContractMethods: _excludeContractMethods,
         includeContractMethods: _includeContractMethods,
-        fromDecimals: srcDecimals,
-        toDecimals: destDecimals,
+        srcDecimals,
+        destDecimals,
         maxImpact,
         maxUSDImpact,
+        userAddress,
       });
 
       const pricesURL = `${
         this.apiURL
-      }/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
+      }/prices/?srcToken=${srcToken}&destToken=${destToken}&amount=${amount}${
         query ? '&' + query : ''
-      }&side=${side}&network=${this.network}`;
-      const { data } = await axios.get(pricesURL, {
-        headers: {
-          'X-Partner': referrer || 'paraswap.io',
-        },
-      });
+      }&side=${side}&network=${this.network}&partner=${
+        partner || 'paraswap.io'
+      }`;
+      const { data } = await axios.get(pricesURL);
       return data.priceRoute;
     } catch (e) {
       return this.handleAPIError(e);
@@ -254,13 +244,17 @@ export class ParaSwap {
     destToken: Address,
     srcAmount: PriceString,
     destAmount: PriceString,
-    priceRoute: OptimalRatesWithPartnerFees,
+    priceRoute: OptimalRate,
     userAddress: Address,
-    referrer: string,
+    partner?: string,
+    partnerAddress?: string,
+    partnerFeeBps?: number,
     receiver?: Address,
     options: BuildOptions = {},
     srcDecimals?: number,
     destDecimals?: number,
+    permit?: string,
+    deadline?: string,
   ) {
     try {
       const query = _.isEmpty(options) ? '' : qs.stringify(options);
@@ -274,20 +268,17 @@ export class ParaSwap {
         srcAmount,
         destAmount,
         userAddress,
-        referrer,
-        receiver: receiver || '',
+        partner,
+        partnerAddress,
+        partnerFeeBps,
+        receiver,
         srcDecimals,
         destDecimals,
+        permit,
+        deadline,
       };
 
-      const config: AxiosRequestConfig = {};
-      if (referrer) {
-        config.headers = {
-          'X-Partner': referrer,
-        };
-      }
-
-      const { data } = await axios.post(txURL, txConfig, config);
+      const { data } = await axios.post(txURL, txConfig);
 
       return data as Transaction;
     } catch (e) {
@@ -295,86 +286,15 @@ export class ParaSwap {
     }
   }
 
-  //Warning: ParaSwapPool is not supported when building locally
-  async buildTxLocally(
-    srcToken: Token,
-    destToken: Token,
-    srcAmount: string,
-    destAmount: string,
-    priceRoute: OptimalRatesWithPartnerFees,
-    userAddress: string,
-    referrer: string,
-    referrerIndex: number,
-    gasPrice: string,
-    receiver: string = NULL_ADDRESS,
-    options: BuildOptions = {},
-  ) {
-    // TODO: fix me for multiple adapter version!
-    if (!this.adapters) {
-      await this.getAdapters();
+  async getTokenTransferProxy(_provider?: any): Promise<Address | APIError> {
+    try {
+      const { data } = await axios.get(
+        `${this.apiURL}/adapters/contracts?network=${this.network}`,
+      );
+      return data.TokenTransferProxy;
+    } catch (e) {
+      return this.handleAPIError(e);
     }
-
-    if (!this.tokens.length) {
-      await this.getTokens();
-    }
-
-    const augustusVersion =
-      (priceRoute.adapterVersion &&
-        AdapterAugustusVersionMap[priceRoute.adapterVersion]) ||
-      latestAugustusVersion;
-
-    // Todo: can be a member
-    const transaction = new TransactionBuilder(
-      this.network,
-      this.web3Provider!,
-      this.adapters!,
-      this.tokens,
-      augustusVersion,
-    );
-
-    const ignoreGasCheck = !!(
-      options.ignoreChecks || options.ignoreGasEstimate
-    );
-
-    return transaction.buildTransaction(
-      srcToken,
-      destToken,
-      srcAmount,
-      destAmount,
-      priceRoute,
-      userAddress,
-      referrer,
-      referrerIndex,
-      gasPrice,
-      receiver,
-      ignoreGasCheck,
-      augustusVersion,
-      !!options.onlyParams,
-      !!options.useReduxToken,
-    );
-  }
-
-  async getSpender(_provider?: any): Promise<Address | APIError> {
-    if (!this.adapters) {
-      const adaptersOrError = await this.getAdapters();
-
-      if ((adaptersOrError as APIError).message) {
-        return adaptersOrError as APIError;
-      }
-
-      this.adapters = adaptersOrError as Adapters;
-    }
-
-    const provider = this.web3Provider || _provider;
-
-    const augustusAddress = this.adapters.augustus.exchange;
-
-    const augustusContract = new provider.eth.Contract(
-      AUGUSTUS_ABI,
-      augustusAddress,
-    );
-
-    return augustusContract.methods.getTokenTransferProxy().call();
   }
 
   async getAllowances(
@@ -449,7 +369,7 @@ export class ParaSwap {
     sendOptions?: Omit<SendOptions, 'from'>,
   ): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const spender = await this.getSpender();
+      const spender = await this.getTokenTransferProxy();
 
       const provider = _provider || this.web3Provider;
 

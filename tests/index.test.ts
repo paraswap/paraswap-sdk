@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import qs from 'qs';
 import * as _ from 'lodash';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { ParaSwap, OptimalRates, Token, APIError, Transaction } from '../src';
 import BigNumber from 'bignumber.js';
 import {
@@ -16,9 +16,7 @@ import {
   Address,
   BuildOptions,
 } from '../src/types';
-import { NULL_ADDRESS } from '../src/lib/transaction-builder';
-import { SwapSide } from '../src/constants';
-import { assert } from 'ts-essentials';
+import { SwapSide } from '../src';
 const erc20abi = require('../src/abi/erc20.json');
 
 dotenv.config();
@@ -140,9 +138,8 @@ describe('ParaSwap SDK', () => {
       'DAI',
       srcAmount,
       SwapSide.SELL,
-      { includeDEXS: 'Uniswap' },
+      { includeDEXS: 'UniswapV2' },
     );
-
     const priceRoute = ratesOrError as OptimalRates;
 
     const { destAmount, bestRoute, others } = priceRoute;
@@ -209,56 +206,24 @@ describe('ParaSwap SDK', () => {
 
     const adapters = adaptersOrError as Adapters;
 
-    expect(adapters.augustus.exchange).toBeDefined();
+    // expect(adapters.augustus.exchange).toBeDefined();
     expect(adapters.uniswap.exchange).toBeDefined();
     expect(adapters.uniswap.targetExchange).toBeDefined();
-    expect(adapters.kyber.exchange).toBeDefined();
-    expect(adapters.kyber.targetExchange).toBeDefined();
-  });
-
-  test('Build_Tx_Locally', async () => {
-    const srcToken = new Token(ETH, 18, 'DAI');
-    const destToken = new Token(DAI, 18, 'KNC');
-
-    assert(srcToken.symbol, 'token should have a symbol');
-    assert(destToken.symbol, 'token should have a symbol');
-
-    const ratesOrError = await paraSwap.getRate(
-      srcToken.symbol,
-      destToken.symbol,
-      srcAmount,
-      SwapSide.SELL,
-      { includeDEXS: 'Kyber' },
-    );
-    const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
-
-    const destAmount = priceRoute.destAmount;
-
-    const gasPrice = new BigNumber(10).times(10 ** 9).toFixed();
-
-    const transaction = await paraSwap.buildTxLocally(
-      srcToken,
-      destToken,
-      srcAmount,
-      destAmount,
-      priceRoute,
-      senderAddress,
-      referrer,
-      undefined,
-      gasPrice,
-      receiver,
-    );
-    expect(typeof transaction).toBe('object');
+    // expect(adapters.kyber.exchange).toBeDefined();
+    // expect(adapters.kyber.targetExchange).toBeDefined();
   });
 
   test('Build_Tx', async () => {
     const ratesOrError = await paraSwap.getRate(
       srcToken,
-      destToken,
+      '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       srcAmount,
       SwapSide.SELL,
       { includeDEXS: 'Uniswap' },
     );
+
+    expect((ratesOrError as APIError)?.data?.error).toBeUndefined();
+
     const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
 
     const destAmount = new BigNumber(priceRoute.destAmount)
@@ -277,9 +242,8 @@ describe('ParaSwap SDK', () => {
       { ignoreChecks: true },
     );
 
-    const transaction = txOrError as Transaction;
-
-    expect(typeof transaction).toBe('object');
+    expect(txOrError.data.error).toBeUndefined();
+    expect(typeof txOrError).toBe('object');
   });
   if (TESTING_ENV) {
     test('Build_tx_legacy', async () => {
