@@ -22,7 +22,7 @@
     "qs": "^6.9.1",
     "ts-essentials": "^7.0.0",
     "web3": "^1.5.0",
-    "paraswap-core": "https://github.com/paraswap/paraswap-core#master"
+    "paraswap-core": "1.0.2"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
