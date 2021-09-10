@@ -103,7 +103,7 @@ export class ParaSwap {
   async getRateByRoute(
     route: AddressOrSymbol[],
     amount: PriceString,
-    userAddress: Address,
+    userAddress?: Address,
     side: SwapSide = SwapSide.SELL,
     options?: RateOptions,
     srcDecimals?: number,
@@ -175,7 +175,7 @@ export class ParaSwap {
     srcToken: AddressOrSymbol,
     destToken: AddressOrSymbol,
     amount: PriceString,
-    userAddress: Address,
+    userAddress?: Address,
     side: SwapSide = SwapSide.SELL,
     options: RateOptions = {},
     srcDecimals?: number,
