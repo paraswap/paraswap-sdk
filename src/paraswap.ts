@@ -39,12 +39,18 @@ export class ParaSwap {
     }
   }
 
-  private handleAPIError(e: AxiosError): APIError {
-    if (e.response) {
-      const { data, status } = e.response!;
-      return { status, message: data.error, data };
+  private handleAPIError(e: unknown): APIError {
+    if (!axios.isAxiosError(e)) {
+      return { message: `Unknown error: ${e}` };
     }
-    return new Error(e.message);
+
+    if (!e.response) {
+      return { message: e.message };
+    }
+
+    const { status, data } = e.response;
+
+    return { status, message: data.error, data };
   }
 
   private checkDexList(dexs?: string) {
@@ -301,51 +307,43 @@ export class ParaSwap {
     userAddress: Address,
     tokenAddresses: Address[],
   ): Promise<Allowance[] | APIError> {
-    try {
-      const balancesOrError = await this.getBalances(userAddress);
+    const balancesOrError = await this.getBalances(userAddress);
 
-      if ((<APIError>balancesOrError).message) {
-        return <APIError>balancesOrError;
-      }
-
-      return (<Token[]>balancesOrError)
-        .filter(t =>
-          tokenAddresses.find(
-            addr => addr.toLowerCase() === t.address.toLowerCase(),
-          ),
-        )
-        .map(token => ({
-          tokenAddress: token.address,
-          allowance: token.allowance || '0',
-        }));
-    } catch (e) {
-      return { message: e.message };
+    if ((<APIError>balancesOrError).message) {
+      return <APIError>balancesOrError;
     }
+
+    return (<Token[]>balancesOrError)
+      .filter(t =>
+        tokenAddresses.find(
+          addr => addr.toLowerCase() === t.address.toLowerCase(),
+        ),
+      )
+      .map(token => ({
+        tokenAddress: token.address,
+        allowance: token.allowance || '0',
+      }));
   }
 
   async getAllowance(
     userAddress: Address,
     tokenAddress: Address,
   ): Promise<Allowance | APIError> {
-    try {
-      const allowanceOrError = await this.getAllowances(userAddress, [
-        tokenAddress,
-      ]);
+    const allowanceOrError = await this.getAllowances(userAddress, [
+      tokenAddress,
+    ]);
 
-      if ((<APIError>allowanceOrError).message) {
-        return <APIError>allowanceOrError;
-      }
-
-      const allowances = allowanceOrError as Allowance[];
-
-      if (!allowances.length) {
-        return { message: 'Not Found' };
-      }
-
-      return allowances[0];
-    } catch (e) {
-      return { message: e.message };
+    if ((<APIError>allowanceOrError).message) {
+      return <APIError>allowanceOrError;
     }
+
+    const allowances = allowanceOrError as Allowance[];
+
+    if (!allowances.length) {
+      return { message: 'Not Found' };
+    }
+
+    return allowances[0];
   }
 
   async approveTokenBulk(
@@ -403,7 +401,7 @@ export class ParaSwap {
     userAddress: Address,
     token: AddressOrSymbol,
   ): Promise<Token | APIError> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async resolve => {
       try {
         const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}/${token}`;
 
@@ -411,13 +409,13 @@ export class ParaSwap {
 
         resolve(data.token);
       } catch (e) {
-        reject({ error: e.message });
+        resolve(this.handleAPIError(e));
       }
     });
   }
 
   async getBalances(userAddress: Address): Promise<Token[] | APIError> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async resolve => {
       try {
         const tokensURL = `${this.apiURL}/users/tokens/${this.network}/${userAddress}`;
 
@@ -431,7 +429,7 @@ export class ParaSwap {
 
         resolve(tokens);
       } catch (e) {
-        reject({ error: e.message });
+        resolve(this.handleAPIError(e));
       }
     });
   }
