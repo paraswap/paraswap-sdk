@@ -34,8 +34,6 @@ import { SwapSide } from './constants';
 
 const API_URL = 'https://apiv5.paraswap.io';
 
-console.log('Random this shit works');
-
 export class ParaSwap {
   constructor(
     private network: NetworkID = 1,
