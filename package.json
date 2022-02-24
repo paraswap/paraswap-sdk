@@ -1,5 +1,5 @@
 {
-  "name": "paraswap",
+  "name": "@nenad91/paraswap",
   "version": "5.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
