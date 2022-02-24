@@ -1,5 +1,5 @@
 {
-  "name": "paraswap",
+  "name": "@nenad91/paraswap",
   "version": "5.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -21,7 +21,6 @@
     "lodash": "4.17.21",
     "qs": "^6.9.1",
     "ts-essentials": "^7.0.0",
-    "web3": "^1.5.0",
     "paraswap-core": "1.0.2"
   },
   "devDependencies": {
