@@ -1,8 +1,14 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
-import Web3 from 'web3';
-import type { SendOptions } from 'web3-eth-contract';
+
+interface SendOptions {
+  from: string;
+  gasPrice?: string;
+  gas?: number;
+  value?: number | string;
+  nonce?: number;
+}
 
 import {
   Address,
@@ -28,16 +34,13 @@ import { SwapSide } from './constants';
 
 const API_URL = 'https://apiv5.paraswap.io';
 
+console.log('Random this shit works');
+
 export class ParaSwap {
   constructor(
     private network: NetworkID = 1,
     private apiURL: string = API_URL,
-    public web3Provider?: any,
-  ) {
-    if (web3Provider && !web3Provider.eth) {
-      this.web3Provider = new Web3(web3Provider);
-    }
-  }
+  ) {}
 
   private handleAPIError(e: unknown): APIError {
     if (!axios.isAxiosError(e)) {
@@ -61,15 +64,6 @@ export class ParaSwap {
         throw new Error('Invalid DEX list');
       }
     }
-  }
-
-  setWeb3Provider(web3Provider: any) {
-    if (!web3Provider.eth) {
-      this.web3Provider = new Web3(web3Provider);
-    } else {
-      this.web3Provider = web3Provider;
-    }
-    return this;
   }
 
   async getTokens() {
@@ -369,7 +363,7 @@ export class ParaSwap {
     return new Promise(async (resolve, reject) => {
       const spender = await this.getTokenTransferProxy();
 
-      const provider = _provider || this.web3Provider;
+      const provider = _provider;
 
       const contract: any = new provider!.eth.Contract(ERC20_ABI, tokenAddress);
 

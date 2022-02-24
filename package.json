@@ -21,7 +21,6 @@
     "lodash": "4.17.21",
     "qs": "^6.9.1",
     "ts-essentials": "^7.0.0",
-    "web3": "^1.5.0",
     "paraswap-core": "1.0.2"
   },
   "devDependencies": {
