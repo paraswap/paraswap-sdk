@@ -1,74 +1,91 @@
-import BigNumber from 'bignumber.js';
-import { Merge } from 'ts-essentials';
-import { Token } from './lib/token';
-import { SwapSide, ContractMethod, PricingMethod } from './constants';
+import type { JsonFragment } from "@ethersproject/abi";
+import { Address, Token, TxHash } from "./token";
 
-type Symbol = string;
-type Address = string;
-type AddressOrSymbol = Address | Symbol;
-type PriceString = string;
-type NumberAsString = string;
+export type { Address, Token, TxHash };
 
-type NetworkID = 1 | 3 | 42 | 4 | 56 | 137 | 43114;
+export interface ConstructBaseInput {
+  apiURL: string;
+  network: number;
+}
 
-const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+interface FetcherInputBase {
+  url: string;
+  headers?: Record<string, string>;
+}
+export interface FetcherGetInput extends FetcherInputBase {
+  method: "GET";
+}
+export interface FetcherPostInput extends FetcherInputBase {
+  method: "POST";
+  data: Record<string, any>;
+}
 
-type APIQuery = {
-  [name: string]: string | number | boolean;
-};
+export type FetcherFunction = <T>(
+  params: FetcherGetInput | FetcherPostInput
+) => Promise<T>;
 
-type Allowance = {
-  tokenAddress: Address;
-  allowance: string;
-};
+export interface ConstructFetchInput extends ConstructBaseInput {
+  fetcher: FetcherFunction;
+}
 
-type APIError = {
-  message: string;
-  status?: number;
-  data?: any;
-};
+interface OverridesBase {
+  from?: string;
+  gasPrice?: string;
+  gas?: number;
+  value?: number | string;
+}
 
-type Transaction = {
-  from: Address;
-  to: Address;
-  value: string;
-  data: string;
-  chainId: number;
-};
+export interface StaticCallOverrides extends OverridesBase {
+  block?: string | number | "latest" | "pending" | "earliest" | "genesis";
+}
+export interface TxSendOverrides extends OverridesBase {
+  nonce?: number;
+}
 
-type RateOptions = {
-  excludeDEXS?: string;
-  includeDEXS?: string;
-  excludePools?: string;
-  excludePricingMethods?: PricingMethod[];
-  excludeContractMethods?: ContractMethod[];
-  includeContractMethods?: ContractMethod[];
-  adapterVersion?: string;
-  partner?: string;
-  maxImpact?: number;
-  maxUSDImpact?: number;
-};
+interface ContractCallInput<T extends string> {
+  address: Address;
+  abi: ReadonlyArray<JsonFragment>;
+  contractMethod: T;
+  static: boolean;
+  args: any[];
+}
 
-type BuildOptions = {
-  ignoreChecks?: boolean;
-  ignoreGasEstimate?: boolean;
-  onlyParams?: boolean;
-  simple?: boolean;
-  gasPrice?: PriceString;
-};
+interface ContractCallStaticInput<T extends string>
+  extends ContractCallInput<T> {
+  static: true;
+  overrides: StaticCallOverrides;
+}
 
-export {
-  Symbol,
-  Address,
-  AddressOrSymbol,
-  PriceString,
-  NumberAsString,
-  NetworkID,
-  ETHER_ADDRESS,
-  APIQuery,
-  Allowance,
-  APIError,
-  Transaction,
-  RateOptions,
-  BuildOptions,
-};
+interface ContractCallTransactionInput<T extends string>
+  extends ContractCallInput<T> {
+  static: false;
+  overrides: TxSendOverrides;
+}
+
+export type ContractCallerFunction = <T, M extends string = string>(
+  params: ContractCallTransactionInput<M> | ContractCallStaticInput<M>
+) => Promise<T>;
+
+export interface ConstructProviderFetchInput extends ConstructFetchInput {
+  contractCaller: ContractCallerFunction;
+}
+
+export type TokenFromApi = Pick<
+  Token,
+  "address" | "decimals" | "symbol" | "balance" | "allowance"
+>;
+
+export interface TokensApiResponse {
+  tokens: TokenFromApi[];
+}
+export interface TokenApiResponse {
+  token?: TokenFromApi;
+}
+
+// if no extra keys in Checking, return Checking, otherwise never
+export type NoExtraKeysCheck<Checking, CheckAgainst> = Exclude<
+  keyof Checking,
+  keyof CheckAgainst
+> extends never
+  ? Checking
+  : never;
