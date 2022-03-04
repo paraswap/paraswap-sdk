@@ -4,6 +4,8 @@
   "compilerOptions": {
     "module": "esnext",
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "declarationMap": true,
+    "declaration": true
   }
 }
