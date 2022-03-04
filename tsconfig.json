@@ -1,15 +1,9 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["src", "types"],
   "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "target": "es6",
-    "sourceMap": true,
-    "declaration": true,
-    "noImplicitReturns": true,
-    "strict": true,
+    "module": "esnext",
     "resolveJsonModule": true,
-    "lib": ["es2017", "es7", "es6", "dom"],
-    "outDir": "./build"
-  },
-  "include": ["src/*", "./src/abi/*.json"]
+    "moduleResolution": "node"
+  }
 }

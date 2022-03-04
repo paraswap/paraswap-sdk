@@ -15,3 +15,5 @@ docker
 build
 
 src/*.js
+
+dist
