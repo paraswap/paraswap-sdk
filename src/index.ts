@@ -13,6 +13,7 @@ import {
   constructToken,
   GetTokensFunctions,
   Token,
+  PriceString
 } from "./token";
 import { BuildTxFunctions, constructBuildTx } from "./transaction";
 import {
@@ -24,6 +25,7 @@ import {
   ConstructBaseInput,
   ConstructFetchInput,
   ConstructProviderFetchInput,
+  Address,
 } from "./types";
 import { UnionToIntersection } from "ts-essentials";
 export * from "./constants";
@@ -54,6 +56,8 @@ export type {
   ConstructFetchInput,
   ConstructProviderFetchInput,
   Token,
+  Address,
+  PriceString
 };
 
 export type SDKConfig = ConstructProviderFetchInput & ConstructFetchInput;
