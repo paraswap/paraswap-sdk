@@ -6,6 +6,7 @@ import BigNumber from "bignumber.js";
 import { assert } from "ts-essentials";
 import { SwapSide } from "./constants";
 import { PriceString } from "./token";
+import { constructSearchString } from "./helpers/misc";
 
 export interface TransactionParams {
   to: string;
@@ -43,16 +44,7 @@ type BuildOptionsWitWithMaxFee = BuildOptionsBase & Partial<WithMaxFee>;
 
 export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 
-const objectToFilledEntries = <T extends Record<string, unknown>>(
-  object: T
-): [keyof T, string][] => {
-  return (
-    Object.entries(object)
-      // removes keys with undefined values
-      .filter(([, value]) => value !== undefined)
-      .map(([key, value]) => [key, String(value)])
-  );
-};
+
 
 type BuildTx = (
   params: BuildTxInput,
@@ -63,16 +55,7 @@ export type BuildTxFunctions = {
   buildTx: BuildTx;
 };
 
-const constructSearchString = (
-  queryOptions: BuildOptions
-): `?${string}` | "" => {
-  const queryEntries = objectToFilledEntries(queryOptions);
 
-  const queryString = new URLSearchParams(queryEntries).toString();
-
-  // returns empty string or `?${string}`
-  return queryString && (`?${queryString}` as const);
-};
 
 export const constructBuildTx = ({
   apiURL,

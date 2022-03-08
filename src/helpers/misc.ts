@@ -35,3 +35,26 @@ export function assertContractHasMethods<T extends string>(
     `Contract must have methods: ${methods.join(", ")}`
   );
 }
+
+export const objectToFilledEntries = <T extends Record<string, unknown>>(
+  object: T
+): [string, string][] => {
+  return (
+    Object.entries(object)
+      // removes keys with undefined values
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => [key, String(value)])
+  );
+};
+
+
+export const constructSearchString = <U extends Record<string, unknown>>(
+  queryOptions: U
+): `?${string}` | "" => {
+  const queryEntries = objectToFilledEntries(queryOptions);
+
+  const queryString = new URLSearchParams(queryEntries).toString();
+
+  // returns empty string or `?${string}`
+  return queryString && (`?${queryString}` as const);
+};

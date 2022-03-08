@@ -8,6 +8,7 @@ export const sum = (a: number, b: number) => {
 import { constructApproveToken, ApproveTokenFunctions } from "./approve";
 import { constructGetBalances, GetBalancesFunctions } from "./balance";
 import { constructGetSpender, GetSpenderFunctions } from "./spender";
+import { constructGetAdapters, ConstructAdaptersFunctions } from "./adapters";
 import {
   constructGetTokens,
   constructToken,
@@ -42,10 +43,11 @@ export {
   constructContractCaller,
   constructFetcher,
   constructToken,
+  constructGetAdapters,
   isFetcherError,
 };
 // @TODO missing fro parity with older SDK:
-// getRate, getRateByRoute, getAdapters (with namesOnly option)
+// getRate, getRateByRoute
 
 export type {
   ApproveTokenFunctions,
@@ -55,6 +57,7 @@ export type {
   BuildTxFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
+  ConstructAdaptersFunctions,
   Token,
   Address,
   PriceString
@@ -66,7 +69,8 @@ export type AllSDKMethods = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
   ApproveTokenFunctions &
-  BuildTxFunctions;
+  BuildTxFunctions &
+  ConstructAdaptersFunctions;
 
 type AnyFunction = (...args: any[]) => any;
 
@@ -104,5 +108,6 @@ export const constructSDK = (config: SDKConfig): AllSDKMethods =>
     constructGetTokens,
     constructGetSpender,
     constructApproveToken,
-    constructBuildTx
+    constructBuildTx,
+    constructGetAdapters
   );
