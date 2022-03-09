@@ -1,13 +1,17 @@
-import type { Address, ContractCallerFunction, NoExtraKeysCheck } from "../types";
-import { JsonRpcProvider, BaseProvider } from "@ethersproject/providers";
+import type {
+  Address,
+  ContractCallerFunction,
+  NoExtraKeysCheck,
+} from '../types';
+import { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
 import {
   Contract,
   PayableOverrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { TransactionResponse } from "@ethersproject/abstract-provider";
-import { assertContractHasMethods } from "./misc";
-import { assert } from "ts-essentials";
+} from '@ethersproject/contracts';
+import { TransactionResponse } from '@ethersproject/abstract-provider';
+import { assertContractHasMethods } from './misc';
+import { assert } from 'ts-essentials';
 
 export const constructContractCaller = (
   ethers: BaseProvider,
@@ -42,8 +46,11 @@ export const constructContractCaller = (
       return contract.callStatic[contractMethod](...args, callOverrides);
     }
 
-    assert(account, "account must be specified to create a signer");
-    assert(ethers instanceof JsonRpcProvider, "ethers must be an instance of JsonRpcProvider to create a signer");
+    assert(account, 'account must be specified to create a signer');
+    assert(
+      ethers instanceof JsonRpcProvider,
+      'ethers must be an instance of JsonRpcProvider to create a signer'
+    );
 
     const { address, abi, contractMethod, args, overrides } = params;
 

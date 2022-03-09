@@ -1,12 +1,12 @@
-import type { OptimalRate } from "paraswap-core";
-import type { WithGasPrice, WithMaxFee } from "./gas";
-import type { ConstructFetchInput, Address, FetcherPostInput } from "./types";
+import type { OptimalRate } from 'paraswap-core';
+import type { WithGasPrice, WithMaxFee } from './gas';
+import type { ConstructFetchInput, Address, FetcherPostInput } from './types';
 
-import BigNumber from "bignumber.js";
-import { assert } from "ts-essentials";
-import { SwapSide } from "./constants";
-import { PriceString } from "./token";
-import { constructSearchString } from "./helpers/misc";
+import BigNumber from 'bignumber.js';
+import { assert } from 'ts-essentials';
+import { SwapSide } from './constants';
+import { PriceString } from './token';
+import { constructSearchString } from './helpers/misc';
 
 export interface TransactionParams {
   to: string;
@@ -44,8 +44,6 @@ type BuildOptionsWitWithMaxFee = BuildOptionsBase & Partial<WithMaxFee>;
 
 export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 
-
-
 type BuildTx = (
   params: BuildTxInput,
   options?: BuildOptions
@@ -54,8 +52,6 @@ type BuildTx = (
 export type BuildTxFunctions = {
   buildTx: BuildTx;
 };
-
-
 
 export const constructBuildTx = ({
   apiURL,
@@ -74,8 +70,8 @@ export const constructBuildTx = ({
 
     const AmountMistmatchError =
       side === SwapSide.SELL
-        ? "Source Amount Mismatch"
-        : "Destination Amount Mismatch";
+        ? 'Source Amount Mismatch'
+        : 'Destination Amount Mismatch';
 
     assert(
       areAmountsCorrect({
@@ -91,7 +87,7 @@ export const constructBuildTx = ({
 
     const fetchParams: FetcherPostInput = {
       url: fetchURL,
-      method: "POST",
+      method: 'POST',
       data: params,
     };
 

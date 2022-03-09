@@ -1,5 +1,5 @@
-import type { JsonFragment } from "@ethersproject/abi";
-import { Address, Token, TxHash } from "./token";
+import type { JsonFragment } from '@ethersproject/abi';
+import { Address, Token, TxHash } from './token';
 
 export type { Address, Token, TxHash };
 
@@ -13,10 +13,10 @@ interface FetcherInputBase {
   headers?: Record<string, string>;
 }
 export interface FetcherGetInput extends FetcherInputBase {
-  method: "GET";
+  method: 'GET';
 }
 export interface FetcherPostInput extends FetcherInputBase {
-  method: "POST";
+  method: 'POST';
   data: Record<string, any>;
 }
 
@@ -36,7 +36,7 @@ interface OverridesBase {
 }
 
 export interface StaticCallOverrides extends OverridesBase {
-  block?: string | number | "latest" | "pending" | "earliest" | "genesis";
+  block?: string | number | 'latest' | 'pending' | 'earliest' | 'genesis';
 }
 export interface TxSendOverrides extends OverridesBase {
   nonce?: number;
@@ -72,7 +72,7 @@ export interface ConstructProviderFetchInput extends ConstructFetchInput {
 
 export type TokenFromApi = Pick<
   Token,
-  "address" | "decimals" | "symbol" | "balance" | "allowance"
+  'address' | 'decimals' | 'symbol' | 'balance' | 'allowance'
 >;
 
 export interface TokensApiResponse {

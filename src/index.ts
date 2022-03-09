@@ -1,35 +1,35 @@
+import { constructApproveToken, ApproveTokenFunctions } from './approve';
+import { constructGetBalances, GetBalancesFunctions } from './balance';
+import { constructGetSpender, GetSpenderFunctions } from './spender';
+import { constructGetAdapters, ConstructAdaptersFunctions } from './adapters';
+import {
+  constructGetTokens,
+  constructToken,
+  GetTokensFunctions,
+  Token,
+  PriceString,
+} from './token';
+import { BuildTxFunctions, constructBuildTx } from './transaction';
+import {
+  constructContractCaller,
+  constructFetcher,
+  isFetcherError,
+} from './helpers';
+import {
+  ConstructBaseInput,
+  ConstructFetchInput,
+  ConstructProviderFetchInput,
+  Address,
+} from './types';
+import { UnionToIntersection } from 'ts-essentials';
+
 export const sum = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {
     console.log('dev only output');
   }
   return a + b;
 };
-
-import { constructApproveToken, ApproveTokenFunctions } from "./approve";
-import { constructGetBalances, GetBalancesFunctions } from "./balance";
-import { constructGetSpender, GetSpenderFunctions } from "./spender";
-import { constructGetAdapters, ConstructAdaptersFunctions } from "./adapters";
-import {
-  constructGetTokens,
-  constructToken,
-  GetTokensFunctions,
-  Token,
-  PriceString
-} from "./token";
-import { BuildTxFunctions, constructBuildTx } from "./transaction";
-import {
-  constructContractCaller,
-  constructFetcher,
-  isFetcherError,
-} from "./helpers";
-import {
-  ConstructBaseInput,
-  ConstructFetchInput,
-  ConstructProviderFetchInput,
-  Address,
-} from "./types";
-import { UnionToIntersection } from "ts-essentials";
-export * from "./constants";
+export * from './constants';
 
 // can import these individually
 // and use in constructPartialSDK only what you need
@@ -60,7 +60,7 @@ export type {
   ConstructAdaptersFunctions,
   Token,
   Address,
-  PriceString
+  PriceString,
 };
 
 export type SDKConfig = ConstructProviderFetchInput & ConstructFetchInput;

@@ -1,18 +1,18 @@
-import axios from "axios";
-import { ethers } from "ethers";
-import { constructSDK } from "..";
-import { constructContractCaller, constructFetcher } from "../helpers";
+import axios from 'axios';
+import { ethers } from 'ethers';
+import { constructSDK } from '..';
+import { constructContractCaller, constructFetcher } from '../helpers';
 
-const fetcher = constructFetcher(axios)
+const fetcher = constructFetcher(axios);
 
-const provider = ethers.getDefaultProvider(1)
-const contractCaller = constructContractCaller(provider)
+const provider = ethers.getDefaultProvider(1);
+const contractCaller = constructContractCaller(provider);
 
 const paraswap = constructSDK({
-  apiURL: "",
+  apiURL: '',
   network: 1,
   fetcher,
-  contractCaller
-})
+  contractCaller,
+});
 
-const res = paraswap.getAdapters({type: "list", namesOnly: false})
+const res = paraswap.getAdapters({ type: 'list', namesOnly: false });

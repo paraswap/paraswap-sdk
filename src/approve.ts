@@ -1,6 +1,6 @@
-import { constructGetSpender } from "./spender";
-import { Address, PriceString, TxHash } from "./token";
-import { ConstructProviderFetchInput, TxSendOverrides } from "./types";
+import { constructGetSpender } from './spender';
+import { Address, PriceString, TxHash } from './token';
+import { ConstructProviderFetchInput, TxSendOverrides } from './types';
 
 type ApproveToken = (
   amount: PriceString,
@@ -33,14 +33,12 @@ export const constructApproveToken = (
   ) => {
     const spender = await getSpender();
 
-    const { default: ERC20_ABI } = await import(
-      "./abi/ERC20.json"
-    );
+    const { default: ERC20_ABI } = await import('./abi/ERC20.json');
 
     const res = await options.contractCaller<TxHash>({
       address: tokenAddress,
       abi: ERC20_ABI,
-      contractMethod: "approve",
+      contractMethod: 'approve',
       args: [spender, amount],
       overrides,
       static: false,

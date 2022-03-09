@@ -1,6 +1,5 @@
-import type { MarkOptional } from "ts-essentials";
-import type { ConstructFetchInput, TokensApiResponse } from "./types";
-
+import type { MarkOptional } from 'ts-essentials';
+import type { ConstructFetchInput, TokensApiResponse } from './types';
 
 /**
  * @type hex token or account address
@@ -52,19 +51,19 @@ export type Token = {
 type ConstructTokenInput = MarkOptional<
   Token,
   // these props are constructed from other, required props
-  "tokenType" | "mainConnector" | "connectors" | "network"
+  'tokenType' | 'mainConnector' | 'connectors' | 'network'
 >;
 
 export const constructToken = (tokenProps: ConstructTokenInput): Token => {
   const {
-    tokenType = "ERC20",
-    mainConnector = "ETH",
+    tokenType = 'ERC20',
+    mainConnector = 'ETH',
     connectors: connectorsInput = [],
     network = 1,
     ...rest
   } = tokenProps;
 
-  const connectors: Token["connectors"] =
+  const connectors: Token['connectors'] =
     connectorsInput.length > 0 ? connectorsInput : [mainConnector];
 
   return {
@@ -92,7 +91,7 @@ export const constructGetTokens = ({
   const getTokens: GetTokens = async () => {
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
-      method: "GET",
+      method: 'GET',
     });
 
     const tokens = data.tokens.map(constructToken);

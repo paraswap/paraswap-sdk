@@ -1,10 +1,10 @@
-import { FetcherFunction } from "../types";
-import type Axios from "axios";
-import type { AxiosError } from "axios";
+import { FetcherFunction } from '../types';
+import type Axios from 'axios';
+import type { AxiosError } from 'axios';
 
 type FetcherErrorConstructorInput = Pick<
   AxiosError,
-  "code" | "request" | "response" | "isAxiosError" | "message"
+  'code' | 'request' | 'response' | 'isAxiosError' | 'message'
 >;
 
 interface FetcherErrorInterface extends FetcherErrorConstructorInput {

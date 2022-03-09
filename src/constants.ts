@@ -1,1 +1,1 @@
-export { SwapSide, ContractMethod } from "paraswap-core";
+export { SwapSide, ContractMethod } from 'paraswap-core';

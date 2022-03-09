@@ -1,5 +1,5 @@
-import { Address } from "./token";
-import { ConstructFetchInput } from "./types";
+import { Address } from './token';
+import { ConstructFetchInput } from './types';
 
 type GetSpender = () => Promise<Address>;
 
@@ -22,7 +22,7 @@ export const constructGetSpender = ({
   const getSpender: GetSpender = async () => {
     const data = await fetcher<AdaptersContractsResult>({
       url: fetchURL,
-      method: "GET",
+      method: 'GET',
     });
 
     return data.TokenTransferProxy;

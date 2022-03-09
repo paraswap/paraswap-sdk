@@ -1,9 +1,9 @@
-import { Token, Address, constructToken, AddressOrSymbol } from "./token";
+import { Token, Address, constructToken, AddressOrSymbol } from './token';
 import {
   ConstructFetchInput,
   TokenApiResponse,
   TokensApiResponse,
-} from "./types";
+} from './types';
 
 type GetBalances = (userAddress: Address) => Promise<Token[]>;
 type GetBalance = (
@@ -32,7 +32,7 @@ export type GetBalancesFunctions = {
   getAllowances: GetAllowances;
 };
 
-const NOT_FOUND_RESPONSE = { message: "Not Found" } as const;
+const NOT_FOUND_RESPONSE = { message: 'Not Found' } as const;
 
 export const constructGetBalances = ({
   apiURL,
@@ -46,7 +46,7 @@ export const constructGetBalances = ({
 
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
-      method: "GET",
+      method: 'GET',
     });
 
     const tokens = data.tokens.map(constructToken);
@@ -59,11 +59,11 @@ export const constructGetBalances = ({
 
     const data = await fetcher<TokenApiResponse>({
       url: fetchURL,
-      method: "GET",
+      method: 'GET',
     });
 
     if (!data.token) {
-      return { message: "Not Found" };
+      return { message: 'Not Found' };
     }
 
     return constructToken(data.token);
@@ -80,7 +80,7 @@ export const constructGetBalances = ({
       .filter((token) =>
         tokenAddressesLowercaseSet.has(token.address.toLowerCase())
       )
-      .map(({ address, allowance = "0" }) => ({
+      .map(({ address, allowance = '0' }) => ({
         tokenAddress: address,
         allowance,
       }));
@@ -91,11 +91,11 @@ export const constructGetBalances = ({
   const getAllowance: GetAllowance = async (userAddress, tokenAddress) => {
     const balanceOrNotFound = await getBalance(userAddress, tokenAddress);
 
-    if ("message" in balanceOrNotFound) {
+    if ('message' in balanceOrNotFound) {
       return balanceOrNotFound;
     }
 
-    const { address, allowance = "0" } = balanceOrNotFound;
+    const { address, allowance = '0' } = balanceOrNotFound;
 
     return { tokenAddress: address, allowance };
   };
