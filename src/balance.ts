@@ -63,7 +63,7 @@ export const constructGetBalances = ({
     });
 
     if (!data.token) {
-      return { message: 'Not Found' };
+      return NOT_FOUND_RESPONSE;
     }
 
     return constructToken(data.token);
