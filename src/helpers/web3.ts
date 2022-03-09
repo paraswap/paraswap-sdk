@@ -1,9 +1,10 @@
 import type { Address, ContractCallerFunction } from '../types';
 import Web3 from 'web3';
+import { TransactionReceipt } from 'web3-eth';
 import { AbiItem } from 'web3-utils';
 import { assert } from 'ts-essentials';
 import { assertContractHasMethods } from './misc';
-import { ContractSendMethod, SendOptions } from 'web3-eth-contract';
+import { SendOptions, CallOptions } from 'web3-eth-contract';
 
 export const constructContractCaller = (
   web3: Web3,
@@ -24,17 +25,14 @@ export const constructContractCaller = (
 
       const { block, gas, ...restOverrides } = overrides;
 
-      const normalizedOverrides = {
+      const normalizedOverrides: CallOptions = {
         ...restOverrides,
-        blockTag: block,
         gas,
       };
 
-      const preparedCall = contract.methods[contractMethod](
-        ...args
-      ) as ContractSendMethod;
-
-      return preparedCall.call(normalizedOverrides);
+      return contract.methods[contractMethod](...args).call(
+        normalizedOverrides
+      );
     }
 
     assert(account, 'account must be specified to create a signer');
@@ -59,19 +57,11 @@ export const constructContractCaller = (
       gas: gas,
     };
 
-    const preparedCall = contract.methods[contractMethod](
-      ...args
-    ) as ContractSendMethod;
+    const transactionReceipt: TransactionReceipt = await contract.methods[
+      contractMethod
+    ](...args).send(normalizedOverrides);
 
-    return new Promise<string>((resolve, reject) => {
-      preparedCall.send(normalizedOverrides, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+    return transactionReceipt.transactionHash;
   };
 
   return contractCallerFunction;
