@@ -16,7 +16,7 @@ export const constructContractCaller = (
       const { address, abi, contractMethod, args, overrides } = params;
 
       const contract = new web3.eth.Contract(
-        abi as unknown as AbiItem[], // FIXME abi types ethers dependant
+        abi as AbiItem[], // FIXME abi types ethers dependant
         address
       );
 
