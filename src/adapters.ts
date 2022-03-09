@@ -22,7 +22,7 @@ interface GetAdapternsFunc {
   (options: OptionsListNamesOnly): Promise<AdaptersAsStrings>;
 }
 
-export type ConstructAdaptersFunctions = {
+export type AdaptersFunctions = {
   getAdapters: GetAdapternsFunc;
 };
 
@@ -30,7 +30,7 @@ export const constructGetAdapters = ({
   apiURL,
   network,
   fetcher,
-}: ConstructFetchInput): ConstructAdaptersFunctions => {
+}: ConstructFetchInput): AdaptersFunctions => {
   async function getAdapters(options: OptionsObject): Promise<AdaptersAsObject>;
   async function getAdapters(options: OptionsList): Promise<AdaptersAsList>;
   async function getAdapters(
