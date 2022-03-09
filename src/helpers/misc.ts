@@ -54,5 +54,5 @@ export const constructSearchString = <U extends Record<string, unknown>>(
   const queryString = new URLSearchParams(queryEntries).toString();
 
   // returns empty string or `?${string}`
-  return queryString && (`?${queryString}` as const);
+  return queryString && `?${queryString}`;
 };
