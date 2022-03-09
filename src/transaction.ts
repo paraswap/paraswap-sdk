@@ -25,11 +25,14 @@ interface BuildTxInput {
   destAmount: PriceString;
   priceRoute: OptimalRate;
   userAddress: Address;
-  partner: string;
+  partner?: string;
+  partnerAddress?: string;
+  partnerFeeBps?: number;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;
   permit?: string;
+  deadline?: string;
 }
 
 type BuildOptionsBase = {
