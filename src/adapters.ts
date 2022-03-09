@@ -14,12 +14,18 @@ type OptionsObject = { type: 'object' };
 type OptionsList = { type: 'list'; namesOnly?: false };
 type OptionsListNamesOnly = { type: 'list'; namesOnly: true };
 
-type AllAdaptersOptions = OptionsObject | OptionsList | OptionsListNamesOnly;
+export type AllAdaptersOptions =
+  | OptionsObject
+  | OptionsList
+  | OptionsListNamesOnly;
 
 interface GetAdapternsFunc {
   (options: OptionsObject): Promise<AdaptersAsObject>;
   (options: OptionsList): Promise<AdaptersAsList>;
   (options: OptionsListNamesOnly): Promise<AdaptersAsStrings>;
+  (options: AllAdaptersOptions): Promise<
+    AdaptersAsObject | AdaptersAsList | AdaptersAsStrings
+  >;
 }
 
 export type AdaptersFunctions = {
@@ -36,6 +42,9 @@ export const constructGetAdapters = ({
   async function getAdapters(
     options: OptionsListNamesOnly
   ): Promise<AdaptersAsStrings>;
+  async function getAdapters(
+    options: AllAdaptersOptions
+  ): Promise<AdaptersAsObject | AdaptersAsList | AdaptersAsStrings>;
   async function getAdapters(
     options: AllAdaptersOptions
   ): Promise<AdaptersAsObject | AdaptersAsList | AdaptersAsStrings> {
