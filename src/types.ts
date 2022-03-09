@@ -1,4 +1,5 @@
 import type { JsonFragment } from '@ethersproject/abi';
+import { OptimalRate } from 'paraswap-core';
 import { Address, Token, TxHash } from './token';
 
 export type { Address, Token, TxHash };
@@ -89,3 +90,13 @@ export type NoExtraKeysCheck<Checking, CheckAgainst> = Exclude<
 > extends never
   ? Checking
   : never;
+
+export type PriceRouteApiResponse = {
+  priceRoute: OptimalRate;
+};
+
+export type PriceRouteApiErrorResponse =
+  | {
+      error: string;
+    }
+  | { error: string; value: string; priceRoute: OptimalRate };
