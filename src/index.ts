@@ -23,12 +23,6 @@ import {
 } from './types';
 import { UnionToIntersection } from 'ts-essentials';
 
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('dev only output');
-  }
-  return a + b;
-};
 export * from './constants';
 
 // can import these individually
