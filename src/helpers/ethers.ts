@@ -1,5 +1,5 @@
 import type { Address, ContractCallerFunction, NoExtraKeysCheck } from "../types";
-import type { Web3Provider } from "@ethersproject/providers";
+import { JsonRpcProvider, BaseProvider } from "@ethersproject/providers";
 import {
   Contract,
   PayableOverrides,
@@ -10,7 +10,7 @@ import { assertContractHasMethods } from "./misc";
 import { assert } from "ts-essentials";
 
 export const constructContractCaller = (
-  ethers: Web3Provider,
+  ethers: BaseProvider,
   account?: Address
 ): ContractCallerFunction => {
   const contractCallerFunction: ContractCallerFunction = async (params) => {
@@ -43,6 +43,7 @@ export const constructContractCaller = (
     }
 
     assert(account, "account must be specified to create a signer");
+    assert(ethers instanceof JsonRpcProvider, "ethers must be an instance of JsonRpcProvider to create a signer");
 
     const { address, abi, contractMethod, args, overrides } = params;
 
