@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { constructSDK } from '..';
