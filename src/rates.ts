@@ -11,7 +11,7 @@ export enum PricingMethod {
   simplepath = 'simplepath',
 }
 
-type RateOptions = {
+export type RateOptions = {
   excludeDEXS?: string;
   includeDEXS?: string;
   excludePools?: string;

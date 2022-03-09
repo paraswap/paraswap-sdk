@@ -11,7 +11,7 @@ type GetBalance = (
   tokenAddressOrSymbol: AddressOrSymbol
 ) => Promise<Token | typeof NOT_FOUND_RESPONSE>;
 
-interface Allowance {
+export interface Allowance {
   tokenAddress: Address;
   allowance: string;
 }
