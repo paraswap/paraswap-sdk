@@ -31,6 +31,7 @@ export const constructApproveToken = (
     tokenAddress,
     overrides = {}
   ) => {
+    // @TODO consider caching `spender`
     const spender = await getSpender();
 
     const { default: ERC20_ABI } = await import('./abi/ERC20.json');
