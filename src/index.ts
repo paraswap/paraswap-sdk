@@ -1,7 +1,8 @@
 import { constructApproveToken, ApproveTokenFunctions } from './approve';
 import { constructGetBalances, GetBalancesFunctions } from './balance';
 import { constructGetSpender, GetSpenderFunctions } from './spender';
-import { constructGetAdapters, ConstructAdaptersFunctions } from './adapters';
+import { constructGetAdapters, AdaptersFunctions } from './adapters';
+import { constructGetRate, GetRateFunctions } from './rates';
 import {
   constructGetTokens,
   constructToken,
@@ -51,7 +52,7 @@ export type {
   BuildTxFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
-  ConstructAdaptersFunctions,
+  AdaptersFunctions as ConstructAdaptersFunctions,
   Token,
   Address,
   PriceString,
@@ -64,7 +65,8 @@ export type AllSDKMethods = GetBalancesFunctions &
   GetSpenderFunctions &
   ApproveTokenFunctions &
   BuildTxFunctions &
-  ConstructAdaptersFunctions;
+  AdaptersFunctions &
+  GetRateFunctions;
 
 type AnyFunction = (...args: any[]) => any;
 
@@ -103,5 +105,6 @@ export const constructSDK = (config: SDKConfig): AllSDKMethods =>
     constructGetSpender,
     constructApproveToken,
     constructBuildTx,
-    constructGetAdapters
+    constructGetAdapters,
+    constructGetRate
   );
