@@ -43,6 +43,7 @@ type Fetch = typeof fetch;
 
 const API_URL = 'https://apiv5.paraswap.io';
 
+/** @deprecated */
 export class ParaSwap {
   sdk: Partial<AllSDKMethods> = {};
   fetcher: FetcherFunction;
@@ -299,9 +300,9 @@ export class ParaSwap {
     amount: PriceString,
     userAddress: Address,
     tokenAddresses: Address[],
-    _provider?: any
+    /** @deprecated */
+    _provider?: any // not used, can't detect if Ethers or Web3 provider without importing them
   ): Promise<string[] | APIError> {
-    // @TODO reinit sdk with provider if given
     // @TODO expand sendOptions
     assert(
       this.sdk.approveTokenBulk,
@@ -319,10 +320,10 @@ export class ParaSwap {
     amount: PriceString,
     userAddress: Address,
     tokenAddress: Address,
-    _provider?: any,
+    /** @deprecated */
+    _provider?: any, // not used, can't detect if Ethers or Web3 provider without importing them
     sendOptions?: Omit<SendOptions, 'from'>
   ): Promise<string | APIError> {
-    // @TODO reinit sdk with provider if given
     // @TODO expand sendOptions
     assert(this.sdk.approveToken, 'sdk must be initialized with a provider');
     try {
