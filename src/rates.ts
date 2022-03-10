@@ -22,6 +22,7 @@ export type RateOptions = {
   partner?: string;
   maxImpact?: number;
   maxUSDImpact?: number;
+  otherExchangePrices?: boolean;
 };
 
 type CommonGetRateInput = {
@@ -138,6 +139,7 @@ type CommonGetRateResult = {
   maxUSDImpact?: number;
   userAddress?: string;
   partner: string;
+  otherExchangePrices?: boolean;
 };
 function commonGetRateOptionsGetter({
   options = {},
