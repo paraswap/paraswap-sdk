@@ -32,6 +32,7 @@ import type { AddressOrSymbol, Token } from './token';
 import type { Allowance } from './balance';
 // @TODO remove hard dependency on axios and deal with FetchErrors only
 import axios from 'axios';
+import { FetcherFunction } from './types';
 
 type APIError = {
   message: string;
@@ -44,14 +45,15 @@ const API_URL = 'https://apiv5.paraswap.io';
 
 export class ParaSwap {
   sdk: Partial<AllSDKMethods> = {};
+  fetcher: FetcherFunction;
 
   constructor(
     private network: number = 1,
     private apiURL: string = API_URL,
     public web3Provider?: Web3,
-    public ethersProvider?: BaseProvider,
-    axios?: AxiosStatic,
-    fetch?: Fetch
+    public ethersProvider?: BaseProvider, // need to be a provider with signer for approve requests
+    public axios?: AxiosStatic,
+    public fetch?: Fetch
   ) {
     const fetcher = axios
       ? constructAxiosFetcher(axios)
@@ -60,6 +62,7 @@ export class ParaSwap {
       : null;
 
     assert(fetcher, 'at least one fetcher is needed');
+    this.fetcher = fetcher;
 
     if (!web3Provider && !ethersProvider) {
       this.sdk = constructPartialSDK(
@@ -111,14 +114,31 @@ export class ParaSwap {
   //   }
   // }
 
-  setWeb3Provider(web3Provider: any): this {
-    // @TODO reinit sdk with provider
+  setWeb3Provider(web3Provider: Web3): this {
+    const contractCaller = constructWeb3ContractCaller(web3Provider);
+    const { apiURL, network, fetcher } = this;
 
-    // if (!web3Provider.eth) {
-    //   this.web3Provider = new Web3(web3Provider);
-    // } else {
-    //   this.web3Provider = web3Provider;
-    // }
+    this.sdk = constructSDK({
+      fetcher,
+      contractCaller,
+      apiURL,
+      network,
+    });
+
+    return this;
+  }
+
+  setEthersProvider(ethersProvider: BaseProvider): this {
+    const contractCaller = constructEthersContractCaller(ethersProvider);
+    const { apiURL, network, fetcher } = this;
+
+    this.sdk = constructSDK({
+      fetcher,
+      contractCaller,
+      apiURL,
+      network,
+    });
+
     return this;
   }
 
