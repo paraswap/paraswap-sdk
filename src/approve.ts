@@ -25,14 +25,16 @@ export const constructApproveToken = (
   options: ConstructProviderFetchInput
 ): ApproveTokenFunctions => {
   const { getSpender } = constructGetSpender(options);
+  // cached for the same instance of `approveToken = constructApproveToken()`
+  // so should persist across same apiUrl & network
+  let _spender: string | undefined;
 
   const approveToken: ApproveToken = async (
     amount,
     tokenAddress,
     overrides = {}
   ) => {
-    // @TODO consider caching `spender`
-    const spender = await getSpender();
+    const spender = _spender || (_spender = await getSpender(signal));
 
     const { default: ERC20_ABI } = await import('./abi/ERC20.json');
 
