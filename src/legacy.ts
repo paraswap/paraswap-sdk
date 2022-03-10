@@ -34,7 +34,7 @@ import type { AddressOrSymbol, Token } from './token';
 import type { Allowance } from './balance';
 import type { FetcherFunction } from './types';
 
-type APIError = {
+export type APIError = {
   message: string;
   status?: number;
   data?: any;

@@ -113,3 +113,5 @@ export const constructSDK = (config: SDKConfig): AllSDKMethods =>
     constructGetAdapters,
     constructGetRate
   );
+
+export { ParaSwap } from './legacy';
