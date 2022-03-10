@@ -35,7 +35,7 @@ export const constructContractCaller = (
       );
     }
 
-    assert(account, 'account must be specified to create a signer');
+    // assert(account, 'account must be specified to create a signer');
     // FIXME: how to assert properly if user passed signer
 
     const { address, abi, contractMethod, args, overrides } = params;
@@ -49,11 +49,13 @@ export const constructContractCaller = (
 
     const { gas, from, ...restOverrides } = overrides;
 
-    assert(from, 'from is required');
+    const _from = from || account;
+
+    assert(_from, 'from is required');
 
     const normalizedOverrides: SendOptions = {
       ...restOverrides,
-      from,
+      from: _from,
       gas: gas,
     };
 
