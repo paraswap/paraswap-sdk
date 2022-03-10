@@ -1,23 +1,18 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
-import qs from 'qs';
-import * as _ from 'lodash';
 import axios from 'axios';
-import { ParaSwap, OptimalRates, Token, APIError, Transaction } from '../src';
+import { Address, ParaSwap, PriceString, Token } from '../src';
 import BigNumber from 'bignumber.js';
-import {
-  Adapters,
-  Allowance,
-  OptimalRatesWithPartnerFees,
-  AddressOrSymbol,
-  PriceString,
-  RateOptions,
-  Address,
-  BuildOptions,
-} from '../src/types';
 import { SwapSide } from '../src';
-const erc20abi = require('../src/abi/erc20.json');
+import { OptimalRate, Adapters } from 'paraswap-core';
+import { Allowance } from '../src/balance';
+import { APIError } from '../src/legacy';
+import { RateOptions } from '../src/rates';
+import { AddressOrSymbol } from '../src/token';
+import { BuildOptions, TransactionParams } from '../src/transaction';
+import { constructSearchString } from '../src/helpers/misc';
+import erc20abi from '../src/abi/ERC20.json';
 
 dotenv.config();
 
@@ -40,27 +35,25 @@ const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its d
 const senderAddress =
   process.env.SENDER_ADDRESS || '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const referrer = 'sdk-test';
-const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A';
+// const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A';
 
 const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
 
 const ethersProvider = new ethers.providers.JsonRpcProvider(PROVIDER_URL);
 
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY).connect(
-  ethersProvider,
+  ethersProvider
 );
 
 async function getRateLegacy(
   srcToken: AddressOrSymbol,
   destToken: AddressOrSymbol,
   amount: PriceString,
-  options?: RateOptions,
-): Promise<OptimalRatesWithPartnerFees | APIError> {
+  options?: RateOptions
+): Promise<OptimalRate | APIError> {
   const { excludeDEXS, includeDEXS } = options || {};
 
-  const query = _.isEmpty(options)
-    ? ''
-    : qs.stringify({ excludeDEXS, includeDEXS });
+  const query = constructSearchString({ excludeDEXS, includeDEXS });
 
   const pricesURL = `${API_URL}/prices/?from=${srcToken}&to=${destToken}&amount=${amount}${
     query ? '&' + query : ''
@@ -74,13 +67,13 @@ async function buildTxLegacy(
   destToken: Address,
   srcAmount: PriceString,
   destAmount: PriceString,
-  priceRoute: OptimalRatesWithPartnerFees,
+  priceRoute: OptimalRate,
   userAddress: Address,
   referrer: string,
   receiver?: Address,
-  options: BuildOptions = {},
+  options: BuildOptions = {}
 ) {
-  const query = _.isEmpty(options) ? '' : qs.stringify(options);
+  const query = constructSearchString(options);
 
   const txURL = `${API_URL}/transactions/1/?${query}`;
 
@@ -96,19 +89,25 @@ async function buildTxLegacy(
   };
 
   const { data } = await axios.post(txURL, txConfig);
-  return data as Transaction;
+  return data as TransactionParams;
 }
 
 describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
-    paraSwap = new ParaSwap(network, API_URL).setWeb3Provider(provider);
-
+    paraSwap = new ParaSwap(
+      network,
+      API_URL,
+      undefined,
+      undefined,
+      axios
+    ).setWeb3Provider(provider);
+    // @ts-expect-error
     paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
 
-  afterAll(async done => {
+  afterAll((done) => {
     done();
   });
 
@@ -119,7 +118,7 @@ describe('ParaSwap SDK', () => {
 
   test('Get_Markets', async () => {
     const markets = await paraSwap.getMarketNames();
-    expect((<string[]>markets).length).toBeGreaterThan(15);
+    expect((markets as string[]).length).toBeGreaterThan(15);
   });
 
   test('Get_Tokens', async () => {
@@ -129,7 +128,13 @@ describe('ParaSwap SDK', () => {
 
     expect(Array.isArray(tokens)).toBe(true);
     expect(tokens.length).toBeGreaterThan(0);
-    expect(tokens[0]).toBeInstanceOf(Token);
+    expect(tokens[0]).toEqual(
+      expect.objectContaining({
+        symbol: expect.any(String),
+        address: expect.any(String),
+        decimals: expect.any(Number),
+      })
+    );
   });
 
   test('Get_Rates', async () => {
@@ -137,10 +142,11 @@ describe('ParaSwap SDK', () => {
       'ETH',
       'DAI',
       srcAmount,
+      senderAddress,
       SwapSide.SELL,
-      { includeDEXS: 'UniswapV2' },
+      { includeDEXS: 'UniswapV2', otherExchangePrices: true }
     );
-    const priceRoute = ratesOrError as OptimalRates;
+    const priceRoute = ratesOrError as OptimalRate;
 
     const { destAmount, bestRoute, others } = priceRoute;
 
@@ -148,41 +154,44 @@ describe('ParaSwap SDK', () => {
 
     expect(Array.isArray(bestRoute)).toBe(true);
 
-    expect(typeof bestRoute[0].destAmount).toBe('string');
-    expect(new BigNumber(bestRoute[0].destAmount).isNaN()).toBe(false);
+    const swapExchange = bestRoute[0]?.swaps[0]?.swapExchanges[0];
 
-    expect(typeof bestRoute[0].exchange).toBe('string');
+    expect(swapExchange).toBeDefined();
 
-    expect(typeof bestRoute[0].percent).toBe('string');
+    expect(typeof swapExchange.destAmount).toBe('string');
+    expect(new BigNumber(swapExchange.destAmount).isNaN()).toBe(false);
+
+    expect(typeof swapExchange.exchange).toBe('string');
+
+    expect(typeof bestRoute[0].percent).toBe('number');
     expect(new BigNumber(bestRoute[0].percent).isNaN()).toBe(false);
 
-    expect(typeof bestRoute[0].srcAmount).toBe('string');
-    expect(new BigNumber(bestRoute[0].srcAmount).isNaN()).toBe(false);
+    expect(typeof swapExchange.srcAmount).toBe('string');
+    expect(new BigNumber(swapExchange.srcAmount).isNaN()).toBe(false);
 
     expect(Array.isArray(others)).toBe(true);
 
     expect(typeof others![0].exchange).toBe('string');
 
-    expect(typeof others![0].rate).toBe('string');
-    expect(new BigNumber(others![0].rate).isNaN()).toBe(false);
-
     expect(typeof others![0].unit).toBe('string');
-    expect(new BigNumber(<string>others![0].unit).isNaN()).toBe(false);
+    expect(new BigNumber(others![0].unit as string).isNaN()).toBe(false);
   });
 
   test('Get_Spender', async () => {
-    const spender = await paraSwap.getSpender();
+    const spender = await paraSwap.getTokenTransferProxy();
     expect(provider.utils.isAddress(spender as string));
   });
 
   test('Get_Allowance', async () => {
     const allowance = await paraSwap.getAllowance(senderAddress, DAI);
 
-    if (!allowance || (<APIError>allowance).message) {
+    if (!allowance || (allowance as APIError).message) {
       return;
     }
 
-    expect(new BigNumber((<Allowance>allowance).allowance).isNaN()).toBe(false);
+    expect(new BigNumber((allowance as Allowance).allowance).isNaN()).toBe(
+      false
+    );
   });
 
   test('Get_Allowances', async () => {
@@ -195,9 +204,9 @@ describe('ParaSwap SDK', () => {
     const allowances = allowancesOrError as Allowance[];
 
     await Promise.all(
-      allowances.map(allowance =>
-        expect(new BigNumber(allowance.allowance).isNaN()).toBe(false),
-      ),
+      allowances.map((allowance) =>
+        expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
+      )
     );
   });
 
@@ -206,30 +215,36 @@ describe('ParaSwap SDK', () => {
 
     const adapters = adaptersOrError as Adapters;
 
-    // expect(adapters.augustus.exchange).toBeDefined();
-    expect(adapters.uniswap.exchange).toBeDefined();
-    expect(adapters.uniswap.targetExchange).toBeDefined();
-    // expect(adapters.kyber.exchange).toBeDefined();
-    // expect(adapters.kyber.targetExchange).toBeDefined();
+    expect(adapters.paraswappool[0].adapter).toBeDefined();
+    expect(adapters.uniswap[0].adapter).toBeDefined();
+    expect(adapters.uniswap[0].index).toBeDefined();
+    expect(adapters.kyber[0].adapter).toBeDefined();
+    expect(adapters.kyber[0].index).toBeDefined();
   });
 
   test('Build_Tx', async () => {
+    const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
     const ratesOrError = await paraSwap.getRate(
       srcToken,
-      '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+      destToken,
       srcAmount,
+      senderAddress,
       SwapSide.SELL,
-      { includeDEXS: 'Uniswap' },
+      { includeDEXS: 'UniswapV2' }
     );
 
     expect((ratesOrError as APIError)?.data?.error).toBeUndefined();
 
-    const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+    const priceRoute = ratesOrError as OptimalRate;
 
     const destAmount = new BigNumber(priceRoute.destAmount)
       .times(0.99)
-      .toFixed();
+      .toFixed(0);
 
+    console.log(
+      '🚀 ~ file: index.test.ts ~ line 253 ~ test ~ senderAddress',
+      senderAddress
+    );
     const txOrError = await paraSwap.buildTx(
       srcToken,
       destToken,
@@ -239,7 +254,9 @@ describe('ParaSwap SDK', () => {
       senderAddress,
       referrer,
       undefined,
-      { ignoreChecks: true },
+      undefined,
+      undefined,
+      { ignoreChecks: true }
     );
 
     expect(txOrError.data.error).toBeUndefined();
@@ -251,10 +268,11 @@ describe('ParaSwap SDK', () => {
         srcToken,
         destToken,
         srcAmount,
+        senderAddress,
         SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
       );
-      const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+      const priceRoute = ratesOrError as OptimalRate;
       const destAmount = new BigNumber(priceRoute.destAmount)
         .times(0.99)
         .toFixed();
@@ -268,9 +286,11 @@ describe('ParaSwap SDK', () => {
         signer.address,
         referrer,
         undefined,
-        { ignoreChecks: true },
+        undefined,
+        undefined,
+        { ignoreChecks: true }
       );
-      const transaction = txOrError as Transaction;
+      const transaction = txOrError as TransactionParams;
       expect(typeof transaction).toBe('object');
     });
     test('Build_and_Send_Tx', async () => {
@@ -278,10 +298,11 @@ describe('ParaSwap SDK', () => {
         srcToken,
         destToken,
         srcAmount,
+        senderAddress,
         SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
       );
-      const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+      const priceRoute = ratesOrError as OptimalRate;
       const destAmount = new BigNumber(priceRoute.destAmount)
         .times(0.99)
         .toFixed();
@@ -295,23 +316,29 @@ describe('ParaSwap SDK', () => {
         signer.address,
         referrer,
         undefined,
-        { ignoreChecks: true },
+        undefined,
+        undefined,
+        { ignoreChecks: true }
       );
-      const _tx = txOrError as Transaction;
+      const _tx = txOrError as TransactionParams;
       const transaction = {
         ..._tx,
         chainId: 1337,
-        gasPrice: '0x' + new BigNumber((<any>_tx).gasPrice).toString(16),
+        gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
         value: '0x' + new BigNumber(_tx.value).toString(16),
       };
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
-        ethersProvider,
+        ethersProvider
       );
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
+
+      // disable write calls for now
+      return;
+
       const txr = await signer.sendTransaction(transaction);
       await txr.wait(1);
       const afterFromBalance = await ethersProvider.getBalance(signer.address);
@@ -325,10 +352,11 @@ describe('ParaSwap SDK', () => {
         srcToken,
         destToken,
         destAmount,
+        senderAddress,
         SwapSide.BUY,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
       );
-      const priceRoute = ratesOrError as OptimalRatesWithPartnerFees;
+      const priceRoute = ratesOrError as OptimalRate;
       const _srcAmount = new BigNumber(priceRoute.srcAmount)
         .times(0.99)
         .toFixed(0);
@@ -342,23 +370,29 @@ describe('ParaSwap SDK', () => {
         signer.address,
         referrer,
         undefined,
-        { ignoreChecks: true },
+        undefined,
+        undefined,
+        { ignoreChecks: true }
       );
-      const _tx = txOrError as Transaction;
+      const _tx = txOrError as TransactionParams;
       const transaction = {
         ..._tx,
         chainId: 1337,
-        gasPrice: '0x' + new BigNumber((<any>_tx).gasPrice).toString(16),
+        gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
         value: '0x' + new BigNumber(_tx.value).toString(16),
       };
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
-        ethersProvider,
+        ethersProvider
       );
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
+
+      // disable write calls for now
+      return;
+
       const txr = await signer.sendTransaction(transaction);
       await txr.wait(1);
       const afterFromBalance = await ethersProvider.getBalance(signer.address);
@@ -382,23 +416,27 @@ describe('ParaSwap SDK', () => {
         signer.address,
         referrer,
         undefined,
-        { ignoreChecks: true },
+        { ignoreChecks: true }
       );
-      const _tx = txOrError as Transaction;
+      const _tx = txOrError as TransactionParams;
       const transaction = {
         ..._tx,
         chainId: 1337,
-        gasPrice: '0x' + new BigNumber((<any>_tx).gasPrice).toString(16),
+        gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
         value: '0x' + new BigNumber(_tx.value).toString(16),
       };
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
-        ethersProvider,
+        ethersProvider
       );
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
+
+      // disable write calls for now
+      return;
+
       const txr = await signer.sendTransaction(transaction);
       await txr.wait(1);
       const afterFromBalance = await ethersProvider.getBalance(signer.address);
