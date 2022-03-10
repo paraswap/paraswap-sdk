@@ -25,14 +25,14 @@ import {
   constructEthersContractCaller,
   constructFetchFetcher,
   constructWeb3ContractCaller,
+  isFetcherError,
 } from './helpers';
+
 import type { RateOptions } from './rates';
 import type { BuildOptions, TransactionParams } from './transaction';
 import type { AddressOrSymbol, Token } from './token';
 import type { Allowance } from './balance';
-// @TODO remove hard dependency on axios and deal with FetchErrors only
-import axios from 'axios';
-import { FetcherFunction } from './types';
+import type { FetcherFunction } from './types';
 
 type APIError = {
   message: string;
@@ -91,8 +91,8 @@ export class ParaSwap {
   }
 
   private handleAPIError(e: unknown): APIError {
-    // @TODO handle FetcherError to account for `fetch`
-    if (!axios.isAxiosError(e)) {
+    // @CONSIDER if some errors should not be replaced
+    if (!isFetcherError(e)) {
       return { message: `Unknown error: ${e}` };
     }
 
@@ -187,7 +187,7 @@ export class ParaSwap {
         destDecimals,
       });
     } catch (e) {
-      // @TODO this overrides any non AxiosError,
+      // @TODO this overrides any non FetchError,
       // including Error('Invalid DEX list')
       return this.handleAPIError(e);
     }
