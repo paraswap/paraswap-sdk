@@ -5,7 +5,8 @@ import { ConstructProviderFetchInput, TxSendOverrides } from './types';
 type ApproveToken = (
   amount: PriceString,
   tokenAddress: Address,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<TxHash>;
 
 type ApproveTokenBulk = (
@@ -32,7 +33,8 @@ export const constructApproveToken = (
   const approveToken: ApproveToken = async (
     amount,
     tokenAddress,
-    overrides = {}
+    overrides = {},
+    signal
   ) => {
     const spender = _spender || (_spender = await getSpender(signal));
 

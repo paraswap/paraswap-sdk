@@ -38,13 +38,19 @@ type GetRateInput = CommonGetRateInput & {
   destToken: AddressOrSymbol;
 };
 
-type GetRate = (options: GetRateInput) => Promise<OptimalRate>;
+type GetRate = (
+  options: GetRateInput,
+  signal?: AbortSignal
+) => Promise<OptimalRate>;
 
 type GetRateByRouteInput = CommonGetRateInput & {
   route: AddressOrSymbol[];
 };
 
-type GetRateByRoute = (options: GetRateByRouteInput) => Promise<OptimalRate>;
+type GetRateByRoute = (
+  options: GetRateByRouteInput,
+  signal?: AbortSignal
+) => Promise<OptimalRate>;
 
 export type GetRateFunctions = {
   getRate: GetRate;
@@ -63,7 +69,7 @@ export const constructGetRate = ({
 }: ConstructFetchInput): GetRateFunctions => {
   const pricesUrl = `${apiURL}/prices/`;
 
-  const getRate: GetRate = async ({ srcToken, destToken, ...rest }) => {
+  const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
     const parsedOptions = commonGetRateOptionsGetter(rest);
 
     const search = constructSearchString({
@@ -78,12 +84,13 @@ export const constructGetRate = ({
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     return data.priceRoute;
   };
 
-  const getRateByRoute: GetRateByRoute = async ({ route, ...rest }) => {
+  const getRateByRoute: GetRateByRoute = async ({ route, ...rest }, signal) => {
     if (route.length < 2) {
       throw new Error(INVALID_ROUTE);
     }
@@ -103,6 +110,7 @@ export const constructGetRate = ({
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     return data.priceRoute;

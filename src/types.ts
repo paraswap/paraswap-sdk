@@ -12,6 +12,7 @@ export interface ConstructBaseInput {
 interface FetcherInputBase {
   url: string;
   headers?: Record<string, string>;
+  signal?: AbortSignal;
 }
 export interface FetcherGetInput extends FetcherInputBase {
   method: 'GET';

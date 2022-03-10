@@ -5,10 +5,14 @@ import {
   TokensApiResponse,
 } from './types';
 
-type GetBalances = (userAddress: Address) => Promise<Token[]>;
+type GetBalances = (
+  userAddress: Address,
+  signal?: AbortSignal
+) => Promise<Token[]>;
 type GetBalance = (
   userAddress: Address,
-  tokenAddressOrSymbol: AddressOrSymbol
+  tokenAddressOrSymbol: AddressOrSymbol,
+  signal?: AbortSignal
 ) => Promise<Token | typeof NOT_FOUND_RESPONSE>;
 
 export interface Allowance {
@@ -18,11 +22,13 @@ export interface Allowance {
 
 type GetAllowances = (
   userAddress: Address,
-  tokenAddresses: Address[]
+  tokenAddresses: Address[],
+  signal?: AbortSignal
 ) => Promise<Allowance[]>;
 type GetAllowance = (
   userAddress: Address,
-  tokenAddress: Address
+  tokenAddress: Address,
+  signal?: AbortSignal
 ) => Promise<Allowance | typeof NOT_FOUND_RESPONSE>;
 
 export type GetBalancesFunctions = {
@@ -41,12 +47,13 @@ export const constructGetBalances = ({
 }: ConstructFetchInput): GetBalancesFunctions => {
   const tokensUrl = `${apiURL}/users/tokens/${network}`;
 
-  const getBalances: GetBalances = async (userAddress) => {
+  const getBalances: GetBalances = async (userAddress, signal) => {
     const fetchURL = `${tokensUrl}/${userAddress}`;
 
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     const tokens = data.tokens.map(constructToken);
@@ -54,12 +61,17 @@ export const constructGetBalances = ({
     return tokens;
   };
 
-  const getBalance: GetBalance = async (userAddress, tokenAddressOrSymbol) => {
+  const getBalance: GetBalance = async (
+    userAddress,
+    tokenAddressOrSymbol,
+    signal
+  ) => {
     const fetchURL = `${tokensUrl}/${userAddress}/${tokenAddressOrSymbol}`;
 
     const data = await fetcher<TokenApiResponse>({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     if (!data.token) {
@@ -69,12 +81,16 @@ export const constructGetBalances = ({
     return constructToken(data.token);
   };
 
-  const getAllowances: GetAllowances = async (userAddress, tokenAddresses) => {
+  const getAllowances: GetAllowances = async (
+    userAddress,
+    tokenAddresses,
+    signal
+  ) => {
     const tokenAddressesLowercaseSet = new Set(
       tokenAddresses.map((address) => address.toLowerCase())
     );
 
-    const balances = await getBalances(userAddress);
+    const balances = await getBalances(userAddress, signal);
 
     const allowances: Allowance[] = balances
       .filter((token) =>
@@ -88,8 +104,16 @@ export const constructGetBalances = ({
     return allowances;
   };
 
-  const getAllowance: GetAllowance = async (userAddress, tokenAddress) => {
-    const balanceOrNotFound = await getBalance(userAddress, tokenAddress);
+  const getAllowance: GetAllowance = async (
+    userAddress,
+    tokenAddress,
+    signal
+  ) => {
+    const balanceOrNotFound = await getBalance(
+      userAddress,
+      tokenAddress,
+      signal
+    );
 
     if ('message' in balanceOrNotFound) {
       return balanceOrNotFound;

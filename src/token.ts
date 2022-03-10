@@ -75,7 +75,7 @@ export const constructToken = (tokenProps: ConstructTokenInput): Token => {
   };
 };
 
-type GetTokens = () => Promise<Token[]>;
+type GetTokens = (signal?: AbortSignal) => Promise<Token[]>;
 
 export type GetTokensFunctions = {
   getTokens: GetTokens;
@@ -88,10 +88,11 @@ export const constructGetTokens = ({
 }: ConstructFetchInput): GetTokensFunctions => {
   const fetchURL = `${apiURL}/tokens/${network}`;
 
-  const getTokens: GetTokens = async () => {
+  const getTokens: GetTokens = async (signal) => {
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     const tokens = data.tokens.map(constructToken);

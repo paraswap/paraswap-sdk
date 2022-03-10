@@ -49,7 +49,8 @@ export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 
 type BuildTx = (
   params: BuildTxInput,
-  options?: BuildOptions
+  options?: BuildOptions,
+  signal?: AbortSignal
 ) => Promise<TransactionParams>;
 
 export type BuildTxFunctions = {
@@ -63,7 +64,7 @@ export const constructBuildTx = ({
 }: ConstructFetchInput): BuildTxFunctions => {
   const transactionsURL = `${apiURL}/transactions/${network}`;
 
-  const buildTx: BuildTx = async (params, options = {}) => {
+  const buildTx: BuildTx = async (params, options = {}, signal) => {
     const {
       srcAmount,
       destAmount,
@@ -92,6 +93,7 @@ export const constructBuildTx = ({
       url: fetchURL,
       method: 'POST',
       data: params,
+      signal,
     };
 
     const builtTx = await fetcher<TransactionParams>(fetchParams);

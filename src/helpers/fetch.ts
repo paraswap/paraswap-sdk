@@ -8,10 +8,10 @@ export const constructFetcher =
   (fetch: Fetch): FetcherFunction =>
   async (params) => {
     try {
-      const { url, method } = params;
+      const { url, method, signal } = params;
       const body = method === 'POST' ? JSON.stringify(params.data) : null;
 
-      const response = await fetch(url, { method, body });
+      const response = await fetch(url, { method, body, signal });
 
       const data = await response.json();
 
