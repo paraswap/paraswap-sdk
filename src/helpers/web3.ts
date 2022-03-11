@@ -1,7 +1,11 @@
 import type { Address, ContractCallerFunction } from '../types';
 import type Web3 from 'web3';
 import type { AbiItem } from 'web3-utils';
-import type { ContractSendMethod, SendOptions } from 'web3-eth-contract';
+import type {
+  ContractSendMethod,
+  SendOptions,
+  CallOptions,
+} from 'web3-eth-contract';
 import { assert } from 'ts-essentials';
 import { assertContractHasMethods } from './misc';
 
@@ -24,20 +28,17 @@ export const constructContractCaller = (
 
       const { block, gas, ...restOverrides } = overrides;
 
-      const normalizedOverrides = {
+      const normalizedOverrides: CallOptions = {
         ...restOverrides,
-        blockTag: block,
         gas,
       };
 
-      const preparedCall = contract.methods[contractMethod](
-        ...args
-      ) as ContractSendMethod;
-
-      return preparedCall.call(normalizedOverrides);
+      return contract.methods[contractMethod](...args).call(
+        normalizedOverrides
+      );
     }
 
-    assert(account, 'account must be specified to create a signer');
+    // assert(account, 'account must be specified to create a signer');
     // FIXME: how to assert properly if user passed signer
 
     const { address, abi, contractMethod, args, overrides } = params;
@@ -51,11 +52,13 @@ export const constructContractCaller = (
 
     const { gas, from, ...restOverrides } = overrides;
 
-    assert(from, 'from is required');
+    const _from = from || account;
+
+    assert(_from, 'from is required');
 
     const normalizedOverrides: SendOptions = {
       ...restOverrides,
-      from,
+      from: _from,
       gas: gas,
     };
 
