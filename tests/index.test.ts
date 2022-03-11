@@ -32,8 +32,8 @@ const network = 1;
 const srcToken = ETH;
 const destToken = DAI;
 const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
-const senderAddress =
-  process.env.SENDER_ADDRESS || '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
+// const senderAddress =
+//   process.env.SENDER_ADDRESS || '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
 const referrer = 'sdk-test';
 // const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A';
 
@@ -41,9 +41,8 @@ const provider = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
 
 const ethersProvider = new ethers.providers.JsonRpcProvider(PROVIDER_URL);
 
-const signer = new ethers.Wallet(process.env.PRIVATE_KEY).connect(
-  ethersProvider
-);
+const signer = ethers.Wallet.createRandom().connect(ethersProvider);
+const senderAddress = signer.address;
 
 async function getRateLegacy(
   srcToken: AddressOrSymbol,
@@ -101,6 +100,7 @@ describe('ParaSwap SDK', () => {
       API_URL,
       undefined,
       undefined,
+      senderAddress,
       axios
     ).setWeb3Provider(provider);
     // @ts-expect-error
