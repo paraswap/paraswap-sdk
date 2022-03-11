@@ -27,6 +27,8 @@ jobs:
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
+        env:
+          PROVIDER_URL: ${{ secrets.PROVIDER_URL }}
 
       - name: Build
         run: yarn build
