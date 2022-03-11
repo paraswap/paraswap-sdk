@@ -53,6 +53,7 @@ export class ParaSwap {
     private apiURL: string = API_URL,
     public web3Provider?: Web3,
     public ethersProvider?: BaseProvider, // need to be a provider with signer for approve requests
+    public account?: Address,
     public axios?: AxiosStatic,
     public fetch?: Fetch
   ) {
@@ -80,9 +81,9 @@ export class ParaSwap {
     }
 
     const contractCaller = ethersProvider
-      ? constructEthersContractCaller(ethersProvider)
+      ? constructEthersContractCaller(ethersProvider, account)
       : web3Provider
-      ? constructWeb3ContractCaller(web3Provider)
+      ? constructWeb3ContractCaller(web3Provider, account)
       : null;
 
     if (contractCaller) {
@@ -115,8 +116,8 @@ export class ParaSwap {
   //   }
   // }
 
-  setWeb3Provider(web3Provider: Web3): this {
-    const contractCaller = constructWeb3ContractCaller(web3Provider);
+  setWeb3Provider(web3Provider: Web3, account?: string): this {
+    const contractCaller = constructWeb3ContractCaller(web3Provider, account);
     const { apiURL, network, fetcher } = this;
 
     this.sdk = constructSDK({
@@ -125,12 +126,19 @@ export class ParaSwap {
       apiURL,
       network,
     });
+
+    this.web3Provider = web3Provider;
+    this.ethersProvider = undefined;
+    this.account = account;
 
     return this;
   }
 
-  setEthersProvider(ethersProvider: BaseProvider): this {
-    const contractCaller = constructEthersContractCaller(ethersProvider);
+  setEthersProvider(ethersProvider: BaseProvider, account?: string): this {
+    const contractCaller = constructEthersContractCaller(
+      ethersProvider,
+      account
+    );
     const { apiURL, network, fetcher } = this;
 
     this.sdk = constructSDK({
@@ -139,6 +147,10 @@ export class ParaSwap {
       apiURL,
       network,
     });
+
+    this.web3Provider = undefined;
+    this.ethersProvider = ethersProvider;
+    this.account = account;
 
     return this;
   }
