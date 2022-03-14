@@ -36,7 +36,10 @@ import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } fr
 const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other signer/provider 
 const account = '__signer_address__'
 
-const contractCaller = constructEthersContractCaller(signer, account); // alternatively constructWeb3ContractCaller
+const contractCaller = constructEthersContractCaller({
+  providerOrSigner: signer,
+  Contract: ethers.Contract,
+}, account); // alternatively constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
 const paraswap = constructSDK({

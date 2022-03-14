@@ -25,10 +25,10 @@ import { assert } from 'ts-essentials';
 import {
   constructAxiosFetcher,
   constructFetchFetcher,
+  constructEthersContractCaller,
   constructWeb3ContractCaller,
   isFetcherError,
 } from '../helpers';
-import { constructContractCaller as constructEthersContractCaller } from './ethers_injected';
 
 import type { RateOptions } from '../rates';
 import type { BuildOptions, TransactionParams } from '../transaction';

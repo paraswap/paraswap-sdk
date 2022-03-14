@@ -11,7 +11,10 @@ import {
 const fetcher = constructAxiosFetcher(axios);
 
 const provider = ethers.getDefaultProvider(1);
-const contractCaller = constructEthersContractCaller(provider);
+const contractCaller = constructEthersContractCaller({
+  providerOrSigner: provider,
+  Contract: ethers.Contract,
+});
 
 const paraswap = constructSDK({
   apiURL: '',

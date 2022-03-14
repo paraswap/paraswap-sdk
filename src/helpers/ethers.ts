@@ -3,26 +3,31 @@ import type {
   ContractCallerFunction,
   NoExtraKeysCheck,
 } from '../types';
-import { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
-import { Signer } from '@ethersproject/abstract-signer';
-import {
-  Contract,
+import type { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
+import type { Signer } from '@ethersproject/abstract-signer';
+import type {
+  Contract as EthersContract,
   PayableOverrides,
   CallOverrides,
 } from '@ethersproject/contracts';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
-import { assertContractHasMethods } from './misc';
+import { assertContractHasMethods } from '../helpers/misc';
 import { assert } from 'ts-essentials';
 
+interface EthersProviderDeps {
+  providerOrSigner: BaseProvider | Signer;
+  Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+}
+
 export const constructContractCaller = (
-  ethers: BaseProvider | Signer,
+  { providerOrSigner, Contract }: EthersProviderDeps,
   account?: Address
 ): ContractCallerFunction => {
   const contractCallerFunction: ContractCallerFunction = async (params) => {
     if (params.static) {
       const { address, abi, contractMethod, args, overrides } = params;
 
-      const contract = new Contract(address, abi, ethers);
+      const contract = new Contract(address, abi, providerOrSigner);
 
       assertContractHasMethods(contract, contractMethod);
       // drop keys not in CallOverrides
@@ -49,13 +54,17 @@ export const constructContractCaller = (
 
     assert(account, 'account must be specified to create a signer');
     assert(
-      ethers instanceof JsonRpcProvider || ethers instanceof Signer,
+      isEthersProviderWithSigner(providerOrSigner) ||
+        isEthersSigner(providerOrSigner),
       'ethers must be an instance of Signer or JsonRpcProvider to create a signer'
     );
 
     const { address, abi, contractMethod, args, overrides } = params;
 
-    const signer = 'getSigner' in ethers ? ethers.getSigner(account) : ethers;
+    const signer =
+      'getSigner' in providerOrSigner
+        ? providerOrSigner.getSigner(account)
+        : providerOrSigner;
 
     const contract = new Contract(address, abi, signer);
 
@@ -89,3 +98,21 @@ export const constructContractCaller = (
 
   return contractCallerFunction;
 };
+
+function isEthersProvider(
+  providerOrSigner: BaseProvider | Signer
+): providerOrSigner is BaseProvider {
+  return '_isProvider' in providerOrSigner && providerOrSigner._isProvider;
+}
+
+function isEthersProviderWithSigner(
+  providerOrSigner: JsonRpcProvider | BaseProvider | Signer
+): providerOrSigner is JsonRpcProvider {
+  return isEthersProvider(providerOrSigner) && 'getSigner' in providerOrSigner;
+}
+
+function isEthersSigner(
+  providerOrSigner: BaseProvider | Signer
+): providerOrSigner is Signer {
+  return '_isSigner' in providerOrSigner && providerOrSigner._isSigner;
+}
