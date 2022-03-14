@@ -41,8 +41,7 @@
     },
     {
       "path": "dist/sdk.esm.js",
-      "limit": "25 KB",
-      "ignore": "@ethersproject/*"
+      "limit": "25 KB"
     }
   ],
   "devDependencies": {
