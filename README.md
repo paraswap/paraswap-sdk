@@ -113,7 +113,7 @@ const transactionReceipt = await transactionResponse.wait();
 ```
 
 ## Playground
-Interact with the ParaSwap SDK in CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker?file=/src/App.tsx)
+Interact with the ParaSwap SDK in CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker)
 
 ## Bundle Optimization
 For bundle-size savvy developers, you can construct a lightweight version of this sdk to bring only the functions you need.
