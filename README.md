@@ -33,11 +33,9 @@ import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } fr
 ### Instanciate the ParaSwap object
 
 ```typescript
-const signer = ethers.Wallet // or any other signer/provider 
-                .fromMnmemonic('__your_mnemonic__')
-                .connect(ethers.getDefaultProvider(1)) 
-
+const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other signer/provider 
 const account = '__signer_address__'
+
 const contractCaller = constructEthersContractCaller(signer, account); // alternatively constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
