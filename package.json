@@ -37,7 +37,7 @@
   "size-limit": [
     {
       "path": "dist/sdk.cjs.production.min.js",
-      "limit": "200 KB"
+      "limit": "25 KB"
     },
     {
       "path": "dist/sdk.esm.js",
