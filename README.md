@@ -5,13 +5,13 @@
 </p>
 
 
-## Accompanion SDK of the ParaSwap API
+# Accompanion SDK of the ParaSwap API
 
 Refer to the documentation of the ParaSwap API: https://developers.paraswap.network
 
 
 ## Features
-**Versatility**: it works with both [web3](https://www.npmjs.com/package/web3) and [ethers](https://www.npmjs.com/package/ethers) and without direct dependency
+**Versatility**: works with both [web3](https://www.npmjs.com/package/web3) and [ethers](https://www.npmjs.com/package/ethers) without direct dependency
 
 **Canonicity**: bring only the functions you actually need
 
@@ -111,6 +111,9 @@ const txParams = await paraSwap.buildTx(
 const transactionResponse = await signer.sendTransaction(txParams);
 const transactionReceipt = await transactionResponse.wait();
 ```
+
+## Playground
+Interact with the ParaSwap SDK in CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker?file=/src/App.tsx)
 
 ## Bundle Optimization
 For bundle-size savvy developers, you can construct a lightweight version of this sdk to bring only the functions you need.
