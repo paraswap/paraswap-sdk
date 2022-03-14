@@ -2,15 +2,14 @@
 import axios from 'axios';
 import Web3 from 'web3';
 import { constructSDK } from '..';
-import { constructFetcher } from '../helpers';
+import { constructAxiosFetcher } from '../helpers';
 import { constructContractCaller } from '../helpers/web3';
 
-const fetcher = constructFetcher(axios);
+const fetcher = constructAxiosFetcher(axios);
 const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructContractCaller(web3);
 
 const paraswap = constructSDK({
-  apiURL: '',
   network: 1,
   fetcher,
   contractCaller,

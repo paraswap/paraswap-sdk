@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node: ['14.x', '16.x']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout repo
@@ -27,6 +27,8 @@ jobs:
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
+        env:
+          PROVIDER_URL: ${{ secrets.PROVIDER_URL }}
 
       - name: Build
         run: yarn build

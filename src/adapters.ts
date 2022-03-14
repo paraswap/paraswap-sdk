@@ -1,5 +1,6 @@
 import { ConstructFetchInput } from './types';
 import { constructSearchString } from './helpers/misc';
+import { API_URL } from './constants';
 
 type Adapter = {
   adapter: string;
@@ -14,12 +15,21 @@ type OptionsObject = { type: 'object' };
 type OptionsList = { type: 'list'; namesOnly?: false };
 type OptionsListNamesOnly = { type: 'list'; namesOnly: true };
 
-type AllAdaptersOptions = OptionsObject | OptionsList | OptionsListNamesOnly;
+export type AllAdaptersOptions =
+  | OptionsObject
+  | OptionsList
+  | OptionsListNamesOnly;
 
 interface GetAdapternsFunc {
-  (options: OptionsObject): Promise<AdaptersAsObject>;
-  (options: OptionsList): Promise<AdaptersAsList>;
-  (options: OptionsListNamesOnly): Promise<AdaptersAsStrings>;
+  (options: OptionsObject, signal?: AbortSignal): Promise<AdaptersAsObject>;
+  (options: OptionsList, signal?: AbortSignal): Promise<AdaptersAsList>;
+  (
+    options: OptionsListNamesOnly,
+    signal?: AbortSignal
+  ): Promise<AdaptersAsStrings>;
+  (options: AllAdaptersOptions, signal?: AbortSignal): Promise<
+    AdaptersAsObject | AdaptersAsList | AdaptersAsStrings
+  >;
 }
 
 export type AdaptersFunctions = {
@@ -27,17 +37,29 @@ export type AdaptersFunctions = {
 };
 
 export const constructGetAdapters = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): AdaptersFunctions => {
-  async function getAdapters(options: OptionsObject): Promise<AdaptersAsObject>;
-  async function getAdapters(options: OptionsList): Promise<AdaptersAsList>;
   async function getAdapters(
-    options: OptionsListNamesOnly
+    options: OptionsObject,
+    signal?: AbortSignal
+  ): Promise<AdaptersAsObject>;
+  async function getAdapters(
+    options: OptionsList,
+    signal?: AbortSignal
+  ): Promise<AdaptersAsList>;
+  async function getAdapters(
+    options: OptionsListNamesOnly,
+    signal?: AbortSignal
   ): Promise<AdaptersAsStrings>;
   async function getAdapters(
-    options: AllAdaptersOptions
+    options: AllAdaptersOptions,
+    signal?: AbortSignal
+  ): Promise<AdaptersAsObject | AdaptersAsList | AdaptersAsStrings>;
+  async function getAdapters(
+    options: AllAdaptersOptions,
+    signal?: AbortSignal
   ): Promise<AdaptersAsObject | AdaptersAsList | AdaptersAsStrings> {
     const query = constructSearchString({
       network,
@@ -53,6 +75,7 @@ export const constructGetAdapters = ({
     >({
       url: fetchURL,
       method: 'GET',
+      signal,
     });
 
     return data;

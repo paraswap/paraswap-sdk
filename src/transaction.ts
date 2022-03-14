@@ -4,7 +4,7 @@ import type { ConstructFetchInput, Address, FetcherPostInput } from './types';
 
 import BigNumber from 'bignumber.js';
 import { assert } from 'ts-essentials';
-import { SwapSide } from './constants';
+import { API_URL, SwapSide } from './constants';
 import { PriceString } from './token';
 import { constructSearchString } from './helpers/misc';
 
@@ -25,11 +25,14 @@ interface BuildTxInput {
   destAmount: PriceString;
   priceRoute: OptimalRate;
   userAddress: Address;
-  partner: string;
+  partner?: string;
+  partnerAddress?: string;
+  partnerFeeBps?: number;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;
   permit?: string;
+  deadline?: string;
 }
 
 type BuildOptionsBase = {
@@ -46,7 +49,8 @@ export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 
 type BuildTx = (
   params: BuildTxInput,
-  options?: BuildOptions
+  options?: BuildOptions,
+  signal?: AbortSignal
 ) => Promise<TransactionParams>;
 
 export type BuildTxFunctions = {
@@ -54,13 +58,13 @@ export type BuildTxFunctions = {
 };
 
 export const constructBuildTx = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): BuildTxFunctions => {
   const transactionsURL = `${apiURL}/transactions/${network}`;
 
-  const buildTx: BuildTx = async (params, options = {}) => {
+  const buildTx: BuildTx = async (params, options = {}, signal) => {
     const {
       srcAmount,
       destAmount,
@@ -89,6 +93,7 @@ export const constructBuildTx = ({
       url: fetchURL,
       method: 'POST',
       data: params,
+      signal,
     };
 
     const builtTx = await fetcher<TransactionParams>(fetchParams);

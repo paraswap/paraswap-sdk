@@ -15,7 +15,7 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "echo 'Tests not ready' || dts test"
+    "test": "dts test"
   },
   "husky": {
     "hooks": {
@@ -37,19 +37,22 @@
   "size-limit": [
     {
       "path": "dist/paraswap-sdk.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "200 KB"
     },
     {
       "path": "dist/paraswap-sdk.esm.js",
-      "limit": "10 KB"
+      "limit": "25 KB",
+      "ignore": "@ethersproject/*"
     }
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@tsconfig/recommended": "^1.0.1",
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
     "dts-cli": "^1.4.0",
-    "ethers": "^5.5.4",
+    "ethers": "^5.6.0",
+    "ganache": "^7.0.3",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
     "tslib": "^2.3.1",
@@ -57,8 +60,8 @@
     "web3": "^1.7.1"
   },
   "peerDependencies": {
-    "axios": "^0.26.0",
-    "ethers": "^5.5.4",
+    "axios": ">=0.25.0 <1.0.0",
+    "ethers": "^5.5.0",
     "web3": "^1.7.1"
   },
   "dependencies": {

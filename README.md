@@ -1,151 +1,171 @@
-# ParaSwap SDK
+<p align="center">
+  <a href="https://paraswap.io">
+    <img src="https://cdn.paraswap.io/brand/paraswap.png" width="400px" >
+  </a>
+</p>
 
-<img src="https://paraswap-achirecture.netlify.com/logo.png" width="400px" >
 
----
+## Accompanion SDK of the ParaSwap API
 
-### API docs are available here :
+Refer to the documentation of the ParaSwap API: https://developers.paraswap.network
 
-https://developers.paraswap.network
 
-### To use ParaSwap SDK :
+## Features
+**Versatility**: it works with both [web3](https://www.npmjs.com/package/web3) and [ethers](https://www.npmjs.com/package/ethers) and without direct dependency
 
-Install the lib using npm or yarn
+**Canonicity**: bring only the functions you actually need
+
+**Lightweight**: 400B Gzipped for the most minimalistic variant
+
+
+## Installing ParaSwap SDK
 
 ```bash
-yarn add paraswap
+yarn add @paraswap/sdk
 ```
 
-##### Then on a Javascript file:
+## Using ParaSwap SDK
 
-```javascript
-const { ParaSwap } = require('paraswap');
-const paraSwap = new ParaSwap();
+### Import the necessary functions
+```typescript
+import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
 ```
-
-ES6 or TypeScript
+### Construct the ParaSwap object
 
 ```typescript
-import { ParaSwap } from 'paraswap';
-const paraSwap = new ParaSwap();
+const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other signer/provider 
+const account = '__signer_address__'
+
+const contractCaller = constructEthersContractCaller(signer, account); // alternatively constructWeb3ContractCaller
+const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
+
+const paraswap = constructSDK({
+  network: 1,
+  fetcher,
+  contractCaller,
+});
 ```
 
-##### To retrieve the list all available tokens:
+### To approve ParaSwap contracts to swap a ERC20 token
 
-```javascript
-const tokens = await paraSwap.getTokens();
+```typescript
+const txHash = await paraSwap.approveToken(amount, tokenAddress);
 ```
 
-##### To get the rate of a token pair using the API:
+### To get the rate of a token pair
 
-```javascript
+```typescript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
-const destToken = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'; // DAI
+const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5'; // PSP
 const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals: 10 ** 18 here
+const srcDecimals = 18
+const destDecimals = 18
 
-const priceRoute: OptimalRates = await paraSwap.getRate(
-  srcToken,
-  destToken,
-  srcAmount,
+const priceRoute = await paraSwap.getRate(
+  {
+    srcToken,
+    destToken,
+    amount,
+    srcDecimals,
+    destDecimals,
+  }
 );
 ```
 
 Where priceRoute contains the rate and the distribution among exchanges, checkout the OptimalRates type for more details.
 
-##### To get the rate of a token pair using the Price Feed Contract:
+### To build a transaction
 
-This can be used for trustless integrations, the
-
-```javascript
-const paraswapFeed = new ParaswapFeed(1);
-const priceRoute: OptimalRates = await paraswapFeed.getRate(
-  srcToken,
-  destToken,
-  srcAmount,
-);
-```
-
-This is a schema that describes the data flow from price query to executing a Swap:
-
-<img src="https://paraswap-achirecture.netlify.com/ParaSwapDeveloper.png" width="400px" >
-
-Also available at https://paraswap-achirecture.netlify.com
-
-##### To get the allowance of an ERC20
-
-```javascript
-const paraSwap = new ParaSwap().setWeb3Provider(web3Provider);
-
-const allowance = await paraSwap.getAllowance(userAddress, tokenAddress);
-```
-
-##### To approve an ERC20
-
-```javascript
-const paraSwap = new ParaSwap().setWeb3Provider(web3Provider);
-
-const txHash = await paraSwap.approveToken(amount, userAddress, tokenAddress);
-```
-
-##### To build and sign a transaction
-
-```javascript
+```typescript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
-const destToken = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359';
-const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals
-const senderAddress = '0xfceA770875E7e6f25E33CEa5188d12Ef234606b4';
-const receiver = '0x8B4e846c90a2521F0D2733EaCb56760209EAd51A'; // Useful in case of swap and transfer
-const referrer = 'my-company-or-nick-name';
+const srcDecimals = 18
+const srcAmount = '1000000000000000000'; // The source amount multiplied by its decimals
+const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5';
+const destDecimals = 18
+const destAmount = priceRoute.destAmount // price route being output of paraSwap.getRate()
+const senderAddress = '__sender_address__'; // mandatory
+const receiver = '__receiver_address__'; // optional: for swap and transfer
+const partnerAddress = '__fee_receiver_address__' // optional: for permission-less monetization
+const partnerFeeBps = 50 // optional: fee in base point, for permission-less monetization
+
 
 const txParams = await paraSwap.buildTx(
-  srcToken,
-  destToken,
-  srcAmount,
-  destAmount,
-  priceRoute,
-  senderAddress,
-  referrer,
-  receiver,
+  {
+    srcAmount,
+    srcToken,
+    srcDecimals,
+    destAmount,
+    destToken,
+    destDecimals,
+    priceRoute,
+    senderAddress,
+    receiver,
+    partnerAddress,
+    partnerFeeBps,
+  }
 );
 
-web3.eth.sendTransaction(
-  txParams,
-  async (err: Error, transactionHash: string) => {
-    if (err) {
-      return this.setState({ error: err.toString(), loading: false });
-    }
-    console.log('transactionHash', transactionHash);
-  },
-);
+const transactionResponse = await signer.sendTransaction(txParams);
+const transactionReceipt = await transactionResponse.wait();
 ```
 
----
+## Bundle Optimization
+For bundle-size savvy developers, you can construct a lightweight version of this sdk to bring only the functions you need.
 
-### To run the example locally:
+For e.g. for fetching rate and allowance only
 
-Created an .env file with these 2 env variables:
+```typescript
+import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetAllowance } from '@paraswap/sdk';
 
-```bash
-PROVIDER_URL=YOUR_PROVIDRER_URL_OR_INFURA_URL
-NODE_ENV=production
+const fetcher = constructFetchFetcher(window.fetch)
+
+const minParaSwap = constructPartialSDK({
+  network: 1,
+  fetcher,
+}, constructGetRate, constructGetAllowance)
+
+const priceRoute = await minParaSwap.getRate(params)
+const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
 
-run
+## Legacy
+The ParaSwap class is exposed with some effort on backward compatibility with previous versions.
 
-```bash
-yarn install paraswap
+
+```typescript
+import { ParaSwap } from '@paraswap/sdk'
+import axios from 'axios'
+import Web3 from 'web3'
+
+const web3Provider = new Web3(window.ethereum)
+const account = '__user_address__'
+
+const paraswap = new ParaSwap(
+  1, 
+  undefined, 
+  web3Provider, 
+  undefined, 
+  account, 
+  axios
+)
+
 ```
 
-For local developement you can run
+By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only
 
-```bash
-yarn dev
+```typescript
+import { ParaSwap } from '@paraswap/sdk'
+
+const paraswap = new ParaSwap(
+  1, 
+  undefined, 
+  undefined, 
+  undefined, 
+  undefined, 
+  undefined,
+  window.fetch
+)
+
 ```
 
-For production build:
-
-```bash
-yarn build
-```
-
-Which will generate a production build on "dist" folder
+Refer to [this README for depecreated documentation](https://github.com/paraswap/paraswap-sdk/blob/c4c70c674fb2be4ec528064649d992d4b38c654b/README.md) for functions usage.

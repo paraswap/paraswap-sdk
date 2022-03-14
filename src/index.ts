@@ -12,8 +12,10 @@ import {
 } from './token';
 import { BuildTxFunctions, constructBuildTx } from './transaction';
 import {
-  constructContractCaller,
-  constructFetcher,
+  constructEthersContractCaller,
+  constructWeb3ContractCaller,
+  constructAxiosFetcher,
+  constructFetchFetcher,
   isFetcherError,
 } from './helpers';
 import {
@@ -35,10 +37,13 @@ export {
   constructGetSpender, // this was getTokenTransferProxy
   constructGetTokens,
   constructBuildTx,
-  constructContractCaller,
-  constructFetcher,
+  constructEthersContractCaller,
+  constructWeb3ContractCaller,
+  constructAxiosFetcher,
+  constructFetchFetcher,
   constructToken,
   constructGetAdapters,
+  constructGetRate,
   isFetcherError,
 };
 // @TODO missing fro parity with older SDK:
@@ -108,3 +113,5 @@ export const constructSDK = (config: SDKConfig): AllSDKMethods =>
     constructGetAdapters,
     constructGetRate
   );
+
+export { ParaSwap } from './legacy';

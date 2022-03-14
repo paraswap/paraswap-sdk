@@ -5,13 +5,14 @@ import { Address, Token, TxHash } from './token';
 export type { Address, Token, TxHash };
 
 export interface ConstructBaseInput {
-  apiURL: string;
+  apiURL?: string;
   network: number;
 }
 
 interface FetcherInputBase {
   url: string;
   headers?: Record<string, string>;
+  signal?: AbortSignal;
 }
 export interface FetcherGetInput extends FetcherInputBase {
   method: 'GET';

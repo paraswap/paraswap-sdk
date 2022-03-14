@@ -1,10 +1,13 @@
 import type { Address, ContractCallerFunction } from '../types';
-import Web3 from 'web3';
-import { TransactionReceipt } from 'web3-eth';
-import { AbiItem } from 'web3-utils';
+import type Web3 from 'web3';
+import type { AbiItem } from 'web3-utils';
+import type {
+  ContractSendMethod,
+  SendOptions,
+  CallOptions,
+} from 'web3-eth-contract';
 import { assert } from 'ts-essentials';
 import { assertContractHasMethods } from './misc';
-import { SendOptions, CallOptions } from 'web3-eth-contract';
 
 export const constructContractCaller = (
   web3: Web3,
@@ -17,7 +20,7 @@ export const constructContractCaller = (
       const { address, abi, contractMethod, args, overrides } = params;
 
       const contract = new web3.eth.Contract(
-        abi as unknown as AbiItem[], // FIXME abi types ethers dependant
+        abi as AbiItem[], // FIXME abi types ethers dependant
         address
       );
 
@@ -59,11 +62,19 @@ export const constructContractCaller = (
       gas: gas,
     };
 
-    const transactionReceipt: TransactionReceipt = await contract.methods[
-      contractMethod
-    ](...args).send(normalizedOverrides);
+    const preparedCall = contract.methods[contractMethod](
+      ...args
+    ) as ContractSendMethod;
 
-    return transactionReceipt.transactionHash;
+    return new Promise<string>((resolve, reject) => {
+      preparedCall.send(normalizedOverrides, (err, transactionHash) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(transactionHash);
+        }
+      });
+    });
   };
 
   return contractCallerFunction;
