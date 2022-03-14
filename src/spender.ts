@@ -1,3 +1,4 @@
+import { API_URL } from './constants';
 import { Address } from './token';
 import { ConstructFetchInput } from './types';
 
@@ -13,7 +14,7 @@ interface AdaptersContractsResult {
 }
 
 export const constructGetSpender = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): GetSpenderFunctions => {

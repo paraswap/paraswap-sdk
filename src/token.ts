@@ -1,4 +1,5 @@
 import type { MarkOptional } from 'ts-essentials';
+import { API_URL } from './constants';
 import type { ConstructFetchInput, TokensApiResponse } from './types';
 
 /**
@@ -82,7 +83,7 @@ export type GetTokensFunctions = {
 };
 
 export const constructGetTokens = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): GetTokensFunctions => {

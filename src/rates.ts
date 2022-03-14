@@ -1,5 +1,5 @@
 import { OptimalRate } from 'paraswap-core';
-import { SwapSide, ContractMethod } from './constants';
+import { SwapSide, ContractMethod, API_URL } from './constants';
 import { constructSearchString } from './helpers/misc';
 import { Address, AddressOrSymbol, PriceString } from './token';
 import { ConstructFetchInput, PriceRouteApiResponse } from './types';
@@ -64,7 +64,7 @@ const INVALID_DEX_LIST = 'Invalid DEX list';
 const INVALID_ROUTE = 'Invalid Route';
 
 export const constructGetRate = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): GetRateFunctions => {

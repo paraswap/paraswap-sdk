@@ -8,7 +8,7 @@ import type { BaseProvider } from '@ethersproject/providers';
 
 import type { Address, OptimalRate } from 'paraswap-core';
 
-import { SwapSide } from '../constants';
+import { API_URL, SwapSide } from '../constants';
 import {
   AllSDKMethods,
   constructBuildTx,
@@ -42,8 +42,6 @@ export type APIError = {
   data?: any;
 };
 type Fetch = typeof fetch;
-
-const API_URL = 'https://apiv5.paraswap.io';
 
 interface EthersProviderDeps {
   providerOrSigner: BaseProvider | Signer;

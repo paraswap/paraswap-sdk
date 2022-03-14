@@ -1,5 +1,6 @@
 import { ConstructFetchInput } from './types';
 import { constructSearchString } from './helpers/misc';
+import { API_URL } from './constants';
 
 type Adapter = {
   adapter: string;
@@ -36,7 +37,7 @@ export type AdaptersFunctions = {
 };
 
 export const constructGetAdapters = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): AdaptersFunctions => {

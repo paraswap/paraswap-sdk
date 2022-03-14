@@ -4,7 +4,7 @@ import type { ConstructFetchInput, Address, FetcherPostInput } from './types';
 
 import BigNumber from 'bignumber.js';
 import { assert } from 'ts-essentials';
-import { SwapSide } from './constants';
+import { API_URL, SwapSide } from './constants';
 import { PriceString } from './token';
 import { constructSearchString } from './helpers/misc';
 
@@ -58,7 +58,7 @@ export type BuildTxFunctions = {
 };
 
 export const constructBuildTx = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): BuildTxFunctions => {

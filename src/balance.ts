@@ -1,3 +1,4 @@
+import { API_URL } from './constants';
 import { Token, Address, constructToken, AddressOrSymbol } from './token';
 import {
   ConstructFetchInput,
@@ -41,7 +42,7 @@ export type GetBalancesFunctions = {
 const NOT_FOUND_RESPONSE = { message: 'Not Found' } as const;
 
 export const constructGetBalances = ({
-  apiURL,
+  apiURL = API_URL,
   network,
   fetcher,
 }: ConstructFetchInput): GetBalancesFunctions => {
