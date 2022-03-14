@@ -10,7 +10,6 @@ const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructContractCaller(web3);
 
 const paraswap = constructSDK({
-  apiURL: '',
   network: 1,
   fetcher,
   contractCaller,
