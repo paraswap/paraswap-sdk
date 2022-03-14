@@ -2,7 +2,6 @@ import type { OptimalRate } from 'paraswap-core';
 import type { WithGasPrice, WithMaxFee } from './gas';
 import type { ConstructFetchInput, Address, FetcherPostInput } from './types';
 
-import BigNumber from 'bignumber.js';
 import { assert } from 'ts-essentials';
 import { API_URL, SwapSide } from './constants';
 import { PriceString } from './token';
@@ -119,5 +118,5 @@ function areAmountsCorrect({
     side === SwapSide.SELL ? queryParams.srcAmount : queryParams.destAmount;
   const priceRouteAmount =
     side === SwapSide.SELL ? priceRoute.srcAmount : priceRoute.destAmount;
-  return new BigNumber(priceRouteAmount).isEqualTo(amount);
+  return BigInt(priceRouteAmount) === BigInt(amount);
 }
