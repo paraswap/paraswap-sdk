@@ -37,11 +37,11 @@
   "size-limit": [
     {
       "path": "dist/paraswap-sdk.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "200 KB"
     },
     {
       "path": "dist/paraswap-sdk.esm.js",
-      "limit": "10 KB",
+      "limit": "25 KB",
       "ignore": "@ethersproject/*"
     }
   ],
