@@ -41,7 +41,8 @@
     },
     {
       "path": "dist/paraswap-sdk.esm.js",
-      "limit": "10 KB"
+      "limit": "10 KB",
+      "ignore": "@ethersproject/*"
     }
   ],
   "devDependencies": {
