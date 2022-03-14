@@ -144,9 +144,26 @@ const paraswap = new ParaSwap(
   1, 
   undefined, 
   web3Provider, 
-  null, 
+  undefined, 
   account, 
   axios
+)
+
+```
+
+By analogy to constructPartialSDK, you can leverage a lightweight version of the sdk for fetching only
+
+```typescript
+import { ParaSwap } from '@paraswap/sdk'
+
+const paraswap = new ParaSwap(
+  1, 
+  undefined, 
+  undefined, 
+  undefined, 
+  undefined, 
+  undefined,
+  window.fetch
 )
 
 ```
