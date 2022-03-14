@@ -2,7 +2,7 @@
   "name": "@paraswap/sdk",
   "version": "5.6.0-alpha.0",
   "main": "dist/index.js",
-  "module": "dist/paraswap-sdk.esm.js",
+  "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -36,11 +36,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/paraswap-sdk.cjs.production.min.js",
+      "path": "dist/sdk.cjs.production.min.js",
       "limit": "200 KB"
     },
     {
-      "path": "dist/paraswap-sdk.esm.js",
+      "path": "dist/sdk.esm.js",
       "limit": "25 KB",
       "ignore": "@ethersproject/*"
     }
