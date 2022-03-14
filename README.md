@@ -30,7 +30,7 @@ yarn add @paraswap/sdk
 ```typescript
 import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
 ```
-### Instanciate the ParaSwap object
+### Construct the ParaSwap object
 
 ```typescript
 const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other signer/provider 
