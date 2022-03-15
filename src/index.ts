@@ -47,8 +47,6 @@ export {
   constructGetRate,
   isFetcherError,
 };
-// @TODO missing fro parity with older SDK:
-// getRate, getRateByRoute
 
 export type {
   ApproveTokenFunctions,
@@ -64,12 +62,13 @@ export type {
   PriceString,
 };
 
-export type SDKConfig = ConstructProviderFetchInput & ConstructFetchInput;
+export type SDKConfig<TxResponse = any> =
+  ConstructProviderFetchInput<TxResponse> & ConstructFetchInput;
 
-export type AllSDKMethods = GetBalancesFunctions &
+export type AllSDKMethods<TxResponse> = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
-  ApproveTokenFunctions &
+  ApproveTokenFunctions<TxResponse> &
   BuildTxFunctions &
   AdaptersFunctions &
   GetRateFunctions;
@@ -102,14 +101,18 @@ export const constructPartialSDK = <
   return sdkFuncs as IntersectionOfReturns<Funcs>;
 };
 
-export const constructSDK = (config: SDKConfig): AllSDKMethods =>
+export const constructSDK = <TxResponse = any>(
+  config: SDKConfig<TxResponse>
+): AllSDKMethods<TxResponse> =>
   // include all available functions
   constructPartialSDK(
     config,
     constructGetBalances,
     constructGetTokens,
     constructGetSpender,
-    constructApproveToken,
+    constructApproveToken as (
+      options: ConstructProviderFetchInput<TxResponse>
+    ) => ApproveTokenFunctions<TxResponse>, // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
     constructBuildTx,
     constructGetAdapters,
     constructGetRate
