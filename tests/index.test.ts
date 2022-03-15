@@ -9,7 +9,7 @@ import { OptimalRate, Adapters } from 'paraswap-core';
 import { Allowance } from '../src/balance';
 import { APIError } from '../src/legacy';
 import { TransactionParams } from '../src/transaction';
-import erc20abi from '../src/abi/ERC20.json';
+import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
 
