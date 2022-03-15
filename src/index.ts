@@ -26,6 +26,7 @@ import {
 } from './types';
 import { UnionToIntersection } from 'ts-essentials';
 
+export type { TransactionParams } from './transaction';
 export * from './constants';
 
 // can import these individually
