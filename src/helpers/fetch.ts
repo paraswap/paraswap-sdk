@@ -10,8 +10,14 @@ export const constructFetcher =
     try {
       const { url, method, signal } = params;
       const body = method === 'POST' ? JSON.stringify(params.data) : null;
+      const headers =
+        method === 'POST' && body
+          ? {
+              'Content-Type': 'application/json',
+            }
+          : undefined;
 
-      const response = await fetch(url, { method, body, signal });
+      const response = await fetch(url, { method, body, signal, headers });
 
       const data = await response.json();
 
