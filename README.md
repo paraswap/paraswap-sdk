@@ -4,19 +4,16 @@
   </a>
 </p>
 
-
-# Accompanion SDK of the ParaSwap API
+# SDK for the ParaSwap API
 
 Refer to the documentation of the ParaSwap API: https://developers.paraswap.network
-
 
 ## Features
 **Versatility**: works with both [web3](https://www.npmjs.com/package/web3) and [ethers](https://www.npmjs.com/package/ethers) without direct dependency
 
-**Canonicity**: bring only the functions you actually need
+**Canonical**: bring only the functions you actually need
 
-**Lightweight**: 400B Gzipped for the most minimalistic variant
-
+**Lightweight**: 400B Gzipped for the minimal variant
 
 ## Installing ParaSwap SDK
 
@@ -49,7 +46,7 @@ const paraswap = constructSDK({
 });
 ```
 
-### To approve ParaSwap contracts to swap a ERC20 token
+### To approve ParaSwap contracts to swap an ERC20 token
 
 ```typescript
 const txHash = await paraSwap.approveToken(amount, tokenAddress);
@@ -113,12 +110,12 @@ const transactionReceipt = await transactionResponse.wait();
 ```
 
 ## Playground
-Interact with the ParaSwap SDK in CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker)
+Interact with the ParaSwap SDK in a CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker)
 
 ## Bundle Optimization
-For bundle-size savvy developers, you can construct a lightweight version of this sdk to bring only the functions you need.
+For bundle-size savvy developers, you can construct a lightweight version of the SDK and bring only the functions you need.
 
-For e.g. for fetching rate and allowance only
+e.g. for only getting rates and allowances:
 
 ```typescript
 import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetAllowance } from '@paraswap/sdk';
@@ -135,8 +132,7 @@ const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
 
 ## Legacy
-The ParaSwap class is exposed with some effort on backward compatibility with previous versions.
-
+The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk'
@@ -157,7 +153,7 @@ const paraswap = new ParaSwap(
 
 ```
 
-By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only
+Which corresponds to ```constructPartialSDK``` in the SDK's current version to leverage a lightweight version for fetching only.
 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk'
