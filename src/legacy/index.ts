@@ -36,7 +36,7 @@ import type { BuildOptions, TransactionParams } from '../transaction';
 import type { AddressOrSymbol, Token } from '../token';
 import type { Allowance } from '../balance';
 import type { FetcherFunction } from '../types';
-import { UnpromiEvent } from '../helpers/web3';
+import type { UnpromiEvent } from '../helpers/web3';
 
 export type APIError = {
   message: string;
