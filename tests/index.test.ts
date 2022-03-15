@@ -1,7 +1,8 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
-import axios from 'axios';
+// import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import { ParaSwap, Token } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
@@ -66,7 +67,8 @@ describe('ParaSwap SDK', () => {
       undefined,
       undefined,
       senderAddress,
-      axios
+      undefined, // `axios` will take precedence if given
+      fetch
     ).setWeb3Provider(provider);
     // @ts-expect-error
     paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
