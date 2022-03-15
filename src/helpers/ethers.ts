@@ -1,7 +1,9 @@
 import type {
   Address,
-  ContractCallerFunction,
+  ContractCallerFunctions,
   NoExtraKeysCheck,
+  StaticContractCallerFn,
+  TransactionContractCallerFn,
 } from '../types';
 import type { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
 import type { Signer } from '@ethersproject/abstract-signer';
@@ -9,8 +11,8 @@ import type {
   Contract as EthersContract,
   PayableOverrides,
   CallOverrides,
+  ContractTransaction,
 } from '@ethersproject/contracts';
-import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { assertContractHasMethods } from '../helpers/misc';
 import { assert } from 'ts-essentials';
 
@@ -22,36 +24,38 @@ interface EthersProviderDeps {
 export const constructContractCaller = (
   { providerOrSigner, Contract }: EthersProviderDeps,
   account?: Address
-): ContractCallerFunction => {
-  const contractCallerFunction: ContractCallerFunction = async (params) => {
-    if (params.static) {
-      const { address, abi, contractMethod, args, overrides } = params;
+): ContractCallerFunctions<ContractTransaction> => {
+  const staticCall: StaticContractCallerFn = async (params) => {
+    const { address, abi, contractMethod, args, overrides } = params;
 
-      const contract = new Contract(address, abi, providerOrSigner);
+    const contract = new Contract(address, abi, providerOrSigner);
 
-      assertContractHasMethods(contract, contractMethod);
-      // drop keys not in CallOverrides
-      const { block, gas, ...restOverrides } = overrides;
-      // reassign values to keys in CallOverrides
-      const normalizedOverrides = {
-        ...restOverrides,
-        blockTag: block,
-        gasLimit: gas,
-      };
+    assertContractHasMethods(contract, contractMethod);
+    // drop keys not in CallOverrides
+    const { block, gas, ...restOverrides } = overrides;
+    // reassign values to keys in CallOverrides
+    const normalizedOverrides = {
+      ...restOverrides,
+      blockTag: block,
+      gasLimit: gas,
+    };
 
-      // type FinalCallOverrides = normalizedOverrides has extra props ? never : normalizedOverrides
-      type FinalCallOverrides = NoExtraKeysCheck<
-        typeof normalizedOverrides,
-        CallOverrides
-      >;
+    // type FinalCallOverrides = normalizedOverrides has extra props ? never : normalizedOverrides
+    type FinalCallOverrides = NoExtraKeysCheck<
+      typeof normalizedOverrides,
+      CallOverrides
+    >;
 
-      // enforce overrides shape ethers accepts
-      // TS will break if normalizedOverrides type has any keys not also present in CallOverrides
-      const callOverrides: FinalCallOverrides = normalizedOverrides;
-      // returns whatever the Contract.method returns: BigNumber, string, boolean
-      return contract.callStatic[contractMethod](...args, callOverrides);
-    }
+    // enforce overrides shape ethers accepts
+    // TS will break if normalizedOverrides type has any keys not also present in CallOverrides
+    const callOverrides: FinalCallOverrides = normalizedOverrides;
+    // returns whatever the Contract.method returns: BigNumber, string, boolean
+    return contract.callStatic[contractMethod](...args, callOverrides);
+  };
 
+  const transactCall: TransactionContractCallerFn<ContractTransaction> = async (
+    params
+  ) => {
     assert(account, 'account must be specified to create a signer');
     assert(
       isEthersProviderWithSigner(providerOrSigner) ||
@@ -86,17 +90,17 @@ export const constructContractCaller = (
     // enforce overrides shape ethers accepts
     // TS will break if normalizedOverrides type has any keys not also present in PayableOverrides
     const txOverrides: FinalPayableOverrides = normalizedOverrides;
-    const txResponse: TransactionResponse = await contract[contractMethod](
+    const txResponse: ContractTransaction = await contract[contractMethod](
       ...args,
       txOverrides
     );
 
     // returns tx hash
-    return txResponse.hash;
+    return txResponse;
     // @TODO maybe better return the whole txResponse for versatility
   };
 
-  return contractCallerFunction;
+  return { staticCall, transactCall };
 };
 
 function isEthersProvider(
