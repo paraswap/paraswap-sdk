@@ -95,9 +95,7 @@ export const constructContractCaller = (
       txOverrides
     );
 
-    // returns tx hash
     return txResponse;
-    // @TODO maybe better return the whole txResponse for versatility
   };
 
   return { staticCall, transactCall };
