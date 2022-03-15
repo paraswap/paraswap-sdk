@@ -68,7 +68,7 @@ export const constructGetRate = ({
   network,
   fetcher,
 }: ConstructFetchInput): GetRateFunctions => {
-  const pricesUrl = `${apiURL}/prices/`;
+  const pricesUrl = `${apiURL}/prices`;
 
   const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
     const parsedOptions = commonGetRateOptionsGetter(rest);
