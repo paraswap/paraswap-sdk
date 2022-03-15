@@ -153,7 +153,7 @@ const paraswap = new ParaSwap(
 
 ```
 
-Which corresponds to ```constructPartialSDK``` in the SDK's current version to leverage a lightweight version for fetching only.
+By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only.
 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk'
