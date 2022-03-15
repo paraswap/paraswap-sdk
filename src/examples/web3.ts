@@ -16,12 +16,14 @@ const paraswap = constructSDK({
 });
 
 async function main() {
-  const txHash = await paraswap.approveToken(
+  const eventfulTxResponse = await paraswap.approveToken(
     '1000000000000000000',
     '0xcafe001067cDEF266AfB7Eb5A286dCFD277f3dE5'
   );
 
-  console.log('watch for tx', txHash);
+  eventfulTxResponse.once('transactionHash', (txHash) =>
+    console.log('watch for tx', txHash)
+  );
 }
 
 main();
