@@ -118,14 +118,14 @@ For bundle-size savvy developers, you can construct a lightweight version of the
 e.g. for only getting rates and allowances:
 
 ```typescript
-import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetAllowance } from '@paraswap/sdk';
+import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetBalances } from '@paraswap/sdk';
 
 const fetcher = constructFetchFetcher(window.fetch)
 
 const minParaSwap = constructPartialSDK({
   network: 1,
   fetcher,
-}, constructGetRate, constructGetAllowance)
+}, constructGetRate, constructGetBalances)
 
 const priceRoute = await minParaSwap.getRate(params)
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
