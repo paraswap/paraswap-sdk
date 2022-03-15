@@ -68,8 +68,20 @@ export type ContractCallerFunction = <T, M extends string = string>(
   params: ContractCallTransactionInput<M> | ContractCallStaticInput<M>
 ) => Promise<T>;
 
-export interface ConstructProviderFetchInput extends ConstructFetchInput {
-  contractCaller: ContractCallerFunction;
+export type StaticContractCallerFn = <T, M extends string = string>(
+  params: ContractCallStaticInput<M>
+) => Promise<T>;
+export type TransactionContractCallerFn<T> = <M extends string = string>(
+  params: ContractCallTransactionInput<M>
+) => Promise<T>;
+
+export interface ContractCallerFunctions<T> {
+  staticCall: StaticContractCallerFn;
+  transactCall: TransactionContractCallerFn<T>;
+}
+
+export interface ConstructProviderFetchInput<T> extends ConstructFetchInput {
+  contractCaller: ContractCallerFunctions<T>;
 }
 
 export type TokenFromApi = Pick<

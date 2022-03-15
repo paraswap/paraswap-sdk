@@ -1,23 +1,23 @@
 import { constructGetSpender } from './spender';
-import { Address, PriceString, TxHash } from './token';
+import { Address, PriceString } from './token';
 import { ConstructProviderFetchInput, TxSendOverrides } from './types';
 
-type ApproveToken = (
+type ApproveToken<T> = (
   amount: PriceString,
   tokenAddress: Address,
   overrides?: TxSendOverrides,
   signal?: AbortSignal
-) => Promise<TxHash>;
+) => Promise<T>;
 
-type ApproveTokenBulk = (
+type ApproveTokenBulk<T> = (
   amount: PriceString,
   tokenAddresses: Address[],
   overrides?: TxSendOverrides
-) => Promise<TxHash[]>;
+) => Promise<Awaited<T>[]>;
 
-export type ApproveTokenFunctions = {
-  approveToken: ApproveToken;
-  approveTokenBulk: ApproveTokenBulk;
+export type ApproveTokenFunctions<T> = {
+  approveToken: ApproveToken<T>;
+  approveTokenBulk: ApproveTokenBulk<T>;
 };
 
 // much smaller than the whole ERC20_ABI
@@ -43,15 +43,15 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinERC20Abi>;
 
 // @TODO make this generic to return whatever `contractCaller` returns
 // to allow for better versatility
-export const constructApproveToken = (
-  options: ConstructProviderFetchInput
-): ApproveTokenFunctions => {
+export const constructApproveToken = <T>(
+  options: ConstructProviderFetchInput<T>
+): ApproveTokenFunctions<T> => {
   const { getSpender } = constructGetSpender(options);
   // cached for the same instance of `approveToken = constructApproveToken()`
   // so should persist across same apiUrl & network
   let _spender: string | undefined;
 
-  const approveToken: ApproveToken = async (
+  const approveToken: ApproveToken<T> = async (
     amount,
     tokenAddress,
     overrides = {},
@@ -59,7 +59,7 @@ export const constructApproveToken = (
   ) => {
     const spender = _spender || (_spender = await getSpender(signal));
 
-    const res = await options.contractCaller<TxHash, AvailableMethods>({
+    const res = await options.contractCaller.transactCall<AvailableMethods>({
       address: tokenAddress,
       abi: MinERC20Abi,
       contractMethod: 'approve',
@@ -71,7 +71,10 @@ export const constructApproveToken = (
     return res;
   };
 
-  const approveTokenBulk: ApproveTokenBulk = async (amount, tokenAddresses) => {
+  const approveTokenBulk: ApproveTokenBulk<T> = async (
+    amount,
+    tokenAddresses
+  ) => {
     return Promise.all(
       tokenAddresses.map((tokenAddress) => approveToken(amount, tokenAddress))
     );
