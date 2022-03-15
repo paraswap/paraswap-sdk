@@ -114,9 +114,10 @@ function areAmountsCorrect({
   side,
   priceRoute,
 }: AreAmountsCorrectInput): boolean {
-  const amount =
-    side === SwapSide.SELL ? queryParams.srcAmount : queryParams.destAmount;
-  const priceRouteAmount =
-    side === SwapSide.SELL ? priceRoute.srcAmount : priceRoute.destAmount;
-  return BigInt(priceRouteAmount) === BigInt(amount);
+  const [inputAmount, priceRouteAmount] =
+    side === SwapSide.SELL
+      ? [queryParams.srcAmount, priceRoute.srcAmount]
+      : [queryParams.destAmount, priceRoute.destAmount];
+
+  return inputAmount === priceRouteAmount;
 }
