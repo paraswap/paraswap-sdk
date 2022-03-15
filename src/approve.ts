@@ -59,7 +59,7 @@ export const constructApproveToken = (
   ) => {
     const spender = _spender || (_spender = await getSpender(signal));
 
-    const res = await options.contractCaller<TxSentResult, AvailableMethods>({
+    const res = await options.contractCaller<TxHash, AvailableMethods>({
       address: tokenAddress,
       abi: MinERC20Abi,
       contractMethod: 'approve',
