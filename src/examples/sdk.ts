@@ -27,6 +27,8 @@ const res = paraswap.getAdapters({ type: 'list', namesOnly: false });
 
 // type ContractTransaction
 const txResponse = paraswap.approveToken('1', '0x...');
+// type ContractTransaction[]
+const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
 
 const part1 = constructPartialSDK(
   { apiURL: '', network: 1, fetcher },
