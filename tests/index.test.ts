@@ -3,13 +3,17 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 // import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
-import { ParaSwap, Token } from '../src';
+import {
+  AllSDKMethods,
+  constructEthersContractCaller,
+  constructFetchFetcher,
+  constructSDK,
+} from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
-import { OptimalRate, Adapters } from 'paraswap-core';
+import { Adapters } from 'paraswap-core';
 import { Allowance } from '../src/balance';
 import { APIError } from '../src/legacy';
-import { TransactionParams } from '../src/transaction';
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
@@ -54,22 +58,28 @@ const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
 
+const fetcher = constructFetchFetcher(fetch);
+
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
 
+const contractCaller = constructEthersContractCaller(
+  {
+    providerOrSigner: signer,
+    Contract: ethers.Contract,
+  },
+  senderAddress
+);
+
 describe('ParaSwap SDK', () => {
-  let paraSwap: ParaSwap;
+  let paraSwap: AllSDKMethods;
 
   beforeAll(async () => {
-    paraSwap = new ParaSwap(
+    paraSwap = constructSDK({
       network,
-      undefined,
-      undefined,
-      undefined,
-      senderAddress,
-      undefined, // `axios` will take precedence if given
-      fetch
-    ).setWeb3Provider(provider);
+      fetcher,
+      contractCaller,
+    });
     // @ts-expect-error
     paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
@@ -80,14 +90,15 @@ describe('ParaSwap SDK', () => {
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.getMarketNames();
+    const markets = await paraSwap.getAdapters({
+      type: 'list',
+      namesOnly: true,
+    });
     expect((markets as string[]).length).toBeGreaterThan(15);
   });
 
   test('Get_Tokens', async () => {
-    const tokensOrError = await paraSwap.getTokens();
-
-    const tokens = tokensOrError as Token[];
+    const tokens = await paraSwap.getTokens();
 
     expect(Array.isArray(tokens)).toBe(true);
     expect(tokens.length).toBeGreaterThan(0);
@@ -101,15 +112,17 @@ describe('ParaSwap SDK', () => {
   });
 
   test('Get_Rates', async () => {
-    const ratesOrError = await paraSwap.getRate(
-      'ETH',
-      'DAI',
-      srcAmount,
-      senderAddress,
-      SwapSide.SELL,
-      { includeDEXS: 'UniswapV2', otherExchangePrices: true }
-    );
-    const priceRoute = ratesOrError as OptimalRate;
+    const priceRoute = await paraSwap.getRate({
+      srcToken: ETH,
+      destToken: DAI,
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+      options: {
+        includeDEXS: 'UniswapV2',
+        otherExchangePrices: true,
+      },
+    });
 
     const { destAmount, bestRoute, others } = priceRoute;
 
@@ -141,7 +154,7 @@ describe('ParaSwap SDK', () => {
   });
 
   test('Get_Spender', async () => {
-    const spender = await paraSwap.getTokenTransferProxy();
+    const spender = await paraSwap.getSpender();
     expect(provider.utils.isAddress(spender as string));
   });
 
@@ -158,13 +171,11 @@ describe('ParaSwap SDK', () => {
   });
 
   test('Get_Allowances', async () => {
-    const allowancesOrError = await paraSwap.getAllowances(senderAddress, [
+    const allowances = await paraSwap.getAllowances(senderAddress, [
       DAI,
       BAT,
       MANA,
     ]);
-
-    const allowances = allowancesOrError as Allowance[];
 
     await Promise.all(
       allowances.map((allowance) =>
@@ -174,117 +185,110 @@ describe('ParaSwap SDK', () => {
   });
 
   test('Get_Adapters', async () => {
-    const adaptersOrError = await paraSwap.getAdapters();
-
-    const adapters = adaptersOrError as Adapters;
-
+    const adapters = await paraSwap.getAdapters({ type: 'object' });
     expect(adapters.paraswappool[0].adapter).toBeDefined();
-    expect(adapters.uniswap[0].adapter).toBeDefined();
-    expect(adapters.uniswap[0].index).toBeDefined();
+    expect(adapters.uniswapv2[0].adapter).toBeDefined();
+    expect(adapters.uniswapv2[0].index).toBeDefined();
     expect(adapters.kyber[0].adapter).toBeDefined();
     expect(adapters.kyber[0].index).toBeDefined();
   });
 
   test('Build_Tx', async () => {
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-    const ratesOrError = await paraSwap.getRate(
+    const priceRoute = await paraSwap.getRate({
       srcToken,
       destToken,
-      srcAmount,
-      senderAddress,
-      SwapSide.SELL,
-      { includeDEXS: 'UniswapV2' }
-    );
-
-    expect((ratesOrError as APIError)?.data?.error).toBeUndefined();
-
-    const priceRoute = ratesOrError as OptimalRate;
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+      options: {
+        includeDEXS: 'UniswapV2',
+      },
+    });
 
     const destAmount = new BigNumber(priceRoute.destAmount)
       .times(0.99)
       .toFixed(0);
 
-    const txOrError = await paraSwap.buildTx(
-      srcToken,
-      destToken,
-      srcAmount,
-      destAmount,
-      priceRoute,
-      senderAddress,
-      referrer,
-      undefined,
-      undefined,
-      undefined,
-      { ignoreChecks: true }
-    );
-
-    expect(txOrError.data.error).toBeUndefined();
-    expect(typeof txOrError).toBe('object');
-  });
-  if (TESTING_ENV) {
-    test('Build_tx_legacy', async () => {
-      const ratesOrError = await paraSwap.getRate(
+    const txParams = await paraSwap.buildTx(
+      {
         srcToken,
         destToken,
         srcAmount,
-        senderAddress,
-        SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
-      );
-      const priceRoute = ratesOrError as OptimalRate;
+        destAmount,
+        priceRoute,
+        userAddress: senderAddress,
+        partner: referrer,
+      },
+      { ignoreChecks: true }
+    );
+
+    expect(typeof txParams).toBe('object');
+  });
+  if (TESTING_ENV) {
+    test('Build_tx_legacy', async () => {
+      const priceRoute = await paraSwap.getRate({
+        srcToken,
+        destToken,
+        amount: srcAmount,
+        userAddress: senderAddress,
+        side: SwapSide.SELL,
+        options: {
+          includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
+        },
+      });
       const destAmount = new BigNumber(priceRoute.destAmount)
         .times(0.99)
         .toFixed();
 
-      const txOrError = await paraSwap.buildTx(
-        srcToken,
-        destToken,
-        srcAmount,
-        destAmount,
-        priceRoute,
-        signer.address,
-        referrer,
-        undefined,
-        undefined,
-        undefined,
+      const transaction = await paraSwap.buildTx(
+        {
+          srcToken,
+          destToken,
+          srcAmount,
+          destAmount,
+          priceRoute,
+          userAddress: senderAddress,
+          partner: referrer,
+        },
         { ignoreChecks: true }
       );
-      const transaction = txOrError as TransactionParams;
       expect(typeof transaction).toBe('object');
     });
     test('Build_and_Send_Tx', async () => {
-      const ratesOrError = await paraSwap.getRate(
+      const priceRoute = await paraSwap.getRate({
         srcToken,
         destToken,
-        srcAmount,
-        senderAddress,
-        SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
-      );
-      const priceRoute = ratesOrError as OptimalRate;
+        amount: srcAmount,
+        userAddress: senderAddress,
+        side: SwapSide.SELL,
+        options: {
+          includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
+        },
+      });
+
       const destAmount = new BigNumber(priceRoute.destAmount)
         .times(0.99)
         .toFixed(0);
 
-      const txOrError = await paraSwap.buildTx(
-        srcToken,
-        destToken,
-        srcAmount,
-        destAmount,
-        priceRoute,
-        signer.address,
-        referrer,
-        undefined,
-        undefined,
-        undefined,
+      const txParams = await paraSwap.buildTx(
+        {
+          srcToken,
+          destToken,
+          srcAmount,
+          destAmount,
+          priceRoute,
+          userAddress: signer.address,
+          partner: referrer,
+        },
         { ignoreChecks: true }
       );
-      const _tx = txOrError as TransactionParams;
+
       const transaction = {
-        ..._tx,
-        gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+        ...txParams,
+        gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
-        value: '0x' + new BigNumber(_tx.value).toString(16),
+        value: '0x' + new BigNumber(txParams.value).toString(16),
       };
       const toContract = new ethers.Contract(
         destToken,
@@ -303,38 +307,36 @@ describe('ParaSwap SDK', () => {
     });
     test('Build_and_Send_Tx_BUY', async () => {
       const destAmount = srcAmount;
-      const ratesOrError = await paraSwap.getRate(
+      const priceRoute = await paraSwap.getRate({
         srcToken,
         destToken,
-        destAmount,
-        senderAddress,
-        SwapSide.BUY,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
-      );
-      const priceRoute = ratesOrError as OptimalRate;
+        amount: destAmount,
+        userAddress: senderAddress,
+        side: SwapSide.BUY,
+        options: { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+      });
       const _srcAmount = new BigNumber(priceRoute.srcAmount)
         .times(1.1)
         .toFixed(0);
 
-      const txOrError = await paraSwap.buildTx(
-        srcToken,
-        destToken,
-        _srcAmount,
-        destAmount,
-        priceRoute,
-        signer.address,
-        referrer,
-        undefined,
-        undefined,
-        undefined,
+      const txParams = await paraSwap.buildTx(
+        {
+          srcToken,
+          destToken,
+          srcAmount: _srcAmount,
+          destAmount,
+          priceRoute,
+          userAddress: signer.address,
+          partner: referrer,
+        },
         { ignoreChecks: true }
       );
-      const _tx = txOrError as TransactionParams;
+
       const transaction = {
-        ..._tx,
-        gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+        ...txParams,
+        gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
-        value: '0x' + new BigNumber(_tx.value).toString(16),
+        value: '0x' + new BigNumber(txParams.value).toString(16),
       };
       const toContract = new ethers.Contract(
         destToken,
