@@ -12,7 +12,6 @@ import {
 } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
-import { Adapters } from 'paraswap-core';
 import { Allowance } from '../src/balance';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
