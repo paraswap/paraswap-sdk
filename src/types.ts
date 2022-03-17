@@ -48,19 +48,16 @@ interface ContractCallInput<T extends string> {
   address: Address;
   abi: ReadonlyArray<JsonFragment>;
   contractMethod: T;
-  static: boolean;
   args: any[];
 }
 
 interface ContractCallStaticInput<T extends string>
   extends ContractCallInput<T> {
-  static: true;
   overrides: StaticCallOverrides;
 }
 
 interface ContractCallTransactionInput<T extends string>
   extends ContractCallInput<T> {
-  static: false;
   overrides: TxSendOverrides;
 }
 
