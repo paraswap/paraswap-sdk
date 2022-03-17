@@ -25,27 +25,23 @@ export const constructContractCaller = (
   const staticCall: StaticContractCallerFn = async (params) => {
     assert(web3.currentProvider, 'web3.currentProvider is not set');
 
-    if (params.static) {
-      const { address, abi, contractMethod, args, overrides } = params;
+    const { address, abi, contractMethod, args, overrides } = params;
 
-      const contract = new web3.eth.Contract(
-        abi as AbiItem[], // FIXME abi types ethers dependant
-        address
-      );
+    const contract = new web3.eth.Contract(
+      abi as AbiItem[], // FIXME abi types ethers dependant
+      address
+    );
 
-      assertContractHasMethods(contract.methods, contractMethod); // FIXME: web3.contract.methods is any and assert works with ethers types
+    assertContractHasMethods(contract.methods, contractMethod); // FIXME: web3.contract.methods is any and assert works with ethers types
 
-      const { block, gas, ...restOverrides } = overrides;
+    const { block, gas, ...restOverrides } = overrides;
 
-      const normalizedOverrides: CallOptions = {
-        ...restOverrides,
-        gas,
-      };
+    const normalizedOverrides: CallOptions = {
+      ...restOverrides,
+      gas,
+    };
 
-      return contract.methods[contractMethod](...args).call(
-        normalizedOverrides
-      );
-    }
+    return contract.methods[contractMethod](...args).call(normalizedOverrides);
   };
 
   const transactCall: TransactionContractCallerFn<UnpromiEvent> = async (

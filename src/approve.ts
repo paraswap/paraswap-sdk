@@ -65,7 +65,6 @@ export const constructApproveToken = <T>(
       contractMethod: 'approve',
       args: [spender, amount],
       overrides,
-      static: false,
     });
 
     return res;
