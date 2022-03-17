@@ -70,8 +70,6 @@ describe('ParaSwap SDK', () => {
       undefined, // `axios` will take precedence if given
       fetch
     ).setWeb3Provider(provider);
-    // @ts-expect-error
-    paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
 
   test('Get_Balance', async () => {

@@ -93,8 +93,6 @@ describe.each([
       fetcher,
       contractCaller,
     });
-    // @ts-expect-error
-    paraSwap.adapters = (await paraSwap.getAdapters()) as Adapters;
   });
 
   test('Get_Balance', async () => {
