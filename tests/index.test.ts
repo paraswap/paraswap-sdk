@@ -1,10 +1,11 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
-// import axios from 'axios';
+import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
   AllSDKMethods,
+  constructAxiosFetcher,
   constructEthersContractCaller,
   constructFetchFetcher,
   constructSDK,
@@ -52,18 +53,19 @@ const ganacheProvider = ganache.provider({
   },
 });
 
-const provider = new Web3(ganacheProvider as any);
+const web3provider = new Web3(ganacheProvider as any);
 
 const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
 
-const fetcher = constructFetchFetcher(fetch);
+const fetchFetcher = constructFetchFetcher(fetch);
+const axiosFetcher = constructAxiosFetcher(axios);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
 
-const contractCaller = constructEthersContractCaller(
+const ethersContractCaller = constructEthersContractCaller(
   {
     providerOrSigner: signer,
     Contract: ethers.Contract,
@@ -71,7 +73,18 @@ const contractCaller = constructEthersContractCaller(
   senderAddress
 );
 
-describe('ParaSwap SDK', () => {
+const web3ContractCaller = constructEthersContractCaller(
+  {
+    providerOrSigner: signer,
+    Contract: ethers.Contract,
+  },
+  senderAddress
+);
+
+describe.each([
+  ['fetchFetcher & web3ContractCaller', fetchFetcher, web3ContractCaller],
+  ['axiosFetcher & ethersContractCaller', axiosFetcher, ethersContractCaller],
+])('ParaSwap SDK: %s', (testName, fetcher, contractCaller) => {
   let paraSwap: AllSDKMethods;
 
   beforeAll(async () => {
@@ -155,7 +168,7 @@ describe('ParaSwap SDK', () => {
 
   test('Get_Spender', async () => {
     const spender = await paraSwap.getSpender();
-    expect(provider.utils.isAddress(spender as string));
+    expect(web3provider.utils.isAddress(spender as string));
   });
 
   test('Get_Allowance', async () => {
