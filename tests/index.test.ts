@@ -179,8 +179,8 @@ describe('ParaSwap SDK', () => {
     const adapters = adaptersOrError as Adapters;
 
     expect(adapters.paraswappool[0].adapter).toBeDefined();
-    expect(adapters.uniswap[0].adapter).toBeDefined();
-    expect(adapters.uniswap[0].index).toBeDefined();
+    expect(adapters.uniswapv2[0].adapter).toBeDefined();
+    expect(adapters.uniswapv2[0].index).toBeDefined();
     expect(adapters.kyber[0].adapter).toBeDefined();
     expect(adapters.kyber[0].index).toBeDefined();
   });
