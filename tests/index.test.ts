@@ -239,7 +239,7 @@ describe('ParaSwap SDK', () => {
       });
       const destAmount = new BigNumber(priceRoute.destAmount)
         .times(0.99)
-        .toFixed();
+        .toFixed(0);
 
       const transaction = await paraSwap.buildTx(
         {
