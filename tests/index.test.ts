@@ -236,35 +236,6 @@ describe.each([
     expect(typeof txParams).toBe('object');
   });
   if (TESTING_ENV) {
-    test('Build_tx_legacy', async () => {
-      const priceRoute = await paraSwap.getRate({
-        srcToken,
-        destToken,
-        amount: srcAmount,
-        userAddress: senderAddress,
-        side: SwapSide.SELL,
-        options: {
-          includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
-        },
-      });
-      const destAmount = new BigNumber(priceRoute.destAmount)
-        .times(0.99)
-        .toFixed(0);
-
-      const transaction = await paraSwap.buildTx(
-        {
-          srcToken,
-          destToken,
-          srcAmount,
-          destAmount,
-          priceRoute,
-          userAddress: senderAddress,
-          partner: referrer,
-        },
-        { ignoreChecks: true }
-      );
-      expect(typeof transaction).toBe('object');
-    });
     test('Build_and_Send_Tx', async () => {
       const priceRoute = await paraSwap.getRate({
         srcToken,
