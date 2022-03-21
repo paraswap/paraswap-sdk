@@ -32,6 +32,12 @@ type GetAllowance = (
   signal?: AbortSignal
 ) => Promise<Allowance | typeof NOT_FOUND_RESPONSE>;
 
+export const isAllowance = (
+  arg: Awaited<ReturnType<GetAllowance>>
+): arg is Allowance => {
+  return 'allowance' in arg;
+};
+
 export type GetBalancesFunctions = {
   getBalance: GetBalance;
   getBalances: GetBalances;
