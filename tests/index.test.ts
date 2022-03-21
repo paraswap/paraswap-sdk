@@ -30,8 +30,10 @@ declare let process: any;
 
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
-const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
-const MANA = '0x0f5d2fb29fb7d3cfee444a200298f468908cc942';
+const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
+
+const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
+  '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
 const TESTING_ENV = true;
 const PROVIDER_URL = process.env.PROVIDER_URL;
@@ -172,26 +174,29 @@ describe.each([
 
   test('Get_Allowance', async () => {
     const { getAllowance } = constructGetBalances({ network, fetcher });
-    const allowance = await getAllowance(senderAddress, DAI);
-
-    if (!allowance || (allowance as APIError).message) {
-      return;
-    }
-
-    expect(new BigNumber((allowance as Allowance).allowance).isNaN()).toBe(
-      false
+    const allowance = await getAllowance(
+      DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
+      DAI
     );
+
+    assert(isAllowance(allowance), 'hardcoded dummy address should be found');
+
+    expect(allowance.allowance).toEqual('123000000000000000');
   });
 
   test('Get_Allowances', async () => {
     const { getAllowances } = constructGetBalances({ network, fetcher });
-    const allowances = await getAllowances(senderAddress, [DAI, BAT, MANA]);
-
-    await Promise.all(
-      allowances.map((allowance) =>
-        expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
-      )
+    const allowances = await getAllowances(
+      DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
+      [DAI, HEX]
     );
+    console.log('Get_Allowances', allowances);
+
+    const [daiAllowance, hexAllowance] = await Promise.all(
+      allowances.map((allowance) => allowance.allowance)
+    );
+    expect(daiAllowance).toEqual('123000000000000000');
+    expect(hexAllowance).toEqual('32100000');
   });
 
   test('Get_Adapters', async () => {
