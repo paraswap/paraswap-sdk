@@ -21,6 +21,7 @@ import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
+import { assert } from 'ts-essentials';
 
 dotenv.config();
 
@@ -105,7 +106,7 @@ describe.each([
       type: 'list',
       namesOnly: true,
     });
-    expect((markets as string[]).length).toBeGreaterThan(15);
+    expect(markets.length).toBeGreaterThan(15);
   });
 
   test('Get_Tokens', async () => {
@@ -160,10 +161,16 @@ describe.each([
 
     expect(Array.isArray(others)).toBe(true);
 
-    expect(typeof others![0].exchange).toBe('string');
+    const firstRoute = others?.[0];
 
-    expect(typeof others![0].unit).toBe('string');
-    expect(new BigNumber(others![0].unit as string).isNaN()).toBe(false);
+    assert(firstRoute, 'at least one route must exist');
+
+    expect(typeof firstRoute.exchange).toBe('string');
+
+    expect(typeof firstRoute.unit).toBe('string');
+    expect(firstRoute.unit && new BigNumber(firstRoute.unit).isNaN()).toBe(
+      false
+    );
   });
 
   test('Get_Spender', async () => {
