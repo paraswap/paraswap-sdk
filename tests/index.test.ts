@@ -4,15 +4,18 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
-  AllSDKMethods,
   constructAxiosFetcher,
+  constructBuildTx,
   constructEthersContractCaller,
   constructFetchFetcher,
-  constructSDK,
+  constructGetAdapters,
+  constructGetRate,
+  constructGetSpender,
+  constructGetTokens,
 } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
-import { Allowance } from '../src/balance';
+import { Allowance, constructGetBalances } from '../src/balance';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
@@ -84,23 +87,18 @@ describe.each([
   ['fetchFetcher & web3ContractCaller', fetchFetcher, web3ContractCaller],
   ['axiosFetcher & ethersContractCaller', axiosFetcher, ethersContractCaller],
 ])('ParaSwap SDK: %s', (testName, fetcher, contractCaller) => {
-  let paraSwap: AllSDKMethods;
-
-  beforeAll(async () => {
-    paraSwap = constructSDK({
+  test('getBalance', async () => {
+    const { getBalance } = constructGetBalances({
       network,
       fetcher,
-      contractCaller,
     });
-  });
-
-  test('Get_Balance', async () => {
-    const balance = await paraSwap.getBalance(senderAddress, ETH);
+    const balance = await getBalance(senderAddress, ETH);
     expect(balance).toBeDefined();
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.getAdapters({
+    const { getAdapters } = constructGetAdapters({ network, fetcher });
+    const markets = await getAdapters({
       type: 'list',
       namesOnly: true,
     });
@@ -108,7 +106,8 @@ describe.each([
   });
 
   test('Get_Tokens', async () => {
-    const tokens = await paraSwap.getTokens();
+    const { getTokens } = constructGetTokens({ network, fetcher });
+    const tokens = await getTokens();
 
     expect(Array.isArray(tokens)).toBe(true);
     expect(tokens.length).toBeGreaterThan(0);
@@ -122,7 +121,8 @@ describe.each([
   });
 
   test('Get_Rates', async () => {
-    const priceRoute = await paraSwap.getRate({
+    const { getRate } = constructGetRate({ network, fetcher });
+    const priceRoute = await getRate({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -164,12 +164,14 @@ describe.each([
   });
 
   test('Get_Spender', async () => {
-    const spender = await paraSwap.getSpender();
+    const { getSpender } = constructGetSpender({ network, fetcher });
+    const spender = await getSpender();
     expect(web3provider.utils.isAddress(spender as string));
   });
 
   test('Get_Allowance', async () => {
-    const allowance = await paraSwap.getAllowance(senderAddress, DAI);
+    const { getAllowance } = constructGetBalances({ network, fetcher });
+    const allowance = await getAllowance(senderAddress, DAI);
 
     if (!allowance || (allowance as APIError).message) {
       return;
@@ -181,11 +183,8 @@ describe.each([
   });
 
   test('Get_Allowances', async () => {
-    const allowances = await paraSwap.getAllowances(senderAddress, [
-      DAI,
-      BAT,
-      MANA,
-    ]);
+    const { getAllowances } = constructGetBalances({ network, fetcher });
+    const allowances = await getAllowances(senderAddress, [DAI, BAT, MANA]);
 
     await Promise.all(
       allowances.map((allowance) =>
@@ -195,7 +194,8 @@ describe.each([
   });
 
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.getAdapters({ type: 'object' });
+    const { getAdapters } = constructGetAdapters({ network, fetcher });
+    const adapters = await getAdapters({ type: 'object' });
     expect(adapters.paraswappool[0].adapter).toBeDefined();
     expect(adapters.uniswapv2[0].adapter).toBeDefined();
     expect(adapters.uniswapv2[0].index).toBeDefined();
@@ -204,8 +204,9 @@ describe.each([
   });
 
   test('Build_Tx', async () => {
+    const { getRate } = constructGetRate({ network, fetcher });
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await getRate({
       srcToken,
       destToken,
       amount: srcAmount,
@@ -220,7 +221,8 @@ describe.each([
       .times(0.99)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const { buildTx } = constructBuildTx({ network, fetcher });
+    const txParams = await buildTx(
       {
         srcToken,
         destToken,
@@ -237,7 +239,8 @@ describe.each([
   });
   if (TESTING_ENV) {
     test('Build_and_Send_Tx', async () => {
-      const priceRoute = await paraSwap.getRate({
+      const { getRate } = constructGetRate({ network, fetcher });
+      const priceRoute = await getRate({
         srcToken,
         destToken,
         amount: srcAmount,
@@ -252,7 +255,8 @@ describe.each([
         .times(0.99)
         .toFixed(0);
 
-      const txParams = await paraSwap.buildTx(
+      const { buildTx } = constructBuildTx({ network, fetcher });
+      const txParams = await buildTx(
         {
           srcToken,
           destToken,
@@ -287,8 +291,9 @@ describe.each([
       expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
     });
     test('Build_and_Send_Tx_BUY', async () => {
+      const { getRate } = constructGetRate({ network, fetcher });
       const destAmount = srcAmount;
-      const priceRoute = await paraSwap.getRate({
+      const priceRoute = await getRate({
         srcToken,
         destToken,
         amount: destAmount,
@@ -300,7 +305,8 @@ describe.each([
         .times(1.1)
         .toFixed(0);
 
-      const txParams = await paraSwap.buildTx(
+      const { buildTx } = constructBuildTx({ network, fetcher });
+      const txParams = await buildTx(
         {
           srcToken,
           destToken,
