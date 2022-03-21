@@ -220,36 +220,6 @@ describe('ParaSwap SDK', () => {
     expect(typeof txOrError).toBe('object');
   });
   if (TESTING_ENV) {
-    test('Build_tx_legacy', async () => {
-      const ratesOrError = await paraSwap.getRate(
-        srcToken,
-        destToken,
-        srcAmount,
-        senderAddress,
-        SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
-      );
-      const priceRoute = ratesOrError as OptimalRate;
-      const destAmount = new BigNumber(priceRoute.destAmount)
-        .times(0.99)
-        .toFixed();
-
-      const txOrError = await paraSwap.buildTx(
-        srcToken,
-        destToken,
-        srcAmount,
-        destAmount,
-        priceRoute,
-        signer.address,
-        referrer,
-        undefined,
-        undefined,
-        undefined,
-        { ignoreChecks: true }
-      );
-      const transaction = txOrError as TransactionParams;
-      expect(typeof transaction).toBe('object');
-    });
     test('Build_and_Send_Tx', async () => {
       const ratesOrError = await paraSwap.getRate(
         srcToken,
