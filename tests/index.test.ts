@@ -84,9 +84,9 @@ const web3ContractCaller = constructEthersContractCaller(
 );
 
 describe.each([
-  ['fetchFetcher & web3ContractCaller', fetchFetcher, web3ContractCaller],
-  ['axiosFetcher & ethersContractCaller', axiosFetcher, ethersContractCaller],
-])('ParaSwap SDK: %s', (testName, fetcher, contractCaller) => {
+  ['fetchFetcher', fetchFetcher],
+  ['axiosFetcher', axiosFetcher],
+])('ParaSwap SDK: fetching methods: %s', (testName, fetcher) => {
   test('getBalance', async () => {
     const { getBalance } = constructGetBalances({
       network,
@@ -237,7 +237,6 @@ describe.each([
 
     expect(typeof txParams).toBe('object');
   });
-  if (TESTING_ENV) {
     test('Build_and_Send_Tx', async () => {
       const { getRate } = constructGetRate({ network, fetcher });
       const priceRoute = await getRate({
@@ -275,11 +274,7 @@ describe.each([
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
         value: '0x' + new BigNumber(txParams.value).toString(16),
       };
-      const toContract = new ethers.Contract(
-        destToken,
-        erc20abi,
-        ethersProvider
-      );
+    const toContract = new ethers.Contract(destToken, erc20abi, ethersProvider);
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
 
@@ -325,11 +320,7 @@ describe.each([
         gasLimit: '0x' + new BigNumber(5000000).toString(16),
         value: '0x' + new BigNumber(txParams.value).toString(16),
       };
-      const toContract = new ethers.Contract(
-        destToken,
-        erc20abi,
-        ethersProvider
-      );
+    const toContract = new ethers.Contract(destToken, erc20abi, ethersProvider);
       const beforeFromBalance = await ethersProvider.getBalance(signer.address);
       const beforeToBalance = await toContract.balanceOf(signer.address);
 
@@ -340,5 +331,4 @@ describe.each([
       expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
       expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
     });
-  }
 });
