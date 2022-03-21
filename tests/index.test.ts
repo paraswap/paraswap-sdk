@@ -1,9 +1,10 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { ethers } from 'ethers';
+import { BigNumber as BigNumberEthers, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
+  constructApproveToken,
   constructAxiosFetcher,
   constructBuildTx,
   constructEthersContractCaller,
@@ -237,98 +238,129 @@ describe.each([
 
     expect(typeof txParams).toBe('object');
   });
-    test('Build_and_Send_Tx', async () => {
-      const { getRate } = constructGetRate({ network, fetcher });
-      const priceRoute = await getRate({
+  test('Build_and_Send_Tx', async () => {
+    const { getRate } = constructGetRate({ network, fetcher });
+    const priceRoute = await getRate({
+      srcToken,
+      destToken,
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+      options: {
+        includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
+      },
+    });
+
+    const destAmount = new BigNumber(priceRoute.destAmount)
+      .times(0.99)
+      .toFixed(0);
+
+    const { buildTx } = constructBuildTx({ network, fetcher });
+    const txParams = await buildTx(
+      {
         srcToken,
         destToken,
-        amount: srcAmount,
-        userAddress: senderAddress,
-        side: SwapSide.SELL,
-        options: {
-          includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
-        },
-      });
+        srcAmount,
+        destAmount,
+        priceRoute,
+        userAddress: signer.address,
+        partner: referrer,
+      },
+      { ignoreChecks: true }
+    );
 
-      const destAmount = new BigNumber(priceRoute.destAmount)
-        .times(0.99)
-        .toFixed(0);
-
-      const { buildTx } = constructBuildTx({ network, fetcher });
-      const txParams = await buildTx(
-        {
-          srcToken,
-          destToken,
-          srcAmount,
-          destAmount,
-          priceRoute,
-          userAddress: signer.address,
-          partner: referrer,
-        },
-        { ignoreChecks: true }
-      );
-
-      const transaction = {
-        ...txParams,
-        gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
-        gasLimit: '0x' + new BigNumber(5000000).toString(16),
-        value: '0x' + new BigNumber(txParams.value).toString(16),
-      };
+    const transaction = {
+      ...txParams,
+      gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      value: '0x' + new BigNumber(txParams.value).toString(16),
+    };
     const toContract = new ethers.Contract(destToken, erc20abi, ethersProvider);
-      const beforeFromBalance = await ethersProvider.getBalance(signer.address);
-      const beforeToBalance = await toContract.balanceOf(signer.address);
+    const beforeFromBalance = await ethersProvider.getBalance(signer.address);
+    const beforeToBalance = await toContract.balanceOf(signer.address);
 
-      const txr = await signer.sendTransaction(transaction);
-      await txr.wait(1);
-      const afterFromBalance = await ethersProvider.getBalance(signer.address);
-      const afterToBalance = await toContract.balanceOf(signer.address);
-      expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
-      expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
+    const txr = await signer.sendTransaction(transaction);
+    await txr.wait(1);
+    const afterFromBalance = await ethersProvider.getBalance(signer.address);
+    const afterToBalance = await toContract.balanceOf(signer.address);
+    expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
+    expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
+  });
+  test('Build_and_Send_Tx_BUY', async () => {
+    const { getRate } = constructGetRate({ network, fetcher });
+    const destAmount = srcAmount;
+    const priceRoute = await getRate({
+      srcToken,
+      destToken,
+      amount: destAmount,
+      userAddress: senderAddress,
+      side: SwapSide.BUY,
+      options: { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
     });
-    test('Build_and_Send_Tx_BUY', async () => {
-      const { getRate } = constructGetRate({ network, fetcher });
-      const destAmount = srcAmount;
-      const priceRoute = await getRate({
+    const _srcAmount = new BigNumber(priceRoute.srcAmount)
+      .times(1.1)
+      .toFixed(0);
+
+    const { buildTx } = constructBuildTx({ network, fetcher });
+    const txParams = await buildTx(
+      {
         srcToken,
         destToken,
-        amount: destAmount,
-        userAddress: senderAddress,
-        side: SwapSide.BUY,
-        options: { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
-      });
-      const _srcAmount = new BigNumber(priceRoute.srcAmount)
-        .times(1.1)
-        .toFixed(0);
+        srcAmount: _srcAmount,
+        destAmount,
+        priceRoute,
+        userAddress: signer.address,
+        partner: referrer,
+      },
+      { ignoreChecks: true }
+    );
 
-      const { buildTx } = constructBuildTx({ network, fetcher });
-      const txParams = await buildTx(
-        {
-          srcToken,
-          destToken,
-          srcAmount: _srcAmount,
-          destAmount,
-          priceRoute,
-          userAddress: signer.address,
-          partner: referrer,
-        },
-        { ignoreChecks: true }
-      );
-
-      const transaction = {
-        ...txParams,
-        gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
-        gasLimit: '0x' + new BigNumber(5000000).toString(16),
-        value: '0x' + new BigNumber(txParams.value).toString(16),
-      };
+    const transaction = {
+      ...txParams,
+      gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      value: '0x' + new BigNumber(txParams.value).toString(16),
+    };
     const toContract = new ethers.Contract(destToken, erc20abi, ethersProvider);
-      const beforeFromBalance = await ethersProvider.getBalance(signer.address);
-      const beforeToBalance = await toContract.balanceOf(signer.address);
+    const beforeFromBalance = await ethersProvider.getBalance(signer.address);
+    const beforeToBalance = await toContract.balanceOf(signer.address);
 
-      const txr = await signer.sendTransaction(transaction);
-      await txr.wait(1);
-      const afterFromBalance = await ethersProvider.getBalance(signer.address);
-      const afterToBalance = await toContract.balanceOf(signer.address);
-      expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
-      expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
-    });
+    const txr = await signer.sendTransaction(transaction);
+    await txr.wait(1);
+    const afterFromBalance = await ethersProvider.getBalance(signer.address);
+    const afterToBalance = await toContract.balanceOf(signer.address);
+    expect(beforeFromBalance.gt(afterFromBalance)).toBeTruthy();
+    expect(beforeToBalance.lt(afterToBalance)).toBeTruthy();
+  });
 });
+
+describe.each([
+  ['fetchFetcher & ethersContractCaller', fetchFetcher, ethersContractCaller],
+  ['axiosFetcher & web3ContractCaller', axiosFetcher, web3ContractCaller],
+])(
+  'ParaSwap SDK: contract calling methods: %s',
+  (testName, fetcher, contractCaller) => {
+    test('approveToken', async () => {
+      const { approveToken } = constructApproveToken({
+        fetcher,
+        network,
+        contractCaller,
+      });
+
+      const tx = await approveToken('12345', DAI);
+      await tx.wait(1);
+      const toContract = new ethers.Contract(
+        destToken,
+        erc20abi,
+        ethersProvider
+      );
+      const { getSpender } = constructGetSpender({ network, fetcher });
+      const spender = await getSpender();
+      const allowance: BigNumberEthers = await toContract.allowance(
+        signer.address,
+        spender
+      );
+      expect(allowance.toString()).toEqual('12345');
+    });
+  }
+);
