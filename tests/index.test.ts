@@ -167,7 +167,7 @@ describe.each([
   test('Get_Spender', async () => {
     const { getSpender } = constructGetSpender({ network, fetcher });
     const spender = await getSpender();
-    expect(web3provider.utils.isAddress(spender as string));
+    expect(web3provider.utils.isAddress(spender));
   });
 
   test('Get_Allowance', async () => {
