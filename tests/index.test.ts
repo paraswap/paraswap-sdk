@@ -4,6 +4,7 @@ import { BigNumber as BigNumberEthers, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
+  ApproveTokenFunctions,
   BuildTxFunctions,
   constructApproveToken,
   constructAxiosFetcher,
@@ -360,22 +361,24 @@ describe.each([
 ])(
   'ParaSwap SDK: contract calling methods: %s',
   (testName, fetcher, contractCaller) => {
-    test('approveToken', async () => {
-      const { approveToken } = constructApproveToken({
-        fetcher,
-        network,
-        contractCaller,
-      });
+    let paraSwap: ApproveTokenFunctions<any> & GetSpenderFunctions;
 
-      const tx = await approveToken('12345', DAI);
+    beforeAll(() => {
+      paraSwap = constructPartialSDK(
+        { network, fetcher, contractCaller },
+        constructApproveToken,
+        constructGetSpender
+      );
+    });
+    test('approveToken', async () => {
+      const tx = await paraSwap.approveToken('12345', DAI);
       await tx.wait(1);
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
         ethersProvider
       );
-      const { getSpender } = constructGetSpender({ network, fetcher });
-      const spender = await getSpender();
+      const spender = await paraSwap.getSpender();
       const allowance: BigNumberEthers = await toContract.allowance(
         signer.address,
         spender
