@@ -16,8 +16,7 @@ import {
 } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
-import { Allowance, constructGetBalances } from '../src/balance';
-import { APIError } from '../src/legacy';
+import { constructGetBalances, isAllowance } from '../src/balance';
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
@@ -36,7 +35,6 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const TESTING_ENV = true;
 const PROVIDER_URL = process.env.PROVIDER_URL;
 const network = 1;
 const srcToken = ETH;
@@ -197,7 +195,6 @@ describe.each([
       DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
       [DAI, HEX]
     );
-    console.log('Get_Allowances', allowances);
 
     const [daiAllowance, hexAllowance] = await Promise.all(
       allowances.map((allowance) => allowance.allowance)
