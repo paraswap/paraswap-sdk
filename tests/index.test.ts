@@ -37,6 +37,11 @@ import erc20abi from './abi/ERC20.json';
 import ganache from 'ganache';
 import { assert } from 'ts-essentials';
 import { GetRateFunctions } from '../src/rates';
+import {
+  ContractCallerFunctions,
+  StaticContractCallerFn,
+  TransactionContractCallerFn,
+} from '../src/types';
 
 dotenv.config();
 
@@ -95,6 +100,11 @@ const ethersContractCaller = constructEthersContractCaller(
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,
+  senderAddress
+);
+
+const customGanacheContractCaller = constructProviderOnlyContractCaller(
+  ganacheProvider,
   senderAddress
 );
 
@@ -360,10 +370,18 @@ describe.each([
 describe.each([
   ['fetchFetcher & ethersContractCaller', fetchFetcher, ethersContractCaller],
   ['axiosFetcher & web3ContractCaller', axiosFetcher, web3ContractCaller],
+  [
+    'axiosFetcher & customGanacheContractCaller',
+    axiosFetcher,
+    customGanacheContractCaller,
+  ],
 ])(
   'ParaSwap SDK: contract calling methods: %s',
   (testName, fetcher, contractCaller) => {
-    type ApproveTxResult = ethers.ContractTransaction | Web3UnpromiEvent;
+    type ApproveTxResult =
+      | ethers.ContractTransaction
+      | Web3UnpromiEvent
+      | string;
     // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
     type ApproveConstructor = (
       options: ConstructProviderFetchInput<ApproveTxResult>
@@ -384,7 +402,11 @@ describe.each([
     test('approveToken', async () => {
       const tx = await paraSwap.approveToken('12345', DAI);
 
-      if ('wait' in tx) {
+      if (typeof tx === 'string') {
+        // tx is sent
+        // wait for it to mine however you prefer
+        await ethersProvider.waitForTransaction(tx);
+      } else if ('wait' in tx) {
         await tx.wait(1);
       } else if ('on' in tx) {
         await new Promise<Web3TransactionReceipt>((resolve, reject) => {
@@ -406,3 +428,92 @@ describe.each([
     });
   }
 );
+
+interface MinProvider {
+  request(args: { method: string; params: any }): Promise<any>;
+}
+// example of constructing a custom contractCaller with provider only
+function constructProviderOnlyContractCaller(
+  provider: MinProvider,
+  account?: string
+): ContractCallerFunctions<string> {
+  const staticCall: StaticContractCallerFn = async ({
+    address,
+    abi,
+    contractMethod,
+    args,
+    overrides,
+  }) => {
+    // need to encode data somehow, to send raw call
+    const iface = new ethers.utils.Interface(abi);
+    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
+
+    const gasPrice =
+      overrides.gasPrice &&
+      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
+    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
+    const value = overrides.value && '0x' + overrides.value.toString(16);
+
+    const params = [
+      {
+        from: account,
+        to: address,
+        gasPrice,
+        gas,
+        value,
+        data: calldataEncoded,
+      },
+    ];
+
+    // what provider here returns will depend on provider
+    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
+    // keeping it `as any` as we don't know
+    const res = await provider.request({
+      method: 'eth_call',
+      params,
+    });
+
+    return res;
+  };
+
+  const transactCall: TransactionContractCallerFn<string> = async ({
+    address,
+    abi,
+    contractMethod,
+    args,
+    overrides,
+  }) => {
+    const iface = new ethers.utils.Interface(abi);
+    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
+
+    const gasPrice =
+      overrides.gasPrice &&
+      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
+    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
+    const value = overrides.value && '0x' + overrides.value.toString(16);
+
+    const params = [
+      {
+        from: account,
+        to: address,
+        gasPrice,
+        gas,
+        value,
+        data: calldataEncoded,
+      },
+    ];
+
+    // what provider here returns will depend on provider
+    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
+    // `string`
+    const res = await provider.request({
+      method: 'eth_sendTransaction',
+      params,
+    });
+    console.log('🚀 ~ file: index.test.ts ~ line 520 ~ res', res);
+
+    return res;
+  };
+
+  return { staticCall, transactCall };
+}
