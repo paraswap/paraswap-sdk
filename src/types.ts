@@ -61,10 +61,7 @@ interface ContractCallTransactionInput<T extends string>
   overrides: TxSendOverrides;
 }
 
-export type ContractCallerFunction = <T, M extends string = string>(
-  params: ContractCallTransactionInput<M> | ContractCallStaticInput<M>
-) => Promise<T>;
-
+// may have to type result T differently if we ever use staticCalls in SDK
 export type StaticContractCallerFn = <T, M extends string = string>(
   params: ContractCallStaticInput<M>
 ) => Promise<T>;
