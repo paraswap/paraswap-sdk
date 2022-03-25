@@ -507,6 +507,8 @@ function constructProviderOnlyContractCaller(
     // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
     // `string`
     const res = await provider.request({
+      // we can only sendTransaction right away because accounts in ganache are unlocked
+      // for other provider we may need to signTransaction first, then sendRawTransaction
       method: 'eth_sendTransaction',
       params,
     });
