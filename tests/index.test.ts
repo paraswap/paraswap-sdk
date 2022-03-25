@@ -16,6 +16,7 @@ import {
   constructGetSpender,
   constructGetTokens,
   constructPartialSDK,
+  constructWeb3ContractCaller,
   GetSpenderFunctions,
   GetTokensFunctions,
 } from '../src';
@@ -88,11 +89,8 @@ const ethersContractCaller = constructEthersContractCaller(
   senderAddress
 );
 
-const web3ContractCaller = constructEthersContractCaller(
-  {
-    providerOrSigner: signer,
-    Contract: ethers.Contract,
-  },
+const web3ContractCaller = constructWeb3ContractCaller(
+  web3provider,
   senderAddress
 );
 
