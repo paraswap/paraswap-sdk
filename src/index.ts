@@ -27,6 +27,7 @@ import {
 import { UnionToIntersection } from 'ts-essentials';
 
 export type { TransactionParams } from './transaction';
+export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
 
 // can import these individually
