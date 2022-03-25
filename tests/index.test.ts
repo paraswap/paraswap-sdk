@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
+import { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
 import { BigNumber as BigNumberEthers, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
@@ -17,8 +18,11 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructWeb3ContractCaller,
+  ConstructProviderFetchInput,
   GetSpenderFunctions,
   GetTokensFunctions,
+  SDKConfig,
+  Web3UnpromiEvent,
 } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
@@ -359,10 +363,19 @@ describe.each([
 ])(
   'ParaSwap SDK: contract calling methods: %s',
   (testName, fetcher, contractCaller) => {
-    let paraSwap: ApproveTokenFunctions<any> & GetSpenderFunctions;
+    type ApproveTxResult = ethers.ContractTransaction | Web3UnpromiEvent;
+    // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
+    type ApproveConstructor = (
+      options: ConstructProviderFetchInput<ApproveTxResult>
+    ) => ApproveTokenFunctions<ApproveTxResult>;
+
+    let paraSwap: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
 
     beforeAll(() => {
-      paraSwap = constructPartialSDK(
+      paraSwap = constructPartialSDK<
+        SDKConfig<ApproveTxResult>,
+        [ApproveConstructor, typeof constructGetSpender]
+      >(
         { network, fetcher, contractCaller },
         constructApproveToken,
         constructGetSpender
