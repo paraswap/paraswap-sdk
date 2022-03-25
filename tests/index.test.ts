@@ -383,7 +383,15 @@ describe.each([
     });
     test('approveToken', async () => {
       const tx = await paraSwap.approveToken('12345', DAI);
-      await tx.wait(1);
+
+      if ('wait' in tx) {
+        await tx.wait(1);
+      } else if ('on' in tx) {
+        await new Promise<Web3TransactionReceipt>((resolve, reject) => {
+          tx.on('receipt', resolve);
+          tx.on('error', reject);
+        });
+      }
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
