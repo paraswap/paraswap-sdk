@@ -57,8 +57,8 @@ Where priceRoute contains the rate and the distribution among exchanges, checkou
 This can be used for trustless integrations, the
 
 ```javascript
-const paraswapFeed = new ParaswapFeed(1);
-const priceRoute: OptimalRates = await paraswapFeed.getRate(
+const paraswap = new ParaSwap(1);
+const priceRoute: OptimalRates = await paraswap.getRate(
   srcToken,
   destToken,
   srcAmount,
