@@ -125,8 +125,8 @@ const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other 
 const account = '__signer_address__'
 
 const contractCaller = constructEthersContractCaller({
-  providerOrSigner: signer,
-  Contract: ethers.Contract,
+  ethersProviderOrSigner: signer,
+  EthersContract: ethers.Contract,
 }, account); // alternatively constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
@@ -140,7 +140,16 @@ const paraswap = constructSDK({
 ### To approve ParaSwap contracts to swap an ERC20 token
 
 ```typescript
-const txHash = await paraSwap.approveToken(amount, tokenAddress);
+// if created with constructEthersContractCaller
+const contractTx: ContractTransaction = await paraSwap.approveToken(amount, tokenAddress);
+const txReceipt = await contractTx.wait();
+
+// if created with constructWeb3ContractCaller
+const unpromiEvent: Web3UnpromiEvent = await paraSwap.approveToken(amount, tokenAddress);
+const txReceipt = await new Promise<Web3TransactionReceipt>((resolve, reject) => {
+  unpromiEvent.once('receipt', resolve);
+  unpromiEvent.once('error', reject);
+})
 ```
 
 ### To get the rate of a token pair
