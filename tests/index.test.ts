@@ -409,8 +409,8 @@ describe.each([
         await tx.wait(1);
       } else if ('on' in tx) {
         await new Promise<Web3TransactionReceipt>((resolve, reject) => {
-          tx.on('receipt', resolve);
-          tx.on('error', reject);
+          tx.once('receipt', resolve);
+          tx.once('error', reject);
         });
       }
       const toContract = new ethers.Contract(
