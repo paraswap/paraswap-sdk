@@ -14,7 +14,7 @@ import type {
 } from 'web3-eth-contract';
 import type { PromiEvent } from 'web3-core';
 import { assert } from 'ts-essentials';
-import { assertContractHasMethods } from '../misc';
+import { assertWeb3ContractHasMethods } from '../misc';
 
 export type Web3UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
 
@@ -32,7 +32,7 @@ export const constructContractCaller = (
       address
     );
 
-    assertContractHasMethods(contract.methods, contractMethod); // FIXME: web3.contract.methods is any and assert works with ethers types
+    assertWeb3ContractHasMethods(contract, contractMethod);
 
     const { block, gas, ...restOverrides } = overrides;
 
@@ -59,7 +59,7 @@ export const constructContractCaller = (
       address
     );
 
-    assertContractHasMethods(contract.methods, contractMethod); // FIXME see up
+    assertWeb3ContractHasMethods(contract, contractMethod);
 
     const { gas, from, ...restOverrides } = overrides;
 

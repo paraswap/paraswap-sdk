@@ -13,7 +13,7 @@ import type {
   CallOverrides,
   ContractTransaction,
 } from '@ethersproject/contracts';
-import { assertContractHasMethods } from '../misc';
+import { assertEthersContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
 
 export interface EthersProviderDeps {
@@ -30,7 +30,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, providerOrSigner);
 
-    assertContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethods(contract, contractMethod);
     // drop keys not in CallOverrides
     const { block, gas, ...restOverrides } = overrides;
     // reassign values to keys in CallOverrides
@@ -72,7 +72,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, signer);
 
-    assertContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethods(contract, contractMethod);
     // drop keys not in PayableOverrides
     const { gas, from, ...restOverrides } = overrides;
     // reassign values to keys in PayableOverrides
