@@ -13,8 +13,8 @@ const fetcher = constructAxiosFetcher(axios);
 
 const provider = ethers.getDefaultProvider(1);
 const contractCaller = constructEthersContractCaller({
-  providerOrSigner: provider,
-  Contract: ethers.Contract,
+  ethersProviderOrSigner: provider,
+  EthersContract: ethers.Contract,
 });
 
 //  type = AdaptersFunctions & ApproveTokenFunctions<ethers.ContractTransaction>

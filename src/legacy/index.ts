@@ -14,7 +14,7 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructGetRate,
-  constructSDK,
+  constructFullSDK,
   PriceString,
 } from '..';
 import { assert } from 'ts-essentials';
@@ -86,7 +86,7 @@ export class ParaSwap {
       : null;
 
     if (contractCaller) {
-      this.sdk = constructSDK<TxResponse>({
+      this.sdk = constructFullSDK<TxResponse>({
         fetcher,
         contractCaller,
         apiURL,
@@ -128,7 +128,7 @@ export class ParaSwap {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
@@ -146,7 +146,7 @@ export class ParaSwap {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,

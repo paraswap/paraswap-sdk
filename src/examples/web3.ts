@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Web3 from 'web3';
 import {
-  constructSDK,
+  constructFullSDK,
   constructAxiosFetcher,
   constructWeb3ContractCaller,
 } from '..';
@@ -11,7 +11,7 @@ const fetcher = constructAxiosFetcher(axios);
 const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructWeb3ContractCaller(web3);
 
-const paraswap = constructSDK({
+const paraswap = constructFullSDK({
   network: 1,
   fetcher,
   contractCaller,

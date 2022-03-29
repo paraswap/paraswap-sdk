@@ -17,12 +17,15 @@ import { assertEthersContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
 
 export interface EthersProviderDeps {
-  providerOrSigner: BaseProvider | Signer;
-  Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+  ethersProviderOrSigner: BaseProvider | Signer;
+  EthersContract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
 }
 
 export const constructContractCaller = (
-  { providerOrSigner, Contract }: EthersProviderDeps,
+  {
+    ethersProviderOrSigner: providerOrSigner,
+    EthersContract: Contract,
+  }: EthersProviderDeps,
   account?: Address
 ): ContractCallerFunctions<ContractTransaction> => {
   const staticCall: StaticContractCallerFn = async (params) => {

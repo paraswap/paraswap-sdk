@@ -91,8 +91,8 @@ const senderAddress = signer.address;
 
 const ethersContractCaller = constructEthersContractCaller(
   {
-    providerOrSigner: signer,
-    Contract: ethers.Contract,
+    ethersProviderOrSigner: signer,
+    EthersContract: ethers.Contract,
   },
   senderAddress
 );
