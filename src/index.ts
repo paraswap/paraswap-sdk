@@ -28,6 +28,8 @@ import {
   AddressOrSymbol,
   Token,
   PriceString,
+  TxHash,
+  TxSendOverrides,
 } from './types';
 
 export type { TransactionParams } from './methods/transaction';
@@ -69,10 +71,12 @@ export type {
   Address,
   AddressOrSymbol,
   PriceString,
+  TxHash,
+  TxSendOverrides,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
-export { AllSDKMethods, constructFullSDK as constructSDK } from './sdk/full';
-export { SDKFetchMethods, constructFetchSDK } from './sdk/fetchOnly';
+export { AllSDKMethods, constructFullSDK } from './sdk/full';
+export { SDKFetchMethods, constructSimpleSDK } from './sdk/simple';
 
 export { ParaSwap } from './legacy';
