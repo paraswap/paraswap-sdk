@@ -87,13 +87,28 @@ type IntersectionOfReturns<Funcs extends AnyFunction[]> = UnionToIntersection<
   ReturnType<Funcs[number]>
 >;
 
+type ApproveTokenFunctionsKeys = keyof ApproveTokenFunctions<any>;
+
+type PartialSDKResult<
+  Config extends ConstructBaseInput,
+  Funcs extends [SDKFunction<Config>, ...SDKFunction<Config>[]]
+> = IntersectionOfReturns<Funcs> extends ApproveTokenFunctions<any> // if there are ApproveTokenFunctions in the intersection
+  ? // which means constructApproveToken was passed in Funcs
+    Omit<IntersectionOfReturns<Funcs>, ApproveTokenFunctionsKeys> &
+      ApproveTokenFunctions<
+        // infer what TxResponse was used in Config
+        Config extends SDKConfig<infer TxResponse> ? TxResponse : unknown
+        // and make the ApproveTokenFunctions<unknow> in the intersection a specific ApproveTokenFunctions<TxResponse>
+      >
+  : IntersectionOfReturns<Funcs>;
+
 export const constructPartialSDK = <
-  T extends ConstructBaseInput,
-  Funcs extends [SDKFunction<T>, ...SDKFunction<T>[]]
+  Config extends ConstructBaseInput,
+  Funcs extends [SDKFunction<Config>, ...SDKFunction<Config>[]]
 >(
-  config: T, // config is auto-inferred to cover the used functions
+  config: Config, // config is auto-inferred to cover the used functions
   ...funcs: Funcs
-): IntersectionOfReturns<Funcs> => {
+): PartialSDKResult<Config, Funcs> => {
   const sdkFuncs = funcs.reduce<Partial<IntersectionOfReturns<Funcs>>>(
     (accum, func) => {
       const sdkSlice = func(config);
@@ -102,7 +117,7 @@ export const constructPartialSDK = <
     {}
   );
 
-  return sdkFuncs as IntersectionOfReturns<Funcs>;
+  return sdkFuncs as PartialSDKResult<Config, Funcs>;
 };
 
 export const constructSDK = <TxResponse = any>(
