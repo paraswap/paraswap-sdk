@@ -52,6 +52,7 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId: 1,
   },
+  quiet: true,
 });
 
 const web3provider = new Web3(ganacheProvider as any);
