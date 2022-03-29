@@ -23,7 +23,98 @@ yarn add @paraswap/sdk
 
 ## Using ParaSwap SDK
 
-### Import the necessary functions
+There are multiple ways to use ParaSwap SDK, ranging from simple construct-and-use approach to a fully composable _bring what you need_ way that allows for advanced tree-shaking a minimizes bundle size.
+
+### Simple SDK
+
+Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implemetation). Resulting SDK will be able to use all methoda that query the API.
+
+```ts
+  import { constructSimpleSDK } from '@paraswap/sdk'
+  import axios from 'axios'
+
+  // construct minimal SDK with fetcher only
+  const paraSwapMin = constructSimpleSDK({network: 1, axios})
+  // or
+  const paraSwapMin = constructSimpleSDK({network: 1, fetch: window.fetch})
+
+  async function swapExample() {
+    const signer: JsonRpcSigner = ...
+    const senderAddress = signer.address
+
+    const priceRoute = await paraSwapMin.getRate({
+      srcToken: ETH,
+      destToken: DAI,
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+    });
+
+    const txParams = await paraSwapMin.buildTx(
+      {
+        srcToken,
+        destToken,
+        srcAmount,
+        destAmount,
+        priceRoute,
+        userAddress: senderAddress,
+        partner: referrer,
+      },
+      { ignoreChecks: true }
+    );
+
+    const transaction = {
+      ...txParams,
+      gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      value: '0x' + new BigNumber(txParams.value).toString(16),
+    };
+
+    const txr = await signer.sendTransaction(transaction);
+  }
+
+
+  async function approveTokenYourselfExample() {
+    const TransferProxy = await paraSwapMin.getSpender()
+
+    const DAI_CONTRACT = new ethers.Contract(DAI, ERC20_ABI, ethersSignerOrProvider)
+
+    const tx = await DAI_CONTRACT.approve(TransferProxy, amountInWei)
+
+    const txReceipt = await tx.wait(1)
+  }
+
+```
+
+If additionally provided `providerOptions` as the second parameter, the resulting SDK will also be able to approve Tokens for swap.
+
+```ts
+  // 
+  // with ethers.js
+  const providerOptionsEther = {
+    ethersProviderOrSigner: provider, // JsonRpcProvider
+    EthersContract: ethers.Contract,
+    account: senderAddress,
+  };
+
+  // or with web3.js
+  const providerOptionsWeb3 = {
+    web3, // new Web3(...) instance
+    account: senderAddress,
+  };
+
+  const paraSwap = constructSimpleSDK({network: 1, axios}, providerOptionsEther)
+
+  async function approveTokenExample() {
+    const txHash = await paraSwap.approveToken(amountInWei, DAI)
+
+    // await tx somehow
+    await provider.waitForTransaction(txHash)
+  }
+```
+
+### Composed SDK
+Import the necessary functions
 ```typescript
 import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
 ```
