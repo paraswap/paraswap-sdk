@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { ethers } from 'ethers';
-import { constructPartialSDK, constructSDK } from '..';
-import { constructGetAdapters } from '../adapters';
-import { constructApproveToken } from '../approve';
 import {
+  constructPartialSDK,
+  constructGetAdapters,
+  constructApproveToken,
   constructEthersContractCaller,
   constructAxiosFetcher,
-} from '../helpers';
+} from '..';
 
 const fetcher = constructAxiosFetcher(axios);
 

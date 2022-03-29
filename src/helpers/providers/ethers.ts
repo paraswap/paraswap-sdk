@@ -4,7 +4,7 @@ import type {
   NoExtraKeysCheck,
   StaticContractCallerFn,
   TransactionContractCallerFn,
-} from '../types';
+} from '../../types';
 import type { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type {
@@ -13,10 +13,10 @@ import type {
   CallOverrides,
   ContractTransaction,
 } from '@ethersproject/contracts';
-import { assertContractHasMethods } from '../helpers/misc';
+import { assertContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
 
-interface EthersProviderDeps {
+export interface EthersProviderDeps {
   providerOrSigner: BaseProvider | Signer;
   Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
 }

@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import Web3 from 'web3';
-import { constructSDK } from '..';
-import { constructAxiosFetcher } from '../helpers';
-import { constructContractCaller } from '../helpers/web3';
+import {
+  constructSDK,
+  constructAxiosFetcher,
+  constructWeb3ContractCaller,
+} from '..';
 
 const fetcher = constructAxiosFetcher(axios);
 const web3 = new Web3(Web3.givenProvider);
-const contractCaller = constructContractCaller(web3);
+const contractCaller = constructWeb3ContractCaller(web3);
 
 const paraswap = constructSDK({
   network: 1,

@@ -3,7 +3,7 @@ import type {
   ContractCallerFunctions,
   StaticContractCallerFn,
   TransactionContractCallerFn,
-} from '../types';
+} from '../../types';
 import type Web3 from 'web3';
 import type { AbiItem } from 'web3-utils';
 import type {
@@ -14,14 +14,14 @@ import type {
 } from 'web3-eth-contract';
 import type { PromiEvent } from 'web3-core';
 import { assert } from 'ts-essentials';
-import { assertContractHasMethods } from './misc';
+import { assertContractHasMethods } from '../misc';
 
-export type UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
+export type Web3UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
 
 export const constructContractCaller = (
   web3: Web3,
   account?: Address
-): ContractCallerFunctions<UnpromiEvent> => {
+): ContractCallerFunctions<Web3UnpromiEvent> => {
   const staticCall: StaticContractCallerFn = async (params) => {
     assert(web3.currentProvider, 'web3.currentProvider is not set');
 
@@ -44,7 +44,7 @@ export const constructContractCaller = (
     return contract.methods[contractMethod](...args).call(normalizedOverrides);
   };
 
-  const transactCall: TransactionContractCallerFn<UnpromiEvent> = async (
+  const transactCall: TransactionContractCallerFn<Web3UnpromiEvent> = async (
     params
   ) => {
     assert(web3.currentProvider, 'web3.currentProvider is not set');
@@ -84,7 +84,7 @@ export const constructContractCaller = (
     // that is await Promise<PromiEvent> = Awaited<PromiEvent> that doesn't have .on|once
     // so that functionality becomes lost
     // transactCall can be made sync, but approve has to be async to await getSpender()
-    const unpromiEvent: UnpromiEvent = {
+    const unpromiEvent: Web3UnpromiEvent = {
       on: promiEvent.on.bind(promiEvent),
       once: promiEvent.once.bind(promiEvent),
     };

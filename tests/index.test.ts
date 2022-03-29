@@ -23,20 +23,19 @@ import {
   GetTokensFunctions,
   SDKConfig,
   Web3UnpromiEvent,
-} from '../src';
-import BigNumber from 'bignumber.js';
-import { SwapSide } from '../src';
-import {
   constructGetBalances,
   GetBalancesFunctions,
+  GetAdaptersFunctions,
+  GetRateFunctions,
   isAllowance,
-} from '../src/balance';
-import { AdaptersFunctions } from '../src/adapters';
+  SwapSide,
+} from '../src';
+import BigNumber from 'bignumber.js';
+
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
 import { assert } from 'ts-essentials';
-import { GetRateFunctions } from '../src/rates';
 import {
   ContractCallerFunctions,
   TransactionContractCallerFn,
@@ -113,7 +112,7 @@ describe.each([
   ['axiosFetcher', axiosFetcher],
 ])('ParaSwap SDK: fetching methods: %s', (testName, fetcher) => {
   let paraSwap: GetBalancesFunctions &
-    AdaptersFunctions &
+    GetAdaptersFunctions &
     GetTokensFunctions &
     GetRateFunctions &
     GetSpenderFunctions &

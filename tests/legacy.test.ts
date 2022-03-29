@@ -3,13 +3,11 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 // import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
-import { ParaSwap, Token } from '../src';
+import { ParaSwap, Token, Allowance, TransactionParams } from '../src';
 import BigNumber from 'bignumber.js';
 import { SwapSide } from '../src';
 import { OptimalRate, Adapters } from 'paraswap-core';
-import { Allowance } from '../src/balance';
 import { APIError } from '../src/legacy';
-import { TransactionParams } from '../src/transaction';
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
