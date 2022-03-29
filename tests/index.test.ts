@@ -39,8 +39,8 @@ import { assert } from 'ts-essentials';
 import { GetRateFunctions } from '../src/rates';
 import {
   ContractCallerFunctions,
-  StaticContractCallerFn,
   TransactionContractCallerFn,
+  // StaticContractCallerFn,
 } from '../src/types';
 
 dotenv.config();
@@ -384,7 +384,7 @@ describe.each([
       | string;
     // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
     type ApproveConstructor = (
-      options: ConstructProviderFetchInput<ApproveTxResult>
+      options: ConstructProviderFetchInput<ApproveTxResult, 'transactCall'>
     ) => ApproveTokenFunctions<ApproveTxResult>;
 
     let paraSwap: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
@@ -436,8 +436,9 @@ interface MinProvider {
 function constructProviderOnlyContractCaller(
   provider: MinProvider,
   account?: string
-): ContractCallerFunctions<string> {
-  const staticCall: StaticContractCallerFn = async ({
+): Pick<ContractCallerFunctions<string>, 'transactCall'> {
+  // staticCall isn't currently necessary, because provider is only used in approveToken currently for tx making
+  /* const staticCall: StaticContractCallerFn = async ({
     address,
     abi,
     contractMethod,
@@ -474,7 +475,7 @@ function constructProviderOnlyContractCaller(
     });
 
     return res;
-  };
+  }; */
 
   const transactCall: TransactionContractCallerFn<string> = async ({
     address,
@@ -512,10 +513,9 @@ function constructProviderOnlyContractCaller(
       method: 'eth_sendTransaction',
       params,
     });
-    console.log('🚀 ~ file: index.test.ts ~ line 520 ~ res', res);
 
     return res;
   };
 
-  return { staticCall, transactCall };
+  return { transactCall /* , staticCall */ };
 }

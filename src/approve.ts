@@ -41,10 +41,10 @@ type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
 
 type AvailableMethods = ExtractAbiMethodNames<typeof MinERC20Abi>;
 
-// @TODO make this generic to return whatever `contractCaller` returns
+// returns whatever `contractCaller` returns
 // to allow for better versatility
 export const constructApproveToken = <T>(
-  options: ConstructProviderFetchInput<T>
+  options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenFunctions<T> => {
   const { getSpender } = constructGetSpender(options);
   // cached for the same instance of `approveToken = constructApproveToken()`

@@ -74,8 +74,11 @@ export interface ContractCallerFunctions<T> {
   transactCall: TransactionContractCallerFn<T>;
 }
 
-export interface ConstructProviderFetchInput<T> extends ConstructFetchInput {
-  contractCaller: ContractCallerFunctions<T>;
+export interface ConstructProviderFetchInput<
+  T,
+  D extends keyof ContractCallerFunctions<T> = keyof ContractCallerFunctions<T>
+> extends ConstructFetchInput {
+  contractCaller: Pick<ContractCallerFunctions<T>, D>;
 }
 
 export type TokenFromApi = Pick<

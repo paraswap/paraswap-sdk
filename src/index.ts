@@ -63,8 +63,11 @@ export type {
   PriceString,
 };
 
-export type SDKConfig<TxResponse = any> =
-  ConstructProviderFetchInput<TxResponse> & ConstructFetchInput;
+export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
+  TxResponse,
+  'transactCall'
+> &
+  ConstructFetchInput;
 
 export type AllSDKMethods<TxResponse> = GetBalancesFunctions &
   GetTokensFunctions &
@@ -112,7 +115,7 @@ export const constructSDK = <TxResponse = any>(
     constructGetTokens,
     constructGetSpender,
     constructApproveToken as (
-      options: ConstructProviderFetchInput<TxResponse>
+      options: ConstructProviderFetchInput<TxResponse, 'transactCall'>
     ) => ApproveTokenFunctions<TxResponse>, // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
     constructBuildTx,
     constructGetAdapters,
