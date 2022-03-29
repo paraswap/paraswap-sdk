@@ -26,9 +26,9 @@ const paraswap = constructFullSDK({
 
 const res = paraswap.getAdapters({ type: 'list', namesOnly: false });
 
-// type ContractTransaction
+// type Promise<ContractTransaction>
 const txResponse = paraswap.approveToken('1', '0x...');
-// type ContractTransaction[]
+// type Promise<ContractTransaction[]>
 const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
 
 const part1 = constructPartialSDK(

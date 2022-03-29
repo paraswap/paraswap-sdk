@@ -17,7 +17,7 @@ const contractCaller = constructEthersContractCaller({
   EthersContract: ethers.Contract,
 });
 
-//  type = AdaptersFunctions & ApproveTokenFunctions<ethers.ContractTransaction>
+// type AdaptersFunctions & ApproveTokenFunctions<ethers.ContractTransaction>
 const part1 = constructPartialSDK(
   {
     network: 1,
@@ -28,7 +28,7 @@ const part1 = constructPartialSDK(
   constructApproveToken
 );
 
-// type = AdaptersAsObject
+// type Promise<AdaptersAsObject>
 const res1 = part1.getAdapters({ type: 'object' });
-// type = ethers.ContractTransaction
+// type Promise<ethers.ContractTransaction>
 const res2 = part1.approveToken('123', '0x...');
