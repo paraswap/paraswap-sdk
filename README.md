@@ -23,7 +23,7 @@ yarn add @paraswap/sdk
 
 ## Using ParaSwap SDK
 
-There are multiple ways to use ParaSwap SDK, ranging from simple construct-and-use approach to a fully composable _bring what you need_ way that allows for advanced tree-shaking a minimizes bundle size.
+There are multiple ways to use ParaSwap SDK, ranging from simple construct-and-use approach to a fully composable _bring what you need_ way that allows for advanced tree-shaking and minimizes bundle size.
 
 ### Simple SDK
 
