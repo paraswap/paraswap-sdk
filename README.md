@@ -27,7 +27,7 @@ There are multiple ways to use ParaSwap SDK, ranging from simple construct-and-u
 
 ### Simple SDK
 
-Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implemetation). Resulting SDK will be able to use all methoda that query the API.
+Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implementation). Resulting SDK will be able to use all methods that query the API.
 
 ```ts
   import { constructSimpleSDK } from '@paraswap/sdk'
