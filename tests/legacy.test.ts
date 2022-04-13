@@ -178,8 +178,8 @@ describe('ParaSwap SDK', () => {
     expect(adapters.paraswappool[0].adapter).toBeDefined();
     expect(adapters.uniswapv2[0].adapter).toBeDefined();
     expect(adapters.uniswapv2[0].index).toBeDefined();
-    expect(adapters.kyber[0].adapter).toBeDefined();
-    expect(adapters.kyber[0].index).toBeDefined();
+    expect(adapters.kyberdmm[0].adapter).toBeDefined();
+    expect(adapters.kyberdmm[0].index).toBeDefined();
   });
 
   test('Build_Tx', async () => {
