@@ -23,11 +23,11 @@ yarn add @paraswap/sdk
 
 ## Using ParaSwap SDK
 
-There are multiple ways to use ParaSwap SDK, ranging from simple construct-and-use approach to a fully composable _bring what you need_ way that allows for advanced tree-shaking and minimizes bundle size.
+There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and-use approach to a fully composable _bring what you need_ approach which allows for advanced tree-shaking and minimizes bundle size.
 
 ### Simple SDK
 
-Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implementation). Resulting SDK will be able to use all methods that query the API.
+Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implementation). The resulting SDK will be able to use all methods that query the API.
 
 ```ts
   import { constructSimpleSDK } from '@paraswap/sdk'
@@ -37,6 +37,9 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
   const paraSwapMin = constructSimpleSDK({network: 1, axios})
   // or
   const paraSwapMin = constructSimpleSDK({network: 1, fetch: window.fetch})
+
+  const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+  const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 
   async function swapExample() {
     const signer: JsonRpcSigner = ...
