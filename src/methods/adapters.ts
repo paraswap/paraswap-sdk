@@ -1,6 +1,6 @@
-import { ConstructFetchInput } from './types';
-import { constructSearchString } from './helpers/misc';
-import { API_URL } from './constants';
+import { ConstructFetchInput } from '../types';
+import { constructSearchString } from '../helpers/misc';
+import { API_URL } from '../constants';
 
 type Adapter = {
   adapter: string;
@@ -20,7 +20,7 @@ export type AllAdaptersOptions =
   | OptionsList
   | OptionsListNamesOnly;
 
-interface GetAdapternsFunc {
+interface GetAdaptersFunc {
   (options: OptionsObject, signal?: AbortSignal): Promise<AdaptersAsObject>;
   (options: OptionsList, signal?: AbortSignal): Promise<AdaptersAsList>;
   (
@@ -32,15 +32,15 @@ interface GetAdapternsFunc {
   >;
 }
 
-export type AdaptersFunctions = {
-  getAdapters: GetAdapternsFunc;
+export type GetAdaptersFunctions = {
+  getAdapters: GetAdaptersFunc;
 };
 
 export const constructGetAdapters = ({
   apiURL = API_URL,
   network,
   fetcher,
-}: ConstructFetchInput): AdaptersFunctions => {
+}: ConstructFetchInput): GetAdaptersFunctions => {
   async function getAdapters(
     options: OptionsObject,
     signal?: AbortSignal

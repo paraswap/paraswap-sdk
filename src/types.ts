@@ -1,8 +1,14 @@
 import type { JsonFragment } from '@ethersproject/abi';
 import { OptimalRate } from 'paraswap-core';
-import { Address, Token, TxHash } from './token';
+import {
+  Address,
+  AddressOrSymbol,
+  PriceString,
+  Token,
+  TxHash,
+} from './helpers/token';
 
-export type { Address, Token, TxHash };
+export type { Address, AddressOrSymbol, PriceString, Token, TxHash };
 
 export interface ConstructBaseInput {
   apiURL?: string;
@@ -61,10 +67,7 @@ interface ContractCallTransactionInput<T extends string>
   overrides: TxSendOverrides;
 }
 
-export type ContractCallerFunction = <T, M extends string = string>(
-  params: ContractCallTransactionInput<M> | ContractCallStaticInput<M>
-) => Promise<T>;
-
+// may have to type result T differently if we ever use staticCalls in SDK
 export type StaticContractCallerFn = <T, M extends string = string>(
   params: ContractCallStaticInput<M>
 ) => Promise<T>;
@@ -77,8 +80,11 @@ export interface ContractCallerFunctions<T> {
   transactCall: TransactionContractCallerFn<T>;
 }
 
-export interface ConstructProviderFetchInput<T> extends ConstructFetchInput {
-  contractCaller: ContractCallerFunctions<T>;
+export interface ConstructProviderFetchInput<
+  T,
+  D extends keyof ContractCallerFunctions<T> = keyof ContractCallerFunctions<T>
+> extends ConstructFetchInput {
+  contractCaller: Pick<ContractCallerFunctions<T>, D>;
 }
 
 export type TokenFromApi = Pick<

@@ -1,5 +1,11 @@
-export { constructFetcher as constructAxiosFetcher } from './axios';
-export { constructFetcher as constructFetchFetcher } from './fetch';
-export { constructContractCaller as constructEthersContractCaller } from './ethers';
-export { constructContractCaller as constructWeb3ContractCaller } from './web3';
+export { constructFetcher as constructAxiosFetcher } from './fetchers/axios';
+export { constructFetcher as constructFetchFetcher } from './fetchers/fetch';
+export {
+  constructContractCaller as constructEthersContractCaller,
+  EthersProviderDeps,
+} from './providers/ethers';
+export {
+  constructContractCaller as constructWeb3ContractCaller,
+  Web3UnpromiEvent,
+} from './providers/web3';
 export { isFetcherError } from './misc';
