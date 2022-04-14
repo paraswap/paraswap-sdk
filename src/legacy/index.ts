@@ -1,12 +1,7 @@
 import type { AxiosStatic } from 'axios';
 import type Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
-import type { Contract as EthersContract } from '@ethersproject/contracts';
-import type { Signer } from '@ethersproject/abstract-signer';
-
-import type { BaseProvider } from '@ethersproject/providers';
 import type { ContractTransaction } from '@ethersproject/contracts';
-
 import type { Address, OptimalRate } from 'paraswap-core';
 
 import { API_URL, SwapSide } from '../constants';
@@ -19,7 +14,7 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructGetRate,
-  constructSDK,
+  constructFullSDK,
   PriceString,
 } from '..';
 import { assert } from 'ts-essentials';
@@ -29,14 +24,14 @@ import {
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   isFetcherError,
+  Web3UnpromiEvent,
+  EthersProviderDeps,
 } from '../helpers';
 
-import type { RateOptions } from '../rates';
-import type { BuildOptions, TransactionParams } from '../transaction';
-import type { AddressOrSymbol, Token } from '../token';
-import type { Allowance } from '../balance';
-import type { FetcherFunction } from '../types';
-import type { UnpromiEvent } from '../helpers/web3';
+import type { RateOptions } from '../methods/rates';
+import type { BuildOptions, TransactionParams } from '../methods/transaction';
+import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
+import type { Allowance } from '../methods/balance';
 
 export type APIError = {
   message: string;
@@ -45,12 +40,7 @@ export type APIError = {
 };
 type Fetch = typeof fetch;
 
-interface EthersProviderDeps {
-  providerOrSigner: BaseProvider | Signer;
-  Contract: typeof EthersContract;
-}
-
-type TxResponse = UnpromiEvent | ContractTransaction;
+type TxResponse = Web3UnpromiEvent | ContractTransaction;
 
 /** @deprecated */
 export class ParaSwap {
@@ -96,7 +86,7 @@ export class ParaSwap {
       : null;
 
     if (contractCaller) {
-      this.sdk = constructSDK<TxResponse>({
+      this.sdk = constructFullSDK<TxResponse>({
         fetcher,
         contractCaller,
         apiURL,
@@ -138,7 +128,7 @@ export class ParaSwap {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
@@ -156,7 +146,7 @@ export class ParaSwap {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
