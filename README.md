@@ -30,20 +30,20 @@ There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and
 Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implementation). The resulting SDK will be able to use all methods that query the API.
 
 ```ts
-  import { constructSimpleSDK } from '@paraswap/sdk'
-  import axios from 'axios'
+  import { constructSimpleSDK } from '@paraswap/sdk';
+  import axios from 'axios';
 
   // construct minimal SDK with fetcher only
-  const paraSwapMin = constructSimpleSDK({network: 1, axios})
+  const paraSwapMin = constructSimpleSDK({network: 1, axios});
   // or
-  const paraSwapMin = constructSimpleSDK({network: 1, fetch: window.fetch})
+  const paraSwapMin = constructSimpleSDK({network: 1, fetch: window.fetch});
 
   const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 
   async function swapExample() {
     const signer: JsonRpcSigner = ...
-    const senderAddress = signer.address
+    const senderAddress = signer.address;
 
     const priceRoute = await paraSwapMin.getRate({
       srcToken: ETH,
@@ -78,13 +78,13 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
 
 
   async function approveTokenYourselfExample() {
-    const TransferProxy = await paraSwapMin.getSpender()
+    const TransferProxy = await paraSwapMin.getSpender();
 
-    const DAI_CONTRACT = new ethers.Contract(DAI, ERC20_ABI, ethersSignerOrProvider)
+    const DAI_CONTRACT = new ethers.Contract(DAI, ERC20_ABI, ethersSignerOrProvider);
 
-    const tx = await DAI_CONTRACT.approve(TransferProxy, amountInWei)
+    const tx = await DAI_CONTRACT.approve(TransferProxy, amountInWei);
 
-    const txReceipt = await tx.wait(1)
+    const txReceipt = await tx.wait(1);
   }
 
 ```
@@ -106,13 +106,13 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
-  const paraSwap = constructSimpleSDK({network: 1, axios}, providerOptionsEther)
+  const paraSwap = constructSimpleSDK({network: 1, axios}, providerOptionsEther);
 
   async function approveTokenExample() {
-    const txHash = await paraSwap.approveToken(amountInWei, DAI)
+    const txHash = await paraSwap.approveToken(amountInWei, DAI);
 
     // await tx somehow
-    await provider.waitForTransaction(txHash)
+    await provider.waitForTransaction(txHash);
   }
 ```
 
@@ -124,8 +124,8 @@ import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } fr
 ### Construct the ParaSwap object
 
 ```typescript
-const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__') // or any other signer/provider 
-const account = '__signer_address__'
+const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider 
+const account = '__signer_address__';
 
 const contractCaller = constructEthersContractCaller({
   ethersProviderOrSigner: signer,
@@ -161,8 +161,8 @@ const txReceipt = await new Promise<Web3TransactionReceipt>((resolve, reject) =>
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
 const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5'; // PSP
 const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals: 10 ** 18 here
-const srcDecimals = 18
-const destDecimals = 18
+const srcDecimals = 18;
+const destDecimals = 18;
 
 const priceRoute = await paraSwap.getRate(
   {
@@ -181,15 +181,15 @@ Where priceRoute contains the rate and the distribution among exchanges, checkou
 
 ```typescript
 const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
-const srcDecimals = 18
+const srcDecimals = 18;
 const srcAmount = '1000000000000000000'; // The source amount multiplied by its decimals
 const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5';
-const destDecimals = 18
-const destAmount = priceRoute.destAmount // price route being output of paraSwap.getRate()
+const destDecimals = 18;
+const destAmount = priceRoute.destAmount; // price route being output of paraSwap.getRate()
 const senderAddress = '__sender_address__'; // mandatory
 const receiver = '__receiver_address__'; // optional: for swap and transfer
-const partnerAddress = '__fee_receiver_address__' // optional: for permission-less monetization
-const partnerFeeBps = 50 // optional: fee in base point, for permission-less monetization
+const partnerAddress = '__fee_receiver_address__'; // optional: for permission-less monetization
+const partnerFeeBps = 50; // optional: fee in base point, for permission-less monetization
 
 
 const txParams = await paraSwap.buildTx(
@@ -223,14 +223,14 @@ e.g. for only getting rates and allowances:
 ```typescript
 import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetBalances } from '@paraswap/sdk';
 
-const fetcher = constructFetchFetcher(window.fetch)
+const fetcher = constructFetchFetcher(window.fetch);
 
 const minParaSwap = constructPartialSDK({
   network: 1,
   fetcher,
-}, constructGetRate, constructGetBalances)
+}, constructGetRate, constructGetBalances);
 
-const priceRoute = await minParaSwap.getRate(params)
+const priceRoute = await minParaSwap.getRate(params);
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
 
@@ -238,12 +238,12 @@ const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
 
 ```typescript
-import { ParaSwap } from '@paraswap/sdk'
-import axios from 'axios'
-import Web3 from 'web3'
+import { ParaSwap } from '@paraswap/sdk';
+import axios from 'axios';
+import Web3 from 'web3';
 
-const web3Provider = new Web3(window.ethereum)
-const account = '__user_address__'
+const web3Provider = new Web3(window.ethereum);
+const account = '__user_address__';
 
 const paraswap = new ParaSwap(
   1, 
@@ -252,14 +252,14 @@ const paraswap = new ParaSwap(
   undefined, 
   account, 
   axios
-)
+);
 
 ```
 
 By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only.
 
 ```typescript
-import { ParaSwap } from '@paraswap/sdk'
+import { ParaSwap } from '@paraswap/sdk';
 
 const paraswap = new ParaSwap(
   1, 
@@ -269,7 +269,7 @@ const paraswap = new ParaSwap(
   undefined, 
   undefined,
   window.fetch
-)
+);
 
 ```
 
