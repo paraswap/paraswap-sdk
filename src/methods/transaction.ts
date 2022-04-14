@@ -1,11 +1,15 @@
 import type { OptimalRate } from 'paraswap-core';
-import type { WithGasPrice, WithMaxFee } from './gas';
-import type { ConstructFetchInput, Address, FetcherPostInput } from './types';
+import type { WithGasPrice, WithMaxFee } from '../gas';
+import type {
+  ConstructFetchInput,
+  Address,
+  FetcherPostInput,
+  PriceString,
+} from '../types';
 
 import { assert } from 'ts-essentials';
-import { API_URL, SwapSide } from './constants';
-import { PriceString } from './token';
-import { constructSearchString } from './helpers/misc';
+import { API_URL, SwapSide } from '../constants';
+import { constructSearchString } from '../helpers/misc';
 
 export interface TransactionParams {
   to: string;

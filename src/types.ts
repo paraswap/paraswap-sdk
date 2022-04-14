@@ -1,8 +1,14 @@
 import type { JsonFragment } from '@ethersproject/abi';
 import { OptimalRate } from 'paraswap-core';
-import { Address, Token, TxHash } from './token';
+import {
+  Address,
+  AddressOrSymbol,
+  PriceString,
+  Token,
+  TxHash,
+} from './helpers/token';
 
-export type { Address, Token, TxHash };
+export type { Address, AddressOrSymbol, PriceString, Token, TxHash };
 
 export interface ConstructBaseInput {
   apiURL?: string;
@@ -48,28 +54,37 @@ interface ContractCallInput<T extends string> {
   address: Address;
   abi: ReadonlyArray<JsonFragment>;
   contractMethod: T;
-  static: boolean;
   args: any[];
 }
 
 interface ContractCallStaticInput<T extends string>
   extends ContractCallInput<T> {
-  static: true;
   overrides: StaticCallOverrides;
 }
 
 interface ContractCallTransactionInput<T extends string>
   extends ContractCallInput<T> {
-  static: false;
   overrides: TxSendOverrides;
 }
 
-export type ContractCallerFunction = <T, M extends string = string>(
-  params: ContractCallTransactionInput<M> | ContractCallStaticInput<M>
+// may have to type result T differently if we ever use staticCalls in SDK
+export type StaticContractCallerFn = <T, M extends string = string>(
+  params: ContractCallStaticInput<M>
+) => Promise<T>;
+export type TransactionContractCallerFn<T> = <M extends string = string>(
+  params: ContractCallTransactionInput<M>
 ) => Promise<T>;
 
-export interface ConstructProviderFetchInput extends ConstructFetchInput {
-  contractCaller: ContractCallerFunction;
+export interface ContractCallerFunctions<T> {
+  staticCall: StaticContractCallerFn;
+  transactCall: TransactionContractCallerFn<T>;
+}
+
+export interface ConstructProviderFetchInput<
+  T,
+  D extends keyof ContractCallerFunctions<T> = keyof ContractCallerFunctions<T>
+> extends ConstructFetchInput {
+  contractCaller: Pick<ContractCallerFunctions<T>, D>;
 }
 
 export type TokenFromApi = Pick<

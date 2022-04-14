@@ -1,10 +1,15 @@
-import { API_URL } from './constants';
-import { Token, Address, constructToken, AddressOrSymbol } from './token';
+import { API_URL } from '../constants';
+import {
+  Token,
+  Address,
+  constructToken,
+  AddressOrSymbol,
+} from '../helpers/token';
 import {
   ConstructFetchInput,
   TokenApiResponse,
   TokensApiResponse,
-} from './types';
+} from '../types';
 
 type GetBalances = (
   userAddress: Address,
@@ -31,6 +36,12 @@ type GetAllowance = (
   tokenAddress: Address,
   signal?: AbortSignal
 ) => Promise<Allowance | typeof NOT_FOUND_RESPONSE>;
+
+export const isAllowance = (
+  arg: Awaited<ReturnType<GetAllowance>>
+): arg is Allowance => {
+  return 'allowance' in arg;
+};
 
 export type GetBalancesFunctions = {
   getBalance: GetBalance;

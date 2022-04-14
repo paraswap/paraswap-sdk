@@ -1,38 +1,67 @@
 import type {
-  Contract,
-  ContractFunction,
-  PopulatedTransaction,
-  BigNumber,
+  Contract as EthersContract,
+  ContractFunction as EthersContractFunction,
+  PopulatedTransaction as EthersPopulatedTransaction,
+  BigNumber as EthersBigNumber,
 } from 'ethers';
+import type {
+  ContractSendMethod as Web3ContractSendMethod,
+  Contract as Web3Contract,
+} from 'web3-eth-contract';
 import { assert } from 'ts-essentials';
 
 import type { AxiosError } from 'axios';
 
-export type ContractWithMethod<T extends string> = Contract & {
-  readonly [method in T]: ContractFunction;
+export type EthersContractWithMethod<T extends string> = EthersContract & {
+  readonly [method in T]: EthersContractFunction;
 } & {
-  readonly functions: { [method in T]: ContractFunction };
+  readonly functions: { [method in T]: EthersContractFunction };
 
-  readonly callStatic: { [method in T]: ContractFunction };
-  readonly estimateGas: { [method in T]: ContractFunction<BigNumber> };
+  readonly callStatic: { [method in T]: EthersContractFunction };
+  readonly estimateGas: {
+    [method in T]: EthersContractFunction<EthersBigNumber>;
+  };
   readonly populateTransaction: {
-    [method in T]: ContractFunction<PopulatedTransaction>;
+    [method in T]: EthersContractFunction<EthersPopulatedTransaction>;
   };
 };
 
-export function contractHasMethods<T extends string>(
-  contract: Contract,
+export function ethersContractHasMethods<T extends string>(
+  contract: EthersContract,
   ...methods: T[]
-): contract is ContractWithMethod<T> {
+): contract is EthersContractWithMethod<T> {
   return methods.every((method) => typeof contract[method] === 'function');
 }
 
-export function assertContractHasMethods<T extends string>(
-  contract: Contract,
+export function assertEthersContractHasMethods<T extends string>(
+  contract: EthersContract,
   ...methods: T[]
-): asserts contract is ContractWithMethod<T> {
+): asserts contract is EthersContractWithMethod<T> {
   assert(
-    contractHasMethods(contract, ...methods),
+    ethersContractHasMethods(contract, ...methods),
+    `Contract must have methods: ${methods.join(', ')}`
+  );
+}
+
+export type Web3ContractWithMethod<T extends string> = Web3Contract & {
+  methods: { [method in T]: Web3ContractSendMethod };
+};
+
+export function web3ContractHasMethods<T extends string>(
+  contract: Web3Contract,
+  ...methods: T[]
+): contract is Web3ContractWithMethod<T> {
+  return methods.every(
+    (method) => typeof contract.methods[method] === 'function'
+  );
+}
+
+export function assertWeb3ContractHasMethods<T extends string>(
+  contract: Web3Contract,
+  ...methods: T[]
+): asserts contract is Web3ContractWithMethod<T> {
+  assert(
+    web3ContractHasMethods(contract, ...methods),
     `Contract must have methods: ${methods.join(', ')}`
   );
 }

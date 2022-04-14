@@ -1,5 +1,5 @@
-import { FetcherFunction } from '../types';
-import { FetcherError } from './misc';
+import type { FetcherFunction } from '../../types';
+import { FetcherError } from '../misc';
 
 // @TODO may not work with node-fetch
 type Fetch = typeof fetch;

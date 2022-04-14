@@ -3,8 +3,8 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import {
   constructPartialSDK,
-  constructFullSDK,
   constructGetAdapters,
+  constructApproveToken,
   constructEthersContractCaller,
   constructAxiosFetcher,
 } from '..';
@@ -17,23 +17,18 @@ const contractCaller = constructEthersContractCaller({
   EthersContract: ethers.Contract,
 });
 
-const paraswap = constructFullSDK({
-  apiURL: '',
-  network: 1,
-  fetcher,
-  contractCaller,
-});
-
-const res = paraswap.getAdapters({ type: 'list', namesOnly: false });
-
-// type Promise<ContractTransaction>
-const txResponse = paraswap.approveToken('1', '0x...');
-// type Promise<ContractTransaction[]>
-const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
-
+// type AdaptersFunctions & ApproveTokenFunctions<ethers.ContractTransaction>
 const part1 = constructPartialSDK(
-  { apiURL: '', network: 1, fetcher },
-  constructGetAdapters
+  {
+    network: 1,
+    fetcher,
+    contractCaller,
+  },
+  constructGetAdapters,
+  constructApproveToken
 );
 
+// type Promise<AdaptersAsObject>
 const res1 = part1.getAdapters({ type: 'object' });
+// type Promise<ethers.ContractTransaction>
+const res2 = part1.approveToken('123', '0x...');

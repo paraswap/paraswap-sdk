@@ -1,11 +1,7 @@
 import type { AxiosStatic } from 'axios';
 import type Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
-import type { Contract as EthersContract } from '@ethersproject/contracts';
-import type { Signer } from '@ethersproject/abstract-signer';
-
-import type { BaseProvider } from '@ethersproject/providers';
-
+import type { ContractTransaction } from '@ethersproject/contracts';
 import type { Address, OptimalRate } from 'paraswap-core';
 
 import { API_URL, SwapSide } from '../constants';
@@ -18,7 +14,7 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructGetRate,
-  constructSDK,
+  constructFullSDK,
   PriceString,
 } from '..';
 import { assert } from 'ts-essentials';
@@ -28,13 +24,14 @@ import {
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   isFetcherError,
+  Web3UnpromiEvent,
+  EthersProviderDeps,
 } from '../helpers';
 
-import type { RateOptions } from '../rates';
-import type { BuildOptions, TransactionParams } from '../transaction';
-import type { AddressOrSymbol, Token } from '../token';
-import type { Allowance } from '../balance';
-import type { FetcherFunction } from '../types';
+import type { RateOptions } from '../methods/rates';
+import type { BuildOptions, TransactionParams } from '../methods/transaction';
+import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
+import type { Allowance } from '../methods/balance';
 
 export type APIError = {
   message: string;
@@ -43,14 +40,11 @@ export type APIError = {
 };
 type Fetch = typeof fetch;
 
-interface EthersProviderDeps {
-  providerOrSigner: BaseProvider | Signer;
-  Contract: typeof EthersContract;
-}
+type TxResponse = Web3UnpromiEvent | ContractTransaction;
 
 /** @deprecated */
 export class ParaSwap {
-  sdk: Partial<AllSDKMethods> = {};
+  sdk: Partial<AllSDKMethods<TxResponse>> = {};
   fetcher: FetcherFunction;
 
   constructor(
@@ -92,11 +86,16 @@ export class ParaSwap {
       : null;
 
     if (contractCaller) {
-      this.sdk = constructSDK({ fetcher, contractCaller, apiURL, network });
+      this.sdk = constructFullSDK<TxResponse>({
+        fetcher,
+        contractCaller,
+        apiURL,
+        network,
+      });
     }
   }
 
-  private handleAPIError(e: unknown): APIError {
+  private static handleAPIError(e: unknown): APIError {
     // @CONSIDER if some errors should not be replaced
     if (!isFetcherError(e)) {
       return { message: `Unknown error: ${e}` };
@@ -111,21 +110,25 @@ export class ParaSwap {
     return { status, message: data.error, data };
   }
 
-  // private checkDexList(dexs?: string): void {
-  //   if (dexs) {
-  //     const targetDEXs = dexs.split(',');
+  private static async extractHasFromTxResponse(
+    txResponse: TxResponse
+  ): Promise<string> {
+    if ('once' in txResponse) {
+      return new Promise<string>((resolve, reject) => {
+        txResponse.once('transactionHash', resolve);
+        txResponse.once('error', reject);
+      });
+    }
 
-  //     if (!targetDEXs.length) {
-  //       throw new Error('Invalid DEX list');
-  //     }
-  //   }
-  // }
+    const { hash } = await txResponse;
+    return hash;
+  }
 
   setWeb3Provider(web3Provider: Web3, account?: string): this {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
@@ -143,7 +146,7 @@ export class ParaSwap {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
     const { apiURL, network, fetcher } = this;
 
-    this.sdk = constructSDK({
+    this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
@@ -163,7 +166,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getTokens();
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -172,7 +175,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getAdapters({ type: 'object' });
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -203,7 +206,7 @@ export class ParaSwap {
     } catch (e) {
       // @TODO this overrides any non FetchError,
       // including Error('Invalid DEX list')
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -230,7 +233,7 @@ export class ParaSwap {
         destDecimals,
       });
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -273,7 +276,7 @@ export class ParaSwap {
         options
       );
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -282,7 +285,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getSpender();
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -294,7 +297,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getAllowances(userAddress, tokenAddresses);
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -306,7 +309,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getAllowance(userAddress, tokenAddress);
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -324,9 +327,16 @@ export class ParaSwap {
     );
     try {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
-      return await this.sdk.approveTokenBulk(amount, tokenAddresses);
+      const txResponses = await this.sdk.approveTokenBulk(
+        amount,
+        tokenAddresses
+      );
+
+      return await Promise.all(
+        txResponses.map(ParaSwap.extractHasFromTxResponse)
+      );
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -342,9 +352,11 @@ export class ParaSwap {
     assert(this.sdk.approveToken, 'sdk must be initialized with a provider');
     try {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
-      return await this.sdk.approveToken(amount, tokenAddress);
+      const txResponse = await this.sdk.approveToken(amount, tokenAddress);
+
+      return await ParaSwap.extractHasFromTxResponse(txResponse);
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -353,7 +365,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getAdapters({ type: 'list', namesOnly: true });
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -365,7 +377,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getBalance(userAddress, token);
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 
@@ -374,7 +386,7 @@ export class ParaSwap {
     try {
       return await this.sdk.getBalances(userAddress);
     } catch (e) {
-      return this.handleAPIError(e);
+      return ParaSwap.handleAPIError(e);
     }
   }
 }
