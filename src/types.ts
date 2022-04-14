@@ -7,6 +7,7 @@ import {
   Token,
   TxHash,
 } from './helpers/token';
+import { SignableTypedData } from './methods/limitOrders/buildOrderData';
 
 export type { Address, AddressOrSymbol, PriceString, Token, TxHash };
 
@@ -74,10 +75,14 @@ export type StaticContractCallerFn = <T, M extends string = string>(
 export type TransactionContractCallerFn<T> = <M extends string = string>(
   params: ContractCallTransactionInput<M>
 ) => Promise<T>;
+export type SignTypedDataContractCallerFn = (
+  params: SignableTypedData
+) => Promise<string>;
 
 export interface ContractCallerFunctions<T> {
   staticCall: StaticContractCallerFn;
   transactCall: TransactionContractCallerFn<T>;
+  signTypedDataCall: SignTypedDataContractCallerFn;
 }
 
 export interface ConstructProviderFetchInput<
