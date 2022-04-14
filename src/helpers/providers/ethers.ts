@@ -4,7 +4,7 @@ import type {
   NoExtraKeysCheck,
   StaticContractCallerFn,
   TransactionContractCallerFn,
-} from '../types';
+} from '../../types';
 import type { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type {
@@ -13,16 +13,19 @@ import type {
   CallOverrides,
   ContractTransaction,
 } from '@ethersproject/contracts';
-import { assertContractHasMethods } from '../helpers/misc';
+import { assertEthersContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
 
-interface EthersProviderDeps {
-  providerOrSigner: BaseProvider | Signer;
-  Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+export interface EthersProviderDeps {
+  ethersProviderOrSigner: BaseProvider | Signer;
+  EthersContract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
 }
 
 export const constructContractCaller = (
-  { providerOrSigner, Contract }: EthersProviderDeps,
+  {
+    ethersProviderOrSigner: providerOrSigner,
+    EthersContract: Contract,
+  }: EthersProviderDeps,
   account?: Address
 ): ContractCallerFunctions<ContractTransaction> => {
   const staticCall: StaticContractCallerFn = async (params) => {
@@ -30,7 +33,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, providerOrSigner);
 
-    assertContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethods(contract, contractMethod);
     // drop keys not in CallOverrides
     const { block, gas, ...restOverrides } = overrides;
     // reassign values to keys in CallOverrides
@@ -72,7 +75,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, signer);
 
-    assertContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethods(contract, contractMethod);
     // drop keys not in PayableOverrides
     const { gas, from, ...restOverrides } = overrides;
     // reassign values to keys in PayableOverrides

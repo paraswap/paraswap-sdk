@@ -1,34 +1,14 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
 import { BigNumber as BigNumberEthers, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
-  ApproveTokenFunctions,
-  BuildTxFunctions,
-  constructApproveToken,
-  constructAxiosFetcher,
-  constructBuildTx,
-  constructEthersContractCaller,
-  constructFetchFetcher,
-  constructGetAdapters,
-  constructGetRate,
-  constructGetSpender,
-  constructGetTokens,
-  constructPartialSDK,
-  constructWeb3ContractCaller,
-  ConstructProviderFetchInput,
-  GetSpenderFunctions,
-  GetTokensFunctions,
-  SDKConfig,
-  Web3UnpromiEvent,
-  constructGetBalances,
-  GetBalancesFunctions,
-  GetAdaptersFunctions,
-  GetRateFunctions,
   isAllowance,
   SwapSide,
+  SDKFetchMethods,
+  AllSDKMethods,
+  TxHash,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -36,11 +16,8 @@ import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
 import { assert } from 'ts-essentials';
-import {
-  ContractCallerFunctions,
-  TransactionContractCallerFn,
-  // StaticContractCallerFn,
-} from '../src/types';
+
+import { constructSimpleSDK } from '../src/sdk/simple';
 
 dotenv.config();
 
@@ -84,51 +61,17 @@ const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
 
-const fetchFetcher = constructFetchFetcher(fetch);
-const axiosFetcher = constructAxiosFetcher(axios);
-
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
 
-const ethersContractCaller = constructEthersContractCaller(
-  {
-    ethersProviderOrSigner: signer,
-    EthersContract: ethers.Contract,
-  },
-  senderAddress
-);
-
-const web3ContractCaller = constructWeb3ContractCaller(
-  web3provider,
-  senderAddress
-);
-
-const customGanacheContractCaller = constructProviderOnlyContractCaller(
-  ganacheProvider,
-  senderAddress
-);
-
 describe.each([
-  ['fetchFetcher', fetchFetcher],
-  ['axiosFetcher', axiosFetcher],
-])('ParaSwap SDK: fetching methods: %s', (testName, fetcher) => {
-  let paraSwap: GetBalancesFunctions &
-    GetAdaptersFunctions &
-    GetTokensFunctions &
-    GetRateFunctions &
-    GetSpenderFunctions &
-    BuildTxFunctions;
+  ['fetch', { fetch }],
+  ['axios', { axios }],
+])('ParaSwap SDK: fetcher made with: %s', (testName, fetcherOptions) => {
+  let paraSwap: SDKFetchMethods;
 
   beforeAll(() => {
-    paraSwap = constructPartialSDK(
-      { network, fetcher },
-      constructGetBalances,
-      constructGetAdapters,
-      constructGetTokens,
-      constructGetRate,
-      constructGetSpender,
-      constructBuildTx
-    );
+    paraSwap = constructSimpleSDK({ network, ...fetcherOptions });
   });
   test('getBalance', async () => {
     const balance = await paraSwap.getBalance(senderAddress, ETH);
@@ -368,52 +311,32 @@ describe.each([
 });
 
 describe.each([
-  ['fetchFetcher & ethersContractCaller', fetchFetcher, ethersContractCaller],
-  ['axiosFetcher & web3ContractCaller', axiosFetcher, web3ContractCaller],
   [
-    'axiosFetcher & customGanacheContractCaller',
-    axiosFetcher,
-    customGanacheContractCaller,
+    'fetch & ethers',
+    { fetch },
+    {
+      ethersProviderOrSigner: signer,
+      EthersContract: ethers.Contract,
+      account: senderAddress,
+    },
   ],
+  ['axios & web3', { axios }, { web3: web3provider, account: senderAddress }],
 ])(
   'ParaSwap SDK: contract calling methods: %s',
-  (testName, fetcher, contractCaller) => {
-    type ApproveTxResult =
-      | ethers.ContractTransaction
-      | Web3UnpromiEvent
-      | string;
-    // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
-    type ApproveConstructor = (
-      options: ConstructProviderFetchInput<ApproveTxResult, 'transactCall'>
-    ) => ApproveTokenFunctions<ApproveTxResult>;
-
-    let paraSwap: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
+  (testName, fetcherOptions, providerOptions) => {
+    let paraSwap: AllSDKMethods<TxHash>;
 
     beforeAll(() => {
-      paraSwap = constructPartialSDK<
-        SDKConfig<ApproveTxResult>,
-        [ApproveConstructor, typeof constructGetSpender]
-      >(
-        { network, fetcher, contractCaller },
-        constructApproveToken,
-        constructGetSpender
+      paraSwap = constructSimpleSDK(
+        { network, ...fetcherOptions },
+        providerOptions
       );
     });
     test('approveToken', async () => {
-      const tx = await paraSwap.approveToken('12345', DAI);
+      const txHash = await paraSwap.approveToken('12345', DAI);
 
-      if (typeof tx === 'string') {
-        // tx is sent
-        // wait for it to mine however you prefer
-        await ethersProvider.waitForTransaction(tx);
-      } else if ('wait' in tx) {
-        await tx.wait(1);
-      } else if ('on' in tx) {
-        await new Promise<Web3TransactionReceipt>((resolve, reject) => {
-          tx.once('receipt', resolve);
-          tx.once('error', reject);
-        });
-      }
+      await ethersProvider.waitForTransaction(txHash);
+
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
@@ -428,94 +351,3 @@ describe.each([
     });
   }
 );
-
-interface MinProvider {
-  request(args: { method: string; params: any }): Promise<any>;
-}
-// example of constructing a custom contractCaller with provider only
-function constructProviderOnlyContractCaller(
-  provider: MinProvider,
-  account?: string
-): Pick<ContractCallerFunctions<string>, 'transactCall'> {
-  // staticCall isn't currently necessary, because provider is only used in approveToken currently for tx making
-  /* const staticCall: StaticContractCallerFn = async ({
-    address,
-    abi,
-    contractMethod,
-    args,
-    overrides,
-  }) => {
-    // need to encode data somehow, to send raw call
-    const iface = new ethers.utils.Interface(abi);
-    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
-
-    const gasPrice =
-      overrides.gasPrice &&
-      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
-    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
-    const value = overrides.value && '0x' + overrides.value.toString(16);
-
-    const params = [
-      {
-        from: account,
-        to: address,
-        gasPrice,
-        gas,
-        value,
-        data: calldataEncoded,
-      },
-    ];
-
-    // what provider here returns will depend on provider
-    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
-    // keeping it `as any` as we don't know
-    const res = await provider.request({
-      method: 'eth_call',
-      params,
-    });
-
-    return res;
-  }; */
-
-  const transactCall: TransactionContractCallerFn<string> = async ({
-    address,
-    abi,
-    contractMethod,
-    args,
-    overrides,
-  }) => {
-    const iface = new ethers.utils.Interface(abi);
-    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
-
-    const gasPrice =
-      overrides.gasPrice &&
-      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
-    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
-    const value = overrides.value && '0x' + overrides.value.toString(16);
-
-    const params = [
-      {
-        from: account,
-        to: address,
-        gasPrice,
-        gas,
-        value,
-        data: calldataEncoded,
-      },
-    ];
-
-    // what provider here returns will depend on provider
-    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
-    // `string`
-    const res = await provider.request({
-      // we can only sendTransaction right away because accounts in ganache are unlocked
-      // for other provider we may need to signTransaction first, then sendRawTransaction
-      method: 'eth_sendTransaction',
-      params,
-    });
-
-    return res;
-  };
-
-  return { transactCall /* , staticCall */ };
-}
