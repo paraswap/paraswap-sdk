@@ -86,7 +86,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
 
 ```
 
-If additionally provided `providerOptions` as the second parameter, the resulting SDK will also be able to approve Tokens for swap.
+If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
 
 ```ts
   // 
