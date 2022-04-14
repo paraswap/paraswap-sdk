@@ -1,8 +1,13 @@
 import { OptimalRate } from 'paraswap-core';
-import { SwapSide, ContractMethod, API_URL } from './constants';
-import { constructSearchString } from './helpers/misc';
-import { Address, AddressOrSymbol, PriceString } from './token';
-import { ConstructFetchInput, PriceRouteApiResponse } from './types';
+import { SwapSide, ContractMethod, API_URL } from '../constants';
+import { constructSearchString } from '../helpers/misc';
+import {
+  ConstructFetchInput,
+  PriceRouteApiResponse,
+  Address,
+  AddressOrSymbol,
+  PriceString,
+} from '../types';
 
 // TODO: This is legacy and can be removed
 export enum PricingMethod {

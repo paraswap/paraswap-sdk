@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { ethers } from 'ethers';
-import { constructPartialSDK, constructSDK } from '..';
-import { constructGetAdapters } from '../adapters';
 import {
+  constructPartialSDK,
+  constructFullSDK,
+  constructGetAdapters,
   constructEthersContractCaller,
   constructAxiosFetcher,
-} from '../helpers';
+} from '..';
 
 const fetcher = constructAxiosFetcher(axios);
 
 const provider = ethers.getDefaultProvider(1);
 const contractCaller = constructEthersContractCaller({
-  providerOrSigner: provider,
-  Contract: ethers.Contract,
+  ethersProviderOrSigner: provider,
+  EthersContract: ethers.Contract,
 });
 
-const paraswap = constructSDK({
+const paraswap = constructFullSDK({
   apiURL: '',
   network: 1,
   fetcher,
@@ -25,9 +26,9 @@ const paraswap = constructSDK({
 
 const res = paraswap.getAdapters({ type: 'list', namesOnly: false });
 
-// type ContractTransaction
+// type Promise<ContractTransaction>
 const txResponse = paraswap.approveToken('1', '0x...');
-// type ContractTransaction[]
+// type Promise<ContractTransaction[]>
 const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
 
 const part1 = constructPartialSDK(

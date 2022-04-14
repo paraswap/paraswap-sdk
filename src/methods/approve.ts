@@ -1,6 +1,10 @@
 import { constructGetSpender } from './spender';
-import type { Address, PriceString } from './token';
-import type { ConstructProviderFetchInput, TxSendOverrides } from './types';
+import type {
+  ConstructProviderFetchInput,
+  TxSendOverrides,
+  Address,
+  PriceString,
+} from '../types';
 
 type ApproveToken<T> = (
   amount: PriceString,
