@@ -104,8 +104,11 @@ function constructSimpleContractCaller(
   providerOptions: ProviderOptions
 ): ContractCallerFunctions<TxHash> {
   if ('ethersProviderOrSigner' in providerOptions) {
-    const { staticCall, transactCall: _transactCall } =
-      constructEthersContractCaller(providerOptions, providerOptions.account);
+    const {
+      staticCall,
+      transactCall: _transactCall,
+      signTypedDataCall,
+    } = constructEthersContractCaller(providerOptions, providerOptions.account);
 
     const transactCall: TransactionContractCallerFn<TxHash> = async (
       params
@@ -117,11 +120,17 @@ function constructSimpleContractCaller(
       return contractTx.hash;
     };
 
-    return { staticCall, transactCall };
+    return { staticCall, transactCall, signTypedDataCall };
   }
 
-  const { staticCall, transactCall: _transactCall } =
-    constructWeb3ContractCaller(providerOptions.web3, providerOptions.account);
+  const {
+    staticCall,
+    transactCall: _transactCall,
+    signTypedDataCall,
+  } = constructWeb3ContractCaller(
+    providerOptions.web3,
+    providerOptions.account
+  );
 
   const transactCall: TransactionContractCallerFn<TxHash> = async (params) => {
     const unpromiEvent = await _transactCall(params);
@@ -134,5 +143,5 @@ function constructSimpleContractCaller(
     });
   };
 
-  return { staticCall, transactCall };
+  return { staticCall, transactCall, signTypedDataCall };
 }
