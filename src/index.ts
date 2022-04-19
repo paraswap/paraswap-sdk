@@ -20,6 +20,7 @@ import {
   constructFetchFetcher,
   isFetcherError,
   EthersProviderDeps,
+  constructToken,
 } from './helpers';
 import {
   ConstructFetchInput,
@@ -55,6 +56,7 @@ export {
   constructGetRate,
   isFetcherError,
   isAllowance,
+  constructToken,
 };
 
 export type {
