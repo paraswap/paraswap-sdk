@@ -1,5 +1,5 @@
 import type { JsonFragment } from '@ethersproject/abi';
-import { OptimalRate } from 'paraswap-core';
+import { OptimalRate, OptionalRate } from 'paraswap-core';
 import {
   Address,
   AddressOrSymbol,
@@ -8,7 +8,15 @@ import {
   TxHash,
 } from './helpers/token';
 
-export type { Address, AddressOrSymbol, PriceString, Token, TxHash };
+export type {
+  Address,
+  AddressOrSymbol,
+  PriceString,
+  Token,
+  TxHash,
+  OptimalRate,
+  OptionalRate,
+};
 
 export interface ConstructBaseInput {
   apiURL?: string;

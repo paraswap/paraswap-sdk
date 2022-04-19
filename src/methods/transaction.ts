@@ -1,10 +1,10 @@
-import type { OptimalRate } from 'paraswap-core';
 import type { WithGasPrice, WithMaxFee } from '../gas';
 import type {
   ConstructFetchInput,
   Address,
   FetcherPostInput,
   PriceString,
+  OptimalRate,
 } from '../types';
 
 import { assert } from 'ts-essentials';
