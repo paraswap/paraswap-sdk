@@ -2,7 +2,6 @@ import type { AxiosStatic } from 'axios';
 import type Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
 import type { ContractTransaction } from '@ethersproject/contracts';
-import type { Address, OptimalRate } from 'paraswap-core';
 
 import { API_URL, SwapSide } from '../constants';
 import {
@@ -16,6 +15,8 @@ import {
   constructGetRate,
   constructFullSDK,
   PriceString,
+  Address,
+  OptimalRate,
 } from '..';
 import { assert } from 'ts-essentials';
 import {

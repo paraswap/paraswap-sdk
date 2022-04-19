@@ -1,4 +1,3 @@
-import { OptimalRate } from 'paraswap-core';
 import { SwapSide, ContractMethod, API_URL } from '../constants';
 import { constructSearchString } from '../helpers/misc';
 import {
@@ -7,6 +6,7 @@ import {
   Address,
   AddressOrSymbol,
   PriceString,
+  OptimalRate,
 } from '../types';
 
 // TODO: This is legacy and can be removed

@@ -30,6 +30,8 @@ import {
   PriceString,
   TxHash,
   TxSendOverrides,
+  OptimalRate,
+  OptionalRate,
 } from './types';
 
 export type { TransactionParams } from './methods/transaction';
@@ -73,6 +75,8 @@ export type {
   PriceString,
   TxHash,
   TxSendOverrides,
+  OptimalRate,
+  OptionalRate,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
