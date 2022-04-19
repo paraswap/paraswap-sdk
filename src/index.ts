@@ -20,6 +20,7 @@ import {
   constructFetchFetcher,
   isFetcherError,
   EthersProviderDeps,
+  constructToken,
 } from './helpers';
 import {
   ConstructFetchInput,
@@ -30,6 +31,8 @@ import {
   PriceString,
   TxHash,
   TxSendOverrides,
+  OptimalRate,
+  OptionalRate,
 } from './types';
 
 export type { TransactionParams } from './methods/transaction';
@@ -53,6 +56,7 @@ export {
   constructGetRate,
   isFetcherError,
   isAllowance,
+  constructToken,
 };
 
 export type {
@@ -73,6 +77,8 @@ export type {
   PriceString,
   TxHash,
   TxSendOverrides,
+  OptimalRate,
+  OptionalRate,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
