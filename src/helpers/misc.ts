@@ -141,3 +141,6 @@ export class FetcherError extends Error implements FetcherErrorInterface {
     this.message = data?.error || message;
   }
 }
+
+export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
+  T[number]['name'];
