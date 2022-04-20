@@ -1,13 +1,13 @@
 import type { JsonFragment } from '@ethersproject/abi';
-import { OptimalRate, OptionalRate } from 'paraswap-core';
-import {
+import type { OptimalRate, OptionalRate } from 'paraswap-core';
+import type {
   Address,
   AddressOrSymbol,
   PriceString,
   Token,
   TxHash,
 } from './helpers/token';
-import { SignableTypedData } from './methods/limitOrders/buildOrderData';
+import type { SignableTypedData } from './methods/limitOrders/helpers/buildOrderData';
 
 export type {
   Address,
@@ -84,7 +84,7 @@ export type TransactionContractCallerFn<T> = <M extends string = string>(
   params: ContractCallTransactionInput<M>
 ) => Promise<T>;
 export type SignTypedDataContractCallerFn = (
-  params: SignableTypedData
+  typedData: SignableTypedData
 ) => Promise<string>;
 
 export interface ContractCallerFunctions<T> {
