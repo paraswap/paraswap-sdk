@@ -93,7 +93,7 @@ type FetcherErrorConstructorInput = Pick<
   'code' | 'request' | 'response' | 'isAxiosError' | 'message'
 >;
 
-interface FetcherErrorInterface extends FetcherErrorConstructorInput {
+export interface FetcherErrorInterface extends FetcherErrorConstructorInput {
   status?: number;
   code?: string;
 }
