@@ -21,7 +21,7 @@ export interface TransactionParams {
   chainId: number;
 }
 
-interface BuildTxInput {
+export interface BuildTxInput {
   srcToken: Address;
   destToken: Address;
   srcAmount: PriceString;
@@ -38,15 +38,15 @@ interface BuildTxInput {
   deadline?: string;
 }
 
-type BuildOptionsBase = {
+export type BuildOptionsBase = {
   ignoreChecks?: boolean;
   ignoreGasEstimate?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
 };
 
-type BuildOptionsWithGasPrice = BuildOptionsBase & Partial<WithGasPrice>;
-type BuildOptionsWitWithMaxFee = BuildOptionsBase & Partial<WithMaxFee>;
+export type BuildOptionsWithGasPrice = BuildOptionsBase & Partial<WithGasPrice>;
+export type BuildOptionsWitWithMaxFee = BuildOptionsBase & Partial<WithMaxFee>;
 
 export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 
