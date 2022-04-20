@@ -19,6 +19,8 @@ import {
   constructAxiosFetcher,
   constructFetchFetcher,
   isFetcherError,
+  FetcherError,
+  FetcherErrorInterface,
   EthersProviderDeps,
   constructToken,
 } from './helpers';
@@ -55,6 +57,8 @@ export {
   constructGetAdapters,
   constructGetRate,
   isFetcherError,
+  FetcherError,
+  FetcherErrorInterface,
   isAllowance,
   constructToken,
 };
