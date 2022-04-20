@@ -106,7 +106,9 @@ export const constructContractCaller = (
     return txResponse;
   };
 
-  const signTypedDataCall: SignTypedDataContractCallerFn = async (params) => {
+  const signTypedDataCall: SignTypedDataContractCallerFn = async (
+    typedData
+  ) => {
     assert(account, 'account must be specified to create a signer');
     assert(
       isEthersProviderWithSigner(providerOrSigner) ||
@@ -121,7 +123,7 @@ export const constructContractCaller = (
 
     assert(isTypedDataCapableSigner(signer), 'Signer can sign typed data');
 
-    const { data, domain, types } = params;
+    const { data, domain, types } = typedData;
 
     return signer._signTypedData(domain, types, data);
   };
