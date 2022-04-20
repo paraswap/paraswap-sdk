@@ -17,6 +17,7 @@ import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
+import { assert } from 'ts-essentials';
 
 dotenv.config();
 
@@ -122,25 +123,32 @@ describe('ParaSwap SDK', () => {
 
     const swapExchange = bestRoute[0]?.swaps[0]?.swapExchanges[0];
 
-    expect(swapExchange).toBeDefined();
+    assert(swapExchange, 'exchange available at swapExchanges[0]');
 
     expect(typeof swapExchange.destAmount).toBe('string');
     expect(new BigNumber(swapExchange.destAmount).isNaN()).toBe(false);
 
     expect(typeof swapExchange.exchange).toBe('string');
 
-    expect(typeof bestRoute[0].percent).toBe('number');
-    expect(new BigNumber(bestRoute[0].percent).isNaN()).toBe(false);
+    const firstBestRoute = bestRoute[0];
+    assert(firstBestRoute, 'route available at bestRoute[0]');
+
+    expect(typeof firstBestRoute.percent).toBe('number');
+    expect(new BigNumber(firstBestRoute.percent).isNaN()).toBe(false);
 
     expect(typeof swapExchange.srcAmount).toBe('string');
     expect(new BigNumber(swapExchange.srcAmount).isNaN()).toBe(false);
 
     expect(Array.isArray(others)).toBe(true);
 
-    expect(typeof others![0].exchange).toBe('string');
+    const firstRoute = others?.[0];
 
-    expect(typeof others![0].unit).toBe('string');
-    expect(new BigNumber(others![0].unit as string).isNaN()).toBe(false);
+    assert(firstRoute, 'at least one route must exist');
+
+    expect(typeof firstRoute.exchange).toBe('string');
+
+    expect(typeof firstRoute.unit).toBe('string');
+    expect(new BigNumber(firstRoute.unit as string).isNaN()).toBe(false);
   });
 
   test('Get_Spender', async () => {
@@ -169,10 +177,8 @@ describe('ParaSwap SDK', () => {
 
     const allowances = allowancesOrError as Allowance[];
 
-    await Promise.all(
-      allowances.map((allowance) =>
-        expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
-      )
+    allowances.forEach((allowance) =>
+      expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
     );
   });
 
@@ -181,11 +187,11 @@ describe('ParaSwap SDK', () => {
 
     const adapters = adaptersOrError as Adapters;
 
-    expect(adapters.paraswappool[0].adapter).toBeDefined();
-    expect(adapters.uniswapv2[0].adapter).toBeDefined();
-    expect(adapters.uniswapv2[0].index).toBeDefined();
-    expect(adapters.kyberdmm[0].adapter).toBeDefined();
-    expect(adapters.kyberdmm[0].index).toBeDefined();
+    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
+    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
+    expect(adapters.uniswapv2?.[0]?.index).toBeDefined();
+    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
+    expect(adapters.kyberdmm?.[0]?.index).toBeDefined();
   });
 
   test('Build_Tx', async () => {
