@@ -10,3 +10,4 @@ export {
 } from './providers/web3';
 export { constructToken } from './token';
 export { isFetcherError } from './misc';
+export type { FetcherError, FetcherErrorInterface } from './misc';
