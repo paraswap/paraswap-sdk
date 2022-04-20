@@ -105,6 +105,10 @@ describe('Limit Orders', () => {
     };
   });
 
+  // takes care of `there are asynchronous operations that weren't stopped in your tests`
+  // @TODO check if still needed after there are tx tests
+  afterAll(() => ganacheProvider.disconnect());
+
   test('buildLimitOrder', async () => {
     const orderData = paraSwap.buildLimitOrder(orderInput);
 
