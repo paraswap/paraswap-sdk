@@ -14,6 +14,15 @@ import { constructGetRate, GetRateFunctions } from './methods/rates';
 import { constructGetTokens, GetTokensFunctions } from './methods/token';
 import { BuildTxFunctions, constructBuildTx } from './methods/transaction';
 import {
+  BuildLimitOrderFunctions,
+  constructBuildLimitOrder,
+} from './methods/limitOrders/buildOrder';
+import {
+  SignLimitOrderFunctions,
+  constructSignLimitOrder,
+} from './methods/limitOrders/signOrder';
+
+import {
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   constructAxiosFetcher,
@@ -37,7 +46,14 @@ import {
   OptionalRate,
 } from './types';
 
-export type { TransactionParams } from './methods/transaction';
+export type {
+  TransactionParams,
+  BuildOptions,
+  BuildOptionsBase,
+  BuildOptionsWitWithMaxFee,
+  BuildOptionsWithGasPrice,
+  BuildTxInput,
+} from './methods/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
 
@@ -50,6 +66,8 @@ export {
   constructGetSpender, // this was getTokenTransferProxy
   constructGetTokens,
   constructBuildTx,
+  constructBuildLimitOrder,
+  constructSignLimitOrder,
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   constructAxiosFetcher,
@@ -57,8 +75,6 @@ export {
   constructGetAdapters,
   constructGetRate,
   isFetcherError,
-  FetcherError,
-  FetcherErrorInterface,
   isAllowance,
   constructToken,
 };
@@ -73,6 +89,8 @@ export type {
   GetAdaptersFunctions,
   GetRateFunctions,
   BuildTxFunctions,
+  BuildLimitOrderFunctions,
+  SignLimitOrderFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
   Token,
@@ -83,6 +101,8 @@ export type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
+  FetcherError,
+  FetcherErrorInterface,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
