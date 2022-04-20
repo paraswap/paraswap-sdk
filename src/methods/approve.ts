@@ -5,6 +5,7 @@ import type {
   Address,
   PriceString,
 } from '../types';
+import { ExtractAbiMethodNames } from '../helpers/misc';
 
 type ApproveToken<T> = (
   amount: PriceString,
@@ -16,7 +17,8 @@ type ApproveToken<T> = (
 type ApproveTokenBulk<T> = (
   amount: PriceString,
   tokenAddresses: Address[],
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<Awaited<T>[]>;
 
 export type ApproveTokenFunctions<T> = {
@@ -39,9 +41,6 @@ const MinERC20Abi = [
     type: 'function',
   },
 ] as const;
-
-type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
-  T[number]['name'];
 
 type AvailableMethods = ExtractAbiMethodNames<typeof MinERC20Abi>;
 
@@ -76,10 +75,14 @@ export const constructApproveToken = <T>(
 
   const approveTokenBulk: ApproveTokenBulk<T> = async (
     amount,
-    tokenAddresses
+    tokenAddresses,
+    overrides,
+    signal
   ) => {
     return Promise.all(
-      tokenAddresses.map((tokenAddress) => approveToken(amount, tokenAddress))
+      tokenAddresses.map((tokenAddress) =>
+        approveToken(amount, tokenAddress, overrides, signal)
+      )
     );
   };
 
