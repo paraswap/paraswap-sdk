@@ -178,15 +178,18 @@ describe.each([
 
     const swapExchange = bestRoute[0]?.swaps[0]?.swapExchanges[0];
 
-    expect(swapExchange).toBeDefined();
+    assert(swapExchange, 'exchange available at swapExchanges[0]');
 
     expect(typeof swapExchange.destAmount).toBe('string');
     expect(new BigNumber(swapExchange.destAmount).isNaN()).toBe(false);
 
     expect(typeof swapExchange.exchange).toBe('string');
 
-    expect(typeof bestRoute[0].percent).toBe('number');
-    expect(new BigNumber(bestRoute[0].percent).isNaN()).toBe(false);
+    const firstBestRoute = bestRoute[0];
+    assert(firstBestRoute, 'route available at bestRoute[0]');
+
+    expect(typeof firstBestRoute.percent).toBe('number');
+    expect(new BigNumber(firstBestRoute.percent).isNaN()).toBe(false);
 
     expect(typeof swapExchange.srcAmount).toBe('string');
     expect(new BigNumber(swapExchange.srcAmount).isNaN()).toBe(false);
@@ -227,20 +230,21 @@ describe.each([
       [DAI, HEX]
     );
 
-    const [daiAllowance, hexAllowance] = await Promise.all(
-      allowances.map((allowance) => allowance.allowance)
+    const [daiAllowance, hexAllowance] = allowances.map(
+      (allowance) => allowance.allowance
     );
+
     expect(daiAllowance).toEqual('123000000000000000');
     expect(hexAllowance).toEqual('32100000');
   });
 
   test('Get_Adapters', async () => {
     const adapters = await paraSwap.getAdapters({ type: 'object' });
-    expect(adapters.paraswappool[0].adapter).toBeDefined();
-    expect(adapters.uniswapv2[0].adapter).toBeDefined();
-    expect(adapters.uniswapv2[0].index).toBeDefined();
-    expect(adapters.kyberdmm[0].adapter).toBeDefined();
-    expect(adapters.kyberdmm[0].index).toBeDefined();
+    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
+    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
+    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
+    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
+    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
   });
 
   test('Build_Tx', async () => {
