@@ -202,6 +202,106 @@ describe('Limit Orders', () => {
     );
   });
 
+  test('fillLimitOrder', async () => {
+    const maker = signer;
+    const taker = walletRandom.connect(ethersProvider);
+
+    const makerAmount = (1e18).toString(10);
+    const takerAmount = (8e18).toString(10);
+
+    const orderData = paraSwap.buildLimitOrder({
+      nonceAndMeta: 1,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: erc20Token1.address,
+      makerAmount,
+      takerAsset: erc20Token2.address,
+      takerAmount,
+    });
+
+    const signature = await paraSwap.signLimitOrder(orderData);
+
+    const makerToken1InitBalance: BigNumberEthers = await erc20Token1.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await erc20Token1.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await erc20Token2.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await erc20Token2.balanceOf(
+      taker.address
+    );
+
+    console.log('balances', {
+      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
+    await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
+
+    console.log('signature', signature, 'order', orderData.data);
+
+    await AugustusRFQ.connect(taker).fillOrder(orderData.data, signature);
+
+    const makerToken1AfterBalance: BigNumberEthers =
+      await erc20Token1.balanceOf(maker.address);
+    const takerToken1AfterBalance: BigNumberEthers =
+      await erc20Token1.balanceOf(taker.address);
+    const makerToken2AfterBalance: BigNumberEthers =
+      await erc20Token2.balanceOf(maker.address);
+    const takerToken2AfterBalance: BigNumberEthers =
+      await erc20Token2.balanceOf(taker.address);
+
+    console.log('balances after', {
+      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString()).toNumber() - +makerAmount
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString()).toNumber() + +makerAmount
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString()).toNumber() + +takerAmount
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString()).toNumber() - +takerAmount
+    );
+  });
+
     );
   });
 });
