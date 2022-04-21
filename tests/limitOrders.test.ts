@@ -302,7 +302,39 @@ describe('Limit Orders', () => {
     );
   });
 
+  test('cancelLimitOrder', async () => {
+    // bytes32
+    const randomOrderHash =
+      '0x1000000000000000000000000000000000000000000000000000000000000000';
+
+    await paraSwap.cancelLimitOrder(randomOrderHash);
+
+    const orderStatus: BigNumberEthers = await AugustusRFQ.remaining(
+      senderAddress,
+      randomOrderHash
     );
+    expect(orderStatus.toNumber()).toEqual(1);
+  });
+  test('cancelLimitOrder Bulk', async () => {
+    // bytes32[]
+    const randomOrderHashes = [
+      '0x1000000000000000000000000000000000000000000000000000000000000000',
+      '0x2000000000000000000000000000000000000000000000000000000000000000',
+    ];
+
+    await paraSwap.cancelLimitOrderBulk(randomOrderHashes);
+
+    const orderStatus0 = await AugustusRFQ.remaining(
+      senderAddress,
+      randomOrderHashes[0]
+    );
+    const orderStatus1 = await AugustusRFQ.remaining(
+      senderAddress,
+      randomOrderHashes[1]
+    );
+
+    expect(orderStatus0.toNumber()).toEqual(1);
+    expect(orderStatus1.toNumber()).toEqual(1);
   });
 });
 /* 
