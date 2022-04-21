@@ -9,9 +9,9 @@ export type SignLimitOrderFunctions = {
 
 // returns whatever `contractCaller` returns
 // to allow for better versatility
-export const constructSignLimitOrder = <T>(
+export const constructSignLimitOrder = (
   options: Pick<
-    ConstructProviderFetchInput<T, 'signTypedDataCall'>,
+    ConstructProviderFetchInput<any, 'signTypedDataCall'>,
     'contractCaller'
   >
 ): SignLimitOrderFunctions => {
