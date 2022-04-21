@@ -15,7 +15,7 @@ Object {
   "domain": Object {
     "chainId": 1,
     "name": "AUGUSTUS RFQ",
-    "verifyingContract": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+    "verifyingContract": "0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC",
     "version": "1",
   },
   "types": Object {

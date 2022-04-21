@@ -198,7 +198,10 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signLimitOrder(orderData);
     expect(signature).toMatchInlineSnapshot(
-      `"0x6cf736b548c19e36d0042c0b9834ca6f077e5d99ec7b925fe3dd9d3d5b3d54dc4713ae46b46b388160f65933818959bd37e2e395d6c549f19676c989bc5b21f01b"`
+      `"0xe0c6fbcf0660ef93dee579c715efbaee41e9c9504464669f8f96f3dc0c9f279634cfe4eaca930be2793f506e237d8826ddb91bb3d4cd1dadede631f198e0915c1c"`
+    );
+  });
+
     );
   });
 });
