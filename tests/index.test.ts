@@ -440,7 +440,7 @@ interface MinProvider {
 function constructProviderOnlyContractCaller(
   provider: MinProvider,
   account?: string
-): Pick<ContractCallerFunctions<string>, 'transactCall'> {
+): Pick<ContractCallerFunctions<string>, 'transactCall' | 'signTypedDataCall'> {
   // staticCall isn't currently necessary, because provider is only used in approveToken currently for tx making
   /* const staticCall: StaticContractCallerFn = async ({
     address,
@@ -521,5 +521,9 @@ function constructProviderOnlyContractCaller(
     return res;
   };
 
-  return { transactCall /* , staticCall */ };
+  const signTypedDataCall = () => {
+    throw new Error('not implemented');
+  };
+
+  return { transactCall, signTypedDataCall /* , staticCall */ };
 }
