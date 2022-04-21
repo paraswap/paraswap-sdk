@@ -38,8 +38,8 @@ type CancelOrderBulk<T> = (
 ) => Promise<T>;
 
 export type CancelOrderFunctions<T> = {
-  cancelOrder: CancelOrder<T>;
-  cancelOrderBulk: CancelOrderBulk<T>;
+  cancelLimitOrder: CancelOrder<T>;
+  cancelLimitOrderBulk: CancelOrderBulk<T>;
 };
 
 // much smaller than the whole ERC20_ABI
@@ -76,12 +76,12 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 
 // returns whatever `contractCaller` returns
 // to allow for better versatility
-export const constructCancelOrder = <T>(
+export const constructCancelLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): CancelOrderFunctions<T> => {
   const verifyingContract = chainId2verifyingContract[options.network];
 
-  const cancelOrder: CancelOrder<T> = async (
+  const cancelLimitOrder: CancelOrder<T> = async (
     orderHash,
     overrides = {}
     // signal //@TODO not needed if no fetch call for `verifyingContract`
@@ -104,7 +104,7 @@ export const constructCancelOrder = <T>(
     return res;
   };
 
-  const cancelOrderBulk: CancelOrderBulk<T> = async (
+  const cancelLimitOrderBulk: CancelOrderBulk<T> = async (
     orderHashes,
     overrides = {}
     // signal //@TODO not needed if no fetch call for `verifyingContract`
@@ -127,5 +127,8 @@ export const constructCancelOrder = <T>(
     return res;
   };
 
-  return { cancelOrder, cancelOrderBulk };
+  return {
+    cancelLimitOrder,
+    cancelLimitOrderBulk,
+  };
 };

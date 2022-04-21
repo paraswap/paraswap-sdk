@@ -21,6 +21,10 @@ import {
   SignLimitOrderFunctions,
   constructSignLimitOrder,
 } from './methods/limitOrders/signOrder';
+import {
+  CancelOrderFunctions,
+  constructCancelLimitOrder,
+} from './methods/limitOrders/cancelOrder';
 
 import {
   constructEthersContractCaller,
@@ -68,6 +72,7 @@ export {
   constructBuildTx,
   constructBuildLimitOrder,
   constructSignLimitOrder,
+  constructCancelLimitOrder,
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   constructAxiosFetcher,
@@ -91,6 +96,7 @@ export type {
   BuildTxFunctions,
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,
+  CancelOrderFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
   Token,
