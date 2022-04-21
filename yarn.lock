@@ -3446,10 +3446,10 @@ dotenv@^16.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
   integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
-dts-cli@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/dts-cli/-/dts-cli-1.5.0.tgz#23789e01959853667f4564714d94b120836c1e2e"
-  integrity sha512-/Nan5rmA4KCFMFWP9vXjr6akcy+D2aviQQUGLxK8eye0HXFzNBt4rZ6akU+jhaVTROR9HQ7EFFT1zsXVmVTZsQ==
+dts-cli@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/dts-cli/-/dts-cli-1.5.1.tgz#ac59ddff2341ae8a7067ddb3c3aa4dbe40df1eab"
+  integrity sha512-B2WQwhsom28y7lswu443DTQBP55Op8WbRY1MrLb8MOcR1blhr8iriKjAZTGYdk34fd3DkXOYuxWlnV5REe33MQ==
   dependencies:
     "@babel/core" "^7.17.5"
     "@babel/helper-module-imports" "^7.16.7"
