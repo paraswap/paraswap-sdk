@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { BigNumber as BigNumberEthers, ethers } from 'ethers';
+import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {
@@ -14,19 +14,24 @@ import {
   BuildLimitOrderFunctions,
   constructSignLimitOrder,
   SignLimitOrderFunctions,
+  constructCancelLimitOrder,
   constructEthersContractCaller,
+  CancelOrderFunctions,
+  SDKConfig,
+  ConstructProviderFetchInput,
+  constructAxiosFetcher,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
-import erc20abi from './abi/ERC20.json';
+import ERC20MinableABI from './abi/ERC20Mintable.json';
+import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
+import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
 import ganache from 'ganache';
-import { assert } from 'ts-essentials';
 
-import { constructSimpleSDK } from '../src/sdk/simple';
 import { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
-import { HDNode, defaultPath } from '@ethersproject/hdnode';
+import { chainId2verifyingContract } from '../src/methods/limitOrders/helpers/misc';
 
 dotenv.config();
 
@@ -51,17 +56,21 @@ const referrer = 'sdk-test';
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
-const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
+const walletStable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
+const walletRandom = ethers.Wallet.createRandom();
 
 const ganacheProvider = ganache.provider({
   wallet: {
-    accounts: [{ balance: 8e18, secretKey: wallet.privateKey }],
+    accounts: [
+      { balance: 8e18, secretKey: walletStable.privateKey },
+      { balance: 8e18, secretKey: walletRandom.privateKey },
+    ],
   },
   fork: {
     url: PROVIDER_URL,
   },
   chain: {
-    chainId: 1,
+    chainId: network,
   },
   quiet: true,
 });
@@ -72,8 +81,10 @@ const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
 
-const signer = wallet.connect(ethersProvider);
+const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
+
+const axiosFetcher = constructAxiosFetcher(axios);
 
 const ethersContractCaller = constructEthersContractCaller(
   {
@@ -83,17 +94,34 @@ const ethersContractCaller = constructEthersContractCaller(
   senderAddress
 );
 
+const ERC20MintableFactory = new ethers.ContractFactory(
+  ERC20MinableABI,
+  ERC20MintableBytecode,
+  signer
+);
+
+const AugustusRFQFactory = new ethers.ContractFactory(
+  AugustusRFQAbi,
+  AugustusRFQBytecode,
+  signer
+);
+
 describe('Limit Orders', () => {
-  let paraSwap: BuildLimitOrderFunctions & SignLimitOrderFunctions;
+  let paraSwap: BuildLimitOrderFunctions &
+    SignLimitOrderFunctions &
+    CancelOrderFunctions<ethers.ContractTransaction>;
+
   let orderInput: BuildLimitOrderInput;
   const orderExpiry = new Date('12.20.2022').getTime();
 
-  beforeAll(() => {
-    paraSwap = constructPartialSDK(
-      { network, contractCaller: ethersContractCaller },
-      constructBuildLimitOrder,
-      constructSignLimitOrder
-    );
+  let erc20Token1: Contract;
+  let erc20Token2: Contract;
+
+  let AugustusRFQ: Contract;
+
+  let initialChainId2verifyingContract = { ...chainId2verifyingContract };
+
+  beforeAll(async () => {
     orderInput = {
       nonceAndMeta: 1,
       expiry: orderExpiry,
@@ -103,6 +131,53 @@ describe('Limit Orders', () => {
       takerAmount: (8e18).toString(10),
       maker: senderAddress,
     };
+
+    erc20Token1 = await ERC20MintableFactory.deploy(
+      'ERC20Token1',
+      'ERC20Token1'
+    );
+    await erc20Token1.deployTransaction.wait();
+
+    erc20Token2 = await ERC20MintableFactory.deploy(
+      'ERC20Token2',
+      'ERC20Token2'
+    );
+    await erc20Token2.deployTransaction.wait();
+
+    await erc20Token1.mint(walletStable.address, (10e18).toString(10));
+    await erc20Token1.mint(walletRandom.address, (10e18).toString(10));
+    await erc20Token2.mint(walletStable.address, (10e18).toString(10));
+    await erc20Token2.mint(walletRandom.address, (10e18).toString(10));
+
+    AugustusRFQ = await AugustusRFQFactory.deploy();
+    await AugustusRFQ.deployTransaction.wait();
+
+    console.log('AugustusRFQ', AugustusRFQ.address);
+
+    // @TODO reconsider after real contracts are deployed
+    // override for tests only
+    chainId2verifyingContract[network] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
+
+    type CancelOrderConstructor = (
+      options: ConstructProviderFetchInput<
+        ethers.ContractTransaction,
+        'transactCall'
+      >
+    ) => CancelOrderFunctions<ethers.ContractTransaction>;
+
+    paraSwap = constructPartialSDK<
+      SDKConfig<ethers.ContractTransaction>,
+      [
+        typeof constructBuildLimitOrder,
+        typeof constructSignLimitOrder,
+        CancelOrderConstructor
+      ]
+    >(
+      { network, contractCaller: ethersContractCaller, fetcher: axiosFetcher },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructCancelLimitOrder
+    );
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
