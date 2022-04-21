@@ -8,7 +8,7 @@ import { UnionToIntersection } from 'ts-essentials';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
-  'transactCall'
+  'transactCall' | 'signTypedDataCall'
 > &
   ConstructFetchInput;
 
