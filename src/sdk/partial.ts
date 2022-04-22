@@ -1,10 +1,12 @@
-import { ApproveTokenFunctions } from '../methods/approve';
-import {
+import type { ApproveTokenFunctions } from '../methods/approve';
+import type {
+  AnyFunction,
   ConstructBaseInput,
   ConstructFetchInput,
   ConstructProviderFetchInput,
 } from '../types';
-import { UnionToIntersection } from 'ts-essentials';
+import type { Merge, UnionToIntersection } from 'ts-essentials';
+import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -20,45 +22,46 @@ type IntersectionOfReturns<Funcs extends AnyFunction[]> = UnionToIntersection<
   ReturnType<Funcs[number]>
 >;
 
-type ApproveTokenFunctionsKeys = keyof ApproveTokenFunctions<any>;
-type CancelLimitOrderFunctionsKeys = keyof CancelLimitOrderFunctions<any>;
-type TxResponseDetectKeys =
-  | ApproveTokenFunctionsKeys
-  | CancelLimitOrderFunctionsKeys;
-type TxResponseDetectFuncs =
-  | ApproveTokenFunctions<any>
-  | CancelLimitOrderFunctions<any>;
-
-
 type PartialSDKResult<
   Config extends ConstructBaseInput,
   Funcs extends [SDKFunction<Config>, ...SDKFunction<Config>[]]
 > =
   // if can infer TxResponse inside Config
   Config extends SDKConfig<infer TxResponse>
-    ? // if there are ApproveTokenFunctions or CancelLimitOrderFunctions in the intersection
-      IntersectionOfReturns<Funcs> extends TxResponseDetectFuncs
-      ? // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
-        // then remove them
-        Omit<IntersectionOfReturns<Funcs>, TxResponseDetectKeys> &
-          // and add them again but with specific TxResponse
-          // if both were passed
-          (IntersectionOfReturns<Funcs> extends ApproveTokenFunctions<any> &
-            CancelLimitOrderFunctions<any>
-            ? // make the CancelLimitOrderFunctions<unknow> in the intersection a specific CancelLimitOrderFunctions<TxResponse>
-              CancelLimitOrderFunctions<TxResponse> &
-                // and make the ApproveTokenFunctions<unknow> in the intersection a specific ApproveTokenFunctions<TxResponse>
-                ApproveTokenFunctions<TxResponse>
-            : // if constructApproveToken was passed
-            IntersectionOfReturns<Funcs> extends ApproveTokenFunctions<any>
-            ? ApproveTokenFunctions<TxResponse>
-            : // if constructCancelLimitOrder was passed
-            IntersectionOfReturns<Funcs> extends CancelLimitOrderFunctions<any>
-            ? CancelLimitOrderFunctions<TxResponse>
-            : // and make the CancelLimitOrderFunctions<unknow> in the intersection a specific CancelLimitOrderFunctions<TxResponse>
-              IntersectionOfReturns<Funcs>)
+    ? // and if returns can be successfully intersected
+      IntersectionOfReturns<Funcs> extends Record<string, any>
+      ? MergeExtendableRecursively<
+          IntersectionOfReturns<Funcs>,
+          [
+            // if there are ApproveTokenFunctions or CancelLimitOrderFunctions in the intersection
+            // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
+            ApproveTokenFunctions<TxResponse>,
+            CancelLimitOrderFunctions<TxResponse>
+          ]
+          // then merge IntersectionOfReturns<Funcs> with them recursively
+        >
       : IntersectionOfReturns<Funcs>
     : IntersectionOfReturns<Funcs>;
+
+// merges Accum with Replacement
+// if Accum has keys of Replacement
+type MergeExtendableOnce<
+  Accum extends Record<string, any>,
+  Replacement extends Record<string, any>
+> = Accum extends Record<keyof Replacement, any>
+  ? Merge<Accum, Replacement>
+  : Accum;
+
+// recursively merges Accum with each Replacement
+// if Accum has keys of Replacement
+type MergeExtendableRecursively<
+  Accum extends Record<string, any>,
+  Replacements extends Record<string, any>[]
+> = Replacements extends [head: infer Head, ...tail: infer Tail]
+  ? Tail extends Record<string, any>[]
+    ? MergeExtendableRecursively<MergeExtendableOnce<Accum, Head>, Tail>
+    : MergeExtendableOnce<Accum, Head>
+  : Accum;
 
 /** @description construct composable SDK with methods you choose yourself */
 export const constructPartialSDK = <
