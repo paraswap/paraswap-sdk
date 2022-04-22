@@ -22,7 +22,7 @@ import {
   constructSignLimitOrder,
 } from './methods/limitOrders/signOrder';
 import {
-  CancelOrderFunctions,
+  CancelLimitOrderFunctions,
   constructCancelLimitOrder,
 } from './methods/limitOrders/cancelOrder';
 
@@ -96,7 +96,7 @@ export type {
   BuildTxFunctions,
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,
-  CancelOrderFunctions,
+  CancelLimitOrderFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
   Token,

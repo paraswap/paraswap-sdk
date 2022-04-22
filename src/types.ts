@@ -129,3 +129,5 @@ export type PriceRouteApiErrorResponse =
       error: string;
     }
   | { error: string; value: string; priceRoute: OptimalRate };
+
+export type AnyFunction = (...args: any[]) => any;

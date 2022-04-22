@@ -28,8 +28,7 @@ export type ApproveTokenFunctions<T> = {
 
 type CancelOrder<T> = (
   orderHash: string,
-  overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  overrides?: TxSendOverrides
 ) => Promise<T>;
 
 type CancelOrderBulk<T> = (
@@ -37,7 +36,7 @@ type CancelOrderBulk<T> = (
   overrides?: TxSendOverrides
 ) => Promise<T>;
 
-export type CancelOrderFunctions<T> = {
+export type CancelLimitOrderFunctions<T> = {
   cancelLimitOrder: CancelOrder<T>;
   cancelLimitOrderBulk: CancelOrderBulk<T>;
 };
@@ -78,7 +77,7 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 // to allow for better versatility
 export const constructCancelLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
-): CancelOrderFunctions<T> => {
+): CancelLimitOrderFunctions<T> => {
   const verifyingContract = chainId2verifyingContract[options.network];
 
   const cancelLimitOrder: CancelOrder<T> = async (
