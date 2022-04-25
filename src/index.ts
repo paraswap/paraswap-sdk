@@ -25,6 +25,10 @@ import {
   CancelLimitOrderFunctions,
   constructCancelLimitOrder,
 } from './methods/limitOrders/cancelOrder';
+import {
+  GetLimitOrdersFunctions,
+  constructGetLimitOrders,
+} from './methods/limitOrders/getOrders';
 
 import {
   constructEthersContractCaller,
@@ -60,25 +64,30 @@ export type {
 } from './methods/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
+export * from './methods/limitOrders/helpers/types';
 
 // can import these individually
 // and use in constructPartialSDK only what you need
 // unused should tree-shake
 export {
+  // swap methods:
   constructApproveToken,
   constructGetBalances, // getAllowances is inside
   constructGetSpender, // this was getTokenTransferProxy
   constructGetTokens,
   constructBuildTx,
+  constructGetAdapters,
+  constructGetRate,
+  // limitOrders methods:
   constructBuildLimitOrder,
   constructSignLimitOrder,
   constructCancelLimitOrder,
+  constructGetLimitOrders,
+  // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   constructAxiosFetcher,
   constructFetchFetcher,
-  constructGetAdapters,
-  constructGetRate,
   isFetcherError,
   isAllowance,
   constructToken,
@@ -86,6 +95,7 @@ export {
 
 export type {
   Allowance,
+  // types for swap methods:
   EthersProviderDeps,
   ApproveTokenFunctions,
   GetBalancesFunctions,
@@ -94,11 +104,14 @@ export type {
   GetAdaptersFunctions,
   GetRateFunctions,
   BuildTxFunctions,
+  // types for limitOrders methods:
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,
   CancelLimitOrderFunctions,
+  GetLimitOrdersFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
+  // other types
   Token,
   Address,
   AddressOrSymbol,
