@@ -15,8 +15,8 @@ import {
   constructSignLimitOrder,
   SignLimitOrderFunctions,
   constructCancelLimitOrder,
+  CancelLimitOrderFunctions,
   constructEthersContractCaller,
-  CancelOrderFunctions,
   SDKConfig,
   ConstructProviderFetchInput,
   constructAxiosFetcher,
@@ -109,7 +109,7 @@ const AugustusRFQFactory = new ethers.ContractFactory(
 describe('Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
-    CancelOrderFunctions<ethers.ContractTransaction>;
+    CancelLimitOrderFunctions<ethers.ContractTransaction>;
 
   let orderInput: BuildLimitOrderInput;
   const orderExpiry = new Date('12.20.2022').getTime();
@@ -163,7 +163,7 @@ describe('Limit Orders', () => {
         ethers.ContractTransaction,
         'transactCall'
       >
-    ) => CancelOrderFunctions<ethers.ContractTransaction>;
+    ) => CancelLimitOrderFunctions<ethers.ContractTransaction>;
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -309,7 +309,8 @@ describe('Limit Orders', () => {
     const randomOrderHash =
       '0x1000000000000000000000000000000000000000000000000000000000000000';
 
-    await paraSwap.cancelLimitOrder(randomOrderHash);
+    const tx = await paraSwap.cancelLimitOrder(randomOrderHash);
+    await tx.wait();
 
     const orderStatus: BigNumberEthers = await AugustusRFQ.remaining(
       senderAddress,
@@ -320,11 +321,12 @@ describe('Limit Orders', () => {
   test('cancelLimitOrder Bulk', async () => {
     // bytes32[]
     const randomOrderHashes = [
-      '0x1000000000000000000000000000000000000000000000000000000000000000',
       '0x2000000000000000000000000000000000000000000000000000000000000000',
+      '0x3000000000000000000000000000000000000000000000000000000000000000',
     ];
 
-    await paraSwap.cancelLimitOrderBulk(randomOrderHashes);
+    const tx = await paraSwap.cancelLimitOrderBulk(randomOrderHashes);
+    await tx.wait();
 
     const orderStatus0 = await AugustusRFQ.remaining(
       senderAddress,

@@ -46,7 +46,7 @@ const orderInput = {
 };
 
 // type SignableOrderData
-const signableOrderData = part1.limitOrders.buildLimitOrder(orderInput);
+const signableOrderData = part1.buildLimitOrder(orderInput);
 // type Promise<string>
 const signature = part1.signLimitOrder(signableOrderData);
 

@@ -1,4 +1,4 @@
-import { Address } from '../../../types';
+import type { Address } from '../../../types';
 
 // @TODO either fill in or fetch from API
 export const chainId2verifyingContract: Record<number, Address> = {
