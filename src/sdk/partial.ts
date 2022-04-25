@@ -25,23 +25,26 @@ type IntersectionOfReturns<Funcs extends AnyFunction[]> = UnionToIntersection<
 type PartialSDKResult<
   Config extends ConstructBaseInput,
   Funcs extends [SDKFunction<Config>, ...SDKFunction<Config>[]]
-> =
-  // if can infer TxResponse inside Config
-  Config extends SDKConfig<infer TxResponse>
-    ? // and if returns can be successfully intersected
-      IntersectionOfReturns<Funcs> extends Record<string, any>
-      ? MergeExtendableRecursively<
-          IntersectionOfReturns<Funcs>,
-          [
-            // if there are ApproveTokenFunctions or CancelLimitOrderFunctions in the intersection
-            // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
-            ApproveTokenFunctions<TxResponse>,
-            CancelLimitOrderFunctions<TxResponse>
-          ]
-          // then merge IntersectionOfReturns<Funcs> with them recursively
-        >
-      : IntersectionOfReturns<Funcs>
-    : IntersectionOfReturns<Funcs>;
+> = InferWithTxResponse<Config, Funcs>;
+
+type InferWithTxResponse<
+  Config extends ConstructBaseInput,
+  Funcs extends [SDKFunction<Config>, ...SDKFunction<Config>[]]
+> = Config extends SDKConfig<infer TxResponse> // if can infer TxResponse inside Config
+  ? // and if returns can be successfully intersected
+    IntersectionOfReturns<Funcs> extends Record<string, any>
+    ? MergeExtendableRecursively<
+        IntersectionOfReturns<Funcs>,
+        [
+          // if there are ApproveTokenFunctions or CancelLimitOrderFunctions in the intersection
+          // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
+          ApproveTokenFunctions<TxResponse>,
+          CancelLimitOrderFunctions<TxResponse>
+        ]
+        // then merge IntersectionOfReturns<Funcs> with them recursively
+      >
+    : IntersectionOfReturns<Funcs>
+  : IntersectionOfReturns<Funcs>;
 
 // merges Accum with Replacement
 // if Accum has keys of Replacement
