@@ -35,6 +35,12 @@ import {
   PostLimitOrderFunctions,
   constructPostLimitOrder,
 } from './methods/limitOrders/postOrder';
+import {
+  FillLimitOrderFunctions,
+  FillOrderInput,
+  PartialFillOrderInput,
+  constructFillLimitOrder,
+} from './methods/limitOrders/fillOrders';
 
 import {
   constructEthersContractCaller,
@@ -90,6 +96,7 @@ export {
   constructCancelLimitOrder,
   constructGetLimitOrders,
   constructPostLimitOrder,
+  constructFillLimitOrder,
   // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
@@ -121,6 +128,9 @@ export type {
   BuildLimitOrderInput,
   BuildOrderDataInput,
   PostLimitOrderFunctions,
+  FillLimitOrderFunctions,
+  FillOrderInput,
+  PartialFillOrderInput,
   // other types
   Token,
   Address,
