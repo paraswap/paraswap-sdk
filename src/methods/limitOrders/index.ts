@@ -46,3 +46,20 @@ export const constructSubmitLimitOrder = (
 
   return { submitLimitOrder };
 };
+
+export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
+  GetLimitOrdersFunctions &
+  CancelLimitOrderFunctions<T>;
+
+export const constructAllLimitOrdersHandlers = <T>(
+  options: ConstructProviderFetchInput<
+    any,
+    'signTypedDataCall' | 'transactCall'
+  >
+): LimitOrderHandlers<T> => {
+  const limitOrdersGetters = constructGetLimitOrders(options);
+  const limitOrdersSubmit = constructSubmitLimitOrder(options);
+  const limitOrdersCancel = constructCancelLimitOrder(options);
+
+  return { ...limitOrdersGetters, ...limitOrdersSubmit, ...limitOrdersCancel };
+};
