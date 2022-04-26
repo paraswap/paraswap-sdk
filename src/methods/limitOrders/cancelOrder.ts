@@ -1,30 +1,7 @@
 import { assert } from 'ts-essentials';
 import { ExtractAbiMethodNames } from '../../helpers/misc';
-import type {
-  ConstructProviderFetchInput,
-  TxSendOverrides,
-  Address,
-  PriceString,
-} from '../../types';
+import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import { chainId2verifyingContract } from './helpers/misc';
-
-type ApproveToken<T> = (
-  amount: PriceString,
-  tokenAddress: Address,
-  overrides?: TxSendOverrides,
-  signal?: AbortSignal
-) => Promise<T>;
-
-type ApproveTokenBulk<T> = (
-  amount: PriceString,
-  tokenAddresses: Address[],
-  overrides?: TxSendOverrides
-) => Promise<Awaited<T>[]>;
-
-export type ApproveTokenFunctions<T> = {
-  approveToken: ApproveToken<T>;
-  approveTokenBulk: ApproveTokenBulk<T>;
-};
 
 type CancelOrder<T> = (
   orderHash: string,
