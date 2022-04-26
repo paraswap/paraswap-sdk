@@ -24,11 +24,6 @@ type PartialFillOrder<T> = (
   overrides?: TxSendOverrides
 ) => Promise<T>;
 
-type CancelOrderBulk<T> = (
-  orderHashes: string[],
-  overrides?: TxSendOverrides
-) => Promise<T>;
-
 export type FillLimitOrderFunctions<T> = {
   fillLimitOrder: FillOrder<T>;
   partialFilllLimitOrder: PartialFillOrder<T>;
@@ -96,6 +91,77 @@ const MinAugustusRFQAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'nonceAndMeta',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint128',
+            name: 'expiry',
+            type: 'uint128',
+          },
+          {
+            internalType: 'address',
+            name: 'makerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'takerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'maker',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'taker',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'makerAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'takerAmount',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct AugustusRFQ.Order',
+        name: 'order',
+        type: 'tuple',
+      },
+      {
+        internalType: 'bytes',
+        name: 'signature',
+        type: 'bytes',
+      },
+      {
+        internalType: 'uint256',
+        name: 'takerTokenFillAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'partialFillOrder',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'makerTokenFilledAmount',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ] as const;
 
 type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
@@ -127,7 +193,28 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
+  const partialFilllLimitOrder: PartialFillOrder<T> = async (
+    { orderData, signature, fillAmount },
+    overrides = {}
+  ) => {
+    assert(
+      verifyingContract,
+      `AugustusRFQ contract for Limit Orders not available on chain ${options.network}`
+    );
+
+    const res = await options.contractCaller.transactCall<AvailableMethods>({
+      address: verifyingContract,
+      abi: MinAugustusRFQAbi,
+      contractMethod: 'partialFillOrder',
+      args: [orderData, signature, fillAmount],
+      overrides,
+    });
+
+    return res;
+  };
+
   return {
     fillLimitOrder,
+    partialFilllLimitOrder,
   };
 };
