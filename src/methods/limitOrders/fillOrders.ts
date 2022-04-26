@@ -5,7 +5,7 @@ import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import { OrderData } from './buildOrder';
 import { chainId2verifyingContract } from './helpers/misc';
 
-interface FillOrderInput {
+export interface FillOrderInput {
   orderData: OrderData;
   signature: string;
 }
@@ -15,7 +15,7 @@ type FillOrder<T> = (
   overrides?: TxSendOverrides
 ) => Promise<T>;
 
-interface PartialFillOrderInput extends FillOrderInput {
+export interface PartialFillOrderInput extends FillOrderInput {
   fillAmount: string;
 }
 
@@ -172,6 +172,8 @@ export const constructFillLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): FillLimitOrderFunctions<T> => {
   const verifyingContract = chainId2verifyingContract[options.network];
+
+  // @TODO add fillOrderWithTarget variants and bulk* variants
 
   const fillLimitOrder: FillOrder<T> = async (
     { orderData, signature },

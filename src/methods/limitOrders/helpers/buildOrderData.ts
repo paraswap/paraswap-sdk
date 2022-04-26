@@ -53,14 +53,13 @@ type Domain = {
   verifyingContract: string;
 };
 
-type OrderData = {
+export type OrderData = {
   nonceAndMeta: string;
   expiry: number;
   makerAsset: string;
   takerAsset: string;
   maker: string;
   taker: string;
-  // @TODO in the source amouns are number
   makerAmount: string;
   takerAmount: string;
 };
