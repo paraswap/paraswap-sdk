@@ -1,5 +1,5 @@
 import { assert } from 'ts-essentials';
-import { ExtractAbiMethodNames } from '../../helpers/misc';
+import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import { chainId2verifyingContract } from './helpers/misc';
 

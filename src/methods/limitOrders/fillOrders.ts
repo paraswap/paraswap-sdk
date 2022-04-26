@@ -1,8 +1,8 @@
 // @TODO add fulfillLimitOrder
 import { assert } from 'ts-essentials';
-import { ExtractAbiMethodNames } from '../../helpers/misc';
+import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
-import { OrderData } from './buildOrder';
+import type { OrderData } from './buildOrder';
 import { chainId2verifyingContract } from './helpers/misc';
 
 export interface FillOrderInput {
