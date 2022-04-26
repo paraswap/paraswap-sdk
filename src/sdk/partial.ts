@@ -8,6 +8,7 @@ import type { Merge, UnionToIntersection } from 'ts-essentials';
 import type { ApproveTokenFunctions } from '../methods/approve';
 import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
 import type { FillLimitOrderFunctions } from '../methods/limitOrders/fillOrders';
+import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -41,7 +42,8 @@ type InferWithTxResponse<
           // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
           ApproveTokenFunctions<TxResponse>,
           CancelLimitOrderFunctions<TxResponse>,
-          FillLimitOrderFunctions<TxResponse>
+          FillLimitOrderFunctions<TxResponse>,
+          ApproveTokenForLimitOrderFunctions<TxResponse>
         ]
         // then merge IntersectionOfReturns<Funcs> with them recursively
       >
