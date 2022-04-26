@@ -18,6 +18,8 @@ import {
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
   chainId2verifyingContract,
+  constructGetLimitOrdersContract,
+  GetLimitOrdersContractFunctions,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -104,6 +106,7 @@ const AugustusRFQFactory = new ethers.ContractFactory(
 describe('Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
+    GetLimitOrdersContractFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
@@ -172,6 +175,7 @@ describe('Limit Orders', () => {
       [
         typeof constructBuildLimitOrder,
         typeof constructSignLimitOrder,
+        typeof constructGetLimitOrdersContract,
         CancelOrderConstructor,
         ApproveTokenForLimitOrderConstructor
       ]
@@ -179,6 +183,7 @@ describe('Limit Orders', () => {
       { network, contractCaller: ethersContractCaller, fetcher: axiosFetcher },
       constructBuildLimitOrder,
       constructSignLimitOrder,
+      constructGetLimitOrdersContract,
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder
     );
@@ -188,6 +193,13 @@ describe('Limit Orders', () => {
   // @TODO check if still needed after there are tx tests
   afterAll(async () => {
     Object.assign(chainId2verifyingContract, initialChainId2verifyingContract);
+  });
+
+  test('getLimitOrdersContract', async () => {
+    const augustusRFQAddress = paraSwap.getLimitOrdersContract();
+
+    // @TODO replace with snapshot test once contracts are deployed
+    expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
   test('buildLimitOrder', async () => {
