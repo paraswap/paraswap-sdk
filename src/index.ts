@@ -77,6 +77,11 @@ export type {
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
 export * from './methods/limitOrders/helpers/types';
+export type {
+  SignableOrderData,
+  SignableTypedData,
+  OrderData,
+} from './methods/limitOrders/helpers/buildOrderData';
 
 // can import these individually
 // and use in constructPartialSDK only what you need
