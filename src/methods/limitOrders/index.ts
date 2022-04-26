@@ -8,6 +8,7 @@ import {
 import { constructGetLimitOrders, GetLimitOrdersFunctions } from './getOrders';
 import { constructPostLimitOrder, OpenLimitOrder } from './postOrder';
 import { constructSignLimitOrder } from './signOrder';
+import { constructFillLimitOrder, FillLimitOrderFunctions } from './fillOrders';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
@@ -49,7 +50,8 @@ export const constructSubmitLimitOrder = (
 
 export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
   GetLimitOrdersFunctions &
-  CancelLimitOrderFunctions<T>;
+  CancelLimitOrderFunctions<T> &
+  FillLimitOrderFunctions<T>;
 
 export const constructAllLimitOrdersHandlers = <T>(
   options: ConstructProviderFetchInput<
@@ -60,6 +62,12 @@ export const constructAllLimitOrdersHandlers = <T>(
   const limitOrdersGetters = constructGetLimitOrders(options);
   const limitOrdersSubmit = constructSubmitLimitOrder(options);
   const limitOrdersCancel = constructCancelLimitOrder(options);
+  const limitOrdersFill = constructFillLimitOrder(options);
 
-  return { ...limitOrdersGetters, ...limitOrdersSubmit, ...limitOrdersCancel };
+  return {
+    ...limitOrdersGetters,
+    ...limitOrdersSubmit,
+    ...limitOrdersCancel,
+    ...limitOrdersFill,
+  };
 };
