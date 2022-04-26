@@ -22,7 +22,7 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export interface BuildOrderDataInput {
   chainId: number;
   verifyingContract: Address;
-  nonceAndMeta: number;
+  nonce: number;
   expiry: number;
   makerAsset: Address;
   takerAsset: Address;
@@ -54,7 +54,7 @@ type Domain = {
 };
 
 type OrderData = {
-  nonceAndMeta: number;
+  nonceAndMeta: string;
   expiry: number;
   makerAsset: string;
   takerAsset: string;
@@ -65,18 +65,26 @@ type OrderData = {
   takerAmount: string;
 };
 
+function getRandomInt(): number {
+  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+}
+
 export function buildOrderData({
   chainId,
   verifyingContract,
-  nonceAndMeta,
+  nonce = getRandomInt(),
   expiry,
   makerAsset,
   takerAsset,
   makerAmount,
   takerAmount,
   maker,
-  taker = ZERO_ADDRESS, //@TODO check if we can even allow specifying `taker`
+  // `taker` is always AugustusRFQ if using our contract
+  taker = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
 }: BuildOrderDataInput): SignableOrderData {
+  // first 180 bits is 0, so that anyone can be the taker of the Order
+  const nonceAndMeta = (BigInt(nonce) << BigInt(180)).toString(10);
+
   const order: OrderData = {
     nonceAndMeta,
     expiry,
