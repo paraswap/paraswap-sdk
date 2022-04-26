@@ -13,6 +13,10 @@ import {
   constructApproveTokenForLimitOrder,
   ApproveTokenForLimitOrderFunctions,
 } from './approveForOrder';
+import {
+  GetLimitOrdersContractFunctions,
+  constructGetLimitOrdersContract,
+} from './getOrdersContract';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
@@ -54,6 +58,7 @@ export const constructSubmitLimitOrder = (
 
 export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
   GetLimitOrdersFunctions &
+  GetLimitOrdersContractFunctions &
   CancelLimitOrderFunctions<T> &
   FillLimitOrderFunctions<T> &
   ApproveTokenForLimitOrderFunctions<T>;
@@ -65,6 +70,7 @@ export const constructAllLimitOrdersHandlers = <T>(
   >
 ): LimitOrderHandlers<T> => {
   const limitOrdersGetters = constructGetLimitOrders(options);
+  const limitOrdersContractGetter = constructGetLimitOrdersContract(options);
   const limitOrdersSubmit = constructSubmitLimitOrder(options);
   const limitOrdersCancel = constructCancelLimitOrder(options);
   const limitOrdersFill = constructFillLimitOrder(options);
@@ -72,6 +78,7 @@ export const constructAllLimitOrdersHandlers = <T>(
 
   return {
     ...limitOrdersGetters,
+    ...limitOrdersContractGetter,
     ...limitOrdersSubmit,
     ...limitOrdersCancel,
     ...limitOrdersFill,
