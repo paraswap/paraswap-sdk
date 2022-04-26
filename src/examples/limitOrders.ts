@@ -2,14 +2,21 @@
 import axios from 'axios';
 import { ethers } from 'ethers';
 import {
+  // swap methods
   constructPartialSDK,
   constructEthersContractCaller,
   constructAxiosFetcher,
+  constructApproveToken,
+  // limitOrders methods
   constructBuildLimitOrder,
   constructCancelLimitOrder,
   constructSignLimitOrder,
+  constructFillLimitOrder,
+  constructGetLimitOrders,
+  constructPostLimitOrder,
+  // extra types
+  SignableOrderData,
 } from '..';
-import { constructApproveToken } from '../methods/approve';
 
 const fetcher = constructAxiosFetcher(axios);
 
@@ -32,7 +39,10 @@ const part1 = constructPartialSDK(
   constructBuildLimitOrder,
   constructApproveToken,
   constructCancelLimitOrder,
-  constructSignLimitOrder
+  constructSignLimitOrder,
+  constructPostLimitOrder,
+  constructGetLimitOrders,
+  constructFillLimitOrder
 );
 
 const orderInput = {
@@ -45,18 +55,24 @@ const orderInput = {
   maker: '0x1234...',
 };
 
-// type SignableOrderData
-const signableOrderData = part1.buildLimitOrder(orderInput);
-// type Promise<string>
-const signature = part1.signLimitOrder(signableOrderData);
+async function run() {
+  const signableOrderData: SignableOrderData =
+    part1.buildLimitOrder(orderInput);
+  // type string
+  const signature: string = await part1.signLimitOrder(signableOrderData);
 
-// type Promise<ethers.ContractTransaction>
-const res1 = part1.cancelLimitOrder('order hash bytes32');
-// type Promise<ethers.ContractTransaction>
-const res2 = part1.cancelLimitOrderBulk([
-  'order hash bytes32',
-  'more order hashes',
-]);
+  const tx1: ethers.ContractTransaction = await part1.cancelLimitOrder(
+    'order hash bytes32'
+  );
+  const tx2: ethers.ContractTransaction = await part1.cancelLimitOrderBulk([
+    'order hash bytes32',
+    'more order hashes',
+  ]);
 
-// type Promise<ethers.ContractTransaction>
-const res3 = part1.approveToken('', '');
+  const tx3: ethers.ContractTransaction = await part1.approveToken('', '');
+
+  const tx4: ethers.ContractTransaction = await part1.fillLimitOrder({
+    orderData: signableOrderData.data,
+    signature,
+  });
+}
