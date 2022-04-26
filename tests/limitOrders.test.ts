@@ -15,6 +15,8 @@ import {
   ConstructProviderFetchInput,
   constructAxiosFetcher,
   constructFillLimitOrder,
+  ApproveTokenForLimitOrderFunctions,
+  constructApproveTokenForLimitOrder,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -102,7 +104,8 @@ const AugustusRFQFactory = new ethers.ContractFactory(
 describe('Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
-    CancelLimitOrderFunctions<ethers.ContractTransaction>;
+    CancelLimitOrderFunctions<ethers.ContractTransaction> &
+    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
   let orderInput: BuildLimitOrderInput;
   const orderExpiry = new Date('12.20.2022').getTime();
@@ -157,19 +160,27 @@ describe('Limit Orders', () => {
         'transactCall'
       >
     ) => CancelLimitOrderFunctions<ethers.ContractTransaction>;
+    type ApproveTokenForLimitOrderConstructor = (
+      options: ConstructProviderFetchInput<
+        ethers.ContractTransaction,
+        'transactCall'
+      >
+    ) => ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
       [
         typeof constructBuildLimitOrder,
         typeof constructSignLimitOrder,
-        CancelOrderConstructor
+        CancelOrderConstructor,
+        ApproveTokenForLimitOrderConstructor
       ]
     >(
       { network, contractCaller: ethersContractCaller, fetcher: axiosFetcher },
       constructBuildLimitOrder,
       constructSignLimitOrder,
-      constructCancelLimitOrder
+      constructCancelLimitOrder,
+      constructApproveTokenForLimitOrder
     );
   });
 
@@ -244,10 +255,17 @@ describe('Limit Orders', () => {
         .toString(10),
     });
 
-    await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
-    await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
-
     console.log('signature', signature, 'order', signableOrderData.data);
+
+    // without SDK
+    // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await paraSwap.approveTokenForLimitOrder(
+      makerAmount,
+      erc20Token1.address
+    );
+    await approveForMakerTx.wait();
 
     /* Without SDK
      await AugustusRFQ.connect(taker).fillOrder(
@@ -266,8 +284,19 @@ describe('Limit Orders', () => {
 
     const takerParaswapSDK = constructPartialSDK(
       { network, contractCaller: takerContractCaller, fetcher: axiosFetcher },
-      constructFillLimitOrder
+      constructFillLimitOrder,
+      constructApproveTokenForLimitOrder
     );
+
+    // without SDK
+    // await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
+
+    // withSDK
+    const approveForTakerTx = await takerParaswapSDK.approveTokenForLimitOrder(
+      takerAmount,
+      erc20Token2.address
+    );
+    await approveForTakerTx.wait();
 
     const takerFillsOrderTx = await takerParaswapSDK.fillLimitOrder({
       orderData: signableOrderData.data,
