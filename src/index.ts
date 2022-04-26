@@ -45,6 +45,10 @@ import {
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
 } from './methods/limitOrders/approveForOrder';
+import {
+  GetLimitOrdersContractFunctions,
+  constructGetLimitOrdersContract,
+} from './methods/limitOrders/getOrdersContract';
 
 import {
   constructEthersContractCaller,
@@ -107,6 +111,7 @@ export {
   constructPostLimitOrder,
   constructFillLimitOrder,
   constructApproveTokenForLimitOrder,
+  constructGetLimitOrdersContract,
   // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
@@ -132,7 +137,7 @@ export type {
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,
   CancelLimitOrderFunctions,
-  GetLimitOrdersFunctions,
+  GetLimitOrdersContractFunctions,
   ConstructFetchInput,
   ConstructProviderFetchInput,
   BuildLimitOrderInput,
@@ -142,6 +147,7 @@ export type {
   FillOrderInput,
   PartialFillOrderInput,
   ApproveTokenForLimitOrderFunctions,
+  GetLimitOrdersFunctions,
   // other types
   Token,
   Address,
