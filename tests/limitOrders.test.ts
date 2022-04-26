@@ -17,6 +17,7 @@ import {
   constructFillLimitOrder,
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
+  chainId2verifyingContract,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -28,7 +29,6 @@ import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 import ganache from 'ganache';
 
 import { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
-import { chainId2verifyingContract } from '../src/methods/limitOrders/helpers/misc';
 
 dotenv.config();
 

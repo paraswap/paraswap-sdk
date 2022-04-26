@@ -160,3 +160,9 @@ export { AllSDKMethods, constructFullSDK } from './sdk/full';
 export { SDKFetchMethods, constructSimpleSDK } from './sdk/simple';
 
 export { ParaSwap } from './legacy';
+
+// bundled methods for limitOrders
+export * from './methods/limitOrders';
+
+/* @hidden */
+export { chainId2verifyingContract } from './methods/limitOrders/helpers/misc';
