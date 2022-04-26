@@ -1,6 +1,7 @@
 // @TODO getOrder, getOrders from API
 // onchain from contract can't distinguish between filled or cancelled
 import { API_URL } from '../../constants';
+import { isFetcherError } from '../../helpers';
 import type { ConstructFetchInput } from '../../types';
 import type {
   LimitOrderFromApi,
@@ -32,29 +33,38 @@ export const constructGetLimitOrders = ({
 
   // @TODO add getLimitOrderStatus method
 
-  const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
-    const fetchURL = `${baseFetchURL}/${userAddress}`;
-
-    const { orders } = await fetcher<LimitOrdersApiResponse>({
-      url: fetchURL,
-      method: 'GET',
-      signal,
-    });
-
-    // @TODO attach status to orders, with onchain calls
-    return orders;
-  };
-
   const getRawLimitOrders: GetRawLimitOrders = async (userAddress, signal) => {
     const fetchURL = `${baseFetchURL}/${userAddress}`;
 
-    const { orders } = await fetcher<LimitOrdersApiResponse>({
-      url: fetchURL,
-      method: 'GET',
-      signal,
-    });
+    try {
+      const { orders } = await fetcher<LimitOrdersApiResponse>({
+        url: fetchURL,
+        method: 'GET',
+        signal,
+      });
 
-    // without ny extra calls, return  what API returns
+      // without any extra calls, return  what API returns
+      return orders;
+    } catch (error) {
+      if (!isFetcherError(error) || !error.response) throw error;
+      // @TODO test that this works with fetch and axios properly, that status is properly propagated
+      console.log('🚀 ~ Error fetching Orders', error, error.response);
+
+      // no Orders found
+      if (error.response.status === 404) {
+        // API still returns a response but with `orders = []`
+        const data: LimitOrdersApiResponse = error.response.data;
+        return data.orders;
+      }
+
+      throw error;
+    }
+  };
+
+  const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
+    const orders = await getRawLimitOrders(userAddress, signal);
+
+    // @TODO attach status to orders, with onchain calls
     return orders;
   };
 

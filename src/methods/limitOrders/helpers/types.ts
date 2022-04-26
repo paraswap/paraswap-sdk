@@ -26,8 +26,14 @@ export type LimitOrderToSend = Omit<LimitOrder, 'orderHash' | 'status'> & {
 //   updatedAt: string; // Date
 // };
 
-export type LimitOrdersApiResponse = { orders: LimitOrderFromApi[] };
-export type LimitOrderApiResponse = { order: LimitOrderFromApi[] };
+export type LimitOrdersApiResponse = {
+  status: 'Ok';
+  orders: LimitOrderFromApi[];
+};
+export type LimitOrderApiResponse = {
+  status: 'Ok';
+  order: LimitOrderFromApi[];
+};
 
 export type LimitOrderFromApi = {
   chainId: number;
