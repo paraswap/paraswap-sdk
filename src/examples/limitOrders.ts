@@ -14,6 +14,7 @@ import {
   constructFillLimitOrder,
   constructGetLimitOrders,
   constructPostLimitOrder,
+  constructApproveTokenForLimitOrder,
   // extra types
   SignableOrderData,
 } from '..';
@@ -42,7 +43,8 @@ const part1 = constructPartialSDK(
   constructSignLimitOrder,
   constructPostLimitOrder,
   constructGetLimitOrders,
-  constructFillLimitOrder
+  constructFillLimitOrder,
+  constructApproveTokenForLimitOrder
 );
 
 const orderInput = {
@@ -69,9 +71,17 @@ async function run() {
     'more order hashes',
   ]);
 
-  const tx3: ethers.ContractTransaction = await part1.approveToken('', '');
+  const tx3: ethers.ContractTransaction = await part1.approveToken(
+    '1234',
+    '0x1234'
+  );
 
-  const tx4: ethers.ContractTransaction = await part1.fillLimitOrder({
+  const tx4: ethers.ContractTransaction = await part1.approveTokenForLimitOrder(
+    '1234',
+    '0x1234'
+  );
+
+  const tx5: ethers.ContractTransaction = await part1.fillLimitOrder({
     orderData: signableOrderData.data,
     signature,
   });
