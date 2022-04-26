@@ -123,7 +123,7 @@ describe('Limit Orders', () => {
 
   beforeAll(async () => {
     orderInput = {
-      nonceAndMeta: 1,
+      nonce: 1,
       expiry: orderExpiry,
       makerAsset: srcToken,
       takerAsset: destToken,
@@ -212,7 +212,7 @@ describe('Limit Orders', () => {
     const takerAmount = (8e18).toString(10);
 
     const orderData = paraSwap.buildLimitOrder({
-      nonceAndMeta: 1,
+      nonce: 1,
       expiry: orderExpiry,
       maker: maker.address,
       makerAsset: erc20Token1.address,
