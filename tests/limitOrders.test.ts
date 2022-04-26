@@ -20,6 +20,7 @@ import {
   SDKConfig,
   ConstructProviderFetchInput,
   constructAxiosFetcher,
+  constructFillLimitOrder,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -187,18 +188,18 @@ describe('Limit Orders', () => {
   });
 
   test('buildLimitOrder', async () => {
-    const orderData = paraSwap.buildLimitOrder(orderInput);
+    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
 
-    expect(orderData.data.maker).toBe(senderAddress);
-    expect(orderData.data.expiry).toBe(orderExpiry);
+    expect(signableOrderData.data.maker).toBe(senderAddress);
+    expect(signableOrderData.data.expiry).toBe(orderExpiry);
 
-    expect(orderData).toMatchSnapshot('Order_Data_Snapshot');
+    expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
   test('signLimitOrder', async () => {
-    const orderData = paraSwap.buildLimitOrder(orderInput);
+    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
 
-    const signature = await paraSwap.signLimitOrder(orderData);
+    const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
       `"0x6c03f1b5d40c19ba2adf25d8edc2afaa0e3100dd9173550aa2c1a9890ae79a516d2944b6204354f0437a0c5aa918521df42d5373772edf6f7a8f548fabb6892f1c"`
     );
@@ -211,7 +212,7 @@ describe('Limit Orders', () => {
     const makerAmount = (1e18).toString(10);
     const takerAmount = (8e18).toString(10);
 
-    const orderData = paraSwap.buildLimitOrder({
+    const signableOrderData = paraSwap.buildLimitOrder({
       nonce: 1,
       expiry: orderExpiry,
       maker: maker.address,
@@ -221,7 +222,7 @@ describe('Limit Orders', () => {
       takerAmount,
     });
 
-    const signature = await paraSwap.signLimitOrder(orderData);
+    const signature = await paraSwap.signLimitOrder(signableOrderData);
 
     const makerToken1InitBalance: BigNumberEthers = await erc20Token1.balanceOf(
       maker.address
@@ -254,9 +255,34 @@ describe('Limit Orders', () => {
     await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
     await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
 
-    console.log('signature', signature, 'order', orderData.data);
+    console.log('signature', signature, 'order', signableOrderData.data);
 
-    await AugustusRFQ.connect(taker).fillOrder(orderData.data, signature);
+    /* Without SDK
+     await AugustusRFQ.connect(taker).fillOrder(
+      signableOrderData.data,
+      signature
+    ); */
+
+    // With SDK
+    const takerContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      taker.address
+    );
+
+    const takerParaswapSDK = constructPartialSDK(
+      { network, contractCaller: takerContractCaller, fetcher: axiosFetcher },
+      constructFillLimitOrder
+    );
+
+    const takerFillsOrderTx = await takerParaswapSDK.fillLimitOrder({
+      orderData: signableOrderData.data,
+      signature,
+    });
+
+    await takerFillsOrderTx.wait();
 
     const makerToken1AfterBalance: BigNumberEthers =
       await erc20Token1.balanceOf(maker.address);
