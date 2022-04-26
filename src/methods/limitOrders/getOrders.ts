@@ -25,6 +25,8 @@ export const constructGetLimitOrders = ({
 }: ConstructFetchInput): GetLimitOrdersFunctions => {
   const baseFetchURL = `${apiURL}/limit-orders/${network}`;
 
+  // @TODO add getLimitOrderStatus method
+
   const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
     const fetchURL = `${baseFetchURL}/${userAddress}`;
 
