@@ -200,7 +200,7 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signLimitOrder(orderData);
     expect(signature).toMatchInlineSnapshot(
-      `"0xe0c6fbcf0660ef93dee579c715efbaee41e9c9504464669f8f96f3dc0c9f279634cfe4eaca930be2793f506e237d8826ddb91bb3d4cd1dadede631f198e0915c1c"`
+      `"0x6c03f1b5d40c19ba2adf25d8edc2afaa0e3100dd9173550aa2c1a9890ae79a516d2944b6204354f0437a0c5aa918521df42d5373772edf6f7a8f548fabb6892f1c"`
     );
   });
 
