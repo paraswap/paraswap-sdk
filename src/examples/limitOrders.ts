@@ -36,7 +36,7 @@ const part1 = constructPartialSDK(
 );
 
 const orderInput = {
-  nonceAndMeta: 1,
+  nonce: 1,
   expiry: Date.now() + 10_000_000,
   makerAsset: '0x1234...',
   takerAsset: '0x1234...',
