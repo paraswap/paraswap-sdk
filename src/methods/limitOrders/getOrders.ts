@@ -2,7 +2,7 @@
 // onchain from contract can't distinguish between filled or cancelled
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
-import { LimitOrdersApiResponse, LimitOrder } from './helpers/types';
+import type { LimitOrdersApiResponse, RawLimitOrder } from './helpers/types';
 
 type GetLimitOrders = (
   userAddress: string,
@@ -11,7 +11,7 @@ type GetLimitOrders = (
 type GetRawLimitOrders = (
   userAddress: string,
   signal?: AbortSignal
-) => Promise<Omit<LimitOrder, 'status'>[]>;
+) => Promise<RawLimitOrder[]>;
 
 export type GetLimitOrdersFunctions = {
   getLimitOrders: GetLimitOrders;
