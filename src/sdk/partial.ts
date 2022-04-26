@@ -1,4 +1,3 @@
-import type { ApproveTokenFunctions } from '../methods/approve';
 import type {
   AnyFunction,
   ConstructBaseInput,
@@ -6,7 +5,9 @@ import type {
   ConstructProviderFetchInput,
 } from '../types';
 import type { Merge, UnionToIntersection } from 'ts-essentials';
+import type { ApproveTokenFunctions } from '../methods/approve';
 import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
+import type { FillLimitOrderFunctions } from '../methods/limitOrders/fillOrders';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -39,7 +40,8 @@ type InferWithTxResponse<
           // if there are ApproveTokenFunctions or CancelLimitOrderFunctions in the intersection
           // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
           ApproveTokenFunctions<TxResponse>,
-          CancelLimitOrderFunctions<TxResponse>
+          CancelLimitOrderFunctions<TxResponse>,
+          FillLimitOrderFunctions<TxResponse>
         ]
         // then merge IntersectionOfReturns<Funcs> with them recursively
       >
