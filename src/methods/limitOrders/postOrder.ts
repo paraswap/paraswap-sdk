@@ -2,14 +2,14 @@ import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import type {
   LimitOrder,
-  LimitOrderWithSignature,
+  LimitOrderToSend,
   RawLimitOrder,
 } from './helpers/types';
 
-type OpenLimitOrder = LimitOrder & { status: 'open' };
+export type OpenLimitOrder = LimitOrder & { status: 'open' };
 
 type PostLimitOrder = (
-  limitOrderWithSignature: LimitOrderWithSignature,
+  limitOrderWithSignature: LimitOrderToSend,
   signal?: AbortSignal
 ) => Promise<OpenLimitOrder>;
 

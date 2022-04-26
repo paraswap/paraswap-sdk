@@ -10,13 +10,13 @@ export type LimitOrder = {
   makerAmount: string;
   takerAmount: string;
   status: LimitOrderStatus; // `status` likely not available from API
-  amountFilled: string;
+  // amountFilled: string; // @TODO do we have this? Not from API at the start
   chainId: number;
 };
 
 export type RawLimitOrder = Omit<LimitOrder, 'status'>;
 
-export type LimitOrderWithSignature = Omit<LimitOrder, 'orderHash'> & {
+export type LimitOrderToSend = Omit<LimitOrder, 'orderHash' | 'status'> & {
   signature: string;
 };
 

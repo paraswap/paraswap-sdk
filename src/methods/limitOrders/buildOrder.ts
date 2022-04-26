@@ -14,7 +14,9 @@ export type BuildLimitOrderInput = Omit<
   'chainId' | 'verifyingContract'
 >;
 
-type BuildLimitOrder = (params: BuildLimitOrderInput) => SignableOrderData;
+type BuildLimitOrder = (
+  buildLimitOrderParams: BuildLimitOrderInput
+) => SignableOrderData;
 
 export type BuildLimitOrderFunctions = {
   buildLimitOrder: BuildLimitOrder;
@@ -26,12 +28,16 @@ export const constructBuildLimitOrder = ({
 }: Pick<ConstructBaseInput, 'network'>): BuildLimitOrderFunctions => {
   const verifyingContract = chainId2verifyingContract[network];
 
-  const buildLimitOrder: BuildLimitOrder = (params) => {
+  const buildLimitOrder: BuildLimitOrder = (buildLimitOrderParams) => {
     assert(
       verifyingContract,
       `verifyingContract for Limit Orders not available on chain ${network}`
     );
-    return buildOrderData({ ...params, chainId: network, verifyingContract });
+    return buildOrderData({
+      ...buildLimitOrderParams,
+      chainId: network,
+      verifyingContract,
+    });
   };
 
   return {
