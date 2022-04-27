@@ -1,12 +1,12 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import type {
-  LimitOrder,
+  LimitOrderFromApi,
   LimitOrderToSend,
   RawLimitOrder,
 } from './helpers/types';
 
-export type OpenLimitOrder = LimitOrder & { status: 'open' };
+export type OpenLimitOrder = LimitOrderFromApi & { status: 'open' };
 
 type PostLimitOrder = (
   limitOrderWithSignature: LimitOrderToSend,
