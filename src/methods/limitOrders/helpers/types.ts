@@ -1,22 +1,20 @@
 export type LimitOrderStatus = 'open' | 'filled' | 'expired' | 'canceled';
-// @TODO what else? `orderHash`?
-export type LimitOrder = {
-  orderHash: string;
-  expiry: number; // timestamp
-  makerAsset: string;
-  takerAsset: string;
-  maker: string;
-  taker: string;
-  makerAmount: string;
-  takerAmount: string;
+export type LimitOrder = LimitOrderFromApi & {
   status: LimitOrderStatus; // `status` likely not available from API
-  // amountFilled: string; // @TODO do we have this? Not from API at the start
-  chainId: number;
+  amountFilled: string;
 };
 
 export type RawLimitOrder = LimitOrderFromApi;
 
-export type LimitOrderToSend = Omit<LimitOrder, 'orderHash' | 'status'> & {
+export type LimitOrderToSend = Omit<
+  LimitOrder,
+  | 'orderHash'
+  | 'status'
+  | 'amountFilled'
+  | 'createdAt'
+  | 'permitMakerAsset'
+  | 'permitTakerAsset'
+> & {
   signature: string;
 };
 
