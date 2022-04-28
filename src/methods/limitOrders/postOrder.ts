@@ -1,9 +1,9 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import type {
+  LimitOrderApiResponse,
   LimitOrderFromApi,
   LimitOrderToSend,
-  RawLimitOrder,
 } from './helpers/types';
 
 export type OpenLimitOrder = LimitOrderFromApi & { status: 'open' };
@@ -29,7 +29,7 @@ export const constructPostLimitOrder = ({
     signal
   ) => {
     // @TODO check API return matches
-    const newOrder = await fetcher<RawLimitOrder>({
+    const { order: newOrder } = await fetcher<LimitOrderApiResponse>({
       url: fetchURL,
       method: 'POST',
       data: limitOrderWithSignature,
