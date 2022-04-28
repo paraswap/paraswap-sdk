@@ -30,7 +30,7 @@ export type LimitOrdersApiResponse = {
 };
 export type LimitOrderApiResponse = {
   status: 'Ok';
-  order: LimitOrderFromApi[];
+  order: LimitOrderFromApi;
 };
 
 export type LimitOrderFromApi = {
