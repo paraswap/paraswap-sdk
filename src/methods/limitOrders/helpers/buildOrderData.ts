@@ -81,8 +81,8 @@ export function buildOrderData({
   // `taker` is always AugustusRFQ if using our contract
   taker = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
 }: BuildOrderDataInput): SignableOrderData {
-  // first 180 bits is 0, so that anyone can be the taker of the Order
-  const nonceAndMeta = (BigInt(nonce) << BigInt(180)).toString(10);
+  // first 160 bits is 0, so that anyone can be the taker of the Order
+  const nonceAndMeta = (BigInt(nonce) << BigInt(160)).toString(10);
 
   const order: OrderData = {
     nonceAndMeta,
