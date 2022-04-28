@@ -49,7 +49,7 @@ const part1 = constructPartialSDK(
 
 const orderInput = {
   nonce: 1,
-  expiry: Date.now() + 10_000_000,
+  expiry: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // week from now, in sec
   makerAsset: '0x1234...',
   takerAsset: '0x1234...',
   makerAmount: (1e18).toString(10),

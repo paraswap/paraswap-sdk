@@ -111,7 +111,7 @@ describe('Limit Orders', () => {
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
   let orderInput: BuildLimitOrderInput;
-  const orderExpiry = new Date('12.20.2022').getTime();
+  const orderExpiry = Math.floor(new Date('12.20.2022').getTime() / 1000);
 
   let erc20Token1: Contract;
   let erc20Token2: Contract;
@@ -213,10 +213,11 @@ describe('Limit Orders', () => {
 
   test('signLimitOrder', async () => {
     const signableOrderData = paraSwap.buildLimitOrder(orderInput);
+    console.log('🚀 orderInput', orderInput);
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
-      `"0x6c03f1b5d40c19ba2adf25d8edc2afaa0e3100dd9173550aa2c1a9890ae79a516d2944b6204354f0437a0c5aa918521df42d5373772edf6f7a8f548fabb6892f1c"`
+      `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
     );
   });
 
