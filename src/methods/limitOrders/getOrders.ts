@@ -80,8 +80,8 @@ export const constructGetLimitOrders = ({
   fetcher,
   contractCaller,
 }: ConstructProviderFetchInput<any, 'staticCall'>): GetLimitOrdersFunctions => {
-  const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
-  // const baseFetchURL = `${apiURL}/orders`; // in API
+  // const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
+  const baseFetchURL = `${apiURL}/orders`; // in API
 
   const verifyingContract = chainId2verifyingContract[network];
 
