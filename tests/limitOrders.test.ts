@@ -21,6 +21,9 @@ import {
   constructGetLimitOrdersContract,
   GetLimitOrdersContractFunctions,
   SignableOrderData,
+  constructPostLimitOrder,
+  PostLimitOrderFunctions,
+  LimitOrderToSend,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -108,6 +111,7 @@ describe('Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     GetLimitOrdersContractFunctions &
+    PostLimitOrderFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
@@ -177,14 +181,20 @@ describe('Limit Orders', () => {
         typeof constructBuildLimitOrder,
         typeof constructSignLimitOrder,
         typeof constructGetLimitOrdersContract,
+        typeof constructPostLimitOrder,
         CancelOrderConstructor,
         ApproveTokenForLimitOrderConstructor
       ]
     >(
-      { network, contractCaller: ethersContractCaller, fetcher: axiosFetcher },
+      {
+        network,
+        contractCaller: ethersContractCaller,
+        fetcher: axiosFetcher,
+      },
       constructBuildLimitOrder,
       constructSignLimitOrder,
       constructGetLimitOrdersContract,
+      constructPostLimitOrder,
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder
     );
@@ -226,6 +236,36 @@ describe('Limit Orders', () => {
     expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
       senderAddress
     );
+  });
+
+  test('postLimitOrder', async () => {
+    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
+
+    const signature = await paraSwap.signLimitOrder(signableOrderData);
+    expect(signature).toMatchInlineSnapshot(
+      `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
+    );
+
+    const orderWithSignature: LimitOrderToSend = {
+      ...signableOrderData.data,
+      chainId: signableOrderData.domain.chainId,
+      signature,
+    };
+
+    console.log('🚀 orderWithSignature', orderWithSignature);
+
+    const newOrder = await paraSwap.postLimitOrder(orderWithSignature);
+    console.log('🚀 newOrder from API', newOrder);
+
+    const recoveredAddress = ethers.utils.recoverAddress(
+      newOrder.orderHash,
+      signature
+    );
+    console.log('🚀 recoveredAddress', recoveredAddress);
+
+    expect(recoveredAddress).toEqual(senderAddress);
+
+    expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
 
   test('fillLimitOrder', async () => {
