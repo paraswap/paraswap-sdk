@@ -22,7 +22,7 @@ export const constructPostLimitOrder = ({
   // network, @TODO would it make more sense to post by network?
   fetcher,
 }: ConstructFetchInput): PostLimitOrderFunctions => {
-  const fetchURL = `${apiURL}/orders`;
+  const fetchURL = `${apiURL}/limit/orders`;
 
   const postLimitOrder: PostLimitOrder = async (
     limitOrderWithSignature,
