@@ -238,7 +238,7 @@ describe('Limit Orders', () => {
     );
   });
 
-  test('postLimitOrder', async () => {
+  test.skip('postLimitOrder', async () => {
     const signableOrderData = paraSwap.buildLimitOrder(orderInput);
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
