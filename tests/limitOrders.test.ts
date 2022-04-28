@@ -20,6 +20,7 @@ import {
   chainId2verifyingContract,
   constructGetLimitOrdersContract,
   GetLimitOrdersContractFunctions,
+  SignableOrderData,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -213,11 +214,17 @@ describe('Limit Orders', () => {
 
   test('signLimitOrder', async () => {
     const signableOrderData = paraSwap.buildLimitOrder(orderInput);
-    console.log('🚀 orderInput', orderInput);
+    console.log('🚀 orderInput', signableOrderData.data);
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
       `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
+    );
+
+    const presumedOrderHash = calculateOrderHash(signableOrderData);
+
+    expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
+      senderAddress
     );
   });
 
@@ -401,3 +408,11 @@ describe('Limit Orders', () => {
     expect(orderStatus1.toNumber()).toEqual(1);
   });
 });
+
+function calculateOrderHash({
+  domain,
+  types,
+  data,
+}: SignableOrderData): string {
+  return ethers.utils._TypedDataEncoder.hash(domain, types, data);
+}
