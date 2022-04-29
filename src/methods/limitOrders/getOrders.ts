@@ -161,7 +161,7 @@ export const constructGetLimitOrders = ({
   'staticCall' | 'getLogsCall'
 >): GetLimitOrdersFunctions => {
   // const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
-  const baseFetchURL = `${apiURL}/orders`; // in API
+  const baseFetchURL = `${apiURL}/limit/orders`; // in API
 
   const verifyingContract = chainId2verifyingContract[network];
 
