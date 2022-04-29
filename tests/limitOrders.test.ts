@@ -458,7 +458,7 @@ describe('Limit Orders', () => {
     expect(orderStatus1.toNumber()).toEqual(1);
   });
 
-  test.skip('getOrderStatus', async () => {
+  test.only('getOrderStatus', async () => {
     const orderHash =
       '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34';
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
@@ -491,7 +491,7 @@ describe('Limit Orders', () => {
     );
   });
 
-  test.skip('getOrdersStatus', async () => {
+  test.only('getOrdersStatus', async () => {
     const orderHashes = [
       '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34',
       '0x401c4fbb5d5619a26d3807b0d1c8d70682970a3d93fbe6b2583416e04ef2eb9f',
@@ -499,6 +499,22 @@ describe('Limit Orders', () => {
       '0x7083dc88bc4c89566e93f49297d84d833d3ba6a1865c8e20d28702c58fc3aedf',
     ];
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+
+    // need real provider, local ganache fork can't get historical events
+    const prov = ethers.getDefaultProvider(PROVIDER_URL);
+    const connectedWallet = walletStable.connect(prov);
+    const contractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: connectedWallet,
+        EthersContract: ethers.Contract,
+      },
+      connectedWallet.address
+    );
+
+    const paraSwap = constructPartialSDK(
+      { network: 3, apiURL: '', fetcher: axiosFetcher, contractCaller },
+      constructGetLimitOrders
+    );
 
     const ordersExtraData = await paraSwap.getLimitOrdersStatusAndAmountFilled(
       account,
