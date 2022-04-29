@@ -25,11 +25,9 @@ export type LimitOrderToSend = Omit<
 // };
 
 export type LimitOrdersApiResponse = {
-  status: 'Ok';
   orders: LimitOrderFromApi[];
 };
 export type LimitOrderApiResponse = {
-  status: 'Ok';
   order: LimitOrderFromApi;
 };
 
