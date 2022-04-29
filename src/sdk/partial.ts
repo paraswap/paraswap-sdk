@@ -12,7 +12,7 @@ import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
-  'transactCall' | 'signTypedDataCall'
+  'staticCall' | 'transactCall' | 'signTypedDataCall' | 'getLogsCall'
 > &
   ConstructFetchInput;
 
