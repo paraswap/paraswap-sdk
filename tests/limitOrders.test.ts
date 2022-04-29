@@ -24,6 +24,8 @@ import {
   constructPostLimitOrder,
   PostLimitOrderFunctions,
   LimitOrderToSend,
+  GetLimitOrdersFunctions,
+  constructGetLimitOrders,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -112,6 +114,7 @@ describe('Limit Orders', () => {
     SignLimitOrderFunctions &
     GetLimitOrdersContractFunctions &
     PostLimitOrderFunctions &
+    GetLimitOrdersFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
@@ -182,19 +185,22 @@ describe('Limit Orders', () => {
         typeof constructSignLimitOrder,
         typeof constructGetLimitOrdersContract,
         typeof constructPostLimitOrder,
+        typeof constructGetLimitOrders,
         CancelOrderConstructor,
         ApproveTokenForLimitOrderConstructor
       ]
     >(
       {
-        network,
+        network: 3,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
+        apiURL: 'https://api.staging.paraswap.io',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
       constructGetLimitOrdersContract,
       constructPostLimitOrder,
+      constructGetLimitOrders,
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder
     );
@@ -238,13 +244,16 @@ describe('Limit Orders', () => {
     );
   });
 
-  test.skip('postLimitOrder', async () => {
-    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
+  test('postLimitOrder', async () => {
+    const signableOrderData = paraSwap.buildLimitOrder({
+      ...orderInput,
+      nonce: 2,
+    });
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
-    expect(signature).toMatchInlineSnapshot(
-      `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
-    );
+    // expect(signature).toMatchInlineSnapshot(
+    //   `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
+    // );
 
     const orderWithSignature: LimitOrderToSend = {
       ...signableOrderData.data,
@@ -265,7 +274,7 @@ describe('Limit Orders', () => {
 
     expect(recoveredAddress).toEqual(senderAddress);
 
-    expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
+    // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
 
   test('fillLimitOrder', async () => {
@@ -425,6 +434,7 @@ describe('Limit Orders', () => {
     );
     expect(orderStatus.toNumber()).toEqual(1);
   });
+
   test('cancelLimitOrder Bulk', async () => {
     // bytes32[]
     const randomOrderHashes = [
@@ -446,6 +456,59 @@ describe('Limit Orders', () => {
 
     expect(orderStatus0.toNumber()).toEqual(1);
     expect(orderStatus1.toNumber()).toEqual(1);
+  });
+
+  test.skip('getOrderStatus', async () => {
+    const orderHash =
+      '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34';
+    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+
+    // need real provider, local ganache fork can't get historical events
+    const prov = ethers.getDefaultProvider(PROVIDER_URL);
+    const connectedWallet = walletStable.connect(prov);
+    const contractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: connectedWallet,
+        EthersContract: ethers.Contract,
+      },
+      connectedWallet.address
+    );
+
+    const paraSwap = constructPartialSDK(
+      { network: 3, apiURL: '', fetcher: axiosFetcher, contractCaller },
+      constructGetLimitOrders
+    );
+
+    const orderExtraData = await paraSwap.getLimitOrderStatusAndAmountFilled(
+      account,
+      { expiry: orderExpiry, makerAmount: '100000000', orderHash }
+    );
+    console.log(
+      '🚀 ~ orderStatus',
+      orderExtraData.status,
+      ', amountFilled',
+      orderExtraData.amountFilled
+    );
+  });
+
+  test.skip('getOrdersStatus', async () => {
+    const orderHashes = [
+      '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34',
+      '0x401c4fbb5d5619a26d3807b0d1c8d70682970a3d93fbe6b2583416e04ef2eb9f',
+      '0x10a612fbb34a65daf1d1c085f483c33bc867dea5647a08bb8d036f2e26f47217',
+      '0x7083dc88bc4c89566e93f49297d84d833d3ba6a1865c8e20d28702c58fc3aedf',
+    ];
+    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+
+    const ordersExtraData = await paraSwap.getLimitOrdersStatusAndAmountFilled(
+      account,
+      orderHashes.map((orderHash) => ({
+        expiry: orderExpiry,
+        makerAmount: '100000000',
+        orderHash,
+      }))
+    );
+    console.log('🚀 ~ ordersExtraData', ordersExtraData);
   });
 });
 
