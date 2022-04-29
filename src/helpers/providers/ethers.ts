@@ -1,6 +1,7 @@
 import type {
   Address,
   ContractCallerFunctions,
+  LogsContractCallerFn,
   NoExtraKeysCheck,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
@@ -17,6 +18,7 @@ import type {
   PayableOverrides,
   CallOverrides,
   ContractTransaction,
+  EventFilter,
 } from '@ethersproject/contracts';
 import { assertEthersContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
@@ -128,7 +130,60 @@ export const constructContractCaller = (
     return signer._signTypedData(domain, types, data);
   };
 
-  return { staticCall, transactCall, signTypedDataCall };
+  const getLogsCall: LogsContractCallerFn = async (params) => {
+    const { address, abi, filter } = params;
+
+    const contract = new Contract(address, abi, providerOrSigner);
+
+    // assert(
+    //   isEthersProviderWithSigner(providerOrSigner),
+    //   'ethers must be an instance of Signer or JsonRpcProvider to create a signer'
+    // );
+
+    const provider = isEthersSigner(providerOrSigner)
+      ? providerOrSigner.provider
+      : providerOrSigner;
+
+    assert(
+      provider,
+      'ethers must be an instance of Provider or Signer with Provider attached'
+    );
+
+    const logs = await contract.queryFilter(filter as EventFilter, 12223870);
+    // const logs = await provider.getLogs(filter);
+    console.log('🚀 ~  logs', logs);
+    const decoded = logs.map((log) => {
+      const { topic, args } = contract.interface.parseLog(log);
+      return { topic, args };
+    });
+    console.log('🚀 ~  decoded', decoded);
+
+    return decoded;
+
+    // assertEthersContractHasMethods(contract, contractMethod);
+    // // drop keys not in CallOverrides
+    // const { block, gas, ...restOverrides } = overrides;
+    // // reassign values to keys in CallOverrides
+    // const normalizedOverrides = {
+    //   ...restOverrides,
+    //   blockTag: block,
+    //   gasLimit: gas,
+    // };
+
+    // // type FinalCallOverrides = normalizedOverrides has extra props ? never : normalizedOverrides
+    // type FinalCallOverrides = NoExtraKeysCheck<
+    //   typeof normalizedOverrides,
+    //   CallOverrides
+    // >;
+
+    // // enforce overrides shape ethers accepts
+    // // TS will break if normalizedOverrides type has any keys not also present in CallOverrides
+    // const callOverrides: FinalCallOverrides = normalizedOverrides;
+    // // returns whatever the Contract.method returns: BigNumber, string, boolean
+    // return contract.callStatic[contractMethod](...args, callOverrides);
+  };
+
+  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
 };
 
 function isEthersProvider(
