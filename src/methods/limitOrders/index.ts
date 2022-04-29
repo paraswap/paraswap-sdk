@@ -66,7 +66,7 @@ export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
 export const constructAllLimitOrdersHandlers = <T>(
   options: ConstructProviderFetchInput<
     any,
-    'signTypedDataCall' | 'transactCall' | 'staticCall'
+    'signTypedDataCall' | 'transactCall' | 'staticCall' | 'getLogsCall'
   >
 ): LimitOrderHandlers<T> => {
   const limitOrdersGetters = constructGetLimitOrders(options);
