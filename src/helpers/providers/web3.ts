@@ -1,6 +1,7 @@
 import type {
   Address,
   ContractCallerFunctions,
+  LogsContractCallerFn,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
   TransactionContractCallerFn,
@@ -97,5 +98,9 @@ export const constructContractCaller = (
     throw new Error('UNIMPLEMENTED');
   };
 
-  return { staticCall, transactCall, signTypedDataCall };
+  const getLogsCall: LogsContractCallerFn = async (params) => {
+    throw new Error('UNIMPLEMENTED');
+  };
+
+  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
 };
