@@ -3,8 +3,7 @@
 import { BigNumber as EthersBigNumber } from 'ethers';
 import { assert } from 'ts-essentials';
 import { API_URL } from '../../constants';
-import { isFetcherError } from '../../helpers';
-import { ExtractAbiMethodNames } from '../../helpers/misc';
+import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type {
   Address,
   ConstructProviderFetchInput,
@@ -297,29 +296,14 @@ export const constructGetLimitOrders = ({
   const getRawLimitOrders: GetRawLimitOrders = async (userAddress, signal) => {
     const fetchURL = `${baseFetchURL}/${userAddress}`;
 
-    try {
-      const { orders } = await fetcher<LimitOrdersApiResponse>({
-        url: fetchURL,
-        method: 'GET',
-        signal,
-      });
+    const { orders } = await fetcher<LimitOrdersApiResponse>({
+      url: fetchURL,
+      method: 'GET',
+      signal,
+    });
 
-      // without any extra calls, return  what API returns
-      return orders;
-    } catch (error) {
-      if (!isFetcherError(error) || !error.response) throw error;
-      // @TODO test that this works with fetch and axios properly, that status is properly propagated
-      console.log('🚀 ~ Error fetching Orders', error, error.response);
-
-      // no Orders found
-      if (error.response.status === 404) {
-        // API still returns a response but with `orders = []`
-        const data: LimitOrdersApiResponse = error.response.data;
-        return data.orders;
-      }
-
-      throw error;
-    }
+    // without any extra calls, return  what API returns
+    return orders;
   };
 
   const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
