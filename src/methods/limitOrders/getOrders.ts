@@ -152,6 +152,7 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 
 const OrderFilledSig =
   '0x6621486d9c28838df4a87d2cca5007bc2aaf6a5b5de083b1db8faf709302c473';
+// @TODO change when contract is redeployed
 const OrderCancelledSig =
   '0x35974c4230d53fb4c6e8553fd900c88ba92747dbc689a79bcd6ba755cb936985';
 
