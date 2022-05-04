@@ -384,7 +384,7 @@ function _getLimitOrderStatusAndAmountFilled(
 
   // partially filled
   return {
-    status: 'filled',
+    status: 'partiallyFilled',
     amountFilled: remainingBalance.sub(makerAmount).mul(-1).toString(),
   };
 }

@@ -1,6 +1,7 @@
 export type LimitOrderStatus =
   | 'open'
   | 'filled'
+  | 'partiallyFilled'
   | 'expired'
   | 'canceled'
   | 'unknown';
