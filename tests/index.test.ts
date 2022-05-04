@@ -36,10 +36,10 @@ import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
 import { assert } from 'ts-essentials';
-import {
+import type {
   ContractCallerFunctions,
+  StaticContractCallerFn,
   TransactionContractCallerFn,
-  // StaticContractCallerFn,
 } from '../src/types';
 
 dotenv.config();
@@ -440,9 +440,12 @@ interface MinProvider {
 function constructProviderOnlyContractCaller(
   provider: MinProvider,
   account?: string
-): Pick<ContractCallerFunctions<string>, 'transactCall' | 'signTypedDataCall'> {
+): Pick<
+  ContractCallerFunctions<string>,
+  'staticCall' | 'transactCall' | 'signTypedDataCall' | 'getLogsCall'
+> {
   // staticCall isn't currently necessary, because provider is only used in approveToken currently for tx making
-  /* const staticCall: StaticContractCallerFn = async ({
+  const staticCall: StaticContractCallerFn = async ({
     address,
     abi,
     contractMethod,
@@ -479,7 +482,7 @@ function constructProviderOnlyContractCaller(
     });
 
     return res;
-  }; */
+  };
 
   const transactCall: TransactionContractCallerFn<string> = async ({
     address,
@@ -525,5 +528,9 @@ function constructProviderOnlyContractCaller(
     throw new Error('not implemented');
   };
 
-  return { transactCall, signTypedDataCall /* , staticCall */ };
+  const getLogsCall = () => {
+    throw new Error('not implemented');
+  };
+
+  return { transactCall, signTypedDataCall, staticCall, getLogsCall };
 }
