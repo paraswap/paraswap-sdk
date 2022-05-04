@@ -1,5 +1,6 @@
 // @TODO getOrder, getOrders from API
 // onchain from contract can't distinguish between filled or cancelled
+import BigNumber from 'bignumber.js';
 import { BigNumber as EthersBigNumber } from 'ethers';
 import { assert } from 'ts-essentials';
 import { API_URL } from '../../constants';
@@ -259,9 +260,9 @@ export const constructGetLimitOrders = ({
           filledEvents.length === 0
             ? undefined
             : // sum up all takerAmount across OrderFilled event for this orderHash
-              filledEvents.reduce(
-                (accum, curr) => accum.add(curr.args.takerAmount),
-                EthersBigNumber.from(0) // switch to string so we don't have a hard ethers dependency
+              filledEvents.reduce<BigNumber>(
+                (accum, curr) => accum.plus(curr.args.takerAmount.toString()),
+                new BigNumber(0)
               );
 
         const amountFilled = !_amountFilled
@@ -270,12 +271,11 @@ export const constructGetLimitOrders = ({
           ? undefined
           : _amountFilled.toString();
 
-        return _getLimitOrderStatusAndAmountFilled(
-          remainingBalance,
-          order,
+        return _getLimitOrderStatusAndAmountFilled(order, {
+          remainingBalance: remainingBalance.toString(),
           wasCancelled,
-          amountFilled
-        );
+          amountFilled,
+        });
       });
 
       return orderStatusesAndAmountsFilled;
@@ -350,18 +350,23 @@ export const constructGetLimitOrders = ({
 
 type LimitOrderExtra = Pick<LimitOrder, 'status' | 'amountFilled'>;
 
+interface StatusAndAmountFilledOptions {
+  remainingBalance: string;
+  wasCancelled: boolean;
+  amountFilled?: string;
+}
+
 // RemainingBalance keeps track of remaining amounts of each Order
 // 0 -> order unfilled / not exists
 // 1 -> order filled / cancelled
 function _getLimitOrderStatusAndAmountFilled(
-  remainingBalance: EthersBigNumber,
   { expiry, makerAmount }: Pick<RawLimitOrder, 'expiry' | 'makerAmount'>,
-  wasCancelled: boolean,
-  amountFilled?: string
+  { remainingBalance, wasCancelled, amountFilled }: StatusAndAmountFilledOptions
 ): LimitOrderExtra {
   console.log('🚀 ~ remainingBalance', remainingBalance.toString());
+  const remainingBalanceBN = new BigNumber(remainingBalance);
   // order exists since we got it from API
-  if (remainingBalance.eq(0)) {
+  if (remainingBalanceBN.isZero()) {
     const status: LimitOrderStatus =
       Date.now() / 1000 > expiry ? 'expired' : 'open';
     // `expired` status means the Order expired without being filled (even partially)
@@ -373,11 +378,10 @@ function _getLimitOrderStatusAndAmountFilled(
   }
 
   // filled or cancelled
-  if (remainingBalance.eq(1)) {
-    // @TODO go through events to distinguish filled or cancelled
-    // @TODO check if cancelled was partially filled first
+  if (remainingBalanceBN.eq(1)) {
     return {
       status: wasCancelled ? 'canceled' : 'filled',
+      // `cancelled` order can be partiallyFilled first
       amountFilled: wasCancelled && amountFilled ? amountFilled : makerAmount,
     };
   }
@@ -385,6 +389,9 @@ function _getLimitOrderStatusAndAmountFilled(
   // partially filled
   return {
     status: 'partiallyFilled',
-    amountFilled: remainingBalance.sub(makerAmount).mul(-1).toString(),
+    amountFilled: remainingBalanceBN
+      .minus(makerAmount)
+      .multipliedBy(-1)
+      .toString(),
   };
 }
