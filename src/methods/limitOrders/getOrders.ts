@@ -10,7 +10,10 @@ import type {
   ConstructProviderFetchInput,
   StaticCallOverrides,
 } from '../../types';
-import { chainId2verifyingContract } from './helpers/misc';
+import {
+  chainId2BlockContractDeployedAt,
+  chainId2verifyingContract,
+} from './helpers/misc';
 import type {
   LimitOrder,
   LimitOrdersApiResponse,
@@ -165,6 +168,8 @@ export const constructGetLimitOrders = ({
   const baseFetchURL = `${apiURL}/limit/orders`; // in API
 
   const verifyingContract = chainId2verifyingContract[network];
+  const verifyingContractDeployedBlock =
+    chainId2BlockContractDeployedAt[network];
 
   const getLimitOrdersStatusAndAmountFilled: GetOrdersStatusAndAmountFilled =
     async (orderMaker, orders, overrides = {}) => {
@@ -227,8 +232,8 @@ export const constructGetLimitOrders = ({
         filter: {
           address: verifyingContract,
           topics: [[OrderFilledSig, OrderCancelledSig]],
-          fromBlock: '0xba857e',
-          // fromBlock: 12223870,
+          fromBlock: verifyingContractDeployedBlock, // if not available will default to 0
+          // and then depending on node will either count from 0 or from the earlies available block or break or hang
         },
       })) as (OrderCancelleDecodedLog | OrderFilledDecodedLog)[]; // @TODO adapt for web3 too
 
