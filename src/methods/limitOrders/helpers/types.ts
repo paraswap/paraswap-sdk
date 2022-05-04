@@ -1,10 +1,17 @@
-export type LimitOrderStatus = 'open' | 'filled' | 'expired' | 'canceled';
+export type LimitOrderStatus =
+  | 'open'
+  | 'filled'
+  | 'expired'
+  | 'canceled'
+  | 'unknown';
 export type LimitOrder = LimitOrderFromApi & {
   status: LimitOrderStatus; // `status` likely not available from API
   amountFilled: string;
 };
 
 export type OpenLimitOrder = LimitOrderFromApi & { status: 'open' };
+export type UnknownLimitOrder = LimitOrderFromApi & { status: 'unknown' };
+
 export type RawLimitOrder = LimitOrderFromApi;
 
 export type LimitOrderToSend = Omit<

@@ -15,12 +15,13 @@ import type {
   LimitOrdersApiResponse,
   LimitOrderStatus,
   RawLimitOrder,
+  UnknownLimitOrder,
 } from './helpers/types';
 
 type GetLimitOrders = (
   userAddress: string,
   signal?: AbortSignal
-) => Promise<LimitOrder[]>;
+) => Promise<LimitOrder[] | UnknownLimitOrder[]>;
 type GetRawLimitOrders = (
   userAddress: string,
   signal?: AbortSignal
@@ -309,22 +310,32 @@ export const constructGetLimitOrders = ({
   const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
     const orders = await getRawLimitOrders(userAddress, signal);
 
-    const orderExtras = await getLimitOrdersStatusAndAmountFilled(
-      userAddress,
-      orders
-    );
+    try {
+      const orderExtras = await getLimitOrdersStatusAndAmountFilled(
+        userAddress,
+        orders
+      );
 
-    const ordersWithEtras = orders.map<LimitOrder>((order, index) => {
-      const extras = orderExtras[index];
-      assert(extras, `Failed to get status for order ${order.orderHash}`);
+      const ordersWithEtras = orders.map<LimitOrder>((order, index) => {
+        const extras = orderExtras[index];
+        assert(extras, `Failed to get status for order ${order.orderHash}`);
 
-      return {
-        ...order,
-        ...extras,
-      };
-    });
+        return {
+          ...order,
+          ...extras,
+        };
+      });
 
-    return ordersWithEtras;
+      return ordersWithEtras;
+    } catch (error) {
+      const ordersWithUnknownStatus = orders.map<UnknownLimitOrder>(
+        (order) => ({
+          ...order,
+          status: 'unknown',
+        })
+      );
+      return ordersWithUnknownStatus;
+    }
   };
 
   return {
