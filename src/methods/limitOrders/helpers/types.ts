@@ -4,6 +4,7 @@ export type LimitOrder = LimitOrderFromApi & {
   amountFilled: string;
 };
 
+export type OpenLimitOrder = LimitOrderFromApi & { status: 'open' };
 export type RawLimitOrder = LimitOrderFromApi;
 
 export type LimitOrderToSend = Omit<
