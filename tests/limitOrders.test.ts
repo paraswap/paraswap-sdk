@@ -466,8 +466,9 @@ describe('Limit Orders', () => {
   });
 
   test.only('getOrderStatus', async () => {
+    // order that should not change anymore
     const orderHash =
-      '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34';
+      '0x54c588bd7c47c6d382ea24de9a1aca5375514da4baae84d5ba401979c6d4019b';
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
     // need real provider, local ganache fork can't get historical events
@@ -482,28 +483,36 @@ describe('Limit Orders', () => {
     );
 
     const paraSwap = constructPartialSDK(
-      { network: 3, apiURL: '', fetcher: axiosFetcher, contractCaller },
+      { network: 3, fetcher: axiosFetcher, contractCaller },
       constructGetLimitOrders
     );
 
+    const orders = await paraSwap.getRawLimitOrders(account);
+
+    const order = orders.find((order) => order.orderHash === orderHash);
+
+    assert(order, `must have an order with orderHash ${orderHash}`);
+
     const orderExtraData = await paraSwap.getLimitOrderStatusAndAmountFilled(
       account,
-      { expiry: orderExpiry, makerAmount: '100000000', orderHash }
+      order
     );
-    console.log(
-      '🚀 ~ orderStatus',
-      orderExtraData.status,
-      ', amountFilled',
-      orderExtraData.amountFilled
-    );
+
+    expect(orderExtraData).toMatchInlineSnapshot(`
+      Object {
+        "amountFilled": "1000000000000000000",
+        "status": "canceled",
+      }
+    `);
   });
 
   test.only('getOrdersStatus', async () => {
+    // orders that should not change anymore
     const orderHashes = [
-      '0x4f831fa1339a426f7e35898fc2115d789629b328812cc1170b9ef68f5b0fca34',
-      '0x401c4fbb5d5619a26d3807b0d1c8d70682970a3d93fbe6b2583416e04ef2eb9f',
-      '0x10a612fbb34a65daf1d1c085f483c33bc867dea5647a08bb8d036f2e26f47217',
-      '0x7083dc88bc4c89566e93f49297d84d833d3ba6a1865c8e20d28702c58fc3aedf',
+      '0x54c588bd7c47c6d382ea24de9a1aca5375514da4baae84d5ba401979c6d4019b',
+      '0x7439ebc1766075e4bd12776baed3c272538a858d8f01ebf94438b205eec4e6da',
+      '0x0086663f44b3a8b250a8d2f9cb98c4281da3a83cb2d743fb650ea5c8aa84bc03',
+      '0x04ccb2face97aae119c712bf14dfae675ea3ba9a195b046e89ac255fd85f38bc',
     ];
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
@@ -519,9 +528,18 @@ describe('Limit Orders', () => {
     );
 
     const paraSwap = constructPartialSDK(
-      { network: 3, apiURL: '', fetcher: axiosFetcher, contractCaller },
+      { network, fetcher: axiosFetcher, contractCaller },
       constructGetLimitOrders
     );
+
+    const orders = await paraSwap.getRawLimitOrders(account);
+
+    const selectedOrders = orders.filter((order) =>
+      orderHashes.includes(order.orderHash)
+    );
+
+    // all orderHashes should be found
+    expect(orderHashes.length).toEqual(selectedOrders.length);
 
     const ordersExtraData = await paraSwap.getLimitOrdersStatusAndAmountFilled(
       account,
@@ -531,6 +549,26 @@ describe('Limit Orders', () => {
         orderHash,
       }))
     );
+    expect(ordersExtraData).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "amountFilled": "100000000",
+          "status": "canceled",
+        },
+        Object {
+          "amountFilled": "100000000",
+          "status": "canceled",
+        },
+        Object {
+          "amountFilled": "100000000",
+          "status": "canceled",
+        },
+        Object {
+          "amountFilled": "100000000",
+          "status": "canceled",
+        },
+      ]
+    `);
     console.log('🚀 ~ ordersExtraData', ordersExtraData);
   });
 });
