@@ -37,6 +37,7 @@ import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 import ganache from 'ganache';
 
 import { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
+import { assert } from 'ts-essentials';
 
 dotenv.config();
 
@@ -51,8 +52,11 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
-const network = 1;
+const PROVIDER_URL: string = process.env.PROVIDER_URL.replace(
+  'mainnet',
+  'ropsten'
+);
+const network = 3; // @TODO return to mainnet
 const srcToken = DAI;
 const destToken = HEX;
 
@@ -126,7 +130,7 @@ describe('Limit Orders', () => {
 
   let AugustusRFQ: Contract;
 
-  let initialChainId2verifyingContract = { ...chainId2verifyingContract };
+  // let initialChainId2verifyingContract = { ...chainId2verifyingContract };
 
   beforeAll(async () => {
     orderInput = {
@@ -156,15 +160,6 @@ describe('Limit Orders', () => {
     await erc20Token2.mint(walletStable.address, (10e18).toString(10));
     await erc20Token2.mint(walletRandom.address, (10e18).toString(10));
 
-    AugustusRFQ = await AugustusRFQFactory.deploy();
-    await AugustusRFQ.deployTransaction.wait();
-
-    console.log('AugustusRFQ', AugustusRFQ.address);
-
-    // @TODO reconsider after real contracts are deployed
-    // override for tests only
-    chainId2verifyingContract[network] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
-
     type CancelOrderConstructor = (
       options: ConstructProviderFetchInput<
         ethers.ContractTransaction,
@@ -191,7 +186,7 @@ describe('Limit Orders', () => {
       ]
     >(
       {
-        network: 3,
+        network,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
         apiURL: 'https://api.staging.paraswap.io',
@@ -204,13 +199,25 @@ describe('Limit Orders', () => {
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder
     );
+
+    AugustusRFQ = await AugustusRFQFactory.attach(
+      paraSwap.getLimitOrdersContract()
+    );
+    // AugustusRFQ = await AugustusRFQFactory.deploy();
+    // await AugustusRFQ.deployTransaction.wait();
+
+    console.log('AugustusRFQ', AugustusRFQ.address);
+
+    // @TODO reconsider after real contracts are deployed
+    // override for tests only
+    chainId2verifyingContract[network] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
   // @TODO check if still needed after there are tx tests
-  afterAll(async () => {
-    Object.assign(chainId2verifyingContract, initialChainId2verifyingContract);
-  });
+  // afterAll(async () => {
+  //   Object.assign(chainId2verifyingContract, initialChainId2verifyingContract);
+  // });
 
   test('getLimitOrdersContract', async () => {
     const augustusRFQAddress = paraSwap.getLimitOrdersContract();
