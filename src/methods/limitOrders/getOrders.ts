@@ -328,6 +328,8 @@ export const constructGetLimitOrders = ({
 
       return ordersWithEtras;
     } catch (error) {
+      console.warn('Error fetching Orders status onchain', error);
+
       const ordersWithUnknownStatus = orders.map<UnknownLimitOrder>(
         (order) => ({
           ...order,
