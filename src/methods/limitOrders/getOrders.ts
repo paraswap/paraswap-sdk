@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { BigNumber as EthersBigNumber } from 'ethers';
 import { assert } from 'ts-essentials';
 import { API_URL } from '../../constants';
-import type { ExtractAbiMethodNames } from '../../helpers/misc';
+import { ExtractAbiMethodNames, gatherObjectsByProp } from '../../helpers/misc';
 import type {
   Address,
   ConstructProviderFetchInput,
@@ -31,12 +31,12 @@ type GetRawLimitOrders = (
   signal?: AbortSignal
 ) => Promise<RawLimitOrder[]>;
 
-type GetOrderStatusAndAmountFilled = (
+type GetOrderExtraData = (
   orderMaker: Address,
   order: Pick<RawLimitOrder, 'expiry' | 'makerAmount' | 'orderHash'>,
   overrides?: StaticCallOverrides
 ) => Promise<LimitOrderExtra>;
-type GetOrdersStatusAndAmountFilled = (
+type GetOrdersExtraData = (
   orderMaker: Address,
   orders: Pick<RawLimitOrder, 'expiry' | 'makerAmount' | 'orderHash'>[],
   overrides?: StaticCallOverrides
@@ -45,8 +45,8 @@ type GetOrdersStatusAndAmountFilled = (
 export type GetLimitOrdersFunctions = {
   getLimitOrders: GetLimitOrders;
   getRawLimitOrders: GetRawLimitOrders;
-  getLimitOrderStatusAndAmountFilled: GetOrderStatusAndAmountFilled;
-  getLimitOrdersStatusAndAmountFilled: GetOrdersStatusAndAmountFilled;
+  getLimitOrderStatusAndAmountFilled: GetOrderExtraData;
+  getLimitOrdersStatusAndAmountFilled: GetOrdersExtraData;
 };
 
 const MinAugustusRFQAbi = [
@@ -172,133 +172,170 @@ export const constructGetLimitOrders = ({
   const verifyingContractDeployedBlock =
     chainId2BlockContractDeployedAt[network];
 
-  const getLimitOrdersStatusAndAmountFilled: GetOrdersStatusAndAmountFilled =
-    async (orderMaker, orders, overrides = {}) => {
-      // @TODO allow to pass {ordderHash} only, fetch everything else
+  const getLimitOrdersStatusAndAmountFilled: GetOrdersExtraData = async (
+    orderMaker,
+    orders,
+    overrides = {}
+  ) => {
+    // @TODO allow to pass {ordderHash} only, fetch everything else
+    assert(
+      verifyingContract,
+      `AugustusRFQ contract for Limit Orders not available on chain ${network}`
+    );
+
+    const orderHashes = orders.map((order) => order.orderHash);
+
+    // @TODO check what the return is for web3, probably string[]
+    const remainingBalances = await contractCaller.staticCall<
+      EthersBigNumber[],
+      AvailableMethods
+    >({
+      address: verifyingContract,
+      abi: MinAugustusRFQAbi,
+      contractMethod: 'getRemainingOrderBalance',
+      args: [orderMaker, orderHashes],
+      overrides,
+    });
+
+    type OrderCancelledDecodedArgs = readonly [
+      maker: Address,
+      orderHash: string
+    ] & {
+      maker: Address;
+      orderHash: string;
+    };
+    interface OrderCancelleDecodedLog {
+      topic: string;
+      args: OrderCancelledDecodedArgs;
+      transactionHash: string;
+    }
+    type OrderFilledDecodedArgs = readonly [
+      orderHash: string,
+      maker: Address,
+      makerAsset: Address,
+      makerAmount: EthersBigNumber, // @TODO see what works with web3, may need to just stick to string everywhere
+      taker: Address,
+      takerAsset: Address,
+      takerAmount: EthersBigNumber
+    ] & {
+      orderHash: string;
+      maker: Address;
+      makerAsset: Address;
+      makerAmount: EthersBigNumber;
+      taker: Address;
+      takerAsset: Address;
+      takerAmount: EthersBigNumber;
+    };
+    interface OrderFilledDecodedLog {
+      topic: string;
+      args: OrderFilledDecodedArgs;
+      transactionHash: string;
+    }
+
+    type OrderLog = OrderCancelleDecodedLog | OrderFilledDecodedLog;
+
+    const logs = (await contractCaller.getLogsCall({
+      address: verifyingContract,
+      abi: AugustusRFQEventsAbi,
+      filter: {
+        address: verifyingContract,
+        topics: [
+          [OrderFilledSig, OrderCancelledSig],
+          // null,
+          // '0x' + orderMaker.replace('0x', '').padStart(64, '0'),
+        ],
+        fromBlock: verifyingContractDeployedBlock, // if not available will default to 0
+        // and then depending on node will either count from 0 or from the earlies available block or break or hang
+      },
+    })) as OrderLog[]; // @TODO adapt for web3 too
+
+    // const cancelledOrders = new Set(
+    //   logs
+    //     .filter((log) => log.topic === OrderCancelledSig)
+    //     .map((log) => log.args.orderHash)
+    // );
+
+    const order2EventsMap = gatherObjectsByProp<OrderLog, OrderLog[]>(
+      logs,
+      (log) => log.args.orderHash,
+      (log, accumElem = []) => {
+        accumElem.push(log);
+        return accumElem;
+      }
+    );
+
+    const orderStatusesAndAmountsFilled = orders.map((order, index) => {
+      const remainingBalance = remainingBalances[index];
       assert(
-        verifyingContract,
-        `AugustusRFQ contract for Limit Orders not available on chain ${network}`
+        remainingBalance,
+        `Failed to get remainingBalance for order ${order.orderHash}`
       );
 
-      const orderHashes = orders.map((order) => order.orderHash);
+      //  can have none, can have OrderFilled*n + OrderCancelled
+      const orderEvents = order2EventsMap[order.orderHash];
 
-      // @TODO check what the return is for web3, probably string[]
-      const remainingBalances = await contractCaller.staticCall<
-        EthersBigNumber[],
-        AvailableMethods
-      >({
-        address: verifyingContract,
-        abi: MinAugustusRFQAbi,
-        contractMethod: 'getRemainingOrderBalance',
-        args: [orderMaker, orderHashes],
-        overrides,
-      });
-
-      type OrderCancelledDecodedArgs = readonly [
-        maker: Address,
-        orderHash: string
-      ] & {
-        maker: Address;
-        orderHash: string;
-      };
-      interface OrderCancelleDecodedLog {
-        topic: string;
-        args: OrderCancelledDecodedArgs;
-      }
-      type OrderFilledDecodedArgs = readonly [
-        orderHash: string,
-        maker: Address,
-        makerAsset: Address,
-        makerAmount: EthersBigNumber, // @TODO see what works with web3, may need to just stick to string everywhere
-        taker: Address,
-        takerAsset: Address,
-        takerAmount: EthersBigNumber
-      ] & {
-        orderHash: string;
-        maker: Address;
-        makerAsset: Address;
-        makerAmount: EthersBigNumber;
-        taker: Address;
-        takerAsset: Address;
-        takerAmount: EthersBigNumber;
-      };
-      interface OrderFilledDecodedLog {
-        topic: string;
-        args: OrderFilledDecodedArgs;
-      }
-
-      const logs = (await contractCaller.getLogsCall({
-        address: verifyingContract,
-        abi: AugustusRFQEventsAbi,
-        filter: {
-          address: verifyingContract,
-          topics: [[OrderFilledSig, OrderCancelledSig]],
-          fromBlock: verifyingContractDeployedBlock, // if not available will default to 0
-          // and then depending on node will either count from 0 or from the earlies available block or break or hang
-        },
-      })) as (OrderCancelleDecodedLog | OrderFilledDecodedLog)[]; // @TODO adapt for web3 too
-
-      const cancelledOrders = new Set(
-        logs
-          .filter((log) => log.topic === OrderCancelledSig)
-          .map((log) => log.args.orderHash)
+      const wasCancelled = !!orderEvents?.some(
+        (log) => log.topic === OrderCancelledSig
       );
+      // const wasCancelled = cancelledOrders.has(order.orderHash);
 
-      const orderStatusesAndAmountsFilled = orders.map((order, index) => {
-        const remainingBalance = remainingBalances[index];
-        assert(
-          remainingBalance,
-          `Failed to get remainingBalance for order ${order.orderHash}`
-        );
+      const filledEvents = !wasCancelled
+        ? []
+        : orderEvents?.filter<OrderFilledDecodedLog>(
+            (log): log is OrderFilledDecodedLog =>
+              log.args.orderHash === order.orderHash &&
+              log.topic === OrderFilledSig
+          ) || [];
 
-        const wasCancelled = cancelledOrders.has(order.orderHash);
-
-        const filledEvents = !wasCancelled
-          ? []
-          : logs.filter<OrderFilledDecodedLog>(
-              (log): log is OrderFilledDecodedLog =>
-                log.args.orderHash === order.orderHash &&
-                log.topic === OrderFilledSig
+      // @TODO check this is even correct
+      const _amountFilled =
+        filledEvents.length === 0
+          ? undefined
+          : // sum up all takerAmount across OrderFilled event for this orderHash
+            filledEvents.reduce<BigNumber>(
+              (accum, curr) => accum.plus(curr.args.takerAmount.toString()),
+              new BigNumber(0)
             );
 
-        // @TODO check this is even correct
-        const _amountFilled =
-          filledEvents.length === 0
-            ? undefined
-            : // sum up all takerAmount across OrderFilled event for this orderHash
-              filledEvents.reduce<BigNumber>(
-                (accum, curr) => accum.plus(curr.args.takerAmount.toString()),
-                new BigNumber(0)
-              );
+      const amountFilled = !_amountFilled
+        ? undefined
+        : _amountFilled.isZero()
+        ? undefined
+        : _amountFilled.toString();
 
-        const amountFilled = !_amountFilled
-          ? undefined
-          : _amountFilled.isZero()
-          ? undefined
-          : _amountFilled.toString();
-
-        return _getLimitOrderStatusAndAmountFilled(order, {
-          remainingBalance: remainingBalance.toString(),
-          wasCancelled,
-          amountFilled,
-        });
+      const extraData = _getLimitOrderStatusAndAmountFilled(order, {
+        remainingBalance: remainingBalance.toString(),
+        wasCancelled,
+        amountFilled,
       });
 
-      return orderStatusesAndAmountsFilled;
-    };
+      if (!orderEvents) return extraData;
 
-  const getLimitOrderStatusAndAmountFilled: GetOrderStatusAndAmountFilled =
-    async (orderMaker, order, overrides = {}) => {
-      const [orderStatus] = await getLimitOrdersStatusAndAmountFilled(
-        orderMaker,
-        [order],
-        overrides
-      );
+      const transactionHashes = orderEvents.map((log) => log.transactionHash);
 
-      assert(orderStatus, `Failed to get status for order ${order.orderHash}`);
+      // never return {transactionHashes: undefined}
+      // to avoid false positive typeguards `'transactionHashes' in order => order is Cancelled | Filled | PartiallyFilled`
+      return { ...extraData, transactionHashes };
+    });
 
-      return orderStatus;
-    };
+    return orderStatusesAndAmountsFilled;
+  };
+
+  const getLimitOrderStatusAndAmountFilled: GetOrderExtraData = async (
+    orderMaker,
+    order,
+    overrides = {}
+  ) => {
+    const [orderStatus] = await getLimitOrdersStatusAndAmountFilled(
+      orderMaker,
+      [order],
+      overrides
+    );
+
+    assert(orderStatus, `Failed to get status for order ${order.orderHash}`);
+
+    return orderStatus;
+  };
 
   const getRawLimitOrders: GetRawLimitOrders = async (userAddress, signal) => {
     const fetchURL = `${baseFetchURL}/${userAddress}`;
@@ -354,7 +391,10 @@ export const constructGetLimitOrders = ({
   };
 };
 
-type LimitOrderExtra = Pick<LimitOrder, 'status' | 'amountFilled'>;
+type LimitOrderExtra = Pick<
+  LimitOrder,
+  'status' | 'amountFilled' | 'transactionHashes'
+>;
 
 interface StatusAndAmountFilledOptions {
   remainingBalance: string;
@@ -365,6 +405,7 @@ interface StatusAndAmountFilledOptions {
 // RemainingBalance keeps track of remaining amounts of each Order
 // 0 -> order unfilled / not exists
 // 1 -> order filled / cancelled
+// other number -> remaining balance
 function _getLimitOrderStatusAndAmountFilled(
   { expiry, makerAmount }: Pick<RawLimitOrder, 'expiry' | 'makerAmount'>,
   { remainingBalance, wasCancelled, amountFilled }: StatusAndAmountFilledOptions

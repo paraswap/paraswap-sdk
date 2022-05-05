@@ -8,10 +8,25 @@ export type LimitOrderStatus =
 export type LimitOrder = LimitOrderFromApi & {
   status: LimitOrderStatus; // `status` likely not available from API
   amountFilled: string;
+  transactionHashes?: string[];
 };
 
+export type ExpiredLimitOrder = LimitOrderFromApi & { status: 'expired' };
 export type OpenLimitOrder = LimitOrderFromApi & { status: 'open' };
 export type UnknownLimitOrder = LimitOrderFromApi & { status: 'unknown' };
+export type FilledLimitOrder = LimitOrderFromApi & {
+  status: 'filled';
+  transactionHashes: [string, ...string[]];
+};
+export type PartiallyFilledLimitOrder = LimitOrderFromApi & {
+  status: 'partiallyFilled';
+  transactionHashes: [string, ...string[]];
+};
+export type CancelledLimitOrder = LimitOrderFromApi & {
+  status: 'canceled';
+  /** @description  last tx hash is always for OrderCancelled event */
+  transactionHashes: [string, ...string[]]; // last tx hash is always for OrderCancelled event
+};
 
 export type RawLimitOrder = LimitOrderFromApi;
 

@@ -97,6 +97,7 @@ export interface GetLogsInput {
 export type GetLogsResult = {
   topic: string;
   args: ReadonlyArray<any> & Record<string, any>;
+  transactionHash: string;
 }[];
 
 // may have to type result T differently if we ever use staticCalls in SDK
