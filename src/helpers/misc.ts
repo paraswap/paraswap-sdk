@@ -144,3 +144,38 @@ export class FetcherError extends Error implements FetcherErrorInterface {
 
 export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
   T[number]['name'];
+
+// reduce element[] to Object{key: prop, val?: element}
+// for example
+// gatherObjectsByProp(Token[], token => token.address) => Record<address, Token|undefined>
+export function gatherObjectsByProp<T>(
+  elements: T[],
+  pickProp: (elem: T) => string
+): Record<string, T>;
+export function gatherObjectsByProp<T, U>(
+  elements: T[],
+  pickProp: (elem: T) => string,
+  transfrom: (elem: T, accumElem?: U) => U
+): Record<string, U>;
+export function gatherObjectsByProp<T, U>(
+  elements: T[],
+  pickProp: (elem: T) => string,
+  transform?: (elem: T, accumElem?: U) => U
+): Record<string, T> | Record<string, U> {
+  return elements.reduce<Record<string, T> | Record<string, U>>(
+    (accum, element) => {
+      const key = pickProp(element);
+
+      const accumElem: T | U | undefined = accum[key];
+      const transformedElement = transform
+        ? //                       if transform is available, can only be U | undefined
+          transform(element, accumElem as U | undefined)
+        : element;
+
+      accum[key] = transformedElement;
+
+      return accum;
+    },
+    {}
+  );
+}
