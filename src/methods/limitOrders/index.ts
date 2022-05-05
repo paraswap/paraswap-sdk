@@ -1,12 +1,12 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { LimitOrderToSend } from './helpers/types';
+import type { LimitOrderToSend, OpenLimitOrder } from './helpers/types';
 import { BuildLimitOrderInput, constructBuildLimitOrder } from './buildOrder';
 import {
   CancelLimitOrderFunctions,
   constructCancelLimitOrder,
 } from './cancelOrder';
 import { constructGetLimitOrders, GetLimitOrdersFunctions } from './getOrders';
-import { constructPostLimitOrder, OpenLimitOrder } from './postOrder';
+import { constructPostLimitOrder } from './postOrder';
 import { constructSignLimitOrder } from './signOrder';
 import { constructFillLimitOrder, FillLimitOrderFunctions } from './fillOrders';
 import {
