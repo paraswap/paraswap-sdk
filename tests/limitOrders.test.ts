@@ -505,6 +505,9 @@ describe('Limit Orders', () => {
       Object {
         "amountFilled": "1000000000000000000",
         "status": "canceled",
+        "transactionHashes": Array [
+          "0x123312868fa1201f029b9fabfa485d24738459a65c41563869a9f6cd134c2fe2",
+        ],
       }
     `);
   });
@@ -557,18 +560,30 @@ describe('Limit Orders', () => {
         Object {
           "amountFilled": "100000000",
           "status": "canceled",
+          "transactionHashes": Array [
+            "0x123312868fa1201f029b9fabfa485d24738459a65c41563869a9f6cd134c2fe2",
+          ],
         },
         Object {
           "amountFilled": "100000000",
           "status": "canceled",
+          "transactionHashes": Array [
+            "0x3b158b11455ef3a84dacada5932c9f65f1966c29af65eb11e193ab07b0e089f8",
+          ],
         },
         Object {
           "amountFilled": "100000000",
           "status": "canceled",
+          "transactionHashes": Array [
+            "0x896f579d71f588f95f4957c4f59a3dfbc6810b9a2ddb3fff0c3084504e28c9dd",
+          ],
         },
         Object {
           "amountFilled": "100000000",
           "status": "canceled",
+          "transactionHashes": Array [
+            "0xf4122de565f18a812c74451c5945397ce4e859e1ef6125e6f8f6c413e90ace95",
+          ],
         },
       ]
     `);
