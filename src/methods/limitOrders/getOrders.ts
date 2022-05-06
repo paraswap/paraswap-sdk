@@ -15,7 +15,8 @@ import {
   chainId2verifyingContract,
 } from './helpers/misc';
 import type {
-  LimitOrder,
+  AnyLimitOrder,
+  LimitOrderExtra,
   LimitOrdersApiResponse,
   LimitOrderStatus,
   RawLimitOrder,
@@ -25,7 +26,7 @@ import type {
 type GetLimitOrders = (
   userAddress: string,
   signal?: AbortSignal
-) => Promise<LimitOrder[] | UnknownLimitOrder[]>;
+) => Promise<AnyLimitOrder[] | UnknownLimitOrder[]>;
 type GetRawLimitOrders = (
   userAddress: string,
   signal?: AbortSignal
@@ -197,43 +198,6 @@ export const constructGetLimitOrders = ({
       overrides,
     });
 
-    type OrderCancelledDecodedArgs = readonly [
-      maker: Address,
-      orderHash: string
-    ] & {
-      maker: Address;
-      orderHash: string;
-    };
-    interface OrderCancelleDecodedLog {
-      topic: string;
-      args: OrderCancelledDecodedArgs;
-      transactionHash: string;
-    }
-    type OrderFilledDecodedArgs = readonly [
-      orderHash: string,
-      maker: Address,
-      makerAsset: Address,
-      makerAmount: EthersBigNumber, // @TODO see what works with web3, may need to just stick to string everywhere
-      taker: Address,
-      takerAsset: Address,
-      takerAmount: EthersBigNumber
-    ] & {
-      orderHash: string;
-      maker: Address;
-      makerAsset: Address;
-      makerAmount: EthersBigNumber;
-      taker: Address;
-      takerAsset: Address;
-      takerAmount: EthersBigNumber;
-    };
-    interface OrderFilledDecodedLog {
-      topic: string;
-      args: OrderFilledDecodedArgs;
-      transactionHash: string;
-    }
-
-    type OrderLog = OrderCancelleDecodedLog | OrderFilledDecodedLog;
-
     const logs = (await contractCaller.getLogsCall({
       address: verifyingContract,
       abi: AugustusRFQEventsAbi,
@@ -309,13 +273,7 @@ export const constructGetLimitOrders = ({
         amountFilled,
       });
 
-      if (!orderEvents) return extraData;
-
-      const transactionHashes = orderEvents.map((log) => log.transactionHash);
-
-      // never return {transactionHashes: undefined}
-      // to avoid false positive typeguards `'transactionHashes' in order => order is Cancelled | Filled | PartiallyFilled`
-      return { ...extraData, transactionHashes };
+      return extraData;
     });
 
     return orderStatusesAndAmountsFilled;
@@ -359,7 +317,7 @@ export const constructGetLimitOrders = ({
         orders
       );
 
-      const ordersWithEtras = orders.map<LimitOrder>((order, index) => {
+      const ordersWithEtras = orders.map<AnyLimitOrder>((order, index) => {
         const extras = orderExtras[index];
         assert(extras, `Failed to get status for order ${order.orderHash}`);
 
@@ -391,15 +349,11 @@ export const constructGetLimitOrders = ({
   };
 };
 
-type LimitOrderExtra = Pick<
-  LimitOrder,
-  'status' | 'amountFilled' | 'transactionHashes'
->;
-
 interface StatusAndAmountFilledOptions {
   remainingBalance: string;
   wasCancelled: boolean;
   amountFilled?: string;
+  orderEvents?: OrderLog[];
 }
 
 // RemainingBalance keeps track of remaining amounts of each Order
@@ -408,7 +362,12 @@ interface StatusAndAmountFilledOptions {
 // other number -> remaining balance
 function _getLimitOrderStatusAndAmountFilled(
   { expiry, makerAmount }: Pick<RawLimitOrder, 'expiry' | 'makerAmount'>,
-  { remainingBalance, wasCancelled, amountFilled }: StatusAndAmountFilledOptions
+  {
+    remainingBalance,
+    wasCancelled,
+    amountFilled,
+    orderEvents,
+  }: StatusAndAmountFilledOptions
 ): LimitOrderExtra {
   console.log('🚀 ~ remainingBalance', remainingBalance.toString());
   const remainingBalanceBN = new BigNumber(remainingBalance);
@@ -424,21 +383,69 @@ function _getLimitOrderStatusAndAmountFilled(
     };
   }
 
+  // never return {..., transactionHashes: undefined}
+  // to avoid false positive typeguards `'transactionHashes' in order => order is Cancelled | Filled | PartiallyFilled`
+  assert(
+    orderEvents && orderEvents[0],
+    'there should be events for cancelled, filled and partiallyFilled orders'
+  );
+
+  const transactionHashes = orderEvents.map((log) => log.transactionHash) as [
+    string,
+    ...string[]
+  ];
+
   // filled or cancelled
   if (remainingBalanceBN.eq(1)) {
     return {
       status: wasCancelled ? 'canceled' : 'filled',
       // `cancelled` order can be partiallyFilled first
       amountFilled: wasCancelled && amountFilled ? amountFilled : makerAmount,
+      transactionHashes,
     };
   }
 
   // partially filled
   return {
     status: 'partiallyFilled',
-    amountFilled: remainingBalanceBN
-      .minus(makerAmount)
-      .multipliedBy(-1)
-      .toString(),
+    amountFilled: remainingBalanceBN.minus(makerAmount).negated().toString(),
+    transactionHashes,
   };
 }
+
+type OrderCancelledDecodedArgs = readonly [
+  maker: Address,
+  orderHash: string
+] & {
+  maker: Address;
+  orderHash: string;
+};
+interface OrderCancelleDecodedLog {
+  topic: string;
+  args: OrderCancelledDecodedArgs;
+  transactionHash: string;
+}
+type OrderFilledDecodedArgs = readonly [
+  orderHash: string,
+  maker: Address,
+  makerAsset: Address,
+  makerAmount: EthersBigNumber, // @TODO see what works with web3, may need to just stick to string everywhere
+  taker: Address,
+  takerAsset: Address,
+  takerAmount: EthersBigNumber
+] & {
+  orderHash: string;
+  maker: Address;
+  makerAsset: Address;
+  makerAmount: EthersBigNumber;
+  taker: Address;
+  takerAsset: Address;
+  takerAmount: EthersBigNumber;
+};
+interface OrderFilledDecodedLog {
+  topic: string;
+  args: OrderFilledDecodedArgs;
+  transactionHash: string;
+}
+
+type OrderLog = OrderCancelleDecodedLog | OrderFilledDecodedLog;
