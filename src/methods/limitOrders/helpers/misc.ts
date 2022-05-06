@@ -1,4 +1,5 @@
 import type { Address } from '../../../types';
+import { OrderData } from './buildOrderData';
 
 // @TODO either fill in or fetch from API
 export const chainId2verifyingContract: Record<number, Address> = {
@@ -9,3 +10,25 @@ export const chainId2verifyingContract: Record<number, Address> = {
 export const chainId2BlockContractDeployedAt: Record<number, number> = {
   3: 12240016,
 };
+
+export function sanitizeOrderData({
+  nonceAndMeta,
+  expiry,
+  makerAsset,
+  takerAsset,
+  maker,
+  taker,
+  makerAmount,
+  takerAmount,
+}: OrderData & Record<string, any>): OrderData {
+  return {
+    nonceAndMeta,
+    expiry,
+    makerAsset,
+    takerAsset,
+    maker,
+    taker,
+    makerAmount,
+    takerAmount,
+  };
+}
