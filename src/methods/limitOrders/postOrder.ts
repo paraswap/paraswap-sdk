@@ -7,7 +7,7 @@ import type {
 } from './helpers/types';
 
 type PostLimitOrder = (
-  limitOrderWithSignature: LimitOrderToSend,
+  limitOrderWithSignatureAndPermit: LimitOrderToSend,
   signal?: AbortSignal
 ) => Promise<OpenLimitOrder>;
 
@@ -23,14 +23,14 @@ export const constructPostLimitOrder = ({
   const fetchURL = `${apiURL}/limit/orders`;
 
   const postLimitOrder: PostLimitOrder = async (
-    limitOrderWithSignature,
+    limitOrderWithSignatureAndPermit,
     signal
   ) => {
     // @TODO check API return matches
     const { order: newOrder } = await fetcher<LimitOrderApiResponse>({
       url: fetchURL,
       method: 'POST',
-      data: limitOrderWithSignature,
+      data: limitOrderWithSignatureAndPermit,
       signal,
     });
     console.log(
@@ -38,7 +38,7 @@ export const constructPostLimitOrder = ({
       newOrder
     );
 
-    return { ...newOrder, status: 'open' };
+    return { ...newOrder, status: 'open', amountFilled: '0' };
   };
 
   return { postLimitOrder };
