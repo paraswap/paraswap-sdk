@@ -84,15 +84,15 @@ const AugustusRFQEventsAbi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'address',
-        name: 'maker',
-        type: 'address',
-      },
-      {
-        indexed: false,
         internalType: 'bytes32',
         name: 'orderHash',
         type: 'bytes32',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'maker',
+        type: 'address',
       },
     ],
     name: 'OrderCancelled',
@@ -155,7 +155,7 @@ const OrderFilledSig =
   '0x6621486d9c28838df4a87d2cca5007bc2aaf6a5b5de083b1db8faf709302c473';
 // @TODO change when contract is redeployed
 const OrderCancelledSig =
-  '0x35974c4230d53fb4c6e8553fd900c88ba92747dbc689a79bcd6ba755cb936985';
+  '0xa6eb7cdc219e1518ced964e9a34e61d68a94e4f1569db3e84256ba981ba52753';
 
 export const constructGetLimitOrders = ({
   apiURL = API_URL,
@@ -205,8 +205,8 @@ export const constructGetLimitOrders = ({
         address: verifyingContract,
         topics: [
           [OrderFilledSig, OrderCancelledSig],
-          // null,
-          // '0x' + orderMaker.replace('0x', '').padStart(64, '0'),
+          orderHashes,
+          '0x' + orderMaker.replace('0x', '').padStart(64, '0'),
         ],
         fromBlock: verifyingContractDeployedBlock, // if not available will default to 0
         // and then depending on node will either count from 0 or from the earlies available block or break or hang
@@ -221,7 +221,7 @@ export const constructGetLimitOrders = ({
 
     const order2EventsMap = gatherObjectsByProp<OrderLog, OrderLog[]>(
       logs,
-      (log) => log.args.orderHash,
+      (log) => log.args.orderHash.toLowerCase(),
       (log, accumElem = []) => {
         accumElem.push(log);
         return accumElem;
@@ -236,7 +236,7 @@ export const constructGetLimitOrders = ({
       );
 
       //  can have none, can have OrderFilled*n + OrderCancelled
-      const orderEvents = order2EventsMap[order.orderHash];
+      const orderEvents = order2EventsMap[order.orderHash.toLowerCase()];
 
       const wasCancelled = !!orderEvents?.some(
         (log) => log.topic === OrderCancelledSig
@@ -247,8 +247,8 @@ export const constructGetLimitOrders = ({
         ? []
         : orderEvents?.filter<OrderFilledDecodedLog>(
             (log): log is OrderFilledDecodedLog =>
-              log.args.orderHash === order.orderHash &&
-              log.topic === OrderFilledSig
+              log.args.orderHash.toLowerCase() ===
+                order.orderHash.toLowerCase() && log.topic === OrderFilledSig
           ) || [];
 
       // @TODO check this is even correct
@@ -271,6 +271,7 @@ export const constructGetLimitOrders = ({
         remainingBalance: remainingBalance.toString(),
         wasCancelled,
         amountFilled,
+        orderEvents,
       });
 
       return extraData;
@@ -414,11 +415,11 @@ function _getLimitOrderStatusAndAmountFilled(
 }
 
 type OrderCancelledDecodedArgs = readonly [
-  maker: Address,
-  orderHash: string
+  orderHash: string,
+  maker: Address
 ] & {
-  maker: Address;
   orderHash: string;
+  maker: Address;
 };
 interface OrderCancelleDecodedLog {
   topic: string;
