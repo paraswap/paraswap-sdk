@@ -3,7 +3,7 @@ import { assert } from 'ts-essentials';
 import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import type { OrderData } from './buildOrder';
-import { chainId2verifyingContract } from './helpers/misc';
+import { chainId2verifyingContract, sanitizeOrderData } from './helpers/misc';
 
 export interface FillOrderInput {
   orderData: OrderData;
@@ -188,7 +188,8 @@ export const constructFillLimitOrder = <T>(
       address: verifyingContract,
       abi: MinAugustusRFQAbi,
       contractMethod: 'fillOrder',
-      args: [orderData, signature],
+      // types allow to pass OrderData & extra_stuff, but tx will break like that
+      args: [sanitizeOrderData(orderData), signature],
       overrides,
     });
 
@@ -208,7 +209,8 @@ export const constructFillLimitOrder = <T>(
       address: verifyingContract,
       abi: MinAugustusRFQAbi,
       contractMethod: 'partialFillOrder',
-      args: [orderData, signature, fillAmount],
+      // types allow to pass OrderData & extra_stuff, but tx will break like that
+      args: [sanitizeOrderData(orderData), signature, fillAmount],
       overrides,
     });
 
