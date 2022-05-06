@@ -20,6 +20,7 @@ import {
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
+  extra?: { permitMakerAsset?: string },
   signal?: AbortSignal
 ) => Promise<OpenLimitOrder>;
 
@@ -36,6 +37,7 @@ export const constructSubmitLimitOrder = (
 
   const submitLimitOrder: SubmitLimitOrder = async (
     buildLimitOrderParams,
+    extra = {},
     signal
   ) => {
     const orderData = buildLimitOrder(buildLimitOrderParams);
@@ -43,6 +45,7 @@ export const constructSubmitLimitOrder = (
 
     const orderWithSignature: LimitOrderToSend = {
       ...orderData.data,
+      ...extra,
       chainId: orderData.domain.chainId,
       signature,
     };
