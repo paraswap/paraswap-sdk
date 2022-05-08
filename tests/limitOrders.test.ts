@@ -155,10 +155,10 @@ describe('Limit Orders', () => {
     );
     await erc20Token2.deployTransaction.wait();
 
-    await erc20Token1.mint(walletStable.address, (10e18).toString(10));
-    await erc20Token1.mint(walletRandom.address, (10e18).toString(10));
-    await erc20Token2.mint(walletStable.address, (10e18).toString(10));
-    await erc20Token2.mint(walletRandom.address, (10e18).toString(10));
+    await erc20Token1.mint(walletStable.address, (30e18).toString(10));
+    await erc20Token1.mint(walletRandom.address, (30e18).toString(10));
+    await erc20Token2.mint(walletStable.address, (30e18).toString(10));
+    await erc20Token2.mint(walletRandom.address, (30e18).toString(10));
 
     type CancelOrderConstructor = (
       options: ConstructProviderFetchInput<
