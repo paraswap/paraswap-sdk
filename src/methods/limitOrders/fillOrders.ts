@@ -1,7 +1,11 @@
 // @TODO add fulfillLimitOrder
 import { assert } from 'ts-essentials';
 import type { ExtractAbiMethodNames } from '../../helpers/misc';
-import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
+import type {
+  Address,
+  ConstructProviderFetchInput,
+  TxSendOverrides,
+} from '../../types';
 import type { OrderData } from './buildOrder';
 import { chainId2verifyingContract, sanitizeOrderData } from './helpers/misc';
 
@@ -24,9 +28,25 @@ type PartialFillOrder<T> = (
   overrides?: TxSendOverrides
 ) => Promise<T>;
 
+export interface PartialFillOrderWithTargetPermitInput
+  extends PartialFillOrderInput {
+  /** @description address to send tokens to. Pass current account */
+  target: Address;
+  /** @description for permissible taker's Token, '0x' by default === no permit used */
+  permitTakerAsset?: string;
+  /** @description for permissible maker's Token, '0x' by default === no permit used */
+  permitMakerAsset?: string;
+}
+
+type PartialFillOrderWithTargetPermit<T> = (
+  params: PartialFillOrderWithTargetPermitInput,
+  overrides?: TxSendOverrides
+) => Promise<T>;
+
 export type FillLimitOrderFunctions<T> = {
   fillLimitOrder: FillOrder<T>;
   partialFilllLimitOrder: PartialFillOrder<T>;
+  partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
 };
 
 // much smaller than the whole ERC20_ABI
@@ -162,6 +182,92 @@ const MinAugustusRFQAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'nonceAndMeta',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint128',
+            name: 'expiry',
+            type: 'uint128',
+          },
+          {
+            internalType: 'address',
+            name: 'makerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'takerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'maker',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'taker',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'makerAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'takerAmount',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct AugustusRFQ.Order',
+        name: 'order',
+        type: 'tuple',
+      },
+      {
+        internalType: 'bytes',
+        name: 'signature',
+        type: 'bytes',
+      },
+      {
+        internalType: 'uint256',
+        name: 'takerTokenFillAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'target',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'permitTakerAsset',
+        type: 'bytes',
+      },
+      {
+        internalType: 'bytes',
+        name: 'permitMakerAsset',
+        type: 'bytes',
+      },
+    ],
+    name: 'partialFillOrderWithTargetPermit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'makerTokenFilledAmount',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ] as const;
 
 type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
@@ -217,8 +323,46 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
+  const partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<
+    T
+  > = async (
+    {
+      orderData,
+      signature,
+      fillAmount,
+      target,
+      permitTakerAsset = '0x',
+      permitMakerAsset = '0x',
+    },
+    overrides = {}
+  ) => {
+    assert(
+      verifyingContract,
+      `AugustusRFQ contract for Limit Orders not available on chain ${options.network}`
+    );
+
+    const res = await options.contractCaller.transactCall<AvailableMethods>({
+      address: verifyingContract,
+      abi: MinAugustusRFQAbi,
+      contractMethod: 'partialFillOrderWithTargetPermit',
+      args: [
+        // types allow to pass OrderData & extra_stuff, but tx will break like that
+        sanitizeOrderData(orderData),
+        signature,
+        fillAmount,
+        target,
+        permitTakerAsset,
+        permitMakerAsset,
+      ],
+      overrides,
+    });
+
+    return res;
+  };
+
   return {
     fillLimitOrder,
     partialFilllLimitOrder,
+    partialFillLimitOrderWithTargetPermit,
   };
 };
