@@ -624,10 +624,10 @@ describe('Limit Orders', () => {
     expect(orderStatus1.toNumber()).toEqual(1);
   });
 
-  test('getOrderStatus', async () => {
+  test.only('getOrderStatus', async () => {
     // order that should not change anymore
     const orderHash =
-      '0x54c588bd7c47c6d382ea24de9a1aca5375514da4baae84d5ba401979c6d4019b';
+      '0x636CC5AA95CE9F6E3EA5EB7E65B4136DEBE62C4A743FB9A4D8AF9C0D35C71BA4';
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
     // need real provider, local ganache fork can't get historical events
@@ -642,13 +642,33 @@ describe('Limit Orders', () => {
     );
 
     const paraSwap = constructPartialSDK(
-      { network: 3, fetcher: axiosFetcher, contractCaller },
+      {
+        network: 3,
+        apiURL: 'https://api.staging.paraswap.io',
+        fetcher: axiosFetcher,
+        contractCaller,
+      },
       constructGetLimitOrders
     );
 
-    const orders = await paraSwap.getRawLimitOrders(account);
-
-    const order = orders.find((order) => order.orderHash === orderHash);
+    const order = {
+      expiry: 1654418209,
+      createdAt: 1651826231,
+      chainId: 3,
+      nonceAndMeta:
+        '3992791579555718835298587613543555574383102812671805313477771264',
+      maker: '0x05182e579fdfcf69e4390c3411d8fea1fb6467cf',
+      taker: '0x0000000000000000000000000000000000000000',
+      makerAsset: '0x21718c0fbd10900565fa57c76e1862cd3f6a4d8e',
+      takerAsset: '0xc778417e063141139fce010982780140aa0cd5ab',
+      makerAmount: '1000000000000000000',
+      takerAmount: '100000000000000000',
+      signature:
+        '0x7fdb308ff5a4df88c8e2e4fd66e99a0de257ee635f1e2d0e183025688b2b2a183178e9f102e08ed86a6ef6498f7562d13546be84e8853e4ba0d8ac6b9819f4851b',
+      orderHash:
+        '0x636cc5aa95ce9f6e3ea5eb7e65b4136debe62c4a743fb9a4d8af9c0d35c71ba4',
+      permitMakerAsset: null,
+    };
 
     assert(order, `must have an order with orderHash ${orderHash}`);
 
@@ -659,22 +679,22 @@ describe('Limit Orders', () => {
 
     expect(orderExtraData).toMatchInlineSnapshot(`
       Object {
-        "amountFilled": "1000000000000000000",
+        "amountFilled": "50000000000000000",
         "status": "canceled",
         "transactionHashes": Array [
-          "0x123312868fa1201f029b9fabfa485d24738459a65c41563869a9f6cd134c2fe2",
+          "0x2d544b7d2cc0f57de2cf51cecd3c975915e33030e33e28ffdd8ebe7e52c7866c",
+          "0x107b94c8979d3a7e4e0856bff52e00a57a71f9c0664a79a4e884a3127e666f9e",
+          "0xcd6ceb51f996480ab484907bfd79439dea302e8b6e987c90e905075335fdc9e5",
         ],
       }
     `);
   });
 
-  test('getOrdersStatus', async () => {
+  test.only('getOrdersStatus', async () => {
     // orders that should not change anymore
     const orderHashes = [
-      '0x54c588bd7c47c6d382ea24de9a1aca5375514da4baae84d5ba401979c6d4019b',
-      '0x7439ebc1766075e4bd12776baed3c272538a858d8f01ebf94438b205eec4e6da',
-      '0x0086663f44b3a8b250a8d2f9cb98c4281da3a83cb2d743fb650ea5c8aa84bc03',
-      '0x04ccb2face97aae119c712bf14dfae675ea3ba9a195b046e89ac255fd85f38bc',
+      '0x636cc5aa95ce9f6e3ea5eb7e65b4136debe62c4a743fb9a4d8af9c0d35c71ba4',
+      '0x36e737bec31051f7b5a6ac101be831ed496f7c5b78a7c7f9b1177fd7a9ad9c09',
     ];
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
@@ -690,11 +710,20 @@ describe('Limit Orders', () => {
     );
 
     const paraSwap = constructPartialSDK(
-      { network, fetcher: axiosFetcher, contractCaller },
+      {
+        network,
+        apiURL: 'https://api.staging.paraswap.io',
+        fetcher: axiosFetcher,
+        contractCaller,
+      },
       constructGetLimitOrders
     );
 
     const orders = await paraSwap.getRawLimitOrders(account);
+    console.log(
+      '🚀 ~ file: limitOrders.test.ts ~ line 574 ~ test.only ~ orders',
+      orders
+    );
 
     const selectedOrders = orders.filter((order) =>
       orderHashes.includes(order.orderHash)
@@ -714,32 +743,17 @@ describe('Limit Orders', () => {
     expect(ordersExtraData).toMatchInlineSnapshot(`
       Array [
         Object {
-          "amountFilled": "100000000",
+          "amountFilled": "50000000000000000",
           "status": "canceled",
           "transactionHashes": Array [
-            "0x123312868fa1201f029b9fabfa485d24738459a65c41563869a9f6cd134c2fe2",
+            "0x2d544b7d2cc0f57de2cf51cecd3c975915e33030e33e28ffdd8ebe7e52c7866c",
+            "0x107b94c8979d3a7e4e0856bff52e00a57a71f9c0664a79a4e884a3127e666f9e",
+            "0xcd6ceb51f996480ab484907bfd79439dea302e8b6e987c90e905075335fdc9e5",
           ],
         },
         Object {
-          "amountFilled": "100000000",
-          "status": "canceled",
-          "transactionHashes": Array [
-            "0x3b158b11455ef3a84dacada5932c9f65f1966c29af65eb11e193ab07b0e089f8",
-          ],
-        },
-        Object {
-          "amountFilled": "100000000",
-          "status": "canceled",
-          "transactionHashes": Array [
-            "0x896f579d71f588f95f4957c4f59a3dfbc6810b9a2ddb3fff0c3084504e28c9dd",
-          ],
-        },
-        Object {
-          "amountFilled": "100000000",
-          "status": "canceled",
-          "transactionHashes": Array [
-            "0xf4122de565f18a812c74451c5945397ce4e859e1ef6125e6f8f6c413e90ace95",
-          ],
+          "amountFilled": "0",
+          "status": "open",
         },
       ]
     `);
