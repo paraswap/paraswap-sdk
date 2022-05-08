@@ -241,7 +241,7 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
-      `"0x9d1b0b9d2b9c5f3aaa28835579d05e9326301d8089d37bdaf5c73b85bdc5be5256c8c935a44d02189639d2487749f6b258423e868963efea32496510359e768a1b"`
+      `"0x6c292e05ea223465fcb61a62e0e348ade300d895306b5dfe9f9082a728370ec70116929501b95aa00e338a34b5d3cd9911328ff458715516dd49e38a4a1d93f01c"`
     );
 
     const presumedOrderHash = calculateOrderHash(signableOrderData);
@@ -430,7 +430,7 @@ describe('Limit Orders', () => {
     );
   });
 
-  test.only('partialFillLimitOrderWithTargetPermit', async () => {
+  test('partialFillLimitOrderWithTargetPermit', async () => {
     const maker = signer;
     const taker = walletRandom.connect(ethersProvider);
 
@@ -624,7 +624,7 @@ describe('Limit Orders', () => {
     expect(orderStatus1.toNumber()).toEqual(1);
   });
 
-  test.only('getOrderStatus', async () => {
+  test('getOrderStatus', async () => {
     // order that should not change anymore
     const orderHash =
       '0x636CC5AA95CE9F6E3EA5EB7E65B4136DEBE62C4A743FB9A4D8AF9C0D35C71BA4';
@@ -690,7 +690,7 @@ describe('Limit Orders', () => {
     `);
   });
 
-  test.only('getOrdersStatus', async () => {
+  test('getOrdersStatus', async () => {
     // orders that should not change anymore
     const orderHashes = [
       '0x636cc5aa95ce9f6e3ea5eb7e65b4136debe62c4a743fb9a4d8af9c0d35c71ba4',
@@ -720,10 +720,6 @@ describe('Limit Orders', () => {
     );
 
     const orders = await paraSwap.getRawLimitOrders(account);
-    console.log(
-      '🚀 ~ file: limitOrders.test.ts ~ line 574 ~ test.only ~ orders',
-      orders
-    );
 
     const selectedOrders = orders.filter((order) =>
       orderHashes.includes(order.orderHash)
