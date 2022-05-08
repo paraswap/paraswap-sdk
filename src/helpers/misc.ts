@@ -138,8 +138,12 @@ export class FetcherError extends Error implements FetcherErrorInterface {
 
     const { data, status } = response;
     this.status = status;
-    this.message = data?.error || message;
+    this.message = isDataWithError(data) ? data.error : message;
   }
+}
+
+export function isDataWithError(data: unknown): data is { error: string } {
+  return !!data && typeof data == 'object' && 'error' in data;
 }
 
 export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =

@@ -33,6 +33,7 @@ import type { RateOptions } from '../methods/rates';
 import type { BuildOptions, TransactionParams } from '../methods/transaction';
 import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
 import type { Allowance } from '../methods/balance';
+import { isDataWithError } from '../helpers/misc';
 
 export type APIError = {
   message: string;
@@ -108,7 +109,11 @@ export class ParaSwap {
 
     const { status, data } = e.response;
 
-    return { status, message: data.error, data };
+    return {
+      status,
+      message: isDataWithError(data) ? data.error : e.message,
+      data,
+    };
   }
 
   private static async extractHasFromTxResponse(
