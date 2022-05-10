@@ -22,7 +22,7 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export interface BuildOrderDataInput {
   chainId: number;
   verifyingContract: Address;
-  nonce: number;
+  nonce?: number;
   expiry: number;
   makerAsset: Address;
   takerAsset: Address;
