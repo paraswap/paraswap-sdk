@@ -251,6 +251,42 @@ describe('Limit Orders', () => {
     );
   });
 
+  // @TODO witch to getLimitOrders
+  test.only('getRawLimitOrders', async () => {
+    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+    const orderHash =
+      '0x76444ee52272f6a11eaf0db38ed9c41f352ca576e8946875826614f4250fdd77';
+
+    const orders = await paraSwap.getRawLimitOrders(account);
+
+    const order = orders.find(
+      (order) => order.orderHash.toLowerCase() === orderHash
+    );
+
+    assert(order, `order must exist for orderHash ${orderHash}`);
+
+    const { state, transactions, makerBalance, ...stableOrderFields } = order;
+
+    // @TODO regenerate when createAt is fixed
+    expect(stableOrderFields).toMatchInlineSnapshot(`
+      Object {
+        "chainId": 3,
+        "createdAt": 1652336459,
+        "expiry": 1652372454,
+        "maker": "0x05182e579fdfcf69e4390c3411d8fea1fb6467cf",
+        "makerAmount": "10000000000000000000",
+        "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
+        "nonceAndMeta": "2528441167932495735490360796529905318841314624752046783131025408",
+        "orderHash": "0x76444ee52272f6a11eaf0db38ed9c41f352ca576e8946875826614f4250fdd77",
+        "permitMakerAsset": null,
+        "signature": "0xe3d8611565ab6d8d793f176f397491700a71f50a3d1cbda1aef00c7c02746238464201307ac1cb0fe5b1f91583a31f8352c15db305a80e9dda353150a032342d1c",
+        "taker": "0x0000000000000000000000000000000000000000",
+        "takerAmount": "1000000000000000000",
+        "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
+      }
+    `);
+  });
+
   test.skip('postLimitOrder', async () => {
     // @TODO breaks with 'maker' doesn't have sufficient balance for this limit order
     // because of API balance check
