@@ -128,6 +128,7 @@ export type LimitOrderFromApi = {
   takerAsset: string; // address
   makerAmount: string; // wei
   takerAmount: string; // wei
+  makerBalance: string; // wei, balance left to fill (remainingBalance in contract)
   signature: string; // supplied by FE
   permitMakerAsset: null | string; // address
   orderHash: string; // hex string
