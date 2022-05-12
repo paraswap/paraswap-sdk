@@ -44,9 +44,12 @@ type GetOrdersExtraData = (
 ) => Promise<LimitOrderExtra[]>;
 
 export type GetLimitOrdersFunctions = {
+  /** @deprecated use getRawLimitOrders for now*/
   getLimitOrders: GetLimitOrders;
   getRawLimitOrders: GetRawLimitOrders;
+  /** @deprecated */
   getLimitOrderStatusAndAmountFilled: GetOrderExtraData;
+  /** @deprecated */
   getLimitOrdersStatusAndAmountFilled: GetOrdersExtraData;
 };
 
