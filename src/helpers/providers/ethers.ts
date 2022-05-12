@@ -131,6 +131,7 @@ export const constructContractCaller = (
     return signer._signTypedData(domain, types, data);
   };
 
+  // @TODO remove if not going to use (API returns full Orders)
   const getLogsCall: LogsContractCallerFn = async (params) => {
     const { address, abi, filter } = params;
 
