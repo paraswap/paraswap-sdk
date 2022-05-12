@@ -83,17 +83,19 @@ export type LimitOrderExtra = PickExistingKeysInArray<
 
 export type RawLimitOrder = LimitOrderFromApi;
 
-export type LimitOrderToSend = Omit<
+export type LimitOrderToSend = Pick<
   LimitOrder,
-  | 'orderHash'
-  | 'status'
-  | 'amountFilled'
-  | 'createdAt'
-  | 'permitMakerAsset'
-  | 'permitTakerAsset'
-  | 'transactionHashes'
+  | 'chainId'
+  | 'maker'
+  | 'taker'
+  | 'expiry'
+  | 'nonceAndMeta'
+  | 'makerAsset'
+  | 'takerAsset'
+  | 'makerAmount'
+  | 'takerAmount'
+  | 'signature'
 > & {
-  signature: string;
   permitMakerAsset?: string;
 };
 
@@ -102,6 +104,18 @@ export type LimitOrdersApiResponse = {
 };
 export type LimitOrderApiResponse = {
   order: LimitOrderFromApi;
+};
+
+// display states such as EXPIRED and PARTIALLY_FILLLED derived on client side
+// EXPIRED == order.expiry < Date.now()/1000
+// PARTIALLY_FILLED == order.makerBalance < order.makerAmount && order.makerBalance !== '0'
+export type LimitOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED';
+
+export type LimitOrderEvent = '';
+
+export type LimitOrderTransaction = {
+  hash: string;
+  event_type: 'OrderFilled' | 'OrderCancelled';
 };
 
 export type LimitOrderFromApi = {
@@ -115,10 +129,12 @@ export type LimitOrderFromApi = {
   makerAmount: string; // wei
   takerAmount: string; // wei
   signature: string; // supplied by FE
-  permitTakerAsset: null | string; // address
   permitMakerAsset: null | string; // address
   orderHash: string; // hex string
   // not returned for now
   // updatedAt: number; // timestamp
   createdAt: number; // timestamp
+  state: LimitOrderState;
+  // not yet returned
+  transactions: LimitOrderTransaction[];
 };
