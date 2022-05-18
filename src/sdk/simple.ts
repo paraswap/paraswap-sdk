@@ -29,14 +29,49 @@ import type { EthersProviderDeps } from '../helpers';
 import type Web3 from 'web3';
 
 import type AxiosStatic from 'axios';
-import { AllSDKMethods, constructFullSDK } from './full';
+import { constructFullSDK, SwapSDKMethods } from './full';
+import {
+  BuildLimitOrderFunctions,
+  constructBuildLimitOrder,
+} from '../methods/limitOrders/buildOrder';
+import {
+  constructPostLimitOrder,
+  PostLimitOrderFunctions,
+} from '../methods/limitOrders/postOrder';
+// import {
+//   constructGetLimitOrders,
+//   GetLimitOrdersFunctions,
+// } from '../methods/limitOrders/getOrders';
+import {
+  constructGetLimitOrdersContract,
+  GetLimitOrdersContractFunctions,
+} from '../methods/limitOrders/getOrdersContract';
+import {
+  constructAllLimitOrdersHandlers,
+  LimitOrderHandlers,
+} from '../methods/limitOrders';
 
-export type SDKFetchMethods = GetBalancesFunctions &
+export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
   BuildTxFunctions &
   GetAdaptersFunctions &
   GetRateFunctions;
+
+export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
+  // GetLimitOrdersFunctions &
+  BuildLimitOrderFunctions &
+  PostLimitOrderFunctions;
+
+export type SimpleFetchSDK = {
+  swap: SwapFetchMethods;
+  limitOrders: LimitOrdersFetchMethods;
+};
+
+export type SimpleSDK = {
+  swap: SwapSDKMethods<TxHash>;
+  limitOrders: LimitOrderHandlers<TxHash>;
+};
 
 type SimpleOptions = ConstructBaseInput &
   (
@@ -51,15 +86,15 @@ type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
 };
 
 /** @description construct SDK with methods that fetch from API and optionally with token approval methods */
-export function constructSimpleSDK(options: SimpleOptions): SDKFetchMethods;
+export function constructSimpleSDK(options: SimpleOptions): SimpleFetchSDK;
 export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions: ProviderOptions
-): AllSDKMethods<TxHash>;
+): SimpleSDK;
 export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions?: ProviderOptions
-): SDKFetchMethods | AllSDKMethods<TxHash> {
+): SimpleFetchSDK | SimpleSDK {
   const fetcher =
     'axios' in options
       ? constructAxiosFetcher(options.axios)
@@ -73,7 +108,7 @@ export function constructSimpleSDK(
     };
 
     // include all available functions that don't need `contractCaller`
-    const sdk: SDKFetchMethods = constructPartialSDK(
+    const swap: SwapFetchMethods = constructPartialSDK(
       config,
       constructGetBalances,
       constructGetTokens,
@@ -83,7 +118,15 @@ export function constructSimpleSDK(
       constructGetRate
     );
 
-    return sdk;
+    const limitOrders = constructPartialSDK(
+      config,
+      constructBuildLimitOrder,
+      constructPostLimitOrder,
+      // constructGetLimitOrders, @TODO reenable when removing provider dependency
+      constructGetLimitOrdersContract
+    );
+
+    return { swap, limitOrders };
   }
 
   const contractCaller = constructSimpleContractCaller(providerOptions);
@@ -95,9 +138,12 @@ export function constructSimpleSDK(
     contractCaller,
   };
 
-  const sdk: AllSDKMethods<TxHash> = constructFullSDK(config);
+  const swap: SwapSDKMethods<TxHash> = constructFullSDK(config);
 
-  return sdk;
+  const limitOrders: LimitOrderHandlers<TxHash> =
+    constructAllLimitOrdersHandlers<TxHash>(config);
+
+  return { swap, limitOrders };
 }
 
 function constructSimpleContractCaller(
