@@ -163,7 +163,7 @@ export type {
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
 export { AllSDKMethods, constructFullSDK } from './sdk/full';
-export { SDKFetchMethods, constructSimpleSDK } from './sdk/simple';
+export { SimpleFetchSDK, constructSimpleSDK } from './sdk/simple';
 
 export { ParaSwap } from './legacy';
 

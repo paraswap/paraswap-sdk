@@ -14,13 +14,15 @@ import { constructBuildTx, BuildTxFunctions } from '../methods/transaction';
 import { constructPartialSDK, SDKConfig } from './partial';
 import type { ConstructProviderFetchInput } from '../types';
 
-export type AllSDKMethods<TxResponse> = GetBalancesFunctions &
+export type SwapSDKMethods<TxResponse> = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
   ApproveTokenFunctions<TxResponse> &
   BuildTxFunctions &
   GetAdaptersFunctions &
   GetRateFunctions;
+
+export type AllSDKMethods<TxResponse> = SwapSDKMethods<TxResponse>;
 
 /** @description construct SDK with every method, fetching from API and token approval */
 export const constructFullSDK = <TxResponse = any>(
