@@ -9,7 +9,7 @@ const simpleFetchOnlySDK = constructSimpleSDK({ network: 1, axios });
 const account = '0x...';
 
 // type Promise<OptimalRate>
-const rateRes = simpleFetchOnlySDK.getRate({
+const rateRes = simpleFetchOnlySDK.swap.getRate({
   srcToken: '0x...',
   destToken: '0x...',
   amount: '1000000000000',
@@ -30,4 +30,7 @@ const SDKwithApprove = constructSimpleSDK(
 );
 
 // type Promise<TxHash>
-const approveTxHash = SDKwithApprove.approveToken('1000000000000', '0x...');
+const approveTxHash = SDKwithApprove.swap.approveToken(
+  '1000000000000',
+  '0x...'
+);
