@@ -123,7 +123,8 @@ describe('Limit Orders', () => {
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
 
   let orderInput: BuildLimitOrderInput;
-  const orderExpiry = Math.floor(new Date('12.20.2022').getTime() / 1000);
+  //                                        UTC format
+  const orderExpiry = Math.floor(new Date('2022-12-20').getTime() / 1000);
 
   let erc20Token1: Contract;
   let erc20Token2: Contract;
@@ -241,7 +242,7 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
-      `"0x6c292e05ea223465fcb61a62e0e348ade300d895306b5dfe9f9082a728370ec70116929501b95aa00e338a34b5d3cd9911328ff458715516dd49e38a4a1d93f01c"`
+      `"0x584f1e9f3cc9adea951d0ea6f6c6ef8074156ff2d0a98d23c294be9fb2dadbe14030532dfa173575ce2a3e1373bcaa7c4b5cad6257f4d02957eeacdf3701a52d1b"`
     );
 
     const presumedOrderHash = calculateOrderHash(signableOrderData);
@@ -251,11 +252,11 @@ describe('Limit Orders', () => {
     );
   });
 
-  // @TODO witch to getLimitOrders
-  test.only('getRawLimitOrders', async () => {
+  // @TODO switch to getLimitOrders
+  test('getRawLimitOrders', async () => {
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
     const orderHash =
-      '0x76444ee52272f6a11eaf0db38ed9c41f352ca576e8946875826614f4250fdd77';
+      '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
     const orders = await paraSwap.getRawLimitOrders(account);
 
@@ -265,21 +266,23 @@ describe('Limit Orders', () => {
 
     assert(order, `order must exist for orderHash ${orderHash}`);
 
-    const { state, transactions, makerBalance, ...stableOrderFields } = order;
+    expect(order.state).toEqual('EXPIRED');
 
-    // @TODO regenerate when createAt is fixed
-    expect(stableOrderFields).toMatchInlineSnapshot(`
+    // EXPIRED order won't change
+    expect(order).toMatchInlineSnapshot(`
       Object {
         "chainId": 3,
-        "createdAt": 1652336459,
-        "expiry": 1652372454,
+        "createdAt": 1652430671,
+        "expiry": 0,
         "maker": "0x05182e579fdfcf69e4390c3411d8fea1fb6467cf",
         "makerAmount": "10000000000000000000",
         "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
-        "nonceAndMeta": "2528441167932495735490360796529905318841314624752046783131025408",
-        "orderHash": "0x76444ee52272f6a11eaf0db38ed9c41f352ca576e8946875826614f4250fdd77",
+        "makerBalance": "10000000000000000000",
+        "nonceAndMeta": "8209317000076433728076072485312968185294986748283703458703343616",
+        "orderHash": "0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b",
         "permitMakerAsset": null,
-        "signature": "0xe3d8611565ab6d8d793f176f397491700a71f50a3d1cbda1aef00c7c02746238464201307ac1cb0fe5b1f91583a31f8352c15db305a80e9dda353150a032342d1c",
+        "signature": "0x5df9b6f3abaef67993e57e94ab2ed9e58a4c709fb03f0cf23117c0ed8a4b46097c515c2b055d2a5a1c373513faaa618ae3873e167c129128bb0b28a8be5f980e1b",
+        "state": "EXPIRED",
         "taker": "0x0000000000000000000000000000000000000000",
         "takerAmount": "1000000000000000000",
         "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
@@ -729,8 +732,8 @@ describe('Limit Orders', () => {
   test('getOrdersStatus', async () => {
     // orders that should not change anymore
     const orderHashes = [
-      '0x636cc5aa95ce9f6e3ea5eb7e65b4136debe62c4a743fb9a4d8af9c0d35c71ba4',
-      '0x36e737bec31051f7b5a6ac101be831ed496f7c5b78a7c7f9b1177fd7a9ad9c09',
+      '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b',
+      '0xa5b52be5e7a6cec7e14d8567c561673a931d91368025dd3966f70b1da154c470',
     ];
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
@@ -775,13 +778,8 @@ describe('Limit Orders', () => {
     expect(ordersExtraData).toMatchInlineSnapshot(`
       Array [
         Object {
-          "amountFilled": "50000000000000000",
-          "status": "canceled",
-          "transactionHashes": Array [
-            "0x2d544b7d2cc0f57de2cf51cecd3c975915e33030e33e28ffdd8ebe7e52c7866c",
-            "0x107b94c8979d3a7e4e0856bff52e00a57a71f9c0664a79a4e884a3127e666f9e",
-            "0xcd6ceb51f996480ab484907bfd79439dea302e8b6e987c90e905075335fdc9e5",
-          ],
+          "amountFilled": "0",
+          "status": "open",
         },
         Object {
           "amountFilled": "0",
