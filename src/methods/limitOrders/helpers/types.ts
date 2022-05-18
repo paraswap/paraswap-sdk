@@ -107,9 +107,9 @@ export type LimitOrderApiResponse = {
 };
 
 // display states such as EXPIRED and PARTIALLY_FILLLED derived on client side
-// EXPIRED == order.expiry < Date.now()/1000
+// returned by API but can be calculated too, EXPIRED == order.expiry < Date.now()/1000
 // PARTIALLY_FILLED == order.makerBalance < order.makerAmount && order.makerBalance !== '0'
-export type LimitOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED';
+export type LimitOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED' | 'EXPIRED';
 
 export type LimitOrderEvent = '';
 
