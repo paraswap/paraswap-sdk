@@ -180,7 +180,6 @@ export const constructGetLimitOrders = ({
     chainId2BlockContractDeployedAt[network];
 
   const getLimitOrdersStatusAndAmountFilled: GetOrdersExtraData = async (
-    orderMaker,
     orders,
     overrides = {}
   ) => {
@@ -192,28 +191,67 @@ export const constructGetLimitOrders = ({
 
     const orderHashes = orders.map((order) => order.orderHash);
 
+    const remainingBalances: EthersBigNumber[] = [];
+
+    // can't fetch all balances onchain for orders if asking for orders with different makers
+    // which happens when fetching orders by taker
+    const orderHashesByMaker = gatherObjectsByProp<
+      MinOrderForStatus,
+      { orderHash: string; index: number }[]
+    >(
+      orders,
+      (order) => order.maker,
+      ({ orderHash }, accumElem = [], index) => {
+        accumElem.push({ orderHash, index });
+        return accumElem;
+      }
+    );
+
+    // make AugustusRFQ.getRemainingOrderBalance(maker, orderHashes) for each maker
+    const executePromises = Object.entries(orderHashesByMaker).map(
+      async ([maker, orderHashObjects]) => {
+        const orderHashes = orderHashObjects.map((o) => o.orderHash);
+
+        const remainingBalancesForGroup = await contractCaller.staticCall<
+          EthersBigNumber[],
+          AvailableMethods
+        >({
+          address: verifyingContract,
+          abi: MinAugustusRFQAbi,
+          contractMethod: 'getRemainingOrderBalance',
+          args: [maker, orderHashes],
+          overrides,
+        });
+
+        remainingBalancesForGroup.forEach((balance, index) => {
+          const orderIndex = orderHashObjects[index]?.index!;
+
+          remainingBalances[orderIndex] = balance;
+        });
+      }
+    );
+
+    await Promise.all(executePromises);
+    // at this point remainingBalances are filled in at correct order indices
+
     // @TODO check what the return is for web3, probably string[]
-    const remainingBalances = await contractCaller.staticCall<
-      EthersBigNumber[],
-      AvailableMethods
-    >({
-      address: verifyingContract,
-      abi: MinAugustusRFQAbi,
-      contractMethod: 'getRemainingOrderBalance',
-      args: [orderMaker, orderHashes],
-      overrides,
-    });
+    // const remainingBalances = await contractCaller.staticCall<
+    //   EthersBigNumber[],
+    //   AvailableMethods
+    // >({
+    //   address: verifyingContract,
+    //   abi: MinAugustusRFQAbi,
+    //   contractMethod: 'getRemainingOrderBalance',
+    //   args: [orderMaker, orderHashes],
+    //   overrides,
+    // });
 
     const logs = (await contractCaller.getLogsCall({
       address: verifyingContract,
       abi: AugustusRFQEventsAbi,
       filter: {
         address: verifyingContract,
-        topics: [
-          [OrderFilledSig, OrderCancelledSig],
-          orderHashes,
-          '0x' + orderMaker.replace('0x', '').padStart(64, '0'),
-        ],
+        topics: [[OrderFilledSig, OrderCancelledSig], orderHashes],
         fromBlock: verifyingContractDeployedBlock, // if not available will default to 0
         // and then depending on node will either count from 0 or from the earlies available block or break or hang
       },
