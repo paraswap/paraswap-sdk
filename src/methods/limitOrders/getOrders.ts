@@ -173,7 +173,7 @@ export const constructGetLimitOrders = ({
   'staticCall' | 'getLogsCall'
 >): GetLimitOrdersFunctions => {
   // const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
-  const baseFetchURL = `${apiURL}/limit/orders`; // in API
+  const baseFetchURL = `${apiURL}/limit/orders/${network}`; // in API
 
   const verifyingContract = chainId2verifyingContract[network];
   const verifyingContractDeployedBlock =
@@ -341,6 +341,11 @@ export const constructGetLimitOrders = ({
   };
 
   const getRawLimitOrders: GetRawLimitOrders = async (useParams, signal) => {
+    const userURL =
+      'maker' in useParams
+        ? `maker/${useParams.maker}`
+        : `taker/${useParams.taker}`;
+    const fetchURL = `${baseFetchURL}/${userURL}`;
 
     const { orders } = await fetcher<LimitOrdersApiResponse>({
       url: fetchURL,
