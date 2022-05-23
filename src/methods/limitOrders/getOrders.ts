@@ -35,14 +35,17 @@ type GetRawLimitOrders = (
   signal?: AbortSignal
 ) => Promise<RawLimitOrder[]>;
 
+type MinOrderForStatus = Pick<
+  RawLimitOrder,
+  'expiry' | 'makerAmount' | 'orderHash' | 'taker' | 'maker'
+>;
+
 type GetOrderExtraData = (
-  orderMaker: Address,
-  order: Pick<RawLimitOrder, 'expiry' | 'makerAmount' | 'orderHash'>,
+  order: MinOrderForStatus,
   overrides?: StaticCallOverrides
 ) => Promise<LimitOrderExtra>;
 type GetOrdersExtraData = (
-  orderMaker: Address,
-  orders: Pick<RawLimitOrder, 'expiry' | 'makerAmount' | 'orderHash'>[],
+  orders: MinOrderForStatus[],
   overrides?: StaticCallOverrides
 ) => Promise<LimitOrderExtra[]>;
 
@@ -325,12 +328,10 @@ export const constructGetLimitOrders = ({
   };
 
   const getLimitOrderStatusAndAmountFilled: GetOrderExtraData = async (
-    orderMaker,
     order,
     overrides = {}
   ) => {
     const [orderStatus] = await getLimitOrdersStatusAndAmountFilled(
-      orderMaker,
       [order],
       overrides
     );
