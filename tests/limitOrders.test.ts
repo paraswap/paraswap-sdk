@@ -36,7 +36,10 @@ import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
 import ganache from 'ganache';
 
-import { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
+import {
+  BuildLimitOrderInput,
+  ZERO_ADDRESS,
+} from '../src/methods/limitOrders/buildOrder';
 import { assert } from 'ts-essentials';
 
 dotenv.config();
@@ -258,7 +261,7 @@ describe('Limit Orders', () => {
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const orders = await paraSwap.getRawLimitOrders(account);
+    const orders = await paraSwap.getRawLimitOrders({ maker: account });
 
     const order = orders.find(
       (order) => order.orderHash.toLowerCase() === orderHash
@@ -667,7 +670,6 @@ describe('Limit Orders', () => {
     // order that should not change anymore
     const orderHash =
       '0x636CC5AA95CE9F6E3EA5EB7E65B4136DEBE62C4A743FB9A4D8AF9C0D35C71BA4';
-    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
 
     // need real provider, local ganache fork can't get historical events
     const prov = ethers.getDefaultProvider(PROVIDER_URL);
@@ -712,7 +714,6 @@ describe('Limit Orders', () => {
     assert(order, `must have an order with orderHash ${orderHash}`);
 
     const orderExtraData = await paraSwap.getLimitOrderStatusAndAmountFilled(
-      account,
       order
     );
 
@@ -758,7 +759,7 @@ describe('Limit Orders', () => {
       constructGetLimitOrders
     );
 
-    const orders = await paraSwap.getRawLimitOrders(account);
+    const orders = await paraSwap.getRawLimitOrders({ maker: account });
 
     const selectedOrders = orders.filter((order) =>
       orderHashes.includes(order.orderHash)
@@ -768,11 +769,12 @@ describe('Limit Orders', () => {
     expect(orderHashes.length).toEqual(selectedOrders.length);
 
     const ordersExtraData = await paraSwap.getLimitOrdersStatusAndAmountFilled(
-      account,
       orderHashes.map((orderHash) => ({
         expiry: orderExpiry,
         makerAmount: '100000000',
         orderHash,
+        maker: senderAddress,
+        taker: ZERO_ADDRESS,
       }))
     );
     expect(ordersExtraData).toMatchInlineSnapshot(`

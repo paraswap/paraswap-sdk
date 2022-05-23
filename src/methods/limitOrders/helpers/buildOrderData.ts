@@ -17,7 +17,7 @@ const Order = [
 
 const name = 'AUGUSTUS RFQ';
 const version = '1';
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export interface BuildOrderDataInput {
   chainId: number;
