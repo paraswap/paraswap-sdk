@@ -154,26 +154,26 @@ export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
 // gatherObjectsByProp(Token[], token => token.address) => Record<address, Token|undefined>
 export function gatherObjectsByProp<T>(
   elements: T[],
-  pickProp: (elem: T) => string
+  pickProp: (elem: T, index: number) => string
 ): Record<string, T>;
 export function gatherObjectsByProp<T, U>(
   elements: T[],
-  pickProp: (elem: T) => string,
-  transfrom: (elem: T, accumElem?: U) => U
+  pickProp: (elem: T, index: number) => string,
+  transfrom: (elem: T, accumElem: U | undefined, index: number) => U
 ): Record<string, U>;
 export function gatherObjectsByProp<T, U>(
   elements: T[],
-  pickProp: (elem: T) => string,
-  transform?: (elem: T, accumElem?: U) => U
+  pickProp: (elem: T, index: number) => string,
+  transform?: (elem: T, accumElem: U | undefined, index: number) => U
 ): Record<string, T> | Record<string, U> {
   return elements.reduce<Record<string, T> | Record<string, U>>(
-    (accum, element) => {
-      const key = pickProp(element);
+    (accum, element, index) => {
+      const key = pickProp(element, index);
 
       const accumElem: T | U | undefined = accum[key];
       const transformedElement = transform
         ? //                       if transform is available, can only be U | undefined
-          transform(element, accumElem as U | undefined)
+          transform(element, accumElem as U | undefined, index)
         : element;
 
       accum[key] = transformedElement;
