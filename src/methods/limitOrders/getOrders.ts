@@ -23,12 +23,15 @@ import type {
   UnknownLimitOrder,
 } from './helpers/types';
 
+//                     get orders by `maker` or `taker`
+type LimitOrdersUserParams = { maker: Address } | { taker: Address };
+
 type GetLimitOrders = (
-  userAddress: string,
+  useParams: LimitOrdersUserParams,
   signal?: AbortSignal
 ) => Promise<AnyLimitOrder[] | UnknownLimitOrder[]>;
 type GetRawLimitOrders = (
-  userAddress: string,
+  useParams: LimitOrdersUserParams,
   signal?: AbortSignal
 ) => Promise<RawLimitOrder[]>;
 
@@ -299,8 +302,7 @@ export const constructGetLimitOrders = ({
     return orderStatus;
   };
 
-  const getRawLimitOrders: GetRawLimitOrders = async (userAddress, signal) => {
-    const fetchURL = `${baseFetchURL}/${userAddress}`;
+  const getRawLimitOrders: GetRawLimitOrders = async (useParams, signal) => {
 
     const { orders } = await fetcher<LimitOrdersApiResponse>({
       url: fetchURL,
@@ -313,14 +315,11 @@ export const constructGetLimitOrders = ({
     return orders;
   };
 
-  const getLimitOrders: GetLimitOrders = async (userAddress, signal) => {
-    const orders = await getRawLimitOrders(userAddress, signal);
+  const getLimitOrders: GetLimitOrders = async (useParams, signal) => {
+    const orders = await getRawLimitOrders(useParams, signal);
 
     try {
-      const orderExtras = await getLimitOrdersStatusAndAmountFilled(
-        userAddress,
-        orders
-      );
+      const orderExtras = await getLimitOrdersStatusAndAmountFilled(orders);
 
       const ordersWithEtras = orders.map<AnyLimitOrder>((order, index) => {
         const extras = orderExtras[index];
