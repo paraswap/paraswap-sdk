@@ -25,7 +25,10 @@ import type {
 
 //                     get orders by `maker` or `taker`
 export type LimitOrdersUserParams = { maker: Address } | { taker: Address };
-
+type GetLimitOrderByHash = (
+  orderHash: string,
+  signal?: AbortSignal
+) => Promise<RawLimitOrder>;
 type GetLimitOrders = (
   userParams: LimitOrdersUserParams,
   signal?: AbortSignal
@@ -53,6 +56,7 @@ export type GetLimitOrdersFunctions = {
   /** @deprecated use getRawLimitOrders for now*/
   getLimitOrders: GetLimitOrders;
   getRawLimitOrders: GetRawLimitOrders;
+  getLimitOrderByHash: GetLimitOrderByHash;
   /** @deprecated */
   getLimitOrderStatusAndAmountFilled: GetOrderExtraData;
   /** @deprecated */
@@ -359,6 +363,21 @@ export const constructGetLimitOrders = ({
     return orders;
   };
 
+  const getLimitOrderByHash: GetLimitOrderByHash = async (
+    orderHash,
+    signal
+  ) => {
+    const fetchURL = `${apiURL}/limit/order/${network}/${orderHash}`;
+
+    const order = await fetcher<RawLimitOrder>({
+      url: fetchURL,
+      method: 'GET',
+      signal,
+    });
+
+    return order;
+  };
+
   const getLimitOrders: GetLimitOrders = async (userParams, signal) => {
     const orders = await getRawLimitOrders(userParams, signal);
 
@@ -392,6 +411,7 @@ export const constructGetLimitOrders = ({
   return {
     getLimitOrders,
     getRawLimitOrders,
+    getLimitOrderByHash,
     getLimitOrderStatusAndAmountFilled,
     getLimitOrdersStatusAndAmountFilled,
   };
