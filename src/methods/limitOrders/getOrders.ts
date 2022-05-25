@@ -24,7 +24,7 @@ import type {
 } from './helpers/types';
 
 //                     get orders by `maker` or `taker`
-type LimitOrdersUserParams = { maker: Address } | { taker: Address };
+export type LimitOrdersUserParams = { maker: Address } | { taker: Address };
 
 type GetLimitOrders = (
   useParams: LimitOrdersUserParams,

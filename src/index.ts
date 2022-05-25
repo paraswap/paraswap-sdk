@@ -30,6 +30,7 @@ import {
 import {
   GetLimitOrdersFunctions,
   constructGetLimitOrders,
+  LimitOrdersUserParams,
 } from './methods/limitOrders/getOrders';
 import {
   PostLimitOrderFunctions,
@@ -148,6 +149,7 @@ export type {
   PartialFillOrderInput,
   ApproveTokenForLimitOrderFunctions,
   GetLimitOrdersFunctions,
+  LimitOrdersUserParams,
   // other types
   Token,
   Address,
