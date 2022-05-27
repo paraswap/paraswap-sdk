@@ -19,6 +19,28 @@ type FillOrder<T> = (
   overrides?: TxSendOverrides
 ) => Promise<T>;
 
+export interface OrderInfoForBatchFill {
+  orderData: OrderData;
+  signature: string;
+  /** @description for partially filling an order, will fully fill by default */
+  takerTokenFillAmount?: string;
+  /** @description for permissible taker's Token, '0x' by default === no permit used */
+  permitTakerAsset?: string;
+  /** @description for permissible maker's Token, '0x' by default === no permit used */
+  permitMakerAsset?: string;
+}
+
+export interface FillOrdersInput {
+  orderInfos: OrderInfoForBatchFill[];
+  /** @description address to send tokens to. Pass current account */
+  target: Address;
+}
+
+type BatchFillOrders<T> = (
+  params: FillOrdersInput,
+  overrides?: TxSendOverrides
+) => Promise<T>;
+
 export interface PartialFillOrderInput extends FillOrderInput {
   fillAmount: string;
 }
@@ -47,6 +69,7 @@ export type FillLimitOrderFunctions<T> = {
   fillLimitOrder: FillOrder<T>;
   partialFilllLimitOrder: PartialFillOrder<T>;
   partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
+  batchFillLimitOrderWithTarget: BatchFillOrders<T>;
 };
 
 // much smaller than the whole ERC20_ABI
@@ -107,6 +130,93 @@ const MinAugustusRFQAbi = [
       },
     ],
     name: 'fillOrder',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'nonceAndMeta',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint128',
+                name: 'expiry',
+                type: 'uint128',
+              },
+              {
+                internalType: 'address',
+                name: 'makerAsset',
+                type: 'address',
+              },
+              {
+                internalType: 'address',
+                name: 'takerAsset',
+                type: 'address',
+              },
+              {
+                internalType: 'address',
+                name: 'maker',
+                type: 'address',
+              },
+              {
+                internalType: 'address',
+                name: 'taker',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'makerAmount',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'takerAmount',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct AugustusRFQ.Order',
+            name: 'order',
+            type: 'tuple',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            internalType: 'uint256',
+            name: 'takerTokenFillAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bytes',
+            name: 'permitTakerAsset',
+            type: 'bytes',
+          },
+          {
+            internalType: 'bytes',
+            name: 'permitMakerAsset',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct AugustusRFQ.OrderInfo[]',
+        name: 'orderInfos',
+        type: 'tuple[]',
+      },
+      {
+        internalType: 'address',
+        name: 'target',
+        type: 'address',
+      },
+    ],
+    name: 'batchFillOrderWithTarget',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -302,6 +412,45 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
+  const batchFillLimitOrderWithTarget: BatchFillOrders<T> = async (
+    { orderInfos, target },
+    overrides = {}
+  ) => {
+    assert(
+      verifyingContract,
+      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
+    );
+
+    const sanitizedOrderInfos = orderInfos.map<Required<OrderInfoForBatchFill>>(
+      ({
+        orderData,
+        signature,
+        takerTokenFillAmount = orderData.takerAmount,
+        permitMakerAsset = '0x',
+        permitTakerAsset = '0x',
+      }) => {
+        return {
+          orderData: sanitizeOrderData(orderData),
+          signature,
+          takerTokenFillAmount,
+          permitMakerAsset,
+          permitTakerAsset,
+        };
+      }
+    );
+
+    const res = await options.contractCaller.transactCall<AvailableMethods>({
+      address: verifyingContract,
+      abi: MinAugustusRFQAbi,
+      contractMethod: 'batchFillOrderWithTarget',
+      // types allow to pass (OrderInfo & extra_stuff)[], but tx will break like that
+      args: [sanitizedOrderInfos, target],
+      overrides,
+    });
+
+    return res;
+  };
+
   const partialFilllLimitOrder: PartialFillOrder<T> = async (
     { orderData, signature, fillAmount },
     overrides = {}
@@ -362,6 +511,7 @@ export const constructFillLimitOrder = <T>(
 
   return {
     fillLimitOrder,
+    batchFillLimitOrderWithTarget,
     partialFilllLimitOrder,
     partialFillLimitOrderWithTargetPermit,
   };
