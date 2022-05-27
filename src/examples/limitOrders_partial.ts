@@ -88,8 +88,8 @@ async function run() {
 
   const tx3: ethers.ContractTransaction =
     await paraSwapLimitOrderSDK.approveTokenForLimitOrder(
-      (1e18).toString(10),
-      DAI
+      orderInput.makerAmount,
+      orderInput.makerAsset
     );
 
   const signableOrderData: SignableOrderData =
@@ -130,8 +130,8 @@ async function run() {
 
   const tx4: ethers.ContractTransaction =
     await paraswapLimitOrdersSDKForTaker.approveTokenForLimitOrder(
-      (8e18).toString(10),
-      HEX
+      orderInput.takerAmount,
+      orderInput.takerAsset
     );
 
   const tx5: ethers.ContractTransaction =
