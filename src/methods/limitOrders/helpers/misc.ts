@@ -12,7 +12,12 @@ export const chainId2verifyingContract: Record<number, Address> = {
 };
 
 export const chainId2BlockContractDeployedAt: Record<number, number> = {
+  1: 14853783,
   3: 12240016,
+  56: 18164860,
+  137: 28829754,
+  250: 39169691,
+  43114: 15242064,
 };
 
 export function sanitizeOrderData({
