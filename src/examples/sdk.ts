@@ -24,16 +24,16 @@ const paraswap = constructFullSDK({
   contractCaller,
 });
 
-const res = paraswap.getAdapters({ type: 'list', namesOnly: false });
+const res = paraswap.swap.getAdapters({ type: 'list', namesOnly: false });
 
 // type Promise<ContractTransaction>
-const txResponse = paraswap.approveToken('1', '0x...');
+const txResponse = paraswap.swap.approveToken('1', '0x...');
 // type Promise<ContractTransaction[]>
-const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
+const txResponses = paraswap.swap.approveTokenBulk('1', ['0x...']);
 
-const part1 = constructPartialSDK(
+const partial = constructPartialSDK(
   { apiURL: '', chainId: 1, fetcher },
   constructGetAdapters
 );
 
-const res1 = part1.getAdapters({ type: 'object' });
+const res1 = partial.getAdapters({ type: 'object' });

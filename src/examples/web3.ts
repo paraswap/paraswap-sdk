@@ -19,7 +19,7 @@ const paraswap = constructFullSDK({
 
 async function main() {
   // type Web3UnpromiEvent
-  const eventfulTxResponse = await paraswap.approveToken(
+  const eventfulTxResponse = await paraswap.swap.approveToken(
     '1000000000000000000',
     '0xcafe001067cDEF266AfB7Eb5A286dCFD277f3dE5'
   );
