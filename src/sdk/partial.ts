@@ -5,7 +5,7 @@ import type {
   ConstructProviderFetchInput,
 } from '../types';
 import type { Merge, UnionToIntersection } from 'ts-essentials';
-import type { ApproveTokenFunctions } from '../methods/approve';
+import type { ApproveTokenFunctions } from '../methods/swap/approve';
 import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
 import type { FillLimitOrderFunctions } from '../methods/limitOrders/fillOrders';
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
