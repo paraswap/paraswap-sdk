@@ -1,18 +1,25 @@
 import {
   constructApproveToken,
   ApproveTokenFunctions,
-} from './methods/approve';
+} from './methods/swap/approve';
 import {
   constructGetBalances,
   GetBalancesFunctions,
   isAllowance,
   Allowance,
-} from './methods/balance';
-import { constructGetSpender, GetSpenderFunctions } from './methods/spender';
-import { constructGetAdapters, GetAdaptersFunctions } from './methods/adapters';
-import { constructGetRate, GetRateFunctions } from './methods/rates';
-import { constructGetTokens, GetTokensFunctions } from './methods/token';
-import { BuildTxFunctions, constructBuildTx } from './methods/transaction';
+} from './methods/swap/balance';
+import {
+  constructGetSpender,
+  GetSpenderFunctions,
+} from './methods/swap/spender';
+import {
+  constructGetAdapters,
+  GetAdaptersFunctions,
+} from './methods/swap/adapters';
+import { constructGetRate, GetRateFunctions } from './methods/swap/rates';
+import { constructGetTokens, GetTokensFunctions } from './methods/swap/token';
+import { BuildTxFunctions, constructBuildTx } from './methods/swap/transaction';
+
 import {
   BuildLimitOrderFunctions,
   BuildLimitOrderInput,
@@ -39,6 +46,7 @@ import {
 import {
   FillLimitOrderFunctions,
   FillOrderInput,
+  FillOrdersInput,
   PartialFillOrderInput,
   constructFillLimitOrder,
 } from './methods/limitOrders/fillOrders';
@@ -75,6 +83,14 @@ import type {
   OptionalRate,
 } from './types';
 
+export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
+
+export {
+  constructAllLimitOrdersHandlers,
+  constructSubmitLimitOrder,
+  LimitOrderHandlers,
+} from './methods/limitOrders';
+
 export type {
   TransactionParams,
   BuildOptions,
@@ -82,7 +98,7 @@ export type {
   BuildOptionsWitWithMaxFee,
   BuildOptionsWithGasPrice,
   BuildTxInput,
-} from './methods/transaction';
+} from './methods/swap/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
 export * from './methods/limitOrders/helpers/types';
@@ -146,6 +162,7 @@ export type {
   PostLimitOrderFunctions,
   FillLimitOrderFunctions,
   FillOrderInput,
+  FillOrdersInput,
   PartialFillOrderInput,
   ApproveTokenForLimitOrderFunctions,
   GetLimitOrdersFunctions,
@@ -165,7 +182,7 @@ export type {
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
 export { AllSDKMethods, constructFullSDK } from './sdk/full';
-export { SimpleFetchSDK, constructSimpleSDK } from './sdk/simple';
+export { SimpleFetchSDK, SimpleSDK, constructSimpleSDK } from './sdk/simple';
 
 export { ParaSwap } from './legacy';
 
