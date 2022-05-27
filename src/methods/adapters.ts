@@ -36,9 +36,14 @@ export type GetAdaptersFunctions = {
   getAdapters: GetAdaptersFunc;
 };
 
+type SearchStringParams = {
+  network: number;
+  namesOnly?: boolean;
+};
+
 export const constructGetAdapters = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): GetAdaptersFunctions => {
   async function getAdapters(
@@ -61,11 +66,13 @@ export const constructGetAdapters = ({
     options: AllAdaptersOptions,
     signal?: AbortSignal
   ): Promise<AdaptersAsObject | AdaptersAsList | AdaptersAsStrings> {
-    const query = constructSearchString({
-      network,
+    // always pass explicit type to make sure UrlSearchParams are correct
+    const query = constructSearchString<SearchStringParams>({
+      network: chainId,
       namesOnly:
         !!options && 'namesOnly' in options ? options.namesOnly : undefined,
     });
+
     const fetchURL = `${apiURL}/adapters${
       options?.type === 'list' ? '/list' : ''
     }${query}`;

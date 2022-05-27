@@ -60,6 +60,8 @@ export type BuildTxFunctions = {
   buildTx: BuildTx;
 };
 
+type SearchStringParams = BuildOptions;
+
 export const constructBuildTx = ({
   apiURL = API_URL,
   chainId,
@@ -88,7 +90,8 @@ export const constructBuildTx = ({
       }),
       AmountMistmatchError
     );
-    const search = constructSearchString(options);
+    // always pass explicit type to make sure UrlSearchParams are correct
+    const search = constructSearchString<SearchStringParams>(options);
 
     const fetchURL = `${transactionsURL}/${search}`;
 

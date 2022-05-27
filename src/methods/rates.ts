@@ -68,9 +68,15 @@ const DEFAULT_PARTNER = 'paraswap.io';
 const INVALID_DEX_LIST = 'Invalid DEX list';
 const INVALID_ROUTE = 'Invalid Route';
 
+type SearchStringParams = CommonGetRateResult & {
+  srcToken: AddressOrSymbol;
+  destToken: AddressOrSymbol;
+  network: number;
+};
+
 export const constructGetRate = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): GetRateFunctions => {
   const pricesUrl = `${apiURL}/prices`;
@@ -78,10 +84,11 @@ export const constructGetRate = ({
   const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
     const parsedOptions = commonGetRateOptionsGetter(rest);
 
-    const search = constructSearchString({
+    // always pass explicit type to make sure UrlSearchParams are correct
+    const search = constructSearchString<SearchStringParams>({
       srcToken,
       destToken,
-      network,
+      network: chainId,
       ...parsedOptions,
     });
 
@@ -107,7 +114,7 @@ export const constructGetRate = ({
 
     const search = constructSearchString({
       route: _route,
-      network,
+      network: chainId,
       ...parsedOptions,
     });
 
