@@ -1,15 +1,15 @@
-import { API_URL } from '../constants';
+import { API_URL } from '../../constants';
 import {
   Token,
   Address,
   constructToken,
   AddressOrSymbol,
-} from '../helpers/token';
-import {
+} from '../../helpers/token';
+import type {
   ConstructFetchInput,
   TokenApiResponse,
   TokensApiResponse,
-} from '../types';
+} from '../../types';
 
 type GetBalances = (
   userAddress: Address,

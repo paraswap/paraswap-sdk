@@ -1,5 +1,5 @@
-import { API_URL } from '../constants';
-import { ConstructFetchInput, Address } from '../types';
+import { API_URL } from '../../constants';
+import type { ConstructFetchInput, Address } from '../../types';
 
 type GetSpender = (signal?: AbortSignal) => Promise<Address>;
 

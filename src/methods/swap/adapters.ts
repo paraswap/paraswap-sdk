@@ -1,6 +1,6 @@
-import { ConstructFetchInput } from '../types';
-import { constructSearchString } from '../helpers/misc';
-import { API_URL } from '../constants';
+import type { ConstructFetchInput } from '../../types';
+import { constructSearchString } from '../../helpers/misc';
+import { API_URL } from '../../constants';
 
 type Adapter = {
   adapter: string;

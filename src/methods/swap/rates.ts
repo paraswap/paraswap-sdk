@@ -1,13 +1,13 @@
-import { SwapSide, ContractMethod, API_URL } from '../constants';
-import { constructSearchString } from '../helpers/misc';
-import {
+import { SwapSide, ContractMethod, API_URL } from '../../constants';
+import { constructSearchString } from '../../helpers/misc';
+import type {
   ConstructFetchInput,
   PriceRouteApiResponse,
   Address,
   AddressOrSymbol,
   PriceString,
   OptimalRate,
-} from '../types';
+} from '../../types';
 
 // TODO: This is legacy and can be removed
 export enum PricingMethod {

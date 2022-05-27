@@ -4,8 +4,8 @@ import type {
   TxSendOverrides,
   Address,
   PriceString,
-} from '../types';
-import { ApproveToken, approveTokenMethodFactory } from '../helpers/approve';
+} from '../../types';
+import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
 
 type ApproveTokenBulk<T> = (
   amount: PriceString,
