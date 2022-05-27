@@ -5,7 +5,7 @@ import type { ContractTransaction } from '@ethersproject/contracts';
 
 import { API_URL, SwapSide } from '../constants';
 import {
-  AllSDKMethods,
+  SwapSDKMethods,
   constructBuildTx,
   constructGetAdapters,
   constructGetBalances,
@@ -13,7 +13,7 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructGetRate,
-  constructFullSDK,
+  constructSwapSDK,
   PriceString,
   Address,
   OptimalRate,
@@ -29,10 +29,13 @@ import {
   EthersProviderDeps,
 } from '../helpers';
 
-import type { RateOptions } from '../methods/rates';
-import type { BuildOptions, TransactionParams } from '../methods/transaction';
+import type { RateOptions } from '../methods/swap/rates';
+import type {
+  BuildOptions,
+  TransactionParams,
+} from '../methods/swap/transaction';
 import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
-import type { Allowance } from '../methods/balance';
+import type { Allowance } from '../methods/swap/balance';
 import { isDataWithError } from '../helpers/misc';
 
 export type APIError = {
@@ -46,7 +49,7 @@ type TxResponse = Web3UnpromiEvent | ContractTransaction;
 
 /** @deprecated */
 export class ParaSwap {
-  sdk: Partial<AllSDKMethods<TxResponse>> = {};
+  sdk: Partial<SwapSDKMethods<TxResponse>> = {};
   fetcher: FetcherFunction;
 
   constructor(
@@ -88,7 +91,7 @@ export class ParaSwap {
       : null;
 
     if (contractCaller) {
-      this.sdk = constructFullSDK<TxResponse>({
+      this.sdk = constructSwapSDK<TxResponse>({
         fetcher,
         contractCaller,
         apiURL,
@@ -134,7 +137,7 @@ export class ParaSwap {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
     const { apiURL, chainId, fetcher } = this;
 
-    this.sdk = constructFullSDK({
+    this.sdk = constructSwapSDK({
       fetcher,
       contractCaller,
       apiURL,
@@ -152,7 +155,7 @@ export class ParaSwap {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
     const { apiURL, chainId, fetcher } = this;
 
-    this.sdk = constructFullSDK({
+    this.sdk = constructSwapSDK({
       fetcher,
       contractCaller,
       apiURL,
