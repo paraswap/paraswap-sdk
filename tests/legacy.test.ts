@@ -32,7 +32,7 @@ const MANA = '0x0f5d2fb29fb7d3cfee444a200298f468908cc942';
 
 const TESTING_ENV = true;
 const PROVIDER_URL = process.env.PROVIDER_URL;
-const network = 1;
+const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
 const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
@@ -68,7 +68,7 @@ describe('ParaSwap SDK', () => {
 
   beforeAll(async () => {
     paraSwap = new ParaSwap(
-      network,
+      chainId,
       undefined,
       undefined,
       undefined,

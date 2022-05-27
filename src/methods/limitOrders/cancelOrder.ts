@@ -55,7 +55,7 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 export const constructCancelLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): CancelLimitOrderFunctions<T> => {
-  const verifyingContract = chainId2verifyingContract[options.network];
+  const verifyingContract = chainId2verifyingContract[options.chainId];
 
   const cancelLimitOrder: CancelOrder<T> = async (
     orderHash,
@@ -64,7 +64,7 @@ export const constructCancelLimitOrder = <T>(
   ) => {
     assert(
       verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${options.network}`
+      `verifyingContract for Limit Orders not available on chain ${options.chainId}`
     );
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
@@ -87,7 +87,7 @@ export const constructCancelLimitOrder = <T>(
   ) => {
     assert(
       verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${options.network}`
+      `verifyingContract for Limit Orders not available on chain ${options.chainId}`
     );
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({

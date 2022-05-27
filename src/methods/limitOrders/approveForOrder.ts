@@ -12,12 +12,12 @@ export type ApproveTokenForLimitOrderFunctions<T> = {
 export const constructApproveTokenForLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenForLimitOrderFunctions<T> => {
-  const verifyingContract = chainId2verifyingContract[options.network];
+  const verifyingContract = chainId2verifyingContract[options.chainId];
 
   const getSpender = (): string => {
     assert(
       verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.network}`
+      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
     );
 
     return verifyingContract;

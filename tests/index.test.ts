@@ -56,7 +56,7 @@ const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
-const network = 1;
+const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
 const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
@@ -121,7 +121,7 @@ describe.each([
 
   beforeAll(() => {
     paraSwap = constructPartialSDK(
-      { network, fetcher },
+      { chainId, fetcher },
       constructGetBalances,
       constructGetAdapters,
       constructGetTokens,
@@ -398,7 +398,7 @@ describe.each([
         SDKConfig<ApproveTxResult>,
         [ApproveConstructor, typeof constructGetSpender]
       >(
-        { network, fetcher, contractCaller },
+        { chainId, fetcher, contractCaller },
         constructApproveToken,
         constructGetSpender
       );

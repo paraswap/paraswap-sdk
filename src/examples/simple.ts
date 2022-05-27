@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { constructSimpleSDK, SwapSide } from '..';
 
 // only methods that fetch from API
-const simpleFetchOnlySDK = constructSimpleSDK({ network: 1, axios });
+const simpleFetchOnlySDK = constructSimpleSDK({ chainId: 1, axios });
 
 const account = '0x...';
 
@@ -25,7 +25,7 @@ const providerOptions = {
 };
 
 const SDKwithApprove = constructSimpleSDK(
-  { network: 1, axios },
+  { chainId: 1, axios },
   providerOptions
 );
 

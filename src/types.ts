@@ -21,7 +21,7 @@ export type {
 
 export interface ConstructBaseInput {
   apiURL?: string;
-  network: number;
+  chainId: number;
 }
 
 interface FetcherInputBase {

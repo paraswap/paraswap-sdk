@@ -62,10 +62,10 @@ export type BuildTxFunctions = {
 
 export const constructBuildTx = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): BuildTxFunctions => {
-  const transactionsURL = `${apiURL}/transactions/${network}`;
+  const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
     const {

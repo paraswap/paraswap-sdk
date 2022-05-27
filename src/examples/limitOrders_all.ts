@@ -33,7 +33,7 @@ const contractCaller = constructEthersContractCaller(
 // & ApproveTokenFunctions<ethers.ContractTransaction>
 const paraSwapLimitOrderSDK = constructPartialSDK(
   {
-    network: 1,
+    chainId: 1,
     fetcher,
     contractCaller,
   },
@@ -71,7 +71,7 @@ async function run() {
 
   const paraswapLimitOrdersSDKForTaker = constructPartialSDK(
     {
-      network: 1,
+      chainId: 1,
       fetcher,
       contractCaller: constructEthersContractCaller(
         {

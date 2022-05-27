@@ -172,7 +172,7 @@ const OrderCancelledSig =
 
 export const constructGetLimitOrders = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
   contractCaller,
 }: ConstructProviderFetchInput<
@@ -180,11 +180,11 @@ export const constructGetLimitOrders = ({
   'staticCall' | 'getLogsCall'
 >): GetLimitOrdersFunctions => {
   // const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
-  const baseFetchURL = `${apiURL}/limit/orders/${network}`; // in API
+  const baseFetchURL = `${apiURL}/limit/orders/${chainId}`; // in API
 
-  const verifyingContract = chainId2verifyingContract[network];
+  const verifyingContract = chainId2verifyingContract[chainId];
   const verifyingContractDeployedBlock =
-    chainId2BlockContractDeployedAt[network];
+    chainId2BlockContractDeployedAt[chainId];
 
   const getLimitOrdersStatusAndAmountFilled: GetOrdersExtraData = async (
     orders,
@@ -193,7 +193,7 @@ export const constructGetLimitOrders = ({
     // @TODO allow to pass {ordderHash} only, fetch everything else
     assert(
       verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${network}`
+      `AugustusRFQ contract for Limit Orders not available on chain ${chainId}`
     );
 
     const orderHashes = orders.map((order) => order.orderHash);
@@ -367,7 +367,7 @@ export const constructGetLimitOrders = ({
     orderHash,
     signal
   ) => {
-    const fetchURL = `${apiURL}/limit/order/${network}/${orderHash}`;
+    const fetchURL = `${apiURL}/limit/order/${chainId}/${orderHash}`;
 
     const order = await fetcher<RawLimitOrder>({
       url: fetchURL,

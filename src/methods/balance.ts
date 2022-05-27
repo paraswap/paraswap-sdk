@@ -54,10 +54,10 @@ const NOT_FOUND_RESPONSE = { message: 'Not Found' } as const;
 
 export const constructGetBalances = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): GetBalancesFunctions => {
-  const tokensUrl = `${apiURL}/users/tokens/${network}`;
+  const tokensUrl = `${apiURL}/users/tokens/${chainId}`;
 
   const getBalances: GetBalances = async (userAddress, signal) => {
     const fetchURL = `${tokensUrl}/${userAddress}`;

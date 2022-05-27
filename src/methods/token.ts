@@ -10,10 +10,10 @@ export type GetTokensFunctions = {
 
 export const constructGetTokens = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): GetTokensFunctions => {
-  const fetchURL = `${apiURL}/tokens/${network}`;
+  const fetchURL = `${apiURL}/tokens/${chainId}`;
 
   const getTokens: GetTokens = async (signal) => {
     const data = await fetcher<TokensApiResponse>({

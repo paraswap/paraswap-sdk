@@ -24,18 +24,18 @@ export type BuildLimitOrderFunctions = {
 
 export const constructBuildLimitOrder = ({
   // apiURL = API_URL,
-  network,
-}: Pick<ConstructBaseInput, 'network'>): BuildLimitOrderFunctions => {
-  const verifyingContract = chainId2verifyingContract[network];
+  chainId,
+}: Pick<ConstructBaseInput, 'chainId'>): BuildLimitOrderFunctions => {
+  const verifyingContract = chainId2verifyingContract[chainId];
 
   const buildLimitOrder: BuildLimitOrder = (buildLimitOrderParams) => {
     assert(
       verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${network}`
+      `verifyingContract for Limit Orders not available on chain ${chainId}`
     );
     return buildOrderData({
       ...buildLimitOrderParams,
-      chainId: network,
+      chainId,
       verifyingContract,
     });
   };

@@ -19,7 +19,7 @@ const contractCaller = constructEthersContractCaller({
 
 const paraswap = constructFullSDK({
   apiURL: '',
-  network: 1,
+  chainId: 1,
   fetcher,
   contractCaller,
 });
@@ -32,7 +32,7 @@ const txResponse = paraswap.approveToken('1', '0x...');
 const txResponses = paraswap.approveTokenBulk('1', ['0x...']);
 
 const part1 = constructPartialSDK(
-  { apiURL: '', network: 1, fetcher },
+  { apiURL: '', chainId: 1, fetcher },
   constructGetAdapters
 );
 

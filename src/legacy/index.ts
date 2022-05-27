@@ -50,7 +50,7 @@ export class ParaSwap {
   fetcher: FetcherFunction;
 
   constructor(
-    private network: number = 1,
+    private chainId: number = 1,
     private apiURL: string = API_URL,
     public web3Provider?: Web3,
     public ethersDeps?: EthersProviderDeps, // need to be a provider with signer for approve requests
@@ -69,7 +69,7 @@ export class ParaSwap {
 
     if (!web3Provider && !ethersDeps) {
       this.sdk = constructPartialSDK(
-        { fetcher, apiURL, network },
+        { fetcher, apiURL, chainId },
         constructGetBalances,
         constructGetTokens,
         constructGetSpender,
@@ -92,7 +92,7 @@ export class ParaSwap {
         fetcher,
         contractCaller,
         apiURL,
-        network,
+        chainId: chainId,
       });
     }
   }
@@ -132,13 +132,13 @@ export class ParaSwap {
 
   setWeb3Provider(web3Provider: Web3, account?: string): this {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
-    const { apiURL, network, fetcher } = this;
+    const { apiURL, chainId, fetcher } = this;
 
     this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
-      network,
+      chainId,
     });
 
     this.web3Provider = web3Provider;
@@ -150,13 +150,13 @@ export class ParaSwap {
 
   setEthersProvider(ethersDeps: EthersProviderDeps, account?: string): this {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
-    const { apiURL, network, fetcher } = this;
+    const { apiURL, chainId, fetcher } = this;
 
     this.sdk = constructFullSDK({
       fetcher,
       contractCaller,
       apiURL,
-      network,
+      chainId,
     });
 
     this.web3Provider = undefined;

@@ -14,10 +14,10 @@ interface AdaptersContractsResult {
 
 export const constructGetSpender = ({
   apiURL = API_URL,
-  network,
+  chainId,
   fetcher,
 }: ConstructFetchInput): GetSpenderFunctions => {
-  const fetchURL = `${apiURL}/adapters/contracts?network=${network}`;
+  const fetchURL = `${apiURL}/adapters/contracts?network=${chainId}`;
 
   const getSpender: GetSpender = async (signal) => {
     const data = await fetcher<AdaptersContractsResult>({

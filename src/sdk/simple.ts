@@ -103,7 +103,7 @@ export function constructSimpleSDK(
   if (!providerOptions) {
     const config: ConstructFetchInput = {
       apiURL: options.apiURL,
-      network: options.network,
+      chainId: options.chainId,
       fetcher,
     };
 
@@ -133,7 +133,7 @@ export function constructSimpleSDK(
 
   const config: SDKConfig<TxHash> = {
     apiURL: options.apiURL,
-    network: options.network,
+    chainId: options.chainId,
     fetcher,
     contractCaller,
   };

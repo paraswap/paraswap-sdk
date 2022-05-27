@@ -55,11 +55,12 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
+const chainId = 3; // @TODO return to mainnet
+
 const PROVIDER_URL: string = process.env.PROVIDER_URL.replace(
   'mainnet',
   'ropsten'
-);
-const network = 3; // @TODO return to mainnet
+).replace(/\/1$/, `/${chainId}`);
 const srcToken = DAI;
 const destToken = HEX;
 
@@ -79,7 +80,7 @@ const ganacheProvider = ganache.provider({
     url: PROVIDER_URL,
   },
   chain: {
-    chainId: network,
+    chainId,
   },
   quiet: true,
 });
@@ -190,7 +191,7 @@ describe('Limit Orders', () => {
       ]
     >(
       {
-        network,
+        chainId,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
         apiURL: 'https://api.staging.paraswap.io',
@@ -214,7 +215,7 @@ describe('Limit Orders', () => {
 
     // @TODO reconsider after real contracts are deployed
     // override for tests only
-    chainId2verifyingContract[network] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
+    chainId2verifyingContract[chainId] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -404,7 +405,11 @@ describe('Limit Orders', () => {
     );
 
     const takerParaswapSDK = constructPartialSDK(
-      { network, contractCaller: takerContractCaller, fetcher: axiosFetcher },
+      {
+        chainId,
+        contractCaller: takerContractCaller,
+        fetcher: axiosFetcher,
+      },
       constructFillLimitOrder,
       constructApproveTokenForLimitOrder
     );
@@ -550,7 +555,11 @@ describe('Limit Orders', () => {
     );
 
     const takerParaswapSDK = constructPartialSDK(
-      { network, contractCaller: takerContractCaller, fetcher: axiosFetcher },
+      {
+        chainId,
+        contractCaller: takerContractCaller,
+        fetcher: axiosFetcher,
+      },
       constructFillLimitOrder,
       constructApproveTokenForLimitOrder
     );
@@ -684,7 +693,7 @@ describe('Limit Orders', () => {
 
     const paraSwap = constructPartialSDK(
       {
-        network: 3,
+        chainId: 3,
         apiURL: 'https://api.staging.paraswap.io',
         fetcher: axiosFetcher,
         contractCaller,
@@ -751,7 +760,7 @@ describe('Limit Orders', () => {
 
     const paraSwap = constructPartialSDK(
       {
-        network,
+        chainId,
         apiURL: 'https://api.staging.paraswap.io',
         fetcher: axiosFetcher,
         contractCaller,

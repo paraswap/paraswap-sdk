@@ -12,7 +12,7 @@ const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructWeb3ContractCaller(web3);
 
 const paraswap = constructFullSDK({
-  network: 1,
+  chainId: 1,
   fetcher,
   contractCaller,
 });
