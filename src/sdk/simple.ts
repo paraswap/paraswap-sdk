@@ -2,12 +2,21 @@ import { constructPartialSDK, SDKConfig } from './partial';
 import {
   GetAdaptersFunctions,
   constructGetAdapters,
-} from '../methods/adapters';
-import { GetBalancesFunctions, constructGetBalances } from '../methods/balance';
-import { GetRateFunctions, constructGetRate } from '../methods/rates';
-import { GetSpenderFunctions, constructGetSpender } from '../methods/spender';
-import { GetTokensFunctions, constructGetTokens } from '../methods/token';
-import { BuildTxFunctions, constructBuildTx } from '../methods/transaction';
+} from '../methods/swap/adapters';
+import {
+  GetBalancesFunctions,
+  constructGetBalances,
+} from '../methods/swap/balance';
+import { GetRateFunctions, constructGetRate } from '../methods/swap/rates';
+import {
+  GetSpenderFunctions,
+  constructGetSpender,
+} from '../methods/swap/spender';
+import { GetTokensFunctions, constructGetTokens } from '../methods/swap/token';
+import {
+  BuildTxFunctions,
+  constructBuildTx,
+} from '../methods/swap/transaction';
 
 import {
   constructAxiosFetcher,
@@ -29,7 +38,7 @@ import type { EthersProviderDeps } from '../helpers';
 import type Web3 from 'web3';
 
 import type AxiosStatic from 'axios';
-import { constructFullSDK, SwapSDKMethods } from './full';
+import type { SwapSDKMethods } from './full';
 import {
   BuildLimitOrderFunctions,
   constructBuildLimitOrder,
@@ -50,6 +59,7 @@ import {
   constructAllLimitOrdersHandlers,
   LimitOrderHandlers,
 } from '../methods/limitOrders';
+import { constructSwapSDK } from '../methods/swap';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -85,7 +95,7 @@ type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
   account: Address;
 };
 
-/** @description construct SDK with methods that fetch from API and optionally with token approval methods */
+/** @description construct SDK with methods that fetch from API and optionally with blockchain provider calling methods */
 export function constructSimpleSDK(options: SimpleOptions): SimpleFetchSDK;
 export function constructSimpleSDK(
   options: SimpleOptions,
@@ -138,7 +148,7 @@ export function constructSimpleSDK(
     contractCaller,
   };
 
-  const swap: SwapSDKMethods<TxHash> = constructFullSDK(config);
+  const swap: SwapSDKMethods<TxHash> = constructSwapSDK(config);
 
   const limitOrders: LimitOrderHandlers<TxHash> =
     constructAllLimitOrdersHandlers<TxHash>(config);
