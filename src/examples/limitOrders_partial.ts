@@ -16,6 +16,7 @@ import {
   constructApproveTokenForLimitOrder,
   // extra types
   SignableOrderData,
+  LimitOrderToSend,
 } from '..';
 
 const account = '0x1234...';
@@ -66,16 +67,10 @@ const orderInput = {
 };
 
 async function run() {
+  /// cancelling current orders
   const currentOrders = await paraSwapLimitOrderSDK.getLimitOrders({
     maker: account,
   });
-
-  const signableOrderData: SignableOrderData =
-    paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
-  // type string
-  const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
-    signableOrderData
-  );
 
   if (currentOrders[0]?.orderHash) {
     const tx1: ethers.ContractTransaction =
@@ -89,8 +84,30 @@ async function run() {
   const tx2: ethers.ContractTransaction =
     await paraSwapLimitOrderSDK.cancelLimitOrderBulk(moreOrderHashes);
 
+  /// creating a new order
+
   const tx3: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.approveTokenForLimitOrder('1234', '0x1234');
+    await paraSwapLimitOrderSDK.approveTokenForLimitOrder(
+      (1e18).toString(10),
+      DAI
+    );
+
+  const signableOrderData: SignableOrderData =
+    paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
+
+  const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
+    signableOrderData
+  );
+
+  const orderToPostToApi: LimitOrderToSend = {
+    ...signableOrderData.data,
+    chainId: signableOrderData.domain.chainId,
+    signature,
+  };
+
+  const newOrder = await paraSwapLimitOrderSDK.postLimitOrder(orderToPostToApi);
+
+  /// filling an order
 
   // to act as order taker
   const anotherAccount = '0x5678...';
@@ -107,12 +124,19 @@ async function run() {
         anotherAccount
       ),
     },
-    constructFillLimitOrder
+    constructFillLimitOrder,
+    constructApproveTokenForLimitOrder
   );
 
   const tx4: ethers.ContractTransaction =
+    await paraswapLimitOrdersSDKForTaker.approveTokenForLimitOrder(
+      (8e18).toString(10),
+      HEX
+    );
+
+  const tx5: ethers.ContractTransaction =
     await paraswapLimitOrdersSDKForTaker.fillLimitOrder({
-      orderData: signableOrderData.data,
+      orderData: newOrder,
       signature,
     });
 }
