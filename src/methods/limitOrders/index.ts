@@ -1,13 +1,17 @@
 import type { ConstructProviderFetchInput } from '../../types';
 import type { LimitOrderToSend, OpenLimitOrder } from './helpers/types';
-import { BuildLimitOrderInput, constructBuildLimitOrder } from './buildOrder';
+import {
+  BuildLimitOrderFunctions,
+  BuildLimitOrderInput,
+  constructBuildLimitOrder,
+} from './buildOrder';
 import {
   CancelLimitOrderFunctions,
   constructCancelLimitOrder,
 } from './cancelOrder';
 import { constructGetLimitOrders, GetLimitOrdersFunctions } from './getOrders';
-import { constructPostLimitOrder } from './postOrder';
-import { constructSignLimitOrder } from './signOrder';
+import { constructPostLimitOrder, PostLimitOrderFunctions } from './postOrder';
+import { constructSignLimitOrder, SignLimitOrderFunctions } from './signOrder';
 import { constructFillLimitOrder, FillLimitOrderFunctions } from './fillOrders';
 import {
   constructApproveTokenForLimitOrder,
@@ -60,21 +64,30 @@ export const constructSubmitLimitOrder = (
 };
 
 export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
+  BuildLimitOrderFunctions &
+  SignLimitOrderFunctions &
+  PostLimitOrderFunctions &
   GetLimitOrdersFunctions &
   GetLimitOrdersContractFunctions &
   CancelLimitOrderFunctions<T> &
   FillLimitOrderFunctions<T> &
   ApproveTokenForLimitOrderFunctions<T>;
 
-export const constructAllLimitOrdersHandlers = <T>(
+/** @description construct SDK with every LimitOrders-related method, fetching from API and contract calls */
+export const constructAllLimitOrdersHandlers = <TxResponse>(
   options: ConstructProviderFetchInput<
-    any,
+    TxResponse,
     'signTypedDataCall' | 'transactCall' | 'staticCall' | 'getLogsCall'
   >
-): LimitOrderHandlers<T> => {
+): LimitOrderHandlers<TxResponse> => {
   const limitOrdersGetters = constructGetLimitOrders(options);
   const limitOrdersContractGetter = constructGetLimitOrdersContract(options);
+
   const limitOrdersSubmit = constructSubmitLimitOrder(options);
+  const limitOrdersBuild = constructBuildLimitOrder(options);
+  const limitOrdersSign = constructSignLimitOrder(options);
+  const limitOrdersPost = constructPostLimitOrder(options);
+
   const limitOrdersCancel = constructCancelLimitOrder(options);
   const limitOrdersFill = constructFillLimitOrder(options);
   const limitOrdersApproveToken = constructApproveTokenForLimitOrder(options);
@@ -83,6 +96,9 @@ export const constructAllLimitOrdersHandlers = <T>(
     ...limitOrdersGetters,
     ...limitOrdersContractGetter,
     ...limitOrdersSubmit,
+    ...limitOrdersBuild,
+    ...limitOrdersSign,
+    ...limitOrdersPost,
     ...limitOrdersCancel,
     ...limitOrdersFill,
     ...limitOrdersApproveToken,
