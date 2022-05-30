@@ -257,7 +257,7 @@ describe('Limit Orders', () => {
   });
 
   // @TODO switch to getLimitOrders
-  test('getRawLimitOrders', async () => {
+  test.skip('getRawLimitOrders', async () => {
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
@@ -675,7 +675,7 @@ describe('Limit Orders', () => {
     expect(orderStatus1.toNumber()).toEqual(1);
   });
 
-  test('getOrderStatus', async () => {
+  test.skip('getOrderStatus', async () => {
     // order that should not change anymore
     const orderHash =
       '0x636CC5AA95CE9F6E3EA5EB7E65B4136DEBE62C4A743FB9A4D8AF9C0D35C71BA4';
@@ -739,7 +739,7 @@ describe('Limit Orders', () => {
     `);
   });
 
-  test('getOrdersStatus', async () => {
+  test.skip('getOrdersStatus', async () => {
     // orders that should not change anymore
     const orderHashes = [
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b',
