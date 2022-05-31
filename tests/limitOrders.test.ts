@@ -26,6 +26,7 @@ import {
   LimitOrderToSend,
   GetLimitOrdersFunctions,
   constructGetLimitOrders,
+  OrderInfoForBatchFill,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -477,6 +478,161 @@ describe('Limit Orders', () => {
     );
   });
 
+  test('batchFillLimitOrderWithTarget', async () => {
+    const maker = signer;
+    const taker = walletRandom.connect(ethersProvider);
+
+    const makerAmount = (1e18).toString(10);
+    const takerAmount = (8e18).toString(10);
+
+    const orders = await Promise.all(
+      [2, 3].map<Promise<OrderInfoForBatchFill>>(async (nonce) => {
+        const signableOrderData = paraSwap.buildLimitOrder({
+          nonce,
+          expiry: orderExpiry,
+          maker: maker.address,
+          makerAsset: erc20Token1.address,
+          makerAmount: (+makerAmount / 2).toString(10),
+          takerAsset: erc20Token2.address,
+          takerAmount: (+takerAmount / 2).toString(10),
+        });
+
+        const signature = await paraSwap.signLimitOrder(signableOrderData);
+
+        return {
+          order: signableOrderData.data,
+          signature,
+        };
+      })
+    );
+
+    const makerToken1InitBalance: BigNumberEthers = await erc20Token1.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await erc20Token1.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await erc20Token2.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await erc20Token2.balanceOf(
+      taker.address
+    );
+
+    console.log('balances', {
+      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    // without SDK
+    // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await paraSwap.approveTokenForLimitOrder(
+      makerAmount,
+      erc20Token1.address
+    );
+    await approveForMakerTx.wait();
+
+    /* Without SDK
+     await AugustusRFQ.connect(taker).fillOrder(
+      signableOrderData.data,
+      signature
+    ); */
+
+    // With SDK
+    const takerContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      taker.address
+    );
+
+    const takerParaswapSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: takerContractCaller,
+        fetcher: axiosFetcher,
+      },
+      constructFillLimitOrder,
+      constructApproveTokenForLimitOrder
+    );
+
+    // without SDK
+    // await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
+
+    // withSDK
+    const approveForTakerTx = await takerParaswapSDK.approveTokenForLimitOrder(
+      takerAmount,
+      erc20Token2.address
+    );
+    await approveForTakerTx.wait();
+
+    const takerFillsOrdersTx =
+      await takerParaswapSDK.batchFillLimitOrderWithTarget({
+        orderInfos: orders,
+        target: taker.address,
+      });
+
+    await takerFillsOrdersTx.wait();
+
+    const makerToken1AfterBalance: BigNumberEthers =
+      await erc20Token1.balanceOf(maker.address);
+    const takerToken1AfterBalance: BigNumberEthers =
+      await erc20Token1.balanceOf(taker.address);
+    const makerToken2AfterBalance: BigNumberEthers =
+      await erc20Token2.balanceOf(maker.address);
+    const takerToken2AfterBalance: BigNumberEthers =
+      await erc20Token2.balanceOf(taker.address);
+
+    console.log('balances after', {
+      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString()).toNumber() - +makerAmount
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString()).toNumber() + +makerAmount
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString()).toNumber() + +takerAmount
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toNumber()
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString()).toNumber() - +takerAmount
+    );
+  });
+
   test('partialFillLimitOrderWithTargetPermit', async () => {
     const maker = signer;
     const taker = walletRandom.connect(ethersProvider);
@@ -485,7 +641,7 @@ describe('Limit Orders', () => {
     const takerAmount = (8e18).toString(10);
 
     const signableOrderData = paraSwap.buildLimitOrder({
-      nonce: 2,
+      nonce: 4,
       expiry: orderExpiry,
       maker: maker.address,
       makerAsset: erc20Token1.address,
