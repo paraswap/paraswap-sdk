@@ -48,6 +48,7 @@ import {
   FillOrderInput,
   FillOrdersInput,
   PartialFillOrderInput,
+  OrderInfoForBatchFill,
   constructFillLimitOrder,
 } from './methods/limitOrders/fillOrders';
 import {
@@ -167,6 +168,7 @@ export type {
   ApproveTokenForLimitOrderFunctions,
   GetLimitOrdersFunctions,
   LimitOrdersUserParams,
+  OrderInfoForBatchFill,
   // other types
   Token,
   Address,
