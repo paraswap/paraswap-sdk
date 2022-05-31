@@ -20,7 +20,7 @@ type FillOrder<T> = (
 ) => Promise<T>;
 
 export interface OrderInfoForBatchFill {
-  orderData: OrderData;
+  order: OrderData;
   signature: string;
   /** @description for partially filling an order, will fully fill by default */
   takerTokenFillAmount?: string;
@@ -423,14 +423,14 @@ export const constructFillLimitOrder = <T>(
 
     const sanitizedOrderInfos = orderInfos.map<Required<OrderInfoForBatchFill>>(
       ({
-        orderData,
+        order,
         signature,
-        takerTokenFillAmount = orderData.takerAmount,
+        takerTokenFillAmount = order.takerAmount,
         permitMakerAsset = '0x',
         permitTakerAsset = '0x',
       }) => {
         return {
-          orderData: sanitizeOrderData(orderData),
+          order: sanitizeOrderData(order),
           signature,
           takerTokenFillAmount,
           permitMakerAsset,
