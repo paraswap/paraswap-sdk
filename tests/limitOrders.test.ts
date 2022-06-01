@@ -882,10 +882,9 @@ describe('Limit Orders', () => {
   });
 
   test.only.each(txSDKs)('cancelLimitOrder with $lib', async ({ sdk, lib }) => {
+    const libDependentNumber = lib === 'ethers' ? 1 : 2;
     // bytes32
-    const randomOrderHash = `0x${
-      lib === 'ethers' ? 1 : 2
-    }000000000000000000000000000000000000000000000000000000000000000`;
+    const randomOrderHash = `0x${libDependentNumber}000000000000000000000000000000000000000000000000000000000000000`;
 
     const tx = await paraSwap.cancelLimitOrder(randomOrderHash);
     await tx.wait();
@@ -897,20 +896,32 @@ describe('Limit Orders', () => {
     expect(orderStatus.toNumber()).toEqual(1);
   });
 
-  test('cancelLimitOrder', async () => {
-    // bytes32
-    const randomOrderHash =
-      '0x1000000000000000000000000000000000000000000000000000000000000000';
+  test.only.each(txSDKs)(
+    'cancelLimitOrder Bulk with $lib',
+    async ({ sdk, lib }) => {
+      const libDependentNumber = lib === 'ethers' ? 1 : 2;
+      // bytes32[]
+      const randomOrderHashes = [
+        `0x20${libDependentNumber}0000000000000000000000000000000000000000000000000000000000000`,
+        `0x30${libDependentNumber}0000000000000000000000000000000000000000000000000000000000000`,
+      ];
 
-    const tx = await paraSwap.cancelLimitOrder(randomOrderHash);
-    await tx.wait();
+      const tx = await paraSwap.cancelLimitOrderBulk(randomOrderHashes);
+      await tx.wait();
 
-    const orderStatus: BigNumberEthers = await AugustusRFQ.remaining(
-      senderAddress,
-      randomOrderHash
-    );
-    expect(orderStatus.toNumber()).toEqual(1);
-  });
+      const orderStatus0 = await AugustusRFQ.remaining(
+        senderAddress,
+        randomOrderHashes[0]
+      );
+      const orderStatus1 = await AugustusRFQ.remaining(
+        senderAddress,
+        randomOrderHashes[1]
+      );
+
+      expect(orderStatus0.toNumber()).toEqual(1);
+      expect(orderStatus1.toNumber()).toEqual(1);
+    }
+  );
 
   test('cancelLimitOrder Bulk', async () => {
     // bytes32[]
