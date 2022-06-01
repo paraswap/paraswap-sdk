@@ -1,5 +1,5 @@
 import type {
-  TypedDataDomain,
+  TypedDataDomain as EthersTypedDataDomain,
   TypedDataField,
 } from '@ethersproject/abstract-signer';
 import type { Address } from '../../../types';
@@ -36,6 +36,10 @@ export type SignableOrderData = {
   types: { Order: typeof Order };
   domain: Domain;
   data: OrderData;
+};
+
+type TypedDataDomain = Omit<EthersTypedDataDomain, 'chainId'> & {
+  chainId: number;
 };
 
 // works for ethers
