@@ -379,27 +379,11 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
-  test.only.each(txSDKs)('signLimitOrder with $lib', async ({ sdk }) => {
+  test.each(txSDKs)('signLimitOrder with $lib', async ({ sdk }) => {
     const signableOrderData = sdk.buildLimitOrder(orderInput);
     console.log('🚀 orderInput', signableOrderData.data);
 
     const signature = await sdk.signLimitOrder(signableOrderData);
-    expect(signature).toMatchInlineSnapshot(
-      `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
-    );
-
-    const presumedOrderHash = calculateOrderHash(signableOrderData);
-
-    expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
-      senderAddress
-    );
-  });
-
-  test('signLimitOrder', async () => {
-    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
-    console.log('🚀 orderInput', signableOrderData.data);
-
-    const signature = await paraSwap.signLimitOrder(signableOrderData);
     expect(signature).toMatchInlineSnapshot(
       `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
     );
