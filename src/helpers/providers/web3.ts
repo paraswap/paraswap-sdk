@@ -51,8 +51,7 @@ export const constructContractCaller = (
   ) => {
     assert(web3.currentProvider, 'web3.currentProvider is not set');
 
-    // assert(account, 'account must be specified to create a signer');
-    // FIXME: how to assert properly if user passed signer
+    assert(account, 'account must be specified to send transactions');
 
     const { address, abi, contractMethod, args, overrides } = params;
 
