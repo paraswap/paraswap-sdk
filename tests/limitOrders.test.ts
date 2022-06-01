@@ -1085,3 +1085,27 @@ function calculateOrderHash({
 }: SignableOrderData): string {
   return ethers.utils._TypedDataEncoder.hash(domain, types, data);
 }
+
+async function awaitTx(
+  tx: EthersTransactionResponse
+): Promise<EthersTransactionReceipt>;
+async function awaitTx(tx: Web3UnpromiEvent): Promise<Web3TransactionReceipt>;
+async function awaitTx(
+  tx: EthersTransactionResponse | Web3UnpromiEvent
+): Promise<EthersTransactionReceipt | Web3TransactionReceipt>;
+async function awaitTx(
+  tx: EthersTransactionResponse | Web3UnpromiEvent
+): Promise<EthersTransactionReceipt | Web3TransactionReceipt> {
+  if ('wait' in tx) {
+    const res = await tx.wait();
+
+    return res;
+  }
+
+  const res = await new Promise<Web3TransactionReceipt>((resolve, reject) => {
+    tx.once('receipt', resolve);
+    tx.once('error', reject);
+  });
+
+  return res;
+}
