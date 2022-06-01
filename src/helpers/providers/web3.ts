@@ -14,9 +14,11 @@ import type {
   CallOptions,
   Contract,
 } from 'web3-eth-contract';
-import type { PromiEvent } from 'web3-core';
+import type { PromiEvent, provider, AbstractProvider } from 'web3-core';
+import type { JsonRpcResponse } from 'web3-core-helpers';
 import { assert } from 'ts-essentials';
 import { assertWeb3ContractHasMethods } from '../misc';
+import type { TypedDataField } from '@ethersproject/abstract-signer';
 
 export type Web3UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
 
@@ -93,8 +95,53 @@ export const constructContractCaller = (
     return unpromiEvent;
   };
 
-  const signTypedDataCall: SignTypedDataContractCallerFn = async (params) => {
-    throw new Error('UNIMPLEMENTED');
+  const signTypedDataCall: SignTypedDataContractCallerFn = async (
+    typedData
+  ) => {
+    assert(web3.currentProvider, 'web3.currentProvider is not set');
+
+    assert(account, 'account must be specified to sign data');
+
+    const provider = web3.currentProvider;
+    assert(
+      isProviderWithSendMethod(provider),
+      'web3.currentProvider needs to be capable of sending arbitrary rpc calls'
+    );
+
+    const { data, domain, types } = typedData;
+
+    const _typedData = {
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' },
+        ],
+        ...types,
+      },
+      primaryType: findPrimaryType(types),
+      domain,
+      message: data,
+    };
+
+    const response = await new Promise<JsonRpcResponse>((resolve, reject) => {
+      provider.send(
+        {
+          jsonrpc: '2.0',
+          // method: 'eth_signTypedData_v4',
+          method: 'eth_signTypedData',
+          params: [account, _typedData],
+        },
+        (error, result) => {
+          if (error || !result) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+    console.log('JsonRpcResponse:', response);
+
+    return response.result;
   };
 
   const getLogsCall: LogsContractCallerFn = async (params) => {
@@ -103,3 +150,39 @@ export const constructContractCaller = (
 
   return { staticCall, transactCall, signTypedDataCall, getLogsCall };
 };
+
+function isProviderWithSendMethod<T extends provider>(
+  provider: T
+): provider is T & Required<Pick<AbstractProvider, 'send'>> {
+  return !!provider && typeof provider === 'object' && 'send' in provider;
+}
+
+function findPrimaryType(types: Record<string, TypedDataField[]>): string {
+  const candidates = Object.keys(types);
+  const candidatesSet = new Set(candidates);
+
+  candidates.forEach((candidate) => {
+    const typedDataFields = types[candidate];
+    if (!typedDataFields) return;
+
+    typedDataFields.forEach(({ type }) => {
+      // Get the base type (drop any array specifiers)
+      // regex from @ethersproject/hash TypedDataEncoder.constructor
+      // may be overly strict, but reliable
+      const baseType = type.match(/^([^\x5b]*)(\x5b|$)/)?.[1];
+      if (!baseType) return;
+
+      // if type was referred to as a child of another type, it can't be the primaryType
+      candidatesSet.delete(baseType);
+    });
+  });
+
+  const [primaryType] = Array.from(candidatesSet);
+
+  assert(
+    primaryType,
+    `No primary type found in SignableTypedData types, ${JSON.stringify(types)}`
+  );
+
+  return primaryType;
+}
