@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-// import Web3 from 'web3';
+import Web3 from 'web3';
 import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
 import axios from 'axios';
 import {
@@ -27,6 +27,8 @@ import {
   GetLimitOrdersFunctions,
   constructGetLimitOrders,
   OrderInfoForBatchFill,
+  Web3UnpromiEvent,
+  constructWeb3ContractCaller,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -106,6 +108,13 @@ const ethersContractCaller = constructEthersContractCaller(
   senderAddress
 );
 
+const web3provider = new Web3(ganacheProvider as any);
+
+const web3ContractCaller = constructWeb3ContractCaller(
+  web3provider,
+  senderAddress
+);
+
 const ERC20MintableFactory = new ethers.ContractFactory(
   ERC20MinableABI,
   ERC20MintableBytecode,
@@ -126,6 +135,82 @@ describe('Limit Orders', () => {
     GetLimitOrdersFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+
+  type MinEtherSDK = BuildLimitOrderFunctions &
+    SignLimitOrderFunctions &
+    CancelLimitOrderFunctions<ethers.ContractTransaction> &
+    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+  type MinWeb3SDK = BuildLimitOrderFunctions &
+    SignLimitOrderFunctions &
+    CancelLimitOrderFunctions<Web3UnpromiEvent> &
+    ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
+
+  type EthersCancelOrderConstructor = (
+    options: ConstructProviderFetchInput<
+      ethers.ContractTransaction,
+      'transactCall'
+    >
+  ) => CancelLimitOrderFunctions<ethers.ContractTransaction>;
+  type EthersApproveTokenForLimitOrderConstructor = (
+    options: ConstructProviderFetchInput<
+      ethers.ContractTransaction,
+      'transactCall'
+    >
+  ) => ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+
+  type Web3CancelOrderConstructor = (
+    options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
+  ) => CancelLimitOrderFunctions<Web3UnpromiEvent>;
+  type Web3ApproveTokenForLimitOrderConstructor = (
+    options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
+  ) => ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
+
+  const ethersSDK: MinEtherSDK = constructPartialSDK<
+    SDKConfig<ethers.ContractTransaction>,
+    [
+      typeof constructBuildLimitOrder,
+      typeof constructSignLimitOrder,
+      EthersCancelOrderConstructor,
+      EthersApproveTokenForLimitOrderConstructor
+    ]
+  >(
+    {
+      chainId,
+      contractCaller: ethersContractCaller,
+      fetcher: axiosFetcher,
+      apiURL: 'https://api.staging.paraswap.io',
+    },
+    constructBuildLimitOrder,
+    constructSignLimitOrder,
+    constructCancelLimitOrder,
+    constructApproveTokenForLimitOrder
+  );
+
+  const web3SDK: MinWeb3SDK = constructPartialSDK<
+    SDKConfig<Web3UnpromiEvent>,
+    [
+      typeof constructBuildLimitOrder,
+      typeof constructSignLimitOrder,
+      Web3CancelOrderConstructor,
+      Web3ApproveTokenForLimitOrderConstructor
+    ]
+  >(
+    {
+      chainId,
+      contractCaller: web3ContractCaller,
+      fetcher: axiosFetcher,
+      apiURL: 'https://api.staging.paraswap.io',
+    },
+    constructBuildLimitOrder,
+    constructSignLimitOrder,
+    constructCancelLimitOrder,
+    constructApproveTokenForLimitOrder
+  );
+
+  const txSDKs = [
+    { lib: 'ethers', sdk: ethersSDK },
+    { lib: 'web3', sdk: web3SDK },
+  ] as const;
 
   let orderInput: BuildLimitOrderInput;
   //                                        UTC format
@@ -166,19 +251,6 @@ describe('Limit Orders', () => {
     await erc20Token2.mint(walletStable.address, (30e18).toString(10));
     await erc20Token2.mint(walletRandom.address, (30e18).toString(10));
 
-    type CancelOrderConstructor = (
-      options: ConstructProviderFetchInput<
-        ethers.ContractTransaction,
-        'transactCall'
-      >
-    ) => CancelLimitOrderFunctions<ethers.ContractTransaction>;
-    type ApproveTokenForLimitOrderConstructor = (
-      options: ConstructProviderFetchInput<
-        ethers.ContractTransaction,
-        'transactCall'
-      >
-    ) => ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
-
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
       [
@@ -187,8 +259,8 @@ describe('Limit Orders', () => {
         typeof constructGetLimitOrdersContract,
         typeof constructPostLimitOrder,
         typeof constructGetLimitOrders,
-        CancelOrderConstructor,
-        ApproveTokenForLimitOrderConstructor
+        EthersCancelOrderConstructor,
+        EthersApproveTokenForLimitOrderConstructor
       ]
     >(
       {
@@ -241,6 +313,25 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
+  test.only.each<typeof txSDKs[number]>(txSDKs)(
+    'buildLimitOrder with $lib',
+    async ({ lib, sdk }) => {
+      const signableOrderData = sdk.buildLimitOrder(orderInput);
+      console.log('🚀 orderInput', signableOrderData.data);
+
+      const signature = await sdk.signLimitOrder(signableOrderData);
+      expect(signature).toMatchInlineSnapshot(
+        `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
+      );
+
+      const presumedOrderHash = calculateOrderHash(signableOrderData);
+
+      expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
+        senderAddress
+      );
+    }
+  );
+
   test('signLimitOrder', async () => {
     const signableOrderData = paraSwap.buildLimitOrder(orderInput);
     console.log('🚀 orderInput', signableOrderData.data);
@@ -256,6 +347,21 @@ describe('Limit Orders', () => {
       senderAddress
     );
   });
+  // test('signLimitOrder', async () => {
+  //   const signableOrderData = paraSwap.buildLimitOrder(orderInput);
+  //   console.log('🚀 orderInput', signableOrderData.data);
+
+  //   const signature = await paraSwap.signLimitOrder(signableOrderData);
+  //   expect(signature).toMatchInlineSnapshot(
+  //     `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
+  //   );
+
+  //   const presumedOrderHash = calculateOrderHash(signableOrderData);
+
+  //   expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
+  //     senderAddress
+  //   );
+  // });
 
   // @TODO switch to getLimitOrders
   test.skip('getRawLimitOrders', async () => {
