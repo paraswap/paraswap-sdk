@@ -313,24 +313,21 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
-  test.only.each<typeof txSDKs[number]>(txSDKs)(
-    'buildLimitOrder with $lib',
-    async ({ lib, sdk }) => {
-      const signableOrderData = sdk.buildLimitOrder(orderInput);
-      console.log('🚀 orderInput', signableOrderData.data);
+  test.only.each(txSDKs)('signLimitOrder with $lib', async ({ sdk }) => {
+    const signableOrderData = sdk.buildLimitOrder(orderInput);
+    console.log('🚀 orderInput', signableOrderData.data);
 
-      const signature = await sdk.signLimitOrder(signableOrderData);
-      expect(signature).toMatchInlineSnapshot(
-        `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
-      );
+    const signature = await sdk.signLimitOrder(signableOrderData);
+    expect(signature).toMatchInlineSnapshot(
+      `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
+    );
 
-      const presumedOrderHash = calculateOrderHash(signableOrderData);
+    const presumedOrderHash = calculateOrderHash(signableOrderData);
 
-      expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
-        senderAddress
-      );
-    }
-  );
+    expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
+      senderAddress
+    );
+  });
 
   test('signLimitOrder', async () => {
     const signableOrderData = paraSwap.buildLimitOrder(orderInput);
@@ -347,21 +344,6 @@ describe('Limit Orders', () => {
       senderAddress
     );
   });
-  // test('signLimitOrder', async () => {
-  //   const signableOrderData = paraSwap.buildLimitOrder(orderInput);
-  //   console.log('🚀 orderInput', signableOrderData.data);
-
-  //   const signature = await paraSwap.signLimitOrder(signableOrderData);
-  //   expect(signature).toMatchInlineSnapshot(
-  //     `"0x9a3c601b5b6ece2d2e08d977a4f42c606e655a3539deda01f64a134bb018e4d5734ed3789eba0b0d962fd74aac0596377903ac738efe96a1ebc3f8435096f68a1b"`
-  //   );
-
-  //   const presumedOrderHash = calculateOrderHash(signableOrderData);
-
-  //   expect(ethers.utils.recoverAddress(presumedOrderHash, signature)).toEqual(
-  //     senderAddress
-  //   );
-  // });
 
   // @TODO switch to getLimitOrders
   test.skip('getRawLimitOrders', async () => {
@@ -897,6 +879,22 @@ describe('Limit Orders', () => {
       new BigNumber(takerToken2InitBalance.toString()).toNumber() -
         +takerAmount * fillPart
     );
+  });
+
+  test.only.each(txSDKs)('cancelLimitOrder with $lib', async ({ sdk, lib }) => {
+    // bytes32
+    const randomOrderHash = `0x${
+      lib === 'ethers' ? 1 : 2
+    }000000000000000000000000000000000000000000000000000000000000000`;
+
+    const tx = await paraSwap.cancelLimitOrder(randomOrderHash);
+    await tx.wait();
+
+    const orderStatus: BigNumberEthers = await AugustusRFQ.remaining(
+      senderAddress,
+      randomOrderHash
+    );
+    expect(orderStatus.toNumber()).toEqual(1);
   });
 
   test('cancelLimitOrder', async () => {
