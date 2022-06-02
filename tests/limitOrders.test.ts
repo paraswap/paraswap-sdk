@@ -97,9 +97,6 @@ const ganacheProvider = ganache.provider({
   quiet: true,
 });
 
-// @TODO tests with web3, especially eth_signTypedData for signing Orders
-// const web3provider = new Web3(ganacheProvider as any);
-
 const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
@@ -472,7 +469,7 @@ describe('Limit Orders', () => {
     // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
 
-  test.concurrent.each(txSDKs)(
+  test.each(txSDKs)(
     'fillLimitOrder with $lib',
     async ({ sdk, takerSDK, lib }) => {
       const makerAmount = (1e18).toString(10);
@@ -545,12 +542,16 @@ describe('Limit Orders', () => {
       );
       await awaitTx(approveForTakerTx);
 
-      const takerFillsOrderTx = await takerSDK.fillLimitOrder({
-        orderData: signableOrderData.data,
-        signature,
-      });
+      const takerFillsOrderTx = await takerSDK.fillLimitOrder(
+        {
+          orderData: signableOrderData.data,
+          signature,
+        },
+        // web3 underestimates gas here
+        lib === 'web3' ? { gas: 150000 } : undefined
+      );
 
-      await awaitTx(takerFillsOrderTx);
+      const receipt = await awaitTx(takerFillsOrderTx);
 
       const makerToken1AfterBalance: BigNumberEthers =
         await erc20Token1.balanceOf(maker.address);
@@ -695,10 +696,13 @@ describe('Limit Orders', () => {
       // await approveForTakerTx.wait();
       await awaitTx(approveForTakerTx);
 
-      const takerFillsOrdersTx = await takerSDK.batchFillLimitOrderWithTarget({
-        orderInfos: orders,
-        target: taker.address,
-      });
+      const takerFillsOrdersTx = await takerSDK.batchFillLimitOrderWithTarget(
+        {
+          orderInfos: orders,
+          target: taker.address,
+        }, // web3 underestimates gas here
+        lib === 'web3' ? { gas: 200000 } : undefined
+      );
 
       // await takerFillsOrdersTx.wait();
       await awaitTx(takerFillsOrdersTx);
@@ -762,7 +766,7 @@ describe('Limit Orders', () => {
     }
   );
 
-  test.concurrent.only.each(txSDKs.slice(0, 1))(
+  test.each(txSDKs)(
     'partialFillLimitOrderWithTargetPermit with $lib',
     async ({ sdk, takerSDK, lib }) => {
       const maker = signer;
@@ -840,17 +844,20 @@ describe('Limit Orders', () => {
       await awaitTx(approveForTakerTx);
 
       const takerFillsOrderTx =
-        await takerSDK.partialFillLimitOrderWithTargetPermit({
-          orderData: signableOrderData.data,
-          signature,
-          target: taker.address,
-          fillAmount: fillAmount.toString(10),
-          // @TODO make a tests with actual `permitTakerData`
-        });
+        await takerSDK.partialFillLimitOrderWithTargetPermit(
+          {
+            orderData: signableOrderData.data,
+            signature,
+            target: taker.address,
+            fillAmount: fillAmount.toString(10),
+            // @TODO make a tests with actual `permitTakerData`
+          }, // web3 underestimates gas here
+          lib === 'web3' ? { gas: 150000 } : undefined
+        );
 
       const receipt = await awaitTx(takerFillsOrderTx);
 
-      console.log('logs', receipt.logs);
+      console.log(lib, 'Filled order', receipt);
 
       const makerToken1AfterBalance: BigNumberEthers =
         await erc20Token1.balanceOf(maker.address);
