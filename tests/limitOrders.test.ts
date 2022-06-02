@@ -551,7 +551,7 @@ describe('Limit Orders', () => {
         lib === 'web3' ? { gas: 150000 } : undefined
       );
 
-      const receipt = await awaitTx(takerFillsOrderTx);
+      await awaitTx(takerFillsOrderTx);
 
       const makerToken1AfterBalance: BigNumberEthers =
         await erc20Token1.balanceOf(maker.address);
