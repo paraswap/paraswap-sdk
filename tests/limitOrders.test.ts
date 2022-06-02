@@ -615,7 +615,6 @@ describe('Limit Orders', () => {
     'batchFillLimitOrderWithTarget with $lib',
     async ({ sdk, lib, takerSDK }) => {
       const maker = signer;
-      const taker = walletRandom.connect(ethersProvider);
 
       const makerAmount = (1e18).toString(10);
       const takerAmount = (8e18).toString(10);
@@ -767,7 +766,6 @@ describe('Limit Orders', () => {
     'partialFillLimitOrderWithTargetPermit with $lib',
     async ({ sdk, takerSDK, lib }) => {
       const maker = signer;
-      const taker = walletRandom.connect(ethersProvider);
 
       const makerAmount = (1e18).toString(10);
       const takerAmount = (8e18).toString(10);
