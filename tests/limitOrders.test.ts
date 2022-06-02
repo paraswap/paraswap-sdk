@@ -316,9 +316,9 @@ describe('Limit Orders', () => {
     await erc20Token2.deployTransaction.wait();
 
     await erc20Token1.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token1.mint(walletRandom.address, (60e18).toString(10));
+    await erc20Token1.mint(walletStable2.address, (60e18).toString(10));
     await erc20Token2.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token2.mint(walletRandom.address, (60e18).toString(10));
+    await erc20Token2.mint(walletStable2.address, (60e18).toString(10));
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
