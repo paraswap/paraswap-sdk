@@ -124,7 +124,7 @@ const takerEthersContractCaller = constructEthersContractCaller(
     ethersProviderOrSigner: taker,
     EthersContract: ethers.Contract,
   },
-  walletRandom.address
+  walletStable2.address
 );
 
 const web3provider = new Web3(ganacheProvider as any);
@@ -135,7 +135,7 @@ const web3ContractCaller = constructWeb3ContractCaller(
 );
 const takerWeb3ContractCaller = constructWeb3ContractCaller(
   web3provider,
-  walletRandom.address
+  walletStable2.address
 );
 
 const ERC20MintableFactory = new ethers.ContractFactory(
