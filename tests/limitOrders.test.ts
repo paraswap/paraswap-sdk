@@ -76,13 +76,16 @@ const destToken = HEX;
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
 const walletStable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
-const walletRandom = ethers.Wallet.createRandom();
+const walletStable2 = ethers.Wallet.fromMnemonic(
+  TEST_MNEMONIC,
+  "m/44'/60'/0'/0/1"
+);
 
 const ganacheProvider = ganache.provider({
   wallet: {
     accounts: [
       { balance: 80e18, secretKey: walletStable.privateKey },
-      { balance: 80e18, secretKey: walletRandom.privateKey },
+      { balance: 80e18, secretKey: walletStable2.privateKey },
     ],
   },
   fork: {
@@ -105,7 +108,7 @@ const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
 
 const maker = signer;
-const taker = walletRandom.connect(ethersProvider);
+const taker = walletStable2.connect(ethersProvider);
 
 const axiosFetcher = constructAxiosFetcher(axios);
 
