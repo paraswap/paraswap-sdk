@@ -85,12 +85,11 @@ export function buildOrderData({
   makerAmount,
   takerAmount,
   maker,
+  AugustusAddress,
   // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
   // if taker is not specified -- limitOrder for anyone to fill through Augustus -- taker = Augustus, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
 }: BuildOrderDataInput): SignableOrderData {
-  const AugustusAddress = '';
-
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
   const nonceAndMeta = (
