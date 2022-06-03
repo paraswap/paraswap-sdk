@@ -387,7 +387,7 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = Zero
     expect(metaAddress).toBe(ZERO_ADDRESS);
 
-    const AugustusAddress = await paraSwap.getSpender();
+    const AugustusAddress = await paraSwap.getAugustusSwapper();
     // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
       AugustusAddress.toLowerCase()
@@ -417,7 +417,7 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(p2pOrderInput.taker.toLowerCase());
 
-    const AugustusAddress = await paraSwap.getSpender();
+    const AugustusAddress = await paraSwap.getAugustusSwapper();
     // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
       AugustusAddress.toLowerCase()
