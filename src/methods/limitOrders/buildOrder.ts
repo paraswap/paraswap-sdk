@@ -30,7 +30,8 @@ export const constructBuildLimitOrder = (
   const { chainId } = options;
   const verifyingContract = chainId2verifyingContract[chainId];
 
-  const { getSpender: _getAugustusAddress } = constructGetSpender(options);
+  const { getAugustusSwapper: _getAugustusAddress } =
+    constructGetSpender(options);
   // cached for the same instance of `buildLimitOrder = constructBuildLimitOrder()`
   // so should persist across same apiUrl & network
   let _spender: string | undefined;
