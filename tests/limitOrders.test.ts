@@ -371,7 +371,7 @@ describe('Limit Orders', () => {
   });
 
   test('buildLimitOrder', async () => {
-    const signableOrderData = paraSwap.buildLimitOrder(orderInput);
+    const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
 
     expect(signableOrderData.data.maker).toBe(senderAddress);
     expect(signableOrderData.data.expiry).toBe(orderExpiry);
@@ -383,7 +383,7 @@ describe('Limit Orders', () => {
     'ethereum lib tests: $lib',
     ({ lib, sdk, takerSDK }) => {
       test(`signLimitOrder with ${lib}`, async () => {
-        const signableOrderData = sdk.buildLimitOrder(orderInput);
+        const signableOrderData = await sdk.buildLimitOrder(orderInput);
         console.log('🚀 orderInput', signableOrderData.data);
 
         const signature = await sdk.signLimitOrder(signableOrderData);
@@ -404,7 +404,7 @@ describe('Limit Orders', () => {
 
         const libDependentNumber = lib === 'ethers' ? 1 : 2;
 
-        const signableOrderData = sdk.buildLimitOrder({
+        const signableOrderData = await sdk.buildLimitOrder({
           nonce: 1 + 5 * libDependentNumber,
           expiry: orderExpiry,
           maker: maker.address,
@@ -558,7 +558,7 @@ describe('Limit Orders', () => {
           [2 + 5 * libDependentNumber, 3 + 5 * libDependentNumber].map<
             Promise<OrderInfoForBatchFill>
           >(async (nonce) => {
-            const signableOrderData = sdk.buildLimitOrder({
+            const signableOrderData = await sdk.buildLimitOrder({
               nonce,
               expiry: orderExpiry,
               maker: maker.address,
@@ -713,7 +713,7 @@ describe('Limit Orders', () => {
 
         const libDependentNumber = lib === 'ethers' ? 1 : 2;
 
-        const signableOrderData = sdk.buildLimitOrder({
+        const signableOrderData = await sdk.buildLimitOrder({
           nonce: 4 + 5 * libDependentNumber,
           expiry: orderExpiry,
           maker: maker.address,
@@ -945,7 +945,7 @@ describe('Limit Orders', () => {
     // @TODO breaks with 'maker' doesn't have sufficient balance for this limit order
     // because of API balance check
     // need to use a fixed address through a PK
-    const signableOrderData = paraSwap.buildLimitOrder({
+    const signableOrderData = await paraSwap.buildLimitOrder({
       ...orderInput,
       nonce: 2,
     });
