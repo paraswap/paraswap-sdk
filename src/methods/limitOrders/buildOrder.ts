@@ -4,6 +4,7 @@ import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
+  buildDirectOrderData,
   BuildOrderDataInput,
   SignableOrderData,
 } from './helpers/buildOrderData';
@@ -21,7 +22,10 @@ type BuildLimitOrder = (
 ) => Promise<SignableOrderData>;
 
 export type BuildLimitOrderFunctions = {
+  /** @description Build Orders that will be excuted through AugustusSwapper */
   buildLimitOrder: BuildLimitOrder;
+  /** @deprecated Orders directly through AugustusRFQ are discouraged */
+  buildDirectLimitOrder: BuildLimitOrder;
 };
 
 export const constructBuildLimitOrder = (
@@ -58,7 +62,23 @@ export const constructBuildLimitOrder = (
     });
   };
 
+  const buildDirectLimitOrder: BuildLimitOrder = async (
+    buildLimitOrderParams
+  ) => {
+    assert(
+      verifyingContract,
+      `verifyingContract for Limit Orders not available on chain ${chainId}`
+    );
+
+    return buildDirectOrderData({
+      ...buildLimitOrderParams,
+      chainId,
+      verifyingContract,
+    });
+  };
+
   return {
     buildLimitOrder,
+    buildDirectLimitOrder,
   };
 };
