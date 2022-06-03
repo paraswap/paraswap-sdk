@@ -36,6 +36,8 @@ import {
   Web3UnpromiEvent,
   constructWeb3ContractCaller,
   FillLimitOrderFunctions,
+  GetSpenderFunctions,
+  constructGetSpender,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -155,7 +157,8 @@ describe('Limit Orders', () => {
     PostLimitOrderFunctions &
     GetLimitOrdersFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
-    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction> &
+    GetSpenderFunctions;
 
   type MinEthersSDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
@@ -327,7 +330,8 @@ describe('Limit Orders', () => {
         typeof constructPostLimitOrder,
         typeof constructGetLimitOrders,
         EthersCancelOrderConstructor,
-        EthersApproveTokenForLimitOrderConstructor
+        EthersApproveTokenForLimitOrderConstructor,
+        typeof constructGetSpender
       ]
     >(
       {
@@ -342,7 +346,8 @@ describe('Limit Orders', () => {
       constructPostLimitOrder,
       constructGetLimitOrders,
       constructCancelLimitOrder,
-      constructApproveTokenForLimitOrder
+      constructApproveTokenForLimitOrder,
+      constructGetSpender
     );
 
     AugustusRFQ = await AugustusRFQFactory.attach(
@@ -371,13 +376,57 @@ describe('Limit Orders', () => {
     expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
-  test('buildLimitOrder', async () => {
+  test.only('buildLimitOrder', async () => {
     const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
+
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = Zero
+    expect(metaAddress).toBe(ZERO_ADDRESS);
+
+    const AugustusAddress = await paraSwap.getSpender();
+    // taker in AugustusRFQ = Augustus
+    expect(signableOrderData.data.taker.toLowerCase()).toBe(
+      AugustusAddress.toLowerCase()
+    );
 
     expect(signableOrderData.data.maker).toBe(senderAddress);
     expect(signableOrderData.data.expiry).toBe(orderExpiry);
 
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
+  });
+
+  test.only('buildLimitOrder p2p', async () => {
+    const p2pOrderInput = {
+      ...orderInput,
+      taker: taker.address,
+    };
+    const signableOrderData = await paraSwap.buildLimitOrder({
+      ...orderInput,
+      taker: taker.address,
+    });
+
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = p2pOrderInput.taker
+    expect(metaAddress.toLowerCase()).toBe(p2pOrderInput.taker.toLowerCase());
+
+    const AugustusAddress = await paraSwap.getSpender();
+    // taker in AugustusRFQ = Augustus
+    expect(signableOrderData.data.taker.toLowerCase()).toBe(
+      AugustusAddress.toLowerCase()
+    );
+
+    expect(signableOrderData.data.maker).toBe(senderAddress);
+    expect(signableOrderData.data.expiry).toBe(orderExpiry);
+
+    expect(signableOrderData).toMatchSnapshot('P2P_Order_Data_Snapshot');
   });
 
   describe.each(txSDKs)(
