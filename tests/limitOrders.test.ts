@@ -6,6 +6,7 @@ import type {
   TransactionResponse as EthersTransactionResponse,
   TransactionReceipt as EthersTransactionReceipt,
 } from '@ethersproject/abstract-provider';
+import { hexValue, hexZeroPad } from '@ethersproject/bytes';
 import axios from 'axios';
 import {
   constructPartialSDK,
@@ -1134,4 +1135,11 @@ async function awaitTx(
   });
 
   return res;
+}
+
+function deriveTakerFromNonceAndTaker(nonceAndMeta: string): string {
+  return hexZeroPad(
+    hexValue(BigInt(nonceAndMeta) & ((BigInt(1) << BigInt(160)) - BigInt(1))),
+    20
+  );
 }
