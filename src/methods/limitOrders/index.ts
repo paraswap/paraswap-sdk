@@ -44,7 +44,7 @@ export const constructSubmitLimitOrder = (
     extra = {},
     signal
   ) => {
-    const orderData = buildLimitOrder(buildLimitOrderParams);
+    const orderData = await buildLimitOrder(buildLimitOrderParams);
     const signature = await signLimitOrder(orderData);
 
     const orderWithSignature: LimitOrderToSend = {
