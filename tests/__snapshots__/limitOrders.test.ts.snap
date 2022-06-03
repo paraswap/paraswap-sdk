@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
+exports[`Limit Orders buildDirectLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
 Object {
   "data": Object {
     "expiry": 1671494400,
@@ -8,7 +8,7 @@ Object {
     "makerAmount": "1000000000000000000",
     "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     "nonceAndMeta": "2693234308085732315020447542820174961101890254772",
-    "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+    "taker": "0xD7c0Cd9e7d2701c710D64Fc492C7086679BdF7b4",
     "takerAmount": "8000000000000000000",
     "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
   },
@@ -57,7 +57,7 @@ Object {
 }
 `;
 
-exports[`Limit Orders buildLimitOrder: Order_Data_Snapshot 1`] = `
+exports[`Limit Orders buildDirectLimitOrder: Order_Data_Snapshot 1`] = `
 Object {
   "data": Object {
     "expiry": 1671494400,
@@ -65,7 +65,7 @@ Object {
     "makerAmount": "1000000000000000000",
     "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     "nonceAndMeta": "1461501637330902918203684832716283019655932542976",
-    "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+    "taker": "0x0000000000000000000000000000000000000000",
     "takerAmount": "8000000000000000000",
     "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
   },
