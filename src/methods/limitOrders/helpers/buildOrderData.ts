@@ -29,7 +29,10 @@ export interface BuildOrderDataInput {
   makerAmount: string;
   takerAmount: string;
   maker: Address;
+  // OrderData.taker must be Augustus for p2p limitOrders to involve swap through Augustus
+  // this is the actual user taker which will go into nonceAndMeta
   taker?: Address;
+  AugustusAddress: Address;
 }
 
 export type SignableOrderData = {
@@ -82,11 +85,18 @@ export function buildOrderData({
   makerAmount,
   takerAmount,
   maker,
-  // `taker` is always AugustusRFQ if using our contract
-  taker = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
+  // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
+  // if taker is not specified -- limitOrder for anyone to fill through Augustus -- taker = Augustus, takerInNonce = Zero
+  taker: takerInNonce = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
 }: BuildOrderDataInput): SignableOrderData {
-  // first 160 bits is 0, so that anyone can be the taker of the Order
-  const nonceAndMeta = (BigInt(nonce) << BigInt(160)).toString(10);
+  const AugustusAddress = '';
+
+  // first 160 bits is taker address (for p2p orders),
+  // or 0 for limitOrders, so that anyone can be the taker of the Order
+  const nonceAndMeta = (
+    BigInt(takerInNonce) +
+    (BigInt(nonce) << BigInt(160))
+  ).toString();
 
   const order: OrderData = {
     nonceAndMeta,
@@ -94,7 +104,7 @@ export function buildOrderData({
     makerAsset,
     takerAsset,
     maker,
-    taker,
+    taker: AugustusAddress,
     makerAmount,
     takerAmount,
   };
