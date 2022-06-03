@@ -210,7 +210,15 @@ describe.each([
 
   test('Get_Spender', async () => {
     const spender = await paraSwap.getSpender();
-    expect(web3provider.utils.isAddress(spender));
+
+  test('Get_AugustusSwapper', async () => {
+    const Augustus = await paraSwap.getAugustusSwapper();
+    expect(web3provider.utils.isAddress(Augustus)).toBe(true);
+  });
+
+  test('Get_Contracts', async () => {
+    const contracts = await paraSwap.getContracts();
+    expect(contracts).toMatchSnapshot(testName);
   });
 
   test('Get_Allowance', async () => {
