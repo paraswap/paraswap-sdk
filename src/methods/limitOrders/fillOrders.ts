@@ -70,6 +70,9 @@ export type FillLimitOrderFunctions<T> = {
   partialFilllLimitOrder: PartialFillOrder<T>;
   partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
   batchFillLimitOrderWithTarget: BatchFillOrders<T>;
+  // @TODO add direct vs Augustus methods
+  // @TODO add buildLimitOrderTx (by analogy with swap.buildTX) method
+  // @TODO rewrite tests
 };
 
 // much smaller than the whole ERC20_ABI
