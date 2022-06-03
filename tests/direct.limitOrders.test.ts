@@ -150,7 +150,7 @@ const AugustusRFQFactory = new ethers.ContractFactory(
   signer
 );
 
-describe('Limit Orders', () => {
+describe('Direct Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     GetLimitOrdersContractFunctions &
