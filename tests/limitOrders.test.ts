@@ -376,8 +376,8 @@ describe('Limit Orders', () => {
     expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
-  test.only('buildLimitOrder', async () => {
-    const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
+  test('buildDirectLimitOrder', async () => {
+    const signableOrderData = await paraSwap.buildDirectLimitOrder(orderInput);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -387,11 +387,7 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = Zero
     expect(metaAddress).toBe(ZERO_ADDRESS);
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
-    // taker in AugustusRFQ = Augustus
-    expect(signableOrderData.data.taker.toLowerCase()).toBe(
-      AugustusAddress.toLowerCase()
-    );
+    expect(signableOrderData.data.taker.toLowerCase()).toBe(ZERO_ADDRESS);
 
     expect(signableOrderData.data.maker).toBe(senderAddress);
     expect(signableOrderData.data.expiry).toBe(orderExpiry);
@@ -399,12 +395,12 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
-  test.only('buildLimitOrder p2p', async () => {
+  test('buildDirectLimitOrder p2p', async () => {
     const p2pOrderInput = {
       ...orderInput,
       taker: taker.address,
     };
-    const signableOrderData = await paraSwap.buildLimitOrder({
+    const signableOrderData = await paraSwap.buildDirectLimitOrder({
       ...orderInput,
       taker: taker.address,
     });
@@ -417,10 +413,8 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(p2pOrderInput.taker.toLowerCase());
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
-    // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
-      AugustusAddress.toLowerCase()
+      p2pOrderInput.taker.toLowerCase()
     );
 
     expect(signableOrderData.data.maker).toBe(senderAddress);
@@ -433,7 +427,7 @@ describe('Limit Orders', () => {
     'ethereum lib tests: $lib',
     ({ lib, sdk, takerSDK }) => {
       test(`signLimitOrder with ${lib}`, async () => {
-        const signableOrderData = await sdk.buildLimitOrder(orderInput);
+        const signableOrderData = await sdk.buildDirectLimitOrder(orderInput);
         console.log('🚀 orderInput', signableOrderData.data);
 
         const signature = await sdk.signLimitOrder(signableOrderData);
@@ -454,7 +448,7 @@ describe('Limit Orders', () => {
 
         const libDependentNumber = lib === 'ethers' ? 1 : 2;
 
-        const signableOrderData = await sdk.buildLimitOrder({
+        const signableOrderData = await sdk.buildDirectLimitOrder({
           nonce: 1 + 5 * libDependentNumber,
           expiry: orderExpiry,
           maker: maker.address,
@@ -504,7 +498,7 @@ describe('Limit Orders', () => {
         // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForLimitOrder(
+        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -521,10 +515,11 @@ describe('Limit Orders', () => {
         // await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
 
         // withSDK
-        const approveForTakerTx = await takerSDK.approveTokenForLimitOrder(
-          takerAmount,
-          erc20Token2.address
-        );
+        const approveForTakerTx =
+          await takerSDK.approveTokenForDirectLimitOrder(
+            takerAmount,
+            erc20Token2.address
+          );
         await awaitTx(approveForTakerTx);
 
         const takerFillsOrderTx = await takerSDK.fillLimitOrder(
@@ -608,7 +603,7 @@ describe('Limit Orders', () => {
           [2 + 5 * libDependentNumber, 3 + 5 * libDependentNumber].map<
             Promise<OrderInfoForBatchFill>
           >(async (nonce) => {
-            const signableOrderData = await sdk.buildLimitOrder({
+            const signableOrderData = await sdk.buildDirectLimitOrder({
               nonce,
               expiry: orderExpiry,
               maker: maker.address,
@@ -663,7 +658,7 @@ describe('Limit Orders', () => {
         // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForLimitOrder(
+        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -679,10 +674,11 @@ describe('Limit Orders', () => {
         // await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
 
         // withSDK
-        const approveForTakerTx = await takerSDK.approveTokenForLimitOrder(
-          takerAmount,
-          erc20Token2.address
-        );
+        const approveForTakerTx =
+          await takerSDK.approveTokenForDirectLimitOrder(
+            takerAmount,
+            erc20Token2.address
+          );
         // await approveForTakerTx.wait();
         await awaitTx(approveForTakerTx);
 
@@ -763,7 +759,7 @@ describe('Limit Orders', () => {
 
         const libDependentNumber = lib === 'ethers' ? 1 : 2;
 
-        const signableOrderData = await sdk.buildLimitOrder({
+        const signableOrderData = await sdk.buildDirectLimitOrder({
           nonce: 4 + 5 * libDependentNumber,
           expiry: orderExpiry,
           maker: maker.address,
@@ -816,7 +812,7 @@ describe('Limit Orders', () => {
         const fillAmount = +takerAmount * fillPart;
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForLimitOrder(
+        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -832,10 +828,11 @@ describe('Limit Orders', () => {
         // await erc20Token2.connect(taker).approve(AugustusRFQ.address, takerAmount);
 
         // withSDK
-        const approveForTakerTx = await takerSDK.approveTokenForLimitOrder(
-          takerAmount,
-          erc20Token2.address
-        );
+        const approveForTakerTx =
+          await takerSDK.approveTokenForDirectLimitOrder(
+            takerAmount,
+            erc20Token2.address
+          );
         await awaitTx(approveForTakerTx);
 
         const takerFillsOrderTx =
@@ -995,7 +992,7 @@ describe('Limit Orders', () => {
     // @TODO breaks with 'maker' doesn't have sufficient balance for this limit order
     // because of API balance check
     // need to use a fixed address through a PK
-    const signableOrderData = await paraSwap.buildLimitOrder({
+    const signableOrderData = await paraSwap.buildDirectLimitOrder({
       ...orderInput,
       nonce: 2,
     });
