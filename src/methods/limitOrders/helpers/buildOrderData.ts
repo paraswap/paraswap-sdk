@@ -114,3 +114,42 @@ export function buildOrderData({
     data: order,
   };
 }
+
+/** @deprecated use buildOrderData */
+export function buildDirectOrderData({
+  chainId,
+  verifyingContract,
+  nonce = getRandomInt(),
+  expiry,
+  makerAsset,
+  takerAsset,
+  makerAmount,
+  takerAmount,
+  maker,
+  // for orders directly through AugustusRFQ taker can be 0 or another user
+  taker: takerInNonce = ZERO_ADDRESS,
+}: Omit<BuildOrderDataInput, 'AugustusAddress'>): SignableOrderData {
+  // first 160 bits is taker address (for p2p orders),
+  // or 0 for limitOrders, so that anyone can be the taker of the Order
+  const nonceAndMeta = (
+    BigInt(takerInNonce) +
+    (BigInt(nonce) << BigInt(160))
+  ).toString();
+
+  const order: OrderData = {
+    nonceAndMeta,
+    expiry,
+    makerAsset,
+    takerAsset,
+    maker,
+    taker: takerInNonce,
+    makerAmount,
+    takerAmount,
+  };
+
+  return {
+    types: { Order },
+    domain: { name, version, chainId, verifyingContract },
+    data: order,
+  };
+}
