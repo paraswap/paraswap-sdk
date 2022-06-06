@@ -528,7 +528,7 @@ describe('Limit Orders', () => {
           );
         await awaitTx(approveForTakerTx);
 
-        const takerFillsOrderTx = await takerSDK.fillLimitOrder(
+        const takerFillsOrderTx = await takerSDK.fillDirectLimitOrder(
           {
             orderData: signableOrderData.data,
             signature,
@@ -688,13 +688,14 @@ describe('Limit Orders', () => {
         // await approveForTakerTx.wait();
         await awaitTx(approveForTakerTx);
 
-        const takerFillsOrdersTx = await takerSDK.batchFillLimitOrderWithTarget(
-          {
-            orderInfos: orders,
-            target: taker.address,
-          }, // web3 underestimates gas here
-          lib === 'web3' ? { gas: 200000 } : undefined
-        );
+        const takerFillsOrdersTx =
+          await takerSDK.batchFillDirectLimitOrderWithTarget(
+            {
+              orderInfos: orders,
+              target: taker.address,
+            }, // web3 underestimates gas here
+            lib === 'web3' ? { gas: 200000 } : undefined
+          );
 
         // await takerFillsOrdersTx.wait();
         await awaitTx(takerFillsOrdersTx);
@@ -842,7 +843,7 @@ describe('Limit Orders', () => {
         await awaitTx(approveForTakerTx);
 
         const takerFillsOrderTx =
-          await takerSDK.partialFillLimitOrderWithTargetPermit(
+          await takerSDK.partialFillDirectLimitOrderWithTargetPermit(
             {
               orderData: signableOrderData.data,
               signature,

@@ -66,10 +66,10 @@ type PartialFillOrderWithTargetPermit<T> = (
 ) => Promise<T>;
 
 export type FillLimitOrderFunctions<T> = {
-  fillLimitOrder: FillOrder<T>;
-  partialFilllLimitOrder: PartialFillOrder<T>;
-  partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
-  batchFillLimitOrderWithTarget: BatchFillOrders<T>;
+  fillDirectLimitOrder: FillOrder<T>;
+  partialFillDirectLimitOrder: PartialFillOrder<T>;
+  partialFillDirectLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
+  batchFillDirectLimitOrderWithTarget: BatchFillOrders<T>;
   // @TODO add direct vs Augustus methods
   // @TODO add buildLimitOrderTx (by analogy with swap.buildTX) method
   // @TODO rewrite tests
@@ -394,7 +394,7 @@ export const constructFillLimitOrder = <T>(
 
   // @TODO add fillOrderWithTarget variants and bulk* variants
 
-  const fillLimitOrder: FillOrder<T> = async (
+  const fillDirectLimitOrder: FillOrder<T> = async (
     { orderData, signature },
     overrides = {}
   ) => {
@@ -415,7 +415,7 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
-  const batchFillLimitOrderWithTarget: BatchFillOrders<T> = async (
+  const batchFillDirectLimitOrderWithTarget: BatchFillOrders<T> = async (
     { orderInfos, target },
     overrides = {}
   ) => {
@@ -454,7 +454,7 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
-  const partialFilllLimitOrder: PartialFillOrder<T> = async (
+  const partialFillDirectLimitOrder: PartialFillOrder<T> = async (
     { orderData, signature, fillAmount },
     overrides = {}
   ) => {
@@ -475,7 +475,7 @@ export const constructFillLimitOrder = <T>(
     return res;
   };
 
-  const partialFillLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<
+  const partialFillDirectLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<
     T
   > = async (
     {
@@ -513,9 +513,9 @@ export const constructFillLimitOrder = <T>(
   };
 
   return {
-    fillLimitOrder,
-    batchFillLimitOrderWithTarget,
-    partialFilllLimitOrder,
-    partialFillLimitOrderWithTargetPermit,
+    fillDirectLimitOrder,
+    batchFillDirectLimitOrderWithTarget,
+    partialFillDirectLimitOrder,
+    partialFillDirectLimitOrderWithTargetPermit,
   };
 };

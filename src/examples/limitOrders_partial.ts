@@ -93,7 +93,7 @@ async function run() {
     );
 
   const signableOrderData: SignableOrderData =
-    paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
+    await paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
 
   const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
     signableOrderData
@@ -135,7 +135,7 @@ async function run() {
     );
 
   const tx5: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.fillLimitOrder({
+    await paraswapLimitOrdersSDKForTaker.fillDirectLimitOrder({
       orderData: newOrder,
       signature,
     });

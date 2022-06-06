@@ -91,7 +91,7 @@ async function run() {
     );
 
   const tx3: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.fillLimitOrder({
+    await paraswapLimitOrdersSDKForTaker.fillDirectLimitOrder({
       orderData: newLimitOrder,
       signature: newLimitOrder.signature,
     });
