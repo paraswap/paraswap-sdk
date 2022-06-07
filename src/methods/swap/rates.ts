@@ -39,12 +39,12 @@ type CommonGetRateInput = {
   destDecimals?: number;
 };
 
-type GetRateInput = CommonGetRateInput & {
+export type GetRateInput = CommonGetRateInput & {
   srcToken: AddressOrSymbol;
   destToken: AddressOrSymbol;
 };
 
-type GetRate = (
+export type GetRate = (
   options: GetRateInput,
   signal?: AbortSignal
 ) => Promise<OptimalRate>;
