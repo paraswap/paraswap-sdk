@@ -145,10 +145,30 @@ export const constructBuildTx = ({
 
     const fetchURL = `${transactionsURL}/${search}`;
 
+    const sanitizedParams =
+      'orders' in params && params.orders.length > 0
+        ? {
+            ...params,
+            //  make sure we don't pass more with orders than API expects
+            orders: params.orders.map((order) => {
+              const sanitizedOrder: SwappableOrder = {
+                ...sanitizeOrderData(order),
+                signature: order.signature,
+              };
+
+              if (order.permitMakerAsset) {
+                sanitizedOrder.permitMakerAsset = order.permitMakerAsset;
+              }
+
+              return sanitizedOrder;
+            }),
+          }
+        : params;
+
     const fetchParams: FetcherPostInput = {
       url: fetchURL,
       method: 'POST',
-      data: params,
+      data: sanitizedParams,
       signal,
     };
 
