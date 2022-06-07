@@ -70,13 +70,15 @@ export interface BuildNFTOrderTxInput extends BuildTxInputBase {
 }
 
 // for Swap + LimitOrder
-export interface BuildSwapAndLimitOrderTxInput extends BuildLimitOrderTxInput {
+export interface BuildSwapAndLimitOrderTxInput extends BuildTxInputBase {
   priceRoute: OptimalRate;
+  orders: SwappableOrder[];
 }
 
 // for Swap + NFT Order
-export interface BuildSwapAndNFTOrderTxInput extends BuildLimitOrderTxInput {
+export interface BuildSwapAndNFTOrderTxInput extends BuildTxInputBase {
   priceRoute: OptimalRate;
+  orders: SwappableNFTOrder[];
 }
 
 export type BuildTxInput =
