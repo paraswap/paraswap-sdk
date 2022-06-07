@@ -1,19 +1,34 @@
-import type { WithGasPrice, WithMaxFee } from '../../gas';
-import type {
-  ConstructFetchInput,
-  Address,
-  FetcherPostInput,
-  PriceString,
-  OptimalRate,
-} from '../../types';
+import type { ConstructFetchInput, OptimalRate } from '../../types';
 
 import { assert } from 'ts-essentials';
 import { API_URL, SwapSide, ContractMethod } from '../../constants';
-import { constructSearchString } from '../../helpers/misc';
-import { constructBuildTx } from '../swap/transaction';
+import {
+  BuildLimitOrderTxInput,
+  BuildOptions,
+  BuildSwapAndLimitOrderTxInput,
+  TransactionParams,
+  constructBuildTx,
+} from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
 import type { OrderData } from './buildOrder';
 
+type BuildSwapAndLimitOrdersTx = (
+  params: BuildSwapAndLimitOrderTxInput,
+  options?: BuildOptions,
+  signal?: AbortSignal
+) => Promise<TransactionParams>;
+
+type BuildLimitOrdersTx = (
+  params: BuildLimitOrderTxInput,
+  options?: BuildOptions,
+  signal?: AbortSignal
+) => Promise<TransactionParams>;
+
+export type BuildLimitOrdersTxFunctions = {
+  getLimitOrdersRate: GetLimitOrdersRate;
+  buildLimitOrderTx: BuildLimitOrdersTx;
+  buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx;
+};
 
 type GetLimitOrdersRate = (
   // `amount`, if given, must equal the total of the orders' `takerAmounts`
@@ -26,9 +41,7 @@ export const constructBuildLimitOrderTx = ({
   apiURL = API_URL,
   chainId,
   fetcher,
-}: ConstructFetchInput): BuildTxFunctions => {
-  const transactionsURL = `${apiURL}/transactions/${chainId}`;
-
+}: ConstructFetchInput): BuildLimitOrdersTxFunctions => {
   const { buildTx: buildSwapTx } = constructBuildTx({
     apiURL,
     chainId,
@@ -107,3 +120,14 @@ export const constructBuildLimitOrderTx = ({
     const optimalRate = await getSwapAndLimitOrderRate(rateInput, signal);
     return optimalRate;
   };
+
+  // cloning functions only to narrow down the types
+  const buildLimitOrderTx: BuildLimitOrdersTx = buildSwapTx;
+  const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = buildSwapTx;
+
+  return {
+    getLimitOrdersRate,
+    buildLimitOrderTx,
+    buildSwapAndLimitOrderTx,
+  };
+};
