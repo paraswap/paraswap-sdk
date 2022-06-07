@@ -32,7 +32,7 @@ export type BuildLimitOrdersTxFunctions = {
 
 type GetLimitOrdersRate = (
   // `amount`, if given, must equal the total of the orders' `takerAmounts`
-  options: Omit<GetRateInput, 'amount'> & { amount?: string },
+  options: Omit<GetRateInput, 'amount' | 'side'> & { amount?: string },
   orders: Pick<OrderData, 'takerAsset' | 'makerAsset' | 'takerAmount'>[],
   signal?: AbortSignal
 ) => Promise<OptimalRate>;
