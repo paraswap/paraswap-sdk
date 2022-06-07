@@ -10,6 +10,8 @@ import type {
 import { assert } from 'ts-essentials';
 import { API_URL, SwapSide } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
+import type { OrderData } from '../limitOrders/buildOrder';
+import { sanitizeOrderData } from '../limitOrders/helpers/misc';
 
 export interface TransactionParams {
   to: string;
@@ -21,12 +23,23 @@ export interface TransactionParams {
   chainId: number;
 }
 
-export interface BuildTxInput {
+type SwappableOrder = OrderData & {
+  permitMakerAsset?: string;
+  signature: string;
+};
+
+type SwappableNFTOrder = SwappableOrder & {
+  makerAssetId: string;
+  takerAssetId: string;
+};
+
+export interface BuildTxInputBase {
   srcToken: Address;
   destToken: Address;
   srcAmount: PriceString;
   destAmount: PriceString;
-  priceRoute: OptimalRate;
+  // priceRoute: OptimalRate;
+  // orders?: SwappableOrder[];
   userAddress: Address;
   partner?: string;
   partnerAddress?: string;
@@ -37,6 +50,41 @@ export interface BuildTxInput {
   permit?: string;
   deadline?: string;
 }
+
+// for Swap transaction
+export interface BuildSwapTxInput extends BuildTxInputBase {
+  priceRoute: OptimalRate;
+}
+
+// for LimitOrder Fill, without swap
+export interface BuildLimitOrderTxInput extends BuildTxInputBase {
+  orders: SwappableOrder[];
+  srcDecimals: number;
+  destDecimals: number;
+}
+
+// for NFT Order Fill, without swap
+export interface BuildNFTOrderTxInput extends BuildTxInputBase {
+  orders: SwappableNFTOrder[];
+  srcDecimals: number;
+}
+
+// for Swap + LimitOrder
+export interface BuildSwapAndLimitOrderTxInput extends BuildLimitOrderTxInput {
+  priceRoute: OptimalRate;
+}
+
+// for Swap + NFT Order
+export interface BuildSwapAndNFTOrderTxInput extends BuildLimitOrderTxInput {
+  priceRoute: OptimalRate;
+}
+
+export type BuildTxInput =
+  | BuildSwapTxInput
+  | BuildLimitOrderTxInput
+  | BuildNFTOrderTxInput
+  | BuildSwapAndLimitOrderTxInput
+  | BuildSwapAndNFTOrderTxInput;
 
 export type BuildOptionsBase = {
   ignoreChecks?: boolean;
