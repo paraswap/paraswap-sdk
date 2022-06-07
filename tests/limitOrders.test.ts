@@ -38,6 +38,8 @@ import {
   FillLimitOrderFunctions,
   GetSpenderFunctions,
   constructGetSpender,
+  BuildLimitOrdersTxFunctions,
+  constructBuildLimitOrderTx,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -59,6 +61,8 @@ dotenv.config();
 jest.setTimeout(30 * 1000);
 
 declare let process: any;
+
+const referrer = 'sdk-test';
 
 // const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
@@ -158,7 +162,8 @@ describe('Limit Orders', () => {
     GetLimitOrdersFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction> &
-    GetSpenderFunctions;
+    GetSpenderFunctions &
+    BuildLimitOrdersTxFunctions;
 
   type MinEthersSDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
@@ -331,14 +336,15 @@ describe('Limit Orders', () => {
         typeof constructGetLimitOrders,
         EthersCancelOrderConstructor,
         EthersApproveTokenForLimitOrderConstructor,
-        typeof constructGetSpender
+        typeof constructGetSpender,
+        typeof constructBuildLimitOrderTx
       ]
     >(
       {
         chainId,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.staging.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -347,7 +353,8 @@ describe('Limit Orders', () => {
       constructGetLimitOrders,
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder,
-      constructGetSpender
+      constructGetSpender,
+      constructBuildLimitOrderTx
     );
 
     AugustusRFQ = await AugustusRFQFactory.attach(
@@ -376,7 +383,7 @@ describe('Limit Orders', () => {
     expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
-  test.only('buildLimitOrder', async () => {
+  test('buildLimitOrder', async () => {
     const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
@@ -399,7 +406,7 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('Order_Data_Snapshot');
   });
 
-  test.only('buildLimitOrder p2p', async () => {
+  test('buildLimitOrder p2p', async () => {
     const p2pOrderInput = {
       ...orderInput,
       taker: taker.address,
@@ -429,10 +436,66 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('P2P_Order_Data_Snapshot');
   });
 
+  test.only('Build_Tx', async () => {
+    const destToken = erc20Token2.address;
+
+    const makerAmount = (1e18).toString(10);
+    const takerAmount = (8e18).toString(10);
+    const srcAmount = (1 * 1e18).toString();
+
+    const order = {
+      nonce: 99,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: erc20Token1.address,
+      makerAmount,
+      takerAsset: erc20Token2.address,
+      takerAmount,
+    };
+
+    const signableOrderData = await paraSwap.buildLimitOrder(order);
+
+    const signature = await paraSwap.signLimitOrder(signableOrderData);
+
+    const priceRoute = await paraSwap.getLimitOrdersRate(
+      {
+        srcToken,
+        destToken,
+        // amount: (1 * 1e18).toString(),
+        userAddress: senderAddress,
+      },
+      [order]
+    );
+
+    console.log('priceRoute', priceRoute);
+
+    const destAmount = new BigNumber(priceRoute.destAmount)
+      .times(0.99)
+      .toFixed(0);
+
+    const swappableOrder = { ...signableOrderData.data, signature };
+
+    const txParams = await paraSwap.buildSwapAndLimitOrderTx(
+      {
+        srcToken,
+        destToken,
+        srcAmount,
+        destAmount,
+        priceRoute,
+        userAddress: senderAddress,
+        partner: referrer,
+        orders: [swappableOrder],
+      },
+      { ignoreChecks: true }
+    );
+
+    expect(typeof txParams).toBe('object');
+  });
+
   describe.each(txSDKs)(
     'ethereum lib tests: $lib',
     ({ lib, sdk, takerSDK }) => {
-      test.only(`signLimitOrder with ${lib}`, async () => {
+      test(`signLimitOrder with ${lib}`, async () => {
         const signableOrderData = await sdk.buildLimitOrder(orderInput);
         console.log('🚀 orderInput', signableOrderData.data);
 
