@@ -21,6 +21,10 @@ import {
   GetLimitOrdersContractFunctions,
   constructGetLimitOrdersContract,
 } from './getOrdersContract';
+import {
+  BuildLimitOrdersTxFunctions,
+  constructBuildLimitOrderTx,
+} from './transaction';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
@@ -69,6 +73,7 @@ export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
   PostLimitOrderFunctions &
   GetLimitOrdersFunctions &
   GetLimitOrdersContractFunctions &
+  BuildLimitOrdersTxFunctions &
   CancelLimitOrderFunctions<T> &
   FillLimitOrderFunctions<T> &
   ApproveTokenForLimitOrderFunctions<T>;
@@ -92,6 +97,8 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
   const limitOrdersFill = constructFillLimitOrder(options);
   const limitOrdersApproveToken = constructApproveTokenForLimitOrder(options);
 
+  const limitOrdersBuildTx = constructBuildLimitOrderTx(options);
+
   return {
     ...limitOrdersGetters,
     ...limitOrdersContractGetter,
@@ -102,5 +109,6 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
     ...limitOrdersCancel,
     ...limitOrdersFill,
     ...limitOrdersApproveToken,
+    ...limitOrdersBuildTx,
   };
 };
