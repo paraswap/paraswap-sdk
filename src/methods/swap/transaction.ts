@@ -118,26 +118,28 @@ export const constructBuildTx = ({
   const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
-    const {
-      srcAmount,
-      destAmount,
-      priceRoute,
-      priceRoute: { side },
-    } = params;
+    const { srcAmount, destAmount } = params;
 
-    const AmountMistmatchError =
-      side === SwapSide.SELL
-        ? 'Source Amount Mismatch'
-        : 'Destination Amount Mismatch';
-
-    assert(
-      areAmountsCorrect({
-        queryParams: { srcAmount, destAmount },
-        side,
+    if ('priceRoute' in params) {
+      const {
         priceRoute,
-      }),
-      AmountMistmatchError
-    );
+        priceRoute: { side },
+      } = params;
+      const AmountMistmatchError =
+        side === SwapSide.SELL
+          ? 'Source Amount Mismatch'
+          : 'Destination Amount Mismatch';
+
+      assert(
+        areAmountsCorrect({
+          queryParams: { srcAmount, destAmount },
+          side,
+          priceRoute,
+        }),
+        AmountMistmatchError
+      );
+    }
+
     // always pass explicit type to make sure UrlSearchParams are correct
     const search = constructSearchString<SearchStringParams>(options);
 
