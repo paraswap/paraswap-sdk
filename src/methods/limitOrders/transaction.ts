@@ -75,7 +75,7 @@ export const constructBuildLimitOrderTx = ({
         return accum;
       },
       {
-        takerAssetsSet: new Set(destToken.toLowerCase()),
+        takerAssetsSet: new Set([destToken.toLowerCase()]),
         makerAssetsSet: new Set(),
         takerAmount: BigInt(0),
       }
