@@ -93,6 +93,9 @@ export const constructGetRate = ({
     });
 
     const fetchURL = `${pricesUrl}/${search}`;
+    console.log(`
+      GET ${fetchURL}
+    `);
 
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
