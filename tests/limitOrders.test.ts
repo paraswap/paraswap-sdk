@@ -156,6 +156,15 @@ const AugustusRFQFactory = new ethers.ContractFactory(
   signer
 );
 
+const expectTxParamsScheme = expect.objectContaining({
+  from: expect.any(String),
+  to: expect.any(String),
+  value: expect.any(String),
+  data: expect.any(String),
+  gasPrice: expect.any(String),
+  chainId: expect.any(Number),
+});
+
 describe('Limit Orders', () => {
   let paraSwap: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
