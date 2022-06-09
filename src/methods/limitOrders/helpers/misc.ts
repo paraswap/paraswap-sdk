@@ -1,5 +1,6 @@
 import type { Address } from '../../../types';
-import { OrderData } from './buildOrderData';
+import type { OrderData } from './buildOrderData';
+import type { OrderType } from './types';
 
 // @TODO either fill in or fetch from API
 export const chainId2verifyingContract: Record<number, Address> = {
@@ -40,4 +41,20 @@ export function sanitizeOrderData({
     makerAmount,
     takerAmount,
   };
+}
+
+type GetBaseFetchUrlInput = {
+  apiURL: string;
+  chainId?: number;
+};
+
+export function constructBaseFetchUrlGetter({
+  chainId,
+  apiURL,
+}: GetBaseFetchUrlInput): (type: OrderType) => string {
+  if (chainId) {
+    return (type) => `${apiURL}/orders/${chainId}/${type.toLowerCase()}`;
+  }
+
+  return (type) => `${apiURL}/orders/${type.toLowerCase()}`;
 }
