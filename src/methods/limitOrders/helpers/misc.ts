@@ -52,5 +52,5 @@ export function constructBaseFetchUrlGetter({
   chainId,
   apiURL,
 }: GetBaseFetchUrlInput): (type: OrderType) => string {
-  return (type) => `${apiURL}/orders/${chainId}/${type.toLowerCase()}`;
+  return (type) => `${apiURL}/limit/orders/${chainId}/${type.toLowerCase()}`;
 }
