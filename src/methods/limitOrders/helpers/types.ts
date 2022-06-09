@@ -66,7 +66,7 @@ type _PickExistingKeysInArrayHelper<
     : PickExistingKeys<Head, K> | Accum
   : Accum;
 
-// returns union of array elements with existing keys priocked from K given
+// returns union of array elements with existing keys picked from K given
 type PickExistingKeysInArray<
   T extends Record<string, any>[],
   K extends string
