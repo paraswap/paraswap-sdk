@@ -88,7 +88,6 @@ export type RawLimitOrder = LimitOrderFromApi;
 
 export type LimitOrderToSend = OrderData & {
   permitMakerAsset?: string;
-  chainId: number;
   signature: string;
 };
 

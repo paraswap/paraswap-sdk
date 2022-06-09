@@ -54,7 +54,6 @@ export const constructSubmitLimitOrder = (
     const orderWithSignature: LimitOrderToSend = {
       ...orderData.data,
       ...extra,
-      chainId: orderData.domain.chainId,
       signature,
     };
 
