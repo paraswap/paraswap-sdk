@@ -31,6 +31,7 @@ export const constructApproveTokenForLimitOrder = <T>(
   const approveTokenForDirectLimitOrder: ApproveToken<T> =
     approveTokenMethodFactory<T>(options.contractCaller, getSpender);
 
+  // approving TokenTransaferProxy as for the swap
   const { approveToken: approveTokenForLimitOrder } =
     constructApproveToken(options);
 
