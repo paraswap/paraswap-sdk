@@ -102,7 +102,6 @@ async function run() {
 
   const orderToPostToApi: LimitOrderToSend = {
     ...signableOrderData.data,
-    chainId: signableOrderData.domain.chainId,
     signature,
   };
 
