@@ -57,6 +57,7 @@ export interface BuildSwapTxInput extends BuildTxInputBase {
 }
 
 // for LimitOrder Fill, without swap
+// @TODO check through a test
 export interface BuildLimitOrderTxInput extends BuildTxInputBase {
   orders: SwappableOrder[];
   srcDecimals: number;
