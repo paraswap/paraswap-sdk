@@ -461,7 +461,6 @@ describe('Limit Orders', () => {
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
     const takerAmount = (6e18).toString(10);
-    // const srcAmount = (1 * 1e18).toString();
 
     const order = {
       nonce: 99,
@@ -486,7 +485,6 @@ describe('Limit Orders', () => {
       {
         srcToken,
         destToken,
-        // amount: (1 * 1e18).toString(),
         userAddress: senderAddress,
       },
       [order]
@@ -494,9 +492,73 @@ describe('Limit Orders', () => {
 
     console.log('priceRoute', priceRoute);
 
-    // const destAmount = new BigNumber(priceRoute.destAmount)
-    //   .times(0.99)
-    //   .toFixed(0);
+    // @CONSIDER this may change
+    expect(priceRoute).toMatchInlineSnapshot(`
+      Object {
+        "bestRoute": Array [
+          Object {
+            "percent": 100,
+            "swaps": Array [
+              Object {
+                "destDecimals": 18,
+                "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+                "srcDecimals": 18,
+                "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+                "swapExchanges": Array [
+                  Object {
+                    "data": Object {
+                      "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+                      "feeFactor": 10000,
+                      "gasUSD": "0.000000",
+                      "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+                      "path": Array [
+                        "0xad6d458402f60fd3bd25163575031acdce07538d",
+                        "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
+                      ],
+                      "pools": Array [
+                        Object {
+                          "address": "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                          "direction": true,
+                          "fee": 30,
+                        },
+                      ],
+                      "router": "0x53e693c6C7FFC4446c53B205Cf513105Bf140D7b",
+                    },
+                    "destAmount": "6000000000000000000",
+                    "exchange": "UniswapV2",
+                    "percent": 100,
+                    "poolAddresses": Array [
+                      "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                    ],
+                    "srcAmount": "1813891456802437169",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        "blockNumber": 12351080,
+        "contractAddress": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+        "contractMethod": "simpleBuy",
+        "destAmount": "6000000000000000000",
+        "destDecimals": 18,
+        "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+        "destUSD": "0",
+        "gasCost": "0",
+        "gasCostUSD": "0.000000",
+        "hmac": "fd0652306e86c74aad04daf004a3599afd599086",
+        "maxImpactReached": false,
+        "network": 3,
+        "partner": "paraswap.io",
+        "partnerFee": 0,
+        "side": "BUY",
+        "srcAmount": "1813891456802437169",
+        "srcDecimals": 18,
+        "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+        "srcUSD": "0",
+        "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
+      }
+    `);
 
     const swapTxPayload = await paraSwap.buildTx(
       {
@@ -507,21 +569,36 @@ describe('Limit Orders', () => {
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
-        // orders: [swappableOrder],
       },
       { ignoreChecks: true }
     );
 
     console.log('swapTxPayload', swapTxPayload);
+    expect(swapTxPayload).toEqual(expectTxParamsScheme);
+
+    expect({
+      from: swapTxPayload.from,
+      to: swapTxPayload.to,
+      value: swapTxPayload.value,
+      chainId: swapTxPayload.chainId,
+      //  data & gasPrice vary from run to run
+    }).toMatchInlineSnapshot(`
+      Object {
+        "chainId": 3,
+        "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
+        "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+        "value": "0",
+      }
+    `);
 
     const swappableOrder = { ...signableOrderData.data, signature };
 
-    const txParams = await paraSwap.buildSwapAndLimitOrderTx(
+    const swapAndLOPayload = await paraSwap.buildSwapAndLimitOrderTx(
       {
         srcToken,
-        destToken,
+        destToken: order.makerAsset,
         srcAmount: priceRoute.srcAmount,
-        destAmount: priceRoute.destAmount,
+        destDecimals: priceRoute.destDecimals,
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
@@ -530,7 +607,23 @@ describe('Limit Orders', () => {
       { ignoreChecks: true }
     );
 
-    expect(typeof txParams).toBe('object');
+    console.log('swapAndLOPayload', swapAndLOPayload);
+
+    expect(swapAndLOPayload).toEqual(expectTxParamsScheme);
+    expect({
+      from: swapAndLOPayload.from,
+      to: swapAndLOPayload.to,
+      value: swapAndLOPayload.value,
+      chainId: swapAndLOPayload.chainId,
+      //  data & gasPrice vary from run to run
+    }).toMatchInlineSnapshot(`
+      Object {
+        "chainId": 3,
+        "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
+        "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+        "value": "0",
+      }
+    `);
   });
 
   describe.each(txSDKs)(
