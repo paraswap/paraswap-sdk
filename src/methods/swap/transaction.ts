@@ -126,9 +126,13 @@ export const constructBuildTx = ({
   const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
-    const { srcAmount, destAmount } = params;
+    const { srcAmount } = params;
 
-    if ('priceRoute' in params) {
+    if (
+      'priceRoute' in params &&
+      'destAmount' in params && // isn't providers together with `orders`
+      !('orders' in params) // when present, destAmount becomes sum(orders[].makerAmount)
+    ) {
       const {
         priceRoute,
         priceRoute: { side },
@@ -140,7 +144,7 @@ export const constructBuildTx = ({
 
       assert(
         areAmountsCorrect({
-          queryParams: { srcAmount, destAmount },
+          queryParams: { srcAmount, destAmount: params.destAmount },
           side,
           priceRoute,
         }),
