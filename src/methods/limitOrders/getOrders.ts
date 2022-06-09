@@ -13,18 +13,22 @@ import type {
 import {
   chainId2BlockContractDeployedAt,
   chainId2verifyingContract,
+  constructBaseFetchUrlGetter,
 } from './helpers/misc';
 import type {
   AnyLimitOrder,
   LimitOrderExtra,
   LimitOrdersApiResponse,
   LimitOrderStatus,
+  OrderType,
   RawLimitOrder,
   UnknownLimitOrder,
 } from './helpers/types';
 
 //                     get orders by `maker` or `taker`
-export type LimitOrdersUserParams = { maker: Address } | { taker: Address };
+export type LimitOrdersUserParams =
+  | { maker: Address; type: OrderType }
+  | { taker: Address; type: OrderType };
 type GetLimitOrderByHash = (
   orderHash: string,
   signal?: AbortSignal
@@ -179,8 +183,10 @@ export const constructGetLimitOrders = ({
   any,
   'staticCall' | 'getLogsCall'
 >): GetLimitOrdersFunctions => {
-  // const baseFetchURL = `${apiURL}/limit-orders/${network}`; // in mocked FE
-  const baseFetchURL = `${apiURL}/limit/orders/${chainId}`; // in API
+  const getBaseFetchURLByOrderType = constructBaseFetchUrlGetter({
+    apiURL,
+    chainId,
+  });
 
   const verifyingContract = chainId2verifyingContract[chainId];
   const verifyingContractDeployedBlock =
@@ -346,6 +352,7 @@ export const constructGetLimitOrders = ({
   };
 
   const getRawLimitOrders: GetRawLimitOrders = async (userParams, signal) => {
+    const baseFetchURL = getBaseFetchURLByOrderType(userParams.type);
     const userURL =
       'maker' in userParams
         ? `maker/${userParams.maker}`
