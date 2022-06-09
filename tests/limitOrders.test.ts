@@ -1077,7 +1077,6 @@ describe('Limit Orders', () => {
 
     const orderWithSignature: LimitOrderToSend = {
       ...signableOrderData.data,
-      chainId: signableOrderData.domain.chainId,
       signature,
     };
 
