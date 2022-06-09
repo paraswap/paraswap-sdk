@@ -71,13 +71,18 @@ export interface BuildNFTOrderTxInput extends BuildTxInputBase {
 }
 
 // for Swap + LimitOrder
-export interface BuildSwapAndLimitOrderTxInput extends BuildTxInputBase {
+export interface BuildSwapAndLimitOrderTxInput
+  // destAmount is sum(orders[].makerAmount)
+  extends Omit<BuildTxInputBase, 'destAmount'> {
   priceRoute: OptimalRate;
   orders: SwappableOrder[];
+  destDecimals: number;
 }
 
 // for Swap + NFT Order
-export interface BuildSwapAndNFTOrderTxInput extends BuildTxInputBase {
+export interface BuildSwapAndNFTOrderTxInput
+  // destAmount is sum(orders[].makerAmount)
+  extends Omit<BuildTxInputBase, 'destAmount'> {
   priceRoute: OptimalRate;
   orders: SwappableNFTOrder[];
 }
