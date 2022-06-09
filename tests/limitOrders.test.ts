@@ -40,6 +40,8 @@ import {
   constructGetSpender,
   BuildLimitOrdersTxFunctions,
   constructBuildLimitOrderTx,
+  BuildTxFunctions,
+  constructBuildTx,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -163,7 +165,8 @@ describe('Limit Orders', () => {
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction> &
     GetSpenderFunctions &
-    BuildLimitOrdersTxFunctions;
+    BuildLimitOrdersTxFunctions &
+    BuildTxFunctions;
 
   type MinEthersSDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
@@ -337,7 +340,8 @@ describe('Limit Orders', () => {
         EthersCancelOrderConstructor,
         EthersApproveTokenForLimitOrderConstructor,
         typeof constructGetSpender,
-        typeof constructBuildLimitOrderTx
+        typeof constructBuildLimitOrderTx,
+        typeof constructBuildTx
       ]
     >(
       {
@@ -354,7 +358,8 @@ describe('Limit Orders', () => {
       constructCancelLimitOrder,
       constructApproveTokenForLimitOrder,
       constructGetSpender,
-      constructBuildLimitOrderTx
+      constructBuildLimitOrderTx,
+      constructBuildTx
     );
 
     AugustusRFQ = await AugustusRFQFactory.attach(
@@ -437,21 +442,32 @@ describe('Limit Orders', () => {
   });
 
   test.only('Build_Tx', async () => {
-    const destToken = erc20Token2.address;
+    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
+    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
-    const makerAmount = (1e18).toString(10);
-    const takerAmount = (8e18).toString(10);
-    const srcAmount = (1 * 1e18).toString();
+    // swap DAI -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
+
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 6 BAT
+    const takerAmount = (6e18).toString(10);
+    // const srcAmount = (1 * 1e18).toString();
 
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: erc20Token1.address,
+      makerAsset: WETH,
       makerAmount,
-      takerAsset: erc20Token2.address,
+      takerAsset: BAT,
       takerAmount,
     };
+
+    // token to get after SWAP must be the takerAsset to allow to fill Order
+    const destToken = order.takerAsset;
+    // token to swap for destToken prior to filling Order
+    const srcToken = DAI;
 
     const signableOrderData = await paraSwap.buildLimitOrder(order);
 
@@ -469,9 +485,25 @@ describe('Limit Orders', () => {
 
     console.log('priceRoute', priceRoute);
 
-    const destAmount = new BigNumber(priceRoute.destAmount)
-      .times(0.99)
-      .toFixed(0);
+    // const destAmount = new BigNumber(priceRoute.destAmount)
+    //   .times(0.99)
+    //   .toFixed(0);
+
+    const swapTxPayload = await paraSwap.buildTx(
+      {
+        srcToken,
+        destToken,
+        srcAmount: priceRoute.srcAmount,
+        destAmount: priceRoute.destAmount,
+        priceRoute,
+        userAddress: senderAddress,
+        partner: referrer,
+        // orders: [swappableOrder],
+      },
+      { ignoreChecks: true }
+    );
+
+    console.log('swapTxPayload', swapTxPayload);
 
     const swappableOrder = { ...signableOrderData.data, signature };
 
@@ -479,8 +511,8 @@ describe('Limit Orders', () => {
       {
         srcToken,
         destToken,
-        srcAmount,
-        destAmount,
+        srcAmount: priceRoute.srcAmount,
+        destAmount: priceRoute.destAmount,
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
