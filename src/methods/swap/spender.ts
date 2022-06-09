@@ -1,7 +1,7 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput, Address } from '../../types';
 
-type GetSpender = (signal?: AbortSignal) => Promise<Address>;
+export type GetSpender = (signal?: AbortSignal) => Promise<Address>;
 type GetContracts = (signal?: AbortSignal) => Promise<AdaptersContractsResult>;
 
 export type GetSpenderFunctions = {
