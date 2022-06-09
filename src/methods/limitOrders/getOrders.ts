@@ -374,7 +374,7 @@ export const constructGetLimitOrders = ({
     orderHash,
     signal
   ) => {
-    const fetchURL = `${apiURL}/limit/order/${chainId}/${orderHash}`;
+    const fetchURL = `${apiURL}/order/${chainId}/${orderHash}`;
 
     const order = await fetcher<RawLimitOrder>({
       url: fetchURL,
