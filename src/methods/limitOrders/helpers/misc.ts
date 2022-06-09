@@ -45,16 +45,12 @@ export function sanitizeOrderData({
 
 type GetBaseFetchUrlInput = {
   apiURL: string;
-  chainId?: number;
+  chainId: number;
 };
 
 export function constructBaseFetchUrlGetter({
   chainId,
   apiURL,
 }: GetBaseFetchUrlInput): (type: OrderType) => string {
-  if (chainId) {
-    return (type) => `${apiURL}/orders/${chainId}/${type.toLowerCase()}`;
-  }
-
-  return (type) => `${apiURL}/orders/${type.toLowerCase()}`;
+  return (type) => `${apiURL}/orders/${chainId}/${type.toLowerCase()}`;
 }
