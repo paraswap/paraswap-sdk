@@ -957,7 +957,10 @@ describe('Direct Limit Orders', () => {
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const orders = await paraSwap.getRawLimitOrders({ maker: account });
+    const orders = await paraSwap.getRawLimitOrders({
+      maker: account,
+      type: 'LIMIT',
+    });
 
     const order = orders.find(
       (order) => order.orderHash.toLowerCase() === orderHash
@@ -1118,7 +1121,10 @@ describe('Direct Limit Orders', () => {
       constructGetLimitOrders
     );
 
-    const orders = await paraSwap.getRawLimitOrders({ maker: account });
+    const orders = await paraSwap.getRawLimitOrders({
+      maker: account,
+      type: 'LIMIT',
+    });
 
     const selectedOrders = orders.filter((order) =>
       orderHashes.includes(order.orderHash)
