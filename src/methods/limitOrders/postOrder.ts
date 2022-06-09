@@ -1,9 +1,11 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
+import { constructBaseFetchUrlGetter } from './helpers/misc';
 import type {
   LimitOrderApiResponse,
   LimitOrderToSend,
   OpenLimitOrder,
+  OrderType,
 } from './helpers/types';
 
 type PostLimitOrder = (
@@ -13,6 +15,7 @@ type PostLimitOrder = (
 
 export type PostLimitOrderFunctions = {
   postLimitOrder: PostLimitOrder;
+  postP2POrder: PostLimitOrder;
 };
 
 export const constructPostLimitOrder = ({
@@ -20,12 +23,17 @@ export const constructPostLimitOrder = ({
   // network, @TODO would it make more sense to post by network?
   fetcher,
 }: ConstructFetchInput): PostLimitOrderFunctions => {
-  const fetchURL = `${apiURL}/limit/orders`;
+  const getBaseFetchURLByOrderType = constructBaseFetchUrlGetter({
+    apiURL,
+  });
 
-  const postLimitOrder: PostLimitOrder = async (
-    limitOrderWithSignatureAndPermit,
-    signal
-  ) => {
+  const postTypedOrder = async (
+    limitOrderWithSignatureAndPermit: LimitOrderToSend,
+    type: OrderType,
+    signal?: AbortSignal
+  ): Promise<OpenLimitOrder> => {
+    const fetchURL = getBaseFetchURLByOrderType(type);
+
     // @TODO check API return matches
     const { order: newOrder } = await fetcher<LimitOrderApiResponse>({
       url: fetchURL,
@@ -33,13 +41,24 @@ export const constructPostLimitOrder = ({
       data: limitOrderWithSignatureAndPermit,
       signal,
     });
-    console.log(
-      '🚀 ~ file: postOrder.ts ~ line 40 ~ created newOrder',
-      newOrder
-    );
+    console.log('🚀 ~ file: postOrder.ts ~ created newOrder', newOrder);
 
     return { ...newOrder, status: 'open', amountFilled: '0' };
   };
 
-  return { postLimitOrder };
+  const postLimitOrder: PostLimitOrder = (
+    limitOrderWithSignatureAndPermit,
+    signal
+  ) => {
+    return postTypedOrder(limitOrderWithSignatureAndPermit, 'LIMIT', signal);
+  };
+
+  const postP2POrder: PostLimitOrder = (
+    limitOrderWithSignatureAndPermit,
+    signal
+  ) => {
+    return postTypedOrder(limitOrderWithSignatureAndPermit, 'P2P', signal);
+  };
+
+  return { postLimitOrder, postP2POrder };
 };
