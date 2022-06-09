@@ -1,4 +1,5 @@
 import type { NonNever } from 'ts-essentials';
+import type { OrderData } from './buildOrderData';
 
 export type LimitOrderStatus =
   | 'open'
@@ -85,20 +86,10 @@ export type LimitOrderExtra = PickExistingKeysInArray<
 
 export type RawLimitOrder = LimitOrderFromApi;
 
-export type LimitOrderToSend = Pick<
-  LimitOrder,
-  | 'chainId'
-  | 'maker'
-  | 'taker'
-  | 'expiry'
-  | 'nonceAndMeta'
-  | 'makerAsset'
-  | 'takerAsset'
-  | 'makerAmount'
-  | 'takerAmount'
-  | 'signature'
-> & {
+export type LimitOrderToSend = OrderData & {
   permitMakerAsset?: string;
+  chainId: number;
+  signature: string;
 };
 
 export type LimitOrdersApiResponse = {
