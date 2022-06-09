@@ -20,11 +20,13 @@ export type PostLimitOrderFunctions = {
 
 export const constructPostLimitOrder = ({
   apiURL = API_URL,
+  chainId,
   // network, @TODO would it make more sense to post by network?
   fetcher,
 }: ConstructFetchInput): PostLimitOrderFunctions => {
   const getBaseFetchURLByOrderType = constructBaseFetchUrlGetter({
     apiURL,
+    chainId,
   });
 
   const postTypedOrder = async (
