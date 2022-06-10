@@ -48,6 +48,38 @@ type GetBaseFetchUrlInput = {
   chainId: number;
 };
 
+type OrderType2URLPart = {
+  LIMIT: 'orders';
+  P2P: 'p2p';
+};
+
+type BaseFetchUrl<T extends OrderType = OrderType> =
+  `${string}/ft/${OrderType2URLPart[T]}/${number}`;
+
+type MinFetchUrl = `${string}/ft/order/${number}`;
+
+/* 
+GET
+/ft/orders/:chainId/maker/:walletAddress
+/ft/orders/:chainId/taker/:walletAddress
+/ft/p2p/:chainId/maker/:walletAddress
+/ft/p2p/:chainId/taker/:walletAddress
+*/
+export type GetOrdersURLs = `${BaseFetchUrl}/${'taker' | 'maker'}/${string}`;
+
+/*
+GET
+/ft/order/:chainId/:orderHash (get you p2p or orders)
+*/
+export type GetOrderURL = `${MinFetchUrl}/${string}`;
+
+/* 
+POST create order
+/ft/orders/:chainId/
+/ft/p2p/:chainId/
+ */
+export type PostOrderURLs = BaseFetchUrl;
+
 interface UrlByTypeFunction {
   (): MinFetchUrl;
   (type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
