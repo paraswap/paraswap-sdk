@@ -181,9 +181,9 @@ describe('Limit Orders', () => {
     SignLimitOrderFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
-  type MinTakerEthersSDK =
+  type MinTakerEthersSDK = BuildLimitOrdersTxFunctions &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction> &
-      FillLimitOrderFunctions<ethers.ContractTransaction>;
+    FillLimitOrderFunctions<ethers.ContractTransaction>;
   type MinWeb3SDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     CancelLimitOrderFunctions<Web3UnpromiEvent> &
@@ -233,7 +233,7 @@ describe('Limit Orders', () => {
       chainId,
       contractCaller: ethersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.staging.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -245,17 +245,19 @@ describe('Limit Orders', () => {
     SDKConfig<ethers.ContractTransaction>,
     [
       EthersApproveTokenForLimitOrderConstructor,
-      EthersFillLimitOrderConstructor
+      EthersFillLimitOrderConstructor,
+      typeof constructBuildLimitOrderTx
     ]
   >(
     {
       chainId,
       contractCaller: takerEthersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.staging.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructApproveTokenForLimitOrder,
-    constructFillLimitOrder
+    constructFillLimitOrder,
+    constructBuildLimitOrderTx
   );
 
   const web3SDK: MinWeb3SDK = constructPartialSDK<
@@ -271,7 +273,7 @@ describe('Limit Orders', () => {
       chainId,
       contractCaller: web3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.staging.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -287,7 +289,7 @@ describe('Limit Orders', () => {
       chainId,
       contractCaller: takerWeb3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.staging.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
 
     constructApproveTokenForLimitOrder,
@@ -505,6 +507,215 @@ describe('Limit Orders', () => {
         "value": "0",
       }
     `);
+  });
+
+  test.only(`fillLimitOrder through Augustus`, async () => {
+    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
+
+    // swap WETH -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
+
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 6 BAT
+    const takerAmount = (6e18).toString(10);
+
+    // @TODO get account with WETH
+    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
+    // @TODO get account with BAT
+    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+
+    console.log('maker', maker.address, 'taker', taker.address);
+
+    const makerEthersContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      senderAddress
+    );
+    const takerEthersContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      walletStable2.address
+    );
+
+    const makerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: makerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: 'https://api.orders.paraswap.io',
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder
+    );
+
+    const takerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: takerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: 'https://api.orders.paraswap.io',
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder,
+      constructBuildLimitOrderTx
+    );
+
+    const order = {
+      nonce: 999,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: WETH,
+      makerAmount,
+      takerAsset: BAT,
+      takerAmount,
+    };
+
+    const signableOrderData = await makerSDK.buildLimitOrder(order);
+
+    const signature = await makerSDK.signLimitOrder(signableOrderData);
+
+    const WETH_Token = erc20Token1.attach(WETH);
+    const BAT_Token = erc20Token1.attach(BAT);
+
+    const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    console.log('balances', {
+      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    console.log('signature', signature, 'order', signableOrderData.data);
+
+    // without SDK
+    // await WETH_Token.connect(maker).approve(Augustus.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await makerSDK.approveTokenForLimitOrder(
+      makerAmount,
+      WETH_Token.address
+    );
+
+    await awaitTx(approveForMakerTx);
+
+    // without SDK
+    // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
+
+    // withSDK
+    const approveForTakerTx = await takerSDK.approveTokenForLimitOrder(
+      takerAmount,
+      BAT_Token.address
+    );
+    await awaitTx(approveForTakerTx);
+
+    const orderWithSignature = { ...signableOrderData.data, signature };
+
+    const swapAndLOPayloadTxParams = await takerSDK.buildLimitOrderTx(
+      {
+        srcDecimals: 18,
+        destDecimals: 18,
+        userAddress: taker.address,
+        partner: referrer,
+        orders: [orderWithSignature],
+      },
+      { ignoreChecks: true }
+    );
+
+    const transaction = {
+      ...swapAndLOPayloadTxParams,
+      gasPrice:
+        '0x' + new BigNumber(swapAndLOPayloadTxParams.gasPrice).toString(16),
+      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      value: '0x' + new BigNumber(swapAndLOPayloadTxParams.value).toString(16),
+    };
+
+    const takerFillsOrderTx = await taker.sendTransaction(transaction);
+
+    await awaitTx(takerFillsOrderTx);
+
+    const makerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    console.log('balances after', {
+      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString())
+        .minus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString())
+        .plus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString())
+        .plus(takerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString())
+        .minus(takerAmount)
+        .toString(10)
+    );
   });
 
   test.only('Build_Swap+LO_Tx', async () => {
