@@ -507,7 +507,7 @@ describe('Limit Orders', () => {
     `);
   });
 
-  test('Build_Swap+LO_Tx', async () => {
+  test.only('Build_Swap+LO_Tx', async () => {
     const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
     const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
@@ -669,10 +669,6 @@ describe('Limit Orders', () => {
 
     const swapAndLOPayload = await paraSwap.buildSwapAndLimitOrderTx(
       {
-        srcToken,
-        destToken: order.makerAsset,
-        srcAmount: priceRoute.srcAmount,
-        destDecimals: priceRoute.destDecimals,
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
