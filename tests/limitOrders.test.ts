@@ -456,7 +456,7 @@ describe('Limit Orders', () => {
     const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
-    // swap DAI -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
+    // swap WETH -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
 
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
@@ -477,7 +477,7 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signLimitOrder(signableOrderData);
 
-    const swappableOrder = { ...signableOrderData.data, signature };
+    const orderWithSignature = { ...signableOrderData.data, signature };
 
     const swapAndLOPayload = await paraSwap.buildLimitOrderTx(
       {
@@ -485,7 +485,7 @@ describe('Limit Orders', () => {
         destDecimals: 18,
         userAddress: senderAddress,
         partner: referrer,
-        orders: [swappableOrder],
+        orders: [orderWithSignature],
       },
       { ignoreChecks: true }
     );
@@ -1530,7 +1530,7 @@ describe('Limit Orders', () => {
     const paraSwap = constructPartialSDK(
       {
         chainId: 3,
-        apiURL: 'https://api.staging.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
         fetcher: axiosFetcher,
         contractCaller,
       },
@@ -1597,7 +1597,7 @@ describe('Limit Orders', () => {
     const paraSwap = constructPartialSDK(
       {
         chainId,
-        apiURL: 'https://api.staging.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
         fetcher: axiosFetcher,
         contractCaller,
       },
