@@ -48,9 +48,28 @@ type GetBaseFetchUrlInput = {
   chainId: number;
 };
 
+interface UrlByTypeFunction {
+  (): MinFetchUrl;
+  (type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
+  (type: 'P2P'): BaseFetchUrl<'P2P'>;
+  (type: OrderType): BaseFetchUrl;
+  (type?: OrderType): BaseFetchUrl | MinFetchUrl;
+}
+
 export function constructBaseFetchUrlGetter({
   chainId,
   apiURL,
-}: GetBaseFetchUrlInput): (type: OrderType) => string {
-  return (type) => `${apiURL}/limit/orders/${chainId}/${type.toLowerCase()}`;
+}: GetBaseFetchUrlInput): UrlByTypeFunction {
+  function urlGetter(type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
+  function urlGetter(type: 'P2P'): BaseFetchUrl<'P2P'>;
+  function urlGetter(type: OrderType): BaseFetchUrl;
+  function urlGetter(): MinFetchUrl;
+  function urlGetter(type?: OrderType): BaseFetchUrl | MinFetchUrl {
+    if (!type) return `${apiURL}/ft/order/${chainId}` as const;
+
+    const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';
+    return `${apiURL}/ft/${orderURLpart}/${chainId}` as const;
+  }
+
+  return urlGetter;
 }
