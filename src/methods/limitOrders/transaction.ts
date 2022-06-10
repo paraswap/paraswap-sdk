@@ -7,6 +7,7 @@ import {
   BuildOptions,
   BuildSwapAndLimitOrderTxInput,
   TransactionParams,
+  SwappableOrder,
   constructBuildTx,
 } from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
@@ -136,46 +137,17 @@ export const constructBuildLimitOrderTx = ({
 
   // derive srcToken, destToken and srcAmount from orders[]
   const buildLimitOrderTx: BuildLimitOrdersTx = (params, options, signal) => {
-    assert(isFilledArray(params.orders), 'must pass at least 1 order');
-
-    const { takerAssetsSet, makerAssetsSet, takerAmount } =
-      params.orders.reduce<
-        Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
-          takerAmount: bigint;
-        }
-      >(
-        (accum, order) => {
-          accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
-          accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
-
-          accum.takerAmount = accum.takerAmount + BigInt(order.takerAmount);
-          return accum;
-        },
-        {
-          takerAssetsSet: new Set(),
-          makerAssetsSet: new Set(),
-          takerAmount: BigInt(0),
-        }
-      );
-
-    assert(
-      takerAssetsSet.size === 1,
-      'All orders must have the same takerAsset as destToken'
+    const { makerAsset, takerAsset, totalTakerAmount } = checkAndParseOrders(
+      params.orders
     );
-    assert(
-      makerAssetsSet.size === 1,
-      'All orders must have the same makerAsset'
-    );
-
-    const [order] = params.orders;
 
     const fillParams: BuildLimitOrderTxInput = {
       ...params,
       // taker supplies takerAsset
-      srcToken: order.takerAsset,
-      srcAmount: takerAmount.toString(10),
+      srcToken: takerAsset,
+      srcAmount: totalTakerAmount.toString(10),
       // taker gets makerAsset in the end
-      destToken: order.makerAsset,
+      destToken: makerAsset,
     };
 
     return buildSwapTx(fillParams, options, signal);
@@ -185,38 +157,7 @@ export const constructBuildLimitOrderTx = ({
     options,
     signal
   ) => {
-    assert(isFilledArray(params.orders), 'must pass at least 1 order');
-
-    const { takerAssetsSet, makerAssetsSet, takerAmount } =
-      params.orders.reduce<
-        Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
-          takerAmount: bigint;
-        }
-      >(
-        (accum, order) => {
-          accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
-          accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
-
-          accum.takerAmount = accum.takerAmount + BigInt(order.takerAmount);
-          return accum;
-        },
-        {
-          takerAssetsSet: new Set(),
-          makerAssetsSet: new Set(),
-          takerAmount: BigInt(0),
-        }
-      );
-
-    assert(
-      takerAssetsSet.size === 1,
-      'All orders must have the same takerAsset as destToken'
-    );
-    assert(
-      makerAssetsSet.size === 1,
-      'All orders must have the same makerAsset'
-    );
-
-    const [order] = params.orders;
+    const { makerAsset } = checkAndParseOrders(params.orders);
 
     const fillParams: BuildSwapAndLimitOrderTxInput = {
       ...params,
@@ -224,7 +165,7 @@ export const constructBuildLimitOrderTx = ({
       srcToken: params.priceRoute.srcToken,
       srcAmount: params.priceRoute.srcAmount,
       // which is swapped for makerAsset, that would go towards filling the orders
-      destToken: order.makerAsset,
+      destToken: makerAsset,
       destDecimals: params.priceRoute.destDecimals,
     };
     return buildSwapTx(fillParams, options, signal);
@@ -236,3 +177,50 @@ export const constructBuildLimitOrderTx = ({
     buildSwapAndLimitOrderTx,
   };
 };
+
+type CheckAndParseOrdersResult = Pick<
+  OrderData,
+  'maker' | 'taker' | 'makerAsset' | 'takerAsset'
+> & { totalTakerAmount: bigint };
+
+function checkAndParseOrders(
+  orders: SwappableOrder[]
+): CheckAndParseOrdersResult {
+  assert(isFilledArray(orders), 'must pass at least 1 order');
+
+  const { takerAssetsSet, makerAssetsSet, totalTakerAmount } = orders.reduce<
+    Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
+      totalTakerAmount: bigint;
+    }
+  >(
+    (accum, order) => {
+      accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
+      accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
+
+      accum.totalTakerAmount =
+        accum.totalTakerAmount + BigInt(order.takerAmount);
+      return accum;
+    },
+    {
+      takerAssetsSet: new Set(),
+      makerAssetsSet: new Set(),
+      totalTakerAmount: BigInt(0),
+    }
+  );
+
+  assert(
+    takerAssetsSet.size === 1,
+    'All orders must have the same takerAsset as destToken'
+  );
+  assert(makerAssetsSet.size === 1, 'All orders must have the same makerAsset');
+
+  const [{ maker, taker, makerAsset, takerAsset }] = orders;
+
+  return {
+    totalTakerAmount,
+    maker,
+    taker,
+    makerAsset,
+    takerAsset,
+  };
+}
