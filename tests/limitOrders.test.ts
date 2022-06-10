@@ -450,7 +450,64 @@ describe('Limit Orders', () => {
     expect(signableOrderData).toMatchSnapshot('P2P_Order_Data_Snapshot');
   });
 
-  test.only('Build_Tx', async () => {
+  test.only('Build_LO_Tx', async () => {
+    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
+
+    // swap DAI -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
+
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 6 BAT
+    const takerAmount = (6e18).toString(10);
+
+    const order = {
+      nonce: 99,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: WETH,
+      makerAmount,
+      takerAsset: BAT,
+      takerAmount,
+    };
+
+    const signableOrderData = await paraSwap.buildLimitOrder(order);
+
+    const signature = await paraSwap.signLimitOrder(signableOrderData);
+
+    const swappableOrder = { ...signableOrderData.data, signature };
+
+    const swapAndLOPayload = await paraSwap.buildLimitOrderTx(
+      {
+        srcDecimals: 18,
+        destDecimals: 18,
+        userAddress: senderAddress,
+        partner: referrer,
+        orders: [swappableOrder],
+      },
+      { ignoreChecks: true }
+    );
+
+    console.log('swapAndLOPayload', swapAndLOPayload);
+
+    expect(swapAndLOPayload).toEqual(expectTxParamsScheme);
+    expect({
+      from: swapAndLOPayload.from,
+      to: swapAndLOPayload.to,
+      value: swapAndLOPayload.value,
+      chainId: swapAndLOPayload.chainId,
+      //  data & gasPrice vary from run to run
+    }).toMatchInlineSnapshot(`
+      Object {
+        "chainId": 3,
+        "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
+        "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
+        "value": "0",
+      }
+    `);
+  });
+
+  test('Build_Swap+LO_Tx', async () => {
     const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
     const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
