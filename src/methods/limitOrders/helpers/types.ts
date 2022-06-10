@@ -131,4 +131,5 @@ export type LimitOrderFromApi = {
   // not yet returned
   transactions: LimitOrderTransaction[];
   type: LimitOrderType;
+  takerFromMeta: string;
 };
