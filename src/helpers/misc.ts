@@ -183,3 +183,8 @@ export function gatherObjectsByProp<T, U>(
     {}
   );
 }
+
+// checks that array has at least one element
+export const isFilledArray = <T>(array: T[]): array is [T, ...T[]] => {
+  return array.length > 0;
+};
