@@ -1,6 +1,6 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
-import { constructBaseFetchUrlGetter } from './helpers/misc';
+import { constructBaseFetchUrlGetter, PostOrderURLs } from './helpers/misc';
 import type {
   LimitOrderApiResponse,
   LimitOrderToSend,
@@ -37,7 +37,10 @@ export const constructPostLimitOrder = ({
     const fetchURL = getBaseFetchURLByOrderType(type);
 
     // @TODO check API return matches
-    const { order: newOrder } = await fetcher<LimitOrderApiResponse>({
+    const { order: newOrder } = await fetcher<
+      LimitOrderApiResponse,
+      PostOrderURLs
+    >({
       url: fetchURL,
       method: 'POST',
       data: limitOrderWithSignatureAndPermit,
