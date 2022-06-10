@@ -14,6 +14,8 @@ import {
   chainId2BlockContractDeployedAt,
   chainId2verifyingContract,
   constructBaseFetchUrlGetter,
+  GetOrdersURLs,
+  GetOrderURL,
 } from './helpers/misc';
 import type {
   AnyLimitOrder,
@@ -355,11 +357,11 @@ export const constructGetLimitOrders = ({
     const baseFetchURL = getBaseFetchURLByOrderType(userParams.type);
     const userURL =
       'maker' in userParams
-        ? `maker/${userParams.maker}`
-        : `taker/${userParams.taker}`;
-    const fetchURL = `${baseFetchURL}/${userURL}`;
+        ? (`maker/${userParams.maker}` as const)
+        : (`taker/${userParams.taker}` as const);
+    const fetchURL = `${baseFetchURL}/${userURL}` as const;
 
-    const { orders } = await fetcher<LimitOrdersApiResponse>({
+    const { orders } = await fetcher<LimitOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
       method: 'GET',
       signal,
@@ -374,9 +376,10 @@ export const constructGetLimitOrders = ({
     orderHash,
     signal
   ) => {
-    const fetchURL = `${apiURL}/limit/order/${chainId}/${orderHash}`;
+    const baseFetchURL = getBaseFetchURLByOrderType();
+    const fetchURL = `${baseFetchURL}/${orderHash}` as const;
 
-    const order = await fetcher<RawLimitOrder>({
+    const order = await fetcher<RawLimitOrder, GetOrderURL>({
       url: fetchURL,
       method: 'GET',
       signal,
