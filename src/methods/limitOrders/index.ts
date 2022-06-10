@@ -34,6 +34,7 @@ type SubmitLimitOrder = (
 
 export type SubmitLimitOrderFuncs = {
   submitLimitOrder: SubmitLimitOrder;
+  submitP2POrder: SubmitLimitOrder;
 };
 
 export const constructSubmitLimitOrder = (
@@ -41,13 +42,12 @@ export const constructSubmitLimitOrder = (
 ): SubmitLimitOrderFuncs => {
   const { buildLimitOrder } = constructBuildLimitOrder(options);
   const { signLimitOrder } = constructSignLimitOrder(options);
-  const { postLimitOrder } = constructPostLimitOrder(options);
+  const { postLimitOrder, postP2POrder } = constructPostLimitOrder(options);
 
-  const submitLimitOrder: SubmitLimitOrder = async (
-    buildLimitOrderParams,
-    extra = {},
-    signal
-  ) => {
+  const prepareLimitOrder = async (
+    buildLimitOrderParams: BuildLimitOrderInput,
+    extra?: { permitMakerAsset?: string }
+  ): Promise<LimitOrderToSend> => {
     const orderData = await buildLimitOrder(buildLimitOrderParams);
     const signature = await signLimitOrder(orderData);
 
@@ -57,13 +57,42 @@ export const constructSubmitLimitOrder = (
       signature,
     };
 
+    return orderWithSignature;
+  };
+
+  const submitLimitOrder: SubmitLimitOrder = async (
+    buildLimitOrderParams,
+    extra = {},
+    signal
+  ) => {
+    const orderWithSignature: LimitOrderToSend = await prepareLimitOrder(
+      buildLimitOrderParams,
+      extra
+    );
+
     const newOrder = await postLimitOrder(orderWithSignature, signal);
 
-    console.log('newOrder created', newOrder);
+    console.log('new Limit Order created', newOrder);
     return newOrder;
   };
 
-  return { submitLimitOrder };
+  const submitP2POrder: SubmitLimitOrder = async (
+    buildLimitOrderParams,
+    extra = {},
+    signal
+  ) => {
+    const orderWithSignature: LimitOrderToSend = await prepareLimitOrder(
+      buildLimitOrderParams,
+      extra
+    );
+
+    const newOrder = await postP2POrder(orderWithSignature, signal);
+
+    console.log('new P2P Order created', newOrder);
+    return newOrder;
+  };
+
+  return { submitLimitOrder, submitP2POrder };
 };
 
 export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
