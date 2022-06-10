@@ -11,6 +11,7 @@ import {
 } from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
 import type { OrderData } from './buildOrder';
+import { isFilledArray } from '../../helpers/misc';
 
 type BuildSwapAndLimitOrdersTx = (
   params: BuildSwapAndLimitOrderTxInput,
@@ -18,8 +19,14 @@ type BuildSwapAndLimitOrdersTx = (
   signal?: AbortSignal
 ) => Promise<TransactionParams>;
 
+type MinBuildLimitOrderTxInput = Omit<
+  BuildLimitOrderTxInput,
+  // these are derived from `orders`
+  'srcToken' | 'srcAmount' | 'destToken'
+>;
+
 type BuildLimitOrdersTx = (
-  params: BuildLimitOrderTxInput,
+  params: MinBuildLimitOrderTxInput,
   options?: BuildOptions,
   signal?: AbortSignal
 ) => Promise<TransactionParams>;
@@ -121,8 +128,52 @@ export const constructBuildLimitOrderTx = ({
     return optimalRate;
   };
 
-  // cloning functions only to narrow down the types
-  const buildLimitOrderTx: BuildLimitOrdersTx = buildSwapTx;
+  // derive srcToken, destToken and srcAmount from orders[]
+  const buildLimitOrderTx: BuildLimitOrdersTx = (params, options, signal) => {
+    assert(isFilledArray(params.orders), 'must pass at least 1 order');
+
+    const { takerAssetsSet, makerAssetsSet, takerAmount } =
+      params.orders.reduce<
+        Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
+          takerAmount: bigint;
+        }
+      >(
+        (accum, order) => {
+          accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
+          accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
+
+          accum.takerAmount = accum.takerAmount + BigInt(order.takerAmount);
+          return accum;
+        },
+        {
+          takerAssetsSet: new Set(),
+          makerAssetsSet: new Set(),
+          takerAmount: BigInt(0),
+        }
+      );
+
+    assert(
+      takerAssetsSet.size === 1,
+      'All orders must have the same takerAsset as destToken'
+    );
+    assert(
+      makerAssetsSet.size === 1,
+      'All orders must have the same makerAsset'
+    );
+
+    const [order] = params.orders;
+
+    const fillParams: BuildLimitOrderTxInput = {
+      ...params,
+      // taker supplies takerAsset
+      srcToken: order.takerAsset,
+      srcAmount: takerAmount.toString(10),
+      // taker gets makerAsset in the end
+      destToken: order.makerAsset,
+    };
+
+    return buildSwapTx(fillParams, options, signal);
+  };
   const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = buildSwapTx;
 
   return {
