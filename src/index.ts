@@ -103,6 +103,8 @@ export type {
   BuildOptionsWitWithMaxFee,
   BuildOptionsWithGasPrice,
   BuildTxInput,
+  SwappableOrder,
+  SwappableNFTOrder,
 } from './methods/swap/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';

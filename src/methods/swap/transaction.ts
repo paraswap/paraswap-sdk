@@ -23,12 +23,12 @@ export interface TransactionParams {
   chainId: number;
 }
 
-type SwappableOrder = OrderData & {
+export type SwappableOrder = OrderData & {
   permitMakerAsset?: string;
   signature: string;
 };
 
-type SwappableNFTOrder = SwappableOrder & {
+export type SwappableNFTOrder = SwappableOrder & {
   makerAssetId: string;
   takerAssetId: string;
 };
