@@ -120,7 +120,7 @@ export type LimitOrderFromApi = {
   takerAsset: string; // address
   makerAmount: string; // wei
   takerAmount: string; // wei
-  makerBalance: string; // wei, balance left to fill (remainingBalance in contract)
+  makerBalance: string; // min(fillableBalance, allowance(maker), balance(maker)]
   signature: string; // supplied by FE
   permitMakerAsset: null | string; // address
   orderHash: string; // hex string
@@ -131,4 +131,8 @@ export type LimitOrderFromApi = {
   // not yet returned
   transactions: LimitOrderTransaction[];
   type: LimitOrderType;
+  takerFromMeta: string; // the intended receiver, eg receiving address of p2p order where `taker` would be augustus
+  fillableBalance: string; // amount that remains to be filled
+  reservedBalance: string; // amount that is currently reserved in this order
+  swappableBalance: string; // actual amount that can be filled at this time
 };
