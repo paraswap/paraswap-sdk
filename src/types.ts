@@ -24,21 +24,23 @@ export interface ConstructBaseInput {
   chainId: number;
 }
 
-interface FetcherInputBase {
-  url: string;
+interface FetcherInputBase<URL extends string = string> {
+  url: URL;
   headers?: Record<string, string>;
   signal?: AbortSignal;
 }
-export interface FetcherGetInput extends FetcherInputBase {
+export interface FetcherGetInput<URL extends string = string>
+  extends FetcherInputBase<URL> {
   method: 'GET';
 }
-export interface FetcherPostInput extends FetcherInputBase {
+export interface FetcherPostInput<URL extends string = string>
+  extends FetcherInputBase<URL> {
   method: 'POST';
   data: Record<string, any>;
 }
 
-export type FetcherFunction = <T>(
-  params: FetcherGetInput | FetcherPostInput
+export type FetcherFunction = <T, URL extends string = string>(
+  params: FetcherGetInput<URL> | FetcherPostInput<URL>
 ) => Promise<T>;
 
 export interface ConstructFetchInput extends ConstructBaseInput {
