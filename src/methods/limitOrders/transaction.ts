@@ -13,8 +13,14 @@ import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
 import type { OrderData } from './buildOrder';
 import { isFilledArray } from '../../helpers/misc';
 
+type MinBuildSwapAndLimitOrderTxInput = Omit<
+  // these are derived from `orders`
+  BuildSwapAndLimitOrderTxInput,
+  'srcToken' | 'srcAmount' | 'destToken' | 'destDecimals'
+>;
+
 type BuildSwapAndLimitOrdersTx = (
-  params: BuildSwapAndLimitOrderTxInput,
+  params: MinBuildSwapAndLimitOrderTxInput,
   options?: BuildOptions,
   signal?: AbortSignal
 ) => Promise<TransactionParams>;
@@ -174,7 +180,55 @@ export const constructBuildLimitOrderTx = ({
 
     return buildSwapTx(fillParams, options, signal);
   };
-  const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = buildSwapTx;
+  const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = (
+    params,
+    options,
+    signal
+  ) => {
+    assert(isFilledArray(params.orders), 'must pass at least 1 order');
+
+    const { takerAssetsSet, makerAssetsSet, takerAmount } =
+      params.orders.reduce<
+        Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
+          takerAmount: bigint;
+        }
+      >(
+        (accum, order) => {
+          accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
+          accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
+
+          accum.takerAmount = accum.takerAmount + BigInt(order.takerAmount);
+          return accum;
+        },
+        {
+          takerAssetsSet: new Set(),
+          makerAssetsSet: new Set(),
+          takerAmount: BigInt(0),
+        }
+      );
+
+    assert(
+      takerAssetsSet.size === 1,
+      'All orders must have the same takerAsset as destToken'
+    );
+    assert(
+      makerAssetsSet.size === 1,
+      'All orders must have the same makerAsset'
+    );
+
+    const [order] = params.orders;
+
+    const fillParams: BuildSwapAndLimitOrderTxInput = {
+      ...params,
+      // taker supplies srcToken
+      srcToken: params.priceRoute.srcToken,
+      srcAmount: params.priceRoute.srcAmount,
+      // which is swapped for makerAsset, that would go towards filling the orders
+      destToken: order.makerAsset,
+      destDecimals: params.priceRoute.destDecimals,
+    };
+    return buildSwapTx(fillParams, options, signal);
+  };
 
   return {
     getLimitOrdersRate,
