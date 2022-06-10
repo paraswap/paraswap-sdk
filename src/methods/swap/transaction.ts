@@ -57,8 +57,9 @@ export interface BuildSwapTxInput extends BuildTxInputBase {
 }
 
 // for LimitOrder Fill, without swap
-// @TODO check through a test
-export interface BuildLimitOrderTxInput extends BuildTxInputBase {
+export interface BuildLimitOrderTxInput
+  // destAmount is sum(orders[].makerAmount)
+  extends Omit<BuildTxInputBase, 'destAmount'> {
   orders: SwappableOrder[];
   srcDecimals: number;
   destDecimals: number;
