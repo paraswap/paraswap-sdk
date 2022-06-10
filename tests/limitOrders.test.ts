@@ -492,8 +492,25 @@ describe('Limit Orders', () => {
 
     console.log('priceRoute', priceRoute);
 
+    const stablePriceRouteMatch: typeof priceRoute = {
+      ...priceRoute,
+      blockNumber: NaN, // will change with time
+      srcAmount: '---', //will change based on srcToken/destToken rate
+      hmac: '---', // will change with any other change
+      bestRoute: priceRoute.bestRoute.map((route) => ({
+        ...route,
+        swaps: route.swaps.map((swap) => ({
+          ...swap,
+          swapExchanges: swap.swapExchanges.map((exchange) => ({
+            ...exchange,
+            srcAmount: '---', //will change based on srcToken/destToken rate
+          })),
+        })),
+      })),
+    };
+
     // @CONSIDER this may change
-    expect(priceRoute).toMatchInlineSnapshot(`
+    expect(stablePriceRouteMatch).toMatchInlineSnapshot(`
       Object {
         "bestRoute": Array [
           Object {
@@ -530,14 +547,14 @@ describe('Limit Orders', () => {
                     "poolAddresses": Array [
                       "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
                     ],
-                    "srcAmount": "1813891456802437169",
+                    "srcAmount": "---",
                   },
                 ],
               },
             ],
           },
         ],
-        "blockNumber": 12351080,
+        "blockNumber": NaN,
         "contractAddress": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "contractMethod": "simpleBuy",
         "destAmount": "6000000000000000000",
@@ -546,13 +563,13 @@ describe('Limit Orders', () => {
         "destUSD": "0",
         "gasCost": "0",
         "gasCostUSD": "0.000000",
-        "hmac": "fd0652306e86c74aad04daf004a3599afd599086",
+        "hmac": "---",
         "maxImpactReached": false,
         "network": 3,
         "partner": "paraswap.io",
         "partnerFee": 0,
         "side": "BUY",
-        "srcAmount": "1813891456802437169",
+        "srcAmount": "---",
         "srcDecimals": 18,
         "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
         "srcUSD": "0",
