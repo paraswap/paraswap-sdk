@@ -66,9 +66,13 @@ type PartialFillOrderWithTargetPermit<T> = (
 ) => Promise<T>;
 
 export type FillLimitOrderFunctions<T> = {
+  /** @deprecated use buildLimitOrderTx */
   fillDirectLimitOrder: FillOrder<T>;
+  /** @deprecated use buildLimitOrderTx */
   partialFillDirectLimitOrder: PartialFillOrder<T>;
+  /** @deprecated use buildLimitOrderTx */
   partialFillDirectLimitOrderWithTargetPermit: PartialFillOrderWithTargetPermit<T>;
+  /** @deprecated use buildLimitOrderTx */
   batchFillDirectLimitOrderWithTarget: BatchFillOrders<T>;
   // @TODO add direct vs Augustus methods
   // @TODO add buildLimitOrderTx (by analogy with swap.buildTX) method
