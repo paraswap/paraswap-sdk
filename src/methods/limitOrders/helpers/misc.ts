@@ -1,6 +1,6 @@
 import type { Address } from '../../../types';
 import type { OrderData } from './buildOrderData';
-import type { OrderType } from './types';
+import type { LimitOrderType } from './types';
 
 // @TODO either fill in or fetch from API
 export const chainId2verifyingContract: Record<number, Address> = {
@@ -53,7 +53,7 @@ type OrderType2URLPart = {
   P2P: 'p2p';
 };
 
-type BaseFetchUrl<T extends OrderType = OrderType> =
+type BaseFetchUrl<T extends LimitOrderType = LimitOrderType> =
   `${string}/ft/${OrderType2URLPart[T]}/${number}`;
 
 type MinFetchUrl = `${string}/ft/order/${number}`;
@@ -77,15 +77,15 @@ export type GetOrderURL = `${MinFetchUrl}/${string}`;
 POST create order
 /ft/orders/:chainId/
 /ft/p2p/:chainId/
- */
+*/
 export type PostOrderURLs = BaseFetchUrl;
 
 interface UrlByTypeFunction {
   (): MinFetchUrl;
   (type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
   (type: 'P2P'): BaseFetchUrl<'P2P'>;
-  (type: OrderType): BaseFetchUrl;
-  (type?: OrderType): BaseFetchUrl | MinFetchUrl;
+  (type: LimitOrderType): BaseFetchUrl;
+  (type?: LimitOrderType): BaseFetchUrl | MinFetchUrl;
 }
 
 export function constructBaseFetchUrlGetter({
@@ -94,9 +94,9 @@ export function constructBaseFetchUrlGetter({
 }: GetBaseFetchUrlInput): UrlByTypeFunction {
   function urlGetter(type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
   function urlGetter(type: 'P2P'): BaseFetchUrl<'P2P'>;
-  function urlGetter(type: OrderType): BaseFetchUrl;
+  function urlGetter(type: LimitOrderType): BaseFetchUrl;
   function urlGetter(): MinFetchUrl;
-  function urlGetter(type?: OrderType): BaseFetchUrl | MinFetchUrl {
+  function urlGetter(type?: LimitOrderType): BaseFetchUrl | MinFetchUrl {
     if (!type) return `${apiURL}/ft/order/${chainId}` as const;
 
     const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';

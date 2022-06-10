@@ -22,15 +22,15 @@ import type {
   LimitOrderExtra,
   LimitOrdersApiResponse,
   LimitOrderStatus,
-  OrderType,
+  LimitOrderType,
   RawLimitOrder,
   UnknownLimitOrder,
 } from './helpers/types';
 
 //                     get orders by `maker` or `taker`
 export type LimitOrdersUserParams =
-  | { maker: Address; type: OrderType }
-  | { taker: Address; type: OrderType };
+  | { maker: Address; type: LimitOrderType }
+  | { taker: Address; type: LimitOrderType };
 type GetLimitOrderByHash = (
   orderHash: string,
   signal?: AbortSignal

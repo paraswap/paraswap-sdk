@@ -9,7 +9,7 @@ export type LimitOrderStatus =
   | 'canceled'
   | 'unknown';
 
-export type OrderType = 'LIMIT' | 'P2P';
+export type LimitOrderType = 'LIMIT' | 'P2P';
 
 export type LimitOrder = LimitOrderFromApi & {
   status: LimitOrderStatus; // `status` likely not available from API
@@ -130,5 +130,5 @@ export type LimitOrderFromApi = {
   state: LimitOrderState;
   // not yet returned
   transactions: LimitOrderTransaction[];
-  type: OrderType;
+  type: LimitOrderType;
 };

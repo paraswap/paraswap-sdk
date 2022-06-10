@@ -5,7 +5,7 @@ import type {
   LimitOrderApiResponse,
   LimitOrderToSend,
   OpenLimitOrder,
-  OrderType,
+  LimitOrderType,
 } from './helpers/types';
 
 type PostLimitOrder = (
@@ -31,7 +31,7 @@ export const constructPostLimitOrder = ({
 
   const postTypedOrder = async (
     limitOrderWithSignatureAndPermit: LimitOrderToSend,
-    type: OrderType,
+    type: LimitOrderType,
     signal?: AbortSignal
   ): Promise<OpenLimitOrder> => {
     const fetchURL = getBaseFetchURLByOrderType(type);
