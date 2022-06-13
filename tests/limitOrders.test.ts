@@ -645,13 +645,17 @@ describe('Limit Orders', () => {
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
 
     const { gas: payloadGas, ...LOPayloadTxParams } =
-      await takerSDK.buildLimitOrderTx({
-        srcDecimals: 18,
-        destDecimals: 18,
-        userAddress: taker.address,
-        partner: referrer,
-        orders: [orderWithSignature],
-      });
+      await takerSDK.buildLimitOrderTx(
+        {
+          srcDecimals: 18,
+          destDecimals: 18,
+          userAddress: taker.address,
+          partner: referrer,
+          orders: [orderWithSignature],
+        },
+        // @TODO remove ignoreChecks, currently ropsten balance is fetched wrong in api
+        { ignoreChecks: true }
+      );
 
     console.log('LOPayloadTxParams', { gas: payloadGas, ...LOPayloadTxParams });
 
