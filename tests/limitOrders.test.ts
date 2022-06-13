@@ -575,6 +575,7 @@ describe('Limit Orders', () => {
       makerAmount,
       takerAsset: BAT,
       takerAmount,
+      taker: taker.address,
     };
 
     const signableOrderData = await makerSDK.buildLimitOrder(order);
@@ -637,7 +638,7 @@ describe('Limit Orders', () => {
 
     const orderWithSignature = { ...signableOrderData.data, signature };
 
-    const swapAndLOPayloadTxParams = await takerSDK.buildLimitOrderTx(
+    const LOPayloadTxParams = await takerSDK.buildLimitOrderTx(
       {
         srcDecimals: 18,
         destDecimals: 18,
@@ -648,6 +649,74 @@ describe('Limit Orders', () => {
       { ignoreChecks: true }
     );
 
+    const transaction = {
+      ...LOPayloadTxParams,
+      gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
+    };
+
+    const takerFillsOrderTx = await taker.sendTransaction(transaction);
+
+    await awaitTx(takerFillsOrderTx);
+
+    const makerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    console.log('balances after', {
+      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+        .div(1e18)
+        .toString(10),
+    });
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString())
+        .minus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString())
+        .plus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString())
+        .plus(takerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString())
+        .minus(takerAmount)
+        .toString(10)
+    );
+  });
     const transaction = {
       ...swapAndLOPayloadTxParams,
       gasPrice:
