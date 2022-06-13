@@ -513,8 +513,6 @@ describe('Limit Orders', () => {
     const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
-    // swap WETH -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
-
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
@@ -646,23 +644,25 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = Zero
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
 
-    const LOPayloadTxParams = await takerSDK.buildLimitOrderTx(
-      {
+    const { gas: payloadGas, ...LOPayloadTxParams } =
+      await takerSDK.buildLimitOrderTx({
         srcDecimals: 18,
         destDecimals: 18,
         userAddress: taker.address,
         partner: referrer,
         orders: [orderWithSignature],
-      },
-      { ignoreChecks: true }
-    );
+      });
+
+    console.log('LOPayloadTxParams', { gas: payloadGas, ...LOPayloadTxParams });
 
     const transaction = {
       ...LOPayloadTxParams,
       gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
-      gasLimit: '0x' + new BigNumber(5000000).toString(16),
+      gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
     };
+
+    console.log('SENDING TX', transaction);
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
