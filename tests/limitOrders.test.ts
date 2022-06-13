@@ -638,6 +638,14 @@ describe('Limit Orders', () => {
 
     const orderWithSignature = { ...signableOrderData.data, signature };
 
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = Zero
+    expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
+
     const LOPayloadTxParams = await takerSDK.buildLimitOrderTx(
       {
         srcDecimals: 18,
