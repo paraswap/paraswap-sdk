@@ -532,14 +532,14 @@ describe('Limit Orders', () => {
         ethersProviderOrSigner: maker,
         EthersContract: ethers.Contract,
       },
-      senderAddress
+      maker.address
     );
     const takerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: taker,
         EthersContract: ethers.Contract,
       },
-      walletStable2.address
+      taker.address
     );
 
     const makerSDK = constructPartialSDK(
