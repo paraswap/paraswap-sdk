@@ -149,6 +149,10 @@ export type {
   SignableTypedData,
   OrderData,
 } from './methods/limitOrders/helpers/buildOrderData';
+export type {
+  SignableNFTOrderData,
+  NFTOrderData,
+} from './methods/nftOrders/helpers/buildOrderData';
 
 // can import these individually
 // and use in constructPartialSDK only what you need
