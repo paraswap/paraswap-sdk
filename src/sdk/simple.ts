@@ -59,7 +59,27 @@ import {
   constructAllLimitOrdersHandlers,
   LimitOrderHandlers,
 } from '../methods/limitOrders';
+import {
+  constructAllNFTOrdersHandlers,
+  NFTOrderHandlers,
+} from '../methods/nftOrders';
 import { constructSwapSDK } from '../methods/swap';
+import {
+  constructGetNFTOrdersContract,
+  GetNFTOrdersContractFunctions,
+} from '../methods/nftOrders/getOrdersContract';
+import {
+  constructGetNFTOrders,
+  GetNFTOrdersFunctions,
+} from '../methods/nftOrders/getOrders';
+import {
+  BuildNFTOrderFunctions,
+  constructBuildNFTOrder,
+} from '../methods/nftOrders/buildOrder';
+import {
+  constructPostNFTOrder,
+  PostNFTOrderFunctions,
+} from '../methods/nftOrders/postOrder';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -73,14 +93,21 @@ export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
   BuildLimitOrderFunctions &
   PostLimitOrderFunctions;
 
+export type NFTOrdersFetchMethods = GetNFTOrdersContractFunctions &
+  GetNFTOrdersFunctions &
+  BuildNFTOrderFunctions &
+  PostNFTOrderFunctions;
+
 export type SimpleFetchSDK = {
   swap: SwapFetchMethods;
   limitOrders: LimitOrdersFetchMethods;
+  nftOrders: NFTOrdersFetchMethods;
 };
 
 export type SimpleSDK = {
   swap: SwapSDKMethods<TxHash>;
   limitOrders: LimitOrderHandlers<TxHash>;
+  nftOrders: NFTOrderHandlers<TxHash>;
 };
 
 type SimpleOptions = ConstructBaseInput &
@@ -136,7 +163,15 @@ export function constructSimpleSDK(
       constructGetLimitOrdersContract
     );
 
-    return { swap, limitOrders };
+    const nftOrders = constructPartialSDK(
+      config,
+      constructBuildNFTOrder,
+      constructPostNFTOrder,
+      constructGetNFTOrders,
+      constructGetNFTOrdersContract
+    );
+
+    return { swap, limitOrders, nftOrders };
   }
 
   const contractCaller = constructSimpleContractCaller(providerOptions);
@@ -153,7 +188,10 @@ export function constructSimpleSDK(
   const limitOrders: LimitOrderHandlers<TxHash> =
     constructAllLimitOrdersHandlers<TxHash>(config);
 
-  return { swap, limitOrders };
+  const nftOrders: NFTOrderHandlers<TxHash> =
+    constructAllNFTOrdersHandlers<TxHash>(config);
+
+  return { swap, limitOrders, nftOrders };
 }
 
 function constructSimpleContractCaller(
