@@ -1,0 +1,208 @@
+import type { ConstructFetchInput, OptimalRate } from '../../types';
+
+import { assert } from 'ts-essentials';
+import { API_URL, SwapSide, ContractMethod } from '../../constants';
+import {
+  BuildNFTOrderTxInput,
+  BuildOptions,
+  BuildSwapAndNFTOrderTxInput,
+  TransactionParams,
+  constructBuildTx,
+} from '../swap/transaction';
+import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
+import type { NftOrderData } from './buildOrder';
+import { isFilledArray } from '../../helpers/misc';
+
+type MinBuildSwapAndNFTOrderTxInput = Omit<
+  // these are derived from `orders`
+  BuildSwapAndNFTOrderTxInput,
+  'srcToken' | 'srcAmount' | 'destToken' | 'destDecimals'
+>;
+
+type BuildSwapAndNFTOrdersTx = (
+  params: MinBuildSwapAndNFTOrderTxInput,
+  options?: BuildOptions,
+  signal?: AbortSignal
+) => Promise<TransactionParams>;
+
+type MinBuildNFTOrderTxInput = Omit<
+  BuildNFTOrderTxInput,
+  // these are derived from `orders`
+  'srcToken' | 'srcAmount' | 'destToken'
+>;
+
+type BuildNFTOrdersTx = (
+  params: MinBuildNFTOrderTxInput,
+  options?: BuildOptions,
+  signal?: AbortSignal
+) => Promise<TransactionParams>;
+
+export type BuildNFTOrdersTxFunctions = {
+  getNFTOrdersRate: GetNFTOrdersRate;
+  buildNFTOrderTx: BuildNFTOrdersTx;
+  buildSwapAndNFTOrderTx: BuildSwapAndNFTOrdersTx;
+};
+
+type GetNFTOrdersRate = (
+  // `amount`, if given, must equal the total of the orders' `takerAmounts`
+  options: Omit<GetRateInput, 'amount' | 'side'> & { amount?: string },
+  orders: CheckableOrderData[],
+  signal?: AbortSignal
+) => Promise<OptimalRate>;
+
+export const constructBuildNFTOrderTx = ({
+  apiURL = API_URL,
+  chainId,
+  fetcher,
+}: ConstructFetchInput): BuildNFTOrdersTxFunctions => {
+  const { buildTx: buildSwapTx } = constructBuildTx({
+    apiURL,
+    chainId,
+    fetcher,
+  });
+
+  const { getRate: getSwapAndNFTOrderRate } = constructGetRate({
+    apiURL,
+    chainId,
+    fetcher,
+  });
+
+  //  returns priceRoute that would allow from swap from srcToken to destToken(=order.takerAsset) followed by filling NFT orders
+  const getNFTOrdersRate: GetNFTOrdersRate = async (
+    { srcToken, destToken, amount, options: _options = {}, ...rest },
+    orders,
+    signal
+  ) => {
+    assert(orders.length > 0, 'must pass at least 1 order');
+
+    const { totalTakerAmount, takerAsset } = checkAndParseOrders(orders);
+
+    assert(
+      takerAsset.toLowerCase() === destToken.toLowerCase(),
+      'All orders must have the same takerAsset as destToken'
+    );
+
+    const takerAmountString = totalTakerAmount.toString(10);
+
+    if (amount) {
+      assert(
+        amount === takerAmountString,
+        "`amount` must equal the total of the orders' `takerAmounts`"
+      );
+    }
+
+    // The pricing must use includeContractMethods=simpleBuy and side=BUY
+    const options: RateOptions = {
+      ..._options,
+      includeContractMethods: [ContractMethod.simpleBuy],
+    };
+
+    const side = SwapSide.BUY;
+
+    const rateInput: GetRateInput = {
+      ...rest,
+      srcToken,
+      destToken,
+      amount: takerAmountString,
+      side,
+      options,
+    };
+
+    // priceRoute
+    const optimalRate = await getSwapAndNFTOrderRate(rateInput, signal);
+    return optimalRate;
+  };
+
+  // derive srcToken, destToken and srcAmount from orders[]
+  const buildNFTOrderTx: BuildNFTOrdersTx = (params, options, signal) => {
+    const { makerAsset, takerAsset, totalTakerAmount } = checkAndParseOrders(
+      params.orders
+    );
+
+    const fillParams: BuildNFTOrderTxInput = {
+      ...params,
+      // taker supplies takerAsset
+      srcToken: takerAsset,
+      srcAmount: totalTakerAmount.toString(10),
+      // taker gets makerAsset in the end
+      destToken: makerAsset,
+    };
+
+    return buildSwapTx(fillParams, options, signal);
+  };
+  const buildSwapAndNFTOrderTx: BuildSwapAndNFTOrdersTx = (
+    params,
+    options,
+    signal
+  ) => {
+    const { makerAsset } = checkAndParseOrders(params.orders);
+
+    const fillParams: BuildSwapAndNFTOrderTxInput = {
+      ...params,
+      // taker supplies srcToken
+      srcToken: params.priceRoute.srcToken,
+      srcAmount: params.priceRoute.srcAmount,
+      // which is swapped for makerAsset, that would go towards filling the orders
+      destToken: makerAsset,
+      destDecimals: params.priceRoute.destDecimals,
+    };
+    return buildSwapTx(fillParams, options, signal);
+  };
+
+  return {
+    getNFTOrdersRate,
+    buildNFTOrderTx,
+    buildSwapAndNFTOrderTx,
+  };
+};
+
+type CheckAndParseOrdersResult = Omit<CheckableOrderData, 'takerAmount'> & {
+  totalTakerAmount: bigint;
+};
+
+type CheckableOrderData = Pick<
+  NftOrderData,
+  'takerAsset' | 'makerAsset' | 'takerAmount' | 'maker'
+> & { taker?: NftOrderData['taker'] };
+
+function checkAndParseOrders(
+  orders: CheckableOrderData[]
+): CheckAndParseOrdersResult {
+  assert(isFilledArray(orders), 'must pass at least 1 order');
+
+  const { takerAssetsSet, makerAssetsSet, totalTakerAmount } = orders.reduce<
+    Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
+      totalTakerAmount: bigint;
+    }
+  >(
+    (accum, order) => {
+      accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
+      accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
+
+      accum.totalTakerAmount =
+        accum.totalTakerAmount + BigInt(order.takerAmount);
+      return accum;
+    },
+    {
+      takerAssetsSet: new Set(),
+      makerAssetsSet: new Set(),
+      totalTakerAmount: BigInt(0),
+    }
+  );
+
+  assert(
+    takerAssetsSet.size === 1,
+    'All orders must have the same takerAsset as destToken'
+  );
+  assert(makerAssetsSet.size === 1, 'All orders must have the same makerAsset');
+
+  const [{ maker, taker, makerAsset, takerAsset }] = orders;
+
+  return {
+    totalTakerAmount,
+    maker,
+    taker,
+    makerAsset,
+    takerAsset,
+  };
+}
