@@ -19,6 +19,7 @@ import {
 } from './helpers/misc';
 import type {
   AnyLimitOrder,
+  LimitOrderApiResponse,
   LimitOrderExtra,
   LimitOrdersApiResponse,
   LimitOrderStatus,
@@ -379,7 +380,7 @@ export const constructGetLimitOrders = ({
     const baseFetchURL = getBaseFetchURLByOrderType();
     const fetchURL = `${baseFetchURL}/${orderHash}` as const;
 
-    const order = await fetcher<RawLimitOrder, GetOrderURL>({
+    const { order } = await fetcher<LimitOrderApiResponse, GetOrderURL>({
       url: fetchURL,
       method: 'GET',
       signal,
