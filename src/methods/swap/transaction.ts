@@ -66,7 +66,8 @@ export interface BuildLimitOrderTxInput
 }
 
 // for NFT Order Fill, without swap
-export interface BuildNFTOrderTxInput extends BuildTxInputBase {
+export interface BuildNFTOrderTxInput
+  extends Omit<BuildTxInputBase, 'destAmount'> {
   orders: SwappableNFTOrder[];
   srcDecimals: number;
 }
