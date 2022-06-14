@@ -56,14 +56,14 @@ import {
   GetLimitOrdersContractFunctions,
 } from '../methods/limitOrders/getOrdersContract';
 import {
+  constructBuildLimitOrderTx,
+  BuildLimitOrdersTxFunctions,
+} from '../methods/limitOrders/transaction';
+import {
   constructAllLimitOrdersHandlers,
   LimitOrderHandlers,
 } from '../methods/limitOrders';
-import {
-  constructAllNFTOrdersHandlers,
-  NFTOrderHandlers,
-} from '../methods/nftOrders';
-import { constructSwapSDK } from '../methods/swap';
+
 import {
   constructGetNFTOrdersContract,
   GetNFTOrdersContractFunctions,
@@ -80,6 +80,16 @@ import {
   constructPostNFTOrder,
   PostNFTOrderFunctions,
 } from '../methods/nftOrders/postOrder';
+import {
+  constructBuildNFTOrderTx,
+  BuildNFTOrdersTxFunctions,
+} from '../methods/nftOrders/transaction';
+import {
+  constructAllNFTOrdersHandlers,
+  NFTOrderHandlers,
+} from '../methods/nftOrders';
+
+import { constructSwapSDK } from '../methods/swap';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -91,12 +101,14 @@ export type SwapFetchMethods = GetBalancesFunctions &
 export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
   // GetLimitOrdersFunctions &
   BuildLimitOrderFunctions &
-  PostLimitOrderFunctions;
+  PostLimitOrderFunctions &
+  BuildLimitOrdersTxFunctions;
 
 export type NFTOrdersFetchMethods = GetNFTOrdersContractFunctions &
   GetNFTOrdersFunctions &
   BuildNFTOrderFunctions &
-  PostNFTOrderFunctions;
+  PostNFTOrderFunctions &
+  BuildNFTOrdersTxFunctions;
 
 export type SimpleFetchSDK = {
   swap: SwapFetchMethods;
@@ -160,7 +172,8 @@ export function constructSimpleSDK(
       constructBuildLimitOrder,
       constructPostLimitOrder,
       // constructGetLimitOrders, @TODO reenable when removing provider dependency
-      constructGetLimitOrdersContract
+      constructGetLimitOrdersContract,
+      constructBuildLimitOrderTx
     );
 
     const nftOrders = constructPartialSDK(
@@ -168,7 +181,8 @@ export function constructSimpleSDK(
       constructBuildNFTOrder,
       constructPostNFTOrder,
       constructGetNFTOrders,
-      constructGetNFTOrdersContract
+      constructGetNFTOrdersContract,
+      constructBuildNFTOrderTx
     );
 
     return { swap, limitOrders, nftOrders };
