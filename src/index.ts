@@ -144,7 +144,6 @@ export type {
 } from './methods/swap/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
-export * from './methods/limitOrders/helpers/types';
 export type {
   SignableOrderData,
   SignableTypedData,
@@ -256,8 +255,11 @@ export { ParaSwap } from './legacy';
 
 // bundled methods for limitOrders
 export * from './methods/limitOrders';
+export * from './methods/limitOrders/helpers/types';
 // bundled methods for nftOrders
 export * from './methods/nftOrders';
+export * from './methods/nftOrders/helpers/types';
+export { AssetType } from './methods/nftOrders/helpers/misc';
 
 /** @hidden */
 export { chainId2verifyingContract } from './methods/limitOrders/helpers/misc';

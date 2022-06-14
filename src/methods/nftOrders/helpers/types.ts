@@ -1,5 +1,6 @@
 import type { Address } from '../../../types';
 import type { NFTOrderData } from './buildOrderData';
+import type { AssetType } from './misc';
 
 export type NFTOrderTransaction = {
   hash: string;
@@ -40,19 +41,5 @@ export type NFTOrdersApiResponse = {
 export type NFTOrderApiResponse = {
   order: NFTOrderFromAPI;
 };
-
-// any number can be assigned to AssetType enum
-// https://github.com/Microsoft/TypeScript/issues/22311
-// export enum AssetType {
-//   ERC20 = 0,
-//   ERC1155 = 1,
-//   ERC721 = 2,
-// }
-
-export const AssetType = {
-  ERC20: 0,
-  ERC1155: 1,
-  ERC721: 2,
-} as const;
 
 export type AssetTypeVariant = typeof AssetType[keyof typeof AssetType];
