@@ -34,6 +34,13 @@ export type NftOrderFromAPI = NftOrderToSend & {
   // transactions: NftOrderTransaction[];
 };
 
+export type NftOrdersApiResponse = {
+  orders: NftOrderFromAPI[];
+};
+export type NftOrderApiResponse = {
+  order: NftOrderFromAPI;
+};
+
 // any number can be assigned to AssetType enum
 // https://github.com/Microsoft/TypeScript/issues/22311
 // export enum AssetType {
