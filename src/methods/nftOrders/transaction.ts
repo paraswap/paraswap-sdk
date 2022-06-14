@@ -10,7 +10,7 @@ import {
   constructBuildTx,
 } from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
-import type { NftOrderData } from './buildOrder';
+import type { NFTOrderData } from './buildOrder';
 import { isFilledArray } from '../../helpers/misc';
 
 type MinBuildSwapAndNFTOrderTxInput = Omit<
@@ -161,9 +161,9 @@ type CheckAndParseOrdersResult = Omit<CheckableOrderData, 'takerAmount'> & {
 };
 
 type CheckableOrderData = Pick<
-  NftOrderData,
+  NFTOrderData,
   'takerAsset' | 'makerAsset' | 'takerAmount' | 'maker'
-> & { taker?: NftOrderData['taker'] };
+> & { taker?: NFTOrderData['taker'] };
 
 function checkAndParseOrders(
   orders: CheckableOrderData[]

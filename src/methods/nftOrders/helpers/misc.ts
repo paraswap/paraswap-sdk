@@ -1,5 +1,5 @@
-import type { NftOrderData } from './buildOrderData';
-import type { NftOrderType } from './types';
+import type { NFTOrderData } from './buildOrderData';
+import type { NFTOrderType } from './types';
 
 export function sanitizeOrderData({
   nonceAndMeta,
@@ -12,7 +12,7 @@ export function sanitizeOrderData({
   takerAmount,
   makerAssetId,
   takerAssetId,
-}: NftOrderData & Record<string, any>): NftOrderData {
+}: NFTOrderData & Record<string, any>): NFTOrderData {
   return {
     nonceAndMeta,
     expiry,
@@ -37,7 +37,7 @@ type OrderType2URLPart = {
   P2P: 'p2p';
 };
 
-type BaseFetchUrl<T extends NftOrderType = NftOrderType> =
+type BaseFetchUrl<T extends NFTOrderType = NFTOrderType> =
   `${string}/nft/${OrderType2URLPart[T]}/${number}`;
 
 type MinFetchUrl = `${string}/nft/order/${number}`;
@@ -68,8 +68,8 @@ interface UrlByTypeFunction {
   (): MinFetchUrl;
   (type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
   (type: 'P2P'): BaseFetchUrl<'P2P'>;
-  (type: NftOrderType): BaseFetchUrl;
-  (type?: NftOrderType): BaseFetchUrl | MinFetchUrl;
+  (type: NFTOrderType): BaseFetchUrl;
+  (type?: NFTOrderType): BaseFetchUrl | MinFetchUrl;
 }
 
 export function constructBaseFetchUrlGetter({
@@ -78,9 +78,9 @@ export function constructBaseFetchUrlGetter({
 }: GetBaseFetchUrlInput): UrlByTypeFunction {
   function urlGetter(type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
   function urlGetter(type: 'P2P'): BaseFetchUrl<'P2P'>;
-  function urlGetter(type: NftOrderType): BaseFetchUrl;
+  function urlGetter(type: NFTOrderType): BaseFetchUrl;
   function urlGetter(): MinFetchUrl;
-  function urlGetter(type?: NftOrderType): BaseFetchUrl | MinFetchUrl {
+  function urlGetter(type?: NFTOrderType): BaseFetchUrl | MinFetchUrl {
     if (!type) return `${apiURL}/nft/order/${chainId}` as const;
 
     const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';

@@ -6,24 +6,24 @@ import {
   GetOrderURL,
 } from './helpers/misc';
 import type {
-  NftOrderApiResponse,
-  NftOrderFromAPI,
-  NftOrdersApiResponse,
-  NftOrderType,
+  NFTOrderApiResponse,
+  NFTOrderFromAPI,
+  NFTOrdersApiResponse,
+  NFTOrderType,
 } from './helpers/types';
 
 //                     get orders by `maker` or `taker`
 export type NFTOrdersUserParams =
-  | { maker: Address; type: NftOrderType }
-  | { taker: Address; type: NftOrderType };
+  | { maker: Address; type: NFTOrderType }
+  | { taker: Address; type: NFTOrderType };
 type GetNFTOrderByHash = (
   orderHash: string,
   signal?: AbortSignal
-) => Promise<NftOrderFromAPI>;
+) => Promise<NFTOrderFromAPI>;
 type GetNFTOrders = (
   userParams: NFTOrdersUserParams,
   signal?: AbortSignal
-) => Promise<NftOrderFromAPI[]>;
+) => Promise<NFTOrderFromAPI[]>;
 
 export type GetNFTOrdersFunctions = {
   getNFTOrders: GetNFTOrders;
@@ -48,7 +48,7 @@ export const constructGetNFTOrders = ({
         : (`taker/${userParams.taker}` as const);
     const fetchURL = `${baseFetchURL}/${userURL}` as const;
 
-    const { orders } = await fetcher<NftOrdersApiResponse, GetOrdersURLs>({
+    const { orders } = await fetcher<NFTOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
       method: 'GET',
       signal,
@@ -63,7 +63,7 @@ export const constructGetNFTOrders = ({
     const baseFetchURL = getBaseFetchURLByOrderType();
     const fetchURL = `${baseFetchURL}/${orderHash}` as const;
 
-    const { order } = await fetcher<NftOrderApiResponse, GetOrderURL>({
+    const { order } = await fetcher<NFTOrderApiResponse, GetOrderURL>({
       url: fetchURL,
       method: 'GET',
       signal,

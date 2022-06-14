@@ -49,7 +49,7 @@ export interface BuildOrderDataInput {
 export type SignableOrderData = {
   types: { OrderNFT: typeof OrderNFT };
   domain: Domain;
-  data: NftOrderData;
+  data: NFTOrderData;
 };
 
 type TypedDataDomain = Omit<EthersTypedDataDomain, 'chainId'> & {
@@ -71,7 +71,7 @@ type Domain = {
 
 type BigIntAsString = string;
 
-export type NftOrderData = {
+export type NFTOrderData = {
   expiry: number;
   // '1' when trading 1 NFT token
   makerAmount: BigIntAsString;
@@ -128,7 +128,7 @@ export function buildOrderData({
     (BigInt(takerAssetType) << BigInt(160))
   ).toString(10);
 
-  const orderNFT: NftOrderData = {
+  const orderNFT: NFTOrderData = {
     nonceAndMeta,
     expiry,
     makerAsset,

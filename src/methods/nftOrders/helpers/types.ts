@@ -1,14 +1,14 @@
 import type { Address } from '../../../types';
-import type { NftOrderData } from './buildOrderData';
+import type { NFTOrderData } from './buildOrderData';
 
-export type NftOrderTransaction = {
+export type NFTOrderTransaction = {
   hash: string;
   event_type: 'OrderFilled' | 'OrderCancelled';
 };
 
-export type NftOrderType = 'LIMIT' | 'P2P';
+export type NFTOrderType = 'LIMIT' | 'P2P';
 
-export type NftOrderToSend = NftOrderData & {
+export type NFTOrderToSend = NFTOrderData & {
   signature: string;
   permitMakerAsset?: string;
 };
@@ -16,9 +16,9 @@ export type NftOrderToSend = NftOrderData & {
 // display states such as EXPIRED and PARTIALLY_FILLLED derived on client side
 // returned by API but can be calculated too, EXPIRED == order.expiry < Date.now()/1000
 // PARTIALLY_FILLED == order.fillableBalance < order.makerAmount && order.fillableBalance !== '0'
-export type NftOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED' | 'EXPIRED';
+export type NFTOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED' | 'EXPIRED';
 
-export type NftOrderFromAPI = NftOrderToSend & {
+export type NFTOrderFromAPI = NFTOrderToSend & {
   makerAsset: Address;
   takerAsset: Address;
   createdAt: number; // timestamp
@@ -28,17 +28,17 @@ export type NftOrderFromAPI = NftOrderToSend & {
   fillableBalance: string; // amount that remains to be filled
   orderHash: string;
   permitMakerAsset: null | string;
-  state: NftOrderState;
+  state: NFTOrderState;
   takerFromMeta: string; // the intended receiver, eg receiving address of p2p order where `taker` would be augustus
   // not yet returned
   // transactions: NftOrderTransaction[];
 };
 
-export type NftOrdersApiResponse = {
-  orders: NftOrderFromAPI[];
+export type NFTOrdersApiResponse = {
+  orders: NFTOrderFromAPI[];
 };
-export type NftOrderApiResponse = {
-  order: NftOrderFromAPI;
+export type NFTOrderApiResponse = {
+  order: NFTOrderFromAPI;
 };
 
 // any number can be assigned to AssetType enum
