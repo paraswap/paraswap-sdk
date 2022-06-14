@@ -1,9 +1,9 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { SignableOrderData } from './buildOrder';
+import type { SignableNFTOrderData } from './buildOrder';
 import { sanitizeOrderData } from './helpers/misc';
 
 export type SignNFTOrderFunctions = {
-  signNFTOrder: (signableOrderData: SignableOrderData) => Promise<string>;
+  signNFTOrder: (signableOrderData: SignableNFTOrderData) => Promise<string>;
 };
 
 // returns whatever `contractCaller` returns
@@ -16,7 +16,7 @@ export const constructSignNFTOrder = (
 ): SignNFTOrderFunctions => {
   const signNFTOrder: SignNFTOrderFunctions['signNFTOrder'] = (typedData) => {
     // types allow to pass OrderData & extra_stuff, but tx will break like that
-    const typedDataOnly: SignableOrderData = {
+    const typedDataOnly: SignableNFTOrderData = {
       ...typedData,
       data: sanitizeOrderData(typedData.data),
     };

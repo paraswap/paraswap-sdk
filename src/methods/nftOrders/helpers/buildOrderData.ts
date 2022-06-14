@@ -22,7 +22,7 @@ const name = 'AUGUSTUS RFQ';
 const version = '1';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-export interface BuildOrderDataInput {
+export interface BuildNFTOrderDataInput {
   chainId: number;
   verifyingContract: Address;
   nonce?: number;
@@ -46,7 +46,7 @@ export interface BuildOrderDataInput {
   AugustusAddress: Address;
 }
 
-export type SignableOrderData = {
+export type SignableNFTOrderData = {
   types: { OrderNFT: typeof OrderNFT };
   domain: Domain;
   data: NFTOrderData;
@@ -110,7 +110,7 @@ export function buildOrderData({
   // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
   // if taker is not specified -- limitOrder for anyone to fill through Augustus -- taker = Augustus, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
-}: BuildOrderDataInput): SignableOrderData {
+}: BuildNFTOrderDataInput): SignableNFTOrderData {
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
   const nonceAndMeta = (

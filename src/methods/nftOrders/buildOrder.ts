@@ -4,20 +4,20 @@ import { chainId2verifyingContract } from '../limitOrders/helpers/misc';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
-  BuildOrderDataInput,
-  SignableOrderData,
+  BuildNFTOrderDataInput,
+  SignableNFTOrderData,
 } from './helpers/buildOrderData';
 export * from './helpers/buildOrderData';
 
 export type BuildNFTOrderInput = Omit<
-  BuildOrderDataInput,
+  BuildNFTOrderDataInput,
   'chainId' | 'verifyingContract' | 'AugustusAddress'
 >;
 
 type BuildNFTOrder = (
   buildNFTOrderParams: BuildNFTOrderInput,
   signal?: AbortSignal
-) => Promise<SignableOrderData>;
+) => Promise<SignableNFTOrderData>;
 
 export type BuildNFTOrderFunctions = {
   /** @description Build Orders that will be excuted through AugustusSwapper */
