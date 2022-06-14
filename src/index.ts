@@ -65,6 +65,42 @@ import {
 } from './methods/limitOrders/transaction';
 
 import {
+  BuildNFTOrderFunctions,
+  BuildNFTOrderInput,
+  BuildNFTOrderDataInput,
+  constructBuildNFTOrder,
+} from './methods/nftOrders/buildOrder';
+import {
+  SignNFTOrderFunctions,
+  constructSignNFTOrder,
+} from './methods/nftOrders/signOrder';
+import {
+  CancelNFTOrderFunctions,
+  constructCancelNFTOrder,
+} from './methods/nftOrders/cancelOrder';
+import {
+  GetNFTOrdersFunctions,
+  constructGetNFTOrders,
+  NFTOrdersUserParams,
+} from './methods/nftOrders/getOrders';
+import {
+  PostNFTOrderFunctions,
+  constructPostNFTOrder,
+} from './methods/nftOrders/postOrder';
+import {
+  ApproveTokenForNFTOrderFunctions,
+  constructApproveTokenForNFTOrder,
+} from './methods/nftOrders/approveForOrder';
+import {
+  GetNFTOrdersContractFunctions,
+  constructGetNFTOrdersContract,
+} from './methods/nftOrders/getOrdersContract';
+import {
+  BuildNFTOrdersTxFunctions,
+  constructBuildNFTOrderTx,
+} from './methods/nftOrders/transaction';
+
+import {
   constructEthersContractCaller,
   constructWeb3ContractCaller,
   constructAxiosFetcher,
@@ -137,6 +173,15 @@ export {
   constructApproveTokenForLimitOrder,
   constructGetLimitOrdersContract,
   constructBuildLimitOrderTx,
+  // nftOrders methods
+  constructBuildNFTOrder,
+  constructSignNFTOrder,
+  constructCancelNFTOrder,
+  constructGetNFTOrders,
+  constructPostNFTOrder,
+  constructApproveTokenForNFTOrder,
+  constructGetNFTOrdersContract,
+  constructBuildNFTOrderTx,
   // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
@@ -175,6 +220,18 @@ export type {
   GetLimitOrdersFunctions,
   LimitOrdersUserParams,
   OrderInfoForBatchFill,
+  // types for nftOrders methods:
+  SignNFTOrderFunctions,
+  CancelNFTOrderFunctions,
+  GetNFTOrdersFunctions,
+  PostNFTOrderFunctions,
+  ApproveTokenForNFTOrderFunctions,
+  GetNFTOrdersContractFunctions,
+  BuildNFTOrdersTxFunctions,
+  BuildNFTOrderFunctions,
+  BuildNFTOrderInput,
+  BuildNFTOrderDataInput,
+  NFTOrdersUserParams,
   //common
   ConstructFetchInput,
   ConstructProviderFetchInput,
@@ -199,6 +256,8 @@ export { ParaSwap } from './legacy';
 
 // bundled methods for limitOrders
 export * from './methods/limitOrders';
+// bundled methods for nftOrders
+export * from './methods/nftOrders';
 
-/* @hidden */
+/** @hidden */
 export { chainId2verifyingContract } from './methods/limitOrders/helpers/misc';
