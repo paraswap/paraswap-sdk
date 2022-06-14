@@ -1,12 +1,12 @@
 import { assert } from 'ts-essentials';
 import type { ConstructFetchInput } from '../../types';
+import { chainId2verifyingContract } from '../limitOrders/helpers/misc';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
   BuildOrderDataInput,
   SignableOrderData,
 } from './helpers/buildOrderData';
-import { chainId2verifyingContract } from './helpers/misc';
 export * from './helpers/buildOrderData';
 
 export type BuildNFTOrderInput = Omit<
