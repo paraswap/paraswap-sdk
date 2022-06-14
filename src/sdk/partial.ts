@@ -9,6 +9,8 @@ import type { ApproveTokenFunctions } from '../methods/swap/approve';
 import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
 import type { FillLimitOrderFunctions } from '../methods/limitOrders/fillOrders';
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
+import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
+import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -43,7 +45,9 @@ type InferWithTxResponse<
           ApproveTokenFunctions<TxResponse>,
           CancelLimitOrderFunctions<TxResponse>,
           FillLimitOrderFunctions<TxResponse>,
-          ApproveTokenForLimitOrderFunctions<TxResponse>
+          ApproveTokenForLimitOrderFunctions<TxResponse>,
+          CancelNFTOrderFunctions<TxResponse>,
+          ApproveTokenForNFTOrderFunctions<TxResponse>
         ]
         // then merge IntersectionOfReturns<Funcs> with them recursively
       >
