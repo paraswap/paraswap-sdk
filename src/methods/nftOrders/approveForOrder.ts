@@ -15,16 +15,16 @@ type ApproveTokenOrNFT<T> = (
   signal?: AbortSignal
 ) => Promise<T>;
 
-export type ApproveTokenForLimitOrderFunctions<T> = {
+export type ApproveTokenForNFTOrderFunctions<T> = {
   /** @description approving AugustusSwapper for ТАЕ Orders that will be executed through it */
   approveTokenForNFTOrder: ApproveTokenOrNFT<T>;
 };
 
 // returns whatever `contractCaller` returns
 // to allow for better versatility
-export const constructApproveTokenForLimitOrder = <T>(
+export const constructApproveTokenForNFTOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
-): ApproveTokenForLimitOrderFunctions<T> => {
+): ApproveTokenForNFTOrderFunctions<T> => {
   // approving TokenTransaferProxy as for the swap
   const { approveToken: approveTokenForNFTOrder } =
     constructApproveToken(options);
