@@ -95,7 +95,7 @@ export function buildOrderData({
   const nonceAndMeta = (
     BigInt(takerInNonce) +
     (BigInt(nonce) << BigInt(160))
-  ).toString();
+  ).toString(10);
 
   const order: OrderData = {
     nonceAndMeta,
