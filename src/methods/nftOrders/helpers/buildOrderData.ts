@@ -118,15 +118,9 @@ export function buildOrderData({
     (BigInt(nonce) << BigInt(160))
   ).toString(10);
 
-  const makerAsset = (
-    BigInt(_makerAssetAddress) +
-    (BigInt(makerAssetType) << BigInt(160))
-  ).toString(10);
+  const makerAsset = assetAddressToUint(_makerAssetAddress, makerAssetType);
 
-  const takerAsset = (
-    BigInt(_takerAssetAddress) +
-    (BigInt(takerAssetType) << BigInt(160))
-  ).toString(10);
+  const takerAsset = assetAddressToUint(_takerAssetAddress, takerAssetType);
 
   const orderNFT: NFTOrderData = {
     nonceAndMeta,
@@ -146,4 +140,13 @@ export function buildOrderData({
     domain: { name, version, chainId, verifyingContract },
     data: orderNFT,
   };
+}
+
+export function assetAddressToUint(
+  assetAddress: Address,
+  assetType: AssetTypeVariant
+): BigIntAsString {
+  return (BigInt(assetAddress) + (BigInt(assetType) << BigInt(160))).toString(
+    10
+  );
 }

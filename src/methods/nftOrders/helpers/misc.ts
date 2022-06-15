@@ -1,4 +1,8 @@
-import type { NFTOrderData } from './buildOrderData';
+import {
+  assetAddressToUint,
+  BuildNFTOrderDataInput,
+  NFTOrderData,
+} from './buildOrderData';
 import type { NFTOrderType } from './types';
 
 // any number can be assigned to AssetType enum
@@ -18,15 +22,29 @@ export const AssetType = {
 export function sanitizeOrderData({
   nonceAndMeta,
   expiry,
-  makerAsset,
-  takerAsset,
+  makerAsset: _makerAsset,
+  takerAsset: _takerAsset,
   maker,
   taker,
   makerAmount,
   takerAmount,
   makerAssetId,
   takerAssetId,
-}: NFTOrderData & Record<string, any>): NFTOrderData {
+  // asset types provided when Order has them ,e.g. got Order by hash from API
+  makerAssetType,
+  takerAssetType,
+}: NFTOrderData &
+  Partial<Pick<BuildNFTOrderDataInput, 'makerAssetType' | 'takerAssetType'>> &
+  Record<string, any>): NFTOrderData {
+  const makerAsset =
+    makerAssetType && _makerAsset.startsWith('0x')
+      ? assetAddressToUint(_makerAsset, makerAssetType)
+      : _makerAsset;
+  const takerAsset =
+    takerAssetType && _takerAsset.startsWith('0x')
+      ? assetAddressToUint(_takerAsset, takerAssetType)
+      : _takerAsset;
+
   return {
     nonceAndMeta,
     expiry,

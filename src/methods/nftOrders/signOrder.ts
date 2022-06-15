@@ -18,6 +18,8 @@ export const constructSignNFTOrder = (
     // types allow to pass OrderData & extra_stuff, but tx will break like that
     const typedDataOnly: SignableNFTOrderData = {
       ...typedData,
+      // here assetType isn't provided, SignableData must already have corrent BigIntAsString
+      // @TODO consider using `template_${types}` for Address, likely bad idea when considering 3rd-party code
       data: sanitizeOrderData(typedData.data),
     };
     return options.contractCaller.signTypedDataCall(typedDataOnly);

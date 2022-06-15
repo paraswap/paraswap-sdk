@@ -505,7 +505,12 @@ describe('Limit Orders', () => {
 
     const signature = await paraSwap.signNFTOrder(signableOrderData);
 
-    const orderWithSignature = { ...signableOrderData.data, signature };
+    const orderWithSignature = {
+      ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
+      ...signableOrderData.data, // provides actual order data necessary for the contract
+      signature, // necessary for execution in the contract
+      // extra stuff will be removed before POSTing to /transaction
+    };
 
     const swapAndNFTPayload = await paraSwap.buildNFTOrderTx(
       {
@@ -669,7 +674,11 @@ describe('Limit Orders', () => {
     await awaitTx(approveForTakerTx);
     console.log('Approved taker');
 
-    const orderWithSignature = { ...signableOrderData.data, signature };
+    const orderWithSignature = {
+      ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
+      ...signableOrderData.data, // provides actual order data necessary for the contract
+      signature, // necessary for execution in the contract
+    };
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -915,7 +924,11 @@ describe('Limit Orders', () => {
     );
     await awaitTx(approveForTakerTx);
 
-    const orderWithSignature = { ...signableOrderData.data, signature };
+    const orderWithSignature = {
+      ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
+      ...signableOrderData.data, // provides actual order data necessary for the contract
+      signature, // necessary for execution in the contract
+    };
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -1180,7 +1193,11 @@ describe('Limit Orders', () => {
       }
     `);
 
-    const swappableOrder = { ...signableOrderData.data, signature };
+    const swappableOrder = {
+      ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
+      ...signableOrderData.data, // provides actual order data necessary for the contract
+      signature, // necessary for execution in the contract
+    };
 
     const swapAndNFTPayload = await paraSwap.buildSwapAndNFTOrderTx(
       {

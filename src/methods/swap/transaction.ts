@@ -13,6 +13,7 @@ import { constructSearchString } from '../../helpers/misc';
 import type { OrderData } from '../limitOrders/buildOrder';
 import { sanitizeOrderData as sanitizeLimitOrderData } from '../limitOrders/helpers/misc';
 import { sanitizeOrderData as sanitizeNFTOrderData } from '../nftOrders/helpers/misc';
+import { AssetTypeVariant } from '../nftOrders/helpers/types';
 
 export interface TransactionParams {
   to: string;
@@ -32,6 +33,8 @@ export type SwappableOrder = OrderData & {
 export type SwappableNFTOrder = SwappableOrder & {
   makerAssetId: string;
   takerAssetId: string;
+  makerAssetType: AssetTypeVariant;
+  takerAssetType: AssetTypeVariant;
 };
 
 export interface BuildTxInputBase {
@@ -168,8 +171,9 @@ export const constructBuildTx = ({
             orders: params.orders.map((order) => {
               const sanitizedOrderData =
                 'makerAssetId' in order || 'takerAssetId' in order
-                  ? sanitizeNFTOrderData(order)
-                  : sanitizeLimitOrderData(order);
+                  ? sanitizeNFTOrderData(order) // assetType is provided here, because Order.*Asset may be address
+                  : // if Order received from API by hash
+                    sanitizeLimitOrderData(order);
 
               const sanitizedOrder: SwappableOrder = {
                 ...sanitizedOrderData,
