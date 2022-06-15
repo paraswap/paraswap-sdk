@@ -115,9 +115,7 @@ export const constructBuildNFTOrderTx = ({
 
   // derive srcToken, destToken and srcAmount from orders[]
   const buildNFTOrderTx: BuildNFTOrdersTx = (params, options, signal) => {
-    const { makerAsset, takerAsset, totalTakerAmount } = checkAndParseOrders(
-      params.orders
-    );
+    const { takerAsset, totalTakerAmount } = checkAndParseOrders(params.orders);
 
     const fillParams: BuildNFTOrderTxInput = {
       ...params,
@@ -125,7 +123,7 @@ export const constructBuildNFTOrderTx = ({
       srcToken: takerAsset,
       srcAmount: totalTakerAmount.toString(10),
       // taker gets makerAsset in the end
-      destToken: makerAsset,
+      destToken: 'NFT', // support any NFT
     };
 
     return buildSwapTx(fillParams, options, signal);
