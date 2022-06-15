@@ -32,7 +32,7 @@ export interface BuildNFTOrderDataInput {
   makerAmount: string;
   takerAmount: string;
   /** @description NFT Token id, will default to 0 (ERC20), provide for NFT */
-  makerAssetId?: string;
+  makerAssetId: string; // required when BUYing NFT
   /** @description NFT Token id, will default to 0 (ERC20), provide for NFT */
   takerAssetId?: string;
   /** @description Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2 */
@@ -101,7 +101,7 @@ export function buildOrderData({
   takerAsset: _takerAssetAddress,
   makerAmount,
   takerAmount,
-  makerAssetId = '0',
+  makerAssetId,
   takerAssetId = '0',
   makerAssetType,
   takerAssetType,
