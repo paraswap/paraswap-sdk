@@ -591,7 +591,7 @@ describe('Limit Orders', () => {
       constructBuildNFTOrderTx
     );
 
-    const order = {
+    const order: BuildNFTOrderInput = {
       nonce: 999,
       expiry: orderExpiry,
       maker: maker.address,
