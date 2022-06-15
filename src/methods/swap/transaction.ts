@@ -11,7 +11,8 @@ import { assert } from 'ts-essentials';
 import { API_URL, SwapSide } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type { OrderData } from '../limitOrders/buildOrder';
-import { sanitizeOrderData } from '../limitOrders/helpers/misc';
+import { sanitizeOrderData as sanitizeLimitOrderData } from '../limitOrders/helpers/misc';
+import { sanitizeOrderData as sanitizeNFTOrderData } from '../nftOrders/helpers/misc';
 
 export interface TransactionParams {
   to: string;
@@ -165,8 +166,13 @@ export const constructBuildTx = ({
             ...params,
             //  make sure we don't pass more with orders than API expects
             orders: params.orders.map((order) => {
+              const sanitizedOrderData =
+                'makerAssetId' in order || 'takerAssetId' in order
+                  ? sanitizeNFTOrderData(order)
+                  : sanitizeLimitOrderData(order);
+
               const sanitizedOrder: SwappableOrder = {
-                ...sanitizeOrderData(order),
+                ...sanitizedOrderData,
                 signature: order.signature,
               };
 
