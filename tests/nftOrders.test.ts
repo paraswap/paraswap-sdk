@@ -651,7 +651,6 @@ describe('Limit Orders', () => {
       await takerSDK.buildNFTOrderTx(
         {
           srcDecimals: 18,
-          destDecimals: 18,
           userAddress: taker.address,
           partner: referrer,
           orders: [orderWithSignature],
