@@ -304,6 +304,7 @@ describe('Limit Orders', () => {
       maker: senderAddress,
       makerAssetType: AssetType.ERC1155,
       takerAssetType: AssetType.ERC20,
+      makerAssetId: '9982',
     };
 
     erc20Token1 = await ERC20MintableFactory.deploy(
@@ -382,7 +383,7 @@ describe('Limit Orders', () => {
     expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
-  test.only('get NFT order', async () => {
+  test('get NFT order', async () => {
     const knownOrderHash =
       '0xc5c28a12904fbf4d7cc6a34aea03a6355f40fe1c75fa0e3cbac82ea1af1b6dcf';
     const sdk = constructPartialSDK(
@@ -497,6 +498,7 @@ describe('Limit Orders', () => {
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
+      makerAssetId: '9982',
     };
 
     const signableOrderData = await paraSwap.buildNFTOrder(order);
@@ -535,8 +537,9 @@ describe('Limit Orders', () => {
     `);
   });
 
-  test(`fillNFTOrder through Augustus`, async () => {
-    const NFT = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+  test.only(`fillNFTOrder through Augustus`, async () => {
+    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
+    const NFT_ID = '9982';
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
     // 1 NFT
@@ -602,6 +605,7 @@ describe('Limit Orders', () => {
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
+      makerAssetId: NFT_ID,
     };
 
     const signableOrderData = await makerSDK.buildNFTOrder(order);
@@ -652,6 +656,8 @@ describe('Limit Orders', () => {
 
     await awaitTx(approveForMakerTx);
 
+    console.log('Approved maker');
+
     // without SDK
     // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
 
@@ -661,6 +667,7 @@ describe('Limit Orders', () => {
       BAT_Token.address
     );
     await awaitTx(approveForTakerTx);
+    console.log('Approved taker');
 
     const orderWithSignature = { ...signableOrderData.data, signature };
 
@@ -671,6 +678,22 @@ describe('Limit Orders', () => {
 
     // taker in nonceAndTaker = Zero
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
+
+    expect(orderWithSignature).toMatchInlineSnapshot(`
+      Object {
+        "expiry": 1671494400,
+        "maker": "0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf",
+        "makerAmount": "1",
+        "makerAsset": "4061774232661968483393222197344793904479204070827",
+        "makerAssetId": "0",
+        "nonceAndMeta": "1460714318943897704263770406787447386424245213697791",
+        "signature": "0x0d9570a95feeeb07e95a901248429f41ee7e7427b5edd23413150ef1ab9f9c57047c4b40f45f932641af2a7a3251546744a765af6bc34624869ee99f0dd1b3f51b",
+        "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+        "takerAmount": "6000000000000000000",
+        "takerAsset": "1250274577517696612136138646343709056755604805814",
+        "takerAssetId": "0",
+      }
+    `);
 
     const { gas: payloadGas, ...NFTPayloadTxParams } =
       await takerSDK.buildNFTOrderTx(
@@ -788,6 +811,7 @@ describe('Limit Orders', () => {
       taker: taker.address,
       makerAssetType: AssetType.ERC1155,
       takerAssetType: AssetType.ERC20,
+      makerAssetId: '9982',
     };
 
     console.log('maker', maker.address, 'taker', taker.address);
@@ -1017,6 +1041,7 @@ describe('Limit Orders', () => {
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
+      makerAssetId: '9982',
     };
 
     // token to get after SWAP must be the takerAsset to allow to fill Order
