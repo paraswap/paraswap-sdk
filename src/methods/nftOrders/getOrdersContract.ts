@@ -1,6 +1,6 @@
 import type { ConstructFetchInput } from '../../types';
 import { constructGetLimitOrdersContract } from '../limitOrders/getOrdersContract';
-import { constructGetSpender, GetSpender } from '../swap/spender';
+import type { GetSpender } from '../swap/spender';
 
 type GetNFTOrdersContract = (/* signal?: AbortSignal */) => string;
 
@@ -13,9 +13,8 @@ export type GetNFTOrdersContractFunctions = {
 export const constructGetNFTOrdersContract = (
   options: ConstructFetchInput
 ): GetNFTOrdersContractFunctions => {
-  const { getLimitOrdersContract } = constructGetLimitOrdersContract(options);
-
-  const { getSpender: getTokenTransferProxy } = constructGetSpender(options);
+  const { getLimitOrdersContract, getTokenTransferProxy } =
+    constructGetLimitOrdersContract(options);
 
   return {
     getNFTOrdersContract: getLimitOrdersContract,
