@@ -654,8 +654,7 @@ describe('Limit Orders', () => {
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
     // withSDK
-    const approveForMakerTx = await makerSDK.approveTokenForNFTOrder(
-      makerAmount,
+    const approveForMakerTx = await makerSDK.approveNFTorNFTOrder(
       NFT_Token.address
     );
 
@@ -667,7 +666,7 @@ describe('Limit Orders', () => {
     // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
 
     // withSDK
-    const approveForTakerTx = await takerSDK.approveTokenForNFTOrder(
+    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       takerAmount,
       BAT_Token.address
     );
@@ -907,8 +906,7 @@ describe('Limit Orders', () => {
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
     // withSDK
-    const approveForMakerTx = await makerSDK.approveTokenForNFTOrder(
-      makerAmount,
+    const approveForMakerTx = await makerSDK.approveNFTorNFTOrder(
       NFT_Token.address
     );
 
@@ -918,7 +916,7 @@ describe('Limit Orders', () => {
     // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
 
     // withSDK
-    const approveForTakerTx = await takerSDK.approveTokenForNFTOrder(
+    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       takerAmount,
       DAI_Token.address
     );
