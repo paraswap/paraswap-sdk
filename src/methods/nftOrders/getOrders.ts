@@ -6,7 +6,6 @@ import {
   GetOrderURL,
 } from './helpers/misc';
 import type {
-  NFTOrderApiResponse,
   NFTOrderFromAPI,
   NFTOrdersApiResponse,
   NFTOrderType,
@@ -63,7 +62,7 @@ export const constructGetNFTOrders = ({
     const baseFetchURL = getBaseFetchURLByOrderType();
     const fetchURL = `${baseFetchURL}/${orderHash}` as const;
 
-    const { order } = await fetcher<NFTOrderApiResponse, GetOrderURL>({
+    const order = await fetcher<NFTOrderFromAPI, GetOrderURL>({
       url: fetchURL,
       method: 'GET',
       signal,
