@@ -37,11 +37,11 @@ export function sanitizeOrderData({
   Partial<Pick<BuildNFTOrderDataInput, 'makerAssetType' | 'takerAssetType'>> &
   Record<string, any>): NFTOrderData {
   const makerAsset =
-    makerAssetType && _makerAsset.startsWith('0x')
+    makerAssetType !== undefined && _makerAsset.startsWith('0x')
       ? assetAddressToUint(_makerAsset, makerAssetType)
       : _makerAsset;
   const takerAsset =
-    takerAssetType && _takerAsset.startsWith('0x')
+    takerAssetType !== undefined && _takerAsset.startsWith('0x')
       ? assetAddressToUint(_takerAsset, takerAssetType)
       : _takerAsset;
 
