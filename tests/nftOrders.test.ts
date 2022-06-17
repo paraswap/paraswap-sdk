@@ -692,14 +692,17 @@ describe('Limit Orders', () => {
         "expiry": 1671494400,
         "maker": "0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf",
         "makerAmount": "1",
-        "makerAsset": "4061774232661968483393222197344793904479204070827",
-        "makerAssetId": "0",
+        "makerAsset": "4160337194696582883088243970031020643097982653676",
+        "makerAssetId": "9982",
+        "makerAssetType": 2,
+        "nonce": 999,
         "nonceAndMeta": "1460714318943897704263770406787447386424245213697791",
-        "signature": "0x0d9570a95feeeb07e95a901248429f41ee7e7427b5edd23413150ef1ab9f9c57047c4b40f45f932641af2a7a3251546744a765af6bc34624869ee99f0dd1b3f51b",
+        "signature": "0xd5e4b726d6f72d591ea7b791eb431649997809a311d35a0493fc0f9130c40a012d2d419e12606ae2bf974c0f9dcdda087658cf3e7fe7b07a8a642e3bd61a8d9f1c",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
         "takerAsset": "1250274577517696612136138646343709056755604805814",
         "takerAssetId": "0",
+        "takerAssetType": 0,
       }
     `);
 
@@ -720,10 +723,10 @@ describe('Limit Orders', () => {
       ...NFTPayloadTxParams,
     });
 
-    const transaction = {
+    const transaction: ethers.providers.TransactionRequest = {
       ...NFTPayloadTxParams,
       gasPrice: '0x' + new BigNumber(NFTPayloadTxParams.gasPrice).toString(16),
-      gasNFT: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
+      gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(NFTPayloadTxParams.value).toString(16),
     };
 
