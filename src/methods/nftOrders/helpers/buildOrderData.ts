@@ -69,7 +69,7 @@ type Domain = {
   verifyingContract: string;
 };
 
-type BigIntAsString = string;
+export type BigIntAsString = string;
 
 export type NFTOrderData = {
   expiry: number;

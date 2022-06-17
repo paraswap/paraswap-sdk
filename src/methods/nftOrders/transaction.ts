@@ -1,4 +1,4 @@
-import type { ConstructFetchInput, OptimalRate } from '../../types';
+import type { Address, ConstructFetchInput, OptimalRate } from '../../types';
 
 import { assert } from 'ts-essentials';
 import { API_URL, SwapSide, ContractMethod } from '../../constants';
@@ -10,7 +10,7 @@ import {
   constructBuildTx,
 } from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
-import type { NFTOrderData } from './buildOrder';
+import type { BigIntAsString, NFTOrderData } from './buildOrder';
 import { isFilledArray } from '../../helpers/misc';
 
 type MinBuildSwapAndNFTOrderTxInput = Omit<
@@ -200,7 +200,18 @@ function checkAndParseOrders(
     totalTakerAmount,
     maker,
     taker,
-    makerAsset,
-    takerAsset,
+    makerAsset: makerAsset.startsWith('0x')
+      ? makerAsset
+      : uintToAssetAddress(makerAsset),
+    takerAsset: takerAsset.startsWith('0x')
+      ? takerAsset
+      : uintToAssetAddress(takerAsset),
   };
+}
+
+function uintToAssetAddress(assetUint: BigIntAsString): Address {
+  return (
+    '0x' +
+    (BigInt(assetUint) & ((BigInt(1) << BigInt(160)) - BigInt(1))).toString(16)
+  );
 }
