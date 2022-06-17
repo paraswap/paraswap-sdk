@@ -56,7 +56,7 @@ type OrderType2URLPart = {
 type BaseFetchUrl<T extends LimitOrderType = LimitOrderType> =
   `${string}/ft/${OrderType2URLPart[T]}/${number}`;
 
-type MinFetchUrl = `${string}/ft/order/${number}`;
+type MinFetchUrl = `${string}/ft/order`;
 
 /* 
 GET
@@ -69,7 +69,7 @@ export type GetOrdersURLs = `${BaseFetchUrl}/${'taker' | 'maker'}/${string}`;
 
 /*
 GET
-/ft/order/:chainId/:orderHash (get you p2p or orders)
+/ft/order/:orderHash (get you p2p or orders)
 */
 export type GetOrderURL = `${MinFetchUrl}/${string}`;
 
@@ -97,7 +97,7 @@ export function constructBaseFetchUrlGetter({
   function urlGetter(type: LimitOrderType): BaseFetchUrl;
   function urlGetter(): MinFetchUrl;
   function urlGetter(type?: LimitOrderType): BaseFetchUrl | MinFetchUrl {
-    if (!type) return `${apiURL}/ft/order/${chainId}` as const;
+    if (!type) return `${apiURL}/ft/order` as const;
 
     const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';
     return `${apiURL}/ft/${orderURLpart}/${chainId}` as const;
