@@ -1,6 +1,11 @@
 import type { Address } from '../../../types';
+import {
+  BaseFetchUrl,
+  baseFetchUrlGetterFactory,
+  BaseFetchUrlInputConstructor,
+  MinFetchUrl,
+} from '../../common/orders/misc';
 import type { OrderData } from './buildOrderData';
-import type { LimitOrderType } from './types';
 
 // @TODO either fill in or fetch from API
 export const chainId2verifyingContract: Record<number, Address> = {
@@ -12,6 +17,7 @@ export const chainId2verifyingContract: Record<number, Address> = {
   43114: '0x34302c4267d0dA0A8c65510282Cc22E9e39df51f', // Avalanche
 };
 
+// @TODO remove when no longer relying on OrderEvents to get transactions
 export const chainId2BlockContractDeployedAt: Record<number, number> = {
   1: 14853783,
   3: 12316905,
@@ -43,21 +49,6 @@ export function sanitizeOrderData({
   };
 }
 
-type GetBaseFetchUrlInput = {
-  apiURL: string;
-  chainId: number;
-};
-
-type OrderType2URLPart = {
-  LIMIT: 'orders';
-  P2P: 'p2p';
-};
-
-type BaseFetchUrl<T extends LimitOrderType = LimitOrderType> =
-  `${string}/ft/${OrderType2URLPart[T]}/${number}`;
-
-type MinFetchUrl = `${string}/ft/order`;
-
 /* 
 GET
 /ft/orders/:chainId/maker/:walletAddress
@@ -65,43 +56,22 @@ GET
 /ft/p2p/:chainId/maker/:walletAddress
 /ft/p2p/:chainId/taker/:walletAddress
 */
-export type GetOrdersURLs = `${BaseFetchUrl}/${'taker' | 'maker'}/${string}`;
+export type GetOrdersURLs = `${BaseFetchUrl<'ft'>}/${
+  | 'taker'
+  | 'maker'}/${string}`;
 
 /*
 GET
 /ft/order/:orderHash (get you p2p or orders)
 */
-export type GetOrderURL = `${MinFetchUrl}/${string}`;
+export type GetOrderURL = `${MinFetchUrl<'ft'>}/${string}`;
 
 /* 
 POST create order
 /ft/orders/:chainId/
 /ft/p2p/:chainId/
 */
-export type PostOrderURLs = BaseFetchUrl;
+export type PostOrderURLs = BaseFetchUrl<'ft'>;
 
-interface UrlByTypeFunction {
-  (): MinFetchUrl;
-  (type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
-  (type: 'P2P'): BaseFetchUrl<'P2P'>;
-  (type: LimitOrderType): BaseFetchUrl;
-  (type?: LimitOrderType): BaseFetchUrl | MinFetchUrl;
-}
-
-export function constructBaseFetchUrlGetter({
-  chainId,
-  apiURL,
-}: GetBaseFetchUrlInput): UrlByTypeFunction {
-  function urlGetter(type: 'LIMIT'): BaseFetchUrl<'LIMIT'>;
-  function urlGetter(type: 'P2P'): BaseFetchUrl<'P2P'>;
-  function urlGetter(type: LimitOrderType): BaseFetchUrl;
-  function urlGetter(): MinFetchUrl;
-  function urlGetter(type?: LimitOrderType): BaseFetchUrl | MinFetchUrl {
-    if (!type) return `${apiURL}/ft/order` as const;
-
-    const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';
-    return `${apiURL}/ft/${orderURLpart}/${chainId}` as const;
-  }
-
-  return urlGetter;
-}
+export const constructBaseFetchUrlGetter: BaseFetchUrlInputConstructor<'ft'> =
+  baseFetchUrlGetterFactory('ft');
