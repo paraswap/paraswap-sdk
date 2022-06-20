@@ -20,6 +20,7 @@ export type NFTOrderToSend = NFTOrderData & {
 export type NFTOrderState = 'PENDING' | 'FULFILLED' | 'CANCELLED' | 'EXPIRED';
 
 export type NFTOrderFromAPI = NFTOrderToSend & {
+  chainId: number;
   makerAsset: Address;
   takerAsset: Address;
   createdAt: number; // timestamp
@@ -31,9 +32,12 @@ export type NFTOrderFromAPI = NFTOrderToSend & {
   permitMakerAsset: null | string;
   state: NFTOrderState;
   takerFromMeta: string; // the intended receiver, eg receiving address of p2p order where `taker` would be augustus
+  type: NFTOrderType;
   // not yet returned
   // transactions: NftOrderTransaction[];
 };
+
+type t = NFTOrderFromAPI[''];
 
 export type NFTOrdersApiResponse = {
   orders: NFTOrderFromAPI[];
