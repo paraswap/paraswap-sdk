@@ -37,8 +37,6 @@ export type NFTOrderFromAPI = NFTOrderToSend & {
   // transactions: NftOrderTransaction[];
 };
 
-type t = NFTOrderFromAPI[''];
-
 export type NFTOrdersApiResponse = {
   orders: NFTOrderFromAPI[];
 };
