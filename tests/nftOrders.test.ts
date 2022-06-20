@@ -52,9 +52,9 @@ import ganache from 'ganache';
 import {
   BuildNFTOrderInput,
   SignableNFTOrderData,
-  ZERO_ADDRESS,
 } from '../src/methods/nftOrders/buildOrder';
 import { assert } from 'ts-essentials';
+import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 
 dotenv.config();
 

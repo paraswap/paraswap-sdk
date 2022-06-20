@@ -1,8 +1,11 @@
-import type {
-  TypedDataDomain as EthersTypedDataDomain,
-  TypedDataField,
-} from '@ethersproject/abstract-signer';
 import type { Address } from '../../../types';
+import {
+  Domain,
+  getRandomInt,
+  name,
+  version,
+  ZERO_ADDRESS,
+} from '../../common/orders/buildOrderData';
 
 const Order = [
   { name: 'nonceAndMeta', type: 'uint256' },
@@ -14,10 +17,6 @@ const Order = [
   { name: 'makerAmount', type: 'uint256' },
   { name: 'takerAmount', type: 'uint256' },
 ];
-
-const name = 'AUGUSTUS RFQ';
-const version = '1';
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export interface BuildOrderDataInput {
   chainId: number;
@@ -41,25 +40,6 @@ export type SignableOrderData = {
   data: OrderData;
 };
 
-type TypedDataDomain = Omit<EthersTypedDataDomain, 'chainId'> & {
-  chainId: number;
-};
-
-// works for ethers
-// @TODO no way this works for web3
-export type SignableTypedData = {
-  types: Record<string, TypedDataField[]>;
-  domain: TypedDataDomain;
-  data: Record<string, any>;
-};
-
-type Domain = {
-  name: string;
-  version: string;
-  chainId: number;
-  verifyingContract: string;
-};
-
 export type OrderData = {
   nonceAndMeta: string;
   expiry: number;
@@ -70,10 +50,6 @@ export type OrderData = {
   makerAmount: string;
   takerAmount: string;
 };
-
-function getRandomInt(): number {
-  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-}
 
 export function buildOrderData({
   chainId,
