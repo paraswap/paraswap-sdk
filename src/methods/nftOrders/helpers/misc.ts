@@ -72,7 +72,7 @@ type OrderType2URLPart = {
 type BaseFetchUrl<T extends NFTOrderType = NFTOrderType> =
   `${string}/nft/${OrderType2URLPart[T]}/${number}`;
 
-type MinFetchUrl = `${string}/nft/order/${number}`;
+type MinFetchUrl = `${string}/nft/order`;
 
 /* 
 GET
@@ -85,7 +85,7 @@ export type GetOrdersURLs = `${BaseFetchUrl}/${'taker' | 'maker'}/${string}`;
 
 /*
 GET
-/nft/order/:chainId/:orderHash (get you p2p or orders)
+/nft/order/:orderHash (get you p2p or orders)
 */
 export type GetOrderURL = `${MinFetchUrl}/${string}`;
 
@@ -113,7 +113,7 @@ export function constructBaseFetchUrlGetter({
   function urlGetter(type: NFTOrderType): BaseFetchUrl;
   function urlGetter(): MinFetchUrl;
   function urlGetter(type?: NFTOrderType): BaseFetchUrl | MinFetchUrl {
-    if (!type) return `${apiURL}/nft/order/${chainId}` as const;
+    if (!type) return `${apiURL}/nft/order` as const;
 
     const orderURLpart = type === 'LIMIT' ? 'orders' : 'p2p';
     return `${apiURL}/nft/${orderURLpart}/${chainId}` as const;
