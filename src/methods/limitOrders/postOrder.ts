@@ -46,7 +46,6 @@ export const constructPostLimitOrder = ({
       data: limitOrderWithSignatureAndPermit,
       signal,
     });
-    console.log('🚀 ~ file: postOrder.ts ~ created newOrder', newOrder);
 
     return { ...newOrder, status: 'open', amountFilled: '0' };
   };

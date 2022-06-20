@@ -72,7 +72,6 @@ export const constructSubmitLimitOrder = (
 
     const newOrder = await postLimitOrder(orderWithSignature, signal);
 
-    console.log('new Limit Order created', newOrder);
     return newOrder;
   };
 
@@ -88,7 +87,6 @@ export const constructSubmitLimitOrder = (
 
     const newOrder = await postP2POrder(orderWithSignature, signal);
 
-    console.log('new P2P Order created', newOrder);
     return newOrder;
   };
 

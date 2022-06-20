@@ -45,7 +45,6 @@ export const constructPostNFTOrder = ({
       data: NFTOrderWithSignatureAndPermit,
       signal,
     });
-    console.log('🚀 ~ file: postOrder.ts ~ created new NFT Order', newOrder);
 
     return { ...newOrder };
   };

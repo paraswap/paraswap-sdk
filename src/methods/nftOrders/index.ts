@@ -71,7 +71,6 @@ export const constructSubmitNFTOrder = (
 
     const newOrder = await postNFTLimitOrder(orderWithSignature, signal);
 
-    console.log('new NFT Limit Order created', newOrder);
     return newOrder;
   };
 
@@ -87,7 +86,6 @@ export const constructSubmitNFTOrder = (
 
     const newOrder = await postNFTP2POrder(orderWithSignature, signal);
 
-    console.log('new NFT P2P Order created', newOrder);
     return newOrder;
   };
 

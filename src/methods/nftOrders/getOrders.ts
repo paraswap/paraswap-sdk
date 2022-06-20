@@ -53,7 +53,6 @@ export const constructGetNFTOrders = ({
       signal,
     });
 
-    console.log('🚀 getNFTOrders', orders);
     // without any extra calls, return  what API returns
     return orders;
   };

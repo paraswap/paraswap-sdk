@@ -196,11 +196,6 @@ export const constructBuildTx = ({
       signal,
     };
 
-    console.log(`
-      POST ${fetchURL}
-      ${JSON.stringify(sanitizedParams, null, 2)}
-    `);
-
     const builtTx = await fetcher<TransactionParams>(fetchParams);
 
     return builtTx;

@@ -368,7 +368,6 @@ export const constructGetLimitOrders = ({
       signal,
     });
 
-    console.log('🚀 getRawLimitOrders', orders);
     // without any extra calls, return  what API returns
     return orders;
   };
@@ -448,7 +447,6 @@ function _getLimitOrderStatusAndAmountFilled(
     orderEvents,
   }: StatusAndAmountFilledOptions
 ): LimitOrderExtra {
-  console.log('🚀 ~ remainingBalance', remainingBalance.toString());
   const remainingBalanceBN = new BigNumber(remainingBalance);
   // order exists since we got it from API
   if (remainingBalanceBN.isZero()) {
