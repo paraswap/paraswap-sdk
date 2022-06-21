@@ -47,10 +47,10 @@ import {
   constructPostLimitOrder,
   PostLimitOrderFunctions,
 } from '../methods/limitOrders/postOrder';
-// import {
-//   constructGetLimitOrders,
-//   GetLimitOrdersFunctions,
-// } from '../methods/limitOrders/getOrders';
+import {
+  constructGetLimitOrders,
+  GetLimitOrdersFunctions,
+} from '../methods/limitOrders/getOrders';
 import {
   constructGetLimitOrdersContract,
   GetLimitOrdersContractFunctions,
@@ -99,7 +99,7 @@ export type SwapFetchMethods = GetBalancesFunctions &
   GetRateFunctions;
 
 export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
-  // GetLimitOrdersFunctions &
+  GetLimitOrdersFunctions &
   BuildLimitOrderFunctions &
   PostLimitOrderFunctions &
   BuildLimitOrdersTxFunctions;
@@ -171,7 +171,7 @@ export function constructSimpleSDK(
       config,
       constructBuildLimitOrder,
       constructPostLimitOrder,
-      // constructGetLimitOrders, @TODO reenable when removing provider dependency
+      constructGetLimitOrders,
       constructGetLimitOrdersContract,
       constructBuildLimitOrderTx
     );
