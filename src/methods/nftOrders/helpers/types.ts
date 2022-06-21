@@ -33,6 +33,8 @@ export type NFTOrderFromAPI = NFTOrderToSend & {
   state: NFTOrderState;
   takerFromMeta: string; // the intended receiver, eg receiving address of p2p order where `taker` would be augustus
   type: NFTOrderType;
+  /** @description transaction with the last event pertaining to the order: OrderFilled or OrderCancelled */
+  transactionHash: null | string;
   // not yet returned
   // transactions: NftOrderTransaction[];
 };

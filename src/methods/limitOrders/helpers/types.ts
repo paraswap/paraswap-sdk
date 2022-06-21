@@ -128,8 +128,10 @@ export type LimitOrderFromApi = {
   // updatedAt: number; // timestamp
   createdAt: number; // timestamp
   state: LimitOrderState;
+  /** @description transaction with the last event pertaining to the order: OrderFilled or OrderCancelled */
+  transactionHash: null | string;
   // not yet returned
-  transactions: LimitOrderTransaction[];
+  // transactions: LimitOrderTransaction[];
   type: LimitOrderType;
   takerFromMeta: string; // the intended receiver, eg receiving address of p2p order where `taker` would be augustus
   fillableBalance: string; // amount that remains to be filled
