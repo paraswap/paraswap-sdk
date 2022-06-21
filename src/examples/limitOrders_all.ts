@@ -9,7 +9,7 @@ import {
   // limitOrders methods
   constructAllLimitOrdersHandlers,
   // extra types
-  OpenLimitOrder,
+  LimitOrderFromApi,
 } from '..';
 
 const account = '0x1234...';
@@ -63,7 +63,7 @@ async function run() {
 
   // builds + signs + posts order to API
   // new limit order returned from API
-  const newLimitOrder: OpenLimitOrder =
+  const newLimitOrder: LimitOrderFromApi =
     await paraSwapLimitOrderSDK.submitLimitOrder(orderInput);
 
   // to act as order taker

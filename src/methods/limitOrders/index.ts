@@ -1,5 +1,5 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { LimitOrderToSend, OpenLimitOrder } from './helpers/types';
+import type { LimitOrderToSend, LimitOrderFromApi } from './helpers/types';
 import {
   BuildLimitOrderFunctions,
   BuildLimitOrderInput,
@@ -30,7 +30,7 @@ type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
   extra?: { permitMakerAsset?: string },
   signal?: AbortSignal
-) => Promise<OpenLimitOrder>;
+) => Promise<LimitOrderFromApi>;
 
 export type SubmitLimitOrderFuncs = {
   submitLimitOrder: SubmitLimitOrder;
