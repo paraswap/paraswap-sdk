@@ -6,18 +6,17 @@ import type {
   TxSendOverrides,
 } from '../../types';
 import { constructApproveToken } from '../swap/approve';
-import { constructGetSpender } from '../swap/spender';
+import { constructGetNFTOrdersContract } from './getOrdersContract';
 
 type ApproveNFT<T> = (
   tokenAddress: Address,
-  overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  overrides?: TxSendOverrides
 ) => Promise<T>;
 
 export type ApproveTokenForNFTOrderFunctions<T> = {
-  /** @description approving ERC20 for NFT Orders that will be executed through AugustusSwapper */
+  /** @description approving AugustusSwapper as spender for takerAsset (ERC20) for Limit Orders that will be executed through it */
   approveERC20ForNFTOrder: ApproveToken<T>;
-  /** @description approving ERC721 and ERC1155 for NFT Orders that will be executed through it */
+  /** @description approving AugustusRFQ as spender for makerAsset (NFT) */
   approveNFTorNFTOrder: ApproveNFT<T>;
 };
 
@@ -53,26 +52,20 @@ export const constructApproveTokenForNFTOrder = <T>(
   const { approveToken: approveERC20ForNFTOrder } =
     constructApproveToken(options);
 
-  const { getSpender: _getSpender } = constructGetSpender(options);
-  // cached for the same instance of `approveToken = constructApproveToken()`
-  // so should persist across same apiUrl & network
-  let _spender: string | undefined;
+  const { getNFTOrdersContract } = constructGetNFTOrdersContract(options);
 
-  const getSpender: typeof _getSpender = async (signal) =>
-    _spender || (_spender = await _getSpender(signal));
+  // @TODO add approvetakerAssetForNFTOrder to use AugustusSwapper as spender if we ever have SELL NFT swaps
+  const AugustusRFQ = getNFTOrdersContract();
 
   const approveNFTorNFTOrder: ApproveNFT<T> = async (
     tokenAddress,
-    overrides = {},
-    signal
+    overrides = {}
   ) => {
-    const spender = await getSpender(signal);
-
     const res = await options.contractCaller.transactCall<ApprovalMethods>({
       address: tokenAddress,
       abi: MinNFTAbi,
       contractMethod: 'setApprovalForAll',
-      args: [spender, true],
+      args: [AugustusRFQ, true],
       overrides,
     });
 
