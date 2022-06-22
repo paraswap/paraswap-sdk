@@ -1238,7 +1238,7 @@ describe('NFT Orders', () => {
 
         const signature = await sdk.signNFTOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x66251150a666cf89e4691a53b7e27df0e30d8496468b424fecbdafddae9142765edea33eecc75724e0e4ccd37160c6b657e4bd4f6c4c4c5f7054a9d9a88c0e371c"`
+          `"0x1aa5388855841c17e989d3e03d3dab17fc50fbdabd5b29d0d76ffb0d6858c86f195a6de6587cec6c282503f4a0abd8dd52f32a497bcda7a7729242d44a47ab791c"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);
