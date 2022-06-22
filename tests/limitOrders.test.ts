@@ -1675,45 +1675,30 @@ describe('Limit Orders', () => {
     }
   );
 
-  // @TODO switch to getLimitOrders
-  test.skip('getRawLimitOrders', async () => {
-    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
-    const orderHash =
-      '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
+  test('getLimitOrders', async () => {
+    const account = '0xc3643bc869dc0dcd2df8729fc3cb768d4f86f57a';
+    const knownOrderHashes = [
+      '0xa2eeb0bd066645dc0d8ba5470682153266003b1a6ff9676b664ec8b430ccb601',
+      '0xa1007d11de22c8f03b3f73fe46189b84aa03908a9747e0dd451f95440c3b02ec',
+      '0xf135cf0bbe33ff078f659c72f8b9aba8a2de595f20c336ea2e31a44894d6eb3a',
+    ];
 
     const orders = await paraSwap.getLimitOrders({
       maker: account,
       type: 'LIMIT',
     });
 
-    const order = orders.find(
-      (order) => order.orderHash.toLowerCase() === orderHash
+    const knownOrders = orders.filter((order) =>
+      knownOrderHashes.includes(order.orderHash.toLowerCase())
     );
 
-    assert(order, `order must exist for orderHash ${orderHash}`);
+    assert(
+      knownOrders.length > 0,
+      `order must exist for orderHashes ${knownOrderHashes.join(', ')}`
+    );
 
-    expect(order.state).toEqual('EXPIRED');
-
-    // EXPIRED order won't change
-    expect(order).toMatchInlineSnapshot(`
-      Object {
-        "chainId": 3,
-        "createdAt": 1652430671,
-        "expiry": 0,
-        "maker": "0x05182e579fdfcf69e4390c3411d8fea1fb6467cf",
-        "makerAmount": "10000000000000000000",
-        "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
-        "makerBalance": "10000000000000000000",
-        "nonceAndMeta": "8209317000076433728076072485312968185294986748283703458703343616",
-        "orderHash": "0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b",
-        "permitMakerAsset": null,
-        "signature": "0x5df9b6f3abaef67993e57e94ab2ed9e58a4c709fb03f0cf23117c0ed8a4b46097c515c2b055d2a5a1c373513faaa618ae3873e167c129128bb0b28a8be5f980e1b",
-        "state": "EXPIRED",
-        "taker": "0x0000000000000000000000000000000000000000",
-        "takerAmount": "1000000000000000000",
-        "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
-      }
-    `);
+    // EXPIRED | CANCELLED order won't change
+    expect(knownOrders).toMatchSnapshot();
   });
 
   test.skip('postLimitOrder', async () => {
