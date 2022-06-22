@@ -1,5 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Limit Orders Build_Swap+LO_Tx 1`] = `
+Object {
+  "bestRoute": Array [
+    Object {
+      "percent": 100,
+      "swaps": Array [
+        Object {
+          "destDecimals": 18,
+          "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+          "srcDecimals": 18,
+          "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+          "swapExchanges": Array [
+            Object {
+              "data": Object {
+                "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+                "feeFactor": 10000,
+                "gasUSD": "0.000000",
+                "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+                "path": Array [
+                  "0xad6d458402f60fd3bd25163575031acdce07538d",
+                  "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
+                ],
+                "pools": Array [
+                  Object {
+                    "address": "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                    "direction": true,
+                    "fee": 30,
+                  },
+                ],
+                "router": "0x53e693c6C7FFC4446c53B205Cf513105Bf140D7b",
+              },
+              "destAmount": "6000000000000000000",
+              "exchange": "UniswapV2",
+              "percent": 100,
+              "poolAddresses": Array [
+                "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+              ],
+              "srcAmount": "---",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  "blockNumber": NaN,
+  "contractAddress": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+  "contractMethod": "simpleBuy",
+  "destAmount": "6000000000000000000",
+  "destDecimals": 18,
+  "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+  "destUSD": "0",
+  "gasCost": "0",
+  "gasCostUSD": "0.000000",
+  "hmac": "---",
+  "maxImpactReached": false,
+  "network": 3,
+  "partner": "paraswap.io",
+  "partnerFee": 0,
+  "side": "BUY",
+  "srcAmount": "---",
+  "srcDecimals": 18,
+  "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+  "srcUSD": "0",
+  "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
+}
+`;
+
 exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
 Object {
   "data": Object {
@@ -112,4 +179,78 @@ Object {
     ],
   },
 }
+`;
+
+exports[`Limit Orders getLimitOrders 1`] = `
+Array [
+  Object {
+    "chainId": 3,
+    "createdAt": 1655835897,
+    "expiry": 0,
+    "fillableBalance": "10000000000000000000",
+    "maker": "0xc3643bc869dc0dcd2df8729fc3cb768d4f86f57a",
+    "makerAmount": "10000000000000000000",
+    "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
+    "makerBalance": "10000000000000000000",
+    "nonceAndMeta": "2038861375058618053358497106930523726788645516548567406861090816",
+    "orderHash": "0xa2eeb0bd066645dc0d8ba5470682153266003b1a6ff9676b664ec8b430ccb601",
+    "permitMakerAsset": null,
+    "reservedBalance": "0",
+    "signature": "0x156c90ce02fa96d7e4242f64479d512b02e6d375dc925bcfba615b807c986a201dda6daec1c8c50fd1edd889027f9531760ee83e08305f44ada387b4f76a75531c",
+    "state": "CANCELLED",
+    "swappableBalance": "10000000000000000000",
+    "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
+    "takerAmount": "6500000000000000",
+    "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
+    "takerFromMeta": "0x0000000000000000000000000000000000000000",
+    "transactionHash": "0xe28a6c9c5a94db2d38b0589c37991746d2f80776e9645d6dde0c4e68ba9706e7",
+    "type": "LIMIT",
+  },
+  Object {
+    "chainId": 3,
+    "createdAt": 1655825807,
+    "expiry": 0,
+    "fillableBalance": "10000000000000000000",
+    "maker": "0xc3643bc869dc0dcd2df8729fc3cb768d4f86f57a",
+    "makerAmount": "10000000000000000000",
+    "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
+    "makerBalance": "10000000000000000000",
+    "nonceAndMeta": "12701321616847227609289261567310234285467050720419790920636956672",
+    "orderHash": "0xa1007d11de22c8f03b3f73fe46189b84aa03908a9747e0dd451f95440c3b02ec",
+    "permitMakerAsset": null,
+    "reservedBalance": "0",
+    "signature": "0x8249910e18ce1ff11e1f25ca87f7f2edb2235dfffe5df582af9df8f7077e2de2712ecfe78979a913b9977a19849173d2645091fe9ffbaea01d2237af0ba63e2e1b",
+    "state": "CANCELLED",
+    "swappableBalance": "10000000000000000000",
+    "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
+    "takerAmount": "40000000000000000",
+    "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
+    "takerFromMeta": "0x0000000000000000000000000000000000000000",
+    "transactionHash": "0xcc63ce1146f0f904d39254c4451c33a8ab3d2d0d4c0c2a758e6884bcc4381f90",
+    "type": "LIMIT",
+  },
+  Object {
+    "chainId": 3,
+    "createdAt": 1655818870,
+    "expiry": 0,
+    "fillableBalance": "10000000000000000000",
+    "maker": "0xc3643bc869dc0dcd2df8729fc3cb768d4f86f57a",
+    "makerAmount": "10000000000000000000",
+    "makerAsset": "0xad6d458402f60fd3bd25163575031acdce07538d",
+    "makerBalance": "10000000000000000000",
+    "nonceAndMeta": "4148217126520458299316293664675038309149981536424256067120136192",
+    "orderHash": "0xf135cf0bbe33ff078f659c72f8b9aba8a2de595f20c336ea2e31a44894d6eb3a",
+    "permitMakerAsset": null,
+    "reservedBalance": "0",
+    "signature": "0xa7ef1f209c7e496fb3beb8b855fea7e195a7db22186c1b298b4e3aa67f1ca2610f0fb881b9e2ef1119587a847c202c0f994da9888da932bc361136a132b6336a1c",
+    "state": "CANCELLED",
+    "swappableBalance": "10000000000000000000",
+    "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
+    "takerAmount": "40000000000000000",
+    "takerAsset": "0xc778417e063141139fce010982780140aa0cd5ab",
+    "takerFromMeta": "0x0000000000000000000000000000000000000000",
+    "transactionHash": "0x7c6578e82fab19cf7fb830acc43b8ce54a0bcdf4eb4ae0c92a5b58db80d635ad",
+    "type": "LIMIT",
+  },
+]
 `;
