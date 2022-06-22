@@ -1750,48 +1750,6 @@ describe('Limit Orders', () => {
 
     // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
-
-  test.skip('getOrdersStatus', async () => {
-    // orders that should not change anymore
-    const orderHashes = [
-      '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b',
-      '0xa5b52be5e7a6cec7e14d8567c561673a931d91368025dd3966f70b1da154c470',
-    ];
-    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
-
-    // need real provider, local ganache fork can't get historical events
-    const prov = ethers.getDefaultProvider(PROVIDER_URL);
-    const connectedWallet = walletStable.connect(prov);
-    const contractCaller = constructEthersContractCaller(
-      {
-        ethersProviderOrSigner: connectedWallet,
-        EthersContract: ethers.Contract,
-      },
-      connectedWallet.address
-    );
-
-    const paraSwap = constructPartialSDK(
-      {
-        chainId,
-        apiURL: 'https://api.orders.paraswap.io',
-        fetcher: axiosFetcher,
-        contractCaller,
-      },
-      constructGetLimitOrders
-    );
-
-    const orders = await paraSwap.getLimitOrders({
-      maker: account,
-      type: 'LIMIT',
-    });
-
-    const selectedOrders = orders.filter((order) =>
-      orderHashes.includes(order.orderHash)
-    );
-
-    // all orderHashes should be found
-    expect(orderHashes.length).toEqual(selectedOrders.length);
-  });
 });
 
 function calculateOrderHash({
