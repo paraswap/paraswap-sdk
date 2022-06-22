@@ -5,11 +5,10 @@ import { assert } from 'ts-essentials';
 import { constructApproveToken } from '../swap/approve';
 
 export type ApproveTokenForLimitOrderFunctions<T> = {
-  /** @description approving AugustusRFQ directly */
-  /** @deprecated use Limit Orders through AugustusSwapper */
-  approveTokenForDirectLimitOrder: ApproveToken<T>;
-  /** @description approving AugustusSwapper for Limit Orders that will be executed through it */
-  approveTokenForLimitOrder: ApproveToken<T>;
+  /** @description approving AugustusRFQ as spender for makerAsset */
+  approveMakerTokenForLimitOrder: ApproveToken<T>;
+  /** @description approving AugustusSwapper as spender for takerAsset for Limit Orders that will be executed through it */
+  approveTakerTokenForLimitOrder: ApproveToken<T>;
 };
 
 // returns whatever `contractCaller` returns
@@ -28,12 +27,15 @@ export const constructApproveTokenForLimitOrder = <T>(
     return verifyingContract;
   };
 
-  const approveTokenForDirectLimitOrder: ApproveToken<T> =
+  const approveMakerTokenForLimitOrder: ApproveToken<T> =
     approveTokenMethodFactory<T>(options.contractCaller, getSpender);
 
   // approving TokenTransaferProxy as for the swap
-  const { approveToken: approveTokenForLimitOrder } =
+  const { approveToken: approveTakerTokenForLimitOrder } =
     constructApproveToken(options);
 
-  return { approveTokenForDirectLimitOrder, approveTokenForLimitOrder };
+  return {
+    approveMakerTokenForLimitOrder,
+    approveTakerTokenForLimitOrder,
+  };
 };
