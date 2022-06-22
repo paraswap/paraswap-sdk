@@ -163,7 +163,7 @@ const expectTxParamsScheme = expect.objectContaining({
   chainId: expect.any(Number),
 });
 
-describe('Limit Orders', () => {
+describe('NFT Orders', () => {
   let paraSwap: BuildNFTOrderFunctions &
     SignNFTOrderFunctions &
     GetNFTOrdersContractFunctions &
@@ -376,7 +376,7 @@ describe('Limit Orders', () => {
   //   Object.assign(chainId2verifyingContract, initialChainId2verifyingContract);
   // });
 
-  test('getLimitOrdersContract', async () => {
+  test('getNFTOrdersContract', async () => {
     const augustusRFQAddress = paraSwap.getNFTOrdersContract();
 
     // @TODO replace with snapshot test once contracts are deployed
