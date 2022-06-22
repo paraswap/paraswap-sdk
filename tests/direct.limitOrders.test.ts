@@ -48,11 +48,9 @@ import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
 import ganache from 'ganache';
 
-import {
-  BuildLimitOrderInput,
-  ZERO_ADDRESS,
-} from '../src/methods/limitOrders/buildOrder';
+import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
 import { assert } from 'ts-essentials';
+import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 
 dotenv.config();
 
@@ -498,7 +496,7 @@ describe('Direct Limit Orders', () => {
         // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
+        const approveForMakerTx = await sdk.approveMakerTokenForLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -516,7 +514,8 @@ describe('Direct Limit Orders', () => {
 
         // withSDK
         const approveForTakerTx =
-          await takerSDK.approveTokenForDirectLimitOrder(
+          // approving same as maker token, because this is a direct-through-AugustusRFQ Order
+          await takerSDK.approveMakerTokenForLimitOrder(
             takerAmount,
             erc20Token2.address
           );
@@ -658,7 +657,7 @@ describe('Direct Limit Orders', () => {
         // await erc20Token1.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
+        const approveForMakerTx = await sdk.approveMakerTokenForLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -675,7 +674,8 @@ describe('Direct Limit Orders', () => {
 
         // withSDK
         const approveForTakerTx =
-          await takerSDK.approveTokenForDirectLimitOrder(
+          // approving same as maker token, because this is a direct-through-AugustusRFQ Order
+          await takerSDK.approveMakerTokenForLimitOrder(
             takerAmount,
             erc20Token2.address
           );
@@ -813,7 +813,7 @@ describe('Direct Limit Orders', () => {
         const fillAmount = +takerAmount * fillPart;
 
         // withSDK
-        const approveForMakerTx = await sdk.approveTokenForDirectLimitOrder(
+        const approveForMakerTx = await sdk.approveMakerTokenForLimitOrder(
           makerAmount,
           erc20Token1.address
         );
@@ -830,7 +830,8 @@ describe('Direct Limit Orders', () => {
 
         // withSDK
         const approveForTakerTx =
-          await takerSDK.approveTokenForDirectLimitOrder(
+          // approving same as maker token, because this is a direct-through-AugustusRFQ Order
+          await takerSDK.approveMakerTokenForLimitOrder(
             takerAmount,
             erc20Token2.address
           );
@@ -957,7 +958,7 @@ describe('Direct Limit Orders', () => {
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const orders = await paraSwap.getRawLimitOrders({
+    const orders = await paraSwap.getLimitOrders({
       maker: account,
       type: 'LIMIT',
     });
@@ -1032,27 +1033,6 @@ describe('Direct Limit Orders', () => {
     const orderHash =
       '0x636CC5AA95CE9F6E3EA5EB7E65B4136DEBE62C4A743FB9A4D8AF9C0D35C71BA4';
 
-    // need real provider, local ganache fork can't get historical events
-    const prov = ethers.getDefaultProvider(PROVIDER_URL);
-    const connectedWallet = walletStable.connect(prov);
-    const contractCaller = constructEthersContractCaller(
-      {
-        ethersProviderOrSigner: connectedWallet,
-        EthersContract: ethers.Contract,
-      },
-      connectedWallet.address
-    );
-
-    const paraSwap = constructPartialSDK(
-      {
-        chainId: 3,
-        apiURL: 'https://api.staging.paraswap.io',
-        fetcher: axiosFetcher,
-        contractCaller,
-      },
-      constructGetLimitOrders
-    );
-
     const order = {
       expiry: 1654418209,
       createdAt: 1651826231,
@@ -1073,22 +1053,6 @@ describe('Direct Limit Orders', () => {
     };
 
     assert(order, `must have an order with orderHash ${orderHash}`);
-
-    const orderExtraData = await paraSwap.getLimitOrderStatusAndAmountFilled(
-      order
-    );
-
-    expect(orderExtraData).toMatchInlineSnapshot(`
-      Object {
-        "amountFilled": "50000000000000000",
-        "status": "canceled",
-        "transactionHashes": Array [
-          "0x2d544b7d2cc0f57de2cf51cecd3c975915e33030e33e28ffdd8ebe7e52c7866c",
-          "0x107b94c8979d3a7e4e0856bff52e00a57a71f9c0664a79a4e884a3127e666f9e",
-          "0xcd6ceb51f996480ab484907bfd79439dea302e8b6e987c90e905075335fdc9e5",
-        ],
-      }
-    `);
   });
 
   test.skip('getOrdersStatus', async () => {
@@ -1120,7 +1084,7 @@ describe('Direct Limit Orders', () => {
       constructGetLimitOrders
     );
 
-    const orders = await paraSwap.getRawLimitOrders({
+    const orders = await paraSwap.getLimitOrders({
       maker: account,
       type: 'LIMIT',
     });
@@ -1131,29 +1095,6 @@ describe('Direct Limit Orders', () => {
 
     // all orderHashes should be found
     expect(orderHashes.length).toEqual(selectedOrders.length);
-
-    const ordersExtraData = await paraSwap.getLimitOrdersStatusAndAmountFilled(
-      orderHashes.map((orderHash) => ({
-        expiry: orderExpiry,
-        makerAmount: '100000000',
-        orderHash,
-        maker: senderAddress,
-        taker: ZERO_ADDRESS,
-      }))
-    );
-    expect(ordersExtraData).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "amountFilled": "0",
-          "status": "open",
-        },
-        Object {
-          "amountFilled": "0",
-          "status": "open",
-        },
-      ]
-    `);
-    console.log('🚀 ~ ordersExtraData', ordersExtraData);
   });
 });
 
