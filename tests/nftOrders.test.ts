@@ -542,7 +542,7 @@ describe('Limit Orders', () => {
     `);
   });
 
-  test.only(`fillNFTOrder through Augustus`, async () => {
+  test(`fillNFTOrder through Augustus`, async () => {
     const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
     const NFT_ID = '9982';
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
