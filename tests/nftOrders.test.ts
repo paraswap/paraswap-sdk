@@ -220,7 +220,7 @@ describe('NFT Orders', () => {
       chainId,
       contractCaller: ethersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructBuildNFTOrder,
     constructSignNFTOrder,
@@ -236,7 +236,7 @@ describe('NFT Orders', () => {
       chainId,
       contractCaller: takerEthersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructApproveTokenForNFTOrder,
     constructBuildNFTOrderTx
@@ -255,7 +255,7 @@ describe('NFT Orders', () => {
       chainId,
       contractCaller: web3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
     constructBuildNFTOrder,
     constructSignNFTOrder,
@@ -271,7 +271,7 @@ describe('NFT Orders', () => {
       chainId,
       contractCaller: takerWeb3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.paraswap.io',
+      apiURL: 'https://api.orders.paraswap.io',
     },
 
     constructApproveTokenForNFTOrder
@@ -343,7 +343,7 @@ describe('NFT Orders', () => {
         chainId,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildNFTOrder,
       constructSignNFTOrder,
@@ -390,7 +390,7 @@ describe('NFT Orders', () => {
       {
         chainId: 137,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructGetNFTOrders
     );
