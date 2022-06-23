@@ -383,9 +383,9 @@ describe('NFT Orders', () => {
     expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
   });
 
-  test('get NFT order', async () => {
+  test('get NFT order by hash', async () => {
     const knownOrderHash =
-      '0xc5c28a12904fbf4d7cc6a34aea03a6355f40fe1c75fa0e3cbac82ea1af1b6dcf';
+      '0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33';
     const sdk = constructPartialSDK(
       {
         chainId: 137,
@@ -396,32 +396,7 @@ describe('NFT Orders', () => {
     );
 
     const order = await sdk.getNFTOrderByHash(knownOrderHash);
-    expect(order).toMatchInlineSnapshot(`
-      Object {
-        "chainId": 137,
-        "createdAt": 1655274198,
-        "expiry": 0,
-        "fillableBalance": "1",
-        "maker": "0x05182e579fdfcf69e4390c3411d8fea1fb6467cf",
-        "makerAmount": "1",
-        "makerAsset": "0xe07eafe9ffc1363b6c4c466837a08aced54f9df9",
-        "makerAssetId": "1000002050",
-        "makerAssetType": 2,
-        "makerBalance": "1",
-        "nonceAndMeta": "20703972438053171999988087303678068449842895375940038879746533286662",
-        "orderHash": "0xc5c28a12904fbf4d7cc6a34aea03a6355f40fe1c75fa0e3cbac82ea1af1b6dcf",
-        "permitMakerAsset": null,
-        "signature": "0x7ed45a3dd78e7e3266314212e68a2344da59dc175770fe32a3ac45bef3f5c0e4145659ffbea25a74a9d872ca1b6e022c1e2ee0a92c8997afa7d9e34853b056601c",
-        "state": "PENDING",
-        "taker": "0x64f72fcfd9c624e3e471223f043060981c83aafc",
-        "takerAmount": "12300",
-        "takerAsset": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-        "takerAssetId": "0",
-        "takerAssetType": 0,
-        "takerFromMeta": "0x7ba594df3161729bf2e68a9d0a11dceb57a2e306",
-        "type": "P2P",
-      }
-    `);
+    expect(order).toMatchInlineSnapshot();
   });
 
   test('buildNFTOrder', async () => {
@@ -579,7 +554,7 @@ describe('NFT Orders', () => {
         chainId,
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildNFTOrder,
       constructSignNFTOrder,
@@ -591,7 +566,7 @@ describe('NFT Orders', () => {
         chainId,
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildNFTOrder,
       constructSignNFTOrder,
@@ -847,7 +822,7 @@ describe('NFT Orders', () => {
         chainId,
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildNFTOrder,
       constructSignNFTOrder,
@@ -859,7 +834,7 @@ describe('NFT Orders', () => {
         chainId,
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.paraswap.io',
+        apiURL: 'https://api.orders.paraswap.io',
       },
       constructBuildNFTOrder,
       constructSignNFTOrder,
