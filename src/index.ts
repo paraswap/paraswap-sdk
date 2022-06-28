@@ -139,6 +139,11 @@ export type {
   BuildOptionsWitWithMaxFee,
   BuildOptionsWithGasPrice,
   BuildTxInput,
+  BuildSwapTxInput,
+  BuildLimitOrderTxInput,
+  BuildNFTOrderTxInput,
+  BuildSwapAndLimitOrderTxInput,
+  BuildSwapAndNFTOrderTxInput,
   SwappableOrder,
   SwappableNFTOrder,
 } from './methods/swap/transaction';
