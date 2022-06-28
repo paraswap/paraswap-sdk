@@ -56,7 +56,7 @@ const orderInput = {
 async function run() {
   // approve token for the limit order
   const tx1: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.approveTokenForLimitOrder(
+    await paraSwapLimitOrderSDK.approveMakerTokenForLimitOrder(
       orderInput.makerAmount,
       orderInput.makerAsset
     );
@@ -85,7 +85,7 @@ async function run() {
   );
 
   const tx2: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.approveTokenForLimitOrder(
+    await paraswapLimitOrdersSDKForTaker.approveTakerTokenForLimitOrder(
       orderInput.takerAmount,
       orderInput.takerAsset
     );
