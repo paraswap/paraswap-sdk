@@ -7,7 +7,7 @@ import type {
   Token,
   TxHash,
 } from './helpers/token';
-import type { SignableTypedData } from './methods/limitOrders/helpers/buildOrderData';
+import type { SignableTypedData } from './methods/common/orders/buildOrderData';
 
 export type {
   Address,
