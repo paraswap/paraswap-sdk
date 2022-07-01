@@ -67,15 +67,7 @@ describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
-    paraSwap = new ParaSwap(
-      network,
-      undefined,
-      undefined,
-      undefined,
-      senderAddress,
-      undefined, // `axios` will take precedence if given
-      fetch
-    ).setWeb3Provider(provider);
+    paraSwap = new ParaSwap({ network, fetch }).setWeb3Provider(provider);
   });
 
   test('Get_Balance', async () => {
