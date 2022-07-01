@@ -14,7 +14,7 @@ import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/appr
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
-  'staticCall' | 'transactCall' | 'signTypedDataCall' | 'getLogsCall'
+  'staticCall' | 'transactCall' | 'signTypedDataCall'
 > &
   ConstructFetchInput;
 

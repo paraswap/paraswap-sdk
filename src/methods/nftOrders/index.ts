@@ -106,7 +106,7 @@ export type NFTOrderHandlers<T> = SubmitNFTOrderFuncs &
 export const constructAllNFTOrdersHandlers = <TxResponse>(
   options: ConstructProviderFetchInput<
     TxResponse,
-    'signTypedDataCall' | 'transactCall' | 'staticCall' | 'getLogsCall'
+    'signTypedDataCall' | 'transactCall' | 'staticCall'
   >
 ): NFTOrderHandlers<TxResponse> => {
   const NFTOrdersGetters = constructGetNFTOrders(options);

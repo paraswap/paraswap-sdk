@@ -1,7 +1,6 @@
 import type {
   Address,
   ContractCallerFunctions,
-  LogsContractCallerFn,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
   TransactionContractCallerFn,
@@ -144,11 +143,7 @@ export const constructContractCaller = (
     return response.result;
   };
 
-  const getLogsCall: LogsContractCallerFn = async (params) => {
-    throw new Error('UNIMPLEMENTED');
-  };
-
-  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
+  return { staticCall, transactCall, signTypedDataCall };
 };
 
 function isProviderWithSendMethod<T extends provider>(

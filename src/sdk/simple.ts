@@ -216,7 +216,6 @@ function constructSimpleContractCaller(
       staticCall,
       transactCall: _transactCall,
       signTypedDataCall,
-      getLogsCall,
     } = constructEthersContractCaller(providerOptions, providerOptions.account);
 
     const transactCall: TransactionContractCallerFn<TxHash> = async (
@@ -229,14 +228,13 @@ function constructSimpleContractCaller(
       return contractTx.hash;
     };
 
-    return { staticCall, transactCall, signTypedDataCall, getLogsCall };
+    return { staticCall, transactCall, signTypedDataCall };
   }
 
   const {
     staticCall,
     transactCall: _transactCall,
     signTypedDataCall,
-    getLogsCall,
   } = constructWeb3ContractCaller(
     providerOptions.web3,
     providerOptions.account
@@ -253,5 +251,5 @@ function constructSimpleContractCaller(
     });
   };
 
-  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
+  return { staticCall, transactCall, signTypedDataCall };
 }

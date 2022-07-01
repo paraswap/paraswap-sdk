@@ -80,28 +80,6 @@ interface ContractCallTransactionInput<T extends string>
   overrides: TxSendOverrides;
 }
 
-// https://docs.ethers.io/v5/concepts/events/#events--filters
-type Topic = string | string[] | null;
-
-interface LogFilter {
-  address?: string;
-  topics: [Topic, ...Topic[]];
-  fromBlock?: BlockTag;
-  toBlock?: BlockTag;
-}
-
-export interface GetLogsInput {
-  address: Address;
-  abi: ReadonlyArray<JsonFragment>;
-  filter: LogFilter;
-}
-
-export type GetLogsResult = {
-  topic: string;
-  args: ReadonlyArray<any> & Record<string, any>;
-  transactionHash: string;
-}[];
-
 // may have to type result T differently if we ever use staticCalls in SDK
 export type StaticContractCallerFn = <T, M extends string = string>(
   params: ContractCallStaticInput<M>
@@ -112,15 +90,11 @@ export type TransactionContractCallerFn<T> = <M extends string = string>(
 export type SignTypedDataContractCallerFn = (
   typedData: SignableTypedData
 ) => Promise<string>;
-export type LogsContractCallerFn = (
-  params: GetLogsInput
-) => Promise<GetLogsResult>;
 
 export interface ContractCallerFunctions<T> {
   staticCall: StaticContractCallerFn;
   transactCall: TransactionContractCallerFn<T>;
   signTypedDataCall: SignTypedDataContractCallerFn;
-  getLogsCall: LogsContractCallerFn;
 }
 
 export interface ConstructProviderFetchInput<
