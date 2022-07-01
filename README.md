@@ -62,8 +62,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
-      },
-      { ignoreChecks: true }
+      }     
     );
 
     const transaction = {
