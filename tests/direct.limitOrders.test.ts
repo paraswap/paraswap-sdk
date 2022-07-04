@@ -214,7 +214,7 @@ describe('Direct Limit Orders', () => {
       chainId,
       contractCaller: ethersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.orders.paraswap.io',
+      apiURL: process.env.API_URL,
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -233,7 +233,7 @@ describe('Direct Limit Orders', () => {
       chainId,
       contractCaller: takerEthersContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.orders.paraswap.io',
+      apiURL: process.env.API_URL,
     },
     constructApproveTokenForLimitOrder,
     constructFillLimitOrder
@@ -252,7 +252,7 @@ describe('Direct Limit Orders', () => {
       chainId,
       contractCaller: web3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.orders.paraswap.io',
+      apiURL: process.env.API_URL,
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -268,7 +268,7 @@ describe('Direct Limit Orders', () => {
       chainId,
       contractCaller: takerWeb3ContractCaller,
       fetcher: axiosFetcher,
-      apiURL: 'https://api.orders.paraswap.io',
+      apiURL: process.env.API_URL,
     },
 
     constructApproveTokenForLimitOrder,
@@ -336,7 +336,7 @@ describe('Direct Limit Orders', () => {
         chainId,
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.orders.paraswap.io',
+        apiURL: process.env.API_URL,
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -957,7 +957,7 @@ describe('Direct Limit Orders', () => {
       {
         chainId: 137,
         fetcher: axiosFetcher,
-        apiURL: 'https://api.orders.paraswap.io',
+        apiURL: process.env.API_URL,
       },
       constructGetLimitOrders
     );
