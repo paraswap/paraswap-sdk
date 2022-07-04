@@ -2,11 +2,11 @@ import type { Address } from '../../../types';
 import type { AssetTypeVariant } from './types';
 import {
   Domain,
-  getRandomInt,
   name,
   version,
   ZERO_ADDRESS,
 } from '../../common/orders/buildOrderData';
+import { getRandomInt } from '../../../helpers/misc';
 
 const OrderNFT = [
   { name: 'nonceAndMeta', type: 'uint256' },

@@ -192,3 +192,7 @@ export function gatherObjectsByProp<T, U>(
 export const isFilledArray = <T>(array: T[]): array is [T, ...T[]] => {
   return array.length > 0;
 };
+
+export function getRandomInt(): number {
+  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+}

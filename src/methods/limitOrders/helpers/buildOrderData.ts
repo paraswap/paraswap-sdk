@@ -1,7 +1,7 @@
+import { getRandomInt } from '../../../helpers/misc';
 import type { Address } from '../../../types';
 import {
   Domain,
-  getRandomInt,
   name,
   version,
   ZERO_ADDRESS,

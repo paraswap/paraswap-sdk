@@ -23,7 +23,3 @@ export type Domain = {
   chainId: number;
   verifyingContract: string;
 };
-
-export function getRandomInt(): number {
-  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-}
