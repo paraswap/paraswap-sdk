@@ -1145,11 +1145,19 @@ describe('Limit Orders', () => {
   );
 
   test('getLimitOrders', async () => {
-    const account = '0xc3643bc869dc0dcd2df8729fc3cb768d4f86f57a';
+    const paraSwap = constructPartialSDK(
+      {
+        chainId: 137,
+        fetcher: axiosFetcher,
+        apiURL: 'https://api.orders.paraswap.io',
+      },
+      constructGetLimitOrders
+    );
+    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
     const knownOrderHashes = [
-      '0xa2eeb0bd066645dc0d8ba5470682153266003b1a6ff9676b664ec8b430ccb601',
-      '0xa1007d11de22c8f03b3f73fe46189b84aa03908a9747e0dd451f95440c3b02ec',
-      '0xf135cf0bbe33ff078f659c72f8b9aba8a2de595f20c336ea2e31a44894d6eb3a',
+      '0xd0f98ebf56a4ad9bf462f23939fd1e582ee02f5625ae2bffd0b6e0405093fd3c',
+      '0x874193472d16c3a44420f5aabf231648b51fcc2fc2d8b8de4a87fb5ee77c7600',
+      '0x57fd9ac6a1753459b1074dbff5e513527df5ecad03c63b56c06b14425d1775d7',
     ];
 
     const orders = await paraSwap.getLimitOrders({
