@@ -42,7 +42,8 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 
   async function swapExample() {
-    const signer: JsonRpcSigner = ...
+    //                                     or any other signer/provider 
+    const signer: JsonRpcSigner = ethers.Wallet.fromMnmemonic('__your_mnemonic__');
     const senderAddress = signer.address;
 
     const priceRoute = await paraSwapMin.getRate({
@@ -62,8 +63,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
-      },
-      { ignoreChecks: true }
+      }     
     );
 
     const transaction = {

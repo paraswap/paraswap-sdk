@@ -47,20 +47,42 @@ type Fetch = typeof fetch;
 
 type TxResponse = Web3UnpromiEvent | ContractTransaction;
 
+type LegacyOptions = {
+  chainId?: number;
+  apiURL?: string;
+  web3Provider?: Web3;
+  ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
+  account?: Address;
+  axios?: AxiosStatic;
+  fetch?: Fetch;
+};
+
 /** @deprecated */
 export class ParaSwap {
   sdk: Partial<SwapSDKMethods<TxResponse>> = {};
   fetcher: FetcherFunction;
 
-  constructor(
-    private chainId: number = 1,
-    private apiURL: string = API_URL,
-    public web3Provider?: Web3,
-    public ethersDeps?: EthersProviderDeps, // need to be a provider with signer for approve requests
-    public account?: Address,
-    public axios?: AxiosStatic,
-    public fetch?: Fetch
-  ) {
+  chainId: number;
+  apiURL: string;
+  web3Provider?: Web3;
+  ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
+  account?: Address;
+
+  constructor({
+    chainId = 1,
+    apiURL = API_URL,
+    web3Provider,
+    ethersDeps,
+    account,
+    axios,
+    fetch,
+  }: LegacyOptions) {
+    this.chainId = chainId;
+    this.apiURL = apiURL;
+    this.web3Provider = web3Provider;
+    this.ethersDeps = ethersDeps;
+    this.account = account;
+
     const fetcher = axios
       ? constructAxiosFetcher(axios)
       : fetch
@@ -95,7 +117,7 @@ export class ParaSwap {
         fetcher,
         contractCaller,
         apiURL,
-        chainId: chainId,
+        chainId,
       });
     }
   }
