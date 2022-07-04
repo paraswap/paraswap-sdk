@@ -274,3 +274,9 @@ const paraswap = new ParaSwap(
 ```
 
 Refer to [this README for depecreated documentation](https://github.com/paraswap/paraswap-sdk/blob/c4c70c674fb2be4ec528064649d992d4b38c654b/README.md) for functions usage.
+
+
+## Tests
+
+To run `yarn tests` at a minimum it is necessary to provide `PROVIDER_URL=<mainnet_rpc_url>` environment variable.
+Some tests also require `PK1=<private key>` and `PK2=<private_key>` for accounts with balance of particular Tokens, Consult test files (`limitOrders.test.ts` and `nftOrders.test.ts`) for details.
