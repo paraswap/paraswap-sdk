@@ -141,9 +141,13 @@ export class FetcherError extends Error implements FetcherErrorInterface {
     this.message = isDataWithError(data) ? data.error : message;
   }
 }
+// to turn `object -> Record` for indexed variable access
+function isObject(obj: unknown): obj is Record<string | symbol, any> {
+  return !!obj && typeof obj === 'object';
+}
 
 export function isDataWithError(data: unknown): data is { error: string } {
-  return !!data && typeof data == 'object' && 'error' in data;
+  return isObject(data) && typeof data['error'] === 'string';
 }
 
 export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
