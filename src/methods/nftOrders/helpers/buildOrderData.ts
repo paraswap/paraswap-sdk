@@ -120,6 +120,7 @@ export function buildOrderData({
   };
 }
 
+// create a packed number that contains assetAddress and AssetType
 export function assetAddressToUint(
   assetAddress: Address,
   assetType: AssetTypeVariant

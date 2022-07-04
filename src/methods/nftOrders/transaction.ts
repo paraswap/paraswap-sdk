@@ -209,6 +209,7 @@ function checkAndParseOrders(
   };
 }
 
+// extract asset address from makerAsset or takerAsset packed number encoded to contain AssetType
 function uintToAssetAddress(assetUint: BigIntAsString): Address {
   return (
     '0x' +
