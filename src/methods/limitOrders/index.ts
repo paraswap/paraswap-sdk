@@ -25,6 +25,7 @@ import {
   BuildLimitOrdersTxFunctions,
   constructBuildLimitOrderTx,
 } from './transaction';
+import { Address } from 'paraswap-core';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
@@ -32,9 +33,15 @@ type SubmitLimitOrder = (
   signal?: AbortSignal
 ) => Promise<LimitOrderFromApi>;
 
+type SubmitP2POrder = (
+  buildLimitOrderParams: BuildLimitOrderInput & { taker: Address },
+  extra?: { permitMakerAsset?: string },
+  signal?: AbortSignal
+) => Promise<LimitOrderFromApi>;
+
 export type SubmitLimitOrderFuncs = {
   submitLimitOrder: SubmitLimitOrder;
-  submitP2POrder: SubmitLimitOrder;
+  submitP2POrder: SubmitP2POrder;
 };
 
 export const constructSubmitLimitOrder = (
@@ -75,7 +82,7 @@ export const constructSubmitLimitOrder = (
     return newOrder;
   };
 
-  const submitP2POrder: SubmitLimitOrder = async (
+  const submitP2POrder: SubmitP2POrder = async (
     buildLimitOrderParams,
     extra = {},
     signal
