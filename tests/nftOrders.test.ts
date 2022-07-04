@@ -396,7 +396,33 @@ describe('NFT Orders', () => {
     );
 
     const order = await sdk.getNFTOrderByHash(knownOrderHash);
-    expect(order).toMatchInlineSnapshot();
+    expect(order).toMatchInlineSnapshot(`
+      Object {
+        "chainId": 137,
+        "createdAt": 1655458765,
+        "expiry": 1658050764,
+        "fillableBalance": "1",
+        "maker": "0x112f39ea2ccff2d088086590d11cd9f092954f77",
+        "makerAmount": "1",
+        "makerAsset": "0xcd494673999194365033d7a287af9f0a3b163874",
+        "makerAssetId": "1028",
+        "makerAssetType": 2,
+        "makerBalance": "1",
+        "nonceAndMeta": "7616951480031442449908195926141502897956149438841392803682297026303",
+        "orderHash": "0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33",
+        "permitMakerAsset": null,
+        "signature": "0x1d0ba657f90512b62f1026812b4718ca6f0868919181d069ec7d8258c3ab5e3c449b462de619114faea0569002e850c879b09a6964d9863c192023c9b297ca051c",
+        "state": "PENDING",
+        "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
+        "takerAmount": "654",
+        "takerAsset": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+        "takerAssetId": "0",
+        "takerAssetType": 0,
+        "takerFromMeta": "0x76176c2971300217e9f48e3dd4e40591500b96ff",
+        "transactionHash": null,
+        "type": "P2P",
+      }
+    `);
   });
 
   test('buildNFTOrder', async () => {
@@ -1127,7 +1153,7 @@ describe('NFT Orders', () => {
         "hmac": "---",
         "maxImpactReached": false,
         "network": 3,
-        "partner": "paraswap.io",
+        "partner": "anon",
         "partnerFee": 0,
         "side": "BUY",
         "srcAmount": "---",
