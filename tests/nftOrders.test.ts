@@ -516,7 +516,6 @@ describe('NFT Orders', () => {
     const swapAndNFTPayload = await paraSwap.buildNFTOrderTx(
       {
         srcDecimals: 18,
-        destDecimals: 18,
         userAddress: senderAddress,
         partner: referrer,
         orders: [orderWithSignature],
