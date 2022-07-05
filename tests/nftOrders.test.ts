@@ -620,30 +620,28 @@ describe('NFT Orders', () => {
     const NFT_Token = erc20Token1.attach(NFT);
     const BAT_Token = erc20Token1.attach(BAT);
 
-    const makerToken1InitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       maker.address
     );
-    const takerToken1InitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       taker.address
     );
-    const makerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      taker.address
-    );
+    const makerTokenERC20InitBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(maker.address);
+    const takerTokenERC20InitBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(taker.address);
 
     console.log('balances', {
-      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
+      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
+      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
+      makerTokenERC20InitBalance: new BigNumber(
+        makerTokenERC20InitBalance.toString()
+      )
         .div(1e18)
         .toString(10),
-      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
+      takerTokenERC20InitBalance: new BigNumber(
+        takerTokenERC20InitBalance.toString()
+      )
         .div(1e18)
         .toString(10),
     });
@@ -736,59 +734,55 @@ describe('NFT Orders', () => {
 
     await awaitTx(takerFillsOrderTx);
 
-    const makerToken1AfterBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken1AfterBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      taker.address
-    );
-    const makerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      taker.address
-    );
+    const makerTokenNFTAfterBalance: BigNumberEthers =
+      await NFT_Token.balanceOf(maker.address);
+    const takerTokenNFTAfterBalance: BigNumberEthers =
+      await NFT_Token.balanceOf(taker.address);
+    const makerTokenERC20AfterBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(maker.address);
+    const takerTokenERC20AfterBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(taker.address);
 
     console.log('balances after', {
-      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
+      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
+      makerTokenERC20AfterBalance: new BigNumber(
+        makerTokenERC20AfterBalance.toString()
+      )
         .div(1e18)
         .toString(10),
-      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+      takerTokenERC20AfterBalance: new BigNumber(
+        takerTokenERC20AfterBalance.toString()
+      )
         .div(1e18)
         .toString(10),
     });
 
     expect(
-      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+      new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(makerToken1InitBalance.toString())
+      new BigNumber(makerTokenNFTInitBalance.toString())
         .minus(makerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+      new BigNumber(takerTokenNFTAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(takerToken1InitBalance.toString())
+      new BigNumber(takerTokenNFTInitBalance.toString())
         .plus(makerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+      new BigNumber(makerTokenERC20AfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(makerToken2InitBalance.toString())
+      new BigNumber(makerTokenERC20InitBalance.toString())
         .plus(takerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+      new BigNumber(takerTokenERC20AfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(takerToken2InitBalance.toString())
+      new BigNumber(takerTokenERC20InitBalance.toString())
         .minus(takerAmount)
         .toString(10)
     );
@@ -876,30 +870,29 @@ describe('NFT Orders', () => {
     const BAT_Token = erc20Token1.attach(BAT);
     const DAI_Token = erc20Token1.attach(DAI);
 
-    const makerToken1InitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       maker.address
     );
-    const takerToken1InitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       taker.address
     );
-    const makerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
+    const makerERC20TokenInitBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(maker.address);
+    const taker3rdTokenInitBalance: BigNumberEthers = await DAI_Token.balanceOf(
       taker.address
     );
 
     console.log('balances', {
-      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
+      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
+      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
+      makerERC20TokenInitBalance: new BigNumber(
+        makerERC20TokenInitBalance.toString()
+      )
         .div(1e18)
         .toString(10),
-      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
+      taker3rdTokenInitBalance: new BigNumber(
+        taker3rdTokenInitBalance.toString()
+      )
         .div(1e18)
         .toString(10),
     });
@@ -975,30 +968,26 @@ describe('NFT Orders', () => {
 
     await awaitTx(takerFillsOrderTx);
 
-    const makerToken1AfterBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken1AfterBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      taker.address
-    );
-    const makerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      maker.address
-    );
-    const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
-      taker.address
-    );
+    const makerTokenNFTAfterBalance: BigNumberEthers =
+      await NFT_Token.balanceOf(maker.address);
+    const takerTokenNFTAfterBalance: BigNumberEthers =
+      await NFT_Token.balanceOf(taker.address);
+    const makerERC20TokenAfterBalance: BigNumberEthers =
+      await BAT_Token.balanceOf(maker.address);
+    const taker3rdTokenAfterBalance: BigNumberEthers =
+      await DAI_Token.balanceOf(taker.address);
 
     console.log('balances after', {
-      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
+      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
+      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
+      makerERC20TokenAfterBalance: new BigNumber(
+        makerERC20TokenAfterBalance.toString()
+      )
         .div(1e18)
         .toString(10),
-      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
+      taker3rdTokenAfterBalance: new BigNumber(
+        taker3rdTokenAfterBalance.toString()
+      )
         .div(1e18)
         .toString(10),
     });
