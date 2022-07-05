@@ -788,7 +788,7 @@ describe('NFT Orders', () => {
     );
   });
 
-  test.only(`fill NFTOrder+Swap through Augustus`, async () => {
+  test(`fill NFTOrder+Swap through Augustus`, async () => {
     const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
     const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
     const NFT_ID = '9983';
