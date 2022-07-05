@@ -794,15 +794,16 @@ describe('NFT Orders', () => {
     );
   });
 
-  test(`fill NFTOrder+Swap through Augustus`, async () => {
+  test.only(`fill NFTOrder+Swap through Augustus`, async () => {
     const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
+    const NFT_ID = '9983';
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
     // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset) Order
 
     // 1 NFT
-    const makerAmount = (1).toString(10);
+    const makerAmount = '1';
     // for 6 BAT
     const takerAmount = (6e18).toString(10);
 
@@ -820,9 +821,9 @@ describe('NFT Orders', () => {
       takerAsset: BAT,
       takerAmount,
       taker: taker.address,
-      makerAssetType: AssetType.ERC1155,
+      makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '9982',
+      makerAssetId: NFT_ID,
     };
 
     console.log('maker', maker.address, 'taker', taker.address);
@@ -1003,32 +1004,31 @@ describe('NFT Orders', () => {
     });
 
     expect(
-      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+      new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(makerToken1InitBalance.toString())
+      new BigNumber(makerTokenNFTInitBalance.toString())
         .minus(makerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+      new BigNumber(takerTokenNFTAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(takerToken1InitBalance.toString())
+      new BigNumber(takerTokenNFTInitBalance.toString())
         .plus(makerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+      new BigNumber(makerERC20TokenAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(makerToken2InitBalance.toString())
+      new BigNumber(makerERC20TokenInitBalance.toString())
         .plus(takerAmount)
         .toString(10)
     );
     expect(
-      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+      new BigNumber(taker3rdTokenAfterBalance.toString()).toString(10)
     ).toEqual(
-      new BigNumber(takerToken2InitBalance.toString()) // initial balance
-        .plus(priceRoute.destAmount) // + swapped destAmount
-        .minus(takerAmount) // - given to fill the order
+      new BigNumber(taker3rdTokenInitBalance.toString()) // initial balance
+        .minus(priceRoute.srcAmount) // + swapped destAmount
         .toString(10)
     );
   });
