@@ -479,7 +479,7 @@ describe('NFT Orders', () => {
   });
 
   test('Build_NFT_Tx', async () => {
-    const NFT = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
     // swap NFT -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
@@ -1024,7 +1024,7 @@ describe('NFT Orders', () => {
 
   test('Build_Swap+NFT_Tx', async () => {
     const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
+    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
     const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
 
     // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
