@@ -1,6 +1,5 @@
-import { assert } from 'ts-essentials';
+import { runOnceAndCache } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
-import { chainId2verifyingContract } from '../limitOrders/helpers/misc';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
@@ -28,24 +27,16 @@ export const constructBuildNFTOrder = (
   options: ConstructFetchInput
 ): BuildNFTOrderFunctions => {
   const { chainId } = options;
-  const verifyingContract = chainId2verifyingContract[chainId];
 
-  const { getAugustusSwapper: _getAugustusAddress } =
-    constructGetSpender(options);
+  const { getContracts: _getContracts } = constructGetSpender(options);
+
   // cached for the same instance of `buildNFTOrder = constructBuildNFTOrder()`
   // so should persist across same apiUrl & network
-  let _spender: string | undefined;
-
-  const getAugustusAddress: typeof _getAugustusAddress = async (signal) =>
-    _spender || (_spender = await _getAugustusAddress(signal));
+  const getContracts = runOnceAndCache(_getContracts);
 
   const buildNFTOrder: BuildNFTOrder = async (buildNFTOrderParams, signal) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for NFT Orders not available on chain ${chainId}`
-    );
-
-    const AugustusAddress = await getAugustusAddress(signal);
+    const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
+      await getContracts(signal);
 
     return buildOrderData({
       ...buildNFTOrderParams,

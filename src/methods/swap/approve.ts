@@ -6,6 +6,7 @@ import type {
   PriceString,
 } from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
+import { runOnceAndCache } from '../../helpers/misc';
 
 type ApproveTokenBulk<T> = (
   amount: PriceString,
@@ -27,10 +28,7 @@ export const constructApproveToken = <T>(
   const { getSpender: _getSpender } = constructGetSpender(options);
   // cached for the same instance of `approveToken = constructApproveToken()`
   // so should persist across same apiUrl & network
-  let _spender: string | undefined;
-
-  const getSpender: typeof _getSpender = async (signal) =>
-    _spender || (_spender = await _getSpender(signal));
+  const getSpender = runOnceAndCache(_getSpender);
 
   const approveToken: ApproveToken<T> = approveTokenMethodFactory<T>(
     options.contractCaller,
