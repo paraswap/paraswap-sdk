@@ -1,13 +1,13 @@
 // @TODO add fulfillLimitOrder
-import { assert } from 'ts-essentials';
-import type { ExtractAbiMethodNames } from '../../helpers/misc';
+import { ExtractAbiMethodNames, runOnceAndCache } from '../../helpers/misc';
 import type {
   Address,
   ConstructProviderFetchInput,
   TxSendOverrides,
 } from '../../types';
+import { constructGetSpender } from '../swap/spender';
 import type { OrderData } from './buildOrder';
-import { chainId2verifyingContract, sanitizeOrderData } from './helpers/misc';
+import { sanitizeOrderData } from './helpers/misc';
 
 export interface FillOrderInput {
   orderData: OrderData;
@@ -16,7 +16,8 @@ export interface FillOrderInput {
 
 type FillOrder<T> = (
   params: FillOrderInput,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 export interface OrderInfoForBatchFill {
@@ -38,7 +39,8 @@ export interface FillOrdersInput {
 
 type BatchFillOrders<T> = (
   params: FillOrdersInput,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 export interface PartialFillOrderInput extends FillOrderInput {
@@ -47,7 +49,8 @@ export interface PartialFillOrderInput extends FillOrderInput {
 
 type PartialFillOrder<T> = (
   params: PartialFillOrderInput,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 export interface PartialFillOrderWithTargetPermitInput
@@ -62,7 +65,8 @@ export interface PartialFillOrderWithTargetPermitInput
 
 type PartialFillOrderWithTargetPermit<T> = (
   params: PartialFillOrderWithTargetPermitInput,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 export type FillLimitOrderFunctions<T> = {
@@ -394,18 +398,20 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 export const constructFillLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): FillLimitOrderFunctions<T> => {
-  const verifyingContract = chainId2verifyingContract[options.chainId];
+  const { getAugustusRFQ: _getAugustusRFQ } = constructGetSpender(options);
+
+  // cached for the same instance of `fillDirectLimitOrder = constructFillLimitOrder()`
+  // so should persist across same apiUrl & network
+  const getAugustusRFQ = runOnceAndCache(_getAugustusRFQ);
 
   // @TODO add fillOrderWithTarget variants and bulk* variants
 
   const fillDirectLimitOrder: FillOrder<T> = async (
     { orderData, signature },
-    overrides = {}
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       address: verifyingContract,
@@ -421,12 +427,10 @@ export const constructFillLimitOrder = <T>(
 
   const batchFillDirectLimitOrderWithTarget: BatchFillOrders<T> = async (
     { orderInfos, target },
-    overrides = {}
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const sanitizedOrderInfos = orderInfos.map<Required<OrderInfoForBatchFill>>(
       ({
@@ -460,12 +464,10 @@ export const constructFillLimitOrder = <T>(
 
   const partialFillDirectLimitOrder: PartialFillOrder<T> = async (
     { orderData, signature, fillAmount },
-    overrides = {}
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       address: verifyingContract,
@@ -490,12 +492,10 @@ export const constructFillLimitOrder = <T>(
       permitTakerAsset = '0x',
       permitMakerAsset = '0x',
     },
-    overrides = {}
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       address: verifyingContract,

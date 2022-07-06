@@ -1,8 +1,8 @@
 import type { ConstructProviderFetchInput } from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
-import { chainId2verifyingContract } from './helpers/misc';
-import { assert } from 'ts-essentials';
 import { constructApproveToken } from '../swap/approve';
+import { constructGetSpender } from '../swap/spender';
+import { runOnceAndCache } from '../../helpers/misc';
 
 export type ApproveTokenForLimitOrderFunctions<T> = {
   /** @description approving AugustusRFQ as spender for makerAsset */
@@ -16,19 +16,14 @@ export type ApproveTokenForLimitOrderFunctions<T> = {
 export const constructApproveTokenForLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenForLimitOrderFunctions<T> => {
-  const verifyingContract = chainId2verifyingContract[options.chainId];
+  const { getAugustusRFQ: _getAugustusRFQ } = constructGetSpender(options);
 
-  const getSpender = (): string => {
-    assert(
-      verifyingContract,
-      `AugustusRFQ contract for Limit Orders not available on chain ${options.chainId}`
-    );
-
-    return verifyingContract;
-  };
+  // cached for the same instance of `approveMakerTokenForLimitOrder = constructApproveTokenForLimitOrder()`
+  // so should persist across same apiUrl & network
+  const getAugustusRFQ = runOnceAndCache(_getAugustusRFQ);
 
   const approveMakerTokenForLimitOrder: ApproveToken<T> =
-    approveTokenMethodFactory<T>(options.contractCaller, getSpender);
+    approveTokenMethodFactory<T>(options.contractCaller, getAugustusRFQ);
 
   // approving TokenTransaferProxy as for the swap
   const { approveToken: approveTakerTokenForLimitOrder } =

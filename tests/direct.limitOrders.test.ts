@@ -23,7 +23,6 @@ import {
   constructFillLimitOrder,
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
-  chainId2verifyingContract,
   constructGetLimitOrdersContract,
   GetLimitOrdersContractFunctions,
   SignableOrderData,
@@ -349,16 +348,12 @@ describe('Direct Limit Orders', () => {
     );
 
     AugustusRFQ = await AugustusRFQFactory.attach(
-      paraSwap.getLimitOrdersContract()
+      await paraSwap.getLimitOrdersContract()
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
 
     console.log('AugustusRFQ', AugustusRFQ.address);
-
-    // @TODO reconsider after real contracts are deployed
-    // override for tests only
-    chainId2verifyingContract[chainId] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -368,10 +363,11 @@ describe('Direct Limit Orders', () => {
   // });
 
   test('getLimitOrdersContract', async () => {
-    const augustusRFQAddress = paraSwap.getLimitOrdersContract();
+    const augustusRFQAddress = await paraSwap.getLimitOrdersContract();
 
-    // @TODO replace with snapshot test once contracts are deployed
-    expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
+    expect(augustusRFQAddress).toMatchInlineSnapshot(
+      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+    );
   });
 
   test('buildDirectLimitOrder', async () => {

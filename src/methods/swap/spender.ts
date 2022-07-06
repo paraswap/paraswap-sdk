@@ -7,12 +7,14 @@ type GetContracts = (signal?: AbortSignal) => Promise<AdaptersContractsResult>;
 export type GetSpenderFunctions = {
   getSpender: GetSpender;
   getAugustusSwapper: GetSpender;
+  getAugustusRFQ: GetSpender;
   getContracts: GetContracts;
 };
 
 interface AdaptersContractsResult {
   AugustusSwapper: string;
   TokenTransferProxy: string;
+  AugustusRFQ: string;
 }
 
 export const constructGetSpender = ({
@@ -42,5 +44,10 @@ export const constructGetSpender = ({
     return AugustusSwapper;
   };
 
-  return { getContracts, getSpender, getAugustusSwapper };
+  const getAugustusRFQ: GetSpender = async (signal) => {
+    const { AugustusRFQ } = await getContracts(signal);
+    return AugustusRFQ;
+  };
+
+  return { getContracts, getSpender, getAugustusSwapper, getAugustusRFQ };
 };

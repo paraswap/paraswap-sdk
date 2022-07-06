@@ -196,3 +196,14 @@ export const isFilledArray = <T>(array: T[]): array is [T, ...T[]] => {
 export function getRandomInt(): number {
   return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 }
+
+export function runOnceAndCache<T, Args extends any[]>(
+  // can pass `(...any[]) => any but null | undefined`
+  func: (...args: Args) => NonNullable<T>
+): (...args: Args) => NonNullable<T> {
+  let result: NonNullable<T>;
+
+  return (...args) => {
+    return result ?? (result = func(...args));
+  };
+}

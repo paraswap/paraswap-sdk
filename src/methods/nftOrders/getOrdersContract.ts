@@ -1,11 +1,8 @@
 import type { ConstructFetchInput } from '../../types';
-import { constructGetLimitOrdersContract } from '../limitOrders/getOrdersContract';
-import type { GetSpender } from '../swap/spender';
-
-type GetNFTOrdersContract = (/* signal?: AbortSignal */) => string;
+import { constructGetSpender, GetSpender } from '../swap/spender';
 
 export type GetNFTOrdersContractFunctions = {
-  getNFTOrdersContract: GetNFTOrdersContract;
+  getNFTOrdersContract: GetSpender;
   getTokenTransferProxy: GetSpender;
 };
 
@@ -13,11 +10,15 @@ export type GetNFTOrdersContractFunctions = {
 export const constructGetNFTOrdersContract = (
   options: ConstructFetchInput
 ): GetNFTOrdersContractFunctions => {
-  const { getLimitOrdersContract, getTokenTransferProxy } =
-    constructGetLimitOrdersContract(options);
+  // analogous to getSpender() but for Limit Orders Contract = AugustusRFQ
+
+  const {
+    getSpender: getTokenTransferProxy,
+    getAugustusRFQ: getNFTOrdersContract,
+  } = constructGetSpender(options);
 
   return {
-    getNFTOrdersContract: getLimitOrdersContract,
+    getNFTOrdersContract,
     getTokenTransferProxy,
   };
 };

@@ -22,7 +22,6 @@ import {
   constructAxiosFetcher,
   ApproveTokenForNFTOrderFunctions,
   constructApproveTokenForNFTOrder,
-  chainId2verifyingContract,
   constructGetNFTOrdersContract,
   GetNFTOrdersContractFunctions,
   constructPostNFTOrder,
@@ -358,16 +357,12 @@ describe('NFT Orders', () => {
     );
 
     AugustusRFQ = await AugustusRFQFactory.attach(
-      paraSwap.getNFTOrdersContract()
+      await paraSwap.getNFTOrdersContract()
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
 
     console.log('AugustusRFQ', AugustusRFQ.address);
-
-    // @TODO reconsider after real contracts are deployed
-    // override for tests only
-    chainId2verifyingContract[chainId] = AugustusRFQ.address; // 0x0c33fC429fDCb7b0A813bEb595D36c5Fadb3CEDC
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -377,10 +372,11 @@ describe('NFT Orders', () => {
   // });
 
   test('getNFTOrdersContract', async () => {
-    const augustusRFQAddress = paraSwap.getNFTOrdersContract();
+    const augustusRFQAddress = await paraSwap.getNFTOrdersContract();
 
-    // @TODO replace with snapshot test once contracts are deployed
-    expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
+    expect(augustusRFQAddress).toMatchInlineSnapshot(
+      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+    );
   });
 
   test('get NFT order by hash', async () => {
