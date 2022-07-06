@@ -269,6 +269,3 @@ export * from './methods/limitOrders/helpers/types';
 export * from './methods/nftOrders';
 export * from './methods/nftOrders/helpers/types';
 export { AssetType } from './methods/nftOrders/helpers/misc';
-
-/** @hidden */
-export { chainId2verifyingContract } from './methods/limitOrders/helpers/misc';
