@@ -374,8 +374,9 @@ describe('NFT Orders', () => {
   test('getNFTOrdersContract', async () => {
     const augustusRFQAddress = await paraSwap.getNFTOrdersContract();
 
-    // @TODO replace with snapshot test once contracts are deployed
-    expect(augustusRFQAddress).toEqual(AugustusRFQ.address);
+    expect(augustusRFQAddress).toMatchInlineSnapshot(
+      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+    );
   });
 
   test('get NFT order by hash', async () => {
