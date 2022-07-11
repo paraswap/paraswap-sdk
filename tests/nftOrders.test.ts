@@ -1274,9 +1274,8 @@ describe('NFT Orders', () => {
     }
   );
 
-  // @TODO switch to getNFTOrders
-  test.skip('getRawNFTOrders', async () => {
-    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+  test.skip('getNFTOrders', async () => {
+    const account = '0x112f39ea2ccff2d088086590d11cd9f092954f77';
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 

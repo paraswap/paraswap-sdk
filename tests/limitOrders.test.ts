@@ -20,7 +20,6 @@ import {
   SDKConfig,
   ConstructProviderFetchInput,
   constructAxiosFetcher,
-  constructFillLimitOrder,
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
   constructGetLimitOrdersContract,
@@ -33,7 +32,6 @@ import {
   constructGetLimitOrders,
   Web3UnpromiEvent,
   constructWeb3ContractCaller,
-  FillLimitOrderFunctions,
   GetSpenderFunctions,
   constructGetSpender,
   BuildLimitOrdersTxFunctions,
@@ -178,14 +176,12 @@ describe('Limit Orders', () => {
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
   type MinTakerEthersSDK = BuildLimitOrdersTxFunctions &
-    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction> &
-    FillLimitOrderFunctions<ethers.ContractTransaction>;
+    ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
   type MinWeb3SDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     CancelLimitOrderFunctions<Web3UnpromiEvent> &
     ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
-  type MinTakerWeb3SDK = ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent> &
-    FillLimitOrderFunctions<Web3UnpromiEvent>;
+  type MinTakerWeb3SDK = ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
 
   type EthersCancelOrderConstructor = (
     options: ConstructProviderFetchInput<
@@ -199,12 +195,6 @@ describe('Limit Orders', () => {
       'transactCall'
     >
   ) => ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
-  type EthersFillLimitOrderConstructor = (
-    options: ConstructProviderFetchInput<
-      ethers.ContractTransaction,
-      'transactCall'
-    >
-  ) => FillLimitOrderFunctions<ethers.ContractTransaction>;
 
   type Web3CancelOrderConstructor = (
     options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
@@ -212,9 +202,6 @@ describe('Limit Orders', () => {
   type Web3ApproveTokenForLimitOrderConstructor = (
     options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
   ) => ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
-  type Web3FillLimitOrderConstructor = (
-    options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
-  ) => FillLimitOrderFunctions<Web3UnpromiEvent>;
 
   const ethersSDK: MinEthersSDK = constructPartialSDK<
     SDKConfig<ethers.ContractTransaction>,
@@ -241,7 +228,6 @@ describe('Limit Orders', () => {
     SDKConfig<ethers.ContractTransaction>,
     [
       EthersApproveTokenForLimitOrderConstructor,
-      EthersFillLimitOrderConstructor,
       typeof constructBuildLimitOrderTx
     ]
   >(
@@ -252,7 +238,6 @@ describe('Limit Orders', () => {
       apiURL: process.env.API_URL,
     },
     constructApproveTokenForLimitOrder,
-    constructFillLimitOrder,
     constructBuildLimitOrderTx
   );
 
@@ -279,7 +264,7 @@ describe('Limit Orders', () => {
 
   const takerWeb3SDK: MinTakerWeb3SDK = constructPartialSDK<
     SDKConfig<Web3UnpromiEvent>,
-    [Web3ApproveTokenForLimitOrderConstructor, Web3FillLimitOrderConstructor]
+    [Web3ApproveTokenForLimitOrderConstructor]
   >(
     {
       chainId,
@@ -288,8 +273,7 @@ describe('Limit Orders', () => {
       apiURL: process.env.API_URL,
     },
 
-    constructApproveTokenForLimitOrder,
-    constructFillLimitOrder
+    constructApproveTokenForLimitOrder
   );
 
   const txSDKs = [
