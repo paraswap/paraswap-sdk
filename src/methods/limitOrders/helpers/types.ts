@@ -53,9 +53,8 @@ export type LimitOrderFromApi = {
   signature: string; // supplied by FE
   permitMakerAsset: null | string; // address
   orderHash: string; // hex string
-  // not returned for now
-  // updatedAt: number; // timestamp
   createdAt: number; // timestamp
+  updatedAt: number; // timestamp
   state: LimitOrderState;
   /** @description transaction with the last event pertaining to the order: OrderFilled or OrderCancelled */
   transactionHash: null | string;
