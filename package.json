@@ -16,8 +16,8 @@
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test",
-    "docs:html": "typedoc src/index.ts --plugin typedoc-plugin-missing-exports --gitRevision \"$(git branch --show-current)\" --out docs/html",
-    "docs:md": "yarn docs:html --out docs/html --plugin typedoc-plugin-markdown --out docs/md",
+    "docs:html": "typedoc --gitRevision \"$(git branch --show-current)\"",
+    "docs:md": "MD=true yarn docs:html",
     "docs": "yarn docs:html && yarn docs:md"
   },
   "husky": {
