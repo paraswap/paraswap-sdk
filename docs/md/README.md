@@ -260,7 +260,7 @@ const paraswap = new ParaSwap({chainId: 1, fetch: window.fetch});
 
 Refer to [this README for depecreated documentation](https://github.com/paraswap/paraswap-sdk/blob/c4c70c674fb2be4ec528064649d992d4b38c654b/README.md) for functions usage.
 
-Refer to [SDK API documentation](docs/md/README.md) for detailed documentation on the methods provided in this SDK.
+Refer to [SDK API documentation](modules.md) for detailed documentation on the methods provided in this SDK.
 
 ## Tests
 
