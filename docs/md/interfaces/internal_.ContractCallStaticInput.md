@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[src/types.ts:68](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/types.ts#L68)
+[src/types.ts:68](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L68)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:67](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/types.ts#L67)
+[src/types.ts:67](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L67)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:70](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/types.ts#L70)
+[src/types.ts:70](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L70)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:69](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/types.ts#L69)
+[src/types.ts:69](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L69)
 
 ___
 
@@ -90,4 +90,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:75](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/types.ts#L75)
+[src/types.ts:75](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L75)

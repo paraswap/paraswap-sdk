@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:34](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L34)
+[src/methods/limitOrders/helpers/buildOrderData.ts:34](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L34)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L22)
+[src/methods/limitOrders/helpers/buildOrderData.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L22)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L25)
+[src/methods/limitOrders/helpers/buildOrderData.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L25)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:30](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L30)
+[src/methods/limitOrders/helpers/buildOrderData.ts:30](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L30)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:28](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L28)
+[src/methods/limitOrders/helpers/buildOrderData.ts:28](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L28)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:26](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L26)
+[src/methods/limitOrders/helpers/buildOrderData.ts:26](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L26)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L24)
+[src/methods/limitOrders/helpers/buildOrderData.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L24)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:33](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L33)
+[src/methods/limitOrders/helpers/buildOrderData.ts:33](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L33)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:29](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L29)
+[src/methods/limitOrders/helpers/buildOrderData.ts:29](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L29)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L27)
+[src/methods/limitOrders/helpers/buildOrderData.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L27)
 
 ___
 
@@ -126,4 +126,4 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/limitOrders/helpers/buildOrderData.ts#L23)
+[src/methods/limitOrders/helpers/buildOrderData.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/limitOrders/helpers/buildOrderData.ts#L23)

@@ -39,7 +39,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:55](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L55)
+[src/methods/swap/transaction.ts:55](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L55)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:44](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L44)
+[src/methods/swap/transaction.ts:44](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L44)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:53](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L53)
+[src/methods/swap/transaction.ts:53](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L53)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:42](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L42)
+[src/methods/swap/transaction.ts:42](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L42)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L48)
+[src/methods/swap/transaction.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L48)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:49](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L49)
+[src/methods/swap/transaction.ts:49](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L49)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L50)
+[src/methods/swap/transaction.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L50)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L54)
+[src/methods/swap/transaction.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L54)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:60](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L60)
+[src/methods/swap/transaction.ts:60](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L60)
 
 ___
 
@@ -161,7 +161,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L51)
+[src/methods/swap/transaction.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L51)
 
 ___
 
@@ -175,7 +175,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L43)
+[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L43)
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:52](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L52)
+[src/methods/swap/transaction.ts:52](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L52)
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L41)
+[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L41)
 
 ___
 
@@ -217,4 +217,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/typedocs/src/methods/swap/transaction.ts#L47)
+[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L47)
