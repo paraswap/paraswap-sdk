@@ -7933,6 +7933,11 @@ typedoc-plugin-missing-exports@^0.23.0:
   resolved "https://registry.yarnpkg.com/typedoc-plugin-missing-exports/-/typedoc-plugin-missing-exports-0.23.0.tgz#076df6ffce4d84e8097be009b7c62a17d58477a5"
   integrity sha512-9smahDSsFRno9ZwoEshQDuIYMHWGB1E6LUud5qMxR2wNZ0T4DlZz0QjoK3HzXtX34mUpTH0dYtt7NQUK4D6B6Q==
 
+typedoc-plugin-replace-text@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-replace-text/-/typedoc-plugin-replace-text-2.0.0.tgz#771aa410ff165595d0e07e4d2faac3c0e654d5a6"
+  integrity sha512-cqiMofDptQyNxPyhoMcihqgUbfvyHLd+mh5dx5Hk9aRL/axxV0KbUuHepB7mvJFqHQHBCl4WkKaeUtJ7/HHbWQ==
+
 typedoc@^0.23.5:
   version "0.23.5"
   resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.5.tgz#a28a3eeca739b6ae9ca6081f429bfe52dc28423b"
