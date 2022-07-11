@@ -16,7 +16,7 @@
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts --gitRevision \"$(git branch --show-current)\""
   },
   "husky": {
     "hooks": {
