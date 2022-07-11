@@ -44,14 +44,6 @@ import {
   constructPostLimitOrder,
 } from './methods/limitOrders/postOrder';
 import {
-  FillLimitOrderFunctions,
-  FillOrderInput,
-  FillOrdersInput,
-  PartialFillOrderInput,
-  OrderInfoForBatchFill,
-  constructFillLimitOrder,
-} from './methods/limitOrders/fillOrders';
-import {
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
 } from './methods/limitOrders/approveForOrder';
@@ -177,7 +169,6 @@ export {
   constructCancelLimitOrder,
   constructGetLimitOrders,
   constructPostLimitOrder,
-  constructFillLimitOrder,
   constructApproveTokenForLimitOrder,
   constructGetLimitOrdersContract,
   constructBuildLimitOrderTx,
@@ -220,14 +211,9 @@ export type {
   BuildLimitOrderInput,
   BuildOrderDataInput,
   PostLimitOrderFunctions,
-  FillLimitOrderFunctions,
-  FillOrderInput,
-  FillOrdersInput,
-  PartialFillOrderInput,
   ApproveTokenForLimitOrderFunctions,
   GetLimitOrdersFunctions,
   LimitOrdersUserParams,
-  OrderInfoForBatchFill,
   // types for nftOrders methods:
   SignNFTOrderFunctions,
   CancelNFTOrderFunctions,
