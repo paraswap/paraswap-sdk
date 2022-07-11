@@ -16,7 +16,9 @@
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test",
-    "docs": "typedoc src/index.ts --gitRevision \"$(git branch --show-current)\""
+    "docs:html": "typedoc src/index.ts --plugin typedoc-plugin-missing-exports --gitRevision \"$(git branch --show-current)\" --out docs/html",
+    "docs:md": "yarn docs:html --out docs/html --plugin typedoc-plugin-markdown --out docs/md",
+    "docs": "yarn docs:html && yarn docs:md"
   },
   "husky": {
     "hooks": {
@@ -58,6 +60,7 @@
     "size-limit": "^7.0.8",
     "tslib": "^2.4.0",
     "typedoc": "^0.23.5",
+    "typedoc-plugin-markdown": "^3.13.3",
     "typedoc-plugin-missing-exports": "^0.23.0",
     "typescript": "^4.6.4",
     "web3": "^1.7.3"
