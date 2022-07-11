@@ -7938,10 +7938,10 @@ typedoc-plugin-replace-text@^2.0.0:
   resolved "https://registry.yarnpkg.com/typedoc-plugin-replace-text/-/typedoc-plugin-replace-text-2.0.0.tgz#771aa410ff165595d0e07e4d2faac3c0e654d5a6"
   integrity sha512-cqiMofDptQyNxPyhoMcihqgUbfvyHLd+mh5dx5Hk9aRL/axxV0KbUuHepB7mvJFqHQHBCl4WkKaeUtJ7/HHbWQ==
 
-typedoc@^0.23.5:
-  version "0.23.5"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.5.tgz#a28a3eeca739b6ae9ca6081f429bfe52dc28423b"
-  integrity sha512-5ydWUOe4E9Z3a/r33cC5X5CJPLnFDKIondHYtdnEnO0sa/s8f+Nrfe+LBGOk/UTkV2IPYyL1Gm1PtUKIihklyw==
+typedoc@^0.23.7:
+  version "0.23.7"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.7.tgz#e47a48801d6b9d0d6f787424fa63ed600c670387"
+  integrity sha512-Vl/Yh4KYBaxQQOYImBgLQDX61hfaA7XaP/DZVd/w7rQvaqLEsdQH6gEMK8CMjyHo0bSzVnNYwxtD1KPSENoWug==
   dependencies:
     lunr "^2.3.9"
     marked "^4.0.16"
