@@ -1,5 +1,3 @@
-import { runOnceAndCache } from '../../helpers/misc';
-// import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
@@ -29,10 +27,9 @@ export const constructBuildLimitOrder = (
 ): BuildLimitOrderFunctions => {
   const { chainId } = options;
 
-  const { getContracts: _getContracts } = constructGetSpender(options);
-  // cached for the same instance of `buildLimitOrder = constructBuildLimitOrder()`
+  // getContracts is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getContracts = runOnceAndCache(_getContracts);
+  const { getContracts } = constructGetSpender(options);
 
   const buildLimitOrder: BuildLimitOrder = async (
     buildLimitOrderParams,
