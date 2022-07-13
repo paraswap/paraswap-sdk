@@ -1,6 +1,6 @@
 {
   "name": "paraswap",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
