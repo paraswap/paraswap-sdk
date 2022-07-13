@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import * as qs from 'qs';
 import * as _ from 'lodash';
 import Web3 from 'web3';
@@ -14,14 +14,10 @@ import {
   PriceString,
   RateOptions,
   Transaction,
-  // OptimalRatesWithPartnerFees,
 } from './types';
 
 import { OptimalRate } from 'paraswap-core';
-
 import ERC20_ABI = require('./abi/erc20.json');
-
-import AUGUSTUS_ABI = require('./abi/augustus-v4.json');
 
 import { Token } from './lib/token';
 import { SwapSide } from './constants';

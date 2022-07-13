@@ -1,7 +1,4 @@
-import BigNumber from 'bignumber.js';
-import { Merge } from 'ts-essentials';
-import { Token } from './lib/token';
-import { SwapSide, ContractMethod, PricingMethod } from './constants';
+import { ContractMethod, PricingMethod } from './constants';
 
 type Symbol = string;
 type Address = string;
