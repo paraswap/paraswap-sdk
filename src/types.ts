@@ -1,7 +1,4 @@
-import BigNumber from 'bignumber.js';
-import { Merge } from 'ts-essentials';
-import { Token } from './lib/token';
-import { SwapSide, ContractMethod, PricingMethod } from './constants';
+import { ContractMethod, PricingMethod } from './constants';
 
 type Symbol = string;
 type Address = string;
@@ -9,7 +6,7 @@ type AddressOrSymbol = Address | Symbol;
 type PriceString = string;
 type NumberAsString = string;
 
-type NetworkID = 1 | 3 | 42 | 4 | 56 | 137 | 43114;
+type NetworkID = 1 | 3 | 56 | 137 | 250 | 42161 | 43114;
 
 const ETHER_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
