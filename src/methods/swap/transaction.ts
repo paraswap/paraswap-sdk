@@ -79,13 +79,31 @@ export interface BuildNFTOrderTxInput
 }
 
 // for Swap + LimitOrder
-export interface BuildSwapAndLimitOrderTxInput
+interface BuildSwapAndLimitOrderTxInputBase
   // destAmount is sum(orders[].makerAmount)
-  extends Omit<BuildTxInputBase, 'destAmount'> {
+  extends Omit<BuildTxInputBase, 'destAmount' | 'srcAmount'> {
   priceRoute: OptimalRate;
   orders: SwappableOrder[];
   destDecimals: number;
 }
+
+export interface BuildSwapAndLimitOrderTxInput
+  extends BuildSwapAndLimitOrderTxInputBase {
+  slippage?: number;
+  srcAmount?: PriceString;
+}
+/**/
+// todo: make something like the below work instead of the above
+// with slippage for a swap and fill - p2p - order, without to fill a p2p order directly with the intended taker asset
+/*
+export type BuildSwapAndLimitOrderTxInput =
+  | (BuildSwapAndLimitOrderTxInputBase & {
+      slippage: number;
+    })
+  | (BuildSwapAndLimitOrderTxInputBase & {
+      srcAmount: PriceString;
+    });
+    */
 
 // for Swap + NFT Order
 export interface BuildSwapAndNFTOrderTxInput
@@ -150,14 +168,19 @@ export const constructBuildTx = ({
           ? 'Source Amount Mismatch'
           : 'Destination Amount Mismatch';
 
-      assert(
-        areAmountsCorrect({
-          queryParams: { srcAmount, destAmount: params.destAmount },
-          side,
-          priceRoute,
-        }),
-        AmountMistmatchError
-      );
+      // user should have provided srcAmount or slippage but not both. so we validate accordingly.
+      if (srcAmount) {
+        assert(
+          areAmountsCorrect({
+            queryParams: { srcAmount, destAmount: params.destAmount },
+            side,
+            priceRoute,
+          }),
+          AmountMistmatchError
+        );
+      } else {
+        // todo: some kind of validation check for amount against the price route that factoring in slippage?
+      }
     }
 
     // always pass explicit type to make sure UrlSearchParams are correct

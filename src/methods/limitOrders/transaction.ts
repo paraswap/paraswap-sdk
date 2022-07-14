@@ -140,10 +140,13 @@ export const constructBuildLimitOrderTx = ({
       ...params,
       // taker supplies srcToken
       srcToken: params.priceRoute.srcToken,
-      srcAmount: params.priceRoute.srcAmount,
       // which is swapped for makerAsset, that would go towards filling the orders
       destToken: makerAsset,
       destDecimals: params.priceRoute.destDecimals,
+      // one or the other
+      ...(params.slippage
+        ? { slippage: params.slippage }
+        : { srcAmount: params.priceRoute.srcAmount }),
     };
     return buildSwapTx(fillParams, options, signal);
   };
