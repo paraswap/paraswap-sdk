@@ -168,19 +168,15 @@ export const constructBuildTx = ({
           ? 'Source Amount Mismatch'
           : 'Destination Amount Mismatch';
 
-      // user should have provided srcAmount or slippage but not both. so we validate accordingly.
-      if (srcAmount) {
-        assert(
-          areAmountsCorrect({
-            queryParams: { srcAmount, destAmount: params.destAmount },
-            side,
-            priceRoute,
-          }),
-          AmountMistmatchError
-        );
-      } else {
-        // todo: some kind of validation check for amount against the price route that factoring in slippage?
-      }
+      // user provides srcAmount or slippage but not both. so we only validate accordingly.
+      assert(
+        areAmountsCorrect({
+          queryParams: { srcAmount, destAmount: params.destAmount },
+          side,
+          priceRoute,
+        }),
+        AmountMistmatchError
+      );
     }
 
     // always pass explicit type to make sure UrlSearchParams are correct
@@ -230,7 +226,7 @@ export const constructBuildTx = ({
 };
 
 interface AreAmountsCorrectInput {
-  queryParams: { srcAmount: string; destAmount: string };
+  queryParams: { srcAmount?: string; destAmount: string; slippage?: number };
   side: SwapSide;
   priceRoute: OptimalRate;
 }
@@ -240,6 +236,14 @@ function areAmountsCorrect({
   side,
   priceRoute,
 }: AreAmountsCorrectInput): boolean {
+  // return early after a simpler check if the user was swapping before filling
+  if (queryParams.slippage) {
+    return (
+      side === SwapSide.BUY && queryParams.destAmount === priceRoute.destAmount
+    );
+  }
+
+  // provided amounts match the previously queried price route
   const [inputAmount, priceRouteAmount] =
     side === SwapSide.SELL
       ? [queryParams.srcAmount, priceRoute.srcAmount]
