@@ -17,7 +17,7 @@ type MinBuildSwapAndLimitOrderTxInput = Omit<
   // these are derived from `orders`
   BuildSwapAndLimitOrderTxInput,
   'srcToken' | 'srcAmount' | 'destToken' | 'destDecimals'
->;
+> & { slippage?: number };
 
 type BuildSwapAndLimitOrdersTx = (
   params: MinBuildSwapAndLimitOrderTxInput,
