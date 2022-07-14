@@ -87,15 +87,7 @@ interface BuildSwapAndLimitOrderTxInputBase
   destDecimals: number;
 }
 
-export interface BuildSwapAndLimitOrderTxInput
-  extends BuildSwapAndLimitOrderTxInputBase {
-  slippage?: number;
-  srcAmount?: PriceString;
-}
-/**/
-// todo: make something like the below work instead of the above
 // with slippage for a swap and fill - p2p - order, without to fill a p2p order directly with the intended taker asset
-/*
 export type BuildSwapAndLimitOrderTxInput =
   | (BuildSwapAndLimitOrderTxInputBase & {
       slippage: number;
@@ -103,7 +95,6 @@ export type BuildSwapAndLimitOrderTxInput =
   | (BuildSwapAndLimitOrderTxInputBase & {
       srcAmount: PriceString;
     });
-    */
 
 // for Swap + NFT Order
 export interface BuildSwapAndNFTOrderTxInput
@@ -152,8 +143,6 @@ export const constructBuildTx = ({
   const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
-    const { srcAmount } = params;
-
     if (
       'priceRoute' in params &&
       'destAmount' in params && // isn't providers together with `orders`
@@ -162,6 +151,7 @@ export const constructBuildTx = ({
       const {
         priceRoute,
         priceRoute: { side },
+        srcAmount,
       } = params;
       const AmountMistmatchError =
         side === SwapSide.SELL
