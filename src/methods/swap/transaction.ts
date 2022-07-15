@@ -37,11 +37,11 @@ export type SwappableNFTOrder = SwappableOrder & {
   takerAssetType: AssetTypeVariant;
 };
 
-export interface BuildTxInputBase {
+export type BuildTxInputBase = {
   srcToken: Address;
   destToken: Address;
-  srcAmount: PriceString;
-  destAmount: PriceString;
+  srcAmount?: PriceString;
+  destAmount?: PriceString;
   // priceRoute: OptimalRate;
   // orders?: SwappableOrder[];
   userAddress: Address;
@@ -53,12 +53,17 @@ export interface BuildTxInputBase {
   destDecimals?: number;
   permit?: string;
   deadline?: string;
-}
+  slippage?: number;
+} & Partial<
+  | { slippage: number; srcAmount: PriceString }
+  | { slippage: number; destAmount: PriceString }
+  | { srcAmount: PriceString; destAmount: PriceString }
+>;
 
 // for Swap transaction
-export interface BuildSwapTxInput extends BuildTxInputBase {
+export type BuildSwapTxInput = BuildTxInputBase & {
   priceRoute: OptimalRate;
-}
+};
 
 // for LimitOrder Fill, without swap
 export interface BuildLimitOrderTxInput
@@ -79,30 +84,22 @@ export interface BuildNFTOrderTxInput
 }
 
 // for Swap + LimitOrder
-interface BuildSwapAndLimitOrderTxInputBase
+export type BuildSwapAndLimitOrderTxInput =
   // destAmount is sum(orders[].makerAmount)
-  extends Omit<BuildTxInputBase, 'destAmount' | 'srcAmount'> {
-  priceRoute: OptimalRate;
-  orders: SwappableOrder[];
-  destDecimals: number;
-}
+  BuildSwapTxInput & {
+    orders: SwappableOrder[];
+    destDecimals: number;
+  };
 
 // with slippage for a swap and fill - p2p - order, without to fill a p2p order directly with the intended taker asset
-export type BuildSwapAndLimitOrderTxInput =
-  | (BuildSwapAndLimitOrderTxInputBase & {
-      slippage: number;
-    })
-  | (BuildSwapAndLimitOrderTxInputBase & {
-      srcAmount: PriceString;
-    });
 
 // for Swap + NFT Order
-export interface BuildSwapAndNFTOrderTxInput
+export type BuildSwapAndNFTOrderTxInput =
   // destAmount is sum(orders[].makerAmount)
-  extends Omit<BuildTxInputBase, 'destAmount'> {
-  priceRoute: OptimalRate;
-  orders: SwappableNFTOrder[];
-}
+  BuildSwapTxInput & {
+    priceRoute: OptimalRate;
+    orders: SwappableNFTOrder[];
+  };
 
 export type BuildTxInput =
   | BuildSwapTxInput
@@ -145,13 +142,14 @@ export const constructBuildTx = ({
   const buildTx: BuildTx = async (params, options = {}, signal) => {
     if (
       'priceRoute' in params &&
-      'destAmount' in params && // isn't providers together with `orders`
+      ('destAmount' in params || 'srcAmount' in params) && // isn't providers together with `orders`
       !('orders' in params) // when present, destAmount becomes sum(orders[].makerAmount)
     ) {
       const {
         priceRoute,
         priceRoute: { side },
         srcAmount,
+        destAmount,
       } = params;
       const AmountMistmatchError =
         side === SwapSide.SELL
@@ -161,7 +159,10 @@ export const constructBuildTx = ({
       // user provides srcAmount or slippage but not both. so we only validate accordingly.
       assert(
         areAmountsCorrect({
-          queryParams: { srcAmount, destAmount: params.destAmount },
+          queryParams: {
+            srcAmount,
+            destAmount,
+          },
           side,
           priceRoute,
         }),
@@ -216,7 +217,7 @@ export const constructBuildTx = ({
 };
 
 interface AreAmountsCorrectInput {
-  queryParams: { srcAmount?: string; destAmount: string; slippage?: number };
+  queryParams: { srcAmount?: string; destAmount?: string; slippage?: number };
   side: SwapSide;
   priceRoute: OptimalRate;
 }
@@ -229,7 +230,9 @@ function areAmountsCorrect({
   // return early after a simpler check if the user was swapping before filling
   if (queryParams.slippage) {
     return (
-      side === SwapSide.BUY && queryParams.destAmount === priceRoute.destAmount
+      (side === SwapSide.BUY &&
+        queryParams.destAmount === priceRoute.destAmount) ||
+      (side === SwapSide.SELL && queryParams.srcAmount === priceRoute.srcAmount)
     );
   }
 
