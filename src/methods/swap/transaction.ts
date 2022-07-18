@@ -81,12 +81,15 @@ export type BuildSwapTxInput = BuildTxInputBase & {
 
 // building block for LimitOrders and NFT Orders swaps
 // can only use priceRoute.side=BUY and related TxInputAmountsPart*
-type BuildTxInputBaseBUYForOrders = BuildTxInputBase &
+type BuildTxInputBaseBUYForOrders<
+  // to Omit extra keys
+  // can't do Omit<> around union, breaks discriminated union
+  K extends keyof TxInputAmountsPartBuy | keyof BuildTxInputBase = never
+> = Omit<BuildTxInputBase, K> &
   // destAmount is sum(orders[].makerAmount)
-  (| Omit<TxInputAmountsPartBuy, 'destAmount'>
-    | Omit<TxInputAmountsPartBuyOrSell, 'destAmount'>
+  (| Omit<TxInputAmountsPartBuy, 'destAmount' | K>
+    | Omit<TxInputAmountsPartBuyOrSell, 'destAmount' | K>
   );
-// can't do Omit<> around union, breaks discriminated union
 
 // for LimitOrder Fill, without swap
 export type BuildLimitOrderTxInput = BuildTxInputBaseBUYForOrders & {
@@ -99,7 +102,7 @@ export type BuildLimitOrderTxInput = BuildTxInputBaseBUYForOrders & {
 export type BuildNFTOrderTxInput =
   // @TODO if NFT can ever be srcToken, change logic
   //                           for NFT token destDecimals = 0 is acceptable
-  Omit<BuildTxInputBaseBUYForOrders, 'destDecimals'> & {
+  BuildTxInputBaseBUYForOrders<'destDecimals'> & {
     orders: SwappableNFTOrder[];
     srcDecimals: number;
   };
