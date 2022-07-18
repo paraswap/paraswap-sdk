@@ -408,7 +408,7 @@ describe('NFT Orders', () => {
         "orderHash": "0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33",
         "permitMakerAsset": null,
         "signature": "0x1d0ba657f90512b62f1026812b4718ca6f0868919181d069ec7d8258c3ab5e3c449b462de619114faea0569002e850c879b09a6964d9863c192023c9b297ca051c",
-        "state": "PENDING",
+        "state": "EXPIRED",
         "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
         "takerAmount": "654",
         "takerAsset": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -1089,9 +1089,9 @@ describe('NFT Orders', () => {
             "swaps": Array [
               Object {
                 "destDecimals": 18,
-                "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+                "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
                 "srcDecimals": 18,
-                "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+                "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
                 "swapExchanges": Array [
                   Object {
                     "data": Object {
@@ -1130,7 +1130,7 @@ describe('NFT Orders', () => {
         "contractMethod": "simpleBuy",
         "destAmount": "6000000000000000000",
         "destDecimals": 18,
-        "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+        "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
         "destUSD": "0",
         "gasCost": "0",
         "gasCostUSD": "0.000000",
@@ -1142,7 +1142,7 @@ describe('NFT Orders', () => {
         "side": "BUY",
         "srcAmount": "---",
         "srcDecimals": 18,
-        "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+        "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "srcUSD": "0",
         "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
       }

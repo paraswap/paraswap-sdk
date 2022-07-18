@@ -8,9 +8,9 @@ Object {
       "swaps": Array [
         Object {
           "destDecimals": 18,
-          "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+          "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
           "srcDecimals": 18,
-          "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+          "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
           "swapExchanges": Array [
             Object {
               "data": Object {
@@ -49,7 +49,7 @@ Object {
   "contractMethod": "simpleBuy",
   "destAmount": "6000000000000000000",
   "destDecimals": 18,
-  "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+  "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
   "destUSD": "0",
   "gasCost": "0",
   "gasCostUSD": "0.000000",
@@ -61,7 +61,7 @@ Object {
   "side": "BUY",
   "srcAmount": "---",
   "srcDecimals": 18,
-  "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+  "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
   "srcUSD": "0",
   "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
 }

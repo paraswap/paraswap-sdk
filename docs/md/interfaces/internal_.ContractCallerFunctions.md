@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[src/types.ts:97](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L97)
+[src/types.ts:97](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L97)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L95)
+[src/types.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L95)
 
 ___
 
@@ -46,4 +46,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:96](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/types.ts#L96)
+[src/types.ts:96](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L96)
