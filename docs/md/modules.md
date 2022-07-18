@@ -21,9 +21,7 @@
 ### Interfaces
 
 - [Allowance](interfaces/Allowance.md)
-- [BuildLimitOrderTxInput](interfaces/BuildLimitOrderTxInput.md)
 - [BuildNFTOrderDataInput](interfaces/BuildNFTOrderDataInput.md)
-- [BuildNFTOrderTxInput](interfaces/BuildNFTOrderTxInput.md)
 - [BuildOrderDataInput](interfaces/BuildOrderDataInput.md)
 - [ConstructFetchInput](interfaces/ConstructFetchInput.md)
 - [ConstructProviderFetchInput](interfaces/ConstructProviderFetchInput.md)
@@ -43,9 +41,11 @@
 - [AssetTypeVariant](modules.md#assettypevariant)
 - [BuildLimitOrderFunctions](modules.md#buildlimitorderfunctions)
 - [BuildLimitOrderInput](modules.md#buildlimitorderinput)
+- [BuildLimitOrderTxInput](modules.md#buildlimitordertxinput)
 - [BuildLimitOrdersTxFunctions](modules.md#buildlimitorderstxfunctions)
 - [BuildNFTOrderFunctions](modules.md#buildnftorderfunctions)
 - [BuildNFTOrderInput](modules.md#buildnftorderinput)
+- [BuildNFTOrderTxInput](modules.md#buildnftordertxinput)
 - [BuildNFTOrdersTxFunctions](modules.md#buildnftorderstxfunctions)
 - [BuildOptions](modules.md#buildoptions)
 - [BuildOptionsBase](modules.md#buildoptionsbase)
@@ -309,6 +309,16 @@ ___
 
 ___
 
+### BuildLimitOrderTxInput
+
+Ƭ **BuildLimitOrderTxInput**: [`BuildTxInputBaseBUYForOrders`](modules/internal_.md#buildtxinputbasebuyfororders) & { `destDecimals`: `number` ; `orders`: [`SwappableOrder`](modules.md#swappableorder)[] ; `srcDecimals`: `number`  }
+
+#### Defined in
+
+[src/methods/swap/transaction.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L95)
+
+___
+
 ### BuildLimitOrdersTxFunctions
 
 Ƭ **BuildLimitOrdersTxFunctions**: `Object`
@@ -323,7 +333,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:40](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/transaction.ts#L40)
+[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/transaction.ts#L41)
 
 ___
 
@@ -353,6 +363,16 @@ ___
 
 ___
 
+### BuildNFTOrderTxInput
+
+Ƭ **BuildNFTOrderTxInput**: [`BuildTxInputBaseBUYForOrders`](modules/internal_.md#buildtxinputbasebuyfororders)<``"destDecimals"``\> & { `orders`: [`SwappableNFTOrder`](modules.md#swappablenftorder)[] ; `srcDecimals`: `number`  }
+
+#### Defined in
+
+[src/methods/swap/transaction.ts:102](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L102)
+
+___
+
 ### BuildNFTOrdersTxFunctions
 
 Ƭ **BuildNFTOrdersTxFunctions**: `Object`
@@ -367,7 +387,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:40](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/transaction.ts#L40)
+[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/transaction.ts#L41)
 
 ___
 
@@ -377,7 +397,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:121](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L121)
+[src/methods/swap/transaction.ts:153](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L153)
 
 ___
 
@@ -396,7 +416,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:111](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L111)
+[src/methods/swap/transaction.ts:143](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L143)
 
 ___
 
@@ -406,7 +426,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:119](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L119)
+[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L151)
 
 ___
 
@@ -416,37 +436,37 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:118](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L118)
+[src/methods/swap/transaction.ts:150](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L150)
 
 ___
 
 ### BuildSwapAndLimitOrderTxInput
 
-Ƭ **BuildSwapAndLimitOrderTxInput**: [`BuildSwapTxInput`](modules.md#buildswaptxinput) & { `destDecimals`: `number` ; `orders`: [`SwappableOrder`](modules.md#swappableorder)[]  }
+Ƭ **BuildSwapAndLimitOrderTxInput**: [`BuildTxInputBaseBUYForOrders`](modules/internal_.md#buildtxinputbasebuyfororders) & { `destDecimals`: `number` ; `orders`: [`SwappableOrder`](modules.md#swappableorder)[] ; `priceRoute`: [`OptimalRate`](modules.md#optimalrate)  }
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:87](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L87)
+[src/methods/swap/transaction.ts:118](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L118)
 
 ___
 
 ### BuildSwapAndNFTOrderTxInput
 
-Ƭ **BuildSwapAndNFTOrderTxInput**: [`BuildSwapTxInput`](modules.md#buildswaptxinput) & { `orders`: [`SwappableNFTOrder`](modules.md#swappablenftorder)[] ; `priceRoute`: [`OptimalRate`](modules.md#optimalrate)  }
+Ƭ **BuildSwapAndNFTOrderTxInput**: [`BuildTxInputBaseBUYForOrders`](modules/internal_.md#buildtxinputbasebuyfororders) & { `orders`: [`SwappableNFTOrder`](modules.md#swappablenftorder)[] ; `priceRoute`: [`OptimalRate`](modules.md#optimalrate)  }
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:97](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L97)
+[src/methods/swap/transaction.ts:129](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L129)
 
 ___
 
 ### BuildSwapTxInput
 
-Ƭ **BuildSwapTxInput**: [`BuildTxInputBase`](modules/internal_.md#buildtxinputbase) & { `priceRoute`: [`OptimalRate`](modules.md#optimalrate)  }
+Ƭ **BuildSwapTxInput**: [`BuildTxInputBase`](modules/internal_.md#buildtxinputbase) & { `priceRoute`: [`OptimalRate`](modules.md#optimalrate)  } & [`TxInputAmountsPartSell`](modules/internal_.md#txinputamountspartsell) \| [`TxInputAmountsPartBuy`](modules/internal_.md#txinputamountspartbuy) \| [`TxInputAmountsPartBuyOrSell`](modules/internal_.md#txinputamountspartbuyorsell)
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:64](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L64)
+[src/methods/swap/transaction.ts:74](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L74)
 
 ___
 
@@ -462,17 +482,17 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:129](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L129)
+[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L161)
 
 ___
 
 ### BuildTxInput
 
-Ƭ **BuildTxInput**: [`BuildSwapTxInput`](modules.md#buildswaptxinput) \| [`BuildLimitOrderTxInput`](interfaces/BuildLimitOrderTxInput.md) \| [`BuildNFTOrderTxInput`](interfaces/BuildNFTOrderTxInput.md) \| [`BuildSwapAndLimitOrderTxInput`](modules.md#buildswapandlimitordertxinput) \| [`BuildSwapAndNFTOrderTxInput`](modules.md#buildswapandnftordertxinput)
+Ƭ **BuildTxInput**: [`BuildSwapTxInput`](modules.md#buildswaptxinput) \| [`BuildLimitOrderTxInput`](modules.md#buildlimitordertxinput) \| [`BuildNFTOrderTxInput`](modules.md#buildnftordertxinput) \| [`BuildSwapAndLimitOrderTxInput`](modules.md#buildswapandlimitordertxinput) \| [`BuildSwapAndNFTOrderTxInput`](modules.md#buildswapandnftordertxinput)
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:104](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L104)
+[src/methods/swap/transaction.ts:136](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L136)
 
 ___
 
