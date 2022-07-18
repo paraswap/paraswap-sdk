@@ -37,13 +37,28 @@ export type SwappableNFTOrder = SwappableOrder & {
   takerAssetType: AssetTypeVariant;
 };
 
+// when priceRoute with side=SELL, slippage can replace destAmount
+export type TxInputAmountsPartSell = {
+  slippage: number;
+  srcAmount: PriceString;
+  destAmount?: never; // disallowed
+};
+// when priceRoute with side=BUY, slippage can replace srcAmount
+export type TxInputAmountsPartBuy = {
+  slippage: number;
+  srcAmount?: never; // disallowed
+  destAmount: PriceString;
+};
+// both srcAmount and destAmount can be present in absence of slippage
+export type TxInputAmountsPartBuyOrSell = {
+  slippage?: never; // disallowed
+  srcAmount: PriceString;
+  destAmount: PriceString;
+};
+
 export type BuildTxInputBase = {
   srcToken: Address;
   destToken: Address;
-  srcAmount?: PriceString;
-  destAmount?: PriceString;
-  // priceRoute: OptimalRate;
-  // orders?: SwappableOrder[];
   userAddress: Address;
   partner?: string;
   partnerAddress?: string;
@@ -53,51 +68,68 @@ export type BuildTxInputBase = {
   destDecimals?: number;
   permit?: string;
   deadline?: string;
-  slippage?: number;
-} & Partial<
-  | { slippage: number; srcAmount: PriceString }
-  | { slippage: number; destAmount: PriceString }
-  | { srcAmount: PriceString; destAmount: PriceString }
->;
+};
 
 // for Swap transaction
 export type BuildSwapTxInput = BuildTxInputBase & {
   priceRoute: OptimalRate;
-};
+} & (
+    | TxInputAmountsPartSell
+    | TxInputAmountsPartBuy
+    | TxInputAmountsPartBuyOrSell
+  ); // this union doesn't allow to mix srcAmount & destAmount & slippage together
+
+// building block for LimitOrders and NFT Orders swaps
+// can only use priceRoute.side=BUY and related TxInputAmountsPart*
+type BuildTxInputBaseBUYForOrders<
+  // to Omit extra keys
+  // can't do Omit<> around union, breaks discriminated union
+  K extends keyof TxInputAmountsPartBuy | keyof BuildTxInputBase = never
+> = Omit<BuildTxInputBase, K> &
+  // destAmount is sum(orders[].makerAmount)
+  (| Omit<TxInputAmountsPartBuy, 'destAmount' | K>
+    | Omit<TxInputAmountsPartBuyOrSell, 'destAmount' | K>
+  );
 
 // for LimitOrder Fill, without swap
-export interface BuildLimitOrderTxInput
-  // destAmount is sum(orders[].makerAmount)
-  extends Omit<BuildTxInputBase, 'destAmount'> {
+export type BuildLimitOrderTxInput = BuildTxInputBaseBUYForOrders & {
   orders: SwappableOrder[];
   srcDecimals: number;
   destDecimals: number;
-}
+};
 
 // for NFT Order Fill, without swap
-export interface BuildNFTOrderTxInput
+export type BuildNFTOrderTxInput =
   // @TODO if NFT can ever be srcToken, change logic
-  //                                    for NFT token destDecimals = 0 is acceptable
-  extends Omit<BuildTxInputBase, 'destAmount' | 'destDecimals'> {
-  orders: SwappableNFTOrder[];
-  srcDecimals: number;
-}
+  //                           for NFT token destDecimals = 0 is acceptable
+  BuildTxInputBaseBUYForOrders<'destDecimals'> & {
+    orders: SwappableNFTOrder[];
+    srcDecimals: number;
+  };
 
-// for Swap + LimitOrder
+export interface BuildSwapAndLimitOrderTxInput0
+  // destAmount is sum(orders[].makerAmount)
+  extends Omit<BuildTxInputBase, 'destAmount'> {
+  priceRoute: OptimalRate; // priceRoute.side=BUY
+  orders: SwappableOrder[];
+  destDecimals: number;
+}
+// for Swap + LimitOrder, priceRoute must have side=BUY
 export type BuildSwapAndLimitOrderTxInput =
   // destAmount is sum(orders[].makerAmount)
-  BuildSwapTxInput & {
+  BuildTxInputBaseBUYForOrders & {
+    priceRoute: OptimalRate; // priceRoute.side=BUY & priceRoute.contractMethod=simpleBuy
     orders: SwappableOrder[];
     destDecimals: number;
   };
 
 // with slippage for a swap and fill - p2p - order, without to fill a p2p order directly with the intended taker asset
 
-// for Swap + NFT Order
+// for Swap + NFT Order, priceRoute must have side=BUY
 export type BuildSwapAndNFTOrderTxInput =
   // destAmount is sum(orders[].makerAmount)
-  BuildSwapTxInput & {
-    priceRoute: OptimalRate;
+  BuildTxInputBaseBUYForOrders & {
+    priceRoute: OptimalRate; // priceRoute.side=BUY & priceRoute.contractMethod=simpleBuy
     orders: SwappableNFTOrder[];
   };
 
@@ -142,14 +174,12 @@ export const constructBuildTx = ({
   const buildTx: BuildTx = async (params, options = {}, signal) => {
     if (
       'priceRoute' in params &&
-      ('destAmount' in params || 'srcAmount' in params) && // isn't providers together with `orders`
+      'destAmount' in params && // isn't provided together with `orders`
       !('orders' in params) // when present, destAmount becomes sum(orders[].makerAmount)
     ) {
       const {
         priceRoute,
         priceRoute: { side },
-        srcAmount,
-        destAmount,
       } = params;
       const AmountMistmatchError =
         side === SwapSide.SELL
@@ -159,10 +189,7 @@ export const constructBuildTx = ({
       // user provides srcAmount or slippage but not both. so we only validate accordingly.
       assert(
         areAmountsCorrect({
-          queryParams: {
-            srcAmount,
-            destAmount,
-          },
+          queryParams: params,
           side,
           priceRoute,
         }),
