@@ -28,7 +28,8 @@ type BuildSwapAndNFTOrdersTx = (
 type MinBuildNFTOrderTxInput = Omit<
   BuildNFTOrderTxInput,
   // these are derived from `orders`
-  'srcToken' | 'srcAmount' | 'destToken'
+  'srcToken' | 'srcAmount' | 'destToken' | 'slippage'
+  // `slippage` doesn't participate as we derive `srcAmount` already
 >;
 
 type BuildNFTOrdersTx = (
@@ -139,8 +140,11 @@ export const constructBuildNFTOrderTx = ({
       ...params,
       // taker supplies srcToken
       srcToken: params.priceRoute.srcToken,
-      srcAmount: params.priceRoute.srcAmount,
-      // which is swapped for makerAsset, that would go towards filling the orders
+      // one or the other
+      ...(params.slippage
+        ? { slippage: params.slippage }
+        : //                                        may sneak in as part of `params`
+          { srcAmount: params.priceRoute.srcAmount, slippage: undefined }),
       destToken: 'NFT', // support any NFT,
       destDecimals: params.priceRoute.destDecimals,
     };
