@@ -6,7 +6,7 @@ Construct a type with the properties of T except for those in type K.
 
 ## Hierarchy
 
-- [`Omit`](../modules/internal_.md#omit)<[`BuildTxInputBase`](internal_.BuildTxInputBase.md), ``"destAmount"``\>
+- [`Omit`](../modules/internal_.md#omit)<[`BuildTxInputBase`](../modules/internal_.md#buildtxinputbase), ``"destAmount"``\>
 
   ↳ **`BuildLimitOrderTxInput`**
 
@@ -23,6 +23,7 @@ Construct a type with the properties of T except for those in type K.
 - [partnerFeeBps](BuildLimitOrderTxInput.md#partnerfeebps)
 - [permit](BuildLimitOrderTxInput.md#permit)
 - [receiver](BuildLimitOrderTxInput.md#receiver)
+- [slippage](BuildLimitOrderTxInput.md#slippage)
 - [srcAmount](BuildLimitOrderTxInput.md#srcamount)
 - [srcDecimals](BuildLimitOrderTxInput.md#srcdecimals)
 - [srcToken](BuildLimitOrderTxInput.md#srctoken)
@@ -40,7 +41,7 @@ Omit.deadline
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:55](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L55)
+[src/methods/swap/transaction.ts:55](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L55)
 
 ___
 
@@ -54,7 +55,7 @@ Omit.destDecimals
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:69](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L69)
+[src/methods/swap/transaction.ts:74](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L74)
 
 ___
 
@@ -68,7 +69,7 @@ Omit.destToken
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:42](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L42)
+[src/methods/swap/transaction.ts:42](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L42)
 
 ___
 
@@ -78,7 +79,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:67](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L67)
+[src/methods/swap/transaction.ts:72](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L72)
 
 ___
 
@@ -92,7 +93,7 @@ Omit.partner
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L48)
+[src/methods/swap/transaction.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L48)
 
 ___
 
@@ -106,7 +107,7 @@ Omit.partnerAddress
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:49](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L49)
+[src/methods/swap/transaction.ts:49](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L49)
 
 ___
 
@@ -120,7 +121,7 @@ Omit.partnerFeeBps
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L50)
+[src/methods/swap/transaction.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L50)
 
 ___
 
@@ -134,7 +135,7 @@ Omit.permit
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L54)
+[src/methods/swap/transaction.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L54)
 
 ___
 
@@ -148,13 +149,35 @@ Omit.receiver
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L51)
+[src/methods/swap/transaction.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L51)
+
+___
+
+### slippage
+
+• `Optional` **slippage**: `number`
+
+#### Inherited from
+
+Omit.slippage
+
+#### Defined in
+
+[src/methods/swap/transaction.ts:56](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56)
+
+[src/methods/swap/transaction.ts:58](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L58)
+
+[src/methods/swap/transaction.ts:56](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56)
+
+[src/methods/swap/transaction.ts:59](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L59)
+
+[src/methods/swap/transaction.ts:56](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56)
 
 ___
 
 ### srcAmount
 
-• **srcAmount**: `string`
+• `Optional` **srcAmount**: `string`
 
 #### Inherited from
 
@@ -162,7 +185,15 @@ Omit.srcAmount
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L43)
+[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43)
+
+[src/methods/swap/transaction.ts:58](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L58)
+
+[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43)
+
+[src/methods/swap/transaction.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43)
+
+[src/methods/swap/transaction.ts:60](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L60)
 
 ___
 
@@ -176,7 +207,7 @@ Omit.srcDecimals
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:68](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L68)
+[src/methods/swap/transaction.ts:73](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L73)
 
 ___
 
@@ -190,7 +221,7 @@ Omit.srcToken
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L41)
+[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L41)
 
 ___
 
@@ -204,4 +235,4 @@ Omit.userAddress
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L47)
+[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L47)

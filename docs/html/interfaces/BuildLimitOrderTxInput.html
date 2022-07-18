@@ -19,7 +19,7 @@
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
-<li><a href="../types/_internal_.Omit.html" class="tsd-signature-type" data-tsd-kind="Type alias">Omit</a><span class="tsd-signature-symbol">&lt;</span><a href="_internal_.BuildTxInputBase.html" class="tsd-signature-type" data-tsd-kind="Interface">BuildTxInputBase</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;destAmount&quot;</span><span class="tsd-signature-symbol">&gt;</span>
+<li><a href="../types/_internal_.Omit.html" class="tsd-signature-type" data-tsd-kind="Type alias">Omit</a><span class="tsd-signature-symbol">&lt;</span><a href="../types/_internal_.BuildTxInputBase.html" class="tsd-signature-type" data-tsd-kind="Type alias">BuildTxInputBase</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;destAmount&quot;</span><span class="tsd-signature-symbol">&gt;</span>
 <ul class="tsd-hierarchy">
 <li><span class="target">BuildLimitOrderTxInput</span></li></ul></li></ul></section>
 <section class="tsd-panel-group tsd-index-group">
@@ -38,6 +38,7 @@
 <a href="BuildLimitOrderTxInput.html#partnerFeeBps" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>partner<wbr/>Fee<wbr/>Bps</span></a>
 <a href="BuildLimitOrderTxInput.html#permit" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>permit</span></a>
 <a href="BuildLimitOrderTxInput.html#receiver" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>receiver</span></a>
+<a href="BuildLimitOrderTxInput.html#slippage" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>slippage</span></a>
 <a href="BuildLimitOrderTxInput.html#srcAmount" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>src<wbr/>Amount</span></a>
 <a href="BuildLimitOrderTxInput.html#srcDecimals" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>src<wbr/>Decimals</span></a>
 <a href="BuildLimitOrderTxInput.html#srcToken" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>src<wbr/>Token</span></a>
@@ -50,78 +51,92 @@
 <div class="tsd-signature">deadline<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.deadline</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L55">src/methods/swap/transaction.ts:55</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L55">src/methods/swap/transaction.ts:55</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="destDecimals" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>dest<wbr/>Decimals</span><a href="#destDecimals" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">dest<wbr/>Decimals<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <p>Overrides Omit.destDecimals</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L69">src/methods/swap/transaction.ts:69</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L74">src/methods/swap/transaction.ts:74</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="destToken" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>dest<wbr/>Token</span><a href="#destToken" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">dest<wbr/>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.destToken</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L42">src/methods/swap/transaction.ts:42</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L42">src/methods/swap/transaction.ts:42</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="orders" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>orders</span><a href="#orders" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">orders<span class="tsd-signature-symbol">:</span> <a href="../types/SwappableOrder.html" class="tsd-signature-type" data-tsd-kind="Type alias">SwappableOrder</a><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L67">src/methods/swap/transaction.ts:67</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L72">src/methods/swap/transaction.ts:72</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="partner" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>partner</span><a href="#partner" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">partner<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.partner</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L48">src/methods/swap/transaction.ts:48</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L48">src/methods/swap/transaction.ts:48</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="partnerAddress" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>partner<wbr/>Address</span><a href="#partnerAddress" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">partner<wbr/>Address<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.partnerAddress</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L49">src/methods/swap/transaction.ts:49</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L49">src/methods/swap/transaction.ts:49</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="partnerFeeBps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>partner<wbr/>Fee<wbr/>Bps</span><a href="#partnerFeeBps" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">partner<wbr/>Fee<wbr/>Bps<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.partnerFeeBps</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L50">src/methods/swap/transaction.ts:50</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L50">src/methods/swap/transaction.ts:50</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="permit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>permit</span><a href="#permit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">permit<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.permit</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L54">src/methods/swap/transaction.ts:54</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L54">src/methods/swap/transaction.ts:54</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="receiver" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>receiver</span><a href="#receiver" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">receiver<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.receiver</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L51">src/methods/swap/transaction.ts:51</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L51">src/methods/swap/transaction.ts:51</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="slippage" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>slippage</span><a href="#slippage" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">slippage<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
+<p>Inherited from Omit.slippage</p>
+<ul>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56">src/methods/swap/transaction.ts:56</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L58">src/methods/swap/transaction.ts:58</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56">src/methods/swap/transaction.ts:56</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L59">src/methods/swap/transaction.ts:59</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L56">src/methods/swap/transaction.ts:56</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="srcAmount" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>src<wbr/>Amount</span><a href="#srcAmount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">src<wbr/>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>src<wbr/>Amount</span><a href="#srcAmount" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">src<wbr/>Amount<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.srcAmount</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L43">src/methods/swap/transaction.ts:43</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43">src/methods/swap/transaction.ts:43</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L58">src/methods/swap/transaction.ts:58</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43">src/methods/swap/transaction.ts:43</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L43">src/methods/swap/transaction.ts:43</a></li>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L60">src/methods/swap/transaction.ts:60</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="srcDecimals" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>src<wbr/>Decimals</span><a href="#srcDecimals" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">src<wbr/>Decimals<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <p>Overrides Omit.srcDecimals</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L68">src/methods/swap/transaction.ts:68</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L73">src/methods/swap/transaction.ts:73</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="srcToken" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>src<wbr/>Token</span><a href="#srcToken" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">src<wbr/>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.srcToken</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L41">src/methods/swap/transaction.ts:41</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L41">src/methods/swap/transaction.ts:41</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a id="userAddress" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>user<wbr/>Address</span><a href="#userAddress" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">user<wbr/>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from Omit.userAddress</p>
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/remove_deprecated/src/methods/swap/transaction.ts#L47">src/methods/swap/transaction.ts:47</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L47">src/methods/swap/transaction.ts:47</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -167,6 +182,7 @@
 <li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#partnerFeeBps" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>partner<wbr/>Fee<wbr/>Bps</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#permit" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>permit</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#receiver" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>receiver</a></li>
+<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#slippage" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>slippage</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#srcAmount" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>src<wbr/>Amount</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="BuildLimitOrderTxInput.html#srcDecimals" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>src<wbr/>Decimals</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="BuildLimitOrderTxInput.html#srcToken" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>src<wbr/>Token</a></li>
