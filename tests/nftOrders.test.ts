@@ -1279,7 +1279,7 @@ describe('NFT Orders', () => {
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const orders = await paraSwap.getNFTOrders({
+    const { orders } = await paraSwap.getNFTOrders({
       maker: account,
       type: 'LIMIT',
     });
