@@ -24,7 +24,7 @@ type GetLimitOrderByHash = (
 type GetLimitOrders = (
   userParams: LimitOrdersUserParams,
   signal?: AbortSignal
-) => Promise<LimitOrderFromApi[]>;
+) => Promise<LimitOrdersApiResponse>;
 
 export type GetLimitOrdersFunctions = {
   getLimitOrders: GetLimitOrders;
@@ -49,14 +49,14 @@ export const constructGetLimitOrders = ({
         : (`taker/${userParams.taker}` as const);
     const fetchURL = `${baseFetchURL}/${userURL}` as const;
 
-    const { orders } = await fetcher<LimitOrdersApiResponse, GetOrdersURLs>({
+    const response = await fetcher<LimitOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
       method: 'GET',
       signal,
     });
 
     // without any extra calls, return  what API returns
-    return orders;
+    return response;
   };
 
   const getLimitOrderByHash: GetLimitOrderByHash = async (
