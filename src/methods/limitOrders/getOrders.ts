@@ -1,6 +1,7 @@
 // @TODO getOrder, getOrders from API
 // onchain from contract can't distinguish between filled or cancelled
 import { API_URL } from '../../constants';
+import { constructSearchString } from '../../helpers/misc';
 import type { Address, ConstructFetchInput } from '../../types';
 import {
   constructBaseFetchUrlGetter,
@@ -13,10 +14,19 @@ import type {
   LimitOrderType,
 } from './helpers/types';
 
+interface PaginationParams {
+  limit?: number;
+  offset?: number;
+  hideSmallBalances?: boolean;
+}
+
 //                     get orders by `maker` or `taker`
-export type LimitOrdersUserParams =
+export type LimitOrdersUserParams = (
   | { maker: Address; type: LimitOrderType }
-  | { taker: Address; type: LimitOrderType };
+  | { taker: Address; type: LimitOrderType }
+) &
+  PaginationParams;
+
 type GetLimitOrderByHash = (
   orderHash: string,
   signal?: AbortSignal
@@ -47,7 +57,11 @@ export const constructGetLimitOrders = ({
       'maker' in userParams
         ? (`maker/${userParams.maker}` as const)
         : (`taker/${userParams.taker}` as const);
-    const fetchURL = `${baseFetchURL}/${userURL}` as const;
+
+    const { offset, limit, hideSmallBalances } = userParams;
+    const search = constructSearchString({ offset, limit, hideSmallBalances });
+
+    const fetchURL = `${baseFetchURL}/${userURL}${search}` as const;
 
     const response = await fetcher<LimitOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
