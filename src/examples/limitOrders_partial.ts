@@ -69,7 +69,7 @@ const orderInput = {
 
 async function run() {
   /// cancelling current orders
-  const currentOrders = await paraSwapLimitOrderSDK.getLimitOrders({
+  const { orders: currentOrders } = await paraSwapLimitOrderSDK.getLimitOrders({
     maker: account,
     type: 'LIMIT',
   });

@@ -1140,7 +1140,7 @@ describe('Limit Orders', () => {
       '0x57fd9ac6a1753459b1074dbff5e513527df5ecad03c63b56c06b14425d1775d7',
     ];
 
-    const orders = await paraSwap.getLimitOrders({
+    const { orders } = await paraSwap.getLimitOrders({
       maker: account,
       type: 'LIMIT',
     });
