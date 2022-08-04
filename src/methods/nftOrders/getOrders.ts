@@ -22,7 +22,7 @@ type GetNFTOrderByHash = (
 type GetNFTOrders = (
   userParams: NFTOrdersUserParams,
   signal?: AbortSignal
-) => Promise<NFTOrderFromAPI[]>;
+) => Promise<NFTOrdersApiResponse>;
 
 export type GetNFTOrdersFunctions = {
   getNFTOrders: GetNFTOrders;
@@ -47,14 +47,14 @@ export const constructGetNFTOrders = ({
         : (`taker/${userParams.taker}` as const);
     const fetchURL = `${baseFetchURL}/${userURL}` as const;
 
-    const { orders } = await fetcher<NFTOrdersApiResponse, GetOrdersURLs>({
+    const response = await fetcher<NFTOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
       method: 'GET',
       signal,
     });
 
     // without any extra calls, return  what API returns
-    return orders;
+    return response;
   };
 
   const getNFTOrderByHash: GetNFTOrderByHash = async (orderHash, signal) => {
