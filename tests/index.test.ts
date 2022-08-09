@@ -165,7 +165,7 @@ describe.each([
       userAddress: senderAddress,
       side: SwapSide.SELL,
       options: {
-        includeDEXS: 'UniswapV2',
+        includeDEXS: ['UniswapV2'],
         otherExchangePrices: true,
       },
     });
@@ -266,7 +266,7 @@ describe.each([
       userAddress: senderAddress,
       side: SwapSide.SELL,
       options: {
-        includeDEXS: 'UniswapV2',
+        includeDEXS: ['UniswapV2'],
       },
     });
 
@@ -297,7 +297,7 @@ describe.each([
       userAddress: senderAddress,
       side: SwapSide.SELL,
       options: {
-        includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis',
+        includeDEXS: ['Uniswap', 'UniswapV2', 'Balancer', 'Oasis'],
       },
     });
 
@@ -343,7 +343,7 @@ describe.each([
       amount: destAmount,
       userAddress: senderAddress,
       side: SwapSide.BUY,
-      options: { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' },
+      options: { includeDEXS: ['Uniswap', 'UniswapV2', 'Balancer', 'Oasis'] },
     });
     const _srcAmount = new BigNumber(priceRoute.srcAmount)
       .times(1.1)

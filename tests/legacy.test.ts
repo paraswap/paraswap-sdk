@@ -103,7 +103,7 @@ describe('ParaSwap SDK', () => {
       srcAmount,
       senderAddress,
       SwapSide.SELL,
-      { includeDEXS: 'UniswapV2', otherExchangePrices: true }
+      { includeDEXS: ['UniswapV2'], otherExchangePrices: true }
     );
     const priceRoute = ratesOrError as OptimalRate;
 
@@ -194,7 +194,7 @@ describe('ParaSwap SDK', () => {
       srcAmount,
       senderAddress,
       SwapSide.SELL,
-      { includeDEXS: 'UniswapV2' }
+      { includeDEXS: ['UniswapV2'] }
     );
 
     expect((ratesOrError as APIError)?.data?.error).toBeUndefined();
@@ -230,7 +230,7 @@ describe('ParaSwap SDK', () => {
         srcAmount,
         senderAddress,
         SwapSide.SELL,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
+        { includeDEXS: ['Uniswap', 'UniswapV2', 'Balancer', 'Oasis'] }
       );
       const priceRoute = ratesOrError as OptimalRate;
       const destAmount = new BigNumber(priceRoute.destAmount)
@@ -280,7 +280,7 @@ describe('ParaSwap SDK', () => {
         destAmount,
         senderAddress,
         SwapSide.BUY,
-        { includeDEXS: 'Uniswap,UniswapV2,Balancer,Oasis' }
+        { includeDEXS: ['Uniswap', 'UniswapV2', 'Balancer', 'Oasis'] }
       );
       const priceRoute = ratesOrError as OptimalRate;
       const _srcAmount = new BigNumber(priceRoute.srcAmount)
