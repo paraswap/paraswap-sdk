@@ -258,9 +258,9 @@ Or you can use `ethers` in place of `web3`
 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk';
-import Web3 from 'web3';
+import { ethers } from "ethers";
 
-const web3Provider = new Web3(window.ethereum);
+const ethersProvider = new ethers.providers.Web3Provider(window.ethereum)
 const account = '__user_address__';
 
 const paraswap = new ParaSwap({
