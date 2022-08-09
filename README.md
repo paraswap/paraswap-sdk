@@ -245,14 +245,33 @@ import Web3 from 'web3';
 const web3Provider = new Web3(window.ethereum);
 const account = '__user_address__';
 
-const paraswap = new ParaSwap(
-  1, 
-  undefined, 
-  web3Provider, 
-  undefined, 
-  account, 
-  axios
-);
+const paraswap = new ParaSwap({
+  network: 1,
+  web3Provider,
+  account,
+  axios,
+ });
+
+```
+
+Or you can use `ethers` in place of `web3`
+
+```typescript
+import { ParaSwap } from '@paraswap/sdk';
+import Web3 from 'web3';
+
+const web3Provider = new Web3(window.ethereum);
+const account = '__user_address__';
+
+const paraswap = new ParaSwap({
+  network: 1,
+  account,
+  ethersDeps: {
+    ethersProviderOrSigner: ethersProvider;
+    EthersContract: ethers.Contract;
+  },
+  fetch: window.fetch,
+ });
 
 ```
 
@@ -261,15 +280,10 @@ By analogy to ```constructPartialSDK```, you can leverage a lightweight version 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk';
 
-const paraswap = new ParaSwap(
-  1, 
-  undefined, 
-  undefined, 
-  undefined, 
-  undefined, 
-  undefined,
-  window.fetch
-);
+const paraswap = new ParaSwap({
+  network: 1,
+  fetch: window.fetch,
+});
 
 ```
 
