@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[src/types.ts:60](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L60)
+[src/types.ts:60](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L60)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L51)
+[src/types.ts:51](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L51)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:53](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L53)
+[src/types.ts:53](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L53)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:52](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L52)
+[src/types.ts:52](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L52)
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/types.ts#L54)
+[src/types.ts:54](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L54)
