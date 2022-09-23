@@ -161,20 +161,6 @@ describe.each([
     expect(allowance.allowance).toEqual('123000000000000000');
   });
 
-  test('Get_Allowances', async () => {
-    const allowances = await paraSwap.swap.getAllowances(
-      DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
-      [DAI, HEX]
-    );
-
-    const [daiAllowance, hexAllowance] = allowances.map(
-      (allowance) => allowance.allowance
-    );
-
-    expect(daiAllowance).toEqual('123000000000000000');
-    expect(hexAllowance).toEqual('32100000');
-  });
-
   test('Get_Adapters', async () => {
     const adapters = await paraSwap.swap.getAdapters({ type: 'object' });
     expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
