@@ -377,18 +377,15 @@ describe('Limit Orders', () => {
     const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
-    const metaAddress = deriveTakerFromNonceAndTaker(
+    const takerFromMeta = deriveTakerFromNonceAndTaker(
       signableOrderData.data.nonceAndMeta
     );
 
     // taker in nonceAndTaker = Zero
-    expect(metaAddress).toBe(ZERO_ADDRESS);
+    expect(takerFromMeta).toBe(ZERO_ADDRESS);
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
-    // taker in AugustusRFQ = Augustus
-    expect(signableOrderData.data.taker.toLowerCase()).toBe(
-      AugustusAddress.toLowerCase()
-    );
+    // not P2P order? taker = Zero
+    expect(signableOrderData.data.taker.toLowerCase()).toBe(ZERO_ADDRESS);
 
     expect(signableOrderData.data.maker).toBe(senderAddress);
     expect(signableOrderData.data.expiry).toBe(orderExpiry);
