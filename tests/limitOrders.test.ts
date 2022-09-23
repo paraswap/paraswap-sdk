@@ -729,10 +729,6 @@ describe('Limit Orders', () => {
   });
 
   test(`fill LimitOrder+Swap through Augustus`, async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
     // swap DAI -> BAT, then fill BAT (takerAsset) for WETH (makerAsset) Order
 
     // 0.01 WETH
@@ -740,10 +736,42 @@ describe('Limit Orders', () => {
     // for 6 BAT
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with WETH
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    // get some WETH onto maker account
+    const maker = new ethers.Wallet(walletStable.privateKey, ethersProvider);
+    const { balance: wethBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: WETH,
+      amount: makerAmount,
+      signer: maker,
+      providerOptions: {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+        account: maker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
+    expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
+
+    // get some DAI onto taker account
+    const taker = new ethers.Wallet(walletStable2.privateKey, ethersProvider);
+    const { balance: daiBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: DAI,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    expect(new BigNumber(daiBalance).gte(takerAmount)).toBeTruthy();
 
     const order = {
       nonce: 998,
