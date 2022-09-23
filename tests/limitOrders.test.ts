@@ -369,7 +369,7 @@ describe('Limit Orders', () => {
     const augustusRFQAddress = await paraSwap.getLimitOrdersContract();
 
     expect(augustusRFQAddress).toMatchInlineSnapshot(
-      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+      `"0xe92b586627ccA7a83dC919cc7127196d70f55a06"`
     );
   });
 
