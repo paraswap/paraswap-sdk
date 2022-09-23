@@ -353,7 +353,7 @@ describe('Limit Orders', () => {
       constructBuildTx
     );
 
-    AugustusRFQ = await AugustusRFQFactory.attach(
+    AugustusRFQ = AugustusRFQFactory.attach(
       await paraSwap.getLimitOrdersContract()
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
