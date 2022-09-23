@@ -51,6 +51,7 @@ import ganache from 'ganache';
 import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
+import { buyErc20TokenForEth } from './helpers';
 
 dotenv.config();
 
@@ -60,9 +61,10 @@ declare let process: any;
 
 const referrer = 'sdk-test';
 
-// const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
+const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
@@ -424,11 +426,7 @@ describe('Limit Orders', () => {
   });
 
   test('Build_LO_Tx', async () => {
-    const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'; // Ropsten
-    const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef'; // Ropsten
-
     // swap WETH -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
-
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
@@ -481,18 +479,47 @@ describe('Limit Orders', () => {
   });
 
   test(`fillLimitOrder through Augustus`, async () => {
-    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with WETH
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    // get some WETH onto maker wallet
+    const maker = new ethers.Wallet(walletStable.privateKey, ethersProvider);
+    const { balance: wethBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: WETH,
+      amount: makerAmount,
+      signer: maker,
+      providerOptions: {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+        account: maker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
+    expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
+
+    // get some BAT onto the taker wallet
+    const taker = new ethers.Wallet(walletStable2.privateKey, ethersProvider);
+    const { balance: batBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: BAT,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    expect(new BigNumber(batBalance).gte(takerAmount)).toBeTruthy();
 
     console.log('maker', maker.address, 'taker', taker.address);
 
