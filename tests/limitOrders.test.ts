@@ -67,12 +67,9 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const chainId = 3; // @TODO return to mainnet
+const chainId = 1;
 
-const PROVIDER_URL: string = process.env.PROVIDER_URL.replace(
-  'mainnet',
-  'ropsten'
-).replace(/\/1$/, `/${chainId}`);
+const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const srcToken = DAI;
 const destToken = HEX;
 
