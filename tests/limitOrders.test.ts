@@ -1032,12 +1032,18 @@ describe('Limit Orders', () => {
       blockNumber: NaN, // will change with time
       srcAmount: '---', //will change based on srcToken/destToken rate
       hmac: '---', // will change with any other change
+      destUSD: '---',
+      gasCostUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({
         ...route,
         swaps: route.swaps.map((swap) => ({
           ...swap,
           swapExchanges: swap.swapExchanges.map((exchange) => ({
             ...exchange,
+            data: {
+              ...exchange.data,
+              gasUSD: '---',
+            },
             srcAmount: '---', //will change based on srcToken/destToken rate
           })),
         })),

@@ -16,7 +16,7 @@ Object {
               "data": Object {
                 "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                 "feeFactor": 10000,
-                "gasUSD": "0.535564",
+                "gasUSD": "---",
                 "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                 "path": Array [
                   "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -50,9 +50,9 @@ Object {
   "destAmount": "6000000000000000000",
   "destDecimals": 18,
   "destToken": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
-  "destUSD": "1.9085040000",
+  "destUSD": "---",
   "gasCost": "189300",
-  "gasCostUSD": "1.267278",
+  "gasCostUSD": "---",
   "hmac": "---",
   "maxImpactReached": false,
   "network": 1,
@@ -64,120 +64,6 @@ Object {
   "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
   "srcUSD": "1.8183432884",
   "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
-}
-`;
-
-exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
-    "expiry": 1671494400,
-    "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
-    "makerAmount": "1000000000000000000",
-    "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-    "nonceAndMeta": "2693234308085732315020447542820174961101890254772",
-    "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
-    "takerAmount": "8000000000000000000",
-    "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
-  },
-  "domain": Object {
-    "chainId": 1,
-    "name": "AUGUSTUS RFQ",
-    "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
-    "version": "1",
-  },
-  "types": Object {
-    "Order": Array [
-      Object {
-        "name": "nonceAndMeta",
-        "type": "uint256",
-      },
-      Object {
-        "name": "expiry",
-        "type": "uint128",
-      },
-      Object {
-        "name": "makerAsset",
-        "type": "address",
-      },
-      Object {
-        "name": "takerAsset",
-        "type": "address",
-      },
-      Object {
-        "name": "maker",
-        "type": "address",
-      },
-      Object {
-        "name": "taker",
-        "type": "address",
-      },
-      Object {
-        "name": "makerAmount",
-        "type": "uint256",
-      },
-      Object {
-        "name": "takerAmount",
-        "type": "uint256",
-      },
-    ],
-  },
-}
-`;
-
-exports[`Limit Orders buildLimitOrder: Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
-    "expiry": 1671494400,
-    "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
-    "makerAmount": "1000000000000000000",
-    "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-    "nonceAndMeta": "1461501637330902918203684832716283019655932542976",
-    "taker": "0x0000000000000000000000000000000000000000",
-    "takerAmount": "8000000000000000000",
-    "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
-  },
-  "domain": Object {
-    "chainId": 1,
-    "name": "AUGUSTUS RFQ",
-    "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
-    "version": "1",
-  },
-  "types": Object {
-    "Order": Array [
-      Object {
-        "name": "nonceAndMeta",
-        "type": "uint256",
-      },
-      Object {
-        "name": "expiry",
-        "type": "uint128",
-      },
-      Object {
-        "name": "makerAsset",
-        "type": "address",
-      },
-      Object {
-        "name": "takerAsset",
-        "type": "address",
-      },
-      Object {
-        "name": "maker",
-        "type": "address",
-      },
-      Object {
-        "name": "taker",
-        "type": "address",
-      },
-      Object {
-        "name": "makerAmount",
-        "type": "uint256",
-      },
-      Object {
-        "name": "takerAmount",
-        "type": "uint256",
-      },
-    ],
-  },
 }
 `;
 
