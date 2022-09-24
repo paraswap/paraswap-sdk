@@ -1186,9 +1186,9 @@ describe('Limit Orders', () => {
     );
     const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
     const knownOrderHashes = [
-      '0xd0f98ebf56a4ad9bf462f23939fd1e582ee02f5625ae2bffd0b6e0405093fd3c',
-      '0x874193472d16c3a44420f5aabf231648b51fcc2fc2d8b8de4a87fb5ee77c7600',
-      '0x57fd9ac6a1753459b1074dbff5e513527df5ecad03c63b56c06b14425d1775d7',
+      '0xfd076127e9fe40c5acf2efd03f8dd0cf2412fe277013d241c95a5da3eb64d5f8',
+      '0xef9fdf84be98cc70c05dbfe62af88412c1231f3025d3c829cf93b29f578a66fd',
+      '0x005c10e295af191364c7b47df72c0ca71b75b8f827231b352c4199ae109d4234',
     ];
 
     const { orders } = await paraSwap.getLimitOrders({
