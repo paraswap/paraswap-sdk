@@ -469,27 +469,52 @@ describe('NFT Orders', () => {
   });
 
   test('Build_NFT_Tx', async () => {
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
+    // wallet.address: 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
+    // wallet.mnemonic.phrase: thought media hello thought sheriff section field carry sentence talk acoustic horse victory ankle feature matter spawn physical sauce dinosaur calm notable tobacco kind
+    // wallet.privateKey: 0x223f073153caa1e15e13c4ada8f247cd4d1f39598171bf8189da85a926b71fc2
+    const maker = ethers.Wallet.fromMnemonic(
+      'thought media hello thought sheriff section field carry sentence talk acoustic horse victory ankle feature matter spawn physical sauce dinosaur calm notable tobacco kind'
+    );
+    const makerEthersContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      maker.address
+    );
+
+    const NFT = '0x80d7B78CA5221561EB30E1ABB94D122D96d30c35'; // Polygon UnspendableNFT, owned by 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
+
+    const paraSwap = constructPartialSDK(
+      {
+        chainId: 137,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        contractCaller: makerEthersContractCaller,
+      },
+      constructBuildNFTOrder,
+      constructSignNFTOrder,
+      constructBuildNFTOrderTx
+    );
 
     // swap NFT -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
 
     // 1 NFT
     const makerAmount = '1';
-    // for 6 BAT
+    // for 6 DAI
     const takerAmount = (6e18).toString(10);
-
+    const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'; // polygon
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
       makerAsset: NFT,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: DAI,
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '9982',
+      makerAssetId: '0',
     };
 
     const signableOrderData = await paraSwap.buildNFTOrder(order);
@@ -502,6 +527,8 @@ describe('NFT Orders', () => {
       signature, // necessary for execution in the contract
       // extra stuff will be removed before POSTing to /transaction
     };
+
+    console.log('orderWithSignature', orderWithSignature);
 
     const swapAndNFTPayload = await paraSwap.buildNFTOrderTx(
       {
@@ -524,7 +551,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 137,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
         "value": "0",
