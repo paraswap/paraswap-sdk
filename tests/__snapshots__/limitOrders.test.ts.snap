@@ -62,7 +62,7 @@ Object {
   "srcAmount": "---",
   "srcDecimals": 18,
   "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
-  "srcUSD": "1.8182286055",
+  "srcUSD": "---",
   "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
 }
 `;

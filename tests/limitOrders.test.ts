@@ -1034,6 +1034,7 @@ describe('Limit Orders', () => {
       hmac: '---', // will change with any other change
       destUSD: '---',
       gasCostUSD: '---',
+      srcUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({
         ...route,
         swaps: route.swaps.map((swap) => ({
