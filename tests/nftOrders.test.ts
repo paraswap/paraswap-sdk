@@ -70,12 +70,7 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const chainId = 3; // @TODO return to mainnet
-
-const PROVIDER_URL: string = process.env.PROVIDER_URL.replace(
-  'mainnet',
-  'ropsten'
-).replace(/\/1$/, `/${chainId}`);
+const chainId = 1;
 const srcToken = DAI;
 const destToken = HEX;
 
@@ -95,7 +90,7 @@ const ganacheProvider = ganache.provider({
     ],
   },
   fork: {
-    url: PROVIDER_URL,
+    url: process.env.PROVIDER_URL,
   },
   chain: {
     chainId,
@@ -356,7 +351,7 @@ describe('NFT Orders', () => {
       constructBuildTx
     );
 
-    AugustusRFQ = await AugustusRFQFactory.attach(
+    AugustusRFQ = AugustusRFQFactory.attach(
       await paraSwap.getNFTOrdersContract()
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
@@ -375,13 +370,13 @@ describe('NFT Orders', () => {
     const augustusRFQAddress = await paraSwap.getNFTOrdersContract();
 
     expect(augustusRFQAddress).toMatchInlineSnapshot(
-      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+      `"0xe92b586627ccA7a83dC919cc7127196d70f55a06"`
     );
   });
 
   test('get NFT order by hash', async () => {
     const knownOrderHash =
-      '0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33';
+      '0xec8018729db146d5bb20f313028ee765f6737deb4f859cd92c66f371bdb34aad';
     const sdk = constructPartialSDK(
       {
         chainId: 137,
@@ -395,27 +390,26 @@ describe('NFT Orders', () => {
     expect(order).toMatchInlineSnapshot(`
       Object {
         "chainId": 137,
-        "createdAt": 1655458765,
-        "expiry": 1658050764,
-        "fillableBalance": "1",
+        "createdAt": 1658989256,
+        "expiry": 1658992856,
+        "fillableBalance": "0",
         "maker": "0x112f39ea2ccff2d088086590d11cd9f092954f77",
         "makerAmount": "1",
-        "makerAsset": "0xcd494673999194365033d7a287af9f0a3b163874",
-        "makerAssetId": "1028",
-        "makerAssetType": 2,
-        "makerBalance": "1",
-        "nonceAndMeta": "7616951480031442449908195926141502897956149438841392803682297026303",
-        "orderHash": "0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33",
+        "makerAsset": "0x235be10a7fb69727b4a907b0a957a716c7c14c13",
+        "makerAssetId": "2",
+        "makerAssetType": 1,
+        "nonceAndMeta": "20622990137246266303598744434210481256286975629423071997844118496006",
+        "orderHash": "0xec8018729db146d5bb20f313028ee765f6737deb4f859cd92c66f371bdb34aad",
         "permitMakerAsset": null,
-        "signature": "0x1d0ba657f90512b62f1026812b4718ca6f0868919181d069ec7d8258c3ab5e3c449b462de619114faea0569002e850c879b09a6964d9863c192023c9b297ca051c",
-        "state": "EXPIRED",
+        "signature": "0x028a2b4dbb6695c46ec432cac2952575c047f55b7e87be7cc5b28e6951200a8d4cbdb82d1a1a2506d59eba979e16c2c25e815d25a5bb840646881797f8d251941c",
+        "state": "FULFILLED",
         "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
-        "takerAmount": "654",
+        "takerAmount": "1000",
         "takerAsset": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
         "takerAssetId": "0",
         "takerAssetType": 0,
-        "takerFromMeta": "0x76176c2971300217e9f48e3dd4e40591500b96ff",
-        "transactionHash": null,
+        "takerFromMeta": "0x7ba594df3161729bf2e68a9d0a11dceb57a2e306",
+        "transactionHash": "0x44ff478136d857d620a7704d19083e0ff8f24021d9612fb8a0b6bcb9558ffcd3",
         "type": "P2P",
       }
     `);
