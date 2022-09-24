@@ -990,10 +990,6 @@ describe('Limit Orders', () => {
   });
 
   test('Build_Swap+LO_Tx', async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
     // swap DAI -> BAT, then fill BAT (takerAsset) for WETH (makerAsset)
 
     // 0.01 WETH
@@ -1075,7 +1071,7 @@ describe('Limit Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
@@ -1105,7 +1101,7 @@ describe('Limit Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
