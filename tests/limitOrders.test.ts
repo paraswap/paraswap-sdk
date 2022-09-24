@@ -1125,7 +1125,7 @@ describe('Limit Orders', () => {
 
         const signature = await sdk.signLimitOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x66251150a666cf89e4691a53b7e27df0e30d8496468b424fecbdafddae9142765edea33eecc75724e0e4ccd37160c6b657e4bd4f6c4c4c5f7054a9d9a88c0e371c"`
+          `"0x16349ef688849bfa4f75ae693e91e862de7e7f60a1038e832008e010db921adb2795df50ea898401663d5355077592ae7ad964e9b04aca58575eec645f3718691b"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);
