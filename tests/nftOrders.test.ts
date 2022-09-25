@@ -42,6 +42,7 @@ import {
 import BigNumber from 'bignumber.js';
 
 import ERC20MinableABI from './abi/ERC20Mintable.json';
+import ERC721MintableABI from './abi/ERC721Mintable.json';
 import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
@@ -54,6 +55,7 @@ import {
 } from '../src/methods/nftOrders/buildOrder';
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
+import { buyErc20TokenForEth } from './helpers';
 
 dotenv.config();
 
@@ -84,11 +86,20 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   "m/44'/60'/0'/0/1"
 );
 
+// mintable by everyone
+const MOCK_NFT = '0xD07Fe849cCfA55E4BF9Df1019C0060e532B75C95';
+
 const ganacheProvider = ganache.provider({
   wallet: {
     accounts: [
-      { balance: 80e18, secretKey: walletStable.privateKey },
-      { balance: 80e18, secretKey: walletStable2.privateKey },
+      {
+        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
+        secretKey: walletStable.privateKey,
+      },
+      {
+        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
+        secretKey: walletStable2.privateKey,
+      },
     ],
   },
   fork: {
@@ -485,8 +496,6 @@ describe('NFT Orders', () => {
       maker.address
     );
 
-    const NFT = '0x80d7B78CA5221561EB30E1ABB94D122D96d30c35'; // Polygon UnspendableNFT, owned by 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
-
     const paraSwap = constructPartialSDK(
       {
         chainId: 137,
@@ -562,22 +571,40 @@ describe('NFT Orders', () => {
   });
 
   test(`fillNFTOrder through Augustus`, async () => {
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const NFT_ID = '9982';
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
+    const NFT = MOCK_NFT;
     // 1 NFT
     const makerAmount = (1).toString(10);
-    // for 6 BAT
+    // for 6 DAI
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with NFT
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    const maker = walletStable.connect(ethersProvider);
+
+    const nftContract = new ethers.Contract(MOCK_NFT, ERC721MintableABI, maker);
+
+    await nftContract.mint(maker.address);
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
+
+    const taker = walletStable2.connect(ethersProvider);
 
     console.log('maker', maker.address, 'taker', taker.address);
 
+    const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'; // polygon
+
+    const { balance: daiBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: DAI,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId: 137,
+      ethersProvider,
+    });
+
+    expect(new BigNumber(daiBalance).gte(takerAmount)).toBeTruthy();
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -595,7 +622,7 @@ describe('NFT Orders', () => {
 
     const makerSDK = constructPartialSDK(
       {
-        chainId,
+        chainId: 137,
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
@@ -607,7 +634,7 @@ describe('NFT Orders', () => {
 
     const takerSDK = constructPartialSDK(
       {
-        chainId,
+        chainId: 137,
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
@@ -624,12 +651,12 @@ describe('NFT Orders', () => {
       maker: maker.address,
       makerAsset: NFT,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: DAI,
       takerAmount,
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: NFT_ID,
+      makerAssetId: afterMintLastId,
     };
 
     const signableOrderData = await makerSDK.buildNFTOrder(order);
@@ -637,7 +664,7 @@ describe('NFT Orders', () => {
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
     const NFT_Token = erc20Token1.attach(NFT);
-    const BAT_Token = erc20Token1.attach(BAT);
+    const DAI_Token = erc20Token1.attach(DAI);
 
     const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       maker.address
@@ -646,9 +673,9 @@ describe('NFT Orders', () => {
       taker.address
     );
     const makerTokenERC20InitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await DAI_Token.balanceOf(maker.address);
     const takerTokenERC20InitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(taker.address);
+      await DAI_Token.balanceOf(taker.address);
 
     console.log('balances', {
       makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
@@ -685,7 +712,7 @@ describe('NFT Orders', () => {
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       takerAmount,
-      BAT_Token.address
+      DAI_Token.address
     );
     await awaitTx(approveForTakerTx);
     console.log('Approved taker');
@@ -695,6 +722,8 @@ describe('NFT Orders', () => {
       ...signableOrderData.data, // provides actual order data necessary for the contract
       signature, // necessary for execution in the contract
     };
+
+    console.log('orderWithSignature', orderWithSignature);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -707,17 +736,17 @@ describe('NFT Orders', () => {
     expect(orderWithSignature).toMatchInlineSnapshot(`
       Object {
         "expiry": 1671494400,
-        "maker": "0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf",
+        "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
-        "makerAsset": "4160337194696582883088243970031020643097982653676",
-        "makerAssetId": "9982",
+        "makerAsset": "4113325784796789127675464962779534147786638843029",
+        "makerAssetId": "0",
         "makerAssetType": 2,
         "nonce": 999,
-        "nonceAndMeta": "1460714318943897704263770406787447386424245213697791",
-        "signature": "0xd5e4b726d6f72d591ea7b791eb431649997809a311d35a0493fc0f9130c40a012d2d419e12606ae2bf974c0f9dcdda087658cf3e7fe7b07a8a642e3bd61a8d9f1c",
+        "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
+        "signature": "0xe98b1ba88f8bc5fdbed569540819c9610874b7566916902578d883d0f287a0227170804d2016e5c415a1228b81d15f5ba617be8ce722ad06ca6c2d41acdb4a221b",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
-        "takerAsset": "1250274577517696612136138646343709056755604805814",
+        "takerAsset": "817745300590784142875303110358459115453087653987",
         "takerAssetId": "0",
         "takerAssetType": 0,
       }
@@ -758,9 +787,9 @@ describe('NFT Orders', () => {
     const takerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(taker.address);
     const makerTokenERC20AfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await DAI_Token.balanceOf(maker.address);
     const takerTokenERC20AfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(taker.address);
+      await DAI_Token.balanceOf(taker.address);
 
     console.log('balances after', {
       makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
