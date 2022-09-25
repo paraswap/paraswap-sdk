@@ -85,7 +85,7 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
 );
 
 // mintable by everyone
-const MOCK_NFT = '0xD07Fe849cCfA55E4BF9Df1019C0060e532B75C95';
+const MOCK_NFT = '0xBed7E52112F9e72C097DfF65789f71d62f612A59';
 
 const ganacheProvider = ganache.provider({
   wallet: {
@@ -390,7 +390,7 @@ describe('NFT Orders', () => {
       '0xec8018729db146d5bb20f313028ee765f6737deb4f859cd92c66f371bdb34aad';
     const sdk = constructPartialSDK(
       {
-        chainId: 137,
+        chainId,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
       },
@@ -491,7 +491,7 @@ describe('NFT Orders', () => {
 
     const paraSwap = constructPartialSDK(
       {
-        chainId: 137,
+        chainId,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
         contractCaller: makerEthersContractCaller,
@@ -507,7 +507,6 @@ describe('NFT Orders', () => {
     const makerAmount = '1';
     // for 6 DAI
     const takerAmount = (6e18).toString(10);
-    const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'; // polygon
 
     const nftContract = new ethers.Contract(MOCK_NFT, ERC721MintableABI, maker);
 
@@ -561,7 +560,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 137,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
         "value": "0",
@@ -587,8 +586,6 @@ describe('NFT Orders', () => {
 
     console.log('maker', maker.address, 'taker', taker.address);
 
-    const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'; // polygon
-
     const { balance: daiBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: DAI,
@@ -599,7 +596,7 @@ describe('NFT Orders', () => {
         EthersContract: ethers.Contract,
         account: taker.address,
       },
-      chainId: 137,
+      chainId,
       ethersProvider,
     });
 
@@ -621,7 +618,7 @@ describe('NFT Orders', () => {
 
     const makerSDK = constructPartialSDK(
       {
-        chainId: 137,
+        chainId,
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
@@ -633,7 +630,7 @@ describe('NFT Orders', () => {
 
     const takerSDK = constructPartialSDK(
       {
-        chainId: 137,
+        chainId,
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
@@ -737,15 +734,15 @@ describe('NFT Orders', () => {
         "expiry": 1671494400,
         "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
-        "makerAsset": "4113325784796789127675464962779534147786638843029",
+        "makerAsset": "4012526141304039586042047491653531280956656265817",
         "makerAssetId": "0",
         "makerAssetType": 2,
         "nonce": 999,
         "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
-        "signature": "0xe98b1ba88f8bc5fdbed569540819c9610874b7566916902578d883d0f287a0227170804d2016e5c415a1228b81d15f5ba617be8ce722ad06ca6c2d41acdb4a221b",
+        "signature": "0xd7fb3c983f6e971a31cfb037fe202f31e2a636d99b7c8db45d62a6337e0c569c13e5ae280ec30adcabaa81fda83003444fed22e48f3f6503350ce8194e95f6c31b",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
-        "takerAsset": "817745300590784142875303110358459115453087653987",
+        "takerAsset": "611382286831621467233887798921843936019654057231",
         "takerAssetId": "0",
         "takerAssetType": 0,
       }
