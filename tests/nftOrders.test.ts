@@ -44,6 +44,7 @@ import BigNumber from 'bignumber.js';
 import ERC20MinableABI from './abi/ERC20Mintable.json';
 import ERC721MintableABI from './abi/ERC721Mintable.json';
 import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
+import { bytecode as ERC721MintableBytecode } from './bytecode/ERC721Mintable.json';
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
@@ -83,9 +84,6 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   TEST_MNEMONIC,
   "m/44'/60'/0'/0/1"
 );
-
-// mintable by everyone
-const MOCK_NFT = '0xBed7E52112F9e72C097DfF65789f71d62f612A59';
 
 const ganacheProvider = ganache.provider({
   wallet: {
@@ -150,6 +148,12 @@ const takerWeb3ContractCaller = constructWeb3ContractCaller(
 const ERC20MintableFactory = new ethers.ContractFactory(
   ERC20MinableABI,
   ERC20MintableBytecode,
+  signer
+);
+
+const ERC721MintableFactory = new ethers.ContractFactory(
+  ERC721MintableABI,
+  ERC721MintableBytecode,
   signer
 );
 
@@ -293,6 +297,8 @@ describe('NFT Orders', () => {
 
   let erc20Token1: Contract;
   let erc20Token2: Contract;
+  let erc721Token1: Contract;
+  let erc721Token2: Contract;
 
   let AugustusRFQ: Contract;
 
@@ -328,6 +334,12 @@ describe('NFT Orders', () => {
     await erc20Token1.mint(walletStable2.address, (60e18).toString(10));
     await erc20Token2.mint(walletStable.address, (60e18).toString(10));
     await erc20Token2.mint(walletStable2.address, (60e18).toString(10));
+
+    erc721Token1 = await ERC721MintableFactory.deploy();
+    await erc721Token1.deployTransaction.wait();
+
+    erc721Token2 = await ERC721MintableFactory.deploy();
+    await erc721Token2.deployTransaction.wait();
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -508,7 +520,11 @@ describe('NFT Orders', () => {
     // for 6 DAI
     const takerAmount = (6e18).toString(10);
 
-    const nftContract = new ethers.Contract(MOCK_NFT, ERC721MintableABI, maker);
+    const nftContract = new ethers.Contract(
+      erc721Token1.address,
+      ERC721MintableABI,
+      maker
+    );
 
     await nftContract.mint(maker.address);
     const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
@@ -517,7 +533,7 @@ describe('NFT Orders', () => {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: MOCK_NFT,
+      makerAsset: erc721Token1.address,
       makerAmount,
       takerAsset: DAI,
       takerAmount,
@@ -569,7 +585,6 @@ describe('NFT Orders', () => {
   });
 
   test(`fillNFTOrder through Augustus`, async () => {
-    const NFT = MOCK_NFT;
     // 1 NFT
     const makerAmount = (1).toString(10);
     // for 6 DAI
@@ -577,9 +592,13 @@ describe('NFT Orders', () => {
 
     const maker = walletStable.connect(ethersProvider);
 
-    const nftContract = new ethers.Contract(MOCK_NFT, ERC721MintableABI, maker);
+    const nftContract = new ethers.Contract(
+      erc721Token2.address,
+      ERC721MintableABI,
+      maker
+    );
 
-    await nftContract.mint(maker.address);
+    await (await nftContract.mint(maker.address)).wait();
     const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
 
     const taker = walletStable2.connect(ethersProvider);
@@ -645,7 +664,7 @@ describe('NFT Orders', () => {
       nonce: 999,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token2.address,
       makerAmount,
       takerAsset: DAI,
       takerAmount,
@@ -659,7 +678,7 @@ describe('NFT Orders', () => {
 
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
-    const NFT_Token = erc20Token1.attach(NFT);
+    const NFT_Token = erc20Token1.attach(erc721Token2.address);
     const DAI_Token = erc20Token1.attach(DAI);
 
     const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
@@ -734,12 +753,12 @@ describe('NFT Orders', () => {
         "expiry": 1671494400,
         "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
-        "makerAsset": "4012526141304039586042047491653531280956656265817",
+        "makerAsset": "4315429714524158815340545734471553671933189254538",
         "makerAssetId": "0",
         "makerAssetType": 2,
         "nonce": 999,
         "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
-        "signature": "0xd7fb3c983f6e971a31cfb037fe202f31e2a636d99b7c8db45d62a6337e0c569c13e5ae280ec30adcabaa81fda83003444fed22e48f3f6503350ce8194e95f6c31b",
+        "signature": "0x8153c2960f0e099984e4506808dc461783ab90c6504d00929cbe57d2544830544f2b8523e15b4f5d4c95fc651f0f472a26e73df9073006e4c38382b7e57faf421c",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
         "takerAsset": "611382286831621467233887798921843936019654057231",
