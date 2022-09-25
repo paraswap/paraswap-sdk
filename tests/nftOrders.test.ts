@@ -1145,12 +1145,19 @@ describe('NFT Orders', () => {
       blockNumber: NaN, // will change with time
       srcAmount: '---', //will change based on srcToken/destToken rate
       hmac: '---', // will change with any other change
+      srcUSD: '---',
+      destUSD: '---',
+      gasCostUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({
         ...route,
         swaps: route.swaps.map((swap) => ({
           ...swap,
           swapExchanges: swap.swapExchanges.map((exchange) => ({
             ...exchange,
+            data: {
+              ...exchange.data,
+              gasUSD: '---',
+            },
             srcAmount: '---', //will change based on srcToken/destToken rate
           })),
         })),
@@ -1174,7 +1181,7 @@ describe('NFT Orders', () => {
                     "data": Object {
                       "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                       "feeFactor": 10000,
-                      "gasUSD": "2.718056",
+                      "gasUSD": "---",
                       "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                       "path": Array [
                         "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -1215,9 +1222,9 @@ describe('NFT Orders', () => {
         "destAmount": "6000000000000000000",
         "destDecimals": 18,
         "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
-        "destUSD": "6.0000000000",
+        "destUSD": "---",
         "gasCost": "276300",
-        "gasCostUSD": "4.693742",
+        "gasCostUSD": "---",
         "hmac": "---",
         "maxImpactReached": false,
         "network": 1,
@@ -1227,7 +1234,7 @@ describe('NFT Orders', () => {
         "srcAmount": "---",
         "srcDecimals": 18,
         "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
-        "srcUSD": "6.0107096097",
+        "srcUSD": "---",
         "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
       }
     `);
