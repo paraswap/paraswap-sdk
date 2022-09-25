@@ -69,6 +69,7 @@ const referrer = 'sdk-test';
 // const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const BUSD = '0x4fabb145d64652a948d72533023f6e7a623c7c53';
+const COMP = '0xc00e94cb662c3520282e6f5717214004a7f26888';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
@@ -591,7 +592,7 @@ describe('NFT Orders', () => {
   test(`fillNFTOrder through Augustus`, async () => {
     // 1 NFT
     const makerAmount = (1).toString(10);
-    // for 6 DAI
+    // for 6 COMP
     const takerAmount = (6e18).toString(10);
 
     const maker = walletStable.connect(ethersProvider);
@@ -609,9 +610,9 @@ describe('NFT Orders', () => {
 
     console.log('maker', maker.address, 'taker', taker.address);
 
-    const { balance: daiBalance } = await buyErc20TokenForEth({
+    const { balance: compBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
-      tokenAddress: DAI,
+      tokenAddress: COMP,
       amount: takerAmount,
       signer: taker,
       providerOptions: {
@@ -623,7 +624,7 @@ describe('NFT Orders', () => {
       ethersProvider,
     });
 
-    expect(new BigNumber(daiBalance).gte(takerAmount)).toBeTruthy();
+    expect(new BigNumber(compBalance).gte(takerAmount)).toBeTruthy();
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -670,7 +671,7 @@ describe('NFT Orders', () => {
       maker: maker.address,
       makerAsset: erc721Token2.address,
       makerAmount,
-      takerAsset: DAI,
+      takerAsset: COMP,
       takerAmount,
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
@@ -683,7 +684,7 @@ describe('NFT Orders', () => {
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
     const NFT_Token = erc20Token1.attach(erc721Token2.address);
-    const DAI_Token = erc20Token1.attach(DAI);
+    const COMP_Token = erc20Token1.attach(COMP);
 
     const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       maker.address
@@ -692,9 +693,9 @@ describe('NFT Orders', () => {
       taker.address
     );
     const makerTokenERC20InitBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(maker.address);
+      await COMP_Token.balanceOf(maker.address);
     const takerTokenERC20InitBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(taker.address);
+      await COMP_Token.balanceOf(taker.address);
 
     console.log('balances', {
       makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
@@ -731,7 +732,7 @@ describe('NFT Orders', () => {
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       takerAmount,
-      DAI_Token.address
+      COMP_Token.address
     );
     await awaitTx(approveForTakerTx);
     console.log('Approved taker');
@@ -762,10 +763,10 @@ describe('NFT Orders', () => {
         "makerAssetType": 2,
         "nonce": 999,
         "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
-        "signature": "0x8153c2960f0e099984e4506808dc461783ab90c6504d00929cbe57d2544830544f2b8523e15b4f5d4c95fc651f0f472a26e73df9073006e4c38382b7e57faf421c",
+        "signature": "0x7b097c5d5d07257bbe3c8cc0cfebbd7b178b954ba516da00218a9c383cfc20990ad42c9347a78a3e5984a18bdd0723ce21e91bccce2185da423c8bf1c86d0b6c1c",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
-        "takerAsset": "611382286831621467233887798921843936019654057231",
+        "takerAsset": "1096451400262405796991039590211805051831004063880",
         "takerAssetId": "0",
         "takerAssetType": 0,
       }
@@ -806,9 +807,9 @@ describe('NFT Orders', () => {
     const takerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(taker.address);
     const makerTokenERC20AfterBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(maker.address);
+      await COMP_Token.balanceOf(maker.address);
     const takerTokenERC20AfterBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(taker.address);
+      await COMP_Token.balanceOf(taker.address);
 
     console.log('balances after', {
       makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
