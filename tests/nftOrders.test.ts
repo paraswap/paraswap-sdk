@@ -70,6 +70,8 @@ const referrer = 'sdk-test';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const BUSD = '0x4fabb145d64652a948d72533023f6e7a623c7c53';
 const COMP = '0xc00e94cb662c3520282e6f5717214004a7f26888';
+const AAVE = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
+const MAKER = '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
@@ -301,6 +303,7 @@ describe('NFT Orders', () => {
   let erc721Token1: Contract;
   let erc721Token2: Contract;
   let erc721Token3: Contract;
+  let erc721Token4: Contract;
 
   let AugustusRFQ: Contract;
 
@@ -345,6 +348,9 @@ describe('NFT Orders', () => {
 
     erc721Token3 = await ERC721MintableFactory.deploy();
     await erc721Token3.deployTransaction.wait();
+
+    erc721Token4 = await ERC721MintableFactory.deploy();
+    await erc721Token4.deployTransaction.wait();
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -857,35 +863,40 @@ describe('NFT Orders', () => {
   });
 
   test(`fill NFTOrder+Swap through Augustus`, async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const NFT_ID = '9983';
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
-    // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset) Order
+    // swap AAVE -> MAKER, then fill MAKER (takerAsset) for NFT (makerAsset) Order
 
     // 1 NFT
     const makerAmount = '1';
-    // for 6 BAT
+    // for 6 MAKER
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with NFT
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    // mint NFT for maker
+    const maker = walletStable.connect(ethersProvider);
+
+    const nftContract = new ethers.Contract(
+      erc721Token4.address,
+      ERC721MintableABI,
+      maker
+    );
+
+    await (await nftContract.mint(maker.address)).wait();
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
+
+    // buy some AAVE for taker
+    const taker = walletStable2.connect(ethersProvider);
 
     const order = {
       nonce: 998,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token4.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: MAKER,
       takerAmount,
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: NFT_ID,
+      makerAssetId: afterMintLastId,
     };
 
     console.log('maker', maker.address, 'taker', taker.address);
@@ -934,36 +945,9 @@ describe('NFT Orders', () => {
 
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
-    const NFT_Token = erc20Token1.attach(NFT);
-    const BAT_Token = erc20Token1.attach(BAT);
-    const DAI_Token = erc20Token1.attach(DAI);
-
-    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      maker.address
-    );
-    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      taker.address
-    );
-    const makerERC20TokenInitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
-    const taker3rdTokenInitBalance: BigNumberEthers = await DAI_Token.balanceOf(
-      taker.address
-    );
-
-    console.log('balances', {
-      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
-      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
-      makerERC20TokenInitBalance: new BigNumber(
-        makerERC20TokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      taker3rdTokenInitBalance: new BigNumber(
-        taker3rdTokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
+    const NFT_Token = erc20Token1.attach(erc721Token4.address);
+    const MAKER_Token = erc20Token1.attach(MAKER);
+    const AAVE_Token = erc20Token1.attach(AAVE);
 
     console.log('signature', signature, 'order', signableOrderData.data);
 
@@ -976,16 +960,6 @@ describe('NFT Orders', () => {
     );
 
     await awaitTx(approveForMakerTx);
-
-    // without SDK
-    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
-
-    // withSDK
-    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
-      takerAmount,
-      DAI_Token.address
-    );
-    await awaitTx(approveForTakerTx);
 
     const orderWithSignature = {
       ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
@@ -1003,14 +977,64 @@ describe('NFT Orders', () => {
 
     const priceRoute = await takerSDK.getNFTOrdersRate(
       {
-        srcToken: DAI,
-        destToken: BAT,
+        srcToken: AAVE,
+        destToken: MAKER,
         userAddress: taker.address,
       },
       [order]
     );
 
     console.log('SWAP priceRoute', priceRoute);
+
+    // without SDK
+    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
+
+    const { balance: aaveBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: AAVE,
+      amount: priceRoute.srcAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+      maker.address
+    );
+    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+      taker.address
+    );
+    const makerERC20TokenInitBalance: BigNumberEthers =
+      await MAKER_Token.balanceOf(maker.address);
+    const taker3rdTokenInitBalance: BigNumberEthers =
+      await AAVE_Token.balanceOf(taker.address);
+
+    console.log('balances', {
+      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
+      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
+      makerERC20TokenInitBalance: new BigNumber(
+        makerERC20TokenInitBalance.toString()
+      )
+        .div(1e18)
+        .toString(10),
+      taker3rdTokenInitBalance: new BigNumber(
+        taker3rdTokenInitBalance.toString()
+      )
+        .div(1e18)
+        .toString(10),
+    });
+
+    // withSDK
+    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
+      priceRoute.srcAmount,
+      AAVE_Token.address
+    );
+    await awaitTx(approveForTakerTx);
 
     const swapAndNFTPayloadTxParams = await takerSDK.buildSwapAndNFTOrderTx(
       {
@@ -1034,16 +1058,18 @@ describe('NFT Orders', () => {
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
-    await awaitTx(takerFillsOrderTx);
+    const result = await awaitTx(takerFillsOrderTx);
+    console.log('result', result);
+    debugger;
 
     const makerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(maker.address);
     const takerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(taker.address);
     const makerERC20TokenAfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await MAKER_Token.balanceOf(maker.address);
     const taker3rdTokenAfterBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(taker.address);
+      await AAVE_Token.balanceOf(taker.address);
 
     console.log('balances after', {
       makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
@@ -1081,12 +1107,8 @@ describe('NFT Orders', () => {
         .plus(takerAmount)
         .toString(10)
     );
-    expect(
-      new BigNumber(taker3rdTokenAfterBalance.toString()).toString(10)
-    ).toEqual(
-      new BigNumber(taker3rdTokenInitBalance.toString()) // initial balance
-        .minus(priceRoute.srcAmount) // + swapped destAmount
-        .toString(10)
+    expect(BigInt(taker3rdTokenAfterBalance.toString())).toBeLessThan(
+      BigInt(taker3rdTokenInitBalance.toString()) // can't calculate how much less precisely, because of slippage
     );
   });
 
