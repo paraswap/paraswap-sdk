@@ -68,14 +68,14 @@ const referrer = 'sdk-test';
 
 // const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
-const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
+const BUSD = '0x4fabb145d64652a948d72533023f6e7a623c7c53';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
 const chainId = process.env.CHAIN_ID || 1;
 const srcToken = DAI;
-const destToken = HEX;
+const destToken = BUSD;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
@@ -299,6 +299,7 @@ describe('NFT Orders', () => {
   let erc20Token2: Contract;
   let erc721Token1: Contract;
   let erc721Token2: Contract;
+  let erc721Token3: Contract;
 
   let AugustusRFQ: Contract;
 
@@ -340,6 +341,9 @@ describe('NFT Orders', () => {
 
     erc721Token2 = await ERC721MintableFactory.deploy();
     await erc721Token2.deployTransaction.wait();
+
+    erc721Token3 = await ERC721MintableFactory.deploy();
+    await erc721Token3.deployTransaction.wait();
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -1086,28 +1090,34 @@ describe('NFT Orders', () => {
   });
 
   test('Build_Swap+NFT_Tx', async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
-    // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
+    // swap DAI -> BUSD, then fill BUSD (takerAsset) for NFT (makerAsset)
 
     // 1 NFT
     const makerAmount = (1).toString(10);
-    // for 6 BAT
+    // for 6 BUSD
     const takerAmount = (6e18).toString(10);
+
+    const maker = walletStable.connect(ethersProvider);
+    const nftContract = new ethers.Contract(
+      erc721Token3.address,
+      ERC721MintableABI,
+      maker
+    );
+
+    await (await nftContract.mint(maker.address)).wait();
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
 
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token3.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: BUSD,
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '9982',
+      makerAssetId: afterMintLastId,
     };
 
     // token to get after SWAP must be the takerAsset to allow to fill Order
@@ -1156,34 +1166,41 @@ describe('NFT Orders', () => {
             "swaps": Array [
               Object {
                 "destDecimals": 18,
-                "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
+                "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
                 "srcDecimals": 18,
-                "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
+                "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
                 "swapExchanges": Array [
                   Object {
                     "data": Object {
                       "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                       "feeFactor": 10000,
-                      "gasUSD": "0.000000",
+                      "gasUSD": "2.718056",
                       "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                       "path": Array [
-                        "0xad6d458402f60fd3bd25163575031acdce07538d",
-                        "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
+                        "0x6b175474e89094c44da98b954eedeac495271d0f",
+                        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                        "0x4fabb145d64652a948d72533023f6e7a623c7c53",
                       ],
                       "pools": Array [
                         Object {
-                          "address": "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                          "address": "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
                           "direction": true,
                           "fee": 30,
                         },
+                        Object {
+                          "address": "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
+                          "direction": false,
+                          "fee": 30,
+                        },
                       ],
-                      "router": "0x53e693c6C7FFC4446c53B205Cf513105Bf140D7b",
+                      "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
                     },
                     "destAmount": "6000000000000000000",
                     "exchange": "UniswapV2",
                     "percent": 100,
                     "poolAddresses": Array [
-                      "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                      "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
+                      "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
                     ],
                     "srcAmount": "---",
                   },
@@ -1197,20 +1214,20 @@ describe('NFT Orders', () => {
         "contractMethod": "simpleBuy",
         "destAmount": "6000000000000000000",
         "destDecimals": 18,
-        "destToken": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
-        "destUSD": "0",
-        "gasCost": "0",
-        "gasCostUSD": "0.000000",
+        "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+        "destUSD": "6.0000000000",
+        "gasCost": "276300",
+        "gasCostUSD": "4.693742",
         "hmac": "---",
         "maxImpactReached": false,
-        "network": 3,
+        "network": 1,
         "partner": "anon",
         "partnerFee": 0,
         "side": "BUY",
         "srcAmount": "---",
         "srcDecimals": 18,
-        "srcToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
-        "srcUSD": "0",
+        "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "srcUSD": "6.0107096097",
         "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
       }
     `);
@@ -1239,7 +1256,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
@@ -1273,7 +1290,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
