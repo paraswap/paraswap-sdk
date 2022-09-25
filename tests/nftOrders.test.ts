@@ -67,10 +67,12 @@ const referrer = 'sdk-test';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 
+const UNSPENDABLE_NFT_MATIC = '0xdf2bfa65316117c44f87b6d99caac033b576fa0d'; // Polygon UnspendableNFT, owned by 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
+
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const chainId = 1;
+const chainId = process.env.CHAIN_ID || 1;
 const srcToken = DAI;
 const destToken = HEX;
 
@@ -508,7 +510,7 @@ describe('NFT Orders', () => {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: UNSPENDABLE_NFT_MATIC,
       makerAmount,
       takerAsset: DAI,
       takerAmount,
