@@ -69,8 +69,6 @@ const referrer = 'sdk-test';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 
-const UNSPENDABLE_NFT_MATIC = '0xdf2bfa65316117c44f87b6d99caac033b576fa0d'; // Polygon UnspendableNFT, owned by 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
-
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
@@ -482,12 +480,7 @@ describe('NFT Orders', () => {
   });
 
   test('Build_NFT_Tx', async () => {
-    // wallet.address: 0x0dAC364DF7cfC79d8f4fE31C41198D63f492069C
-    // wallet.mnemonic.phrase: thought media hello thought sheriff section field carry sentence talk acoustic horse victory ankle feature matter spawn physical sauce dinosaur calm notable tobacco kind
-    // wallet.privateKey: 0x223f073153caa1e15e13c4ada8f247cd4d1f39598171bf8189da85a926b71fc2
-    const maker = ethers.Wallet.fromMnemonic(
-      'thought media hello thought sheriff section field carry sentence talk acoustic horse victory ankle feature matter spawn physical sauce dinosaur calm notable tobacco kind'
-    );
+    const maker = walletStable.connect(ethersProvider);
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -515,17 +508,23 @@ describe('NFT Orders', () => {
     // for 6 DAI
     const takerAmount = (6e18).toString(10);
     const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'; // polygon
+
+    const nftContract = new ethers.Contract(MOCK_NFT, ERC721MintableABI, maker);
+
+    await nftContract.mint(maker.address);
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
+
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: UNSPENDABLE_NFT_MATIC,
+      makerAsset: MOCK_NFT,
       makerAmount,
       takerAsset: DAI,
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '0',
+      makerAssetId: afterMintLastId,
     };
 
     const signableOrderData = await paraSwap.buildNFTOrder(order);
