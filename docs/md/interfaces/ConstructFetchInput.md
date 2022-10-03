@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/types.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L23)
+[src/types.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L23)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L24)
+[src/types.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L24)
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/chore/LO_pagination_params/src/types.ts#L47)
+[src/types.ts:47](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L47)
