@@ -60,7 +60,7 @@ import { buyErc20TokenForEth } from './helpers';
 
 dotenv.config();
 
-jest.setTimeout(30 * 1000);
+jest.setTimeout(60 * 1000);
 
 declare let process: any;
 
