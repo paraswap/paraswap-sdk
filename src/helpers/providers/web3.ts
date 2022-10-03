@@ -141,7 +141,6 @@ export const constructContractCaller = (
         }
       );
     });
-    console.log('JsonRpcResponse:', response);
 
     return response.result;
   };
