@@ -357,8 +357,6 @@ describe('Limit Orders', () => {
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
-
-    console.log('AugustusRFQ', AugustusRFQ.address);
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -459,8 +457,6 @@ describe('Limit Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapAndLOPayload', swapAndLOPayload);
-
     expect(swapAndLOPayload).toEqual(expectTxParamsScheme);
     expect({
       from: swapAndLOPayload.from,
@@ -520,8 +516,6 @@ describe('Limit Orders', () => {
     });
 
     expect(new BigNumber(batBalance).gte(takerAmount)).toBeTruthy();
-
-    console.log('maker', maker.address, 'taker', taker.address);
 
     const makerEthersContractCaller = constructEthersContractCaller(
       {
@@ -594,23 +588,6 @@ describe('Limit Orders', () => {
       taker.address
     );
 
-    console.log('balances', {
-      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-    });
-
-    console.log('signature', signature, 'order', signableOrderData.data);
-
     // without SDK
     // await WETH_Token.connect(maker).approve(Augustus.address, makerAmount);
 
@@ -655,16 +632,12 @@ describe('Limit Orders', () => {
         { ignoreChecks: true }
       );
 
-    console.log('LOPayloadTxParams', { gas: payloadGas, ...LOPayloadTxParams });
-
     const transaction = {
       ...LOPayloadTxParams,
       gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
       gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
     };
-
-    console.log('SENDING TX', transaction);
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
@@ -682,21 +655,6 @@ describe('Limit Orders', () => {
     const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
       taker.address
     );
-
-    console.log('balances after', {
-      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-    });
 
     expect(
       new BigNumber(makerToken1AfterBalance.toString()).toString(10)
@@ -784,8 +742,6 @@ describe('Limit Orders', () => {
       taker: taker.address,
     };
 
-    console.log('maker', maker.address, 'taker', taker.address);
-
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -847,23 +803,6 @@ describe('Limit Orders', () => {
       taker.address
     );
 
-    console.log('balances', {
-      makerToken1InitBalance: new BigNumber(makerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken1InitBalance: new BigNumber(takerToken1InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2InitBalance: new BigNumber(makerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2InitBalance: new BigNumber(takerToken2InitBalance.toString())
-        .div(1e18)
-        .toString(10),
-    });
-
-    console.log('signature', signature, 'order', signableOrderData.data);
-
     // without SDK
     // await WETH_Token.connect(maker).approve(Augustus.address, makerAmount);
 
@@ -904,8 +843,6 @@ describe('Limit Orders', () => {
       [order]
     );
 
-    console.log('SWAP priceRoute', priceRoute);
-
     const swapAndLOPayloadTxParams = await takerSDK.buildSwapAndLimitOrderTx(
       {
         priceRoute,
@@ -924,8 +861,6 @@ describe('Limit Orders', () => {
       value: '0x' + new BigNumber(swapAndLOPayloadTxParams.value).toString(16),
     };
 
-    console.log('SENDING TX', transaction);
-
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
     await awaitTx(takerFillsOrderTx);
@@ -942,21 +877,6 @@ describe('Limit Orders', () => {
     const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
       taker.address
     );
-
-    console.log('balances after', {
-      makerToken1AfterBalance: new BigNumber(makerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken1AfterBalance: new BigNumber(takerToken1AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      makerToken2AfterBalance: new BigNumber(makerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-      takerToken2AfterBalance: new BigNumber(takerToken2AfterBalance.toString())
-        .div(1e18)
-        .toString(10),
-    });
 
     expect(
       new BigNumber(makerToken1AfterBalance.toString()).toString(10)
@@ -1025,8 +945,6 @@ describe('Limit Orders', () => {
       [order]
     );
 
-    console.log('priceRoute', priceRoute);
-
     const stablePriceRouteMatch: typeof priceRoute = {
       ...priceRoute,
       blockNumber: NaN, // will change with time
@@ -1067,7 +985,6 @@ describe('Limit Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapTxPayload', swapTxPayload);
     expect(swapTxPayload).toEqual(expectTxParamsScheme);
 
     expect({
@@ -1097,8 +1014,6 @@ describe('Limit Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapAndLOPayload', swapAndLOPayload);
-
     expect(swapAndLOPayload).toEqual(expectTxParamsScheme);
     expect({
       from: swapAndLOPayload.from,
@@ -1121,7 +1036,6 @@ describe('Limit Orders', () => {
     ({ lib, sdk, takerSDK }) => {
       test(`signLimitOrder with ${lib}`, async () => {
         const signableOrderData = await sdk.buildLimitOrder(orderInput);
-        console.log('🚀 orderInput', signableOrderData.data);
 
         const signature = await sdk.signLimitOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
@@ -1229,16 +1143,12 @@ describe('Limit Orders', () => {
       signature,
     };
 
-    console.log('🚀 orderWithSignature', orderWithSignature);
-
     const newOrder = await paraSwap.postLimitOrder(orderWithSignature);
-    console.log('🚀 newOrder from API', newOrder);
 
     const recoveredAddress = ethers.utils.recoverAddress(
       newOrder.orderHash,
       signature
     );
-    console.log('🚀 recoveredAddress', recoveredAddress);
 
     expect(recoveredAddress).toEqual(senderAddress);
 

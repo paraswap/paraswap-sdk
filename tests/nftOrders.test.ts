@@ -390,8 +390,6 @@ describe('NFT Orders', () => {
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
-
-    console.log('AugustusRFQ', AugustusRFQ.address);
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -564,8 +562,6 @@ describe('NFT Orders', () => {
       // extra stuff will be removed before POSTing to /transaction
     };
 
-    console.log('orderWithSignature', orderWithSignature);
-
     const swapAndNFTPayload = await paraSwap.buildNFTOrderTx(
       {
         srcDecimals: 18,
@@ -575,8 +571,6 @@ describe('NFT Orders', () => {
       },
       { ignoreChecks: true }
     );
-
-    console.log('swapAndNFTPayload', swapAndNFTPayload);
 
     expect(swapAndNFTPayload).toEqual(expectTxParamsScheme);
     expect({
@@ -613,8 +607,6 @@ describe('NFT Orders', () => {
     const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
 
     const taker = walletStable2.connect(ethersProvider);
-
-    console.log('maker', maker.address, 'taker', taker.address);
 
     const { balance: compBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
@@ -703,23 +695,6 @@ describe('NFT Orders', () => {
     const takerTokenERC20InitBalance: BigNumberEthers =
       await COMP_Token.balanceOf(taker.address);
 
-    console.log('balances', {
-      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
-      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
-      makerTokenERC20InitBalance: new BigNumber(
-        makerTokenERC20InitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      takerTokenERC20InitBalance: new BigNumber(
-        takerTokenERC20InitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
-
-    console.log('signature', signature, 'order', signableOrderData.data);
-
     // without SDK
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
@@ -730,8 +705,6 @@ describe('NFT Orders', () => {
 
     await awaitTx(approveForMakerTx);
 
-    console.log('Approved maker');
-
     // without SDK
     // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
 
@@ -741,15 +714,12 @@ describe('NFT Orders', () => {
       COMP_Token.address
     );
     await awaitTx(approveForTakerTx);
-    console.log('Approved taker');
 
     const orderWithSignature = {
       ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
       ...signableOrderData.data, // provides actual order data necessary for the contract
       signature, // necessary for execution in the contract
     };
-
-    console.log('orderWithSignature', orderWithSignature);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -790,19 +760,12 @@ describe('NFT Orders', () => {
         { ignoreChecks: true }
       );
 
-    console.log('NFTPayloadTxParams', {
-      gas: payloadGas,
-      ...NFTPayloadTxParams,
-    });
-
     const transaction: ethers.providers.TransactionRequest = {
       ...NFTPayloadTxParams,
       gasPrice: '0x' + new BigNumber(NFTPayloadTxParams.gasPrice).toString(16),
       gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(NFTPayloadTxParams.value).toString(16),
     };
-
-    console.log('SENDING TX', transaction);
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
@@ -816,21 +779,6 @@ describe('NFT Orders', () => {
       await COMP_Token.balanceOf(maker.address);
     const takerTokenERC20AfterBalance: BigNumberEthers =
       await COMP_Token.balanceOf(taker.address);
-
-    console.log('balances after', {
-      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
-      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
-      makerTokenERC20AfterBalance: new BigNumber(
-        makerTokenERC20AfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      takerTokenERC20AfterBalance: new BigNumber(
-        takerTokenERC20AfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
 
     expect(
       new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
@@ -899,8 +847,6 @@ describe('NFT Orders', () => {
       makerAssetId: afterMintLastId,
     };
 
-    console.log('maker', maker.address, 'taker', taker.address);
-
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -949,8 +895,6 @@ describe('NFT Orders', () => {
     const MAKER_Token = erc20Token1.attach(MAKER);
     const AAVE_Token = erc20Token1.attach(AAVE);
 
-    console.log('signature', signature, 'order', signableOrderData.data);
-
     // without SDK
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
@@ -984,8 +928,6 @@ describe('NFT Orders', () => {
       [order]
     );
 
-    console.log('SWAP priceRoute', priceRoute);
-
     // without SDK
     // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
 
@@ -1014,21 +956,6 @@ describe('NFT Orders', () => {
     const taker3rdTokenInitBalance: BigNumberEthers =
       await AAVE_Token.balanceOf(taker.address);
 
-    console.log('balances', {
-      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
-      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
-      makerERC20TokenInitBalance: new BigNumber(
-        makerERC20TokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      taker3rdTokenInitBalance: new BigNumber(
-        taker3rdTokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
-
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       priceRoute.srcAmount,
@@ -1054,13 +981,9 @@ describe('NFT Orders', () => {
       value: '0x' + new BigNumber(swapAndNFTPayloadTxParams.value).toString(16),
     };
 
-    console.log('SENDING TX', transaction);
-
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
     const result = await awaitTx(takerFillsOrderTx);
-    console.log('result', result);
-    debugger;
 
     const makerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(maker.address);
@@ -1070,21 +993,6 @@ describe('NFT Orders', () => {
       await MAKER_Token.balanceOf(maker.address);
     const taker3rdTokenAfterBalance: BigNumberEthers =
       await AAVE_Token.balanceOf(taker.address);
-
-    console.log('balances after', {
-      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
-      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
-      makerERC20TokenAfterBalance: new BigNumber(
-        makerERC20TokenAfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      taker3rdTokenAfterBalance: new BigNumber(
-        taker3rdTokenAfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
 
     expect(
       new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
@@ -1160,8 +1068,6 @@ describe('NFT Orders', () => {
       },
       [order]
     );
-
-    console.log('priceRoute', priceRoute);
 
     const stablePriceRouteMatch: typeof priceRoute = {
       ...priceRoute,
@@ -1275,7 +1181,6 @@ describe('NFT Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapTxPayload', swapTxPayload);
     expect(swapTxPayload).toEqual(expectTxParamsScheme);
 
     expect({
@@ -1309,8 +1214,6 @@ describe('NFT Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapAndNFTPayload', swapAndNFTPayload);
-
     expect(swapAndNFTPayload).toEqual(expectTxParamsScheme);
     expect({
       from: swapAndNFTPayload.from,
@@ -1333,7 +1236,6 @@ describe('NFT Orders', () => {
     ({ lib, sdk, takerSDK }) => {
       test(`signNFTOrder with ${lib}`, async () => {
         const signableOrderData = await sdk.buildNFTOrder(orderInput);
-        console.log('🚀 orderInput', signableOrderData.data);
 
         const signature = await sdk.signNFTOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
@@ -1447,16 +1349,12 @@ describe('NFT Orders', () => {
       signature,
     };
 
-    console.log('🚀 orderWithSignature', orderWithSignature);
-
     const newOrder = await paraSwap.postNFTLimitOrder(orderWithSignature);
-    console.log('🚀 newOrder from API', newOrder);
 
     const recoveredAddress = ethers.utils.recoverAddress(
       newOrder.orderHash,
       signature
     );
-    console.log('🚀 recoveredAddress', recoveredAddress);
 
     expect(recoveredAddress).toEqual(senderAddress);
 
