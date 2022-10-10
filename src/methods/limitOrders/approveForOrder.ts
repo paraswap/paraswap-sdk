@@ -2,7 +2,6 @@ import type { ConstructProviderFetchInput } from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
 import { constructApproveToken } from '../swap/approve';
 import { constructGetSpender } from '../swap/spender';
-import { runOnceAndCache } from '../../helpers/misc';
 
 export type ApproveTokenForLimitOrderFunctions<T> = {
   /** @description approving AugustusRFQ as spender for makerAsset */
@@ -16,11 +15,9 @@ export type ApproveTokenForLimitOrderFunctions<T> = {
 export const constructApproveTokenForLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenForLimitOrderFunctions<T> => {
-  const { getAugustusRFQ: _getAugustusRFQ } = constructGetSpender(options);
-
-  // cached for the same instance of `approveMakerTokenForLimitOrder = constructApproveTokenForLimitOrder()`
+  // getAugustusRFQ is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getAugustusRFQ = runOnceAndCache(_getAugustusRFQ);
+  const { getAugustusRFQ } = constructGetSpender(options);
 
   const approveMakerTokenForLimitOrder: ApproveToken<T> =
     approveTokenMethodFactory<T>(options.contractCaller, getAugustusRFQ);

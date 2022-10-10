@@ -28,7 +28,8 @@ type BuildSwapAndLimitOrdersTx = (
 type MinBuildLimitOrderTxInput = Omit<
   BuildLimitOrderTxInput,
   // these are derived from `orders`
-  'srcToken' | 'srcAmount' | 'destToken'
+  'srcToken' | 'srcAmount' | 'destToken' | 'slippage'
+  // `slippage` doesn't participate as we derive `srcAmount` already
 >;
 
 type BuildLimitOrdersTx = (
@@ -122,6 +123,7 @@ export const constructBuildLimitOrderTx = ({
       ...params,
       // taker supplies takerAsset
       srcToken: takerAsset,
+      // no `slippage` in `params`
       srcAmount: totalTakerAmount.toString(10),
       // taker gets makerAsset in the end
       destToken: makerAsset,
@@ -129,6 +131,7 @@ export const constructBuildLimitOrderTx = ({
 
     return buildSwapTx(fillParams, options, signal);
   };
+
   const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = (
     params,
     options,
@@ -140,11 +143,16 @@ export const constructBuildLimitOrderTx = ({
       ...params,
       // taker supplies srcToken
       srcToken: params.priceRoute.srcToken,
-      srcAmount: params.priceRoute.srcAmount,
       // which is swapped for makerAsset, that would go towards filling the orders
       destToken: makerAsset,
       destDecimals: params.priceRoute.destDecimals,
+      // one or the other
+      ...(params.slippage
+        ? { slippage: params.slippage }
+        : //                                        may sneak in as part of `params`
+          { srcAmount: params.priceRoute.srcAmount, slippage: undefined }),
     };
+
     return buildSwapTx(fillParams, options, signal);
   };
 

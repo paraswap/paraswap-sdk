@@ -1,4 +1,4 @@
-import { ExtractAbiMethodNames, runOnceAndCache } from '../../helpers/misc';
+import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 
@@ -56,11 +56,9 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 export const constructCancelLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): CancelLimitOrderFunctions<T> => {
-  const { getAugustusRFQ: _getAugustusRFQ } = constructGetSpender(options);
-
-  // cached for the same instance of `cancelLimitOrder = constructCancelLimitOrder()`
+  // getAugustusRFQ is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getAugustusRFQ = runOnceAndCache(_getAugustusRFQ);
+  const { getAugustusRFQ } = constructGetSpender(options);
 
   const cancelLimitOrder: CancelOrder<T> = async (
     orderHash,

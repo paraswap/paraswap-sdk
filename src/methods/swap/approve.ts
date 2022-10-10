@@ -6,7 +6,6 @@ import type {
   PriceString,
 } from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
-import { runOnceAndCache } from '../../helpers/misc';
 
 type ApproveTokenBulk<T> = (
   amount: PriceString,
@@ -25,10 +24,9 @@ export type ApproveTokenFunctions<T> = {
 export const constructApproveToken = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenFunctions<T> => {
-  const { getSpender: _getSpender } = constructGetSpender(options);
-  // cached for the same instance of `approveToken = constructApproveToken()`
+  // getSpender is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getSpender = runOnceAndCache(_getSpender);
+  const { getSpender } = constructGetSpender(options);
 
   const approveToken: ApproveToken<T> = approveTokenMethodFactory<T>(
     options.contractCaller,

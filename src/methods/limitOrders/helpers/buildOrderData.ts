@@ -63,8 +63,8 @@ export function buildOrderData({
   maker,
   AugustusAddress,
   // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
-  // if taker is not specified -- limitOrder for anyone to fill through Augustus -- taker = Augustus, takerInNonce = Zero
-  taker: takerInNonce = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
+  // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
+  taker: takerInNonce = ZERO_ADDRESS,
 }: BuildOrderDataInput): SignableOrderData {
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
@@ -73,44 +73,9 @@ export function buildOrderData({
     (BigInt(nonce) << BigInt(160))
   ).toString(10);
 
-  const order: OrderData = {
-    nonceAndMeta,
-    expiry,
-    makerAsset,
-    takerAsset,
-    maker,
-    taker: AugustusAddress,
-    makerAmount,
-    takerAmount,
-  };
-
-  return {
-    types: { Order },
-    domain: { name, version, chainId, verifyingContract },
-    data: order,
-  };
-}
-
-/** @deprecated use buildOrderData */
-export function buildDirectOrderData({
-  chainId,
-  verifyingContract,
-  nonce = getRandomInt(),
-  expiry,
-  makerAsset,
-  takerAsset,
-  makerAmount,
-  takerAmount,
-  maker,
-  // for orders directly through AugustusRFQ taker can be 0 or another user
-  taker: takerInNonce = ZERO_ADDRESS,
-}: Omit<BuildOrderDataInput, 'AugustusAddress'>): SignableOrderData {
-  // first 160 bits is taker address (for p2p orders),
-  // or 0 for limitOrders, so that anyone can be the taker of the Order
-  const nonceAndMeta = (
-    BigInt(takerInNonce) +
-    (BigInt(nonce) << BigInt(160))
-  ).toString();
+  // no takerInNonce -> not p2p order -> allow anyone to fill (not only Augustus)
+  // otherwise p2p order -> fill through Augustus only
+  const taker = takerInNonce === ZERO_ADDRESS ? ZERO_ADDRESS : AugustusAddress;
 
   const order: OrderData = {
     nonceAndMeta,
@@ -118,7 +83,7 @@ export function buildDirectOrderData({
     makerAsset,
     takerAsset,
     maker,
-    taker: takerInNonce,
+    taker,
     makerAmount,
     takerAmount,
   };

@@ -42,7 +42,9 @@ import {
 import BigNumber from 'bignumber.js';
 
 import ERC20MinableABI from './abi/ERC20Mintable.json';
+import ERC721MintableABI from './abi/ERC721Mintable.json';
 import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
+import { bytecode as ERC721MintableBytecode } from './bytecode/ERC721Mintable.json';
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
@@ -54,10 +56,11 @@ import {
 } from '../src/methods/nftOrders/buildOrder';
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
+import { buyErc20TokenForEth } from './helpers';
 
 dotenv.config();
 
-jest.setTimeout(30 * 1000);
+jest.setTimeout(60 * 1000);
 
 declare let process: any;
 
@@ -65,19 +68,17 @@ const referrer = 'sdk-test';
 
 // const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
-const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
+const BUSD = '0x4fabb145d64652a948d72533023f6e7a623c7c53';
+const COMP = '0xc00e94cb662c3520282e6f5717214004a7f26888';
+const AAVE = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
+const MAKER = '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const chainId = 3; // @TODO return to mainnet
-
-const PROVIDER_URL: string = process.env.PROVIDER_URL.replace(
-  'mainnet',
-  'ropsten'
-).replace(/\/1$/, `/${chainId}`);
+const chainId = process.env.CHAIN_ID || 1;
 const srcToken = DAI;
-const destToken = HEX;
+const destToken = BUSD;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
@@ -90,12 +91,18 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
 const ganacheProvider = ganache.provider({
   wallet: {
     accounts: [
-      { balance: 80e18, secretKey: walletStable.privateKey },
-      { balance: 80e18, secretKey: walletStable2.privateKey },
+      {
+        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
+        secretKey: walletStable.privateKey,
+      },
+      {
+        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
+        secretKey: walletStable2.privateKey,
+      },
     ],
   },
   fork: {
-    url: PROVIDER_URL,
+    url: process.env.PROVIDER_URL,
   },
   chain: {
     chainId,
@@ -144,6 +151,12 @@ const takerWeb3ContractCaller = constructWeb3ContractCaller(
 const ERC20MintableFactory = new ethers.ContractFactory(
   ERC20MinableABI,
   ERC20MintableBytecode,
+  signer
+);
+
+const ERC721MintableFactory = new ethers.ContractFactory(
+  ERC721MintableABI,
+  ERC721MintableBytecode,
   signer
 );
 
@@ -287,6 +300,10 @@ describe('NFT Orders', () => {
 
   let erc20Token1: Contract;
   let erc20Token2: Contract;
+  let erc721Token1: Contract;
+  let erc721Token2: Contract;
+  let erc721Token3: Contract;
+  let erc721Token4: Contract;
 
   let AugustusRFQ: Contract;
 
@@ -323,6 +340,18 @@ describe('NFT Orders', () => {
     await erc20Token2.mint(walletStable.address, (60e18).toString(10));
     await erc20Token2.mint(walletStable2.address, (60e18).toString(10));
 
+    erc721Token1 = await ERC721MintableFactory.deploy();
+    await erc721Token1.deployTransaction.wait();
+
+    erc721Token2 = await ERC721MintableFactory.deploy();
+    await erc721Token2.deployTransaction.wait();
+
+    erc721Token3 = await ERC721MintableFactory.deploy();
+    await erc721Token3.deployTransaction.wait();
+
+    erc721Token4 = await ERC721MintableFactory.deploy();
+    await erc721Token4.deployTransaction.wait();
+
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
       [
@@ -356,13 +385,11 @@ describe('NFT Orders', () => {
       constructBuildTx
     );
 
-    AugustusRFQ = await AugustusRFQFactory.attach(
+    AugustusRFQ = AugustusRFQFactory.attach(
       await paraSwap.getNFTOrdersContract()
     );
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
-
-    console.log('AugustusRFQ', AugustusRFQ.address);
   });
 
   // takes care of `there are asynchronous operations that weren't stopped in your tests`
@@ -375,16 +402,16 @@ describe('NFT Orders', () => {
     const augustusRFQAddress = await paraSwap.getNFTOrdersContract();
 
     expect(augustusRFQAddress).toMatchInlineSnapshot(
-      `"0x34268C38fcbC798814b058656bC0156C7511c0E4"`
+      `"0xe92b586627ccA7a83dC919cc7127196d70f55a06"`
     );
   });
 
   test('get NFT order by hash', async () => {
     const knownOrderHash =
-      '0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33';
+      '0xec8018729db146d5bb20f313028ee765f6737deb4f859cd92c66f371bdb34aad';
     const sdk = constructPartialSDK(
       {
-        chainId: 137,
+        chainId,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
       },
@@ -395,27 +422,26 @@ describe('NFT Orders', () => {
     expect(order).toMatchInlineSnapshot(`
       Object {
         "chainId": 137,
-        "createdAt": 1655458765,
-        "expiry": 1658050764,
-        "fillableBalance": "1",
+        "createdAt": 1658989256,
+        "expiry": 1658992856,
+        "fillableBalance": "0",
         "maker": "0x112f39ea2ccff2d088086590d11cd9f092954f77",
         "makerAmount": "1",
-        "makerAsset": "0xcd494673999194365033d7a287af9f0a3b163874",
-        "makerAssetId": "1028",
-        "makerAssetType": 2,
-        "makerBalance": "1",
-        "nonceAndMeta": "7616951480031442449908195926141502897956149438841392803682297026303",
-        "orderHash": "0x3ee1eb8574ff323df374ab0d09f6fe968c8cec301d4711ebc37d899d8b30eb33",
+        "makerAsset": "0x235be10a7fb69727b4a907b0a957a716c7c14c13",
+        "makerAssetId": "2",
+        "makerAssetType": 1,
+        "nonceAndMeta": "20622990137246266303598744434210481256286975629423071997844118496006",
+        "orderHash": "0xec8018729db146d5bb20f313028ee765f6737deb4f859cd92c66f371bdb34aad",
         "permitMakerAsset": null,
-        "signature": "0x1d0ba657f90512b62f1026812b4718ca6f0868919181d069ec7d8258c3ab5e3c449b462de619114faea0569002e850c879b09a6964d9863c192023c9b297ca051c",
-        "state": "PENDING",
+        "signature": "0x028a2b4dbb6695c46ec432cac2952575c047f55b7e87be7cc5b28e6951200a8d4cbdb82d1a1a2506d59eba979e16c2c25e815d25a5bb840646881797f8d251941c",
+        "state": "FULFILLED",
         "taker": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
-        "takerAmount": "654",
+        "takerAmount": "1000",
         "takerAsset": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
         "takerAssetId": "0",
         "takerAssetType": 0,
-        "takerFromMeta": "0x76176c2971300217e9f48e3dd4e40591500b96ff",
-        "transactionHash": null,
+        "takerFromMeta": "0x7ba594df3161729bf2e68a9d0a11dceb57a2e306",
+        "transactionHash": "0x44ff478136d857d620a7704d19083e0ff8f24021d9612fb8a0b6bcb9558ffcd3",
         "type": "P2P",
       }
     `);
@@ -475,27 +501,54 @@ describe('NFT Orders', () => {
   });
 
   test('Build_NFT_Tx', async () => {
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
+    const maker = walletStable.connect(ethersProvider);
+    const makerEthersContractCaller = constructEthersContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      maker.address
+    );
+
+    const paraSwap = constructPartialSDK(
+      {
+        chainId,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        contractCaller: makerEthersContractCaller,
+      },
+      constructBuildNFTOrder,
+      constructSignNFTOrder,
+      constructBuildNFTOrderTx
+    );
 
     // swap NFT -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
 
     // 1 NFT
     const makerAmount = '1';
-    // for 6 BAT
+    // for 6 DAI
     const takerAmount = (6e18).toString(10);
+
+    const nftContract = new ethers.Contract(
+      erc721Token1.address,
+      ERC721MintableABI,
+      maker
+    );
+
+    await nftContract.mint(maker.address);
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
 
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token1.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: DAI,
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '9982',
+      makerAssetId: afterMintLastId,
     };
 
     const signableOrderData = await paraSwap.buildNFTOrder(order);
@@ -519,8 +572,6 @@ describe('NFT Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapAndNFTPayload', swapAndNFTPayload);
-
     expect(swapAndNFTPayload).toEqual(expectTxParamsScheme);
     expect({
       from: swapAndNFTPayload.from,
@@ -530,7 +581,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
         "value": "0",
@@ -539,22 +590,39 @@ describe('NFT Orders', () => {
   });
 
   test(`fillNFTOrder through Augustus`, async () => {
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const NFT_ID = '9982';
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
     // 1 NFT
     const makerAmount = (1).toString(10);
-    // for 6 BAT
+    // for 6 COMP
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with NFT
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    const maker = walletStable.connect(ethersProvider);
 
-    console.log('maker', maker.address, 'taker', taker.address);
+    const nftContract = new ethers.Contract(
+      erc721Token2.address,
+      ERC721MintableABI,
+      maker
+    );
 
+    await (await nftContract.mint(maker.address)).wait();
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
+
+    const taker = walletStable2.connect(ethersProvider);
+
+    const { balance: compBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: COMP,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    expect(new BigNumber(compBalance).gte(takerAmount)).toBeTruthy();
     const makerEthersContractCaller = constructEthersContractCaller(
       {
         ethersProviderOrSigner: maker,
@@ -599,22 +667,22 @@ describe('NFT Orders', () => {
       nonce: 999,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token2.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: COMP,
       takerAmount,
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: NFT_ID,
+      makerAssetId: afterMintLastId,
     };
 
     const signableOrderData = await makerSDK.buildNFTOrder(order);
 
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
-    const NFT_Token = erc20Token1.attach(NFT);
-    const BAT_Token = erc20Token1.attach(BAT);
+    const NFT_Token = erc20Token1.attach(erc721Token2.address);
+    const COMP_Token = erc20Token1.attach(COMP);
 
     const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
       maker.address
@@ -623,26 +691,9 @@ describe('NFT Orders', () => {
       taker.address
     );
     const makerTokenERC20InitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await COMP_Token.balanceOf(maker.address);
     const takerTokenERC20InitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(taker.address);
-
-    console.log('balances', {
-      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
-      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
-      makerTokenERC20InitBalance: new BigNumber(
-        makerTokenERC20InitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      takerTokenERC20InitBalance: new BigNumber(
-        takerTokenERC20InitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
-
-    console.log('signature', signature, 'order', signableOrderData.data);
+      await COMP_Token.balanceOf(taker.address);
 
     // without SDK
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
@@ -654,18 +705,15 @@ describe('NFT Orders', () => {
 
     await awaitTx(approveForMakerTx);
 
-    console.log('Approved maker');
-
     // without SDK
     // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
       takerAmount,
-      BAT_Token.address
+      COMP_Token.address
     );
     await awaitTx(approveForTakerTx);
-    console.log('Approved taker');
 
     const orderWithSignature = {
       ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
@@ -684,17 +732,17 @@ describe('NFT Orders', () => {
     expect(orderWithSignature).toMatchInlineSnapshot(`
       Object {
         "expiry": 1671494400,
-        "maker": "0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf",
+        "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
-        "makerAsset": "4160337194696582883088243970031020643097982653676",
-        "makerAssetId": "9982",
+        "makerAsset": "4315429714524158815340545734471553671933189254538",
+        "makerAssetId": "0",
         "makerAssetType": 2,
         "nonce": 999,
-        "nonceAndMeta": "1460714318943897704263770406787447386424245213697791",
-        "signature": "0xd5e4b726d6f72d591ea7b791eb431649997809a311d35a0493fc0f9130c40a012d2d419e12606ae2bf974c0f9dcdda087658cf3e7fe7b07a8a642e3bd61a8d9f1c",
+        "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
+        "signature": "0x7b097c5d5d07257bbe3c8cc0cfebbd7b178b954ba516da00218a9c383cfc20990ad42c9347a78a3e5984a18bdd0723ce21e91bccce2185da423c8bf1c86d0b6c1c",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
-        "takerAsset": "1250274577517696612136138646343709056755604805814",
+        "takerAsset": "1096451400262405796991039590211805051831004063880",
         "takerAssetId": "0",
         "takerAssetType": 0,
       }
@@ -712,19 +760,12 @@ describe('NFT Orders', () => {
         { ignoreChecks: true }
       );
 
-    console.log('NFTPayloadTxParams', {
-      gas: payloadGas,
-      ...NFTPayloadTxParams,
-    });
-
     const transaction: ethers.providers.TransactionRequest = {
       ...NFTPayloadTxParams,
       gasPrice: '0x' + new BigNumber(NFTPayloadTxParams.gasPrice).toString(16),
       gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(NFTPayloadTxParams.value).toString(16),
     };
-
-    console.log('SENDING TX', transaction);
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
@@ -735,24 +776,9 @@ describe('NFT Orders', () => {
     const takerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(taker.address);
     const makerTokenERC20AfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await COMP_Token.balanceOf(maker.address);
     const takerTokenERC20AfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(taker.address);
-
-    console.log('balances after', {
-      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
-      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
-      makerTokenERC20AfterBalance: new BigNumber(
-        makerTokenERC20AfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      takerTokenERC20AfterBalance: new BigNumber(
-        takerTokenERC20AfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
+      await COMP_Token.balanceOf(taker.address);
 
     expect(
       new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
@@ -785,38 +811,41 @@ describe('NFT Orders', () => {
   });
 
   test(`fill NFTOrder+Swap through Augustus`, async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const NFT_ID = '9983';
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
-    // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset) Order
+    // swap AAVE -> MAKER, then fill MAKER (takerAsset) for NFT (makerAsset) Order
 
     // 1 NFT
     const makerAmount = '1';
-    // for 6 BAT
+    // for 6 MAKER
     const takerAmount = (6e18).toString(10);
 
-    // @TODO get account with NFT
-    const maker = new ethers.Wallet(process.env.PK1, ethersProvider);
-    // @TODO get account with BAT
-    const taker = new ethers.Wallet(process.env.PK2, ethersProvider);
+    // mint NFT for maker
+    const maker = walletStable.connect(ethersProvider);
+
+    const nftContract = new ethers.Contract(
+      erc721Token4.address,
+      ERC721MintableABI,
+      maker
+    );
+
+    await (await nftContract.mint(maker.address)).wait();
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
+
+    // buy some AAVE for taker
+    const taker = walletStable2.connect(ethersProvider);
 
     const order = {
       nonce: 998,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token4.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: MAKER,
       takerAmount,
       taker: taker.address,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: NFT_ID,
+      makerAssetId: afterMintLastId,
     };
-
-    console.log('maker', maker.address, 'taker', taker.address);
 
     const makerEthersContractCaller = constructEthersContractCaller(
       {
@@ -862,38 +891,9 @@ describe('NFT Orders', () => {
 
     const signature = await makerSDK.signNFTOrder(signableOrderData);
 
-    const NFT_Token = erc20Token1.attach(NFT);
-    const BAT_Token = erc20Token1.attach(BAT);
-    const DAI_Token = erc20Token1.attach(DAI);
-
-    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      maker.address
-    );
-    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
-      taker.address
-    );
-    const makerERC20TokenInitBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
-    const taker3rdTokenInitBalance: BigNumberEthers = await DAI_Token.balanceOf(
-      taker.address
-    );
-
-    console.log('balances', {
-      makerTokenNFTInitBalance: makerTokenNFTInitBalance.toString(),
-      takerTokenNFTInitBalance: takerTokenNFTInitBalance.toString(),
-      makerERC20TokenInitBalance: new BigNumber(
-        makerERC20TokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      taker3rdTokenInitBalance: new BigNumber(
-        taker3rdTokenInitBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
-
-    console.log('signature', signature, 'order', signableOrderData.data);
+    const NFT_Token = erc20Token1.attach(erc721Token4.address);
+    const MAKER_Token = erc20Token1.attach(MAKER);
+    const AAVE_Token = erc20Token1.attach(AAVE);
 
     // without SDK
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
@@ -904,16 +904,6 @@ describe('NFT Orders', () => {
     );
 
     await awaitTx(approveForMakerTx);
-
-    // without SDK
-    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
-
-    // withSDK
-    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
-      takerAmount,
-      DAI_Token.address
-    );
-    await awaitTx(approveForTakerTx);
 
     const orderWithSignature = {
       ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
@@ -931,14 +921,47 @@ describe('NFT Orders', () => {
 
     const priceRoute = await takerSDK.getNFTOrdersRate(
       {
-        srcToken: DAI,
-        destToken: BAT,
+        srcToken: AAVE,
+        destToken: MAKER,
         userAddress: taker.address,
       },
       [order]
     );
 
-    console.log('SWAP priceRoute', priceRoute);
+    // without SDK
+    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
+
+    const { balance: aaveBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: AAVE,
+      amount: priceRoute.srcAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider,
+    });
+
+    const makerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+      maker.address
+    );
+    const takerTokenNFTInitBalance: BigNumberEthers = await NFT_Token.balanceOf(
+      taker.address
+    );
+    const makerERC20TokenInitBalance: BigNumberEthers =
+      await MAKER_Token.balanceOf(maker.address);
+    const taker3rdTokenInitBalance: BigNumberEthers =
+      await AAVE_Token.balanceOf(taker.address);
+
+    // withSDK
+    const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
+      priceRoute.srcAmount,
+      AAVE_Token.address
+    );
+    await awaitTx(approveForTakerTx);
 
     const swapAndNFTPayloadTxParams = await takerSDK.buildSwapAndNFTOrderTx(
       {
@@ -958,35 +981,18 @@ describe('NFT Orders', () => {
       value: '0x' + new BigNumber(swapAndNFTPayloadTxParams.value).toString(16),
     };
 
-    console.log('SENDING TX', transaction);
-
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
-    await awaitTx(takerFillsOrderTx);
+    const result = await awaitTx(takerFillsOrderTx);
 
     const makerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(maker.address);
     const takerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(taker.address);
     const makerERC20TokenAfterBalance: BigNumberEthers =
-      await BAT_Token.balanceOf(maker.address);
+      await MAKER_Token.balanceOf(maker.address);
     const taker3rdTokenAfterBalance: BigNumberEthers =
-      await DAI_Token.balanceOf(taker.address);
-
-    console.log('balances after', {
-      makerTokenNFTAfterBalance: makerTokenNFTAfterBalance.toString(),
-      takerTokenNFTAfterBalance: takerTokenNFTAfterBalance.toString(),
-      makerERC20TokenAfterBalance: new BigNumber(
-        makerERC20TokenAfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-      taker3rdTokenAfterBalance: new BigNumber(
-        taker3rdTokenAfterBalance.toString()
-      )
-        .div(1e18)
-        .toString(10),
-    });
+      await AAVE_Token.balanceOf(taker.address);
 
     expect(
       new BigNumber(makerTokenNFTAfterBalance.toString()).toString(10)
@@ -1009,38 +1015,40 @@ describe('NFT Orders', () => {
         .plus(takerAmount)
         .toString(10)
     );
-    expect(
-      new BigNumber(taker3rdTokenAfterBalance.toString()).toString(10)
-    ).toEqual(
-      new BigNumber(taker3rdTokenInitBalance.toString()) // initial balance
-        .minus(priceRoute.srcAmount) // + swapped destAmount
-        .toString(10)
+    expect(BigInt(taker3rdTokenAfterBalance.toString())).toBeLessThan(
+      BigInt(taker3rdTokenInitBalance.toString()) // can't calculate how much less precisely, because of slippage
     );
   });
 
   test('Build_Swap+NFT_Tx', async () => {
-    const DAI = '0xaD6D458402F60fD3Bd25163575031ACDce07538D'; // Ropsten
-    const NFT = '0xd8bbF8cEb445De814Fb47547436b3CFeecaDD4ec'; // Ropsten
-    const BAT = '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6'; // Ropsten
-
-    // swap DAI -> BAT, then fill BAT (takerAsset) for NFT (makerAsset)
+    // swap DAI -> BUSD, then fill BUSD (takerAsset) for NFT (makerAsset)
 
     // 1 NFT
     const makerAmount = (1).toString(10);
-    // for 6 BAT
+    // for 6 BUSD
     const takerAmount = (6e18).toString(10);
+
+    const maker = walletStable.connect(ethersProvider);
+    const nftContract = new ethers.Contract(
+      erc721Token3.address,
+      ERC721MintableABI,
+      maker
+    );
+
+    await (await nftContract.mint(maker.address)).wait();
+    const afterMintLastId = (await nftContract.lastMintedTokenId()).toString();
 
     const order = {
       nonce: 99,
       expiry: orderExpiry,
       maker: maker.address,
-      makerAsset: NFT,
+      makerAsset: erc721Token3.address,
       makerAmount,
-      takerAsset: BAT,
+      takerAsset: BUSD,
       takerAmount,
       makerAssetType: AssetType.ERC721,
       takerAssetType: AssetType.ERC20,
-      makerAssetId: '9982',
+      makerAssetId: afterMintLastId,
     };
 
     // token to get after SWAP must be the takerAsset to allow to fill Order
@@ -1061,19 +1069,24 @@ describe('NFT Orders', () => {
       [order]
     );
 
-    console.log('priceRoute', priceRoute);
-
     const stablePriceRouteMatch: typeof priceRoute = {
       ...priceRoute,
       blockNumber: NaN, // will change with time
       srcAmount: '---', //will change based on srcToken/destToken rate
       hmac: '---', // will change with any other change
+      srcUSD: '---',
+      destUSD: '---',
+      gasCostUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({
         ...route,
         swaps: route.swaps.map((swap) => ({
           ...swap,
           swapExchanges: swap.swapExchanges.map((exchange) => ({
             ...exchange,
+            data: {
+              ...exchange.data,
+              gasUSD: '---',
+            },
             srcAmount: '---', //will change based on srcToken/destToken rate
           })),
         })),
@@ -1089,34 +1102,41 @@ describe('NFT Orders', () => {
             "swaps": Array [
               Object {
                 "destDecimals": 18,
-                "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
+                "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
                 "srcDecimals": 18,
-                "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+                "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
                 "swapExchanges": Array [
                   Object {
                     "data": Object {
                       "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                       "feeFactor": 10000,
-                      "gasUSD": "0.000000",
+                      "gasUSD": "---",
                       "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                       "path": Array [
-                        "0xad6d458402f60fd3bd25163575031acdce07538d",
-                        "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
+                        "0x6b175474e89094c44da98b954eedeac495271d0f",
+                        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                        "0x4fabb145d64652a948d72533023f6e7a623c7c53",
                       ],
                       "pools": Array [
                         Object {
-                          "address": "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                          "address": "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
                           "direction": true,
                           "fee": 30,
                         },
+                        Object {
+                          "address": "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
+                          "direction": false,
+                          "fee": 30,
+                        },
                       ],
-                      "router": "0x53e693c6C7FFC4446c53B205Cf513105Bf140D7b",
+                      "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
                     },
                     "destAmount": "6000000000000000000",
                     "exchange": "UniswapV2",
                     "percent": 100,
                     "poolAddresses": Array [
-                      "0xf4371c1c0Db37e9b67E31Fa34303aeD124522f24",
+                      "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
+                      "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
                     ],
                     "srcAmount": "---",
                   },
@@ -1130,20 +1150,20 @@ describe('NFT Orders', () => {
         "contractMethod": "simpleBuy",
         "destAmount": "6000000000000000000",
         "destDecimals": 18,
-        "destToken": "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6",
-        "destUSD": "0",
-        "gasCost": "0",
-        "gasCostUSD": "0.000000",
+        "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+        "destUSD": "---",
+        "gasCost": "276300",
+        "gasCostUSD": "---",
         "hmac": "---",
         "maxImpactReached": false,
-        "network": 3,
+        "network": 1,
         "partner": "anon",
         "partnerFee": 0,
         "side": "BUY",
         "srcAmount": "---",
         "srcDecimals": 18,
-        "srcToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
-        "srcUSD": "0",
+        "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "srcUSD": "---",
         "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
       }
     `);
@@ -1161,7 +1181,6 @@ describe('NFT Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapTxPayload', swapTxPayload);
     expect(swapTxPayload).toEqual(expectTxParamsScheme);
 
     expect({
@@ -1172,7 +1191,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
@@ -1195,8 +1214,6 @@ describe('NFT Orders', () => {
       { ignoreChecks: true }
     );
 
-    console.log('swapAndNFTPayload', swapAndNFTPayload);
-
     expect(swapAndNFTPayload).toEqual(expectTxParamsScheme);
     expect({
       from: swapAndNFTPayload.from,
@@ -1206,7 +1223,7 @@ describe('NFT Orders', () => {
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
       Object {
-        "chainId": 3,
+        "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "value": "0",
@@ -1219,11 +1236,10 @@ describe('NFT Orders', () => {
     ({ lib, sdk, takerSDK }) => {
       test(`signNFTOrder with ${lib}`, async () => {
         const signableOrderData = await sdk.buildNFTOrder(orderInput);
-        console.log('🚀 orderInput', signableOrderData.data);
 
         const signature = await sdk.signNFTOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x1aa5388855841c17e989d3e03d3dab17fc50fbdabd5b29d0d76ffb0d6858c86f195a6de6587cec6c282503f4a0abd8dd52f32a497bcda7a7729242d44a47ab791c"`
+          `"0x5f357e11807e9f5db61d16b245b060cc1e7fde8074f44e67cdeff2da04d78b522d45cccf124613ceb17948b1d8b75ef76c3b8edaa620d75d9f0ecab1cb0a07041b"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);
@@ -1274,13 +1290,12 @@ describe('NFT Orders', () => {
     }
   );
 
-  // @TODO switch to getNFTOrders
-  test.skip('getRawNFTOrders', async () => {
-    const account = '0x05182E579FDfCf69E4390c3411D8FeA1fb6467cf';
+  test.skip('getNFTOrders', async () => {
+    const account = '0x112f39ea2ccff2d088086590d11cd9f092954f77';
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const orders = await paraSwap.getNFTOrders({
+    const { orders } = await paraSwap.getNFTOrders({
       maker: account,
       type: 'LIMIT',
     });
@@ -1334,16 +1349,12 @@ describe('NFT Orders', () => {
       signature,
     };
 
-    console.log('🚀 orderWithSignature', orderWithSignature);
-
     const newOrder = await paraSwap.postNFTLimitOrder(orderWithSignature);
-    console.log('🚀 newOrder from API', newOrder);
 
     const recoveredAddress = ethers.utils.recoverAddress(
       newOrder.orderHash,
       signature
     );
-    console.log('🚀 recoveredAddress', recoveredAddress);
 
     expect(recoveredAddress).toEqual(senderAddress);
 

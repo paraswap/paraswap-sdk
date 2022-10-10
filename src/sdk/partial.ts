@@ -7,7 +7,6 @@ import type {
 import type { Merge, UnionToIntersection } from 'ts-essentials';
 import type { ApproveTokenFunctions } from '../methods/swap/approve';
 import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrder';
-import type { FillLimitOrderFunctions } from '../methods/limitOrders/fillOrders';
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
 import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
 import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
@@ -44,7 +43,6 @@ type InferWithTxResponse<
           // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
           ApproveTokenFunctions<TxResponse>,
           CancelLimitOrderFunctions<TxResponse>,
-          FillLimitOrderFunctions<TxResponse>,
           ApproveTokenForLimitOrderFunctions<TxResponse>,
           CancelNFTOrderFunctions<TxResponse>,
           ApproveTokenForNFTOrderFunctions<TxResponse>
