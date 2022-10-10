@@ -290,4 +290,4 @@ Refer to [SDK API documentation](docs/md/modules.md) for detailed documentation 
 To run `yarn test` it is necessary to provide `PROVIDER_URL=<mainnet_rpc_url>` environment variable.
 If it is necessary to run tests against a different API endpoint, provide `API_URL=url_to_API` environment variable.
 
-<img src="./docs/passed_tests.png" width=350 />
+<img src="https://raw.githubusercontent.com/paraswap/paraswap-sdk/sdk-refactor-and-limit-orders/docs/passed_tests.jpg" width=350 />
