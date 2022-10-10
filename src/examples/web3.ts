@@ -12,14 +12,14 @@ const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructWeb3ContractCaller(web3);
 
 const paraswap = constructFullSDK({
-  network: 1,
+  chainId: 1,
   fetcher,
   contractCaller,
 });
 
 async function main() {
   // type Web3UnpromiEvent
-  const eventfulTxResponse = await paraswap.approveToken(
+  const eventfulTxResponse = await paraswap.swap.approveToken(
     '1000000000000000000',
     '0xcafe001067cDEF266AfB7Eb5A286dCFD277f3dE5'
   );

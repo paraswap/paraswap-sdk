@@ -1,20 +1,22 @@
+import type { ApproveTokenFunctions } from '../methods/swap/approve';
+import type { GetBalancesFunctions } from '../methods/swap/balance';
+import type { GetSpenderFunctions } from '../methods/swap/spender';
+import type { GetAdaptersFunctions } from '../methods/swap/adapters';
+import type { GetRateFunctions } from '../methods/swap/rates';
+import type { GetTokensFunctions } from '../methods/swap/token';
+import type { BuildTxFunctions } from '../methods/swap/transaction';
+import type { SDKConfig } from './partial';
+import { constructSwapSDK } from '../methods/swap';
 import {
-  constructApproveToken,
-  ApproveTokenFunctions,
-} from '../methods/approve';
-import { constructGetBalances, GetBalancesFunctions } from '../methods/balance';
-import { constructGetSpender, GetSpenderFunctions } from '../methods/spender';
+  constructAllLimitOrdersHandlers,
+  LimitOrderHandlers,
+} from '../methods/limitOrders';
 import {
-  constructGetAdapters,
-  GetAdaptersFunctions,
-} from '../methods/adapters';
-import { constructGetRate, GetRateFunctions } from '../methods/rates';
-import { constructGetTokens, GetTokensFunctions } from '../methods/token';
-import { constructBuildTx, BuildTxFunctions } from '../methods/transaction';
-import { constructPartialSDK, SDKConfig } from './partial';
-import type { ConstructProviderFetchInput } from '../types';
+  constructAllNFTOrdersHandlers,
+  NFTOrderHandlers,
+} from '../methods/nftOrders';
 
-export type AllSDKMethods<TxResponse> = GetBalancesFunctions &
+export type SwapSDKMethods<TxResponse> = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
   ApproveTokenFunctions<TxResponse> &
@@ -22,20 +24,22 @@ export type AllSDKMethods<TxResponse> = GetBalancesFunctions &
   GetAdaptersFunctions &
   GetRateFunctions;
 
-/** @description construct SDK with every method, fetching from API and token approval */
+export type AllSDKMethods<TxResponse> = {
+  swap: SwapSDKMethods<TxResponse>;
+  limitOrders: LimitOrderHandlers<TxResponse>;
+  nftOrders: NFTOrderHandlers<TxResponse>;
+};
+
+/** @description construct SDK with every method, for swap and limitOrders */
 export const constructFullSDK = <TxResponse = any>(
   config: SDKConfig<TxResponse>
-): AllSDKMethods<TxResponse> =>
+): AllSDKMethods<TxResponse> => {
   // include all available functions
-  constructPartialSDK(
-    config,
-    constructGetBalances,
-    constructGetTokens,
-    constructGetSpender,
-    constructApproveToken as (
-      options: ConstructProviderFetchInput<TxResponse, 'transactCall'>
-    ) => ApproveTokenFunctions<TxResponse>, // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
-    constructBuildTx,
-    constructGetAdapters,
-    constructGetRate
-  );
+  const swap: SwapSDKMethods<TxResponse> = constructSwapSDK(config);
+  const limitOrders: LimitOrderHandlers<TxResponse> =
+    constructAllLimitOrdersHandlers(config);
+  const nftOrders: NFTOrderHandlers<TxResponse> =
+    constructAllNFTOrdersHandlers(config);
+
+  return { swap, limitOrders, nftOrders };
+};

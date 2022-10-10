@@ -2,10 +2,15 @@ import type {
   Address,
   ContractCallerFunctions,
   NoExtraKeysCheck,
+  SignTypedDataContractCallerFn,
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../../types';
-import type { JsonRpcProvider, BaseProvider } from '@ethersproject/providers';
+import type {
+  JsonRpcProvider,
+  BaseProvider,
+  JsonRpcSigner,
+} from '@ethersproject/providers';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type {
   Contract as EthersContract,
@@ -101,7 +106,29 @@ export const constructContractCaller = (
     return txResponse;
   };
 
-  return { staticCall, transactCall };
+  const signTypedDataCall: SignTypedDataContractCallerFn = async (
+    typedData
+  ) => {
+    assert(account, 'account must be specified to create a signer');
+    assert(
+      isEthersProviderWithSigner(providerOrSigner) ||
+        isEthersSigner(providerOrSigner),
+      'ethers must be an instance of Signer or JsonRpcProvider to create a signer'
+    );
+
+    const signer =
+      'getSigner' in providerOrSigner
+        ? providerOrSigner.getSigner(account)
+        : providerOrSigner;
+
+    assert(isTypedDataCapableSigner(signer), 'Signer can sign typed data');
+
+    const { data, domain, types } = typedData;
+
+    return signer._signTypedData(domain, types, data);
+  };
+
+  return { staticCall, transactCall, signTypedDataCall };
 };
 
 function isEthersProvider(
@@ -120,4 +147,10 @@ function isEthersSigner(
   providerOrSigner: BaseProvider | Signer
 ): providerOrSigner is Signer {
   return '_isSigner' in providerOrSigner && providerOrSigner._isSigner;
+}
+
+function isTypedDataCapableSigner(
+  signer: Signer
+): signer is Signer & Pick<JsonRpcSigner, '_signTypedData'> {
+  return '_signTypedData' in signer;
 }

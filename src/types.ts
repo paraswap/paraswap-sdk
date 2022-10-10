@@ -1,12 +1,13 @@
 import type { JsonFragment } from '@ethersproject/abi';
-import { OptimalRate, OptionalRate } from 'paraswap-core';
-import {
+import type { OptimalRate, OptionalRate } from 'paraswap-core';
+import type {
   Address,
   AddressOrSymbol,
   PriceString,
   Token,
   TxHash,
 } from './helpers/token';
+import type { SignableTypedData } from './methods/common/orders/buildOrderData';
 
 export type {
   Address,
@@ -20,24 +21,26 @@ export type {
 
 export interface ConstructBaseInput {
   apiURL?: string;
-  network: number;
+  chainId: number;
 }
 
-interface FetcherInputBase {
-  url: string;
+interface FetcherInputBase<URL extends string = string> {
+  url: URL;
   headers?: Record<string, string>;
   signal?: AbortSignal;
 }
-export interface FetcherGetInput extends FetcherInputBase {
+export interface FetcherGetInput<URL extends string = string>
+  extends FetcherInputBase<URL> {
   method: 'GET';
 }
-export interface FetcherPostInput extends FetcherInputBase {
+export interface FetcherPostInput<URL extends string = string>
+  extends FetcherInputBase<URL> {
   method: 'POST';
   data: Record<string, any>;
 }
 
-export type FetcherFunction = <T>(
-  params: FetcherGetInput | FetcherPostInput
+export type FetcherFunction = <T, URL extends string = string>(
+  params: FetcherGetInput<URL> | FetcherPostInput<URL>
 ) => Promise<T>;
 
 export interface ConstructFetchInput extends ConstructBaseInput {
@@ -51,8 +54,10 @@ interface OverridesBase {
   value?: number | string;
 }
 
+type BlockTag = string | number | 'latest' | 'pending' | 'earliest' | 'genesis';
+
 export interface StaticCallOverrides extends OverridesBase {
-  block?: string | number | 'latest' | 'pending' | 'earliest' | 'genesis';
+  block?: BlockTag;
 }
 export interface TxSendOverrides extends OverridesBase {
   nonce?: number;
@@ -82,10 +87,14 @@ export type StaticContractCallerFn = <T, M extends string = string>(
 export type TransactionContractCallerFn<T> = <M extends string = string>(
   params: ContractCallTransactionInput<M>
 ) => Promise<T>;
+export type SignTypedDataContractCallerFn = (
+  typedData: SignableTypedData
+) => Promise<string>;
 
 export interface ContractCallerFunctions<T> {
   staticCall: StaticContractCallerFn;
   transactCall: TransactionContractCallerFn<T>;
+  signTypedDataCall: SignTypedDataContractCallerFn;
 }
 
 export interface ConstructProviderFetchInput<
@@ -124,3 +133,5 @@ export type PriceRouteApiErrorResponse =
       error: string;
     }
   | { error: string; value: string; priceRoute: OptimalRate };
+
+export type AnyFunction = (...args: any[]) => any;
