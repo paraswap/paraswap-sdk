@@ -1,46 +1,17 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
 import { BigNumber as BigNumberEthers, ethers } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
-import {
-  ApproveTokenFunctions,
-  BuildTxFunctions,
-  constructApproveToken,
-  constructAxiosFetcher,
-  constructBuildTx,
-  constructEthersContractCaller,
-  constructFetchFetcher,
-  constructGetAdapters,
-  constructGetRate,
-  constructGetSpender,
-  constructGetTokens,
-  constructPartialSDK,
-  constructWeb3ContractCaller,
-  ConstructProviderFetchInput,
-  GetSpenderFunctions,
-  GetTokensFunctions,
-  SDKConfig,
-  Web3UnpromiEvent,
-  constructGetBalances,
-  GetBalancesFunctions,
-  GetAdaptersFunctions,
-  GetRateFunctions,
-  isAllowance,
-  SwapSide,
-} from '../src';
+import { isAllowance, SwapSide, SimpleFetchSDK } from '../src';
 import BigNumber from 'bignumber.js';
 
 import erc20abi from './abi/ERC20.json';
 
 import ganache from 'ganache';
 import { assert } from 'ts-essentials';
-import type {
-  ContractCallerFunctions,
-  StaticContractCallerFn,
-  TransactionContractCallerFn,
-} from '../src/types';
+
+import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
 
 dotenv.config();
 
@@ -55,7 +26,7 @@ const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
+const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
@@ -84,59 +55,25 @@ const ethersProvider = new ethers.providers.Web3Provider(
   ganacheProvider as any
 );
 
-const fetchFetcher = constructFetchFetcher(fetch);
-const axiosFetcher = constructAxiosFetcher(axios);
-
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
 
-const ethersContractCaller = constructEthersContractCaller(
-  {
-    ethersProviderOrSigner: signer,
-    EthersContract: ethers.Contract,
-  },
-  senderAddress
-);
-
-const web3ContractCaller = constructWeb3ContractCaller(
-  web3provider,
-  senderAddress
-);
-
-const customGanacheContractCaller = constructProviderOnlyContractCaller(
-  ganacheProvider,
-  senderAddress
-);
-
 describe.each([
-  ['fetchFetcher', fetchFetcher],
-  ['axiosFetcher', axiosFetcher],
-])('ParaSwap SDK: fetching methods: %s', (testName, fetcher) => {
-  let paraSwap: GetBalancesFunctions &
-    GetAdaptersFunctions &
-    GetTokensFunctions &
-    GetRateFunctions &
-    GetSpenderFunctions &
-    BuildTxFunctions;
+  ['fetch', { fetch }],
+  ['axios', { axios }],
+])('ParaSwap SDK: fetcher made with: %s', (testName, fetcherOptions) => {
+  let paraSwap: SimpleFetchSDK;
 
   beforeAll(() => {
-    paraSwap = constructPartialSDK(
-      { chainId, fetcher },
-      constructGetBalances,
-      constructGetAdapters,
-      constructGetTokens,
-      constructGetRate,
-      constructGetSpender,
-      constructBuildTx
-    );
+    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions });
   });
   test('getBalance', async () => {
-    const balance = await paraSwap.getBalance(senderAddress, ETH);
+    const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
     expect(balance).toBeDefined();
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.getAdapters({
+    const markets = await paraSwap.swap.getAdapters({
       type: 'list',
       namesOnly: true,
     });
@@ -144,7 +81,7 @@ describe.each([
   });
 
   test('Get_Tokens', async () => {
-    const tokens = await paraSwap.getTokens();
+    const tokens = await paraSwap.swap.getTokens();
 
     expect(Array.isArray(tokens)).toBe(true);
     expect(tokens.length).toBeGreaterThan(0);
@@ -158,7 +95,7 @@ describe.each([
   });
 
   test('Get_Rates', async () => {
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await paraSwap.swap.getRate({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -209,22 +146,12 @@ describe.each([
   });
 
   test('Get_Spender', async () => {
-    const spender = await paraSwap.getSpender();
-    expect(web3provider.utils.isAddress(spender)).toBe(true);
-  });
-
-  test('Get_AugustusSwapper', async () => {
-    const Augustus = await paraSwap.getAugustusSwapper();
-    expect(web3provider.utils.isAddress(Augustus)).toBe(true);
-  });
-
-  test('Get_Contracts', async () => {
-    const contracts = await paraSwap.getContracts();
-    expect(contracts).toMatchSnapshot(testName);
+    const spender = await paraSwap.swap.getSpender();
+    expect(web3provider.utils.isAddress(spender));
   });
 
   test('Get_Allowance', async () => {
-    const allowance = await paraSwap.getAllowance(
+    const allowance = await paraSwap.swap.getAllowance(
       DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
       DAI
     );
@@ -234,32 +161,18 @@ describe.each([
     expect(allowance.allowance).toEqual('123000000000000000');
   });
 
-  test('Get_Allowances', async () => {
-    const allowances = await paraSwap.getAllowances(
-      DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
-      [DAI, HEX]
-    );
-
-    const [daiAllowance, hexAllowance] = allowances.map(
-      (allowance) => allowance.allowance
-    );
-
-    expect(daiAllowance).toEqual('123000000000000000');
-    expect(hexAllowance).toEqual('32100000');
-  });
-
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.getAdapters({ type: 'object' });
+    const adapters = await paraSwap.swap.getAdapters({ type: 'object' });
     expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
     expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
+    expect(adapters.uniswapv2?.[0]?.index).toBeDefined();
     expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
+    expect(adapters.kyberdmm?.[0]?.index).toBeDefined();
   });
 
   test('Build_Tx', async () => {
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await paraSwap.swap.getRate({
       srcToken,
       destToken,
       amount: srcAmount,
@@ -274,7 +187,7 @@ describe.each([
       .times(0.99)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await paraSwap.swap.buildTx(
       {
         srcToken,
         destToken,
@@ -290,7 +203,7 @@ describe.each([
     expect(typeof txParams).toBe('object');
   });
   test('Build_and_Send_Tx', async () => {
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await paraSwap.swap.getRate({
       srcToken,
       destToken,
       amount: srcAmount,
@@ -305,7 +218,7 @@ describe.each([
       .times(0.99)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await paraSwap.swap.buildTx(
       {
         srcToken,
         destToken,
@@ -337,7 +250,7 @@ describe.each([
   });
   test('Build_and_Send_Tx_BUY', async () => {
     const destAmount = srcAmount;
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await paraSwap.swap.getRate({
       srcToken,
       destToken,
       amount: destAmount,
@@ -349,7 +262,7 @@ describe.each([
       .times(1.1)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await paraSwap.swap.buildTx(
       {
         srcToken,
         destToken,
@@ -382,58 +295,38 @@ describe.each([
 });
 
 describe.each([
-  ['fetchFetcher & ethersContractCaller', fetchFetcher, ethersContractCaller],
-  ['axiosFetcher & web3ContractCaller', axiosFetcher, web3ContractCaller],
   [
-    'axiosFetcher & customGanacheContractCaller',
-    axiosFetcher,
-    customGanacheContractCaller,
+    'fetch & ethers',
+    { fetch },
+    {
+      ethersProviderOrSigner: signer,
+      EthersContract: ethers.Contract,
+      account: senderAddress,
+    },
   ],
+  ['axios & web3', { axios }, { web3: web3provider, account: senderAddress }],
 ])(
   'ParaSwap SDK: contract calling methods: %s',
-  (testName, fetcher, contractCaller) => {
-    type ApproveTxResult =
-      | ethers.ContractTransaction
-      | Web3UnpromiEvent
-      | string;
-    // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
-    type ApproveConstructor = (
-      options: ConstructProviderFetchInput<ApproveTxResult, 'transactCall'>
-    ) => ApproveTokenFunctions<ApproveTxResult>;
-
-    let paraSwap: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
+  (testName, fetcherOptions, providerOptions) => {
+    let paraSwap: SimpleSDK;
 
     beforeAll(() => {
-      paraSwap = constructPartialSDK<
-        SDKConfig<ApproveTxResult>,
-        [ApproveConstructor, typeof constructGetSpender]
-      >(
-        { chainId, fetcher, contractCaller },
-        constructApproveToken,
-        constructGetSpender
+      paraSwap = constructSimpleSDK(
+        { chainId, ...fetcherOptions },
+        providerOptions
       );
     });
     test('approveToken', async () => {
-      const tx = await paraSwap.approveToken('12345', DAI);
+      const txHash = await paraSwap.swap.approveToken('12345', DAI);
 
-      if (typeof tx === 'string') {
-        // tx is sent
-        // wait for it to mine however you prefer
-        await ethersProvider.waitForTransaction(tx);
-      } else if ('wait' in tx) {
-        await tx.wait(1);
-      } else if ('on' in tx) {
-        await new Promise<Web3TransactionReceipt>((resolve, reject) => {
-          tx.once('receipt', resolve);
-          tx.once('error', reject);
-        });
-      }
+      await ethersProvider.waitForTransaction(txHash);
+
       const toContract = new ethers.Contract(
         destToken,
         erc20abi,
         ethersProvider
       );
-      const spender = await paraSwap.getSpender();
+      const spender = await paraSwap.swap.getSpender();
       const allowance: BigNumberEthers = await toContract.allowance(
         signer.address,
         spender
@@ -442,101 +335,3 @@ describe.each([
     });
   }
 );
-
-interface MinProvider {
-  request(args: { method: string; params: any }): Promise<any>;
-}
-// example of constructing a custom contractCaller with provider only
-function constructProviderOnlyContractCaller(
-  provider: MinProvider,
-  account?: string
-): Pick<
-  ContractCallerFunctions<string>,
-  'staticCall' | 'transactCall' | 'signTypedDataCall'
-> {
-  // staticCall isn't currently necessary, because provider is only used in approveToken currently for tx making
-  const staticCall: StaticContractCallerFn = async ({
-    address,
-    abi,
-    contractMethod,
-    args,
-    overrides,
-  }) => {
-    // need to encode data somehow, to send raw call
-    const iface = new ethers.utils.Interface(abi);
-    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
-
-    const gasPrice =
-      overrides.gasPrice &&
-      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
-    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
-    const value = overrides.value && '0x' + overrides.value.toString(16);
-
-    const params = [
-      {
-        from: account,
-        to: address,
-        gasPrice,
-        gas,
-        value,
-        data: calldataEncoded,
-      },
-    ];
-
-    // what provider here returns will depend on provider
-    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
-    // keeping it `as any` as we don't know
-    const res = await provider.request({
-      method: 'eth_call',
-      params,
-    });
-
-    return res;
-  };
-
-  const transactCall: TransactionContractCallerFn<string> = async ({
-    address,
-    abi,
-    contractMethod,
-    args,
-    overrides,
-  }) => {
-    const iface = new ethers.utils.Interface(abi);
-    const calldataEncoded = iface.encodeFunctionData(contractMethod, args);
-
-    const gasPrice =
-      overrides.gasPrice &&
-      '0x' + Number.parseInt(overrides.gasPrice).toString(16);
-    const gas = overrides.gas && '0x' + overrides.gas.toString(16);
-    const value = overrides.value && '0x' + overrides.value.toString(16);
-
-    const params = [
-      {
-        from: account,
-        to: address,
-        gasPrice,
-        gas,
-        value,
-        data: calldataEncoded,
-      },
-    ];
-
-    // what provider here returns will depend on provider
-    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
-    // `string`
-    const res = await provider.request({
-      // we can only sendTransaction right away because accounts in ganache are unlocked
-      // for other provider we may need to signTransaction first, then sendRawTransaction
-      method: 'eth_sendTransaction',
-      params,
-    });
-
-    return res;
-  };
-
-  const signTypedDataCall = () => {
-    throw new Error('not implemented');
-  };
-
-  return { transactCall, signTypedDataCall, staticCall };
-}

@@ -122,15 +122,15 @@ export type SimpleSDK = {
   nftOrders: NFTOrderHandlers<TxHash>;
 };
 
-type SimpleOptions = ConstructBaseInput &
-  (
-    | {
-        axios: typeof AxiosStatic;
-      }
-    | { fetch: typeof fetch }
-  );
+export type FetcherOptions =
+  | {
+      axios: typeof AxiosStatic;
+    }
+  | { fetch: typeof fetch };
 
-type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
+type SimpleOptions = ConstructBaseInput & FetcherOptions;
+
+export type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
   account: Address;
 };
 
