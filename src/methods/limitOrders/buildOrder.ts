@@ -1,10 +1,7 @@
-import { runOnceAndCache } from '../../helpers/misc';
-// import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
-  buildDirectOrderData,
   BuildOrderDataInput,
   SignableOrderData,
 } from './helpers/buildOrderData';
@@ -23,8 +20,6 @@ type BuildLimitOrder = (
 export type BuildLimitOrderFunctions = {
   /** @description Build Orders that will be excuted through AugustusSwapper */
   buildLimitOrder: BuildLimitOrder;
-  /** @deprecated Orders directly through AugustusRFQ are discouraged */
-  buildDirectLimitOrder: BuildLimitOrder;
 };
 
 export const constructBuildLimitOrder = (
@@ -32,10 +27,9 @@ export const constructBuildLimitOrder = (
 ): BuildLimitOrderFunctions => {
   const { chainId } = options;
 
-  const { getContracts: _getContracts } = constructGetSpender(options);
-  // cached for the same instance of `buildLimitOrder = constructBuildLimitOrder()`
+  // getContracts is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getContracts = runOnceAndCache(_getContracts);
+  const { getContracts } = constructGetSpender(options);
 
   const buildLimitOrder: BuildLimitOrder = async (
     buildLimitOrderParams,
@@ -52,21 +46,7 @@ export const constructBuildLimitOrder = (
     });
   };
 
-  const buildDirectLimitOrder: BuildLimitOrder = async (
-    buildLimitOrderParams,
-    signal
-  ) => {
-    const { AugustusRFQ: verifyingContract } = await getContracts(signal);
-
-    return buildDirectOrderData({
-      ...buildLimitOrderParams,
-      chainId,
-      verifyingContract,
-    });
-  };
-
   return {
     buildLimitOrder,
-    buildDirectLimitOrder,
   };
 };

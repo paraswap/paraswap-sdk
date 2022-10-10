@@ -59,7 +59,7 @@
     "isomorphic-unfetch": "^3.1.0",
     "size-limit": "^7.0.8",
     "tslib": "^2.4.0",
-    "typedoc": "^0.23.5",
+    "typedoc": "^0.23.7",
     "typedoc-plugin-markdown": "^3.13.3",
     "typedoc-plugin-missing-exports": "^0.23.0",
     "typedoc-plugin-replace-text": "^2.0.0",
@@ -113,5 +113,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "mounir@paraswap.io"
+  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
 }

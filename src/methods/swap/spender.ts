@@ -1,4 +1,5 @@
 import { API_URL } from '../../constants';
+import { runOnceAndCache } from '../../helpers/misc';
 import type { ConstructFetchInput, Address } from '../../types';
 
 export type GetSpender = (signal?: AbortSignal) => Promise<Address>;
@@ -24,7 +25,7 @@ export const constructGetSpender = ({
 }: ConstructFetchInput): GetSpenderFunctions => {
   const fetchURL = `${apiURL}/adapters/contracts?network=${chainId}`;
 
-  const getContracts: GetContracts = async (signal) => {
+  const _getContracts: GetContracts = async (signal) => {
     const data = await fetcher<AdaptersContractsResult>({
       url: fetchURL,
       method: 'GET',
@@ -33,6 +34,10 @@ export const constructGetSpender = ({
 
     return data;
   };
+
+  // cached for the same instance of `{getContracts, getSpender, getAugustusSwapper, getAugustusRFQ} = constructGetSpender()`
+  // so should persist across same apiUrl & network
+  const getContracts = runOnceAndCache(_getContracts);
 
   const getSpender: GetSpender = async (signal) => {
     const { TokenTransferProxy } = await getContracts(signal);

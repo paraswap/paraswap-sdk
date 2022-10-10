@@ -1,4 +1,3 @@
-import { runOnceAndCache } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
@@ -28,11 +27,9 @@ export const constructBuildNFTOrder = (
 ): BuildNFTOrderFunctions => {
   const { chainId } = options;
 
-  const { getContracts: _getContracts } = constructGetSpender(options);
-
-  // cached for the same instance of `buildNFTOrder = constructBuildNFTOrder()`
+  // getContracts is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  const getContracts = runOnceAndCache(_getContracts);
+  const { getContracts } = constructGetSpender(options);
 
   const buildNFTOrder: BuildNFTOrder = async (buildNFTOrderParams, signal) => {
     const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
+import { assert } from 'ts-essentials';
 import {
   // swap methods
   constructPartialSDK,
@@ -10,6 +12,7 @@ import {
   constructAllLimitOrdersHandlers,
   // extra types
   LimitOrderFromApi,
+  SwappableOrder,
 } from '..';
 
 const account = '0x1234...';
@@ -90,9 +93,34 @@ async function run() {
       orderInput.takerAsset
     );
 
-  const tx3: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.fillDirectLimitOrder({
-      orderData: newLimitOrder,
-      signature: newLimitOrder.signature,
+  const executingOrder: SwappableOrder = {
+    ...newLimitOrder,
+    permitMakerAsset: newLimitOrder.permitMakerAsset || undefined,
+  };
+
+  const { gas: payloadGas, ...LOPayloadTxParams } =
+    await paraswapLimitOrdersSDKForTaker.buildLimitOrderTx({
+      srcDecimals: 18,
+      destDecimals: 18,
+      userAddress: anotherAccount, // taker
+      orders: [executingOrder],
     });
+
+  const tx5Params = {
+    ...LOPayloadTxParams,
+    gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+    gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
+    value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
+  };
+
+  console.log('SENDING TX', tx5Params);
+
+  assert(
+    provider instanceof ethers.providers.JsonRpcProvider,
+    'provider has signer (JsonRpcProvider)'
+  );
+
+  const tx3 = await provider
+    .getSigner(anotherAccount)
+    .sendTransaction(tx5Params);
 }
