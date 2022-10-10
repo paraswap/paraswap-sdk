@@ -1,14 +1,10 @@
-import { assert } from 'ts-essentials';
-// import { API_URL } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
-  buildDirectOrderData,
   BuildOrderDataInput,
   SignableOrderData,
 } from './helpers/buildOrderData';
-import { chainId2verifyingContract } from './helpers/misc';
 export * from './helpers/buildOrderData';
 
 export type BuildLimitOrderInput = Omit<
@@ -24,35 +20,23 @@ type BuildLimitOrder = (
 export type BuildLimitOrderFunctions = {
   /** @description Build Orders that will be excuted through AugustusSwapper */
   buildLimitOrder: BuildLimitOrder;
-  /** @deprecated Orders directly through AugustusRFQ are discouraged */
-  buildDirectLimitOrder: BuildLimitOrder;
 };
 
 export const constructBuildLimitOrder = (
   options: ConstructFetchInput
 ): BuildLimitOrderFunctions => {
   const { chainId } = options;
-  const verifyingContract = chainId2verifyingContract[chainId];
 
-  const { getAugustusSwapper: _getAugustusAddress } =
-    constructGetSpender(options);
-  // cached for the same instance of `buildLimitOrder = constructBuildLimitOrder()`
+  // getContracts is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  let _spender: string | undefined;
-
-  const getAugustusAddress: typeof _getAugustusAddress = async (signal) =>
-    _spender || (_spender = await _getAugustusAddress(signal));
+  const { getContracts } = constructGetSpender(options);
 
   const buildLimitOrder: BuildLimitOrder = async (
     buildLimitOrderParams,
     signal
   ) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${chainId}`
-    );
-
-    const AugustusAddress = await getAugustusAddress(signal);
+    const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
+      await getContracts(signal);
 
     return buildOrderData({
       ...buildLimitOrderParams,
@@ -62,23 +46,7 @@ export const constructBuildLimitOrder = (
     });
   };
 
-  const buildDirectLimitOrder: BuildLimitOrder = async (
-    buildLimitOrderParams
-  ) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${chainId}`
-    );
-
-    return buildDirectOrderData({
-      ...buildLimitOrderParams,
-      chainId,
-      verifyingContract,
-    });
-  };
-
   return {
     buildLimitOrder,
-    buildDirectLimitOrder,
   };
 };

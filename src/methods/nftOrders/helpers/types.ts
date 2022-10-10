@@ -24,6 +24,7 @@ export type NFTOrderFromAPI = NFTOrderToSend & {
   makerAsset: Address;
   takerAsset: Address;
   createdAt: number; // timestamp
+  updatedAt: number; // timestamp
   makerAssetType: AssetTypeVariant;
   takerAssetType: AssetTypeVariant;
   makerBalance: string; // min(fillableBalance, allowance(maker), balance(maker)]
