@@ -1,43 +1,91 @@
 {
-  "name": "paraswap",
-  "version": "5.2.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "name": "@paraswap/sdk",
+  "version": "6.0.0",
+  "main": "dist/index.js",
+  "module": "dist/sdk.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "prepare": "npm run build",
-    "typegen": "typechain --target ethers-v5 --outDir ./src/abi/types \"./src/abi/*.json\""
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test",
+    "docs:html": "typedoc --gitRevision \"$(git branch --show-current)\"",
+    "docs:md": "MD=true yarn docs:html",
+    "docs": "yarn docs:html && yarn docs:md"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "dts lint --fix"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/sdk.cjs.production.min.js",
+      "limit": "25 KB"
+    },
+    {
+      "path": "dist/sdk.esm.js",
+      "limit": "25 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@tsconfig/recommended": "^1.0.1",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.0",
+    "dts-cli": "^1.5.1",
+    "ethers": "^5.6.5",
+    "ganache": "^7.1.0",
+    "husky": "^7.0.4",
+    "isomorphic-unfetch": "^3.1.0",
+    "size-limit": "^7.0.8",
+    "tslib": "^2.4.0",
+    "typedoc": "^0.23.7",
+    "typedoc-plugin-markdown": "^3.13.3",
+    "typedoc-plugin-missing-exports": "^0.23.0",
+    "typedoc-plugin-replace-text": "^2.0.0",
+    "typescript": "^4.6.4",
+    "web3": "^1.7.3"
+  },
+  "peerDependencies": {
+    "axios": ">=0.25.0 <1.0.0",
+    "ethers": "^5.5.0",
+    "web3": "^1.7.1"
+  },
+  "peerDependenciesMeta": {
+    "axios": {
+      "optional": true
+    },
+    "ethers": {
+      "optional": true
+    },
+    "web3": {
+      "optional": true
     }
   },
   "dependencies": {
-    "async": "^3.1.0",
-    "axios": "0.21.2",
-    "bignumber.js": "8.1.1",
-    "lodash": "4.17.21",
-    "qs": "^6.9.1",
-    "ts-essentials": "^7.0.0",
-    "web3": "^1.5.0",
-    "paraswap-core": "1.0.2"
-  },
-  "devDependencies": {
-    "@types/async": "^3.0.3",
-    "@types/dotenv": "6.1.1",
-    "@types/jest": "24.0.18",
-    "@types/lodash": "^4.14.149",
-    "@types/qs": "^6.9.0",
-    "dotenv": "7.0.0",
-    "ethers": "^5.0.17",
-    "husky": "^4.3.0",
-    "jest": "24.9.0",
-    "prettier": "^2.1.2",
-    "pretty-quick": "^3.0.2",
-    "ts-jest": "24.1.0",
-    "typescript": "^3.6.3"
+    "bignumber.js": "^9.0.2",
+    "paraswap-core": "^1.0.2",
+    "ts-essentials": "^9.1.2"
   },
   "author": "ParaSwap",
   "description": "ParaSwap SDK",
@@ -65,5 +113,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "mounir@paraswap.io"
+  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
 }
