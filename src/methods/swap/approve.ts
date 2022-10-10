@@ -24,13 +24,9 @@ export type ApproveTokenFunctions<T> = {
 export const constructApproveToken = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenFunctions<T> => {
-  const { getSpender: _getSpender } = constructGetSpender(options);
-  // cached for the same instance of `approveToken = constructApproveToken()`
+  // getSpender is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
-  let _spender: string | undefined;
-
-  const getSpender: typeof _getSpender = async (signal) =>
-    _spender || (_spender = await _getSpender(signal));
+  const { getSpender } = constructGetSpender(options);
 
   const approveToken: ApproveToken<T> = approveTokenMethodFactory<T>(
     options.contractCaller,

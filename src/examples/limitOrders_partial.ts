@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
+import { assert } from 'ts-essentials';
 import {
   // swap methods
   constructPartialSDK,
@@ -10,13 +12,13 @@ import {
   constructBuildLimitOrder,
   constructCancelLimitOrder,
   constructSignLimitOrder,
-  constructFillLimitOrder,
   constructGetLimitOrders,
   constructPostLimitOrder,
   constructApproveTokenForLimitOrder,
   // extra types
   SignableOrderData,
   LimitOrderToSend,
+  constructBuildLimitOrderTx,
 } from '..';
 
 const account = '0x1234...';
@@ -49,7 +51,6 @@ const paraSwapLimitOrderSDK = constructPartialSDK(
   constructSignLimitOrder,
   constructPostLimitOrder,
   constructGetLimitOrders,
-  constructFillLimitOrder,
   constructApproveTokenForLimitOrder
 );
 
@@ -68,8 +69,9 @@ const orderInput = {
 
 async function run() {
   /// cancelling current orders
-  const currentOrders = await paraSwapLimitOrderSDK.getLimitOrders({
+  const { orders: currentOrders } = await paraSwapLimitOrderSDK.getLimitOrders({
     maker: account,
+    type: 'LIMIT',
   });
 
   if (currentOrders[0]?.orderHash) {
@@ -87,13 +89,13 @@ async function run() {
   /// creating a new order
 
   const tx3: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.approveTokenForLimitOrder(
+    await paraSwapLimitOrderSDK.approveMakerTokenForLimitOrder(
       orderInput.makerAmount,
       orderInput.makerAsset
     );
 
   const signableOrderData: SignableOrderData =
-    paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
+    await paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
 
   const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
     signableOrderData
@@ -101,7 +103,6 @@ async function run() {
 
   const orderToPostToApi: LimitOrderToSend = {
     ...signableOrderData.data,
-    chainId: signableOrderData.domain.chainId,
     signature,
   };
 
@@ -124,19 +125,39 @@ async function run() {
         anotherAccount
       ),
     },
-    constructFillLimitOrder,
+    constructBuildLimitOrderTx,
     constructApproveTokenForLimitOrder
   );
 
   const tx4: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.approveTokenForLimitOrder(
+    await paraswapLimitOrdersSDKForTaker.approveTakerTokenForLimitOrder(
       orderInput.takerAmount,
       orderInput.takerAsset
     );
 
-  const tx5: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.fillLimitOrder({
-      orderData: newOrder,
-      signature,
+  const { gas: payloadGas, ...LOPayloadTxParams } =
+    await paraswapLimitOrdersSDKForTaker.buildLimitOrderTx({
+      srcDecimals: 18,
+      destDecimals: 18,
+      userAddress: anotherAccount, // taker
+      orders: [orderToPostToApi],
     });
+
+  const tx5Params = {
+    ...LOPayloadTxParams,
+    gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+    gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
+    value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
+  };
+
+  console.log('SENDING TX', tx5Params);
+
+  assert(
+    provider instanceof ethers.providers.JsonRpcProvider,
+    'provider has signer (JsonRpcProvider)'
+  );
+
+  const tx5 = await provider
+    .getSigner(anotherAccount)
+    .sendTransaction(tx5Params);
 }

@@ -44,14 +44,6 @@ import {
   constructPostLimitOrder,
 } from './methods/limitOrders/postOrder';
 import {
-  FillLimitOrderFunctions,
-  FillOrderInput,
-  FillOrdersInput,
-  PartialFillOrderInput,
-  OrderInfoForBatchFill,
-  constructFillLimitOrder,
-} from './methods/limitOrders/fillOrders';
-import {
   ApproveTokenForLimitOrderFunctions,
   constructApproveTokenForLimitOrder,
 } from './methods/limitOrders/approveForOrder';
@@ -59,6 +51,46 @@ import {
   GetLimitOrdersContractFunctions,
   constructGetLimitOrdersContract,
 } from './methods/limitOrders/getOrdersContract';
+import {
+  BuildLimitOrdersTxFunctions,
+  constructBuildLimitOrderTx,
+} from './methods/limitOrders/transaction';
+
+import {
+  BuildNFTOrderFunctions,
+  BuildNFTOrderInput,
+  BuildNFTOrderDataInput,
+  constructBuildNFTOrder,
+} from './methods/nftOrders/buildOrder';
+import {
+  SignNFTOrderFunctions,
+  constructSignNFTOrder,
+} from './methods/nftOrders/signOrder';
+import {
+  CancelNFTOrderFunctions,
+  constructCancelNFTOrder,
+} from './methods/nftOrders/cancelOrder';
+import {
+  GetNFTOrdersFunctions,
+  constructGetNFTOrders,
+  NFTOrdersUserParams,
+} from './methods/nftOrders/getOrders';
+import {
+  PostNFTOrderFunctions,
+  constructPostNFTOrder,
+} from './methods/nftOrders/postOrder';
+import {
+  ApproveTokenForNFTOrderFunctions,
+  constructApproveTokenForNFTOrder,
+} from './methods/nftOrders/approveForOrder';
+import {
+  GetNFTOrdersContractFunctions,
+  constructGetNFTOrdersContract,
+} from './methods/nftOrders/getOrdersContract';
+import {
+  BuildNFTOrdersTxFunctions,
+  constructBuildNFTOrderTx,
+} from './methods/nftOrders/transaction';
 
 import {
   constructEthersContractCaller,
@@ -99,15 +131,25 @@ export type {
   BuildOptionsWitWithMaxFee,
   BuildOptionsWithGasPrice,
   BuildTxInput,
+  BuildSwapTxInput,
+  BuildLimitOrderTxInput,
+  BuildNFTOrderTxInput,
+  BuildSwapAndLimitOrderTxInput,
+  BuildSwapAndNFTOrderTxInput,
+  SwappableOrder,
+  SwappableNFTOrder,
 } from './methods/swap/transaction';
 export type { Web3UnpromiEvent } from './helpers';
 export * from './constants';
-export * from './methods/limitOrders/helpers/types';
 export type {
   SignableOrderData,
-  SignableTypedData,
   OrderData,
 } from './methods/limitOrders/helpers/buildOrderData';
+export type {
+  SignableNFTOrderData,
+  NFTOrderData,
+} from './methods/nftOrders/helpers/buildOrderData';
+export type { SignableTypedData } from './methods/common/orders/buildOrderData';
 
 // can import these individually
 // and use in constructPartialSDK only what you need
@@ -127,9 +169,18 @@ export {
   constructCancelLimitOrder,
   constructGetLimitOrders,
   constructPostLimitOrder,
-  constructFillLimitOrder,
   constructApproveTokenForLimitOrder,
   constructGetLimitOrdersContract,
+  constructBuildLimitOrderTx,
+  // nftOrders methods
+  constructBuildNFTOrder,
+  constructSignNFTOrder,
+  constructCancelNFTOrder,
+  constructGetNFTOrders,
+  constructPostNFTOrder,
+  constructApproveTokenForNFTOrder,
+  constructGetNFTOrdersContract,
+  constructBuildNFTOrderTx,
   // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
@@ -156,19 +207,28 @@ export type {
   SignLimitOrderFunctions,
   CancelLimitOrderFunctions,
   GetLimitOrdersContractFunctions,
-  ConstructFetchInput,
-  ConstructProviderFetchInput,
+  BuildLimitOrdersTxFunctions,
   BuildLimitOrderInput,
   BuildOrderDataInput,
   PostLimitOrderFunctions,
-  FillLimitOrderFunctions,
-  FillOrderInput,
-  FillOrdersInput,
-  PartialFillOrderInput,
   ApproveTokenForLimitOrderFunctions,
   GetLimitOrdersFunctions,
   LimitOrdersUserParams,
-  OrderInfoForBatchFill,
+  // types for nftOrders methods:
+  SignNFTOrderFunctions,
+  CancelNFTOrderFunctions,
+  GetNFTOrdersFunctions,
+  PostNFTOrderFunctions,
+  ApproveTokenForNFTOrderFunctions,
+  GetNFTOrdersContractFunctions,
+  BuildNFTOrdersTxFunctions,
+  BuildNFTOrderFunctions,
+  BuildNFTOrderInput,
+  BuildNFTOrderDataInput,
+  NFTOrdersUserParams,
+  //common
+  ConstructFetchInput,
+  ConstructProviderFetchInput,
   // other types
   Token,
   Address,
@@ -190,6 +250,8 @@ export { ParaSwap } from './legacy';
 
 // bundled methods for limitOrders
 export * from './methods/limitOrders';
-
-/* @hidden */
-export { chainId2verifyingContract } from './methods/limitOrders/helpers/misc';
+export * from './methods/limitOrders/helpers/types';
+// bundled methods for nftOrders
+export * from './methods/nftOrders';
+export * from './methods/nftOrders/helpers/types';
+export { AssetType } from './methods/nftOrders/helpers/misc';

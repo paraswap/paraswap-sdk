@@ -1,7 +1,6 @@
 import type {
   Address,
   ContractCallerFunctions,
-  LogsContractCallerFn,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
   TransactionContractCallerFn,
@@ -134,21 +133,19 @@ export const constructContractCaller = (
           params: [account, _typedData],
         },
         (error, result) => {
-          if (error || !result) return reject(error);
+          if (error) return reject(error);
+          if (!result) {
+            throw new Error('No result in response to eth_signTypedData');
+          }
           resolve(result);
         }
       );
     });
-    console.log('JsonRpcResponse:', response);
 
     return response.result;
   };
 
-  const getLogsCall: LogsContractCallerFn = async (params) => {
-    throw new Error('UNIMPLEMENTED');
-  };
-
-  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
+  return { staticCall, transactCall, signTypedDataCall };
 };
 
 function isProviderWithSendMethod<T extends provider>(
@@ -156,6 +153,10 @@ function isProviderWithSendMethod<T extends provider>(
 ): provider is T & Required<Pick<AbstractProvider, 'send'>> {
   return !!provider && typeof provider === 'object' && 'send' in provider;
 }
+
+// regex from @ethersproject/hash TypedDataEncoder.constructor
+// may be overly strict, but reliable
+const baseTypeRegex = /^([^\x5b]*)(\x5b|$)/;
 
 function findPrimaryType(types: Record<string, TypedDataField[]>): string {
   const candidates = Object.keys(types);
@@ -167,9 +168,7 @@ function findPrimaryType(types: Record<string, TypedDataField[]>): string {
 
     typedDataFields.forEach(({ type }) => {
       // Get the base type (drop any array specifiers)
-      // regex from @ethersproject/hash TypedDataEncoder.constructor
-      // may be overly strict, but reliable
-      const baseType = type.match(/^([^\x5b]*)(\x5b|$)/)?.[1];
+      const baseType = type.match(baseTypeRegex)?.[1];
       if (!baseType) return;
 
       // if type was referred to as a child of another type, it can't be the primaryType

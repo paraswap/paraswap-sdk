@@ -1,8 +1,11 @@
-import type {
-  TypedDataDomain as EthersTypedDataDomain,
-  TypedDataField,
-} from '@ethersproject/abstract-signer';
+import { getRandomInt } from '../../../helpers/misc';
 import type { Address } from '../../../types';
+import {
+  Domain,
+  name,
+  version,
+  ZERO_ADDRESS,
+} from '../../common/orders/buildOrderData';
 
 const Order = [
   { name: 'nonceAndMeta', type: 'uint256' },
@@ -15,10 +18,6 @@ const Order = [
   { name: 'takerAmount', type: 'uint256' },
 ];
 
-const name = 'AUGUSTUS RFQ';
-const version = '1';
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-
 export interface BuildOrderDataInput {
   chainId: number;
   verifyingContract: Address;
@@ -29,32 +28,16 @@ export interface BuildOrderDataInput {
   makerAmount: string;
   takerAmount: string;
   maker: Address;
+  // OrderData.taker must be Augustus for p2p limitOrders to involve swap through Augustus
+  // this is the actual user taker which will go into nonceAndMeta
   taker?: Address;
+  AugustusAddress: Address;
 }
 
 export type SignableOrderData = {
   types: { Order: typeof Order };
   domain: Domain;
   data: OrderData;
-};
-
-type TypedDataDomain = Omit<EthersTypedDataDomain, 'chainId'> & {
-  chainId: number;
-};
-
-// works for ethers
-// @TODO no way this works for web3
-export type SignableTypedData = {
-  types: Record<string, TypedDataField[]>;
-  domain: TypedDataDomain;
-  data: Record<string, any>;
-};
-
-type Domain = {
-  name: string;
-  version: string;
-  chainId: number;
-  verifyingContract: string;
 };
 
 export type OrderData = {
@@ -68,10 +51,6 @@ export type OrderData = {
   takerAmount: string;
 };
 
-function getRandomInt(): number {
-  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-}
-
 export function buildOrderData({
   chainId,
   verifyingContract,
@@ -82,11 +61,21 @@ export function buildOrderData({
   makerAmount,
   takerAmount,
   maker,
-  // `taker` is always AugustusRFQ if using our contract
-  taker = ZERO_ADDRESS, //@TODO allow Orders outside of AugustusRFQ
+  AugustusAddress,
+  // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
+  // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
+  taker: takerInNonce = ZERO_ADDRESS,
 }: BuildOrderDataInput): SignableOrderData {
-  // first 160 bits is 0, so that anyone can be the taker of the Order
-  const nonceAndMeta = (BigInt(nonce) << BigInt(160)).toString(10);
+  // first 160 bits is taker address (for p2p orders),
+  // or 0 for limitOrders, so that anyone can be the taker of the Order
+  const nonceAndMeta = (
+    BigInt(takerInNonce) +
+    (BigInt(nonce) << BigInt(160))
+  ).toString(10);
+
+  // no takerInNonce -> not p2p order -> allow anyone to fill (not only Augustus)
+  // otherwise p2p order -> fill through Augustus only
+  const taker = takerInNonce === ZERO_ADDRESS ? ZERO_ADDRESS : AugustusAddress;
 
   const order: OrderData = {
     nonceAndMeta,

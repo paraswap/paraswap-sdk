@@ -1,42 +1,48 @@
-import { assert } from 'ts-essentials';
-// import { API_URL } from '../../constants';
-import { ConstructBaseInput } from '../../types';
+import type { ConstructFetchInput } from '../../types';
+import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
   BuildOrderDataInput,
   SignableOrderData,
 } from './helpers/buildOrderData';
-import { chainId2verifyingContract } from './helpers/misc';
 export * from './helpers/buildOrderData';
 
 export type BuildLimitOrderInput = Omit<
   BuildOrderDataInput,
-  'chainId' | 'verifyingContract'
+  'chainId' | 'verifyingContract' | 'AugustusAddress'
 >;
 
 type BuildLimitOrder = (
-  buildLimitOrderParams: BuildLimitOrderInput
-) => SignableOrderData;
+  buildLimitOrderParams: BuildLimitOrderInput,
+  signal?: AbortSignal
+) => Promise<SignableOrderData>;
 
 export type BuildLimitOrderFunctions = {
+  /** @description Build Orders that will be excuted through AugustusSwapper */
   buildLimitOrder: BuildLimitOrder;
 };
 
-export const constructBuildLimitOrder = ({
-  // apiURL = API_URL,
-  chainId,
-}: Pick<ConstructBaseInput, 'chainId'>): BuildLimitOrderFunctions => {
-  const verifyingContract = chainId2verifyingContract[chainId];
+export const constructBuildLimitOrder = (
+  options: ConstructFetchInput
+): BuildLimitOrderFunctions => {
+  const { chainId } = options;
 
-  const buildLimitOrder: BuildLimitOrder = (buildLimitOrderParams) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${chainId}`
-    );
+  // getContracts is cached internally for the same instance of SDK
+  // so should persist across same apiUrl & network
+  const { getContracts } = constructGetSpender(options);
+
+  const buildLimitOrder: BuildLimitOrder = async (
+    buildLimitOrderParams,
+    signal
+  ) => {
+    const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
+      await getContracts(signal);
+
     return buildOrderData({
       ...buildLimitOrderParams,
       chainId,
       verifyingContract,
+      AugustusAddress,
     });
   };
 

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
+import { assert } from 'ts-essentials';
 import {
   // swap methods
   constructPartialSDK,
@@ -9,7 +11,8 @@ import {
   // limitOrders methods
   constructAllLimitOrdersHandlers,
   // extra types
-  OpenLimitOrder,
+  LimitOrderFromApi,
+  SwappableOrder,
 } from '..';
 
 const account = '0x1234...';
@@ -56,14 +59,14 @@ const orderInput = {
 async function run() {
   // approve token for the limit order
   const tx1: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.approveTokenForLimitOrder(
+    await paraSwapLimitOrderSDK.approveMakerTokenForLimitOrder(
       orderInput.makerAmount,
       orderInput.makerAsset
     );
 
   // builds + signs + posts order to API
   // new limit order returned from API
-  const newLimitOrder: OpenLimitOrder =
+  const newLimitOrder: LimitOrderFromApi =
     await paraSwapLimitOrderSDK.submitLimitOrder(orderInput);
 
   // to act as order taker
@@ -85,14 +88,39 @@ async function run() {
   );
 
   const tx2: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.approveTokenForLimitOrder(
+    await paraswapLimitOrdersSDKForTaker.approveTakerTokenForLimitOrder(
       orderInput.takerAmount,
       orderInput.takerAsset
     );
 
-  const tx3: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.fillLimitOrder({
-      orderData: newLimitOrder,
-      signature: newLimitOrder.signature,
+  const executingOrder: SwappableOrder = {
+    ...newLimitOrder,
+    permitMakerAsset: newLimitOrder.permitMakerAsset || undefined,
+  };
+
+  const { gas: payloadGas, ...LOPayloadTxParams } =
+    await paraswapLimitOrdersSDKForTaker.buildLimitOrderTx({
+      srcDecimals: 18,
+      destDecimals: 18,
+      userAddress: anotherAccount, // taker
+      orders: [executingOrder],
     });
+
+  const tx5Params = {
+    ...LOPayloadTxParams,
+    gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+    gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
+    value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
+  };
+
+  console.log('SENDING TX', tx5Params);
+
+  assert(
+    provider instanceof ethers.providers.JsonRpcProvider,
+    'provider has signer (JsonRpcProvider)'
+  );
+
+  const tx3 = await provider
+    .getSigner(anotherAccount)
+    .sendTransaction(tx5Params);
 }
