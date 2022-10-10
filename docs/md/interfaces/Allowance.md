@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/balance.ts#L26)
+[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/balance.ts#L26)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/balance.ts#L25)
+[src/methods/swap/balance.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/balance.ts#L25)

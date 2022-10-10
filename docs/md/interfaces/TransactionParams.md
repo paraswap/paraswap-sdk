@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L25)
+[src/methods/swap/transaction.ts:25](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L25)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L22)
+[src/methods/swap/transaction.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L22)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L20)
+[src/methods/swap/transaction.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L20)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L24)
+[src/methods/swap/transaction.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L24)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L23)
+[src/methods/swap/transaction.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L23)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:19](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L19)
+[src/methods/swap/transaction.ts:19](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L19)
 
 ___
 
@@ -82,4 +82,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:21](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L21)
+[src/methods/swap/transaction.ts:21](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L21)

@@ -21,6 +21,10 @@ export type LimitOrderToSend = OrderData & {
 };
 
 export type LimitOrdersApiResponse = {
+  limit: number;
+  offset: number;
+  total: number;
+  hasMore: boolean;
   orders: LimitOrderFromApi[];
 };
 export type LimitOrderApiResponse = {

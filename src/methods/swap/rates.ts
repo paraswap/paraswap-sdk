@@ -17,9 +17,9 @@ export enum PricingMethod {
 }
 
 export type RateOptions = {
-  excludeDEXS?: string;
-  includeDEXS?: string;
-  excludePools?: string;
+  excludeDEXS?: string[];
+  includeDEXS?: string[];
+  excludePools?: string[];
   excludePricingMethods?: PricingMethod[];
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
@@ -65,7 +65,6 @@ export type GetRateFunctions = {
 
 const DEFAULT_PARTNER = 'paraswap.io';
 
-const INVALID_DEX_LIST = 'Invalid DEX list';
 const INVALID_ROUTE = 'Invalid Route';
 
 type SearchStringParams = CommonGetRateResult & {
@@ -165,15 +164,26 @@ function commonGetRateOptionsGetter({
     partner = DEFAULT_PARTNER,
     includeDEXS,
     excludeDEXS,
+    excludePools,
     ...restOptions
   } = options;
 
-  checkDexList(includeDEXS);
-  checkDexList(excludeDEXS);
-
-  const _excludePricingMethods = excludePricingMethods?.join(',');
-  const _excludeContractMethods = excludeContractMethods?.join(',');
-  const _includeContractMethods = includeContractMethods?.join(',');
+  const [
+    _includeDEXS,
+    _excludeDEXS,
+    _excludePools,
+    _excludePricingMethods,
+    _excludeContractMethods,
+    _includeContractMethods,
+  ] = [
+    includeDEXS,
+    excludeDEXS,
+    excludePools,
+    excludePricingMethods,
+    excludeContractMethods,
+    includeContractMethods,
+    //                                                                                              no "" empty string
+  ].map((array) => array?.join(',') || undefined);
 
   return {
     version: adapterVersion,
@@ -181,19 +191,10 @@ function commonGetRateOptionsGetter({
     excludeContractMethods: _excludeContractMethods,
     includeContractMethods: _includeContractMethods,
     partner,
-    includeDEXS,
-    excludeDEXS,
+    includeDEXS: _includeDEXS,
+    excludeDEXS: _excludeDEXS,
+    excludePools: _excludePools,
     ...restInput,
     ...restOptions,
   };
-}
-
-function checkDexList(dexs?: string) {
-  if (dexs) {
-    const targetDEXs = dexs.split(',');
-
-    if (!targetDEXs.length) {
-      throw new Error(INVALID_DEX_LIST);
-    }
-  }
 }

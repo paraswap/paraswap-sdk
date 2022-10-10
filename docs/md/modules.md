@@ -166,7 +166,7 @@
 
 #### Defined in
 
-[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/token.ts#L6)
+[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/token.ts#L6)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/token.ts#L10)
+[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/token.ts#L10)
 
 ___
 
@@ -200,7 +200,7 @@ ___
 
 #### Defined in
 
-[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/sdk/full.ts#L27)
+[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/sdk/full.ts#L27)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/approveForOrder.ts#L6)
+[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/approveForOrder.ts#L6)
 
 ___
 
@@ -246,7 +246,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/approveForOrder.ts#L16)
+[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/approveForOrder.ts#L16)
 
 ___
 
@@ -269,7 +269,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/approve.ts#L17)
+[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/approve.ts#L17)
 
 ___
 
@@ -279,7 +279,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L50)
+[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L50)
 
 ___
 
@@ -295,7 +295,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/buildOrder.ts#L20)
+[src/methods/limitOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/buildOrder.ts#L20)
 
 ___
 
@@ -305,7 +305,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/buildOrder.ts#L10)
+[src/methods/limitOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/buildOrder.ts#L10)
 
 ___
 
@@ -315,7 +315,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L95)
+[src/methods/swap/transaction.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L95)
 
 ___
 
@@ -333,7 +333,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/transaction.ts#L41)
+[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/transaction.ts#L41)
 
 ___
 
@@ -349,7 +349,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/buildOrder.ts#L20)
+[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/buildOrder.ts#L20)
 
 ___
 
@@ -359,7 +359,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/buildOrder.ts#L10)
+[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/buildOrder.ts#L10)
 
 ___
 
@@ -369,7 +369,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:102](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L102)
+[src/methods/swap/transaction.ts:102](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L102)
 
 ___
 
@@ -387,7 +387,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/transaction.ts#L41)
+[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/transaction.ts#L41)
 
 ___
 
@@ -397,7 +397,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:153](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L153)
+[src/methods/swap/transaction.ts:153](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L153)
 
 ___
 
@@ -416,7 +416,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:143](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L143)
+[src/methods/swap/transaction.ts:143](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L143)
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L151)
+[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L151)
 
 ___
 
@@ -436,7 +436,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:150](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L150)
+[src/methods/swap/transaction.ts:150](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L150)
 
 ___
 
@@ -446,7 +446,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:118](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L118)
+[src/methods/swap/transaction.ts:118](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L118)
 
 ___
 
@@ -456,7 +456,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:129](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L129)
+[src/methods/swap/transaction.ts:129](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L129)
 
 ___
 
@@ -466,7 +466,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:74](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L74)
+[src/methods/swap/transaction.ts:74](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L74)
 
 ___
 
@@ -482,7 +482,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L161)
 
 ___
 
@@ -492,7 +492,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:136](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L136)
+[src/methods/swap/transaction.ts:136](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L136)
 
 ___
 
@@ -515,7 +515,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/cancelOrder.ts#L17)
+[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/cancelOrder.ts#L17)
 
 ___
 
@@ -538,7 +538,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/cancelOrder.ts#L14)
+[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/cancelOrder.ts#L14)
 
 ___
 
@@ -554,7 +554,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:35](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/adapters.ts#L35)
+[src/methods/swap/adapters.ts:35](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/adapters.ts#L35)
 
 ___
 
@@ -573,7 +573,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/balance.ts#L46)
+[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/balance.ts#L46)
 
 ___
 
@@ -590,7 +590,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/getOrdersContract.ts#L4)
+[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -607,7 +607,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:29](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/getOrders.ts#L29)
+[src/methods/limitOrders/getOrders.ts:39](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/getOrders.ts#L39)
 
 ___
 
@@ -624,7 +624,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/getOrdersContract.ts#L4)
+[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -641,7 +641,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/getOrders.ts#L27)
+[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/getOrders.ts#L27)
 
 ___
 
@@ -658,7 +658,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:61](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/rates.ts#L61)
+[src/methods/swap/rates.ts:61](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/rates.ts#L61)
 
 ___
 
@@ -677,7 +677,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/spender.ts#L8)
+[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/spender.ts#L8)
 
 ___
 
@@ -693,7 +693,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/token.ts#L11)
+[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/token.ts#L11)
 
 ___
 
@@ -703,7 +703,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:13](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L13)
+[src/methods/limitOrders/helpers/types.ts:13](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L13)
 
 ___
 
@@ -719,7 +719,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:26](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L26)
+[src/methods/limitOrders/helpers/types.ts:30](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L30)
 
 ___
 
@@ -729,7 +729,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:35](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L35)
+[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L39)
 
 ___
 
@@ -766,7 +766,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:42](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L42)
+[src/methods/limitOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L46)
 
 ___
 
@@ -782,7 +782,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:102](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/index.ts#L102)
+[src/methods/limitOrders/index.ts:102](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/index.ts#L102)
 
 ___
 
@@ -792,7 +792,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:33](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L33)
+[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L37)
 
 ___
 
@@ -802,7 +802,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L3)
+[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L3)
 
 ___
 
@@ -812,7 +812,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:18](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L18)
+[src/methods/limitOrders/helpers/types.ts:18](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L18)
 
 ___
 
@@ -829,7 +829,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L37)
+[src/methods/limitOrders/helpers/types.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L41)
 
 ___
 
@@ -839,7 +839,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L11)
+[src/methods/limitOrders/helpers/types.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L11)
 
 ___
 
@@ -851,21 +851,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `hasMore` | `boolean` |
+| `limit` | `number` |
+| `offset` | `number` |
 | `orders` | [`LimitOrderFromApi`](modules.md#limitorderfromapi)[] |
+| `total` | `number` |
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/types.ts#L23)
+[src/methods/limitOrders/helpers/types.ts:23](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/types.ts#L23)
 
 ___
 
 ### LimitOrdersUserParams
 
-Ƭ **LimitOrdersUserParams**: { `maker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } \| { `taker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  }
+Ƭ **LimitOrdersUserParams**: { `maker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } \| { `taker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } & [`PaginationParams`](interfaces/internal_.PaginationParams.md)
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:17](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/getOrders.ts#L17)
+[src/methods/limitOrders/getOrders.ts:24](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/getOrders.ts#L24)
 
 ___
 
@@ -881,7 +885,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L46)
+[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L46)
 
 ___
 
@@ -906,7 +910,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
+[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
 
 ___
 
@@ -916,7 +920,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L22)
+[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L22)
 
 ___
 
@@ -932,7 +936,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/index.ts#L95)
+[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/index.ts#L95)
 
 ___
 
@@ -942,7 +946,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L20)
+[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L20)
 
 ___
 
@@ -952,7 +956,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L12)
+[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L12)
 
 ___
 
@@ -969,7 +973,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L5)
+[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L5)
 
 ___
 
@@ -979,7 +983,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L10)
+[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L10)
 
 ___
 
@@ -995,7 +999,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/types.ts#L43)
+[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/types.ts#L43)
 
 ___
 
@@ -1005,7 +1009,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/getOrders.ts#L15)
+[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/getOrders.ts#L15)
 
 ___
 
@@ -1087,7 +1091,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/buildOrderData.ts#L43)
+[src/methods/limitOrders/helpers/buildOrderData.ts:43](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/buildOrderData.ts#L43)
 
 ___
 
@@ -1104,7 +1108,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/postOrder.ts#L16)
+[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/postOrder.ts#L16)
 
 ___
 
@@ -1121,7 +1125,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/postOrder.ts#L16)
+[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/postOrder.ts#L16)
 
 ___
 
@@ -1131,7 +1135,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/token.ts#L14)
+[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/token.ts#L14)
 
 ___
 
@@ -1147,7 +1151,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/sdk/partial.ts#L14)
+[src/sdk/partial.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/sdk/partial.ts#L14)
 
 ___
 
@@ -1163,7 +1167,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/signOrder.ts#L5)
+[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/signOrder.ts#L5)
 
 ___
 
@@ -1179,7 +1183,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/signOrder.ts#L5)
+[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/signOrder.ts#L5)
 
 ___
 
@@ -1198,7 +1202,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
+[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
 
 ___
 
@@ -1217,7 +1221,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
+[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
 
 ___
 
@@ -1235,7 +1239,7 @@ ___
 
 #### Defined in
 
-[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/common/orders/buildOrderData.ts#L14)
+[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/common/orders/buildOrderData.ts#L14)
 
 ___
 
@@ -1253,7 +1257,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:113](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/sdk/simple.ts#L113)
+[src/sdk/simple.ts:113](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/sdk/simple.ts#L113)
 
 ___
 
@@ -1271,7 +1275,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:119](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/sdk/simple.ts#L119)
+[src/sdk/simple.ts:119](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/sdk/simple.ts#L119)
 
 ___
 
@@ -1288,7 +1292,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/limitOrders/index.ts#L41)
+[src/methods/limitOrders/index.ts:41](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/limitOrders/index.ts#L41)
 
 ___
 
@@ -1305,7 +1309,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/index.ts#L34)
+[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/index.ts#L34)
 
 ___
 
@@ -1321,7 +1325,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/index.ts#L11)
+[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/index.ts#L11)
 
 ___
 
@@ -1331,7 +1335,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L33)
+[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L33)
 
 ___
 
@@ -1341,7 +1345,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/swap/transaction.ts#L28)
+[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/swap/transaction.ts#L28)
 
 ___
 
@@ -1366,7 +1370,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/token.ts#L37)
+[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/token.ts#L37)
 
 ___
 
@@ -1376,7 +1380,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/token.ts#L18)
+[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/token.ts#L18)
 
 ___
 
@@ -1386,7 +1390,7 @@ ___
 
 #### Defined in
 
-[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/helpers/providers/web3.ts#L22)
+[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/helpers/providers/web3.ts#L22)
 
 ## Variables
 
@@ -1396,7 +1400,7 @@ ___
 
 #### Defined in
 
-[src/constants.ts:3](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/constants.ts#L3)
+[src/constants.ts:3](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/constants.ts#L3)
 
 ___
 
@@ -1414,7 +1418,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/feat/add-slippage-for-swap-and-limit-order-building/src/methods/nftOrders/helpers/misc.ts#L21)
+[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/methods/nftOrders/helpers/misc.ts#L21)
 
 ## Functions
 
