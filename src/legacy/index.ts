@@ -141,7 +141,7 @@ export class ParaSwap {
     };
   }
 
-  private static async extractHasFromTxResponse(
+  private static async extractHashFromTxResponse(
     txResponse: TxResponse
   ): Promise<string> {
     if ('once' in txResponse) {
@@ -364,7 +364,7 @@ export class ParaSwap {
       );
 
       return await Promise.all(
-        txResponses.map(ParaSwap.extractHasFromTxResponse)
+        txResponses.map(ParaSwap.extractHashFromTxResponse)
       );
     } catch (e) {
       return ParaSwap.handleAPIError(e);
@@ -385,7 +385,7 @@ export class ParaSwap {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
       const txResponse = await this.sdk.approveToken(amount, tokenAddress);
 
-      return await ParaSwap.extractHasFromTxResponse(txResponse);
+      return await ParaSwap.extractHashFromTxResponse(txResponse);
     } catch (e) {
       return ParaSwap.handleAPIError(e);
     }

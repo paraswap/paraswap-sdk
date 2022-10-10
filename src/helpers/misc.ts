@@ -8,7 +8,7 @@ import type {
   ContractSendMethod as Web3ContractSendMethod,
   Contract as Web3Contract,
 } from 'web3-eth-contract';
-import { assert } from 'ts-essentials';
+import { assert, Primitive } from 'ts-essentials';
 
 import type { AxiosError } from 'axios';
 
@@ -76,8 +76,8 @@ export const objectToFilledEntries = <T extends Record<string, unknown>>(
       .map(([key, value]) => [key, String(value)])
   );
 };
-
-export const constructSearchString = <U extends Record<string, unknown>>(
+//                                                            not arrays or mappings
+export const constructSearchString = <U extends Record<string, Primitive>>(
   queryOptions: U
 ): `?${string}` | '' => {
   const queryEntries = objectToFilledEntries(queryOptions);
@@ -141,9 +141,13 @@ export class FetcherError extends Error implements FetcherErrorInterface {
     this.message = isDataWithError(data) ? data.error : message;
   }
 }
+// to turn `object -> Record` for indexed variable access
+function isObject(obj: unknown): obj is Record<string | symbol, any> {
+  return !!obj && typeof obj === 'object';
+}
 
 export function isDataWithError(data: unknown): data is { error: string } {
-  return !!data && typeof data == 'object' && 'error' in data;
+  return isObject(data) && typeof data['error'] === 'string';
 }
 
 export type ExtractAbiMethodNames<T extends readonly { name: string }[]> =
@@ -188,3 +192,18 @@ export function gatherObjectsByProp<T, U>(
 export const isFilledArray = <T>(array: T[]): array is [T, ...T[]] => {
   return array.length > 0;
 };
+
+export function getRandomInt(): number {
+  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+}
+
+export function runOnceAndCache<T, Args extends any[]>(
+  // can pass `(...any[]) => any but null | undefined`
+  func: (...args: Args) => NonNullable<T>
+): (...args: Args) => NonNullable<T> {
+  let result: NonNullable<T>;
+
+  return (...args) => {
+    return result ?? (result = func(...args));
+  };
+}

@@ -1,8 +1,6 @@
 import type {
   Address,
   ContractCallerFunctions,
-  GetLogsResult,
-  LogsContractCallerFn,
   NoExtraKeysCheck,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
@@ -19,7 +17,6 @@ import type {
   PayableOverrides,
   CallOverrides,
   ContractTransaction,
-  EventFilter,
 } from '@ethersproject/contracts';
 import { assertEthersContractHasMethods } from '../misc';
 import { assert } from 'ts-essentials';
@@ -131,37 +128,7 @@ export const constructContractCaller = (
     return signer._signTypedData(domain, types, data);
   };
 
-  // @TODO remove if not going to use (API returns full Orders)
-  const getLogsCall: LogsContractCallerFn = async (params) => {
-    const { address, abi, filter } = params;
-
-    const contract = new Contract(address, abi, providerOrSigner);
-
-    const provider = isEthersSigner(providerOrSigner)
-      ? providerOrSigner.provider
-      : providerOrSigner;
-
-    assert(
-      provider,
-      'ethers must be an instance of Provider or Signer with Provider attached'
-    );
-
-    const logs = await contract.queryFilter(filter as EventFilter, 12223870);
-    // const logs = await provider.getLogs(filter);
-    // console.log('🚀 ~  logs', logs);
-    const decoded = logs
-      // filtering likely doesn't matter when querying past events
-      .filter((log) => !log.removed)
-      .map<GetLogsResult[number]>((log) => {
-        const { topic, args } = contract.interface.parseLog(log);
-        return { topic, args, transactionHash: log.transactionHash };
-      });
-    // console.log('🚀 ~  decoded', decoded);
-
-    return decoded;
-  };
-
-  return { staticCall, transactCall, signTypedDataCall, getLogsCall };
+  return { staticCall, transactCall, signTypedDataCall };
 };
 
 function isEthersProvider(

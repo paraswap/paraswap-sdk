@@ -7,7 +7,6 @@ import {
   BuildOptions,
   BuildSwapAndLimitOrderTxInput,
   TransactionParams,
-  SwappableOrder,
   constructBuildTx,
 } from '../swap/transaction';
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
@@ -29,7 +28,8 @@ type BuildSwapAndLimitOrdersTx = (
 type MinBuildLimitOrderTxInput = Omit<
   BuildLimitOrderTxInput,
   // these are derived from `orders`
-  'srcToken' | 'srcAmount' | 'destToken'
+  'srcToken' | 'srcAmount' | 'destToken' | 'slippage'
+  // `slippage` doesn't participate as we derive `srcAmount` already
 >;
 
 type BuildLimitOrdersTx = (
@@ -47,7 +47,7 @@ export type BuildLimitOrdersTxFunctions = {
 type GetLimitOrdersRate = (
   // `amount`, if given, must equal the total of the orders' `takerAmounts`
   options: Omit<GetRateInput, 'amount' | 'side'> & { amount?: string },
-  orders: Pick<OrderData, 'takerAsset' | 'makerAsset' | 'takerAmount'>[],
+  orders: CheckableOrderData[],
   signal?: AbortSignal
 ) => Promise<OptimalRate>;
 
@@ -76,35 +76,13 @@ export const constructBuildLimitOrderTx = ({
   ) => {
     assert(orders.length > 0, 'must pass at least 1 order');
 
-    const { takerAssetsSet, makerAssetsSet, takerAmount } = orders.reduce<
-      Record<'takerAssetsSet' | 'makerAssetsSet', Set<string>> & {
-        takerAmount: bigint;
-      }
-    >(
-      (accum, order) => {
-        accum.takerAssetsSet.add(order.takerAsset.toLowerCase());
-        accum.makerAssetsSet.add(order.makerAsset.toLowerCase());
-
-        accum.takerAmount = accum.takerAmount + BigInt(order.takerAmount);
-        return accum;
-      },
-      {
-        takerAssetsSet: new Set([destToken.toLowerCase()]),
-        makerAssetsSet: new Set(),
-        takerAmount: BigInt(0),
-      }
-    );
-
+    const { totalTakerAmount, takerAsset } = checkAndParseOrders(orders);
     assert(
-      takerAssetsSet.size === 1,
+      takerAsset.toLowerCase() === destToken.toLowerCase(),
       'All orders must have the same takerAsset as destToken'
     );
-    assert(
-      makerAssetsSet.size === 1,
-      'All orders must have the same makerAsset'
-    );
 
-    const takerAmountString = takerAmount.toString(10);
+    const takerAmountString = totalTakerAmount.toString(10);
 
     if (amount) {
       assert(
@@ -145,6 +123,7 @@ export const constructBuildLimitOrderTx = ({
       ...params,
       // taker supplies takerAsset
       srcToken: takerAsset,
+      // no `slippage` in `params`
       srcAmount: totalTakerAmount.toString(10),
       // taker gets makerAsset in the end
       destToken: makerAsset,
@@ -152,6 +131,7 @@ export const constructBuildLimitOrderTx = ({
 
     return buildSwapTx(fillParams, options, signal);
   };
+
   const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = (
     params,
     options,
@@ -163,11 +143,16 @@ export const constructBuildLimitOrderTx = ({
       ...params,
       // taker supplies srcToken
       srcToken: params.priceRoute.srcToken,
-      srcAmount: params.priceRoute.srcAmount,
       // which is swapped for makerAsset, that would go towards filling the orders
       destToken: makerAsset,
       destDecimals: params.priceRoute.destDecimals,
+      // one or the other
+      ...(params.slippage
+        ? { slippage: params.slippage }
+        : //                                        may sneak in as part of `params`
+          { srcAmount: params.priceRoute.srcAmount, slippage: undefined }),
     };
+
     return buildSwapTx(fillParams, options, signal);
   };
 
@@ -178,13 +163,17 @@ export const constructBuildLimitOrderTx = ({
   };
 };
 
-type CheckAndParseOrdersResult = Pick<
+type CheckAndParseOrdersResult = Omit<CheckableOrderData, 'takerAmount'> & {
+  totalTakerAmount: bigint;
+};
+
+type CheckableOrderData = Pick<
   OrderData,
-  'maker' | 'taker' | 'makerAsset' | 'takerAsset'
-> & { totalTakerAmount: bigint };
+  'takerAsset' | 'makerAsset' | 'takerAmount' | 'maker'
+> & { taker?: OrderData['taker'] };
 
 function checkAndParseOrders(
-  orders: SwappableOrder[]
+  orders: CheckableOrderData[]
 ): CheckAndParseOrdersResult {
   assert(isFilledArray(orders), 'must pass at least 1 order');
 

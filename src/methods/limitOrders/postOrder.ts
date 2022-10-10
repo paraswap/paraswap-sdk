@@ -4,14 +4,14 @@ import { constructBaseFetchUrlGetter, PostOrderURLs } from './helpers/misc';
 import type {
   LimitOrderApiResponse,
   LimitOrderToSend,
-  OpenLimitOrder,
+  LimitOrderFromApi,
   LimitOrderType,
 } from './helpers/types';
 
 type PostLimitOrder = (
   limitOrderWithSignatureAndPermit: LimitOrderToSend,
   signal?: AbortSignal
-) => Promise<OpenLimitOrder>;
+) => Promise<LimitOrderFromApi>;
 
 export type PostLimitOrderFunctions = {
   postLimitOrder: PostLimitOrder;
@@ -33,10 +33,9 @@ export const constructPostLimitOrder = ({
     limitOrderWithSignatureAndPermit: LimitOrderToSend,
     type: LimitOrderType,
     signal?: AbortSignal
-  ): Promise<OpenLimitOrder> => {
+  ): Promise<LimitOrderFromApi> => {
     const fetchURL = getBaseFetchURLByOrderType(type);
 
-    // @TODO check API return matches
     const { order: newOrder } = await fetcher<
       LimitOrderApiResponse,
       PostOrderURLs
@@ -46,9 +45,8 @@ export const constructPostLimitOrder = ({
       data: limitOrderWithSignatureAndPermit,
       signal,
     });
-    console.log('🚀 ~ file: postOrder.ts ~ created newOrder', newOrder);
 
-    return { ...newOrder, status: 'open', amountFilled: '0' };
+    return newOrder;
   };
 
   const postLimitOrder: PostLimitOrder = (

@@ -1,5 +1,5 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { LimitOrderToSend, OpenLimitOrder } from './helpers/types';
+import type { LimitOrderToSend, LimitOrderFromApi } from './helpers/types';
 import {
   BuildLimitOrderFunctions,
   BuildLimitOrderInput,
@@ -12,7 +12,6 @@ import {
 import { constructGetLimitOrders, GetLimitOrdersFunctions } from './getOrders';
 import { constructPostLimitOrder, PostLimitOrderFunctions } from './postOrder';
 import { constructSignLimitOrder, SignLimitOrderFunctions } from './signOrder';
-import { constructFillLimitOrder, FillLimitOrderFunctions } from './fillOrders';
 import {
   constructApproveTokenForLimitOrder,
   ApproveTokenForLimitOrderFunctions,
@@ -25,16 +24,23 @@ import {
   BuildLimitOrdersTxFunctions,
   constructBuildLimitOrderTx,
 } from './transaction';
+import { Address } from 'paraswap-core';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
   extra?: { permitMakerAsset?: string },
   signal?: AbortSignal
-) => Promise<OpenLimitOrder>;
+) => Promise<LimitOrderFromApi>;
+
+type SubmitP2POrder = (
+  buildLimitOrderParams: BuildLimitOrderInput & { taker: Address },
+  extra?: { permitMakerAsset?: string },
+  signal?: AbortSignal
+) => Promise<LimitOrderFromApi>;
 
 export type SubmitLimitOrderFuncs = {
   submitLimitOrder: SubmitLimitOrder;
-  submitP2POrder: SubmitLimitOrder;
+  submitP2POrder: SubmitP2POrder;
 };
 
 export const constructSubmitLimitOrder = (
@@ -72,11 +78,10 @@ export const constructSubmitLimitOrder = (
 
     const newOrder = await postLimitOrder(orderWithSignature, signal);
 
-    console.log('new Limit Order created', newOrder);
     return newOrder;
   };
 
-  const submitP2POrder: SubmitLimitOrder = async (
+  const submitP2POrder: SubmitP2POrder = async (
     buildLimitOrderParams,
     extra = {},
     signal
@@ -88,7 +93,6 @@ export const constructSubmitLimitOrder = (
 
     const newOrder = await postP2POrder(orderWithSignature, signal);
 
-    console.log('new P2P Order created', newOrder);
     return newOrder;
   };
 
@@ -103,14 +107,13 @@ export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
   GetLimitOrdersContractFunctions &
   BuildLimitOrdersTxFunctions &
   CancelLimitOrderFunctions<T> &
-  FillLimitOrderFunctions<T> &
   ApproveTokenForLimitOrderFunctions<T>;
 
 /** @description construct SDK with every LimitOrders-related method, fetching from API and contract calls */
 export const constructAllLimitOrdersHandlers = <TxResponse>(
   options: ConstructProviderFetchInput<
     TxResponse,
-    'signTypedDataCall' | 'transactCall' | 'staticCall' | 'getLogsCall'
+    'signTypedDataCall' | 'transactCall' | 'staticCall'
   >
 ): LimitOrderHandlers<TxResponse> => {
   const limitOrdersGetters = constructGetLimitOrders(options);
@@ -122,7 +125,6 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
   const limitOrdersPost = constructPostLimitOrder(options);
 
   const limitOrdersCancel = constructCancelLimitOrder(options);
-  const limitOrdersFill = constructFillLimitOrder(options);
   const limitOrdersApproveToken = constructApproveTokenForLimitOrder(options);
 
   const limitOrdersBuildTx = constructBuildLimitOrderTx(options);
@@ -135,7 +137,6 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
     ...limitOrdersSign,
     ...limitOrdersPost,
     ...limitOrdersCancel,
-    ...limitOrdersFill,
     ...limitOrdersApproveToken,
     ...limitOrdersBuildTx,
   };

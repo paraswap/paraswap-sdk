@@ -15,7 +15,10 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "docs:html": "typedoc --gitRevision \"$(git branch --show-current)\"",
+    "docs:md": "MD=true yarn docs:html",
+    "docs": "yarn docs:html && yarn docs:md"
   },
   "husky": {
     "hooks": {
@@ -56,6 +59,10 @@
     "isomorphic-unfetch": "^3.1.0",
     "size-limit": "^7.0.8",
     "tslib": "^2.4.0",
+    "typedoc": "^0.23.7",
+    "typedoc-plugin-markdown": "^3.13.3",
+    "typedoc-plugin-missing-exports": "^0.23.0",
+    "typedoc-plugin-replace-text": "^2.0.0",
     "typescript": "^4.6.4",
     "web3": "^1.7.3"
   },
@@ -106,5 +113,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "mounir@paraswap.io"
+  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
 }

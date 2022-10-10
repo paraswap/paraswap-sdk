@@ -1,16 +1,17 @@
-import { assert } from 'ts-essentials';
 import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
-import { chainId2verifyingContract } from './helpers/misc';
+import { constructGetSpender } from '../swap/spender';
 
 type CancelOrder<T> = (
   orderHash: string,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 type CancelOrderBulk<T> = (
   orderHashes: string[],
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  signal?: AbortSignal
 ) => Promise<T>;
 
 export type CancelLimitOrderFunctions<T> = {
@@ -55,17 +56,16 @@ type AvailableMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
 export const constructCancelLimitOrder = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): CancelLimitOrderFunctions<T> => {
-  const verifyingContract = chainId2verifyingContract[options.chainId];
+  // getAugustusRFQ is cached internally for the same instance of SDK
+  // so should persist across same apiUrl & network
+  const { getAugustusRFQ } = constructGetSpender(options);
 
   const cancelLimitOrder: CancelOrder<T> = async (
     orderHash,
-    overrides = {}
-    // signal //@TODO not needed if no fetch call for `verifyingContract`
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       // @CHECK if verifyingContract is the one we need to approve
@@ -82,13 +82,10 @@ export const constructCancelLimitOrder = <T>(
 
   const cancelLimitOrderBulk: CancelOrderBulk<T> = async (
     orderHashes,
-    overrides = {}
-    // signal //@TODO not needed if no fetch call for `verifyingContract`
+    overrides = {},
+    signal
   ) => {
-    assert(
-      verifyingContract,
-      `verifyingContract for Limit Orders not available on chain ${options.chainId}`
-    );
+    const verifyingContract = await getAugustusRFQ(signal);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       // @CHECK if verifyingContract is the one we need to approve
