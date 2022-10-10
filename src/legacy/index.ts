@@ -5,7 +5,7 @@ import type { ContractTransaction } from '@ethersproject/contracts';
 
 import { API_URL, SwapSide } from '../constants';
 import {
-  AllSDKMethods,
+  SwapSDKMethods,
   constructBuildTx,
   constructGetAdapters,
   constructGetBalances,
@@ -13,7 +13,7 @@ import {
   constructGetTokens,
   constructPartialSDK,
   constructGetRate,
-  constructFullSDK,
+  constructSwapSDK,
   PriceString,
   Address,
   OptimalRate,
@@ -29,10 +29,14 @@ import {
   EthersProviderDeps,
 } from '../helpers';
 
-import type { RateOptions } from '../methods/rates';
-import type { BuildOptions, TransactionParams } from '../methods/transaction';
+import type { RateOptions } from '../methods/swap/rates';
+import type {
+  BuildOptions,
+  TransactionParams,
+} from '../methods/swap/transaction';
 import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
-import type { Allowance } from '../methods/balance';
+import type { Allowance } from '../methods/swap/balance';
+import { isDataWithError } from '../helpers/misc';
 
 export type APIError = {
   message: string;
@@ -44,7 +48,7 @@ type Fetch = typeof fetch;
 type TxResponse = Web3UnpromiEvent | ContractTransaction;
 
 type LegacyOptions = {
-  network?: number;
+  chainId?: number;
   apiURL?: string;
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
@@ -55,17 +59,17 @@ type LegacyOptions = {
 
 /** @deprecated */
 export class ParaSwap {
-  sdk: Partial<AllSDKMethods<TxResponse>> = {};
+  sdk: Partial<SwapSDKMethods<TxResponse>> = {};
   fetcher: FetcherFunction;
 
-  network: number;
+  chainId: number;
   apiURL: string;
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
   account?: Address;
 
   constructor({
-    network = 1,
+    chainId = 1,
     apiURL = API_URL,
     web3Provider,
     ethersDeps,
@@ -73,7 +77,7 @@ export class ParaSwap {
     axios,
     fetch,
   }: LegacyOptions) {
-    this.network = network;
+    this.chainId = chainId;
     this.apiURL = apiURL;
     this.web3Provider = web3Provider;
     this.ethersDeps = ethersDeps;
@@ -90,7 +94,7 @@ export class ParaSwap {
 
     if (!web3Provider && !ethersDeps) {
       this.sdk = constructPartialSDK(
-        { fetcher, apiURL, network },
+        { fetcher, apiURL, chainId },
         constructGetBalances,
         constructGetTokens,
         constructGetSpender,
@@ -109,11 +113,11 @@ export class ParaSwap {
       : null;
 
     if (contractCaller) {
-      this.sdk = constructFullSDK<TxResponse>({
+      this.sdk = constructSwapSDK<TxResponse>({
         fetcher,
         contractCaller,
         apiURL,
-        network,
+        chainId,
       });
     }
   }
@@ -130,10 +134,14 @@ export class ParaSwap {
 
     const { status, data } = e.response;
 
-    return { status, message: data.error, data };
+    return {
+      status,
+      message: isDataWithError(data) ? data.error : e.message,
+      data,
+    };
   }
 
-  private static async extractHasFromTxResponse(
+  private static async extractHashFromTxResponse(
     txResponse: TxResponse
   ): Promise<string> {
     if ('once' in txResponse) {
@@ -149,13 +157,13 @@ export class ParaSwap {
 
   setWeb3Provider(web3Provider: Web3, account?: string): this {
     const contractCaller = constructWeb3ContractCaller(web3Provider, account);
-    const { apiURL, network, fetcher } = this;
+    const { apiURL, chainId, fetcher } = this;
 
-    this.sdk = constructFullSDK({
+    this.sdk = constructSwapSDK({
       fetcher,
       contractCaller,
       apiURL,
-      network,
+      chainId,
     });
 
     this.web3Provider = web3Provider;
@@ -167,13 +175,13 @@ export class ParaSwap {
 
   setEthersProvider(ethersDeps: EthersProviderDeps, account?: string): this {
     const contractCaller = constructEthersContractCaller(ethersDeps, account);
-    const { apiURL, network, fetcher } = this;
+    const { apiURL, chainId, fetcher } = this;
 
-    this.sdk = constructFullSDK({
+    this.sdk = constructSwapSDK({
       fetcher,
       contractCaller,
       apiURL,
-      network,
+      chainId,
     });
 
     this.web3Provider = undefined;
@@ -356,7 +364,7 @@ export class ParaSwap {
       );
 
       return await Promise.all(
-        txResponses.map(ParaSwap.extractHasFromTxResponse)
+        txResponses.map(ParaSwap.extractHashFromTxResponse)
       );
     } catch (e) {
       return ParaSwap.handleAPIError(e);
@@ -377,7 +385,7 @@ export class ParaSwap {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
       const txResponse = await this.sdk.approveToken(amount, tokenAddress);
 
-      return await ParaSwap.extractHasFromTxResponse(txResponse);
+      return await ParaSwap.extractHashFromTxResponse(txResponse);
     } catch (e) {
       return ParaSwap.handleAPIError(e);
     }

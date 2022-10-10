@@ -1,6 +1,6 @@
 {
   "name": "@paraswap/sdk",
-  "version": "5.6.0-alpha.6",
+  "version": "5.6.0",
   "main": "dist/index.js",
   "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
@@ -15,7 +15,10 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "docs:html": "typedoc --gitRevision \"$(git branch --show-current)\"",
+    "docs:md": "MD=true yarn docs:html",
+    "docs": "yarn docs:html && yarn docs:md"
   },
   "husky": {
     "hooks": {
@@ -47,17 +50,20 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@tsconfig/recommended": "^1.0.1",
-    "axios": "^0.26.1",
-    "bignumber.js": "^9.0.2",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.0",
-    "dts-cli": "^1.5.0",
-    "ethers": "^5.6.4",
-    "ganache": "^7.0.4",
+    "dts-cli": "^1.5.1",
+    "ethers": "^5.6.5",
+    "ganache": "^7.1.0",
     "husky": "^7.0.4",
     "isomorphic-unfetch": "^3.1.0",
     "size-limit": "^7.0.8",
-    "tslib": "^2.3.1",
-    "typescript": "^4.6.3",
+    "tslib": "^2.4.0",
+    "typedoc": "^0.23.7",
+    "typedoc-plugin-markdown": "^3.13.3",
+    "typedoc-plugin-missing-exports": "^0.23.0",
+    "typedoc-plugin-replace-text": "^2.0.0",
+    "typescript": "^4.6.4",
     "web3": "^1.7.3"
   },
   "peerDependencies": {
@@ -77,6 +83,7 @@
     }
   },
   "dependencies": {
+    "bignumber.js": "^9.0.2",
     "paraswap-core": "^1.0.2",
     "ts-essentials": "^9.1.2"
   },
@@ -106,5 +113,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "mounir@paraswap.io"
+  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
 }

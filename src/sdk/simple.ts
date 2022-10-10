@@ -2,12 +2,21 @@ import { constructPartialSDK, SDKConfig } from './partial';
 import {
   GetAdaptersFunctions,
   constructGetAdapters,
-} from '../methods/adapters';
-import { GetBalancesFunctions, constructGetBalances } from '../methods/balance';
-import { GetRateFunctions, constructGetRate } from '../methods/rates';
-import { GetSpenderFunctions, constructGetSpender } from '../methods/spender';
-import { GetTokensFunctions, constructGetTokens } from '../methods/token';
-import { BuildTxFunctions, constructBuildTx } from '../methods/transaction';
+} from '../methods/swap/adapters';
+import {
+  GetBalancesFunctions,
+  constructGetBalances,
+} from '../methods/swap/balance';
+import { GetRateFunctions, constructGetRate } from '../methods/swap/rates';
+import {
+  GetSpenderFunctions,
+  constructGetSpender,
+} from '../methods/swap/spender';
+import { GetTokensFunctions, constructGetTokens } from '../methods/swap/token';
+import {
+  BuildTxFunctions,
+  constructBuildTx,
+} from '../methods/swap/transaction';
 
 import {
   constructAxiosFetcher,
@@ -29,37 +38,112 @@ import type { EthersProviderDeps } from '../helpers';
 import type Web3 from 'web3';
 
 import type AxiosStatic from 'axios';
-import { AllSDKMethods, constructFullSDK } from './full';
+import type { SwapSDKMethods } from './full';
+import {
+  BuildLimitOrderFunctions,
+  constructBuildLimitOrder,
+} from '../methods/limitOrders/buildOrder';
+import {
+  constructPostLimitOrder,
+  PostLimitOrderFunctions,
+} from '../methods/limitOrders/postOrder';
+import {
+  constructGetLimitOrders,
+  GetLimitOrdersFunctions,
+} from '../methods/limitOrders/getOrders';
+import {
+  constructGetLimitOrdersContract,
+  GetLimitOrdersContractFunctions,
+} from '../methods/limitOrders/getOrdersContract';
+import {
+  constructBuildLimitOrderTx,
+  BuildLimitOrdersTxFunctions,
+} from '../methods/limitOrders/transaction';
+import {
+  constructAllLimitOrdersHandlers,
+  LimitOrderHandlers,
+} from '../methods/limitOrders';
 
-export type SDKFetchMethods = GetBalancesFunctions &
+import {
+  constructGetNFTOrdersContract,
+  GetNFTOrdersContractFunctions,
+} from '../methods/nftOrders/getOrdersContract';
+import {
+  constructGetNFTOrders,
+  GetNFTOrdersFunctions,
+} from '../methods/nftOrders/getOrders';
+import {
+  BuildNFTOrderFunctions,
+  constructBuildNFTOrder,
+} from '../methods/nftOrders/buildOrder';
+import {
+  constructPostNFTOrder,
+  PostNFTOrderFunctions,
+} from '../methods/nftOrders/postOrder';
+import {
+  constructBuildNFTOrderTx,
+  BuildNFTOrdersTxFunctions,
+} from '../methods/nftOrders/transaction';
+import {
+  constructAllNFTOrdersHandlers,
+  NFTOrderHandlers,
+} from '../methods/nftOrders';
+
+import { constructSwapSDK } from '../methods/swap';
+
+export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
   GetSpenderFunctions &
   BuildTxFunctions &
   GetAdaptersFunctions &
   GetRateFunctions;
 
-type SimpleOptions = ConstructBaseInput &
-  (
-    | {
-        axios: typeof AxiosStatic;
-      }
-    | { fetch: typeof fetch }
-  );
+export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
+  GetLimitOrdersFunctions &
+  BuildLimitOrderFunctions &
+  PostLimitOrderFunctions &
+  BuildLimitOrdersTxFunctions;
 
-type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
+export type NFTOrdersFetchMethods = GetNFTOrdersContractFunctions &
+  GetNFTOrdersFunctions &
+  BuildNFTOrderFunctions &
+  PostNFTOrderFunctions &
+  BuildNFTOrdersTxFunctions;
+
+export type SimpleFetchSDK = {
+  swap: SwapFetchMethods;
+  limitOrders: LimitOrdersFetchMethods;
+  nftOrders: NFTOrdersFetchMethods;
+};
+
+export type SimpleSDK = {
+  swap: SwapSDKMethods<TxHash>;
+  limitOrders: LimitOrderHandlers<TxHash>;
+  nftOrders: NFTOrderHandlers<TxHash>;
+};
+
+export type FetcherOptions =
+  | {
+      axios: typeof AxiosStatic;
+    }
+  | { fetch: typeof fetch };
+
+type SimpleOptions = ConstructBaseInput & FetcherOptions;
+
+export type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
   account: Address;
 };
 
-/** @description construct SDK with methods that fetch from API and optionally with token approval methods */
-export function constructSimpleSDK(options: SimpleOptions): SDKFetchMethods;
+/** @description construct SDK with methods that fetch from API and optionally with blockchain provider calling methods */
+export function constructSimpleSDK(options: SimpleOptions): SimpleFetchSDK;
 export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions: ProviderOptions
-): AllSDKMethods<TxHash>;
+): SimpleSDK;
 export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions?: ProviderOptions
-): SDKFetchMethods | AllSDKMethods<TxHash> {
+): SimpleFetchSDK | SimpleSDK {
   const fetcher =
     'axios' in options
       ? constructAxiosFetcher(options.axios)
@@ -68,12 +152,12 @@ export function constructSimpleSDK(
   if (!providerOptions) {
     const config: ConstructFetchInput = {
       apiURL: options.apiURL,
-      network: options.network,
+      chainId: options.chainId,
       fetcher,
     };
 
     // include all available functions that don't need `contractCaller`
-    const sdk: SDKFetchMethods = constructPartialSDK(
+    const swap: SwapFetchMethods = constructPartialSDK(
       config,
       constructGetBalances,
       constructGetTokens,
@@ -83,29 +167,56 @@ export function constructSimpleSDK(
       constructGetRate
     );
 
-    return sdk;
+    const limitOrders = constructPartialSDK(
+      config,
+      constructBuildLimitOrder,
+      constructPostLimitOrder,
+      constructGetLimitOrders,
+      constructGetLimitOrdersContract,
+      constructBuildLimitOrderTx
+    );
+
+    const nftOrders = constructPartialSDK(
+      config,
+      constructBuildNFTOrder,
+      constructPostNFTOrder,
+      constructGetNFTOrders,
+      constructGetNFTOrdersContract,
+      constructBuildNFTOrderTx
+    );
+
+    return { swap, limitOrders, nftOrders };
   }
 
   const contractCaller = constructSimpleContractCaller(providerOptions);
 
   const config: SDKConfig<TxHash> = {
     apiURL: options.apiURL,
-    network: options.network,
+    chainId: options.chainId,
     fetcher,
     contractCaller,
   };
 
-  const sdk: AllSDKMethods<TxHash> = constructFullSDK(config);
+  const swap: SwapSDKMethods<TxHash> = constructSwapSDK(config);
 
-  return sdk;
+  const limitOrders: LimitOrderHandlers<TxHash> =
+    constructAllLimitOrdersHandlers<TxHash>(config);
+
+  const nftOrders: NFTOrderHandlers<TxHash> =
+    constructAllNFTOrdersHandlers<TxHash>(config);
+
+  return { swap, limitOrders, nftOrders };
 }
 
 function constructSimpleContractCaller(
   providerOptions: ProviderOptions
 ): ContractCallerFunctions<TxHash> {
   if ('ethersProviderOrSigner' in providerOptions) {
-    const { staticCall, transactCall: _transactCall } =
-      constructEthersContractCaller(providerOptions, providerOptions.account);
+    const {
+      staticCall,
+      transactCall: _transactCall,
+      signTypedDataCall,
+    } = constructEthersContractCaller(providerOptions, providerOptions.account);
 
     const transactCall: TransactionContractCallerFn<TxHash> = async (
       params
@@ -117,11 +228,17 @@ function constructSimpleContractCaller(
       return contractTx.hash;
     };
 
-    return { staticCall, transactCall };
+    return { staticCall, transactCall, signTypedDataCall };
   }
 
-  const { staticCall, transactCall: _transactCall } =
-    constructWeb3ContractCaller(providerOptions.web3, providerOptions.account);
+  const {
+    staticCall,
+    transactCall: _transactCall,
+    signTypedDataCall,
+  } = constructWeb3ContractCaller(
+    providerOptions.web3,
+    providerOptions.account
+  );
 
   const transactCall: TransactionContractCallerFn<TxHash> = async (params) => {
     const unpromiEvent = await _transactCall(params);
@@ -134,5 +251,5 @@ function constructSimpleContractCaller(
     });
   };
 
-  return { staticCall, transactCall };
+  return { staticCall, transactCall, signTypedDataCall };
 }

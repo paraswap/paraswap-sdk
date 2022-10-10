@@ -20,7 +20,7 @@ const contractCaller = constructEthersContractCaller({
 // type AdaptersFunctions & ApproveTokenFunctions<ethers.ContractTransaction>
 const part1 = constructPartialSDK(
   {
-    network: 1,
+    chainId: 1,
     fetcher,
     contractCaller,
   },

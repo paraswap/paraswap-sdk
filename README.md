@@ -27,16 +27,16 @@ There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and
 
 ### Simple SDK
 
-Can be created by providing `network` and either `axios` or `window.fetch` (or alternative `fetch` implementation). The resulting SDK will be able to use all methods that query the API.
+Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation). The resulting SDK will be able to use all methods that query the API.
 
 ```ts
   import { constructSimpleSDK } from '@paraswap/sdk';
   import axios from 'axios';
 
   // construct minimal SDK with fetcher only
-  const paraSwapMin = constructSimpleSDK({network: 1, axios});
+  const paraSwapMin = constructSimpleSDK({chainId: 1, axios});
   // or
-  const paraSwapMin = constructSimpleSDK({network: 1, fetch: window.fetch});
+  const paraSwapMin = constructSimpleSDK({chainId: 1, fetch: window.fetch});
 
   const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
@@ -46,7 +46,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
     const signer: JsonRpcSigner = ethers.Wallet.fromMnmemonic('__your_mnemonic__');
     const senderAddress = signer.address;
 
-    const priceRoute = await paraSwapMin.getRate({
+    const priceRoute = await paraSwapMin.swap.getRate({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -54,7 +54,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
       side: SwapSide.SELL,
     });
 
-    const txParams = await paraSwapMin.buildTx(
+    const txParams = await paraSwapMin.swap.buildTx(
       {
         srcToken,
         destToken,
@@ -78,7 +78,7 @@ Can be created by providing `network` and either `axios` or `window.fetch` (or a
 
 
   async function approveTokenYourselfExample() {
-    const TransferProxy = await paraSwapMin.getSpender();
+    const TransferProxy = await paraSwapMin.swap.getSpender();
 
     const DAI_CONTRACT = new ethers.Contract(DAI, ERC20_ABI, ethersSignerOrProvider);
 
@@ -106,7 +106,7 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
-  const paraSwap = constructSimpleSDK({network: 1, axios}, providerOptionsEther);
+  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEther);
 
   async function approveTokenExample() {
     const txHash = await paraSwap.approveToken(amountInWei, DAI);
@@ -134,7 +134,7 @@ const contractCaller = constructEthersContractCaller({
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
 const paraswap = constructSDK({
-  network: 1,
+  chainId: 1,
   fetcher,
   contractCaller,
 });
@@ -226,7 +226,7 @@ import { constructPartialSDK, constructFetchFetcher, constructGetRate, construct
 const fetcher = constructFetchFetcher(window.fetch);
 
 const minParaSwap = constructPartialSDK({
-  network: 1,
+  chainId: 1,
   fetcher,
 }, constructGetRate, constructGetBalances);
 
@@ -245,14 +245,10 @@ import Web3 from 'web3';
 const web3Provider = new Web3(window.ethereum);
 const account = '__user_address__';
 
-const paraswap = new ParaSwap({
-  network: 1,
-  web3Provider,
-  account,
-  axios,
- });
+const paraswap = new ParaSwap({chainId: 1, web3Provider, account, axios});
 
 ```
+
 
 Or you can use `ethers` in place of `web3`
 
@@ -264,7 +260,7 @@ const ethersProvider = new ethers.providers.Web3Provider(window.ethereum)
 const account = '__user_address__';
 
 const paraswap = new ParaSwap({
-  network: 1,
+  chainId: 1,
   account,
   ethersDeps: {
     ethersProviderOrSigner: ethersProvider;
@@ -280,11 +276,18 @@ By analogy to ```constructPartialSDK```, you can leverage a lightweight version 
 ```typescript
 import { ParaSwap } from '@paraswap/sdk';
 
-const paraswap = new ParaSwap({
-  network: 1,
-  fetch: window.fetch,
-});
+const paraswap = new ParaSwap({chainId: 1, fetch: window.fetch});
 
 ```
 
 Refer to [this README for depecreated documentation](https://github.com/paraswap/paraswap-sdk/blob/c4c70c674fb2be4ec528064649d992d4b38c654b/README.md) for functions usage.
+
+
+Refer to [SDK API documentation](docs/md/modules.md) for detailed documentation on the methods provided in this SDK.
+
+## Tests
+
+To run `yarn test` it is necessary to provide `PROVIDER_URL=<mainnet_rpc_url>` environment variable.
+If it is necessary to run tests against a different API endpoint, provide `API_URL=url_to_API` environment variable.
+
+<img src="./docs/passed_tests.jpg" width=350 />
