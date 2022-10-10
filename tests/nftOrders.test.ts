@@ -1085,8 +1085,11 @@ describe('NFT Orders', () => {
             ...exchange,
             data: {
               ...exchange.data,
+              path: '---', // stablilze test because of variable path. Details: https://github.com/paraswap/paraswap-sdk/actions/runs/3218112679/jobs/5261882711#step:6:29
+              pools: '---',
               gasUSD: '---',
             },
+            poolAddresses: ['---'],
             srcAmount: '---', //will change based on srcToken/destToken rate
           })),
         })),
@@ -1112,31 +1115,15 @@ describe('NFT Orders', () => {
                       "feeFactor": 10000,
                       "gasUSD": "---",
                       "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
-                      "path": Array [
-                        "0x6b175474e89094c44da98b954eedeac495271d0f",
-                        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-                        "0x4fabb145d64652a948d72533023f6e7a623c7c53",
-                      ],
-                      "pools": Array [
-                        Object {
-                          "address": "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
-                          "direction": true,
-                          "fee": 30,
-                        },
-                        Object {
-                          "address": "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
-                          "direction": false,
-                          "fee": 30,
-                        },
-                      ],
+                      "path": "---",
+                      "pools": "---",
                       "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
                     },
                     "destAmount": "6000000000000000000",
                     "exchange": "UniswapV2",
                     "percent": 100,
                     "poolAddresses": Array [
-                      "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
-                      "0x524847C615639e76fE7D0FE0B16be8c4eAC9CF3c",
+                      "---",
                     ],
                     "srcAmount": "---",
                   },
