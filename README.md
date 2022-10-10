@@ -249,6 +249,28 @@ const paraswap = new ParaSwap({chainId: 1, web3Provider, account, axios});
 
 ```
 
+
+Or you can use `ethers` in place of `web3`
+
+```typescript
+import { ParaSwap } from '@paraswap/sdk';
+import { ethers } from "ethers";
+
+const ethersProvider = new ethers.providers.Web3Provider(window.ethereum)
+const account = '__user_address__';
+
+const paraswap = new ParaSwap({
+  chainId: 1,
+  account,
+  ethersDeps: {
+    ethersProviderOrSigner: ethersProvider;
+    EthersContract: ethers.Contract;
+  },
+  fetch: window.fetch,
+ });
+
+```
+
 By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only.
 
 ```typescript
