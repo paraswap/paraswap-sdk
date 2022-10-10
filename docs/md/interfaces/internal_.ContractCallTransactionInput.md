@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[src/types.ts:68](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L68)
+[src/types.ts:68](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L68)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:67](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L67)
+[src/types.ts:67](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L67)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:70](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L70)
+[src/types.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L70)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:69](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L69)
+[src/types.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L69)
 
 ___
 
@@ -90,4 +90,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:80](https://github.com/paraswap/paraswap-sdk-limit-orders/blob/fix/tests-misc/src/types.ts#L80)
+[src/types.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L80)
