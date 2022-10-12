@@ -13,7 +13,7 @@ concurrency:
 
 env:
   frontend_name: sdk
-  build_command: yarn docs
+  build_command: yarn docs:html
   assets_location: ./docs/html
 
 jobs:
