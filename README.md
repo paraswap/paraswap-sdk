@@ -75,24 +75,11 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
 
     const txr = await signer.sendTransaction(transaction);
   }
-
-
-  async function approveTokenYourselfExample() {
-    const TransferProxy = await paraSwapMin.swap.getSpender();
-
-    const DAI_CONTRACT = new ethers.Contract(DAI, ERC20_ABI, ethersSignerOrProvider);
-
-    const tx = await DAI_CONTRACT.approve(TransferProxy, amountInWei);
-
-    const txReceipt = await tx.wait(1);
-  }
-
 ```
 
 If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
 
 ```ts
-  // 
   // with ethers.js
   const providerOptionsEther = {
     ethersProviderOrSigner: provider, // JsonRpcProvider
@@ -108,12 +95,11 @@ If optional `providerOptions` is provided as the second parameter, then the resu
 
   const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEther);
 
-  async function approveTokenExample() {
-    const txHash = await paraSwap.approveToken(amountInWei, DAI);
+  // approve token through sdk
+  const txHash = await paraSwap.approveToken(amountInWei, DAI);
 
-    // await tx somehow
-    await provider.waitForTransaction(txHash);
-  }
+  // await tx somehow
+  await provider.waitForTransaction(txHash);
 ```
 
 ### Composed SDK
