@@ -102,14 +102,10 @@ If optional `providerOptions` is provided as the second parameter, then the resu
   await provider.waitForTransaction(txHash);
 ```
 
-### Composed SDK
-Import the necessary functions
+### Full SDK 
 ```typescript
 import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
-```
-### Construct the ParaSwap object
 
-```typescript
 const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider 
 const account = '__signer_address__';
 
@@ -119,86 +115,14 @@ const contractCaller = constructEthersContractCaller({
 }, account); // alternatively constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
-const paraswap = constructSDK({
+const paraswap = constructFullSDK({
   chainId: 1,
   fetcher,
   contractCaller,
 });
 ```
 
-### To approve ParaSwap contracts to swap an ERC20 token
-
-```typescript
-// if created with constructEthersContractCaller
-const contractTx: ContractTransaction = await paraSwap.approveToken(amount, tokenAddress);
-const txReceipt = await contractTx.wait();
-
-// if created with constructWeb3ContractCaller
-const unpromiEvent: Web3UnpromiEvent = await paraSwap.approveToken(amount, tokenAddress);
-const txReceipt = await new Promise<Web3TransactionReceipt>((resolve, reject) => {
-  unpromiEvent.once('receipt', resolve);
-  unpromiEvent.once('error', reject);
-})
-```
-
-### To get the rate of a token pair
-
-```typescript
-const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
-const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5'; // PSP
-const srcAmount = '1000000000000000000'; //The source amount multiplied by its decimals: 10 ** 18 here
-const srcDecimals = 18;
-const destDecimals = 18;
-
-const priceRoute = await paraSwap.getRate(
-  {
-    srcToken,
-    destToken,
-    amount: srcAmount,
-    srcDecimals,
-    destDecimals,
-  }
-);
-```
-
-Where priceRoute contains the rate and the distribution among exchanges, checkout the OptimalRates type for more details.
-
-### To build a transaction
-
-```typescript
-const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
-const srcDecimals = 18;
-const srcAmount = '1000000000000000000'; // The source amount multiplied by its decimals
-const destToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5';
-const destDecimals = 18;
-const destAmount = priceRoute.destAmount; // price route being output of paraSwap.getRate()
-const senderAddress = '__sender_address__'; // mandatory
-const receiver = '__receiver_address__'; // optional: for swap and transfer
-const partnerAddress = '__fee_receiver_address__'; // optional: for permission-less monetization
-const partnerFeeBps = 50; // optional: fee in base point, for permission-less monetization
-
-
-const txParams = await paraSwap.buildTx(
-  {
-    srcAmount,
-    srcToken,
-    srcDecimals,
-    destAmount,
-    destToken,
-    destDecimals,
-    priceRoute,
-    senderAddress,
-    receiver,
-    partnerAddress,
-    partnerFeeBps,
-  }
-);
-
-const transactionResponse = await signer.sendTransaction(txParams);
-const transactionReceipt = await transactionResponse.wait();
-```
-
-## Bundle Optimization
+### Partial SDK
 For bundle-size savvy developers, you can construct a lightweight version of the SDK and bring only the functions you need.
 
 e.g. for only getting rates and allowances:
@@ -217,7 +141,7 @@ const priceRoute = await minParaSwap.getRate(params);
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
 
-## Legacy
+### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
 
 ```typescript
