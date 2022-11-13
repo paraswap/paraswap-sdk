@@ -154,7 +154,7 @@ const priceRoute = await paraSwap.getRate(
   {
     srcToken,
     destToken,
-    amount,
+    amount: srcAmount,
     srcDecimals,
     destDecimals,
   }
