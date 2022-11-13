@@ -198,9 +198,6 @@ const transactionResponse = await signer.sendTransaction(txParams);
 const transactionReceipt = await transactionResponse.wait();
 ```
 
-## Playground
-Interact with the ParaSwap SDK in a CodeSandbox playground [here](https://codesandbox.io/s/gallant-flower-7yuker)
-
 ## Bundle Optimization
 For bundle-size savvy developers, you can construct a lightweight version of the SDK and bring only the functions you need.
 
