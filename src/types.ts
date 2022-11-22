@@ -50,6 +50,8 @@ export interface ConstructFetchInput extends ConstructBaseInput {
 interface OverridesBase {
   from?: string;
   gasPrice?: string;
+  maxFeePerGas?: string;
+  maxPriorityFeePerGas?: string;
   gas?: number;
   value?: number | string;
 }
