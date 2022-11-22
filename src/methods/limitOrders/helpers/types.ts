@@ -1,20 +1,9 @@
 import type { OrderData } from './buildOrderData';
 
-export type LimitOrderStatus =
-  | 'open'
-  | 'filled'
-  | 'partiallyFilled'
-  | 'expired'
-  | 'canceled'
-  | 'unknown';
-
 export type LimitOrderType = 'LIMIT' | 'P2P';
 
-export type LimitOrder = LimitOrderFromApi & {
-  status: LimitOrderStatus; // `status` likely not available from API
-  amountFilled?: string;
-  transactionHashes?: string[];
-};
+export type LimitOrder = LimitOrderFromApi;
+
 export type LimitOrderToSend = OrderData & {
   permitMakerAsset?: string;
   signature: string;
