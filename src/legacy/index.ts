@@ -1,4 +1,3 @@
-import type { AxiosStatic } from 'axios';
 import type Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
 import type { ContractTransaction } from '@ethersproject/contracts';
@@ -36,6 +35,7 @@ import type {
 } from '../methods/swap/transaction';
 import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
 import type { Allowance } from '../methods/swap/balance';
+import type { AxiosRequirement } from '../helpers/fetchers/axios';
 import { isDataWithError } from '../helpers/misc';
 
 export type APIError = {
@@ -53,7 +53,7 @@ type LegacyOptions = {
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
   account?: Address;
-  axios?: AxiosStatic;
+  axios?: AxiosRequirement;
   fetch?: Fetch;
 };
 

@@ -37,7 +37,6 @@ import type {
 import type { EthersProviderDeps } from '../helpers';
 import type Web3 from 'web3';
 
-import type AxiosStatic from 'axios';
 import type { SwapSDKMethods } from './full';
 import {
   BuildLimitOrderFunctions,
@@ -90,6 +89,7 @@ import {
 } from '../methods/nftOrders';
 
 import { constructSwapSDK } from '../methods/swap';
+import type { AxiosRequirement } from '../helpers/fetchers/axios';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -124,7 +124,7 @@ export type SimpleSDK = {
 
 export type FetcherOptions =
   | {
-      axios: typeof AxiosStatic;
+      axios: AxiosRequirement;
     }
   | { fetch: typeof fetch };
 

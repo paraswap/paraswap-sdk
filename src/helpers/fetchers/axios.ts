@@ -1,9 +1,11 @@
 import type { FetcherFunction } from '../../types';
-import type AxiosStatic from 'axios';
+import type { AxiosStatic } from 'axios';
 import { FetcherError } from '../misc';
 
+export type AxiosRequirement = Pick<AxiosStatic, 'request' | 'isAxiosError'>;
+
 export const constructFetcher =
-  (axios: typeof AxiosStatic): FetcherFunction =>
+  (axios: AxiosRequirement): FetcherFunction =>
   async (params) => {
     try {
       const { data } = await axios.request(params);
