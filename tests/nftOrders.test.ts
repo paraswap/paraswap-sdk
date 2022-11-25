@@ -1111,16 +1111,12 @@ describe('NFT Orders', () => {
                 "swapExchanges": Array [
                   Object {
                     "data": Object {
-                      "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-                      "feeFactor": 10000,
                       "gasUSD": "---",
-                      "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                       "path": "---",
                       "pools": "---",
-                      "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
                     },
                     "destAmount": "6000000000000000000",
-                    "exchange": "UniswapV2",
+                    "exchange": "UniswapV3",
                     "percent": 100,
                     "poolAddresses": Array [
                       "---",
@@ -1139,7 +1135,7 @@ describe('NFT Orders', () => {
         "destDecimals": 18,
         "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
         "destUSD": "---",
-        "gasCost": "276300",
+        "gasCost": "154300",
         "gasCostUSD": "---",
         "hmac": "---",
         "maxImpactReached": false,

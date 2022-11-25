@@ -60,6 +60,8 @@ export type BuildTxInputBase = {
   srcToken: Address;
   destToken: Address;
   userAddress: Address;
+  /** @description used with referral link */
+  referrer?: string;
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;

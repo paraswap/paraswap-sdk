@@ -941,6 +941,7 @@ describe('Limit Orders', () => {
         srcToken,
         destToken,
         userAddress: senderAddress,
+        options: { includeDEXS: ['UniswapV3'] },
       },
       [order]
     );
