@@ -14,26 +14,28 @@ Object {
           "swapExchanges": Array [
             Object {
               "data": Object {
+                "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+                "feeFactor": 10000,
                 "gasUSD": "---",
+                "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
                 "path": Array [
+                  "0x6b175474e89094c44da98b954eedeac495271d0f",
+                  "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+                ],
+                "pools": Array [
                   Object {
-                    "fee": "500",
-                    "tokenIn": "0x6b175474e89094c44da98b954eedeac495271d0f",
-                    "tokenOut": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                  },
-                  Object {
-                    "fee": "3000",
-                    "tokenIn": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                    "tokenOut": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+                    "address": "0x6929abD7931D0243777d3CD147fE863646A752ba",
+                    "direction": false,
+                    "fee": 30,
                   },
                 ],
+                "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
               },
               "destAmount": "6000000000000000000",
-              "exchange": "UniswapV3",
+              "exchange": "UniswapV2",
               "percent": 100,
               "poolAddresses": Array [
-                "0x60594a405d53811d3BC4766596EFD80fd545A270",
-                "0xAE614a7a56cB79c04Df2aeBA6f5dAB80A39CA78E",
+                "0x6929abD7931D0243777d3CD147fE863646A752ba",
               ],
               "srcAmount": "---",
             },
@@ -49,7 +51,7 @@ Object {
   "destDecimals": 18,
   "destToken": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
   "destUSD": "---",
-  "gasCost": "206300",
+  "gasCost": "189300",
   "gasCostUSD": "---",
   "hmac": "---",
   "maxImpactReached": false,
