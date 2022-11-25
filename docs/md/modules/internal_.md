@@ -27,6 +27,7 @@
 - [Agent](../classes/internal_.Agent-1.md)
 - [Axios](../classes/internal_.Axios.md)
 - [AxiosError](../classes/internal_.AxiosError.md)
+- [AxiosHeaders](../classes/internal_.AxiosHeaders.md)
 - [BN](../classes/internal_.BN-1.md)
 - [BaseContract](../classes/internal_.BaseContract.md)
 - [BaseProvider](../classes/internal_.BaseProvider.md)
@@ -114,7 +115,7 @@
 - [AxiosInstance](../interfaces/internal_.AxiosInstance.md)
 - [AxiosInterceptorManager](../interfaces/internal_.AxiosInterceptorManager.md)
 - [AxiosInterceptorOptions](../interfaces/internal_.AxiosInterceptorOptions.md)
-- [AxiosPromise](../interfaces/internal_.AxiosPromise.md)
+- [AxiosProgressEvent](../interfaces/internal_.AxiosProgressEvent.md)
 - [AxiosProxyConfig](../interfaces/internal_.AxiosProxyConfig.md)
 - [AxiosRequestConfig](../interfaces/internal_.AxiosRequestConfig.md)
 - [AxiosRequestTransformer](../interfaces/internal_.AxiosRequestTransformer.md)
@@ -141,6 +142,7 @@
 - [Certificate](../interfaces/internal_.Certificate.md)
 - [Common](../interfaces/internal_.Common.md)
 - [CommonConnectionOptions](../interfaces/internal_.CommonConnectionOptions.md)
+- [CommonHeaders](../interfaces/internal_.CommonHeaders.md)
 - [ConcatArray](../interfaces/internal_.ConcatArray.md)
 - [ConnectOpts](../interfaces/internal_.ConnectOpts.md)
 - [ConnectionOptions](../interfaces/internal_.ConnectionOptions.md)
@@ -154,7 +156,9 @@
 - [ContractReceipt](../interfaces/internal_.ContractReceipt.md)
 - [ContractSendMethod](../interfaces/internal_.ContractSendMethod.md)
 - [ContractTransaction](../interfaces/internal_.ContractTransaction.md)
+- [CreateAxiosDefaults](../interfaces/internal_.CreateAxiosDefaults.md)
 - [CustomChainParams](../interfaces/internal_.CustomChainParams.md)
+- [CustomParamsSerializer](../interfaces/internal_.CustomParamsSerializer.md)
 - [DOMEventTarget](../interfaces/internal_.DOMEventTarget.md)
 - [DeployOptions](../interfaces/internal_.DeployOptions.md)
 - [Dict](../interfaces/internal_.Dict.md)
@@ -181,6 +185,11 @@
 - [Filter](../interfaces/internal_.Filter.md)
 - [Filter](../interfaces/internal_.Filter-1.md)
 - [FilterByBlockHash](../interfaces/internal_.FilterByBlockHash.md)
+- [FormDataVisitorHelpers](../interfaces/internal_.FormDataVisitorHelpers.md)
+- [FormSerializerOptions](../interfaces/internal_.FormSerializerOptions.md)
+- [GenericAbortSignal](../interfaces/internal_.GenericAbortSignal.md)
+- [GenericFormData](../interfaces/internal_.GenericFormData.md)
+- [GenericHTMLFormElement](../interfaces/internal_.GenericHTMLFormElement.md)
 - [GetAdaptersFunc](../interfaces/internal_.GetAdaptersFunc.md)
 - [GetProof](../interfaces/internal_.GetProof.md)
 - [HeadersDefaults](../interfaces/internal_.HeadersDefaults.md)
@@ -219,6 +228,8 @@
 - [OverridesBase](../interfaces/internal_.OverridesBase.md)
 - [PSKCallbackNegotation](../interfaces/internal_.PSKCallbackNegotation.md)
 - [PaginationParams](../interfaces/internal_.PaginationParams.md)
+- [ParamEncoder](../interfaces/internal_.ParamEncoder.md)
+- [ParamsSerializerOptions](../interfaces/internal_.ParamsSerializerOptions.md)
 - [PastEventOptions](../interfaces/internal_.PastEventOptions.md)
 - [PastLogsOptions](../interfaces/internal_.PastLogsOptions.md)
 - [PeerCertificate](../interfaces/internal_.PeerCertificate.md)
@@ -253,6 +264,8 @@
 - [SecureContext](../interfaces/internal_.SecureContext.md)
 - [SecureContextOptions](../interfaces/internal_.SecureContextOptions.md)
 - [SendOptions](../interfaces/internal_.SendOptions.md)
+- [SerializerOptions](../interfaces/internal_.SerializerOptions.md)
+- [SerializerVisitor](../interfaces/internal_.SerializerVisitor.md)
 - [ServerOpts](../interfaces/internal_.ServerOpts.md)
 - [SharedArrayBuffer](../interfaces/internal_.SharedArrayBuffer.md)
 - [SharedArrayBufferConstructor](../interfaces/internal_.SharedArrayBufferConstructor.md)
@@ -307,7 +320,14 @@
 - [ArrayBufferLike](internal_.md#arraybufferlike)
 - [ArrayBufferView](internal_.md#arraybufferview)
 - [Awaited](internal_.md#awaited)
+- [AxiosHeaderGetter](internal_.md#axiosheadergetter)
+- [AxiosHeaderMatcher](internal_.md#axiosheadermatcher)
+- [AxiosHeaderSetter](internal_.md#axiosheadersetter)
+- [AxiosHeaderTester](internal_.md#axiosheadertester)
+- [AxiosHeaderValue](internal_.md#axiosheadervalue)
+- [AxiosPromise](internal_.md#axiospromise)
 - [AxiosRequestHeaders](internal_.md#axiosrequestheaders)
+- [AxiosRequirement](internal_.md#axiosrequirement)
 - [AxiosResponseHeaders](internal_.md#axiosresponseheaders)
 - [BigIntAsString](internal_.md#bigintasstring)
 - [BigNumberish](internal_.md#bignumberish)
@@ -380,10 +400,13 @@
 - [LimitOrdersFetchMethods](internal_.md#limitordersfetchmethods)
 - [Listener](internal_.md#listener)
 - [LookupFunction](internal_.md#lookupfunction)
+- [Lowercase](internal_.md#lowercase)
 - [MarkOptional](internal_.md#markoptional)
 - [Merge](internal_.md#merge)
 - [MergeExtendableOnce](internal_.md#mergeextendableonce)
 - [MergeExtendableRecursively](internal_.md#mergeextendablerecursively)
+- [Method](internal_.md#method)
+- [MethodsHeaders](internal_.md#methodsheaders)
 - [MinBuildLimitOrderTxInput](internal_.md#minbuildlimitordertxinput)
 - [MinBuildNFTOrderTxInput](internal_.md#minbuildnftordertxinput)
 - [MinBuildSwapAndLimitOrderTxInput](internal_.md#minbuildswapandlimitordertxinput)
@@ -407,6 +430,8 @@
 - [PropertyKey](internal_.md#propertykey)
 - [ProviderOptions](internal_.md#provideroptions)
 - [RateOptions](internal_.md#rateoptions)
+- [RawAxiosHeaders](internal_.md#rawaxiosheaders)
+- [RawAxiosResponseHeaders](internal_.md#rawaxiosresponseheaders)
 - [ReadableStreamDefaultReadResult](internal_.md#readablestreamdefaultreadresult)
 - [Record](internal_.md#record)
 - [ReferrerPolicy](internal_.md#referrerpolicy)
@@ -469,7 +494,6 @@
 
 - [Error](internal_.md#error)
 - [Object](internal_.md#object)
-- [axios](internal_.md#axios)
 
 ## Type Aliases
 
@@ -608,7 +632,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:137](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L137)
+[src/types.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L139)
 
 ___
 
@@ -747,9 +771,95 @@ node_modules/typescript/lib/lib.es5.d.ts:1515
 
 ___
 
-### AxiosRequestHeaders
+### AxiosHeaderGetter
 
-Ƭ **AxiosRequestHeaders**: [`Record`](internal_.md#record)<`string`, `string` \| `number` \| `boolean`\>
+Ƭ **AxiosHeaderGetter**: (`parser?`: `RegExp`) => `RegExpExecArray` \| ``null`` \| (`matcher?`: [`AxiosHeaderMatcher`](internal_.md#axiosheadermatcher)) => [`AxiosHeaderValue`](internal_.md#axiosheadervalue)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:17
+
+___
+
+### AxiosHeaderMatcher
+
+Ƭ **AxiosHeaderMatcher**: (`this`: [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md), `value`: `string`, `name`: `string`, `headers`: [`RawAxiosHeaders`](internal_.md#rawaxiosheaders)) => `boolean`
+
+#### Type declaration
+
+▸ (`this`, `value`, `name`, `headers`): `boolean`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md) |
+| `value` | `string` |
+| `name` | `string` |
+| `headers` | [`RawAxiosHeaders`](internal_.md#rawaxiosheaders) |
+
+##### Returns
+
+`boolean`
+
+#### Defined in
+
+node_modules/axios/index.d.ts:13
+
+___
+
+### AxiosHeaderSetter
+
+Ƭ **AxiosHeaderSetter**: (`value`: [`AxiosHeaderValue`](internal_.md#axiosheadervalue), `rewrite?`: `boolean` \| [`AxiosHeaderMatcher`](internal_.md#axiosheadermatcher)) => [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md)
+
+#### Type declaration
+
+▸ (`value`, `rewrite?`): [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | [`AxiosHeaderValue`](internal_.md#axiosheadervalue) |
+| `rewrite?` | `boolean` \| [`AxiosHeaderMatcher`](internal_.md#axiosheadermatcher) |
+
+##### Returns
+
+[`AxiosHeaders`](../classes/internal_.AxiosHeaders.md)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:15
+
+___
+
+### AxiosHeaderTester
+
+Ƭ **AxiosHeaderTester**: (`matcher?`: [`AxiosHeaderMatcher`](internal_.md#axiosheadermatcher)) => `boolean`
+
+#### Type declaration
+
+▸ (`matcher?`): `boolean`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `matcher?` | [`AxiosHeaderMatcher`](internal_.md#axiosheadermatcher) |
+
+##### Returns
+
+`boolean`
+
+#### Defined in
+
+node_modules/axios/index.d.ts:20
+
+___
+
+### AxiosHeaderValue
+
+Ƭ **AxiosHeaderValue**: [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md) \| `string` \| `string`[] \| `number` \| `boolean` \| ``null``
 
 #### Defined in
 
@@ -757,13 +867,49 @@ node_modules/axios/index.d.ts:2
 
 ___
 
-### AxiosResponseHeaders
+### AxiosPromise
 
-Ƭ **AxiosResponseHeaders**: [`Record`](internal_.md#record)<`string`, `string`\> & { `set-cookie?`: `string`[]  }
+Ƭ **AxiosPromise**<`T`\>: `Promise`<[`AxiosResponse`](../interfaces/internal_.AxiosResponse.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
 
 #### Defined in
 
-node_modules/axios/index.d.ts:4
+node_modules/axios/index.d.ts:383
+
+___
+
+### AxiosRequestHeaders
+
+Ƭ **AxiosRequestHeaders**: [`Partial`](internal_.md#partial)<[`RawAxiosHeaders`](internal_.md#rawaxiosheaders) & [`MethodsHeaders`](internal_.md#methodsheaders) & [`CommonHeaders`](../interfaces/internal_.CommonHeaders.md)\> & [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:71
+
+___
+
+### AxiosRequirement
+
+Ƭ **AxiosRequirement**: [`Pick`](internal_.md#pick)<[`AxiosStatic`](../interfaces/internal_.AxiosStatic.md), ``"request"`` \| ``"isAxiosError"``\>
+
+#### Defined in
+
+[src/helpers/fetchers/axios.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/fetchers/axios.ts#L5)
+
+___
+
+### AxiosResponseHeaders
+
+Ƭ **AxiosResponseHeaders**: [`RawAxiosResponseHeaders`](internal_.md#rawaxiosresponseheaders) & [`AxiosHeaders`](../classes/internal_.AxiosHeaders.md)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:77
 
 ___
 
@@ -813,7 +959,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L57)
+[src/types.ts:59](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L59)
 
 ___
 
@@ -1023,7 +1169,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:155](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L155)
+[src/methods/swap/transaction.ts:157](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L157)
 
 ___
 
@@ -1033,19 +1179,20 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `deadline?` | `string` |
-| `destDecimals?` | `number` |
-| `destToken` | [`Address`](../modules.md#address) |
-| `partner?` | `string` |
-| `partnerAddress?` | `string` |
-| `partnerFeeBps?` | `number` |
-| `permit?` | `string` |
-| `receiver?` | [`Address`](../modules.md#address) |
-| `srcDecimals?` | `number` |
-| `srcToken` | [`Address`](../modules.md#address) |
-| `userAddress` | [`Address`](../modules.md#address) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `deadline?` | `string` | - |
+| `destDecimals?` | `number` | - |
+| `destToken` | [`Address`](../modules.md#address) | - |
+| `partner?` | `string` | - |
+| `partnerAddress?` | `string` | - |
+| `partnerFeeBps?` | `number` | - |
+| `permit?` | `string` | - |
+| `receiver?` | [`Address`](../modules.md#address) | - |
+| `referrer?` | `string` | **`Description`**  used with referral link |
+| `srcDecimals?` | `number` | - |
+| `srcToken` | [`Address`](../modules.md#address) | - |
+| `userAddress` | [`Address`](../modules.md#address) | - |
 
 #### Defined in
 
@@ -1065,7 +1212,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:84](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L84)
+[src/methods/swap/transaction.ts:86](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L86)
 
 ___
 
@@ -1490,7 +1637,7 @@ ___
 
 ### FetcherOptions
 
-Ƭ **FetcherOptions**: { `axios`: typeof [`axios`](internal_.md#axios)  } \| { `fetch`: typeof `fetch`  }
+Ƭ **FetcherOptions**: { `axios`: [`AxiosRequirement`](internal_.md#axiosrequirement)  } \| { `fetch`: typeof `fetch`  }
 
 #### Defined in
 
@@ -2053,7 +2200,7 @@ ___
 | :------ | :------ |
 | `account?` | [`Address`](../modules.md#address) |
 | `apiURL?` | `string` |
-| `axios?` | [`AxiosStatic`](../interfaces/internal_.AxiosStatic.md) |
+| `axios?` | [`AxiosRequirement`](internal_.md#axiosrequirement) |
 | `chainId?` | `number` |
 | `ethersDeps?` | [`EthersProviderDeps`](../interfaces/EthersProviderDeps.md) |
 | `fetch?` | [`Fetch`](internal_.md#fetch) |
@@ -2135,6 +2282,24 @@ node_modules/@types/node/net.d.ts:19
 
 ___
 
+### Lowercase
+
+Ƭ **Lowercase**<`S`\>: intrinsic
+
+Convert string literal type to lowercase
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `S` | extends `string` |
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:1611
+
+___
+
 ### MarkOptional
 
 Ƭ **MarkOptional**<`T`, `K`\>: [`Omit`](internal_.md#omit)<`T`, `K`\> & [`Partial`](internal_.md#partial)<[`Pick`](internal_.md#pick)<`T`, `K`\>\>
@@ -2204,6 +2369,26 @@ ___
 #### Defined in
 
 [src/sdk/partial.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L66)
+
+___
+
+### Method
+
+Ƭ **Method**: ``"get"`` \| ``"GET"`` \| ``"delete"`` \| ``"DELETE"`` \| ``"head"`` \| ``"HEAD"`` \| ``"options"`` \| ``"OPTIONS"`` \| ``"post"`` \| ``"POST"`` \| ``"put"`` \| ``"PUT"`` \| ``"patch"`` \| ``"PATCH"`` \| ``"purge"`` \| ``"PURGE"`` \| ``"link"`` \| ``"LINK"`` \| ``"unlink"`` \| ``"UNLINK"``
+
+#### Defined in
+
+node_modules/axios/index.d.ts:172
+
+___
+
+### MethodsHeaders
+
+Ƭ **MethodsHeaders**: { [Key in Method as Lowercase<Key\>]: AxiosHeaders }
+
+#### Defined in
+
+node_modules/axios/index.d.ts:5
 
 ___
 
@@ -2572,6 +2757,26 @@ ___
 
 ___
 
+### RawAxiosHeaders
+
+Ƭ **RawAxiosHeaders**: [`Record`](internal_.md#record)<`string`, [`AxiosHeaderValue`](internal_.md#axiosheadervalue)\>
+
+#### Defined in
+
+node_modules/axios/index.d.ts:3
+
+___
+
+### RawAxiosResponseHeaders
+
+Ƭ **RawAxiosResponseHeaders**: [`Partial`](internal_.md#partial)<[`Record`](internal_.md#record)<`string`, `string`\> & { `set-cookie?`: `string`[]  }\>
+
+#### Defined in
+
+node_modules/axios/index.d.ts:73
+
+___
+
 ### ReadableStreamDefaultReadResult
 
 Ƭ **ReadableStreamDefaultReadResult**<`T`\>: [`ReadableStreamDefaultReadValueResult`](../interfaces/internal_.ReadableStreamDefaultReadValueResult.md)<`T`\> \| [`ReadableStreamDefaultReadDoneResult`](../interfaces/internal_.ReadableStreamDefaultReadDoneResult.md)
@@ -2693,7 +2898,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:47
+node_modules/axios/index.d.ts:184
 
 ___
 
@@ -2775,7 +2980,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:90](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L90)
+[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L92)
 
 ___
 
@@ -2846,7 +3051,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:84](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L84)
+[src/types.ts:86](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L86)
 
 ___
 
@@ -2999,7 +3204,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:87](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L87)
+[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L89)
 
 ___
 
@@ -3438,32 +3643,3 @@ ___
 #### Returns
 
 `any`
-
-___
-
-### axios
-
-▸ **axios**(`config`): [`AxiosPromise`](../interfaces/internal_.AxiosPromise.md)<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `config` | [`AxiosRequestConfig`](../interfaces/internal_.AxiosRequestConfig.md)<`any`\> |
-
-#### Returns
-
-[`AxiosPromise`](../interfaces/internal_.AxiosPromise.md)<`any`\>
-
-▸ **axios**(`url`, `config?`): [`AxiosPromise`](../interfaces/internal_.AxiosPromise.md)<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` |
-| `config?` | [`AxiosRequestConfig`](../interfaces/internal_.AxiosRequestConfig.md)<`any`\> |
-
-#### Returns
-
-[`AxiosPromise`](../interfaces/internal_.AxiosPromise.md)<`any`\>

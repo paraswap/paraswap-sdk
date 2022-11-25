@@ -19,7 +19,7 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:22
+node_modules/axios/index.d.ts:93
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:21
+node_modules/axios/index.d.ts:92

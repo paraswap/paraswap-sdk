@@ -8,7 +8,7 @@
 
 ### AxiosAdapter
 
-▸ **AxiosAdapter**(`config`): [`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+▸ **AxiosAdapter**(`config`): [`AxiosPromise`](../modules/internal_.md#axiospromise)<`any`\>
 
 #### Parameters
 
@@ -18,4 +18,4 @@
 
 #### Returns
 
-[`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+[`AxiosPromise`](../modules/internal_.md#axiospromise)<`any`\>

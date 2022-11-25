@@ -14,38 +14,55 @@
 
 ### AxiosStatic
 
-▸ **AxiosStatic**(`config`): [`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+▸ **AxiosStatic**<`T`, `R`, `D`\>(`config`): `Promise`<`R`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+| `R` | [`AxiosResponse`](internal_.AxiosResponse.md)<`T`, `any`\> |
+| `D` | `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `config` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`D`\> |
 
 #### Returns
 
-[`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+`Promise`<`R`\>
 
 ### AxiosStatic
 
-▸ **AxiosStatic**(`url`, `config?`): [`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+▸ **AxiosStatic**<`T`, `R`, `D`\>(`url`, `config?`): `Promise`<`R`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+| `R` | [`AxiosResponse`](internal_.AxiosResponse.md)<`T`, `any`\> |
+| `D` | `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `url` | `string` |
-| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`D`\> |
 
 #### Returns
 
-[`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+`Promise`<`R`\>
 
 ## Table of contents
 
 ### Properties
 
 - [Axios](internal_.AxiosStatic.md#axios)
+- [AxiosError](internal_.AxiosStatic.md#axioserror)
 - [Cancel](internal_.AxiosStatic.md#cancel)
 - [CancelToken](internal_.AxiosStatic.md#canceltoken)
 - [VERSION](internal_.AxiosStatic.md#version)
@@ -57,6 +74,7 @@
 - [all](internal_.AxiosStatic.md#all)
 - [create](internal_.AxiosStatic.md#create)
 - [delete](internal_.AxiosStatic.md#delete)
+- [formToJSON](internal_.AxiosStatic.md#formtojson)
 - [get](internal_.AxiosStatic.md#get)
 - [getUri](internal_.AxiosStatic.md#geturi)
 - [head](internal_.AxiosStatic.md#head)
@@ -71,6 +89,7 @@
 - [putForm](internal_.AxiosStatic.md#putform)
 - [request](internal_.AxiosStatic.md#request)
 - [spread](internal_.AxiosStatic.md#spread)
+- [toFormData](internal_.AxiosStatic.md#toformdata)
 
 ## Properties
 
@@ -80,7 +99,17 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:244
+node_modules/axios/index.d.ts:470
+
+___
+
+### AxiosError
+
+• **AxiosError**: typeof [`AxiosError`](../classes/internal_.AxiosError.md)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:471
 
 ___
 
@@ -90,7 +119,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:242
+node_modules/axios/index.d.ts:468
 
 ___
 
@@ -100,7 +129,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:243
+node_modules/axios/index.d.ts:469
 
 ___
 
@@ -110,13 +139,13 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:245
+node_modules/axios/index.d.ts:472
 
 ___
 
 ### defaults
 
-• **defaults**: [`AxiosDefaults`](internal_.AxiosDefaults.md)<`any`\>
+• **defaults**: [`Omit`](../modules/internal_.md#omit)<[`AxiosDefaults`](internal_.AxiosDefaults.md)<`any`\>, ``"headers"``\> & { `headers`: [`HeadersDefaults`](internal_.HeadersDefaults.md) & { `[key: string]`: [`AxiosHeaderValue`](../modules/internal_.md#axiosheadervalue);  }  }
 
 #### Inherited from
 
@@ -124,7 +153,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:216
+node_modules/axios/index.d.ts:449
 
 ___
 
@@ -145,7 +174,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:217
+node_modules/axios/index.d.ts:427
 
 ## Methods
 
@@ -179,7 +208,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `config?` | [`CreateAxiosDefaults`](internal_.CreateAxiosDefaults.md)<`any`\> |
 
 #### Returns
 
@@ -213,6 +242,22 @@ ___
 #### Inherited from
 
 [AxiosInstance](internal_.AxiosInstance.md).[delete](internal_.AxiosInstance.md#delete)
+
+___
+
+### formToJSON
+
+▸ **formToJSON**(`form`): `object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `form` | [`GenericFormData`](internal_.GenericFormData.md) \| [`GenericHTMLFormElement`](internal_.GenericHTMLFormElement.md) |
+
+#### Returns
+
+`object`
 
 ___
 
@@ -296,7 +341,14 @@ ___
 
 ### isAxiosError
 
-▸ **isAxiosError**(`payload`): payload is AxiosError<unknown, any\>
+▸ **isAxiosError**<`T`, `D`\>(`payload`): payload is AxiosError<T, D\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+| `D` | `any` |
 
 #### Parameters
 
@@ -306,13 +358,13 @@ ___
 
 #### Returns
 
-payload is AxiosError<unknown, any\>
+payload is AxiosError<T, D\>
 
 ___
 
 ### isCancel
 
-▸ **isCancel**(`value`): `boolean`
+▸ **isCancel**(`value`): value is Cancel
 
 #### Parameters
 
@@ -322,7 +374,7 @@ ___
 
 #### Returns
 
-`boolean`
+value is Cancel
 
 ___
 
@@ -595,3 +647,21 @@ ___
 ##### Returns
 
 `R`
+
+___
+
+### toFormData
+
+▸ **toFormData**(`sourceObj`, `targetFormData?`, `options?`): [`GenericFormData`](internal_.GenericFormData.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sourceObj` | `object` |
+| `targetFormData?` | [`GenericFormData`](internal_.GenericFormData.md) |
+| `options?` | [`FormSerializerOptions`](internal_.FormSerializerOptions.md) |
+
+#### Returns
+
+[`GenericFormData`](internal_.GenericFormData.md)

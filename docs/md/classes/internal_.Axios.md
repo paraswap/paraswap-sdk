@@ -56,7 +56,7 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:216
+node_modules/axios/index.d.ts:426
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:217
+node_modules/axios/index.d.ts:427
 
 ## Methods
 

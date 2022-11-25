@@ -146,7 +146,7 @@ ___
 
 #### Inherited from
 
-Uint8Array.\_\_@toStringTag@542
+Uint8Array.\_\_@toStringTag@548
 
 #### Defined in
 

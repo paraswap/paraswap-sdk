@@ -25,6 +25,7 @@
 
 ### Properties
 
+- [cause](internal_.AxiosError.md#cause)
 - [code](internal_.AxiosError.md#code)
 - [config](internal_.AxiosError.md#config)
 - [isAxiosError](internal_.AxiosError.md#isaxioserror)
@@ -43,7 +44,9 @@
 - [ERR\_CANCELED](internal_.AxiosError.md#err_canceled)
 - [ERR\_DEPRECATED](internal_.AxiosError.md#err_deprecated)
 - [ERR\_FR\_TOO\_MANY\_REDIRECTS](internal_.AxiosError.md#err_fr_too_many_redirects)
+- [ERR\_INVALID\_URL](internal_.AxiosError.md#err_invalid_url)
 - [ERR\_NETWORK](internal_.AxiosError.md#err_network)
+- [ERR\_NOT\_SUPPORT](internal_.AxiosError.md#err_not_support)
 - [ETIMEDOUT](internal_.AxiosError.md#etimedout)
 - [prepareStackTrace](internal_.AxiosError.md#preparestacktrace)
 - [stackTraceLimit](internal_.AxiosError.md#stacktracelimit)
@@ -81,23 +84,33 @@ Error.constructor
 
 ## Properties
 
+### cause
+
+• `Optional` **cause**: [`Error`](../modules/internal_.md#error)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:365
+
+___
+
 ### code
 
 • `Optional` **code**: `string`
 
 #### Defined in
 
-node_modules/axios/index.d.ts:152
+node_modules/axios/index.d.ts:359
 
 ___
 
 ### config
 
-• **config**: [`AxiosRequestConfig`](../interfaces/internal_.AxiosRequestConfig.md)<`D`\>
+• `Optional` **config**: [`AxiosRequestConfig`](../interfaces/internal_.AxiosRequestConfig.md)<`D`\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:151
+node_modules/axios/index.d.ts:358
 
 ___
 
@@ -107,7 +120,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:155
+node_modules/axios/index.d.ts:362
 
 ___
 
@@ -145,7 +158,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:153
+node_modules/axios/index.d.ts:360
 
 ___
 
@@ -155,7 +168,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:154
+node_modules/axios/index.d.ts:361
 
 ___
 
@@ -175,11 +188,11 @@ ___
 
 ### status
 
-• `Optional` **status**: `string`
+• `Optional` **status**: `number`
 
 #### Defined in
 
-node_modules/axios/index.d.ts:156
+node_modules/axios/index.d.ts:363
 
 ___
 
@@ -197,7 +210,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:157
+node_modules/axios/index.d.ts:364
 
 ___
 
@@ -207,7 +220,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:166
+node_modules/axios/index.d.ts:376
 
 ___
 
@@ -217,7 +230,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:160
+node_modules/axios/index.d.ts:368
 
 ___
 
@@ -227,7 +240,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:159
+node_modules/axios/index.d.ts:367
 
 ___
 
@@ -237,7 +250,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:164
+node_modules/axios/index.d.ts:372
 
 ___
 
@@ -247,7 +260,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:163
+node_modules/axios/index.d.ts:371
 
 ___
 
@@ -257,7 +270,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:165
+node_modules/axios/index.d.ts:375
 
 ___
 
@@ -267,7 +280,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:162
+node_modules/axios/index.d.ts:370
 
 ___
 
@@ -277,7 +290,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:158
+node_modules/axios/index.d.ts:366
+
+___
+
+### ERR\_INVALID\_URL
+
+▪ `Static` `Readonly` **ERR\_INVALID\_URL**: ``"ERR_INVALID_URL"``
+
+#### Defined in
+
+node_modules/axios/index.d.ts:374
 
 ___
 
@@ -287,7 +310,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:161
+node_modules/axios/index.d.ts:369
+
+___
+
+### ERR\_NOT\_SUPPORT
+
+▪ `Static` `Readonly` **ERR\_NOT\_SUPPORT**: ``"ERR_NOT_SUPPORT"``
+
+#### Defined in
+
+node_modules/axios/index.d.ts:373
 
 ___
 
@@ -297,7 +330,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:167
+node_modules/axios/index.d.ts:377
 
 ___
 

@@ -14,10 +14,21 @@
 
 ### Methods
 
+- [clear](internal_.AxiosInterceptorManager.md#clear)
 - [eject](internal_.AxiosInterceptorManager.md#eject)
 - [use](internal_.AxiosInterceptorManager.md#use)
 
 ## Methods
+
+### clear
+
+▸ **clear**(): `void`
+
+#### Returns
+
+`void`
+
+___
 
 ### eject
 
@@ -37,19 +48,13 @@ ___
 
 ### use
 
-▸ **use**<`T`\>(`onFulfilled?`, `onRejected?`, `options?`): `number`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `V` |
+▸ **use**(`onFulfilled?`, `onRejected?`, `options?`): `number`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `onFulfilled?` | (`value`: `V`) => `T` \| `Promise`<`T`\> |
+| `onFulfilled?` | (`value`: `V`) => `V` \| `Promise`<`V`\> |
 | `onRejected?` | (`error`: `any`) => `any` |
 | `options?` | [`AxiosInterceptorOptions`](internal_.AxiosInterceptorOptions.md) |
 

@@ -73,7 +73,6 @@
 - [LimitOrderFromApi](modules.md#limitorderfromapi)
 - [LimitOrderHandlers](modules.md#limitorderhandlers)
 - [LimitOrderState](modules.md#limitorderstate)
-- [LimitOrderStatus](modules.md#limitorderstatus)
 - [LimitOrderToSend](modules.md#limitordertosend)
 - [LimitOrderTransaction](modules.md#limitordertransaction)
 - [LimitOrderType](modules.md#limitordertype)
@@ -315,7 +314,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L95)
+[src/methods/swap/transaction.ts:97](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L97)
 
 ___
 
@@ -369,7 +368,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:102](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L102)
+[src/methods/swap/transaction.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L104)
 
 ___
 
@@ -397,7 +396,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:153](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L153)
+[src/methods/swap/transaction.ts:155](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L155)
 
 ___
 
@@ -416,7 +415,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:143](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L143)
+[src/methods/swap/transaction.ts:145](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L145)
 
 ___
 
@@ -426,7 +425,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L151)
+[src/methods/swap/transaction.ts:153](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L153)
 
 ___
 
@@ -436,7 +435,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:150](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L150)
+[src/methods/swap/transaction.ts:152](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L152)
 
 ___
 
@@ -446,7 +445,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:118](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L118)
+[src/methods/swap/transaction.ts:120](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L120)
 
 ___
 
@@ -456,7 +455,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:129](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L129)
+[src/methods/swap/transaction.ts:131](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L131)
 
 ___
 
@@ -466,7 +465,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L74)
+[src/methods/swap/transaction.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L76)
 
 ___
 
@@ -482,7 +481,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:163](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L163)
 
 ___
 
@@ -492,7 +491,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:136](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L136)
+[src/methods/swap/transaction.ts:138](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L138)
 
 ___
 
@@ -699,11 +698,11 @@ ___
 
 ### LimitOrder
 
-Ƭ **LimitOrder**: [`LimitOrderFromApi`](modules.md#limitorderfromapi) & { `amountFilled?`: `string` ; `status`: [`LimitOrderStatus`](modules.md#limitorderstatus) ; `transactionHashes?`: `string`[]  }
+Ƭ **LimitOrder**: [`LimitOrderFromApi`](modules.md#limitorderfromapi)
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:13](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L13)
+[src/methods/limitOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L5)
 
 ___
 
@@ -719,7 +718,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L30)
+[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L19)
 
 ___
 
@@ -729,7 +728,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L39)
+[src/methods/limitOrders/helpers/types.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L33)
 
 ___
 
@@ -766,7 +765,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L46)
+[src/methods/limitOrders/helpers/types.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L40)
 
 ___
 
@@ -788,21 +787,11 @@ ___
 
 ### LimitOrderState
 
-Ƭ **LimitOrderState**: ``"PENDING"`` \| ``"FULFILLED"`` \| ``"CANCELLED"`` \| ``"EXPIRED"``
+Ƭ **LimitOrderState**: ``"DRAFT"`` \| ``"PENDING"`` \| ``"FULFILLED"`` \| ``"CANCELLED"`` \| ``"EXPIRED"``
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L37)
-
-___
-
-### LimitOrderStatus
-
-Ƭ **LimitOrderStatus**: ``"open"`` \| ``"filled"`` \| ``"partiallyFilled"`` \| ``"expired"`` \| ``"canceled"`` \| ``"unknown"``
-
-#### Defined in
-
-[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L3)
+[src/methods/limitOrders/helpers/types.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L26)
 
 ___
 
@@ -812,7 +801,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L18)
+[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L7)
 
 ___
 
@@ -829,7 +818,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L41)
+[src/methods/limitOrders/helpers/types.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L35)
 
 ___
 
@@ -839,7 +828,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L11)
+[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L3)
 
 ___
 
@@ -859,7 +848,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L23)
+[src/methods/limitOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L12)
 
 ___
 
@@ -1548,7 +1537,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `axios` | [`AxiosStatic`](interfaces/internal_.AxiosStatic.md) |
+| `axios` | [`AxiosRequirement`](modules/internal_.md#axiosrequirement) |
 
 #### Returns
 

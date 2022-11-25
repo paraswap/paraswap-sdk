@@ -24,108 +24,108 @@
 
 ### common
 
-• **common**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **common**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:116
+node_modules/axios/index.d.ts:319
 
 ___
 
 ### delete
 
-• **delete**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **delete**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:117
+node_modules/axios/index.d.ts:320
 
 ___
 
 ### get
 
-• **get**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **get**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:118
+node_modules/axios/index.d.ts:321
 
 ___
 
 ### head
 
-• **head**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **head**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:119
+node_modules/axios/index.d.ts:322
 
 ___
 
 ### link
 
-• `Optional` **link**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• `Optional` **link**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:125
+node_modules/axios/index.d.ts:328
 
 ___
 
 ### options
 
-• `Optional` **options**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• `Optional` **options**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:123
+node_modules/axios/index.d.ts:326
 
 ___
 
 ### patch
 
-• **patch**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **patch**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:122
+node_modules/axios/index.d.ts:325
 
 ___
 
 ### post
 
-• **post**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **post**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:120
+node_modules/axios/index.d.ts:323
 
 ___
 
 ### purge
 
-• `Optional` **purge**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• `Optional` **purge**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:124
+node_modules/axios/index.d.ts:327
 
 ___
 
 ### put
 
-• **put**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• **put**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:121
+node_modules/axios/index.d.ts:324
 
 ___
 
 ### unlink
 
-• `Optional` **unlink**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• `Optional` **unlink**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:126
+node_modules/axios/index.d.ts:329

@@ -8,13 +8,15 @@
 
 ### Canceler
 
-▸ **Canceler**(`message?`): `void`
+▸ **Canceler**(`message?`, `config?`, `request?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `message?` | `string` |
+| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `request?` | `any` |
 
 #### Returns
 

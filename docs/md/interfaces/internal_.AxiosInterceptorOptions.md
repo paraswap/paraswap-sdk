@@ -33,7 +33,7 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:206
+node_modules/axios/index.d.ts:415
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:205
+node_modules/axios/index.d.ts:414

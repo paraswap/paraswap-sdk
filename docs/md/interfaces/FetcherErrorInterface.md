@@ -49,7 +49,7 @@ FetcherErrorConstructorInput.isAxiosError
 
 #### Defined in
 
-node_modules/axios/index.d.ts:155
+node_modules/axios/index.d.ts:362
 
 ___
 
@@ -77,7 +77,7 @@ FetcherErrorConstructorInput.request
 
 #### Defined in
 
-node_modules/axios/index.d.ts:153
+node_modules/axios/index.d.ts:360
 
 ___
 
@@ -91,7 +91,7 @@ FetcherErrorConstructorInput.response
 
 #### Defined in
 
-node_modules/axios/index.d.ts:154
+node_modules/axios/index.d.ts:361
 
 ___
 

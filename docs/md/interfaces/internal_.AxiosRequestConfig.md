@@ -22,12 +22,14 @@
 - [data](internal_.AxiosRequestConfig.md#data)
 - [decompress](internal_.AxiosRequestConfig.md#decompress)
 - [env](internal_.AxiosRequestConfig.md#env)
+- [formSerializer](internal_.AxiosRequestConfig.md#formserializer)
 - [headers](internal_.AxiosRequestConfig.md#headers)
 - [httpAgent](internal_.AxiosRequestConfig.md#httpagent)
 - [httpsAgent](internal_.AxiosRequestConfig.md#httpsagent)
 - [insecureHTTPParser](internal_.AxiosRequestConfig.md#insecurehttpparser)
 - [maxBodyLength](internal_.AxiosRequestConfig.md#maxbodylength)
 - [maxContentLength](internal_.AxiosRequestConfig.md#maxcontentlength)
+- [maxRate](internal_.AxiosRequestConfig.md#maxrate)
 - [maxRedirects](internal_.AxiosRequestConfig.md#maxredirects)
 - [method](internal_.AxiosRequestConfig.md#method)
 - [onDownloadProgress](internal_.AxiosRequestConfig.md#ondownloadprogress)
@@ -58,7 +60,7 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:88
+node_modules/axios/index.d.ts:289
 
 ___
 
@@ -68,7 +70,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:89
+node_modules/axios/index.d.ts:290
 
 ___
 
@@ -78,7 +80,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:78
+node_modules/axios/index.d.ts:279
 
 ___
 
@@ -104,7 +106,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:100
+node_modules/axios/index.d.ts:302
 
 ___
 
@@ -114,7 +116,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:105
+node_modules/axios/index.d.ts:307
 
 ___
 
@@ -124,7 +126,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:84
+node_modules/axios/index.d.ts:285
 
 ___
 
@@ -134,7 +136,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:106
+node_modules/axios/index.d.ts:308
 
 ___
 
@@ -150,17 +152,27 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:110
+node_modules/axios/index.d.ts:312
+
+___
+
+### formSerializer
+
+• `Optional` **formSerializer**: [`FormSerializerOptions`](internal_.FormSerializerOptions.md)
+
+#### Defined in
+
+node_modules/axios/index.d.ts:315
 
 ___
 
 ### headers
 
-• `Optional` **headers**: [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders)
+• `Optional` **headers**: [`Partial`](../modules/internal_.md#partial)<[`RawAxiosHeaders`](../modules/internal_.md#rawaxiosheaders) & [`MethodsHeaders`](../modules/internal_.md#methodsheaders) & [`CommonHeaders`](internal_.CommonHeaders.md)\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:81
+node_modules/axios/index.d.ts:282
 
 ___
 
@@ -170,7 +182,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:102
+node_modules/axios/index.d.ts:304
 
 ___
 
@@ -180,7 +192,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:103
+node_modules/axios/index.d.ts:305
 
 ___
 
@@ -190,7 +202,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:109
+node_modules/axios/index.d.ts:311
 
 ___
 
@@ -200,7 +212,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:98
+node_modules/axios/index.d.ts:299
 
 ___
 
@@ -210,7 +222,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:96
+node_modules/axios/index.d.ts:297
+
+___
+
+### maxRate
+
+• `Optional` **maxRate**: `number` \| [`number`, `number`]
+
+#### Defined in
+
+node_modules/axios/index.d.ts:301
 
 ___
 
@@ -220,7 +242,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:99
+node_modules/axios/index.d.ts:300
 
 ___
 
@@ -230,13 +252,13 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:77
+node_modules/axios/index.d.ts:278
 
 ___
 
 ### onDownloadProgress
 
-• `Optional` **onDownloadProgress**: (`progressEvent`: `any`) => `void`
+• `Optional` **onDownloadProgress**: (`progressEvent`: [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md)) => `void`
 
 #### Type declaration
 
@@ -246,7 +268,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `progressEvent` | `any` |
+| `progressEvent` | [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md) |
 
 ##### Returns
 
@@ -254,13 +276,13 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:95
+node_modules/axios/index.d.ts:296
 
 ___
 
 ### onUploadProgress
 
-• `Optional` **onUploadProgress**: (`progressEvent`: `any`) => `void`
+• `Optional` **onUploadProgress**: (`progressEvent`: [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md)) => `void`
 
 #### Type declaration
 
@@ -270,7 +292,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `progressEvent` | `any` |
+| `progressEvent` | [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md) |
 
 ##### Returns
 
@@ -278,7 +300,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:94
+node_modules/axios/index.d.ts:295
 
 ___
 
@@ -288,31 +310,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:82
+node_modules/axios/index.d.ts:283
 
 ___
 
 ### paramsSerializer
 
-• `Optional` **paramsSerializer**: (`params`: `any`) => `string`
-
-#### Type declaration
-
-▸ (`params`): `string`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | `any` |
-
-##### Returns
-
-`string`
+• `Optional` **paramsSerializer**: [`ParamsSerializerOptions`](internal_.ParamsSerializerOptions.md)
 
 #### Defined in
 
-node_modules/axios/index.d.ts:83
+node_modules/axios/index.d.ts:284
 
 ___
 
@@ -322,7 +330,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:104
+node_modules/axios/index.d.ts:306
 
 ___
 
@@ -332,7 +340,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:91
+node_modules/axios/index.d.ts:292
 
 ___
 
@@ -342,17 +350,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:90
+node_modules/axios/index.d.ts:291
 
 ___
 
 ### signal
 
-• `Optional` **signal**: `AbortSignal`
+• `Optional` **signal**: [`GenericAbortSignal`](internal_.GenericAbortSignal.md)
 
 #### Defined in
 
-node_modules/axios/index.d.ts:108
+node_modules/axios/index.d.ts:310
 
 ___
 
@@ -362,7 +370,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:101
+node_modules/axios/index.d.ts:303
 
 ___
 
@@ -372,7 +380,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:85
+node_modules/axios/index.d.ts:286
 
 ___
 
@@ -382,7 +390,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:86
+node_modules/axios/index.d.ts:287
 
 ___
 
@@ -392,7 +400,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:79
+node_modules/axios/index.d.ts:280
 
 ___
 
@@ -402,7 +410,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:80
+node_modules/axios/index.d.ts:281
 
 ___
 
@@ -412,7 +420,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:107
+node_modules/axios/index.d.ts:309
 
 ___
 
@@ -422,7 +430,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:76
+node_modules/axios/index.d.ts:277
 
 ___
 
@@ -432,7 +440,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:97
+node_modules/axios/index.d.ts:298
 
 ___
 
@@ -442,7 +450,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:87
+node_modules/axios/index.d.ts:288
 
 ___
 
@@ -452,7 +460,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:92
+node_modules/axios/index.d.ts:293
 
 ___
 
@@ -462,4 +470,4 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:93
+node_modules/axios/index.d.ts:294

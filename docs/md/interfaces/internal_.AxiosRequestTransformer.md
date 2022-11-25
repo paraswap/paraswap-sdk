@@ -8,14 +8,15 @@
 
 ### AxiosRequestTransformer
 
-▸ **AxiosRequestTransformer**(`data`, `headers?`): `any`
+▸ **AxiosRequestTransformer**(`this`, `data`, `headers`): `any`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
 | `data` | `any` |
-| `headers?` | [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders) |
+| `headers` | [`AxiosRequestHeaders`](../modules/internal_.md#axiosrequestheaders) |
 
 #### Returns
 

@@ -16,32 +16,48 @@
 
 ### AxiosInstance
 
-▸ **AxiosInstance**(`config`): [`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+▸ **AxiosInstance**<`T`, `R`, `D`\>(`config`): `Promise`<`R`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+| `R` | [`AxiosResponse`](internal_.AxiosResponse.md)<`T`, `any`\> |
+| `D` | `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `config` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`D`\> |
 
 #### Returns
 
-[`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+`Promise`<`R`\>
 
 ### AxiosInstance
 
-▸ **AxiosInstance**(`url`, `config?`): [`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+▸ **AxiosInstance**<`T`, `R`, `D`\>(`url`, `config?`): `Promise`<`R`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+| `R` | [`AxiosResponse`](internal_.AxiosResponse.md)<`T`, `any`\> |
+| `D` | `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `url` | `string` |
-| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`any`\> |
+| `config?` | [`AxiosRequestConfig`](internal_.AxiosRequestConfig.md)<`D`\> |
 
 #### Returns
 
-[`AxiosPromise`](internal_.AxiosPromise.md)<`any`\>
+`Promise`<`R`\>
 
 ## Table of contents
 
@@ -69,15 +85,15 @@
 
 ### defaults
 
-• **defaults**: [`AxiosDefaults`](internal_.AxiosDefaults.md)<`any`\>
+• **defaults**: [`Omit`](../modules/internal_.md#omit)<[`AxiosDefaults`](internal_.AxiosDefaults.md)<`any`\>, ``"headers"``\> & { `headers`: [`HeadersDefaults`](internal_.HeadersDefaults.md) & { `[key: string]`: [`AxiosHeaderValue`](../modules/internal_.md#axiosheadervalue);  }  }
 
-#### Inherited from
+#### Overrides
 
 [Axios](../classes/internal_.Axios.md).[defaults](../classes/internal_.Axios.md#defaults)
 
 #### Defined in
 
-node_modules/axios/index.d.ts:216
+node_modules/axios/index.d.ts:449
 
 ___
 
@@ -98,7 +114,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:217
+node_modules/axios/index.d.ts:427
 
 ## Methods
 

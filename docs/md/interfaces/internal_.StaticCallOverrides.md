@@ -18,6 +18,8 @@
 - [from](internal_.StaticCallOverrides.md#from)
 - [gas](internal_.StaticCallOverrides.md#gas)
 - [gasPrice](internal_.StaticCallOverrides.md#gasprice)
+- [maxFeePerGas](internal_.StaticCallOverrides.md#maxfeepergas)
+- [maxPriorityFeePerGas](internal_.StaticCallOverrides.md#maxpriorityfeepergas)
 - [value](internal_.StaticCallOverrides.md#value)
 
 ## Properties
@@ -28,7 +30,7 @@
 
 #### Defined in
 
-[src/types.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L60)
+[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
 
 ___
 
@@ -56,7 +58,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:53](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L53)
+[src/types.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L55)
 
 ___
 
@@ -74,6 +76,34 @@ ___
 
 ___
 
+### maxFeePerGas
+
+• `Optional` **maxFeePerGas**: `string`
+
+#### Inherited from
+
+[OverridesBase](internal_.OverridesBase.md).[maxFeePerGas](internal_.OverridesBase.md#maxfeepergas)
+
+#### Defined in
+
+[src/types.ts:53](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L53)
+
+___
+
+### maxPriorityFeePerGas
+
+• `Optional` **maxPriorityFeePerGas**: `string`
+
+#### Inherited from
+
+[OverridesBase](internal_.OverridesBase.md).[maxPriorityFeePerGas](internal_.OverridesBase.md#maxpriorityfeepergas)
+
+#### Defined in
+
+[src/types.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L54)
+
+___
+
 ### value
 
 • `Optional` **value**: `string` \| `number`
@@ -84,4 +114,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L54)
+[src/types.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L56)

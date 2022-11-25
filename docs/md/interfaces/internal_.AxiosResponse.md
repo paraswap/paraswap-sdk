@@ -30,7 +30,7 @@
 
 #### Defined in
 
-node_modules/axios/index.d.ts:138
+node_modules/axios/index.d.ts:345
 
 ___
 
@@ -40,17 +40,17 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:134
+node_modules/axios/index.d.ts:341
 
 ___
 
 ### headers
 
-• **headers**: [`AxiosResponseHeaders`](../modules/internal_.md#axiosresponseheaders)
+• **headers**: [`AxiosResponseHeaders`](../modules/internal_.md#axiosresponseheaders) \| [`Partial`](../modules/internal_.md#partial)<[`Record`](../modules/internal_.md#record)<`string`, `string`\> & { `set-cookie?`: `string`[]  }\>
 
 #### Defined in
 
-node_modules/axios/index.d.ts:137
+node_modules/axios/index.d.ts:344
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:139
+node_modules/axios/index.d.ts:346
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:135
+node_modules/axios/index.d.ts:342
 
 ___
 
@@ -80,4 +80,4 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:136
+node_modules/axios/index.d.ts:343

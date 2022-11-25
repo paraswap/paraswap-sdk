@@ -30,12 +30,14 @@ Construct a type with the properties of T except for those in type K.
 - [data](internal_.AxiosDefaults.md#data)
 - [decompress](internal_.AxiosDefaults.md#decompress)
 - [env](internal_.AxiosDefaults.md#env)
+- [formSerializer](internal_.AxiosDefaults.md#formserializer)
 - [headers](internal_.AxiosDefaults.md#headers)
 - [httpAgent](internal_.AxiosDefaults.md#httpagent)
 - [httpsAgent](internal_.AxiosDefaults.md#httpsagent)
 - [insecureHTTPParser](internal_.AxiosDefaults.md#insecurehttpparser)
 - [maxBodyLength](internal_.AxiosDefaults.md#maxbodylength)
 - [maxContentLength](internal_.AxiosDefaults.md#maxcontentlength)
+- [maxRate](internal_.AxiosDefaults.md#maxrate)
 - [maxRedirects](internal_.AxiosDefaults.md#maxredirects)
 - [method](internal_.AxiosDefaults.md#method)
 - [onDownloadProgress](internal_.AxiosDefaults.md#ondownloadprogress)
@@ -70,7 +72,7 @@ Omit.adapter
 
 #### Defined in
 
-node_modules/axios/index.d.ts:88
+node_modules/axios/index.d.ts:289
 
 ___
 
@@ -84,7 +86,7 @@ Omit.auth
 
 #### Defined in
 
-node_modules/axios/index.d.ts:89
+node_modules/axios/index.d.ts:290
 
 ___
 
@@ -98,7 +100,7 @@ Omit.baseURL
 
 #### Defined in
 
-node_modules/axios/index.d.ts:78
+node_modules/axios/index.d.ts:279
 
 ___
 
@@ -128,7 +130,7 @@ Omit.beforeRedirect
 
 #### Defined in
 
-node_modules/axios/index.d.ts:100
+node_modules/axios/index.d.ts:302
 
 ___
 
@@ -142,7 +144,7 @@ Omit.cancelToken
 
 #### Defined in
 
-node_modules/axios/index.d.ts:105
+node_modules/axios/index.d.ts:307
 
 ___
 
@@ -156,7 +158,7 @@ Omit.data
 
 #### Defined in
 
-node_modules/axios/index.d.ts:84
+node_modules/axios/index.d.ts:285
 
 ___
 
@@ -170,7 +172,7 @@ Omit.decompress
 
 #### Defined in
 
-node_modules/axios/index.d.ts:106
+node_modules/axios/index.d.ts:308
 
 ___
 
@@ -190,7 +192,21 @@ Omit.env
 
 #### Defined in
 
-node_modules/axios/index.d.ts:110
+node_modules/axios/index.d.ts:312
+
+___
+
+### formSerializer
+
+• `Optional` **formSerializer**: [`FormSerializerOptions`](internal_.FormSerializerOptions.md)
+
+#### Inherited from
+
+Omit.formSerializer
+
+#### Defined in
+
+node_modules/axios/index.d.ts:315
 
 ___
 
@@ -200,7 +216,7 @@ ___
 
 #### Defined in
 
-node_modules/axios/index.d.ts:130
+node_modules/axios/index.d.ts:333
 
 ___
 
@@ -214,7 +230,7 @@ Omit.httpAgent
 
 #### Defined in
 
-node_modules/axios/index.d.ts:102
+node_modules/axios/index.d.ts:304
 
 ___
 
@@ -228,7 +244,7 @@ Omit.httpsAgent
 
 #### Defined in
 
-node_modules/axios/index.d.ts:103
+node_modules/axios/index.d.ts:305
 
 ___
 
@@ -242,7 +258,7 @@ Omit.insecureHTTPParser
 
 #### Defined in
 
-node_modules/axios/index.d.ts:109
+node_modules/axios/index.d.ts:311
 
 ___
 
@@ -256,7 +272,7 @@ Omit.maxBodyLength
 
 #### Defined in
 
-node_modules/axios/index.d.ts:98
+node_modules/axios/index.d.ts:299
 
 ___
 
@@ -270,7 +286,21 @@ Omit.maxContentLength
 
 #### Defined in
 
-node_modules/axios/index.d.ts:96
+node_modules/axios/index.d.ts:297
+
+___
+
+### maxRate
+
+• `Optional` **maxRate**: `number` \| [`number`, `number`]
+
+#### Inherited from
+
+Omit.maxRate
+
+#### Defined in
+
+node_modules/axios/index.d.ts:301
 
 ___
 
@@ -284,7 +314,7 @@ Omit.maxRedirects
 
 #### Defined in
 
-node_modules/axios/index.d.ts:99
+node_modules/axios/index.d.ts:300
 
 ___
 
@@ -298,13 +328,13 @@ Omit.method
 
 #### Defined in
 
-node_modules/axios/index.d.ts:77
+node_modules/axios/index.d.ts:278
 
 ___
 
 ### onDownloadProgress
 
-• `Optional` **onDownloadProgress**: (`progressEvent`: `any`) => `void`
+• `Optional` **onDownloadProgress**: (`progressEvent`: [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md)) => `void`
 
 #### Type declaration
 
@@ -314,7 +344,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `progressEvent` | `any` |
+| `progressEvent` | [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md) |
 
 ##### Returns
 
@@ -326,13 +356,13 @@ Omit.onDownloadProgress
 
 #### Defined in
 
-node_modules/axios/index.d.ts:95
+node_modules/axios/index.d.ts:296
 
 ___
 
 ### onUploadProgress
 
-• `Optional` **onUploadProgress**: (`progressEvent`: `any`) => `void`
+• `Optional` **onUploadProgress**: (`progressEvent`: [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md)) => `void`
 
 #### Type declaration
 
@@ -342,7 +372,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `progressEvent` | `any` |
+| `progressEvent` | [`AxiosProgressEvent`](internal_.AxiosProgressEvent.md) |
 
 ##### Returns
 
@@ -354,7 +384,7 @@ Omit.onUploadProgress
 
 #### Defined in
 
-node_modules/axios/index.d.ts:94
+node_modules/axios/index.d.ts:295
 
 ___
 
@@ -368,27 +398,13 @@ Omit.params
 
 #### Defined in
 
-node_modules/axios/index.d.ts:82
+node_modules/axios/index.d.ts:283
 
 ___
 
 ### paramsSerializer
 
-• `Optional` **paramsSerializer**: (`params`: `any`) => `string`
-
-#### Type declaration
-
-▸ (`params`): `string`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | `any` |
-
-##### Returns
-
-`string`
+• `Optional` **paramsSerializer**: [`ParamsSerializerOptions`](internal_.ParamsSerializerOptions.md)
 
 #### Inherited from
 
@@ -396,7 +412,7 @@ Omit.paramsSerializer
 
 #### Defined in
 
-node_modules/axios/index.d.ts:83
+node_modules/axios/index.d.ts:284
 
 ___
 
@@ -410,7 +426,7 @@ Omit.proxy
 
 #### Defined in
 
-node_modules/axios/index.d.ts:104
+node_modules/axios/index.d.ts:306
 
 ___
 
@@ -424,7 +440,7 @@ Omit.responseEncoding
 
 #### Defined in
 
-node_modules/axios/index.d.ts:91
+node_modules/axios/index.d.ts:292
 
 ___
 
@@ -438,13 +454,13 @@ Omit.responseType
 
 #### Defined in
 
-node_modules/axios/index.d.ts:90
+node_modules/axios/index.d.ts:291
 
 ___
 
 ### signal
 
-• `Optional` **signal**: `AbortSignal`
+• `Optional` **signal**: [`GenericAbortSignal`](internal_.GenericAbortSignal.md)
 
 #### Inherited from
 
@@ -452,7 +468,7 @@ Omit.signal
 
 #### Defined in
 
-node_modules/axios/index.d.ts:108
+node_modules/axios/index.d.ts:310
 
 ___
 
@@ -466,7 +482,7 @@ Omit.socketPath
 
 #### Defined in
 
-node_modules/axios/index.d.ts:101
+node_modules/axios/index.d.ts:303
 
 ___
 
@@ -480,7 +496,7 @@ Omit.timeout
 
 #### Defined in
 
-node_modules/axios/index.d.ts:85
+node_modules/axios/index.d.ts:286
 
 ___
 
@@ -494,7 +510,7 @@ Omit.timeoutErrorMessage
 
 #### Defined in
 
-node_modules/axios/index.d.ts:86
+node_modules/axios/index.d.ts:287
 
 ___
 
@@ -508,7 +524,7 @@ Omit.transformRequest
 
 #### Defined in
 
-node_modules/axios/index.d.ts:79
+node_modules/axios/index.d.ts:280
 
 ___
 
@@ -522,7 +538,7 @@ Omit.transformResponse
 
 #### Defined in
 
-node_modules/axios/index.d.ts:80
+node_modules/axios/index.d.ts:281
 
 ___
 
@@ -536,7 +552,7 @@ Omit.transitional
 
 #### Defined in
 
-node_modules/axios/index.d.ts:107
+node_modules/axios/index.d.ts:309
 
 ___
 
@@ -550,7 +566,7 @@ Omit.url
 
 #### Defined in
 
-node_modules/axios/index.d.ts:76
+node_modules/axios/index.d.ts:277
 
 ___
 
@@ -564,7 +580,7 @@ Omit.validateStatus
 
 #### Defined in
 
-node_modules/axios/index.d.ts:97
+node_modules/axios/index.d.ts:298
 
 ___
 
@@ -578,7 +594,7 @@ Omit.withCredentials
 
 #### Defined in
 
-node_modules/axios/index.d.ts:87
+node_modules/axios/index.d.ts:288
 
 ___
 
@@ -592,7 +608,7 @@ Omit.xsrfCookieName
 
 #### Defined in
 
-node_modules/axios/index.d.ts:92
+node_modules/axios/index.d.ts:293
 
 ___
 
@@ -606,4 +622,4 @@ Omit.xsrfHeaderName
 
 #### Defined in
 
-node_modules/axios/index.d.ts:93
+node_modules/axios/index.d.ts:294
