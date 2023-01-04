@@ -104,7 +104,7 @@ If optional `providerOptions` is provided as the second parameter, then the resu
 
 ### Full SDK 
 ```typescript
-import { constructSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
+import { constructFullSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
 
 const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider 
 const account = '__signer_address__';
