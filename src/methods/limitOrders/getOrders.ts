@@ -18,6 +18,7 @@ interface PaginationParams {
   limit?: number;
   offset?: number;
   hideSmallBalances?: boolean;
+  orderBy?: 'createdAt' | 'updatedAt' | 'expiry';
 }
 
 //                     get orders by `maker` or `taker`
@@ -58,8 +59,13 @@ export const constructGetLimitOrders = ({
         ? (`maker/${userParams.maker}` as const)
         : (`taker/${userParams.taker}` as const);
 
-    const { offset, limit, hideSmallBalances } = userParams;
-    const search = constructSearchString({ offset, limit, hideSmallBalances });
+    const { offset, limit, hideSmallBalances, orderBy } = userParams;
+    const search = constructSearchString({
+      offset,
+      limit,
+      hideSmallBalances,
+      orderBy,
+    });
 
     const fetchURL = `${baseFetchURL}/${userURL}${search}` as const;
 
