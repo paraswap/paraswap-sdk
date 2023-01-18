@@ -7,6 +7,7 @@ import {
   constructBaseFetchUrlGetter,
   GetOrdersURLs,
   GetOrderURL,
+  GetRequiredAllowanceURL as GetRequiredBalanceURL,
 } from './helpers/misc';
 import type {
   LimitOrderFromApi,
@@ -28,6 +29,11 @@ export type LimitOrdersUserParams = (
 ) &
   PaginationParams;
 
+export type GetRequiredAllowanceParams = {
+  maker: Address;
+  token?: Address;
+};
+
 type GetLimitOrderByHash = (
   orderHash: string,
   signal?: AbortSignal
@@ -37,9 +43,24 @@ type GetLimitOrders = (
   signal?: AbortSignal
 ) => Promise<LimitOrdersApiResponse>;
 
+type GetRequiredBalance = (
+  userParams: GetRequiredAllowanceParams,
+  singal?: AbortSignal
+) => Promise<Record<string, string>>;
+
 export type GetLimitOrdersFunctions = {
   getLimitOrders: GetLimitOrders;
   getLimitOrderByHash: GetLimitOrderByHash;
+  /**
+   * Gets fillableBalance for tokens from user's active orders.
+   * User needs to have enough balance & allowance to cover active orders before creating new orders.
+   * @param userParams - parameters to get allowance for active orders
+   * @param {string} userParams.maker - user to get required allowances for
+   * @param {string} userParams.token - if given `token`, the mapping will contain that token address only
+   * @param {AbortSignal} signal - AbortSignal passed to fetcher
+   * @returns `{Lowercase<Address> => wei number as string}` mapping of token to fillableBalance
+   */
+  getRequiredBalance: GetRequiredBalance;
 };
 
 export const constructGetLimitOrders = ({
@@ -79,6 +100,26 @@ export const constructGetLimitOrders = ({
     return response;
   };
 
+  const getRequiredBalance: GetRequiredBalance = async (userParams, signal) => {
+    const baseFetchURL = getBaseFetchURLByOrderType('fillablebalance');
+    const userURL = `${baseFetchURL}/${userParams.maker}` as const;
+    const fetchURL = userParams.token
+      ? (`${userURL}/${userParams.token}` as const)
+      : userURL;
+
+    const response = await fetcher<
+      Record<string, string>,
+      GetRequiredBalanceURL
+    >({
+      url: fetchURL,
+      method: 'GET',
+      signal,
+    });
+
+    // without any extra calls, return  what API returns
+    return response;
+  };
+
   const getLimitOrderByHash: GetLimitOrderByHash = async (
     orderHash,
     signal
@@ -98,5 +139,6 @@ export const constructGetLimitOrders = ({
   return {
     getLimitOrders,
     getLimitOrderByHash,
+    getRequiredBalance,
   };
 };
