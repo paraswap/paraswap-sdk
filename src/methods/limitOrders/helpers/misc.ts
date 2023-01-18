@@ -3,6 +3,7 @@ import {
   baseFetchUrlGetterFactory,
   BaseFetchUrlInputConstructor,
   MinFetchUrl,
+  OrderFillableBalanceFetchUrl,
 } from '../../common/orders/misc';
 import type { OrderData } from './buildOrderData';
 
@@ -38,6 +39,13 @@ GET
 export type GetOrdersURLs = `${BaseFetchUrl<'ft'>}/${
   | 'taker'
   | 'maker'}/${string}`;
+
+/*
+GET
+/ft/allowance/:chainId/:walletAddress/:makerAsset?
+*/
+export type GetRequiredAllowanceURL =
+  `${OrderFillableBalanceFetchUrl<'ft'>}/${string}${`/${string}` | ''}`;
 
 /*
 GET
