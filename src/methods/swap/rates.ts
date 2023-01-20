@@ -28,6 +28,10 @@ export type RateOptions = {
   maxImpact?: number;
   maxUSDImpact?: number;
   otherExchangePrices?: boolean;
+  srcTokenTransferFee?: number;
+  destTokenTransferFee?: number;
+  srcTokenDexTransferFee?: number;
+  destTokenDexTransferFee?: number;
 };
 
 type CommonGetRateInput = {

@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L18)
+[src/methods/swap/spender.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/spender.ts#L18)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L16)
+[src/methods/swap/spender.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/spender.ts#L16)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L17)
+[src/methods/swap/spender.ts:17](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/spender.ts#L17)
