@@ -34,9 +34,7 @@ const SDKwithApprove = constructSimpleSDK(
   providerOptions
 );
 
-(async function sendApproveTxTransactionExample() {
-  const approveTxHash = SDKwithApprove.swap.approveToken(
-    '1000000000000',
-    PSP_TOKEN
-  );
-})();
+const approveTxHash = SDKwithApprove.swap.approveToken(
+  '1000000000000',
+  PSP_TOKEN
+);
