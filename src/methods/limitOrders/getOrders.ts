@@ -56,8 +56,8 @@ export type GetLimitOrdersFunctions = {
    * User needs to have enough balance & allowance to cover active orders before creating new orders.
    * @param userParams - parameters to get allowance for active orders
    * @param {string} userParams.maker - user to get required allowances for
-   * @param {string} userParams.token - if given `token`, the mapping will contain that token address only
-   * @param {AbortSignal} signal - AbortSignal passed to fetcher
+   * @param {string=} userParams.token - if given `token`, the mapping will contain that token address only
+   * @param {AbortSignal=} signal - AbortSignal passed to fetcher
    * @returns `{Lowercase<Address> => wei number as string}` mapping of token to fillableBalance
    */
   getRequiredBalance: GetRequiredBalance;
