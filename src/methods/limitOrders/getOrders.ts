@@ -68,13 +68,13 @@ export const constructGetLimitOrders = ({
   chainId,
   fetcher,
 }: ConstructFetchInput): GetLimitOrdersFunctions => {
-  const getBaseFetchURLByOrderType = constructBaseFetchUrlGetter({
+  const getBaseFetchURLByEntityType = constructBaseFetchUrlGetter({
     apiURL,
     chainId,
   });
 
   const getLimitOrders: GetLimitOrders = async (userParams, signal) => {
-    const baseFetchURL = getBaseFetchURLByOrderType(userParams.type);
+    const baseFetchURL = getBaseFetchURLByEntityType(userParams.type);
     const userURL =
       'maker' in userParams
         ? (`maker/${userParams.maker}` as const)
@@ -101,7 +101,7 @@ export const constructGetLimitOrders = ({
   };
 
   const getRequiredBalance: GetRequiredBalance = async (userParams, signal) => {
-    const baseFetchURL = getBaseFetchURLByOrderType('fillablebalance');
+    const baseFetchURL = getBaseFetchURLByEntityType('fillablebalance');
     const userURL = `${baseFetchURL}/${userParams.maker}` as const;
     const fetchURL = userParams.token
       ? (`${userURL}/${userParams.token}` as const)
@@ -124,7 +124,7 @@ export const constructGetLimitOrders = ({
     orderHash,
     signal
   ) => {
-    const baseFetchURL = getBaseFetchURLByOrderType();
+    const baseFetchURL = getBaseFetchURLByEntityType();
     const fetchURL = `${baseFetchURL}/${orderHash}` as const;
 
     const order = await fetcher<LimitOrderFromApi, GetOrderURL>({
