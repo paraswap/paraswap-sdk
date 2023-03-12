@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "bignumber.js": "^9.0.2",
-    "paraswap-core": "^1.0.2",
+    "paraswap-core": "git+ssh://git@github.com/paraswap/paraswap-core#0359ab82b5e530d79fc127a97d78ef6de0b0c7c5",
     "ts-essentials": "^9.1.2"
   },
   "author": "ParaSwap",
