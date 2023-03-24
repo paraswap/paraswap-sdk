@@ -28,6 +28,7 @@ export type LimitOrderState =
   | 'PENDING'
   | 'FULFILLED'
   | 'CANCELLED'
+  | 'SUSPENDED'
   | 'EXPIRED';
 
 export type LimitOrderEvent = '';
