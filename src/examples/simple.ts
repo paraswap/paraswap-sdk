@@ -1,25 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { ethers } from 'ethers';
+import { ethers, Wallet } from 'ethers';
 import { constructSimpleSDK, SwapSide } from '..';
+import { ProviderOptions } from '../sdk/simple';
 
+const provider = ethers.getDefaultProvider(1);
+const signer = Wallet.createRandom().connect(provider);
 // only methods that fetch from API
 const simpleFetchOnlySDK = constructSimpleSDK({ chainId: 1, axios });
 
-const account = '0x...';
+const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
+const PSP_TOKEN = '0xcafe001067cdef266afb7eb5a286dcfd277f3de5';
+
+const account = signer.address;
 
 // type Promise<OptimalRate>
 const rateRes = simpleFetchOnlySDK.swap.getRate({
-  srcToken: '0x...',
-  destToken: '0x...',
+  srcToken: DAI_TOKEN,
+  destToken: PSP_TOKEN,
   amount: '1000000000000',
   userAddress: account,
   side: SwapSide.SELL,
 });
 
-const provider = ethers.getDefaultProvider(1);
-const providerOptions = {
-  ethersProviderOrSigner: provider,
+const providerOptions: ProviderOptions = {
+  ethersProviderOrSigner: signer,
   EthersContract: ethers.Contract,
   account,
 };
@@ -29,8 +34,7 @@ const SDKwithApprove = constructSimpleSDK(
   providerOptions
 );
 
-// type Promise<TxHash>
 const approveTxHash = SDKwithApprove.swap.approveToken(
   '1000000000000',
-  '0x...'
+  PSP_TOKEN
 );

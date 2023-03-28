@@ -23,11 +23,15 @@ export type LimitOrderApiResponse = {
 // display states such as EXPIRED and PARTIALLY_FILLLED derived on client side
 // returned by API but can be calculated too, EXPIRED == order.expiry < Date.now()/1000
 // PARTIALLY_FILLED == order.fillableBalance < order.makerAmount && order.fillableBalance !== '0'
+// SUSPENDED status was introduced for Limit orders to indicate that orders where makers lacked sufficient funds
+// to fulfill them would no longer be tracked. This status is similar to CANCELLED, but it reduces any ambiguity that might
+// arise when debugging or when users view their CANCELLED orders.
 export type LimitOrderState =
   | 'DRAFT'
   | 'PENDING'
   | 'FULFILLED'
   | 'CANCELLED'
+  | 'SUSPENDED'
   | 'EXPIRED';
 
 export type LimitOrderEvent = '';

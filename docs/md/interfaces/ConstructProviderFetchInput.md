@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[src/types.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L23)
+[src/types.ts:23](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/types.ts#L23)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L24)
+[src/types.ts:24](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/types.ts#L24)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L106)
+[src/types.ts:106](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/types.ts#L106)
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/types.ts#L47)
