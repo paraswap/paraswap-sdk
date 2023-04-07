@@ -1,6 +1,6 @@
 {
   "name": "@paraswap/sdk",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "main": "dist/index.js",
   "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
