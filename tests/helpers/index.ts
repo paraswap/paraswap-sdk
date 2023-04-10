@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
-import { SwapSide } from 'paraswap-core';
+import { SwapSide } from '@paraswap/core';
 import {
   constructSimpleSDK,
   FetcherOptions,
