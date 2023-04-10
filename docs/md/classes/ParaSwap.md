@@ -60,7 +60,7 @@
 
 #### Defined in
 
-[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L69)
+[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L69)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:66](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L66)
+[src/legacy/index.ts:66](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L66)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:65](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L65)
+[src/legacy/index.ts:65](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L65)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:68](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L68)
+[src/legacy/index.ts:68](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L68)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:63](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L63)
+[src/legacy/index.ts:63](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L63)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:62](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L62)
+[src/legacy/index.ts:62](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L62)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:67](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/legacy/index.ts#L67)
+[src/legacy/index.ts:67](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/legacy/index.ts#L67)
 
 ## Methods
 

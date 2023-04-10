@@ -1,5 +1,5 @@
 import type { JsonFragment } from '@ethersproject/abi';
-import type { OptimalRate, OptionalRate } from 'paraswap-core';
+import type { OptimalRate, OptionalRate } from '@paraswap/core';
 import type {
   Address,
   AddressOrSymbol,
