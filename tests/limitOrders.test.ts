@@ -608,7 +608,7 @@ describe('Limit Orders', () => {
           partner: referrer,
           orders: [orderWithSignature],
         },
-        // @TODO remove ignoreChecks, currently ropsten balance is fetched wrong in api
+        // ignore checks as otherwise would throw "not enough BAT balance"
         { ignoreChecks: true }
       );
 
