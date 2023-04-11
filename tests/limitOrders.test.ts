@@ -282,7 +282,7 @@ describe('Limit Orders', () => {
 
   let orderInput: BuildLimitOrderInput;
   //                                        UTC format
-  const orderExpiry = Math.floor(new Date('2022-12-20').getTime() / 1000);
+  const orderExpiry = Math.floor(new Date('2025-12-20').getTime() / 1000);
 
   let AugustusRFQ: Contract;
 
@@ -1020,7 +1020,7 @@ describe('Limit Orders', () => {
 
         const signature = await sdk.signLimitOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x16349ef688849bfa4f75ae693e91e862de7e7f60a1038e832008e010db921adb2795df50ea898401663d5355077592ae7ad964e9b04aca58575eec645f3718691b"`
+          `"0x18b022691daab1d8a3486aab5a006f2e98932b1c2fe4f04726c766e7a4e6d4935cbbf6d03ef945f23bef5cf4e250086f14581b1b8097f6c3ffd62653c8b2454b1b"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);
