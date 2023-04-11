@@ -296,7 +296,7 @@ describe('NFT Orders', () => {
 
   let orderInput: BuildNFTOrderInput;
   //                                        UTC format
-  const orderExpiry = Math.floor(new Date('2022-12-20').getTime() / 1000);
+  const orderExpiry = Math.floor(new Date('2025-12-20').getTime() / 1000);
 
   let erc20Token1: Contract;
   let erc20Token2: Contract;
@@ -731,7 +731,7 @@ describe('NFT Orders', () => {
 
     expect(orderWithSignature).toMatchInlineSnapshot(`
       Object {
-        "expiry": 1671494400,
+        "expiry": 1766188800,
         "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
         "makerAsset": "4315429714524158815340545734471553671933189254538",
@@ -739,7 +739,7 @@ describe('NFT Orders', () => {
         "makerAssetType": 2,
         "nonce": 999,
         "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
-        "signature": "0x7b097c5d5d07257bbe3c8cc0cfebbd7b178b954ba516da00218a9c383cfc20990ad42c9347a78a3e5984a18bdd0723ce21e91bccce2185da423c8bf1c86d0b6c1c",
+        "signature": "0x9360585f74eee3de2a12f6dc8c084b3c2646eaf62c3f1c829352bc2eb1e278d2542d36652fe864e3e717f26ed4b6c59554ba1b162ca5ed59a7b5bb32792409281b",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
         "takerAsset": "1096451400262405796991039590211805051831004063880",
@@ -1077,6 +1077,7 @@ describe('NFT Orders', () => {
       srcUSD: '---',
       destUSD: '---',
       gasCostUSD: '---',
+      gasCost: '---', // unstable, varies based on whether it's UniswapV2 or UniswapV3 at the time of writing
       bestRoute: priceRoute.bestRoute.map((route) => ({
         ...route,
         swaps: route.swaps.map((swap) => ({
@@ -1087,8 +1088,12 @@ describe('NFT Orders', () => {
               ...exchange.data,
               path: '---', // stablilze test because of variable path. Details: https://github.com/paraswap/paraswap-sdk/actions/runs/3218112679/jobs/5261882711#step:6:29
               pools: '---',
+              factory: '---',
+              feeFactor: '---',
+              initCode: '---',
               gasUSD: '---',
             },
+            exchange: '---', // unstable, sometimes it's UniswapV2, other times UniswapV3
             poolAddresses: ['---'],
             srcAmount: '---', //will change based on srcToken/destToken rate
           })),
@@ -1111,12 +1116,15 @@ describe('NFT Orders', () => {
                 "swapExchanges": Array [
                   Object {
                     "data": Object {
+                      "factory": "---",
+                      "feeFactor": "---",
                       "gasUSD": "---",
+                      "initCode": "---",
                       "path": "---",
                       "pools": "---",
                     },
                     "destAmount": "6000000000000000000",
-                    "exchange": "UniswapV3",
+                    "exchange": "---",
                     "percent": 100,
                     "poolAddresses": Array [
                       "---",
@@ -1135,7 +1143,7 @@ describe('NFT Orders', () => {
         "destDecimals": 18,
         "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
         "destUSD": "---",
-        "gasCost": "154300",
+        "gasCost": "---",
         "gasCostUSD": "---",
         "hmac": "---",
         "maxImpactReached": false,
@@ -1222,7 +1230,7 @@ describe('NFT Orders', () => {
 
         const signature = await sdk.signNFTOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x5f357e11807e9f5db61d16b245b060cc1e7fde8074f44e67cdeff2da04d78b522d45cccf124613ceb17948b1d8b75ef76c3b8edaa620d75d9f0ecab1cb0a07041b"`
+          `"0x72143ce3bc801dac394838d88d3acd39afce1999dee0ffff11bc4c69b5a2d76c02862144eb45a0f6033a3b04f5174c4eb0dbc2ebf0daa2af52528ed1ca12ae281b"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);
