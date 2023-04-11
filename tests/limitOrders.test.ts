@@ -77,7 +77,9 @@ const destToken = HEX;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
+//0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9
 const walletStable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
+//0xD7c0Cd9e7d2701c710D64Fc492C7086679BdF7b4
 const walletStable2 = ethers.Wallet.fromMnemonic(
   TEST_MNEMONIC,
   "m/44'/60'/0'/0/1"
@@ -98,10 +100,11 @@ const ganacheProvider = ganache.provider({
   },
   quiet: true,
 });
-
-const ethersProvider = new ethers.providers.Web3Provider(
-  ganacheProvider as any
-);
+// if test against tenderly fork, make sure accounts have enough ETH and zero nonce
+const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
+const ethersProvider = tenderlyForkUrl
+  ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
+  : new ethers.providers.Web3Provider(ganacheProvider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
