@@ -284,9 +284,6 @@ describe('Limit Orders', () => {
   //                                        UTC format
   const orderExpiry = Math.floor(new Date('2022-12-20').getTime() / 1000);
 
-  let erc20Token1: Contract;
-  let erc20Token2: Contract;
-
   let AugustusRFQ: Contract;
 
   // let initialChainId2verifyingContract = { ...chainId2verifyingContract };
@@ -301,23 +298,6 @@ describe('Limit Orders', () => {
       takerAmount: (8e18).toString(10),
       maker: senderAddress,
     };
-
-    erc20Token1 = await ERC20MintableFactory.deploy(
-      'ERC20Token1',
-      'ERC20Token1'
-    );
-    await erc20Token1.deployTransaction.wait();
-
-    erc20Token2 = await ERC20MintableFactory.deploy(
-      'ERC20Token2',
-      'ERC20Token2'
-    );
-    await erc20Token2.deployTransaction.wait();
-
-    await erc20Token1.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token1.mint(walletStable2.address, (60e18).toString(10));
-    await erc20Token2.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token2.mint(walletStable2.address, (60e18).toString(10));
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -572,8 +552,8 @@ describe('Limit Orders', () => {
 
     const signature = await makerSDK.signLimitOrder(signableOrderData);
 
-    const WETH_Token = erc20Token1.attach(WETH);
-    const BAT_Token = erc20Token1.attach(BAT);
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const BAT_Token = ERC20MintableFactory.attach(BAT);
 
     const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
       maker.address
@@ -786,9 +766,9 @@ describe('Limit Orders', () => {
 
     const signature = await makerSDK.signLimitOrder(signableOrderData);
 
-    const WETH_Token = erc20Token1.attach(WETH);
-    const BAT_Token = erc20Token1.attach(BAT);
-    const DAI_Token = erc20Token1.attach(DAI);
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const BAT_Token = ERC20MintableFactory.attach(BAT);
+    const DAI_Token = ERC20MintableFactory.attach(DAI);
 
     const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
       maker.address
