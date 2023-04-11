@@ -18,7 +18,7 @@ type BuyErc20TokenForEthInput = {
   tokenAddress: string;
   signer: ethers.Wallet;
   chainId: number;
-  ethersProvider: ethers.providers.Web3Provider;
+  ethersProvider: ethers.providers.JsonRpcProvider;
 };
 
 type BuyErc20TokenForEthReturn = {
