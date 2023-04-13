@@ -77,7 +77,9 @@ const destToken = HEX;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
+//0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9
 const walletStable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
+//0xD7c0Cd9e7d2701c710D64Fc492C7086679BdF7b4
 const walletStable2 = ethers.Wallet.fromMnemonic(
   TEST_MNEMONIC,
   "m/44'/60'/0'/0/1"
@@ -98,10 +100,11 @@ const ganacheProvider = ganache.provider({
   },
   quiet: true,
 });
-
-const ethersProvider = new ethers.providers.Web3Provider(
-  ganacheProvider as any
-);
+// if test against tenderly fork, make sure accounts have enough ETH and zero nonce
+const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
+const ethersProvider = tenderlyForkUrl
+  ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
+  : new ethers.providers.Web3Provider(ganacheProvider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -282,10 +285,7 @@ describe('Limit Orders', () => {
 
   let orderInput: BuildLimitOrderInput;
   //                                        UTC format
-  const orderExpiry = Math.floor(new Date('2022-12-20').getTime() / 1000);
-
-  let erc20Token1: Contract;
-  let erc20Token2: Contract;
+  const orderExpiry = Math.floor(new Date('2025-12-20').getTime() / 1000);
 
   let AugustusRFQ: Contract;
 
@@ -301,23 +301,6 @@ describe('Limit Orders', () => {
       takerAmount: (8e18).toString(10),
       maker: senderAddress,
     };
-
-    erc20Token1 = await ERC20MintableFactory.deploy(
-      'ERC20Token1',
-      'ERC20Token1'
-    );
-    await erc20Token1.deployTransaction.wait();
-
-    erc20Token2 = await ERC20MintableFactory.deploy(
-      'ERC20Token2',
-      'ERC20Token2'
-    );
-    await erc20Token2.deployTransaction.wait();
-
-    await erc20Token1.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token1.mint(walletStable2.address, (60e18).toString(10));
-    await erc20Token2.mint(walletStable.address, (60e18).toString(10));
-    await erc20Token2.mint(walletStable2.address, (60e18).toString(10));
 
     paraSwap = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
@@ -572,8 +555,8 @@ describe('Limit Orders', () => {
 
     const signature = await makerSDK.signLimitOrder(signableOrderData);
 
-    const WETH_Token = erc20Token1.attach(WETH);
-    const BAT_Token = erc20Token1.attach(BAT);
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const BAT_Token = ERC20MintableFactory.attach(BAT);
 
     const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
       maker.address
@@ -628,7 +611,7 @@ describe('Limit Orders', () => {
           partner: referrer,
           orders: [orderWithSignature],
         },
-        // @TODO remove ignoreChecks, currently ropsten balance is fetched wrong in api
+        // ignore checks as otherwise would throw "not enough BAT balance"
         { ignoreChecks: true }
       );
 
@@ -786,9 +769,9 @@ describe('Limit Orders', () => {
 
     const signature = await makerSDK.signLimitOrder(signableOrderData);
 
-    const WETH_Token = erc20Token1.attach(WETH);
-    const BAT_Token = erc20Token1.attach(BAT);
-    const DAI_Token = erc20Token1.attach(DAI);
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const BAT_Token = ERC20MintableFactory.attach(BAT);
+    const DAI_Token = ERC20MintableFactory.attach(DAI);
 
     const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
       maker.address
@@ -1040,7 +1023,7 @@ describe('Limit Orders', () => {
 
         const signature = await sdk.signLimitOrder(signableOrderData);
         expect(signature).toMatchInlineSnapshot(
-          `"0x16349ef688849bfa4f75ae693e91e862de7e7f60a1038e832008e010db921adb2795df50ea898401663d5355077592ae7ad964e9b04aca58575eec645f3718691b"`
+          `"0x18b022691daab1d8a3486aab5a006f2e98932b1c2fe4f04726c766e7a4e6d4935cbbf6d03ef945f23bef5cf4e250086f14581b1b8097f6c3ffd62653c8b2454b1b"`
         );
 
         const presumedOrderHash = calculateOrderHash(signableOrderData);

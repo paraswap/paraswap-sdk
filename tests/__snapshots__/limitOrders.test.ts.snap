@@ -70,7 +70,7 @@ Object {
 exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
 Object {
   "data": Object {
-    "expiry": 1671494400,
+    "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
     "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -127,7 +127,7 @@ Object {
 exports[`Limit Orders buildLimitOrder: Order_Data_Snapshot 1`] = `
 Object {
   "data": Object {
-    "expiry": 1671494400,
+    "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
     "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
