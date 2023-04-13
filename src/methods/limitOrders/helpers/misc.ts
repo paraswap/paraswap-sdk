@@ -42,7 +42,7 @@ export type GetOrdersURLs = `${BaseFetchUrl<'ft'>}/${
 
 /*
 GET
-/ft/allowance/:chainId/:walletAddress/:makerAsset?
+/ft/fillablebalance/:chainId/:walletAddress/:makerAsset?
 */
 export type GetRequiredAllowanceURL =
   `${OrderFillableBalanceFetchUrl<'ft'>}/${string}${`/${string}` | ''}`;
