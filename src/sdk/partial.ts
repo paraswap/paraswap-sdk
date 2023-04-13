@@ -66,10 +66,14 @@ type MergeExtendableOnce<
 type MergeExtendableRecursively<
   Accum extends Record<string, any>,
   Replacements extends Record<string, any>[]
-> = Replacements extends [head: infer Head, ...tail: infer Tail]
+> = Replacements extends [head: infer Head, ...tail: infer Tail] // use [head: infer Head extends Record<string, any>, ...tail: infer Tail] after Ts update
   ? Tail extends Record<string, any>[]
-    ? MergeExtendableRecursively<MergeExtendableOnce<Accum, Head>, Tail>
-    : MergeExtendableOnce<Accum, Head>
+    ? Head extends Record<string, any>
+      ? MergeExtendableRecursively<MergeExtendableOnce<Accum, Head>, Tail>
+      : Accum
+    : Head extends Record<string, any>
+    ? MergeExtendableOnce<Accum, Head>
+    : Accum
   : Accum;
 
 /** @description construct composable SDK with methods you choose yourself */
