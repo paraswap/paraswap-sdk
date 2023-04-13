@@ -17,7 +17,7 @@
 
 #### Defined in
 
-node_modules/paraswap-core/build/constants.d.ts:2
+node_modules/@paraswap/core/build/constants.d.ts:2
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-node_modules/paraswap-core/build/constants.d.ts:3
+node_modules/@paraswap/core/build/constants.d.ts:3

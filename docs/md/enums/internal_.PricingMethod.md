@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/methods/swap/rates.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/rates.ts#L14)
+[src/methods/swap/rates.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/swap/rates.ts#L14)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/rates.ts#L15)
+[src/methods/swap/rates.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/swap/rates.ts#L15)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/token-transfer-fees-types/src/methods/swap/rates.ts#L16)
+[src/methods/swap/rates.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/swap/rates.ts#L16)
