@@ -35,7 +35,7 @@ FetcherErrorConstructorInput.code
 
 #### Defined in
 
-[src/helpers/misc.ts:98](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/helpers/misc.ts#L98)
+[src/helpers/misc.ts:98](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/helpers/misc.ts#L98)
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 #### Defined in
 
-[src/helpers/misc.ts:97](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/helpers/misc.ts#L97)
+[src/helpers/misc.ts:97](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/helpers/misc.ts#L97)

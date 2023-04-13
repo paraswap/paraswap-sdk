@@ -11,7 +11,7 @@ import {
   OptimalRate,
 } from '../src';
 import BigNumber from 'bignumber.js';
-import { Adapters } from '@paraswap/core';
+import type { Adapters } from '@paraswap/core';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 

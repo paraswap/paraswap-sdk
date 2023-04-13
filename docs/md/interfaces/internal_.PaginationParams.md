@@ -11,6 +11,7 @@
 - [hideSmallBalances](internal_.PaginationParams.md#hidesmallbalances)
 - [limit](internal_.PaginationParams.md#limit)
 - [offset](internal_.PaginationParams.md#offset)
+- [orderBy](internal_.PaginationParams.md#orderby)
 
 ## Properties
 
@@ -20,7 +21,7 @@
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:20](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/methods/limitOrders/getOrders.ts#L20)
+[src/methods/limitOrders/getOrders.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/limitOrders/getOrders.ts#L21)
 
 ___
 
@@ -30,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:18](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/methods/limitOrders/getOrders.ts#L18)
+[src/methods/limitOrders/getOrders.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/limitOrders/getOrders.ts#L19)
 
 ___
 
@@ -40,4 +41,14 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:19](https://github.com/paraswap/paraswap-sdk/blob/fix/update-paraswap-core-v1.0.4/src/methods/limitOrders/getOrders.ts#L19)
+[src/methods/limitOrders/getOrders.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/limitOrders/getOrders.ts#L20)
+
+___
+
+### orderBy
+
+• `Optional` **orderBy**: ``"createdAt"`` \| ``"updatedAt"`` \| ``"expiry"``
+
+#### Defined in
+
+[src/methods/limitOrders/getOrders.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/orders_orderBy/src/methods/limitOrders/getOrders.ts#L22)
