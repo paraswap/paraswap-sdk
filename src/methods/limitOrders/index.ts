@@ -24,7 +24,7 @@ import {
   BuildLimitOrdersTxFunctions,
   constructBuildLimitOrderTx,
 } from './transaction';
-import { Address } from 'paraswap-core';
+import type { Address } from '@paraswap/core';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
