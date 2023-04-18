@@ -211,7 +211,7 @@ export const constructBuildTx = ({
             //  make sure we don't pass more with orders than API expects
             orders: params.orders.map((order) => {
               const sanitizedOrderData =
-                'makerAssetId' in order || 'takerAssetId' in order
+                'makerAssetId' in order
                   ? sanitizeNFTOrderData(order) // assetType is provided here, because Order.*Asset may be address
                   : // if Order received from API by hash
                     sanitizeLimitOrderData(order);
