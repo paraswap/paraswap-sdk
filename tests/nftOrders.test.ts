@@ -665,7 +665,8 @@ describe('NFT Orders', () => {
       constructBuildNFTOrder,
       constructSignNFTOrder,
       constructApproveTokenForNFTOrder,
-      constructBuildNFTOrderTx
+      constructBuildNFTOrderTx,
+      constructGetSpender
     );
 
     const order: BuildNFTOrderInput = {
@@ -772,6 +773,9 @@ describe('NFT Orders', () => {
       value: '0x' + new BigNumber(NFTPayloadTxParams.value).toString(16),
     };
 
+    const augustusTakerTokenBalanceBeforeSwap: BigNumberEthers =
+      await COMP_Token.balanceOf(await takerSDK.getAugustusSwapper());
+
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
     await awaitTx(takerFillsOrderTx);
@@ -807,7 +811,9 @@ describe('NFT Orders', () => {
         .toString(10)
     );
     expect(
-      new BigNumber(takerTokenERC20AfterBalance.toString()).toString(10)
+      new BigNumber(takerTokenERC20AfterBalance.toString())
+        .minus(augustusTakerTokenBalanceBeforeSwap.toString()) // if augustus contained some dust, it'll be transferred to the taker in the result of a swap
+        .toString(10)
     ).toEqual(
       new BigNumber(takerTokenERC20InitBalance.toString())
         .minus(takerAmount)
