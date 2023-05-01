@@ -1571,10 +1571,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@paraswap/core@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@paraswap/core/-/core-1.0.4.tgz#421f35893c9bdb934881b87436c20fff685fe25b"
-  integrity sha512-8/UkGJwftOFghSmeG1raSwEsXZTveVVo69duCNIWoeBbAj4vxy2KOJ5VugRkfvKbtNeDxR3MZ64QY5yqWYg82w==
+"@paraswap/core@^1.0.5-rfq-direct.0":
+  version "1.0.5-rfq-direct.0"
+  resolved "https://registry.yarnpkg.com/@paraswap/core/-/core-1.0.5-rfq-direct.0.tgz#c05dde933e65a3e5c93cb77ec29afeecf8884522"
+  integrity sha512-7z6WlEe12Nhde816d6kfomN5n0pIBKLngZSOuA3rrwMFMeko7iDwS2SQyBixwA2HqOxIIgdEd//+Nw3tUfGETA==
 
 "@rollup/plugin-babel@^5.3.1":
   version "5.3.1"

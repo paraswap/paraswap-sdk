@@ -83,7 +83,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "^1.0.4",
+    "@paraswap/core": "^1.0.5-rfq-direct.0",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },
