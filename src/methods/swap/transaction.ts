@@ -145,6 +145,7 @@ export type BuildTxInput =
 export type BuildOptionsBase = {
   ignoreChecks?: boolean;
   ignoreGasEstimate?: boolean;
+  ignoreAllowance?: boolean;
   onlyParams?: boolean;
   simple?: boolean;
 };
