@@ -1,6 +1,6 @@
 {
   "name": "@paraswap/sdk",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "main": "dist/index.js",
   "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
@@ -83,7 +83,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "^1.0.4",
+    "@paraswap/core": "1.1.0",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },
