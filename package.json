@@ -83,7 +83,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "1.0.5-new-direct-methods.0",
+    "@paraswap/core": "1.1.0",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },
