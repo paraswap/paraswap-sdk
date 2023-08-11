@@ -10,6 +10,12 @@
 - [buyOnUniswap](ContractMethod.md#buyonuniswap)
 - [buyOnUniswapFork](ContractMethod.md#buyonuniswapfork)
 - [buyOnUniswapV2Fork](ContractMethod.md#buyonuniswapv2fork)
+- [directBalancerV2GivenInSwap](ContractMethod.md#directbalancerv2giveninswap)
+- [directBalancerV2GivenOutSwap](ContractMethod.md#directbalancerv2givenoutswap)
+- [directCurveV1Swap](ContractMethod.md#directcurvev1swap)
+- [directCurveV2Swap](ContractMethod.md#directcurvev2swap)
+- [directUniV3Buy](ContractMethod.md#directuniv3buy)
+- [directUniV3Swap](ContractMethod.md#directuniv3swap)
 - [megaSwap](ContractMethod.md#megaswap)
 - [multiSwap](ContractMethod.md#multiswap)
 - [protectedMegaSwap](ContractMethod.md#protectedmegaswap)
@@ -63,6 +69,66 @@ ___
 #### Defined in
 
 node_modules/@paraswap/core/build/constants.d.ts:11
+
+___
+
+### directBalancerV2GivenInSwap
+
+• **directBalancerV2GivenInSwap** = ``"directBalancerV2GivenInSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:27
+
+___
+
+### directBalancerV2GivenOutSwap
+
+• **directBalancerV2GivenOutSwap** = ``"directBalancerV2GivenOutSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:28
+
+___
+
+### directCurveV1Swap
+
+• **directCurveV1Swap** = ``"directCurveV1Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:25
+
+___
+
+### directCurveV2Swap
+
+• **directCurveV2Swap** = ``"directCurveV2Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:26
+
+___
+
+### directUniV3Buy
+
+• **directUniV3Buy** = ``"directUniV3Buy"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:24
+
+___
+
+### directUniV3Swap
+
+• **directUniV3Swap** = ``"directUniV3Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:23
 
 ___
 
