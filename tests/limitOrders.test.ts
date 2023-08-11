@@ -762,7 +762,8 @@ describe('Limit Orders', () => {
       constructBuildLimitOrder,
       constructSignLimitOrder,
       constructApproveTokenForLimitOrder,
-      constructBuildLimitOrderTx
+      constructBuildLimitOrderTx,
+      constructGetSpender
     );
 
     const signableOrderData = await makerSDK.buildLimitOrder(order);
@@ -844,6 +845,9 @@ describe('Limit Orders', () => {
       value: '0x' + new BigNumber(swapAndLOPayloadTxParams.value).toString(16),
     };
 
+    const augustusTakerTokenBalanceBeforeSwap: BigNumberEthers =
+      await BAT_Token.balanceOf(await takerSDK.getAugustusSwapper());
+
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
     await awaitTx(takerFillsOrderTx);
@@ -883,7 +887,9 @@ describe('Limit Orders', () => {
         .toString(10)
     );
     expect(
-      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+      new BigNumber(takerToken2AfterBalance.toString())
+        .plus(augustusTakerTokenBalanceBeforeSwap.toString()) // if augustus contained some dust, it'll be transferred to the taker in the result of a swap
+        .toString(10)
     ).toEqual(
       new BigNumber(takerToken2InitBalance.toString()) // initial balance
         .plus(priceRoute.destAmount) // + swapped destAmount
