@@ -65,6 +65,7 @@ export type BuildTxInputBase = {
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;
+  positiveSlippageToUser?: boolean;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;
