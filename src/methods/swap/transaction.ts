@@ -145,10 +145,14 @@ export type BuildTxInput =
   | BuildSwapAndNFTOrderTxInput;
 
 export type BuildOptionsBase = {
+  /** @description Allows the API to skip performing onchain checks such as balances, allowances, as well as transaction simulations. The response does not contain `gas` parameter when set to `true` */
   ignoreChecks?: boolean;
+  /** @description Allows the API to skip gas checks. The response does not contain `gas` parameter when set to `true` */
   ignoreGasEstimate?: boolean;
+  /** @description Allows the API to skip performing onchain allowance checks. */
+  ignoreAllowance?: boolean;
+  /** @description Allows the API to return the contract parameters only. */
   onlyParams?: boolean;
-  simple?: boolean;
 };
 
 export type BuildOptionsWithGasPrice = BuildOptionsBase & Partial<WithGasPrice>;
