@@ -65,6 +65,8 @@ export type BuildTxInputBase = {
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;
+  /** @description positive slippage goes to user, true by default */
+  positiveSlippageToUser?: boolean;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;
