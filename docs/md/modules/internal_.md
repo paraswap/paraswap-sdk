@@ -513,7 +513,7 @@
 
 #### Defined in
 
-[src/legacy/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/legacy/index.ts#L41)
+[src/legacy/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/legacy/index.ts#L41)
 
 ___
 
@@ -560,7 +560,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:5](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L5)
+[src/methods/swap/adapters.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L5)
 
 ___
 
@@ -570,7 +570,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L11)
+[src/methods/swap/adapters.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L11)
 
 ___
 
@@ -580,7 +580,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:10](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L10)
+[src/methods/swap/adapters.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L10)
 
 ___
 
@@ -590,7 +590,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:12](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L12)
+[src/methods/swap/adapters.ts:12](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L12)
 
 ___
 
@@ -610,7 +610,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:18](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L18)
+[src/methods/swap/adapters.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L18)
 
 ___
 
@@ -634,7 +634,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:139](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L139)
+[src/types.ts:139](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L139)
 
 ___
 
@@ -665,7 +665,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/approveForOrder.ts#L11)
+[src/methods/nftOrders/approveForOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/approveForOrder.ts#L11)
 
 ___
 
@@ -698,7 +698,7 @@ ___
 
 #### Defined in
 
-[src/helpers/approve.ts:28](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/approve.ts#L28)
+[src/helpers/approve.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/approve.ts#L28)
 
 ___
 
@@ -731,7 +731,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/approve.ts:10](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/approve.ts#L10)
+[src/methods/swap/approve.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/approve.ts#L10)
 
 ___
 
@@ -901,7 +901,7 @@ ___
 
 #### Defined in
 
-[src/helpers/fetchers/axios.ts:5](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/fetchers/axios.ts#L5)
+[src/helpers/fetchers/axios.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/fetchers/axios.ts#L5)
 
 ___
 
@@ -921,7 +921,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:54](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/helpers/buildOrderData.ts#L54)
+[src/methods/nftOrders/helpers/buildOrderData.ts:54](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/buildOrderData.ts#L54)
 
 ___
 
@@ -961,7 +961,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:59](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L59)
+[src/types.ts:59](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L59)
 
 ___
 
@@ -1016,7 +1016,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/buildOrder.ts#L15)
+[src/methods/limitOrders/buildOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/buildOrder.ts#L15)
 
 ___
 
@@ -1042,7 +1042,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L35)
+[src/methods/limitOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L35)
 
 ___
 
@@ -1067,7 +1067,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/buildOrder.ts#L15)
+[src/methods/nftOrders/buildOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/buildOrder.ts#L15)
 
 ___
 
@@ -1093,7 +1093,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L35)
+[src/methods/nftOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L35)
 
 ___
 
@@ -1119,7 +1119,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L22)
+[src/methods/limitOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L22)
 
 ___
 
@@ -1145,7 +1145,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L22)
+[src/methods/nftOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L22)
 
 ___
 
@@ -1171,7 +1171,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:159](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L159)
+[src/methods/swap/transaction.ts:165](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L165)
 
 ___
 
@@ -1190,16 +1190,17 @@ ___
 | `partnerAddress?` | `string` | - |
 | `partnerFeeBps?` | `number` | - |
 | `permit?` | `string` | - |
-| `positiveSlippageToUser?` | `boolean` | **`Description`**  positive slippage goes to user, true by default |
+| `positiveSlippageToUser?` | `boolean` | **`Deprecated`**  Use "takeSurplus" instead. Positive slippage goes to user, true by default |
 | `receiver?` | [`Address`](../modules.md#address) | - |
 | `referrer?` | `string` | **`Description`**  used with referral link |
 | `srcDecimals?` | `number` | - |
 | `srcToken` | [`Address`](../modules.md#address) | - |
+| `takeSurplus?` | `boolean` | **`Description`**  Set to true to take positive slippage. Default: false |
 | `userAddress` | [`Address`](../modules.md#address) | - |
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:59](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L59)
+[src/methods/swap/transaction.ts:59](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L59)
 
 ___
 
@@ -1215,7 +1216,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:88](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L88)
+[src/methods/swap/transaction.ts:90](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L90)
 
 ___
 
@@ -1267,7 +1268,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/cancelOrder.ts#L5)
+[src/methods/limitOrders/cancelOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/cancelOrder.ts#L5)
 
 ___
 
@@ -1298,7 +1299,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:4](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/cancelOrder.ts#L4)
+[src/methods/nftOrders/cancelOrder.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/cancelOrder.ts#L4)
 
 ___
 
@@ -1330,7 +1331,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/cancelOrder.ts#L11)
+[src/methods/limitOrders/cancelOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/cancelOrder.ts#L11)
 
 ___
 
@@ -1361,7 +1362,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:9](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/cancelOrder.ts#L9)
+[src/methods/nftOrders/cancelOrder.ts:9](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/cancelOrder.ts#L9)
 
 ___
 
@@ -1371,7 +1372,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:170](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L170)
+[src/methods/limitOrders/transaction.ts:170](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L170)
 
 ___
 
@@ -1381,7 +1382,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:165](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L165)
+[src/methods/nftOrders/transaction.ts:165](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L165)
 
 ___
 
@@ -1452,7 +1453,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:37](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L37)
+[src/methods/swap/rates.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L37)
 
 ___
 
@@ -1462,7 +1463,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:50](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/token.ts#L50)
+[src/helpers/token.ts:50](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L50)
 
 ___
 
@@ -1537,7 +1538,7 @@ ___
 
 #### Defined in
 
-[src/methods/common/orders/buildOrderData.ts:20](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/common/orders/buildOrderData.ts#L20)
+[src/methods/common/orders/buildOrderData.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/common/orders/buildOrderData.ts#L20)
 
 ___
 
@@ -1593,7 +1594,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:46](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/legacy/index.ts#L46)
+[src/legacy/index.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/legacy/index.ts#L46)
 
 ___
 
@@ -1603,7 +1604,7 @@ ___
 
 #### Defined in
 
-[src/helpers/misc.ts:91](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/misc.ts#L91)
+[src/helpers/misc.ts:91](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/misc.ts#L91)
 
 ___
 
@@ -1634,7 +1635,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:42](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L42)
+[src/types.ts:42](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L42)
 
 ___
 
@@ -1644,7 +1645,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:125](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L125)
+[src/sdk/simple.ts:125](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L125)
 
 ___
 
@@ -1748,7 +1749,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:34](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L34)
+[src/methods/swap/balance.ts:34](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L34)
 
 ___
 
@@ -1774,7 +1775,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:29](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L29)
+[src/methods/swap/balance.ts:29](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L29)
 
 ___
 
@@ -1800,7 +1801,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:18](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L18)
+[src/methods/swap/balance.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L18)
 
 ___
 
@@ -1825,7 +1826,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:14](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L14)
+[src/methods/swap/balance.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L14)
 
 ___
 
@@ -1849,7 +1850,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:6](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/spender.ts#L6)
+[src/methods/swap/spender.ts:6](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/spender.ts#L6)
 
 ___
 
@@ -1874,7 +1875,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:37](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/getOrders.ts#L37)
+[src/methods/limitOrders/getOrders.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L37)
 
 ___
 
@@ -1899,7 +1900,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:41](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/getOrders.ts#L41)
+[src/methods/limitOrders/getOrders.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L41)
 
 ___
 
@@ -1925,7 +1926,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L47)
+[src/methods/limitOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L47)
 
 ___
 
@@ -1950,7 +1951,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:18](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/getOrders.ts#L18)
+[src/methods/nftOrders/getOrders.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/getOrders.ts#L18)
 
 ___
 
@@ -1975,7 +1976,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:22](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/getOrders.ts#L22)
+[src/methods/nftOrders/getOrders.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/getOrders.ts#L22)
 
 ___
 
@@ -2001,7 +2002,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L47)
+[src/methods/nftOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L47)
 
 ___
 
@@ -2026,7 +2027,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:51](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L51)
+[src/methods/swap/rates.ts:51](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L51)
 
 ___
 
@@ -2051,7 +2052,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:60](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L60)
+[src/methods/swap/rates.ts:60](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L60)
 
 ___
 
@@ -2061,7 +2062,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:56](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L56)
+[src/methods/swap/rates.ts:56](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L56)
 
 ___
 
@@ -2071,7 +2072,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:46](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L46)
+[src/methods/swap/rates.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L46)
 
 ___
 
@@ -2088,7 +2089,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:32](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/getOrders.ts#L32)
+[src/methods/limitOrders/getOrders.ts:32](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L32)
 
 ___
 
@@ -2113,7 +2114,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:46](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/getOrders.ts#L46)
+[src/methods/limitOrders/getOrders.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L46)
 
 ___
 
@@ -2137,7 +2138,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:5](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/spender.ts#L5)
+[src/methods/swap/spender.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/spender.ts#L5)
 
 ___
 
@@ -2161,7 +2162,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/token.ts:9](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/token.ts#L9)
+[src/methods/swap/token.ts:9](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/token.ts#L9)
 
 ___
 
@@ -2198,7 +2199,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:33](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/partial.ts#L33)
+[src/sdk/partial.ts:33](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L33)
 
 ___
 
@@ -2214,7 +2215,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:24](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/partial.ts#L24)
+[src/sdk/partial.ts:24](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L24)
 
 ___
 
@@ -2253,7 +2254,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:50](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/legacy/index.ts#L50)
+[src/legacy/index.ts:50](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/legacy/index.ts#L50)
 
 ___
 
@@ -2263,7 +2264,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:21](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/token.ts#L21)
+[src/helpers/token.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L21)
 
 ___
 
@@ -2273,7 +2274,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:101](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L101)
+[src/sdk/simple.ts:101](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L101)
 
 ___
 
@@ -2396,7 +2397,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:57](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/partial.ts#L57)
+[src/sdk/partial.ts:57](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L57)
 
 ___
 
@@ -2413,7 +2414,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:66](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/partial.ts#L66)
+[src/sdk/partial.ts:66](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L66)
 
 ___
 
@@ -2443,7 +2444,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L28)
+[src/methods/limitOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L28)
 
 ___
 
@@ -2453,7 +2454,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L28)
+[src/methods/nftOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L28)
 
 ___
 
@@ -2463,7 +2464,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/transaction.ts#L16)
+[src/methods/limitOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L16)
 
 ___
 
@@ -2473,7 +2474,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/transaction.ts#L16)
+[src/methods/nftOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L16)
 
 ___
 
@@ -2493,7 +2494,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:107](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L107)
+[src/sdk/simple.ts:107](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L107)
 
 ___
 
@@ -2632,7 +2633,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:15](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L15)
+[src/methods/swap/adapters.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L15)
 
 ___
 
@@ -2649,7 +2650,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:16](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L16)
+[src/methods/swap/adapters.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L16)
 
 ___
 
@@ -2665,7 +2666,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:14](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/adapters.ts#L14)
+[src/methods/swap/adapters.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L14)
 
 ___
 
@@ -2727,7 +2728,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/postOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/postOrder.ts#L11)
+[src/methods/limitOrders/postOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/postOrder.ts#L11)
 
 ___
 
@@ -2752,7 +2753,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/postOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/postOrder.ts#L11)
+[src/methods/nftOrders/postOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/postOrder.ts#L11)
 
 ___
 
@@ -2772,7 +2773,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:133](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L133)
+[src/sdk/simple.ts:133](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L133)
 
 ___
 
@@ -2802,7 +2803,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:19](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/rates.ts#L19)
+[src/methods/swap/rates.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L19)
 
 ___
 
@@ -2995,7 +2996,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:20](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/partial.ts#L20)
+[src/sdk/partial.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L20)
 
 ___
 
@@ -3029,7 +3030,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L92)
+[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L92)
 
 ___
 
@@ -3039,7 +3040,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:131](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L131)
+[src/sdk/simple.ts:131](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L131)
 
 ___
 
@@ -3100,7 +3101,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:86](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L86)
+[src/types.ts:86](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L86)
 
 ___
 
@@ -3127,7 +3128,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:29](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/index.ts#L29)
+[src/methods/limitOrders/index.ts:29](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/index.ts#L29)
 
 ___
 
@@ -3154,7 +3155,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:28](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/index.ts#L28)
+[src/methods/nftOrders/index.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/index.ts#L28)
 
 ___
 
@@ -3181,7 +3182,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:35](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/index.ts#L35)
+[src/methods/limitOrders/index.ts:35](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/index.ts#L35)
 
 ___
 
@@ -3191,7 +3192,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:94](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/simple.ts#L94)
+[src/sdk/simple.ts:94](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L94)
 
 ___
 
@@ -3207,7 +3208,7 @@ ___
 
 #### Defined in
 
-[src/sdk/full.ts:19](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/sdk/full.ts#L19)
+[src/sdk/full.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/full.ts#L19)
 
 ___
 
@@ -3217,7 +3218,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:30](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/helpers/token.ts#L30)
+[src/helpers/token.ts:30](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L30)
 
 ___
 
@@ -3253,7 +3254,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/types.ts#L89)
+[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/types.ts#L89)
 
 ___
 
@@ -3300,7 +3301,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L47)
+[src/methods/swap/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L47)
 
 ___
 
@@ -3318,7 +3319,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:53](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L53)
+[src/methods/swap/transaction.ts:53](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L53)
 
 ___
 
@@ -3336,7 +3337,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/transaction.ts#L41)
+[src/methods/swap/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L41)
 
 ___
 
@@ -3346,7 +3347,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:48](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/legacy/index.ts#L48)
+[src/legacy/index.ts:48](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/legacy/index.ts#L48)
 
 ___
 
@@ -3366,7 +3367,7 @@ ___
 
 #### Defined in
 
-[src/methods/common/orders/buildOrderData.ts:10](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/common/orders/buildOrderData.ts#L10)
+[src/methods/common/orders/buildOrderData.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/common/orders/buildOrderData.ts#L10)
 
 ___
 
@@ -3410,7 +3411,7 @@ ___
 
 #### Defined in
 
-[src/gas.ts:1](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/gas.ts#L1)
+[src/gas.ts:1](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/gas.ts#L1)
 
 ___
 
@@ -3443,7 +3444,7 @@ ___
 
 #### Defined in
 
-[src/gas.ts:4](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/gas.ts#L4)
+[src/gas.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/gas.ts#L4)
 
 ___
 
@@ -3511,7 +3512,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:53](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L53)
+[src/methods/swap/balance.ts:53](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L53)
 
 ___
 
@@ -3521,7 +3522,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:10](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/limitOrders/helpers/buildOrderData.ts#L10)
+[src/methods/limitOrders/helpers/buildOrderData.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/buildOrderData.ts#L10)
 
 ___
 
@@ -3531,7 +3532,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:11](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/nftOrders/helpers/buildOrderData.ts#L11)
+[src/methods/nftOrders/helpers/buildOrderData.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/buildOrderData.ts#L11)
 
 ___
 

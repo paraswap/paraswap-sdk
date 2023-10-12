@@ -65,8 +65,10 @@ export type BuildTxInputBase = {
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;
-  /** @description positive slippage goes to user, true by default */
+  /** @deprecated Use "takeSurplus" instead. Positive slippage goes to user, true by default */
   positiveSlippageToUser?: boolean;
+  /** @description Set to true to take positive slippage. Default: false */
+  takeSurplus?: boolean;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;
@@ -189,7 +191,7 @@ export const constructBuildTx = ({
         priceRoute,
         priceRoute: { side },
       } = params;
-      const AmountMistmatchError =
+      const AmountMismatchError =
         side === SwapSide.SELL
           ? 'Source Amount Mismatch'
           : 'Destination Amount Mismatch';
@@ -201,7 +203,7 @@ export const constructBuildTx = ({
           side,
           priceRoute,
         }),
-        AmountMistmatchError
+        AmountMismatchError
       );
     }
 
@@ -235,6 +237,20 @@ export const constructBuildTx = ({
             }),
           }
         : params;
+
+    const takeSurplus =
+      params.takeSurplus ??
+      (params.positiveSlippageToUser !== undefined
+        ? !params.positiveSlippageToUser
+        : undefined);
+
+    if ('positiveSlippageToUser' in sanitizedParams) {
+      // positiveSlippageToUser & takeSurplus together will Error in API
+      delete sanitizedParams.positiveSlippageToUser;
+    }
+    if (takeSurplus !== undefined) {
+      sanitizedParams.takeSurplus = takeSurplus;
+    }
 
     const fetchParams: FetcherPostInput = {
       url: fetchURL,

@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L26)
+[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L26)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:25](https://github.com/paraswap/paraswap-sdk/blob/chore/txParams_positiveSlippageToUser/src/methods/swap/balance.ts#L25)
+[src/methods/swap/balance.ts:25](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L25)
