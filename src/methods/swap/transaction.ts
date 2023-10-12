@@ -182,6 +182,15 @@ export const constructBuildTx = ({
   const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
+    if ('positiveSlippageToUser' in params) {
+      if ('takeSurplus' in params) {
+        throw new Error(
+          'Cannot use both `positiveSlippageToUser` and `takeSurplus` in `buildTx`. Remove one of the params'
+        );
+      }
+      params.takeSurplus = !params.positiveSlippageToUser;
+      delete params.positiveSlippageToUser;
+    }
     if (
       'priceRoute' in params &&
       'destAmount' in params && // isn't provided together with `orders`
@@ -191,7 +200,7 @@ export const constructBuildTx = ({
         priceRoute,
         priceRoute: { side },
       } = params;
-      const AmountMistmatchError =
+      const AmountMismatchError =
         side === SwapSide.SELL
           ? 'Source Amount Mismatch'
           : 'Destination Amount Mismatch';
@@ -203,7 +212,7 @@ export const constructBuildTx = ({
           side,
           priceRoute,
         }),
-        AmountMistmatchError
+        AmountMismatchError
       );
     }
 
