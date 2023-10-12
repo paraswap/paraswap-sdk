@@ -243,7 +243,7 @@ export const constructBuildTx = ({
         ? !params.positiveSlippageToUser
         : undefined;
 
-    if ('positiveSlippage' in sanitizedParams) {
+    if ('positiveSlippageToUser' in sanitizedParams) {
       // positiveSlippageToUser & takeSurplus together will Error in API
       delete sanitizedParams.positiveSlippageToUser;
     }
