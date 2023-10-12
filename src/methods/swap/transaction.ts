@@ -182,15 +182,6 @@ export const constructBuildTx = ({
   const transactionsURL = `${apiURL}/transactions/${chainId}`;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
-    if ('positiveSlippageToUser' in params) {
-      if ('takeSurplus' in params) {
-        throw new Error(
-          'Cannot use both `positiveSlippageToUser` and `takeSurplus` in `buildTx`. Remove one of the params'
-        );
-      }
-      params.takeSurplus = !params.positiveSlippageToUser;
-      delete params.positiveSlippageToUser;
-    }
     if (
       'priceRoute' in params &&
       'destAmount' in params && // isn't provided together with `orders`
@@ -246,6 +237,19 @@ export const constructBuildTx = ({
             }),
           }
         : params;
+
+    const takeSurplus =
+      params.takeSurplus ?? params.positiveSlippageToUser !== undefined
+        ? !params.positiveSlippageToUser
+        : undefined;
+
+    if ('positiveSlippage' in sanitizedParams) {
+      // positiveSlippageToUser & takeSurplus together will Error in API
+      delete sanitizedParams.positiveSlippageToUser;
+    }
+    if (takeSurplus !== undefined) {
+      sanitizedParams.takeSurplus = takeSurplus;
+    }
 
     const fetchParams: FetcherPostInput = {
       url: fetchURL,
