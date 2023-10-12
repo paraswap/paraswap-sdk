@@ -65,9 +65,9 @@ export type BuildTxInputBase = {
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;
-  /** @description (DEPRECATED). Use "takeSurplus" instead. Positive slippage goes to user, true by default */
+  /** @deprecated Use "takeSurplus" instead. Positive slippage goes to user, true by default */
   positiveSlippageToUser?: boolean;
-  /** @description (). Set to true, to take positive slippage. Default: false */
+  /** @description Set to true to take positive slippage. Default: false */
   takeSurplus?: boolean;
   receiver?: Address;
   srcDecimals?: number;
