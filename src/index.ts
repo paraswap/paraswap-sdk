@@ -247,7 +247,12 @@ export type {
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
 export { AllSDKMethods, constructFullSDK } from './sdk/full';
-export { SimpleFetchSDK, SimpleSDK, constructSimpleSDK } from './sdk/simple';
+export {
+  SimpleFetchSDK,
+  SimpleSDK,
+  constructSimpleSDK,
+  ProviderOptions as SimpleSDKProviderOptions,
+} from './sdk/simple';
 
 export { ParaSwap } from './legacy';
 

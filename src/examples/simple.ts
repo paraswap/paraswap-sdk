@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { ethers, Wallet } from 'ethers';
-import { constructSimpleSDK, SwapSide } from '..';
-import { ProviderOptions } from '../sdk/simple';
+import {
+  constructSimpleSDK,
+  ContractMethod,
+  SwapSide,
+  SimpleSDKProviderOptions,
+} from '..';
 
 const provider = ethers.getDefaultProvider(1);
 const signer = Wallet.createRandom().connect(provider);
@@ -23,7 +27,7 @@ const rateRes = simpleFetchOnlySDK.swap.getRate({
   side: SwapSide.SELL,
 });
 
-const providerOptions: ProviderOptions = {
+const providerOptions: SimpleSDKProviderOptions = {
   ethersProviderOrSigner: signer,
   EthersContract: ethers.Contract,
   account,

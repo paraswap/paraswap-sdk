@@ -1,5 +1,4 @@
-import { constructSimpleSDK } from '../sdk/simple';
-import { FetcherFunction } from '../types';
+import { constructSimpleSDK, FetcherFunction } from '../';
 
 // mock superagent module without adding a dependency
 interface SuperAgentStatic
