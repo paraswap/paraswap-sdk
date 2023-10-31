@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { constructSimpleSDK, FetcherFunction } from '../';
 
 // mock superagent module without adding a dependency
