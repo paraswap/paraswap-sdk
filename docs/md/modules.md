@@ -58,6 +58,7 @@
 - [BuildTxInput](modules.md#buildtxinput)
 - [CancelLimitOrderFunctions](modules.md#cancellimitorderfunctions)
 - [CancelNFTOrderFunctions](modules.md#cancelnftorderfunctions)
+- [FetcherFunction](modules.md#fetcherfunction)
 - [GetAdaptersFunctions](modules.md#getadaptersfunctions)
 - [GetBalancesFunctions](modules.md#getbalancesfunctions)
 - [GetLimitOrdersContractFunctions](modules.md#getlimitorderscontractfunctions)
@@ -102,6 +103,7 @@
 - [SignableTypedData](modules.md#signabletypeddata)
 - [SimpleFetchSDK](modules.md#simplefetchsdk)
 - [SimpleSDK](modules.md#simplesdk)
+- [SimpleSDKProviderOptions](modules.md#simplesdkprovideroptions)
 - [SubmitLimitOrderFuncs](modules.md#submitlimitorderfuncs)
 - [SubmitNFTOrderFuncs](modules.md#submitnftorderfuncs)
 - [SwapSDKMethods](modules.md#swapsdkmethods)
@@ -165,7 +167,7 @@
 
 #### Defined in
 
-[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L6)
+[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L6)
 
 ___
 
@@ -175,7 +177,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L10)
+[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L10)
 
 ___
 
@@ -199,7 +201,7 @@ ___
 
 #### Defined in
 
-[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/full.ts#L27)
+[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L27)
 
 ___
 
@@ -222,7 +224,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/approveForOrder.ts#L6)
+[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/approveForOrder.ts#L6)
 
 ___
 
@@ -245,7 +247,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/approveForOrder.ts#L16)
+[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L16)
 
 ___
 
@@ -268,7 +270,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/approve.ts#L17)
+[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L17)
 
 ___
 
@@ -278,7 +280,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L50)
+[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L50)
 
 ___
 
@@ -294,7 +296,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/buildOrder.ts#L20)
+[src/methods/limitOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L20)
 
 ___
 
@@ -304,7 +306,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/buildOrder.ts#L10)
+[src/methods/limitOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L10)
 
 ___
 
@@ -314,7 +316,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:101](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L101)
+[src/methods/swap/transaction.ts:101](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L101)
 
 ___
 
@@ -332,7 +334,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/transaction.ts#L41)
+[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L41)
 
 ___
 
@@ -348,7 +350,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/buildOrder.ts#L20)
+[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L20)
 
 ___
 
@@ -358,7 +360,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/buildOrder.ts#L10)
+[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L10)
 
 ___
 
@@ -368,7 +370,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:108](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L108)
+[src/methods/swap/transaction.ts:108](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L108)
 
 ___
 
@@ -386,7 +388,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/transaction.ts#L41)
+[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L41)
 
 ___
 
@@ -396,7 +398,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:163](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L163)
+[src/methods/swap/transaction.ts:163](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L163)
 
 ___
 
@@ -415,7 +417,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:149](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L149)
+[src/methods/swap/transaction.ts:149](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L149)
 
 ___
 
@@ -425,7 +427,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L161)
 
 ___
 
@@ -435,7 +437,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:160](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L160)
+[src/methods/swap/transaction.ts:160](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L160)
 
 ___
 
@@ -445,7 +447,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:124](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L124)
+[src/methods/swap/transaction.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L124)
 
 ___
 
@@ -455,7 +457,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:135](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L135)
+[src/methods/swap/transaction.ts:135](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L135)
 
 ___
 
@@ -465,7 +467,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:80](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L80)
+[src/methods/swap/transaction.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L80)
 
 ___
 
@@ -481,7 +483,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:171](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L171)
+[src/methods/swap/transaction.ts:171](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L171)
 
 ___
 
@@ -491,7 +493,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:142](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L142)
+[src/methods/swap/transaction.ts:142](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L142)
 
 ___
 
@@ -514,7 +516,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/cancelOrder.ts#L17)
+[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L17)
 
 ___
 
@@ -537,7 +539,38 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/cancelOrder.ts#L14)
+[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L14)
+
+___
+
+### FetcherFunction
+
+Ƭ **FetcherFunction**: <T, URL\>(`params`: [`FetcherGetInput`](interfaces/internal_.FetcherGetInput.md)<`URL`\> \| [`FetcherPostInput`](interfaces/internal_.FetcherPostInput.md)<`URL`\>) => `Promise`<`T`\>
+
+#### Type declaration
+
+▸ <`T`, `URL`\>(`params`): `Promise`<`T`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `URL` | extends `string` = `string` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `params` | [`FetcherGetInput`](interfaces/internal_.FetcherGetInput.md)<`URL`\> \| [`FetcherPostInput`](interfaces/internal_.FetcherPostInput.md)<`URL`\> |
+
+##### Returns
+
+`Promise`<`T`\>
+
+#### Defined in
+
+[src/types.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L42)
 
 ___
 
@@ -553,7 +586,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:35](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/adapters.ts#L35)
+[src/methods/swap/adapters.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L35)
 
 ___
 
@@ -572,7 +605,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/balance.ts#L46)
+[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L46)
 
 ___
 
@@ -589,7 +622,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrdersContract.ts#L4)
+[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -607,7 +640,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:51](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L51)
+[src/methods/limitOrders/getOrders.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L51)
 
 ___
 
@@ -624,7 +657,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/getOrdersContract.ts#L4)
+[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -641,7 +674,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/getOrders.ts#L27)
+[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L27)
 
 ___
 
@@ -658,7 +691,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:65](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/rates.ts#L65)
+[src/methods/swap/rates.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L65)
 
 ___
 
@@ -677,7 +710,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/spender.ts#L8)
+[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L8)
 
 ___
 
@@ -693,7 +726,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/token.ts#L11)
+[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L11)
 
 ___
 
@@ -703,7 +736,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L5)
+[src/methods/limitOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L5)
 
 ___
 
@@ -719,7 +752,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L19)
+[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L19)
 
 ___
 
@@ -729,7 +762,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L37)
+[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L37)
 
 ___
 
@@ -766,7 +799,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L44)
+[src/methods/limitOrders/helpers/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L44)
 
 ___
 
@@ -782,7 +815,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:102](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/index.ts#L102)
+[src/methods/limitOrders/index.ts:102](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L102)
 
 ___
 
@@ -792,7 +825,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:29](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L29)
+[src/methods/limitOrders/helpers/types.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L29)
 
 ___
 
@@ -802,7 +835,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L7)
+[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L7)
 
 ___
 
@@ -819,7 +852,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L39)
+[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L39)
 
 ___
 
@@ -829,7 +862,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L3)
+[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L3)
 
 ___
 
@@ -849,7 +882,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/types.ts#L12)
+[src/methods/limitOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L12)
 
 ___
 
@@ -859,7 +892,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:26](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/getOrders.ts#L26)
+[src/methods/limitOrders/getOrders.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L26)
 
 ___
 
@@ -875,7 +908,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L46)
+[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L46)
 
 ___
 
@@ -900,7 +933,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
+[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
 
 ___
 
@@ -910,7 +943,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L22)
+[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L22)
 
 ___
 
@@ -926,7 +959,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/index.ts#L95)
+[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L95)
 
 ___
 
@@ -936,7 +969,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L20)
+[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L20)
 
 ___
 
@@ -946,7 +979,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L12)
+[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L12)
 
 ___
 
@@ -963,7 +996,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L5)
+[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L5)
 
 ___
 
@@ -973,7 +1006,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L10)
+[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L10)
 
 ___
 
@@ -989,7 +1022,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/types.ts#L43)
+[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L43)
 
 ___
 
@@ -999,7 +1032,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/getOrders.ts#L15)
+[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L15)
 
 ___
 
@@ -1082,7 +1115,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:43](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/buildOrderData.ts#L43)
+[src/methods/limitOrders/helpers/buildOrderData.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L43)
 
 ___
 
@@ -1099,7 +1132,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/postOrder.ts#L16)
+[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/postOrder.ts#L16)
 
 ___
 
@@ -1116,7 +1149,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/postOrder.ts#L16)
+[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/postOrder.ts#L16)
 
 ___
 
@@ -1126,7 +1159,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L14)
+[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L14)
 
 ___
 
@@ -1142,7 +1175,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/partial.ts#L14)
+[src/sdk/partial.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L14)
 
 ___
 
@@ -1158,7 +1191,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/signOrder.ts#L5)
+[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/signOrder.ts#L5)
 
 ___
 
@@ -1174,7 +1207,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/signOrder.ts#L5)
+[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/signOrder.ts#L5)
 
 ___
 
@@ -1193,7 +1226,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
+[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
 
 ___
 
@@ -1212,7 +1245,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
+[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
 
 ___
 
@@ -1230,7 +1263,7 @@ ___
 
 #### Defined in
 
-[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/common/orders/buildOrderData.ts#L14)
+[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/common/orders/buildOrderData.ts#L14)
 
 ___
 
@@ -1248,7 +1281,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:113](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L113)
+[src/sdk/simple.ts:114](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L114)
 
 ___
 
@@ -1266,7 +1299,17 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:119](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/sdk/simple.ts#L119)
+[src/sdk/simple.ts:120](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L120)
+
+___
+
+### SimpleSDKProviderOptions
+
+Ƭ **SimpleSDKProviderOptions**: [`EthersProviderDeps`](interfaces/EthersProviderDeps.md) \| { `web3`: [`default`](classes/internal_.default.md)  } & { `account`: [`Address`](modules.md#address)  }
+
+#### Defined in
+
+[src/sdk/simple.ts:135](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L135)
 
 ___
 
@@ -1283,7 +1326,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/limitOrders/index.ts#L41)
+[src/methods/limitOrders/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L41)
 
 ___
 
@@ -1300,7 +1343,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/index.ts#L34)
+[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L34)
 
 ___
 
@@ -1316,7 +1359,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/index.ts#L11)
+[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/index.ts#L11)
 
 ___
 
@@ -1326,7 +1369,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L33)
+[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L33)
 
 ___
 
@@ -1336,7 +1379,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/swap/transaction.ts#L28)
+[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L28)
 
 ___
 
@@ -1361,7 +1404,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L37)
+[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L37)
 
 ___
 
@@ -1371,7 +1414,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/token.ts#L18)
+[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L18)
 
 ___
 
@@ -1381,7 +1424,7 @@ ___
 
 #### Defined in
 
-[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/helpers/providers/web3.ts#L22)
+[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/web3.ts#L22)
 
 ## Variables
 
@@ -1391,7 +1434,7 @@ ___
 
 #### Defined in
 
-[src/constants.ts:3](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/constants.ts#L3)
+[src/constants.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L3)
 
 ___
 
@@ -1409,7 +1452,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/1159-add-take-surplus-param/src/methods/nftOrders/helpers/misc.ts#L21)
+[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/misc.ts#L21)
 
 ## Functions
 
@@ -1533,7 +1576,7 @@ ___
 
 ### constructAxiosFetcher
 
-▸ **constructAxiosFetcher**(`axios`): [`FetcherFunction`](modules/internal_.md#fetcherfunction)
+▸ **constructAxiosFetcher**(`axios`): [`FetcherFunction`](modules.md#fetcherfunction)
 
 #### Parameters
 
@@ -1543,7 +1586,7 @@ ___
 
 #### Returns
 
-[`FetcherFunction`](modules/internal_.md#fetcherfunction)
+[`FetcherFunction`](modules.md#fetcherfunction)
 
 ___
 
@@ -1690,7 +1733,7 @@ ___
 
 ### constructFetchFetcher
 
-▸ **constructFetchFetcher**(`fetch`): [`FetcherFunction`](modules/internal_.md#fetcherfunction)
+▸ **constructFetchFetcher**(`fetch`): [`FetcherFunction`](modules.md#fetcherfunction)
 
 #### Parameters
 
@@ -1700,7 +1743,7 @@ ___
 
 #### Returns
 
-[`FetcherFunction`](modules/internal_.md#fetcherfunction)
+[`FetcherFunction`](modules.md#fetcherfunction)
 
 ___
 
@@ -1991,7 +2034,7 @@ construct SDK with methods that fetch from API and optionally with blockchain pr
 | Name | Type |
 | :------ | :------ |
 | `options` | [`SimpleOptions`](modules/internal_.md#simpleoptions) |
-| `providerOptions` | [`ProviderOptions`](modules/internal_.md#provideroptions) |
+| `providerOptions` | [`SimpleSDKProviderOptions`](modules.md#simplesdkprovideroptions) |
 
 #### Returns
 
