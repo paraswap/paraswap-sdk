@@ -98,16 +98,17 @@ import {
   constructAxiosFetcher,
   constructFetchFetcher,
   isFetcherError,
-  FetcherError,
   FetcherErrorInterface,
   EthersProviderDeps,
   constructToken,
+  FetcherError,
 } from './helpers';
 import type {
   ConstructFetchInput,
   ConstructProviderFetchInput,
   Address,
   AddressOrSymbol,
+  FetcherFunction,
   Token,
   PriceString,
   TxHash,
@@ -189,6 +190,9 @@ export {
   isFetcherError,
   isAllowance,
   constructToken,
+  // custom fetcher
+  FetcherError,
+  FetcherFunction,
 };
 
 export type {
@@ -238,7 +242,6 @@ export type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
-  FetcherError,
   FetcherErrorInterface,
 };
 

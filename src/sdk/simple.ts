@@ -32,6 +32,7 @@ import type {
   TransactionContractCallerFn,
   TxHash,
   Address,
+  FetcherFunction,
 } from '../types';
 
 import type { EthersProviderDeps } from '../helpers';
@@ -126,7 +127,8 @@ export type FetcherOptions =
   | {
       axios: AxiosRequirement;
     }
-  | { fetch: typeof fetch };
+  | { fetch: typeof fetch }
+  | { fetcher: FetcherFunction };
 
 type SimpleOptions = ConstructBaseInput & FetcherOptions;
 
@@ -134,8 +136,19 @@ export type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
   account: Address;
 };
 
+const constructFetcher = (options: FetcherOptions): FetcherFunction => {
+  if ('axios' in options) {
+    return constructAxiosFetcher(options.axios);
+  }
+  if ('fetch' in options) {
+    return constructFetchFetcher(options.fetch);
+  }
+  return options.fetcher;
+};
+
 /** @description construct SDK with methods that fetch from API and optionally with blockchain provider calling methods */
 export function constructSimpleSDK(options: SimpleOptions): SimpleFetchSDK;
+
 export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions: ProviderOptions
@@ -144,10 +157,7 @@ export function constructSimpleSDK(
   options: SimpleOptions,
   providerOptions?: ProviderOptions
 ): SimpleFetchSDK | SimpleSDK {
-  const fetcher =
-    'axios' in options
-      ? constructAxiosFetcher(options.axios)
-      : constructFetchFetcher(options.fetch);
+  const fetcher = constructFetcher(options);
 
   if (!providerOptions) {
     const config: ConstructFetchInput = {
