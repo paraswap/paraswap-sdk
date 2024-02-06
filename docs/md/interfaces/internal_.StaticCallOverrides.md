@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
+[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L51)
+[src/types.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L54)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L55)
+[src/types.ts:58](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L58)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L52)
+[src/types.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L55)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:53](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L53)
+[src/types.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L56)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L54)
+[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L57)
 
 ___
 
@@ -114,4 +114,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L56)
+[src/types.ts:59](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L59)

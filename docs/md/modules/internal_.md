@@ -365,6 +365,7 @@
 - [EventFilter](internal_.md#eventfilter)
 - [EventType](internal_.md#eventtype)
 - [Exclude](internal_.md#exclude)
+- [ExtraFetchParams](internal_.md#extrafetchparams)
 - [Fetch](internal_.md#fetch)
 - [FetcherErrorConstructorInput](internal_.md#fetchererrorconstructorinput)
 - [FetcherOptions](internal_.md#fetcheroptions)
@@ -632,7 +633,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L139)
+[src/types.ts:142](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L142)
 
 ___
 
@@ -959,7 +960,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:59](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L59)
+[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
 
 ___
 
@@ -1586,6 +1587,22 @@ node_modules/typescript/lib/lib.es5.d.ts:1566
 
 ___
 
+### ExtraFetchParams
+
+Ƭ **ExtraFetchParams**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `apiKey?` | `string` |
+
+#### Defined in
+
+[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+
+___
+
 ### Fetch
 
 Ƭ **Fetch**: typeof `fetch`
@@ -1608,11 +1625,11 @@ ___
 
 ### FetcherOptions
 
-Ƭ **FetcherOptions**: { `axios`: [`AxiosRequirement`](internal_.md#axiosrequirement)  } \| { `fetch`: typeof `fetch`  } \| { `fetcher`: [`FetcherFunction`](../modules.md#fetcherfunction)  }
+Ƭ **FetcherOptions**: { `axios`: [`AxiosRequirement`](internal_.md#axiosrequirement)  } \| { `fetch`: typeof `fetch`  } \| { `fetcher`: [`FetcherFunction`](../modules.md#fetcherfunction)  } & [`ExtraFetchParams`](internal_.md#extrafetchparams)
 
 #### Defined in
 
-[src/sdk/simple.ts:126](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L126)
+[src/sdk/simple.ts:127](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L127)
 
 ___
 
@@ -2212,6 +2229,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `account?` | [`Address`](../modules.md#address) |
+| `apiKey?` | `string` |
 | `apiURL?` | `string` |
 | `axios?` | [`AxiosRequirement`](internal_.md#axiosrequirement) |
 | `chainId?` | `number` |
@@ -2241,7 +2259,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:102](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L102)
+[src/sdk/simple.ts:103](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L103)
 
 ___
 
@@ -2461,7 +2479,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:108](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L108)
+[src/sdk/simple.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L109)
 
 ___
 
@@ -2987,7 +3005,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L92)
+[src/types.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L95)
 
 ___
 
@@ -2997,7 +3015,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:133](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L133)
+[src/sdk/simple.ts:136](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L136)
 
 ___
 
@@ -3058,7 +3076,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:86](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L86)
+[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L89)
 
 ___
 
@@ -3149,7 +3167,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L95)
+[src/sdk/simple.ts:96](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L96)
 
 ___
 
@@ -3211,7 +3229,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L89)
+[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L92)
 
 ___
 

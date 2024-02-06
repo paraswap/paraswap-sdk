@@ -1281,7 +1281,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:114](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L114)
+[src/sdk/simple.ts:115](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L115)
 
 ___
 
@@ -1299,7 +1299,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:120](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L120)
+[src/sdk/simple.ts:121](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L121)
 
 ___
 
@@ -1309,7 +1309,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:135](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L135)
+[src/sdk/simple.ts:138](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L138)
 
 ___
 
@@ -1576,13 +1576,14 @@ ___
 
 ### constructAxiosFetcher
 
-▸ **constructAxiosFetcher**(`axios`): [`FetcherFunction`](modules.md#fetcherfunction)
+▸ **constructAxiosFetcher**(`axios`, `extra?`): [`FetcherFunction`](modules.md#fetcherfunction)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `axios` | [`AxiosRequirement`](modules/internal_.md#axiosrequirement) |
+| `extra?` | [`ExtraFetchParams`](modules/internal_.md#extrafetchparams) |
 
 #### Returns
 
@@ -1733,13 +1734,14 @@ ___
 
 ### constructFetchFetcher
 
-▸ **constructFetchFetcher**(`fetch`): [`FetcherFunction`](modules.md#fetcherfunction)
+▸ **constructFetchFetcher**(`fetch`, `extra?`): [`FetcherFunction`](modules.md#fetcherfunction)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `fetch` | (`input`: [`RequestInfo`](modules/internal_.md#requestinfo), `init?`: [`RequestInit`](interfaces/internal_.RequestInit.md)) => `Promise`<[`Response`](modules/internal_.md#response)\> |
+| `extra?` | [`ExtraFetchParams`](modules/internal_.md#extrafetchparams) |
 
 #### Returns
 

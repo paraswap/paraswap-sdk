@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+[src/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L50)

@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L106)
+[src/types.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L109)
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+[src/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L50)
