@@ -50,6 +50,7 @@ type TxResponse = Web3UnpromiEvent | ContractTransaction;
 type LegacyOptions = {
   chainId?: number;
   apiURL?: string;
+  apiKey?: string;
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
   account?: Address;
@@ -71,6 +72,7 @@ export class ParaSwap {
   constructor({
     chainId = 1,
     apiURL = API_URL,
+    apiKey,
     web3Provider,
     ethersDeps,
     account,
@@ -84,9 +86,9 @@ export class ParaSwap {
     this.account = account;
 
     const fetcher = axios
-      ? constructAxiosFetcher(axios)
+      ? constructAxiosFetcher(axios, { apiKey })
       : fetch
-      ? constructFetchFetcher(fetch)
+      ? constructFetchFetcher(fetch, { apiKey })
       : null;
 
     assert(fetcher, 'at least one fetcher is needed');
@@ -94,7 +96,7 @@ export class ParaSwap {
 
     if (!web3Provider && !ethersDeps) {
       this.sdk = constructPartialSDK(
-        { fetcher, apiURL, chainId },
+        { fetcher, apiURL, apiKey, chainId },
         constructGetBalances,
         constructGetTokens,
         constructGetSpender,

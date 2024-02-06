@@ -1,14 +1,18 @@
-import type { FetcherFunction } from '../../types';
+import type { ExtraFetchParams, FetcherFunction } from '../../types';
 import type { AxiosStatic } from 'axios';
 import { FetcherError } from '../misc';
 
 export type AxiosRequirement = Pick<AxiosStatic, 'request' | 'isAxiosError'>;
 
 export const constructFetcher =
-  (axios: AxiosRequirement): FetcherFunction =>
+  (axios: AxiosRequirement, extra?: ExtraFetchParams): FetcherFunction =>
   async (params) => {
     try {
-      const { data } = await axios.request(params);
+      // adding apiKey to headers if it's provided
+      const headers = extra?.apiKey
+        ? { 'X-API-KEY': extra.apiKey, ...params.headers }
+        : params.headers;
+      const { data } = await axios.request({ ...params, headers });
 
       return data;
     } catch (error: any) {
