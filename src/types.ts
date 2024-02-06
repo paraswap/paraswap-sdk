@@ -43,6 +43,9 @@ export type FetcherFunction = <T, URL extends string = string>(
   params: FetcherGetInput<URL> | FetcherPostInput<URL>
 ) => Promise<T>;
 
+// authentication or some other params required in `fetcher`
+export type ExtraFetchParams = { apiKey?: string };
+
 export interface ConstructFetchInput extends ConstructBaseInput {
   fetcher: FetcherFunction;
 }
