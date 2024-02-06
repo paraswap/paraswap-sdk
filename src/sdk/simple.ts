@@ -33,6 +33,7 @@ import type {
   TxHash,
   Address,
   FetcherFunction,
+  ExtraFetchParams,
 } from '../types';
 
 import type { EthersProviderDeps } from '../helpers';
@@ -123,12 +124,14 @@ export type SimpleSDK = {
   nftOrders: NFTOrderHandlers<TxHash>;
 };
 
-export type FetcherOptions =
+export type FetcherOptions = (
   | {
       axios: AxiosRequirement;
     }
   | { fetch: typeof fetch }
-  | { fetcher: FetcherFunction };
+  | { fetcher: FetcherFunction }
+) &
+  ExtraFetchParams;
 
 type SimpleOptions = ConstructBaseInput & FetcherOptions;
 
@@ -138,12 +141,19 @@ export type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
 
 const constructFetcher = (options: FetcherOptions): FetcherFunction => {
   if ('axios' in options) {
-    return constructAxiosFetcher(options.axios);
+    return constructAxiosFetcher(options.axios, options);
   }
   if ('fetch' in options) {
-    return constructFetchFetcher(options.fetch);
+    return constructFetchFetcher(options.fetch, options);
   }
-  return options.fetcher;
+  return (params) => {
+    // adding apiKey to headers if it's provided
+    const headers = options?.apiKey
+      ? { 'X-API-KEY': options.apiKey, ...params.headers }
+      : params.headers;
+
+    return options.fetcher({ ...params, headers });
+  };
 };
 
 /** @description construct SDK with methods that fetch from API and optionally with blockchain provider calling methods */
