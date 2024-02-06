@@ -1,20 +1,32 @@
-import type { FetcherFunction } from '../../types';
+import type { ExtraFetchParams, FetcherFunction } from '../../types';
 import { FetcherError } from '../misc';
 
 // @TODO may not work with node-fetch
 type Fetch = typeof fetch;
 
 export const constructFetcher =
-  (fetch: Fetch): FetcherFunction =>
+  (fetch: Fetch, extra?: ExtraFetchParams): FetcherFunction =>
   async (params) => {
     try {
       const { url, method, signal } = params;
       const body = method === 'POST' ? JSON.stringify(params.data) : null;
-      const headers =
+      // Only JSON response for POST requests
+      const POSTheaders =
         method === 'POST' && body
           ? {
               'Content-Type': 'application/json',
             }
+          : undefined;
+
+      // adding apiKey to headers if it's provided
+      const apiHeaders = extra?.apiKey
+        ? { 'X-API-KEY': extra.apiKey, ...params.headers }
+        : undefined;
+
+      // all headers combined
+      const headers =
+        POSTheaders || apiHeaders || params.headers
+          ? { ...apiHeaders, ...POSTheaders, ...params.headers }
           : undefined;
 
       const response = await fetch(url, { method, body, signal, headers });
