@@ -125,6 +125,7 @@ export const constructGetRate = ({
     const search = constructSearchString({
       route: _route,
       network: chainId,
+      version,
       ...parsedOptions,
     });
 
