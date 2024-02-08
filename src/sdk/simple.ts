@@ -213,6 +213,7 @@ export function constructSimpleSDK(
 
   const config: SDKConfig<TxHash> = {
     apiURL: options.apiURL,
+    version: options.version,
     chainId: options.chainId,
     fetcher,
     contractCaller,
