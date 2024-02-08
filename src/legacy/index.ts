@@ -2,7 +2,7 @@ import type Web3 from 'web3';
 import type { SendOptions } from 'web3-eth-contract';
 import type { ContractTransaction } from '@ethersproject/contracts';
 
-import { API_URL, SwapSide } from '../constants';
+import { API_URL, DEFAULT_VERSION, SwapSide } from '../constants';
 import {
   SwapSDKMethods,
   constructBuildTx,
@@ -33,7 +33,12 @@ import type {
   BuildOptions,
   TransactionParams,
 } from '../methods/swap/transaction';
-import type { AddressOrSymbol, Token, FetcherFunction } from '../types';
+import type {
+  AddressOrSymbol,
+  Token,
+  FetcherFunction,
+  ParaSwapVersionUnion,
+} from '../types';
 import type { Allowance } from '../methods/swap/balance';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
 import { isDataWithError } from '../helpers/misc';
@@ -50,6 +55,7 @@ type TxResponse = Web3UnpromiEvent | ContractTransaction;
 type LegacyOptions = {
   chainId?: number;
   apiURL?: string;
+  version?: ParaSwapVersionUnion;
   apiKey?: string;
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
@@ -65,6 +71,7 @@ export class ParaSwap {
 
   chainId: number;
   apiURL: string;
+  version: ParaSwapVersionUnion;
   web3Provider?: Web3;
   ethersDeps?: EthersProviderDeps; // need to be a provider with signer for approve requests
   account?: Address;
@@ -72,6 +79,7 @@ export class ParaSwap {
   constructor({
     chainId = 1,
     apiURL = API_URL,
+    version = DEFAULT_VERSION,
     apiKey,
     web3Provider,
     ethersDeps,
@@ -81,6 +89,7 @@ export class ParaSwap {
   }: LegacyOptions) {
     this.chainId = chainId;
     this.apiURL = apiURL;
+    this.version = version;
     this.web3Provider = web3Provider;
     this.ethersDeps = ethersDeps;
     this.account = account;
@@ -96,7 +105,7 @@ export class ParaSwap {
 
     if (!web3Provider && !ethersDeps) {
       this.sdk = constructPartialSDK(
-        { fetcher, apiURL, apiKey, chainId },
+        { fetcher, apiURL, version, apiKey, chainId },
         constructGetBalances,
         constructGetTokens,
         constructGetSpender,
@@ -119,6 +128,7 @@ export class ParaSwap {
         fetcher,
         contractCaller,
         apiURL,
+        version,
         chainId,
       });
     }
@@ -165,6 +175,7 @@ export class ParaSwap {
       fetcher,
       contractCaller,
       apiURL,
+      version: this.version,
       chainId,
     });
 
@@ -183,6 +194,7 @@ export class ParaSwap {
       fetcher,
       contractCaller,
       apiURL,
+      version: this.version,
       chainId,
     });
 
