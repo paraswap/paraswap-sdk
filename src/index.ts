@@ -115,6 +115,7 @@ import type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
+  ParaSwapVersionUnion as ParaSwapVersion,
 } from './types';
 
 export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
@@ -243,6 +244,7 @@ export type {
   OptimalRate,
   OptionalRate,
   FetcherErrorInterface,
+  ParaSwapVersion,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
