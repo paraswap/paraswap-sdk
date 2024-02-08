@@ -64,6 +64,7 @@ export const constructBuildNFTOrderTx = ({
 }: ConstructFetchInput): BuildNFTOrdersTxFunctions => {
   const { buildTx: buildSwapTx } = constructBuildTx({
     apiURL,
+    version,
     chainId,
     fetcher,
   });

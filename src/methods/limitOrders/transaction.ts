@@ -66,6 +66,7 @@ export const constructBuildLimitOrderTx = ({
     apiURL,
     chainId,
     fetcher,
+    version,
   });
 
   const { getRate: getSwapAndLimitOrderRate } = constructGetRate({
