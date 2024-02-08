@@ -179,7 +179,7 @@ export const constructBuildTx = ({
   chainId,
   fetcher,
 }: ConstructFetchInput): BuildTxFunctions => {
-  const transactionsURL = `${apiURL}/transactions/${chainId}`;
+  const transactionsURL = `${apiURL}/transactions/${chainId}` as const;
 
   const buildTx: BuildTx = async (params, options = {}, signal) => {
     if (
@@ -210,7 +210,7 @@ export const constructBuildTx = ({
     // always pass explicit type to make sure UrlSearchParams are correct
     const search = constructSearchString<SearchStringParams>(options);
 
-    const fetchURL = `${transactionsURL}/${search}`;
+    const fetchURL = `${transactionsURL}/${search}` as const;
 
     const sanitizedParams =
       'orders' in params && params.orders.length > 0

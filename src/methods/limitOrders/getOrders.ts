@@ -15,12 +15,12 @@ import type {
   LimitOrderType,
 } from './helpers/types';
 
-interface PaginationParams {
+type PaginationParams = {
   limit?: number;
   offset?: number;
   hideSmallBalances?: boolean;
   orderBy?: 'createdAt' | 'updatedAt' | 'expiry';
-}
+};
 
 //                     get orders by `maker` or `taker`
 export type LimitOrdersUserParams = (
@@ -81,7 +81,7 @@ export const constructGetLimitOrders = ({
         : (`taker/${userParams.taker}` as const);
 
     const { offset, limit, hideSmallBalances, orderBy } = userParams;
-    const search = constructSearchString({
+    const search = constructSearchString<PaginationParams>({
       offset,
       limit,
       hideSmallBalances,

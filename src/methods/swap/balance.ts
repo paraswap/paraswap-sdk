@@ -57,10 +57,10 @@ export const constructGetBalances = ({
   chainId,
   fetcher,
 }: ConstructFetchInput): GetBalancesFunctions => {
-  const tokensUrl = `${apiURL}/users/tokens/${chainId}`;
+  const tokensUrl = `${apiURL}/users/tokens/${chainId}` as const;
 
   const getBalances: GetBalances = async (userAddress, signal) => {
-    const fetchURL = `${tokensUrl}/${userAddress}`;
+    const fetchURL = `${tokensUrl}/${userAddress}` as const;
 
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
@@ -78,7 +78,8 @@ export const constructGetBalances = ({
     tokenAddressOrSymbol,
     signal
   ) => {
-    const fetchURL = `${tokensUrl}/${userAddress}/${tokenAddressOrSymbol}`;
+    const fetchURL =
+      `${tokensUrl}/${userAddress}/${tokenAddressOrSymbol}` as const;
 
     const data = await fetcher<TokenApiResponse>({
       url: fetchURL,
