@@ -173,6 +173,7 @@ export function constructSimpleSDK(
     const config: ConstructFetchInput = {
       apiURL: options.apiURL,
       chainId: options.chainId,
+      version: options.version,
       fetcher,
     };
 
