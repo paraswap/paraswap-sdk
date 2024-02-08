@@ -1,6 +1,6 @@
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, ParaSwapVersionUnion } from '../../types';
 import { constructSearchString } from '../../helpers/misc';
-import { API_URL } from '../../constants';
+import { API_URL, DEFAULT_VERSION } from '../../constants';
 
 type Adapter = {
   adapter: string;
@@ -39,10 +39,12 @@ export type GetAdaptersFunctions = {
 type SearchStringParams = {
   network: number;
   namesOnly?: boolean;
+  version?: ParaSwapVersionUnion;
 };
 
 export const constructGetAdapters = ({
   apiURL = API_URL,
+  version = DEFAULT_VERSION,
   chainId,
   fetcher,
 }: ConstructFetchInput): GetAdaptersFunctions => {
@@ -69,13 +71,14 @@ export const constructGetAdapters = ({
     // always pass explicit type to make sure UrlSearchParams are correct
     const query = constructSearchString<SearchStringParams>({
       network: chainId,
+      version,
       namesOnly:
         !!options && 'namesOnly' in options ? options.namesOnly : undefined,
     });
 
     const fetchURL = `${apiURL}/adapters${
       options?.type === 'list' ? '/list' : ''
-    }${query}`;
+    }${query}` as const;
 
     const data = await fetcher<
       AdaptersAsObject | AdaptersAsList | AdaptersAsStrings
