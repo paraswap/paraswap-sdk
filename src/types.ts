@@ -29,6 +29,8 @@ type EnumerateLiteral<T extends Record<string, any>> = {
 // keeping version as string allows for more flexibility
 // `alpha`,`beta` and other non-numbers can be used
 // allowing enum only forces users to import and pass that enum
+
+/** @description Passed to version API enpoints as ?version: to /prices and /adapters */
 export type ParaSwapVersionUnion = EnumerateLiteral<typeof ParaSwapVersion>;
 
 export interface ConstructBaseInput {
