@@ -1,4 +1,9 @@
-import { SwapSide, ContractMethod, API_URL } from '../../constants';
+import {
+  SwapSide,
+  ContractMethod,
+  API_URL,
+  DEFAULT_VERSION,
+} from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type {
   ConstructFetchInput,
@@ -79,10 +84,11 @@ type SearchStringParams = CommonGetRateResult & {
 
 export const constructGetRate = ({
   apiURL = API_URL,
+  version = DEFAULT_VERSION,
   chainId,
   fetcher,
 }: ConstructFetchInput): GetRateFunctions => {
-  const pricesUrl = `${apiURL}/prices`;
+  const pricesUrl = `${apiURL}/prices` as const;
 
   const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
     const parsedOptions = commonGetRateOptionsGetter(rest);
@@ -92,10 +98,11 @@ export const constructGetRate = ({
       srcToken,
       destToken,
       network: chainId,
+      version,
       ...parsedOptions,
     });
 
-    const fetchURL = `${pricesUrl}/${search}`;
+    const fetchURL = `${pricesUrl}/${search}` as const;
 
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
@@ -121,7 +128,7 @@ export const constructGetRate = ({
       ...parsedOptions,
     });
 
-    const fetchURL = `${pricesUrl}/${search}`;
+    const fetchURL = `${pricesUrl}/${search}` as const;
 
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
