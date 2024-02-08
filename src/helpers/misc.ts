@@ -76,8 +76,11 @@ export const objectToFilledEntries = <T extends Record<string, unknown>>(
       .map(([key, value]) => [key, String(value)])
   );
 };
+
 //                                                            not arrays or mappings
-export const constructSearchString = <U extends Record<string, Primitive>>(
+export const constructSearchString = <
+  U extends Record<string, Exclude<Primitive, symbol>>
+>(
   queryOptions: U
 ): `?${string}` | '' => {
   const queryEntries = objectToFilledEntries(queryOptions);
