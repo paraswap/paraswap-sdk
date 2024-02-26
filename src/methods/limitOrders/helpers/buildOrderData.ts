@@ -69,7 +69,7 @@ export function buildOrderData({
   // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS,
   // if given, overrides the above choices made based on `taker`
-  contractTaker = ZERO_ADDRESS,
+  contractTaker,
 }: BuildOrderDataInput): SignableOrderData {
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
