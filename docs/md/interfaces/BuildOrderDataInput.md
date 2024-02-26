@@ -8,6 +8,7 @@
 
 - [AugustusAddress](BuildOrderDataInput.md#augustusaddress)
 - [chainId](BuildOrderDataInput.md#chainid)
+- [contractTaker](BuildOrderDataInput.md#contracttaker)
 - [expiry](BuildOrderDataInput.md#expiry)
 - [maker](BuildOrderDataInput.md#maker)
 - [makerAmount](BuildOrderDataInput.md#makeramount)
@@ -26,7 +27,7 @@
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L34)
+[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
 
 ___
 
@@ -37,6 +38,20 @@ ___
 #### Defined in
 
 [src/methods/limitOrders/helpers/buildOrderData.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L22)
+
+___
+
+### contractTaker
+
+• `Optional` **contractTaker**: `string`
+
+**`Description`**
+
+contract executor (Augustus or similar) that is allowed to execute the order, gois in Order.taker
+
+#### Defined in
+
+[src/methods/limitOrders/helpers/buildOrderData.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L35)
 
 ___
 
@@ -93,6 +108,10 @@ ___
 ### taker
 
 • `Optional` **taker**: `string`
+
+**`Description`**
+
+actual user taker which will go into nonceAndMeta
 
 #### Defined in
 

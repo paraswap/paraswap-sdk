@@ -10,7 +10,6 @@
 
 ### Enumerations
 
-- [ContractMethod](enums/ContractMethod.md)
 - [SwapSide](enums/SwapSide.md)
 
 ### Classes
@@ -58,6 +57,7 @@
 - [BuildTxInput](modules.md#buildtxinput)
 - [CancelLimitOrderFunctions](modules.md#cancellimitorderfunctions)
 - [CancelNFTOrderFunctions](modules.md#cancelnftorderfunctions)
+- [ContractMethod](modules.md#contractmethod)
 - [FetcherFunction](modules.md#fetcherfunction)
 - [GetAdaptersFunctions](modules.md#getadaptersfunctions)
 - [GetBalancesFunctions](modules.md#getbalancesfunctions)
@@ -117,6 +117,7 @@
 
 - [API\_URL](modules.md#api_url)
 - [AssetType](modules.md#assettype)
+- [ContractMethod](modules.md#contractmethod-1)
 
 ### Functions
 
@@ -540,6 +541,18 @@ ___
 #### Defined in
 
 [src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L14)
+
+___
+
+### ContractMethod
+
+Ƭ **ContractMethod**: [`ContractMethodV5`](enums/internal_.ContractMethodV5.md) \| [`ContractMethodV6`](enums/internal_.ContractMethodV6.md)
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:44
+
+node_modules/@paraswap/core/build/constants.d.ts:81
 
 ___
 
@@ -1038,41 +1051,11 @@ ___
 
 ### OptimalRate
 
-Ƭ **OptimalRate**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `bestRoute` | [`OptimalRoute`](modules/internal_.md#optimalroute)[] |
-| `blockNumber` | `number` |
-| `contractAddress` | [`Address`](modules/internal_.md#address) |
-| `contractMethod` | `string` |
-| `destAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `destDecimals` | `number` |
-| `destToken` | [`Address`](modules/internal_.md#address) |
-| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `gasCost` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `gasCostL1Wei?` | `string` |
-| `gasCostUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `hmac` | `string` |
-| `maxImpact?` | `number` |
-| `maxImpactReached?` | `boolean` |
-| `maxUSDImpact?` | `number` |
-| `network` | `number` |
-| `others?` | [`OptionalRate`](modules.md#optionalrate)[] |
-| `partner?` | `string` |
-| `partnerFee` | `number` |
-| `side` | [`SwapSide`](enums/SwapSide.md) |
-| `srcAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `srcDecimals` | `number` |
-| `srcToken` | [`Address`](modules/internal_.md#address) |
-| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
-| `tokenTransferProxy` | [`Address`](modules/internal_.md#address) |
+Ƭ **OptimalRate**: [`OptimalRateV5`](modules/internal_.md#optimalratev5) \| [`OptimalRateV6`](modules/internal_.md#optimalratev6)
 
 #### Defined in
 
-node_modules/@paraswap/core/build/types.d.ts:36
+node_modules/@paraswap/core/build/types.d.ts:70
 
 ___
 
@@ -1115,7 +1098,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L43)
+[src/methods/limitOrders/helpers/buildOrderData.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L46)
 
 ___
 
@@ -1245,7 +1228,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
+[src/methods/limitOrders/helpers/buildOrderData.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L40)
 
 ___
 
@@ -1453,6 +1436,58 @@ ___
 #### Defined in
 
 [src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/misc.ts#L21)
+
+___
+
+### ContractMethod
+
+• `Const` **ContractMethod**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `buy` | [`buy`](enums/internal_.ContractMethodV5.md#buy) |
+| `buyOnUniswap` | [`buyOnUniswap`](enums/internal_.ContractMethodV5.md#buyonuniswap) |
+| `buyOnUniswapFork` | [`buyOnUniswapFork`](enums/internal_.ContractMethodV5.md#buyonuniswapfork) |
+| `buyOnUniswapV2Fork` | [`buyOnUniswapV2Fork`](enums/internal_.ContractMethodV5.md#buyonuniswapv2fork) |
+| `directBalancerV2GivenInSwap` | [`directBalancerV2GivenInSwap`](enums/internal_.ContractMethodV5.md#directbalancerv2giveninswap) |
+| `directBalancerV2GivenOutSwap` | [`directBalancerV2GivenOutSwap`](enums/internal_.ContractMethodV5.md#directbalancerv2givenoutswap) |
+| `directCurveV1Swap` | [`directCurveV1Swap`](enums/internal_.ContractMethodV5.md#directcurvev1swap) |
+| `directCurveV2Swap` | [`directCurveV2Swap`](enums/internal_.ContractMethodV5.md#directcurvev2swap) |
+| `directUniV3Buy` | [`directUniV3Buy`](enums/internal_.ContractMethodV5.md#directuniv3buy) |
+| `directUniV3Swap` | [`directUniV3Swap`](enums/internal_.ContractMethodV5.md#directuniv3swap) |
+| `megaSwap` | [`megaSwap`](enums/internal_.ContractMethodV5.md#megaswap) |
+| `multiSwap` | [`multiSwap`](enums/internal_.ContractMethodV5.md#multiswap) |
+| `protectedMegaSwap` | [`protectedMegaSwap`](enums/internal_.ContractMethodV5.md#protectedmegaswap) |
+| `protectedMultiSwap` | [`protectedMultiSwap`](enums/internal_.ContractMethodV5.md#protectedmultiswap) |
+| `protectedSimpleBuy` | [`protectedSimpleBuy`](enums/internal_.ContractMethodV5.md#protectedsimplebuy) |
+| `protectedSimpleSwap` | [`protectedSimpleSwap`](enums/internal_.ContractMethodV5.md#protectedsimpleswap) |
+| `simpleBuy` | [`simpleBuy`](enums/internal_.ContractMethodV5.md#simplebuy) |
+| `simpleSwap` | [`simpleSwap`](enums/internal_.ContractMethodV5.md#simpleswap) |
+| `swapExactAmountIn` | [`swapExactAmountIn`](enums/internal_.ContractMethodV6.md#swapexactamountin) |
+| `swapExactAmountInOnBalancerV2` | [`swapExactAmountInOnBalancerV2`](enums/internal_.ContractMethodV6.md#swapexactamountinonbalancerv2) |
+| `swapExactAmountInOnCurveV1` | [`swapExactAmountInOnCurveV1`](enums/internal_.ContractMethodV6.md#swapexactamountinoncurvev1) |
+| `swapExactAmountInOnCurveV2` | [`swapExactAmountInOnCurveV2`](enums/internal_.ContractMethodV6.md#swapexactamountinoncurvev2) |
+| `swapExactAmountInOnUniswapV2` | [`swapExactAmountInOnUniswapV2`](enums/internal_.ContractMethodV6.md#swapexactamountinonuniswapv2) |
+| `swapExactAmountInOnUniswapV3` | [`swapExactAmountInOnUniswapV3`](enums/internal_.ContractMethodV6.md#swapexactamountinonuniswapv3) |
+| `swapExactAmountInOutOnAugustusRFQTryBatchFill` | [`swapExactAmountInOutOnAugustusRFQTryBatchFill`](enums/internal_.ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill) |
+| `swapExactAmountInOutOnMakerPSM` | [`swapExactAmountInOutOnMakerPSM`](enums/internal_.ContractMethodV6.md#swapexactamountinoutonmakerpsm) |
+| `swapExactAmountOut` | [`swapExactAmountOut`](enums/internal_.ContractMethodV6.md#swapexactamountout) |
+| `swapExactAmountOutOnBalancerV2` | [`swapExactAmountOutOnBalancerV2`](enums/internal_.ContractMethodV6.md#swapexactamountoutonbalancerv2) |
+| `swapExactAmountOutOnUniswapV2` | [`swapExactAmountOutOnUniswapV2`](enums/internal_.ContractMethodV6.md#swapexactamountoutonuniswapv2) |
+| `swapExactAmountOutOnUniswapV3` | [`swapExactAmountOutOnUniswapV3`](enums/internal_.ContractMethodV6.md#swapexactamountoutonuniswapv3) |
+| `swapOnUniswap` | [`swapOnUniswap`](enums/internal_.ContractMethodV5.md#swaponuniswap) |
+| `swapOnUniswapFork` | [`swapOnUniswapFork`](enums/internal_.ContractMethodV5.md#swaponuniswapfork) |
+| `swapOnUniswapV2Fork` | [`swapOnUniswapV2Fork`](enums/internal_.ContractMethodV5.md#swaponuniswapv2fork) |
+| `swapOnZeroXv2` | [`swapOnZeroXv2`](enums/internal_.ContractMethodV5.md#swaponzeroxv2) |
+| `swapOnZeroXv4` | [`swapOnZeroXv4`](enums/internal_.ContractMethodV5.md#swaponzeroxv4) |
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:44
+
+node_modules/@paraswap/core/build/constants.d.ts:81
 
 ## Functions
 
