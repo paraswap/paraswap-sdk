@@ -28,9 +28,12 @@ export interface BuildOrderDataInput {
   makerAmount: string;
   takerAmount: string;
   maker: Address;
-  // OrderData.taker must be Augustus for p2p limitOrders to involve swap through Augustus
-  // this is the actual user taker which will go into nonceAndMeta
+  // OrderData.taker must be Augustus (or other Executor) for p2p limitOrders to involve swap through Augustus
+  /** @description actual user taker which will go into nonceAndMeta */
   taker?: Address;
+  /** @description contract executor (Augustus or similar) that is allowed to execute the order, gois in Order.taker */
+  contractTaker?: Address;
+
   AugustusAddress: Address;
 }
 
@@ -65,6 +68,8 @@ export function buildOrderData({
   // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
   // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS,
+  // if given, overrides the above choices made based on `taker`
+  contractTaker,
 }: BuildOrderDataInput): SignableOrderData {
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
@@ -75,7 +80,9 @@ export function buildOrderData({
 
   // no takerInNonce -> not p2p order -> allow anyone to fill (not only Augustus)
   // otherwise p2p order -> fill through Augustus only
-  const taker = takerInNonce === ZERO_ADDRESS ? ZERO_ADDRESS : AugustusAddress;
+  const taker =
+    contractTaker ||
+    (takerInNonce === ZERO_ADDRESS ? ZERO_ADDRESS : AugustusAddress);
 
   const order: OrderData = {
     nonceAndMeta,
