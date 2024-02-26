@@ -15,7 +15,49 @@
 
 ### Enumerations
 
+- [ContractMethodV5](../enums/internal_.ContractMethodV5.md)
+- [ContractMethodV6](../enums/internal_.ContractMethodV6.md)
 - [PricingMethod](../enums/internal_.PricingMethod.md)
+
+### Enumeration Members
+
+- [V5](internal_.md#v5)
+- [V6](internal_.md#v6)
+- [buy](internal_.md#buy)
+- [buyOnUniswap](internal_.md#buyonuniswap)
+- [buyOnUniswapFork](internal_.md#buyonuniswapfork)
+- [buyOnUniswapV2Fork](internal_.md#buyonuniswapv2fork)
+- [directBalancerV2GivenInSwap](internal_.md#directbalancerv2giveninswap)
+- [directBalancerV2GivenOutSwap](internal_.md#directbalancerv2givenoutswap)
+- [directCurveV1Swap](internal_.md#directcurvev1swap)
+- [directCurveV2Swap](internal_.md#directcurvev2swap)
+- [directUniV3Buy](internal_.md#directuniv3buy)
+- [directUniV3Swap](internal_.md#directuniv3swap)
+- [megaSwap](internal_.md#megaswap)
+- [multiSwap](internal_.md#multiswap)
+- [protectedMegaSwap](internal_.md#protectedmegaswap)
+- [protectedMultiSwap](internal_.md#protectedmultiswap)
+- [protectedSimpleBuy](internal_.md#protectedsimplebuy)
+- [protectedSimpleSwap](internal_.md#protectedsimpleswap)
+- [simpleBuy](internal_.md#simplebuy)
+- [simpleSwap](internal_.md#simpleswap)
+- [swapExactAmountIn](internal_.md#swapexactamountin)
+- [swapExactAmountInOnBalancerV2](internal_.md#swapexactamountinonbalancerv2)
+- [swapExactAmountInOnCurveV1](internal_.md#swapexactamountinoncurvev1)
+- [swapExactAmountInOnCurveV2](internal_.md#swapexactamountinoncurvev2)
+- [swapExactAmountInOnUniswapV2](internal_.md#swapexactamountinonuniswapv2)
+- [swapExactAmountInOnUniswapV3](internal_.md#swapexactamountinonuniswapv3)
+- [swapExactAmountInOutOnAugustusRFQTryBatchFill](internal_.md#swapexactamountinoutonaugustusrfqtrybatchfill)
+- [swapExactAmountInOutOnMakerPSM](internal_.md#swapexactamountinoutonmakerpsm)
+- [swapExactAmountOut](internal_.md#swapexactamountout)
+- [swapExactAmountOutOnBalancerV2](internal_.md#swapexactamountoutonbalancerv2)
+- [swapExactAmountOutOnUniswapV2](internal_.md#swapexactamountoutonuniswapv2)
+- [swapExactAmountOutOnUniswapV3](internal_.md#swapexactamountoutonuniswapv3)
+- [swapOnUniswap](internal_.md#swaponuniswap)
+- [swapOnUniswapFork](internal_.md#swaponuniswapfork)
+- [swapOnUniswapV2Fork](internal_.md#swaponuniswapv2fork)
+- [swapOnZeroXv2](internal_.md#swaponzeroxv2)
+- [swapOnZeroXv4](internal_.md#swaponzeroxv4)
 
 ### Classes
 
@@ -329,6 +371,7 @@
 - [AxiosRequestHeaders](internal_.md#axiosrequestheaders)
 - [AxiosRequirement](internal_.md#axiosrequirement)
 - [AxiosResponseHeaders](internal_.md#axiosresponseheaders)
+- [BaseRate](internal_.md#baserate)
 - [BigIntAsString](internal_.md#bigintasstring)
 - [BigNumberish](internal_.md#bignumberish)
 - [BlockNumber](internal_.md#blocknumber)
@@ -419,6 +462,8 @@
 - [Networkish](internal_.md#networkish)
 - [NumberAsString](internal_.md#numberasstring)
 - [Omit](internal_.md#omit)
+- [OptimalRateV5](internal_.md#optimalratev5)
+- [OptimalRateV6](internal_.md#optimalratev6)
 - [OptimalRoute](internal_.md#optimalroute)
 - [OptimalSwap](internal_.md#optimalswap)
 - [OptimalSwapExchange](internal_.md#optimalswapexchange)
@@ -495,6 +540,376 @@
 
 - [Error](internal_.md#error)
 - [Object](internal_.md#object)
+
+## Enumeration Members
+
+### V5
+
+• **V5**: ``"5"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/types.d.ts:72
+
+___
+
+### V6
+
+• **V6**: ``"6"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/types.d.ts:73
+
+___
+
+### buy
+
+• **buy**: ``"buy"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:22
+
+___
+
+### buyOnUniswap
+
+• **buyOnUniswap**: ``"buyOnUniswap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:7
+
+___
+
+### buyOnUniswapFork
+
+• **buyOnUniswapFork**: ``"buyOnUniswapFork"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:9
+
+___
+
+### buyOnUniswapV2Fork
+
+• **buyOnUniswapV2Fork**: ``"buyOnUniswapV2Fork"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:11
+
+___
+
+### directBalancerV2GivenInSwap
+
+• **directBalancerV2GivenInSwap**: ``"directBalancerV2GivenInSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:27
+
+___
+
+### directBalancerV2GivenOutSwap
+
+• **directBalancerV2GivenOutSwap**: ``"directBalancerV2GivenOutSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:28
+
+___
+
+### directCurveV1Swap
+
+• **directCurveV1Swap**: ``"directCurveV1Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:25
+
+___
+
+### directCurveV2Swap
+
+• **directCurveV2Swap**: ``"directCurveV2Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:26
+
+___
+
+### directUniV3Buy
+
+• **directUniV3Buy**: ``"directUniV3Buy"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:24
+
+___
+
+### directUniV3Swap
+
+• **directUniV3Swap**: ``"directUniV3Swap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:23
+
+___
+
+### megaSwap
+
+• **megaSwap**: ``"megaSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:15
+
+___
+
+### multiSwap
+
+• **multiSwap**: ``"multiSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:14
+
+___
+
+### protectedMegaSwap
+
+• **protectedMegaSwap**: ``"protectedMegaSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:17
+
+___
+
+### protectedMultiSwap
+
+• **protectedMultiSwap**: ``"protectedMultiSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:16
+
+___
+
+### protectedSimpleBuy
+
+• **protectedSimpleBuy**: ``"protectedSimpleBuy"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:19
+
+___
+
+### protectedSimpleSwap
+
+• **protectedSimpleSwap**: ``"protectedSimpleSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:18
+
+___
+
+### simpleBuy
+
+• **simpleBuy**: ``"simpleBuy"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:12
+
+___
+
+### simpleSwap
+
+• **simpleSwap**: ``"simpleSwap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:13
+
+___
+
+### swapExactAmountIn
+
+• **swapExactAmountIn**: ``"swapExactAmountIn"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:31
+
+___
+
+### swapExactAmountInOnBalancerV2
+
+• **swapExactAmountInOnBalancerV2**: ``"swapExactAmountInOnBalancerV2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:37
+
+___
+
+### swapExactAmountInOnCurveV1
+
+• **swapExactAmountInOnCurveV1**: ``"swapExactAmountInOnCurveV1"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:39
+
+___
+
+### swapExactAmountInOnCurveV2
+
+• **swapExactAmountInOnCurveV2**: ``"swapExactAmountInOnCurveV2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:40
+
+___
+
+### swapExactAmountInOnUniswapV2
+
+• **swapExactAmountInOnUniswapV2**: ``"swapExactAmountInOnUniswapV2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:33
+
+___
+
+### swapExactAmountInOnUniswapV3
+
+• **swapExactAmountInOnUniswapV3**: ``"swapExactAmountInOnUniswapV3"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:35
+
+___
+
+### swapExactAmountInOutOnAugustusRFQTryBatchFill
+
+• **swapExactAmountInOutOnAugustusRFQTryBatchFill**: ``"swapExactAmountInOutOnAugustusRFQTryBatchFill"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:41
+
+___
+
+### swapExactAmountInOutOnMakerPSM
+
+• **swapExactAmountInOutOnMakerPSM**: ``"swapExactAmountInOutOnMakerPSM"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:42
+
+___
+
+### swapExactAmountOut
+
+• **swapExactAmountOut**: ``"swapExactAmountOut"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:32
+
+___
+
+### swapExactAmountOutOnBalancerV2
+
+• **swapExactAmountOutOnBalancerV2**: ``"swapExactAmountOutOnBalancerV2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:38
+
+___
+
+### swapExactAmountOutOnUniswapV2
+
+• **swapExactAmountOutOnUniswapV2**: ``"swapExactAmountOutOnUniswapV2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:34
+
+___
+
+### swapExactAmountOutOnUniswapV3
+
+• **swapExactAmountOutOnUniswapV3**: ``"swapExactAmountOutOnUniswapV3"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:36
+
+___
+
+### swapOnUniswap
+
+• **swapOnUniswap**: ``"swapOnUniswap"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:6
+
+___
+
+### swapOnUniswapFork
+
+• **swapOnUniswapFork**: ``"swapOnUniswapFork"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:8
+
+___
+
+### swapOnUniswapV2Fork
+
+• **swapOnUniswapV2Fork**: ``"swapOnUniswapV2Fork"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:10
+
+___
+
+### swapOnZeroXv2
+
+• **swapOnZeroXv2**: ``"swapOnZeroXv2"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:20
+
+___
+
+### swapOnZeroXv4
+
+• **swapOnZeroXv4**: ``"swapOnZeroXv4"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:21
 
 ## Type Aliases
 
@@ -911,6 +1326,44 @@ ___
 #### Defined in
 
 node_modules/axios/index.d.ts:77
+
+___
+
+### BaseRate
+
+Ƭ **BaseRate**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `bestRoute` | [`OptimalRoute`](internal_.md#optimalroute)[] |
+| `blockNumber` | `number` |
+| `contractMethod` | `string` |
+| `destAmount` | [`NumberAsString`](internal_.md#numberasstring) |
+| `destDecimals` | `number` |
+| `destToken` | [`Address`](internal_.md#address) |
+| `destUSD` | [`NumberAsString`](internal_.md#numberasstring) |
+| `gasCost` | [`NumberAsString`](internal_.md#numberasstring) |
+| `gasCostL1Wei?` | `string` |
+| `gasCostUSD` | [`NumberAsString`](internal_.md#numberasstring) |
+| `hmac` | `string` |
+| `maxImpact?` | `number` |
+| `maxImpactReached?` | `boolean` |
+| `maxUSDImpact?` | `number` |
+| `network` | `number` |
+| `others?` | [`OptionalRate`](../modules.md#optionalrate)[] |
+| `partner?` | `string` |
+| `partnerFee` | `number` |
+| `side` | [`SwapSide`](../enums/SwapSide.md) |
+| `srcAmount` | [`NumberAsString`](internal_.md#numberasstring) |
+| `srcDecimals` | `number` |
+| `srcToken` | [`Address`](internal_.md#address) |
+| `srcUSD` | [`NumberAsString`](internal_.md#numberasstring) |
+
+#### Defined in
+
+node_modules/@paraswap/core/build/types.d.ts:36
 
 ___
 
@@ -2541,6 +2994,26 @@ node_modules/typescript/lib/lib.es5.d.ts:1576
 
 ___
 
+### OptimalRateV5
+
+Ƭ **OptimalRateV5**: [`BaseRate`](internal_.md#baserate) & { `contractAddress`: [`Address`](internal_.md#address) ; `tokenTransferProxy`: [`Address`](internal_.md#address) ; `version`: [`V5`](internal_.md#v5)  }
+
+#### Defined in
+
+node_modules/@paraswap/core/build/types.d.ts:61
+
+___
+
+### OptimalRateV6
+
+Ƭ **OptimalRateV6**: [`BaseRate`](internal_.md#baserate) & { `contractAddress`: [`Address`](internal_.md#address) ; `version`: [`V6`](internal_.md#v6)  }
+
+#### Defined in
+
+node_modules/@paraswap/core/build/types.d.ts:66
+
+___
+
 ### OptimalRoute
 
 Ƭ **OptimalRoute**: `Object`
@@ -2763,11 +3236,11 @@ ___
 | `adapterVersion?` | `string` |
 | `destTokenDexTransferFee?` | `number` |
 | `destTokenTransferFee?` | `number` |
-| `excludeContractMethods?` | [`ContractMethod`](../enums/ContractMethod.md)[] |
+| `excludeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] |
 | `excludeDEXS?` | `string`[] |
 | `excludePools?` | `string`[] |
 | `excludePricingMethods?` | [`PricingMethod`](../enums/internal_.PricingMethod.md)[] |
-| `includeContractMethods?` | [`ContractMethod`](../enums/ContractMethod.md)[] |
+| `includeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] |
 | `includeDEXS?` | `string`[] |
 | `maxImpact?` | `number` |
 | `maxUSDImpact?` | `number` |
