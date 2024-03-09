@@ -10,6 +10,7 @@ import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrd
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
 import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
 import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
+import { API_URL, DEFAULT_VERSION } from '../constants';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -83,7 +84,7 @@ export const constructPartialSDK = <
 >(
   config: Config, // config is auto-inferred to cover the used functions
   ...funcs: Funcs
-): PartialSDKResult<Config, Funcs> => {
+): PartialSDKResult<Config, Funcs> & Required<Config> => {
   const sdkFuncs = funcs.reduce<Partial<IntersectionOfReturns<Funcs>>>(
     (accum, func) => {
       const sdkSlice = func(config);
@@ -92,5 +93,12 @@ export const constructPartialSDK = <
     {}
   );
 
-  return sdkFuncs as PartialSDKResult<Config, Funcs>;
+  const sdk = {
+    ...sdkFuncs,
+    apiURL: config.apiURL ?? API_URL,
+    version: config.version ?? DEFAULT_VERSION,
+    chainId: config.chainId,
+  } as PartialSDKResult<Config, Funcs> & Required<Config>;
+
+  return sdk;
 };
