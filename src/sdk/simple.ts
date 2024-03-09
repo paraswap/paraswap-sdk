@@ -92,6 +92,7 @@ import {
 
 import { constructSwapSDK } from '../methods/swap';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
+import { API_URL, DEFAULT_VERSION } from '../constants';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -116,13 +117,13 @@ export type SimpleFetchSDK = {
   swap: SwapFetchMethods;
   limitOrders: LimitOrdersFetchMethods;
   nftOrders: NFTOrdersFetchMethods;
-};
+} & Required<ConstructBaseInput>;
 
 export type SimpleSDK = {
   swap: SwapSDKMethods<TxHash>;
   limitOrders: LimitOrderHandlers<TxHash>;
   nftOrders: NFTOrderHandlers<TxHash>;
-};
+} & Required<ConstructBaseInput>;
 
 export type FetcherOptions = (
   | {
@@ -206,7 +207,14 @@ export function constructSimpleSDK(
       constructBuildNFTOrderTx
     );
 
-    return { swap, limitOrders, nftOrders };
+    return {
+      swap,
+      limitOrders,
+      nftOrders,
+      apiURL: options.apiURL ?? API_URL,
+      chainId: options.chainId,
+      version: options.version ?? DEFAULT_VERSION,
+    };
   }
 
   const contractCaller = constructSimpleContractCaller(providerOptions);
@@ -227,7 +235,14 @@ export function constructSimpleSDK(
   const nftOrders: NFTOrderHandlers<TxHash> =
     constructAllNFTOrdersHandlers<TxHash>(config);
 
-  return { swap, limitOrders, nftOrders };
+  return {
+    swap,
+    limitOrders,
+    nftOrders,
+    apiURL: options.apiURL ?? API_URL,
+    chainId: options.chainId,
+    version: options.version ?? DEFAULT_VERSION,
+  };
 }
 
 function constructSimpleContractCaller(
