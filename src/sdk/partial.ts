@@ -11,6 +11,7 @@ import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/
 import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
 import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
 import { API_URL, DEFAULT_VERSION } from '../constants';
+import { FillOrderDirectlyFunctions } from '../methods/limitOrders/fillOrderDirectly';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -44,6 +45,7 @@ type InferWithTxResponse<
           // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
           ApproveTokenFunctions<TxResponse>,
           CancelLimitOrderFunctions<TxResponse>,
+          FillOrderDirectlyFunctions<TxResponse>,
           ApproveTokenForLimitOrderFunctions<TxResponse>,
           CancelNFTOrderFunctions<TxResponse>,
           ApproveTokenForNFTOrderFunctions<TxResponse>
