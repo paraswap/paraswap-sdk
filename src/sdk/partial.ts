@@ -84,7 +84,7 @@ export const constructPartialSDK = <
 >(
   config: Config, // config is auto-inferred to cover the used functions
   ...funcs: Funcs
-): PartialSDKResult<Config, Funcs> & Required<Config> => {
+): PartialSDKResult<Config, Funcs> & Required<ConstructBaseInput> => {
   const sdkFuncs = funcs.reduce<Partial<IntersectionOfReturns<Funcs>>>(
     (accum, func) => {
       const sdkSlice = func(config);
@@ -98,7 +98,7 @@ export const constructPartialSDK = <
     apiURL: config.apiURL ?? API_URL,
     version: config.version ?? DEFAULT_VERSION,
     chainId: config.chainId,
-  } as PartialSDKResult<Config, Funcs> & Required<Config>;
+  } as PartialSDKResult<Config, Funcs> & Required<ConstructBaseInput>;
 
   return sdk;
 };
