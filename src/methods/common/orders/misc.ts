@@ -1,3 +1,5 @@
+import type { LimitOrderFromApi } from '../../limitOrders/helpers/types';
+import { ZERO_ADDRESS } from './buildOrderData';
 import type { OrderType } from './types';
 
 type GetBaseFetchUrlInput = {
@@ -68,4 +70,17 @@ export function baseFetchUrlGetterFactory<Kind extends OrderKind>(
 
     return urlGetter;
   };
+}
+
+// orders with taker = EOA address
+// that can't be filled through AugustusSwapper,
+// only through AugustusRFQ
+export function isOrderFillableDirectlyOnRFQOnly(
+  order: Pick<LimitOrderFromApi, 'taker' | 'takerFromMeta'>
+): boolean {
+  // with 0x taker fillable by anyone
+  if (order.taker === ZERO_ADDRESS) return false;
+
+  // same intended EOA taker and msg.sender taker
+  return order.taker.toLowerCase() === order.takerFromMeta.toLowerCase();
 }
