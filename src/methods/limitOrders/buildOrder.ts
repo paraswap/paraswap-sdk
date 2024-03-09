@@ -1,3 +1,4 @@
+import { DEFAULT_VERSION } from '../../constants';
 import type { ConstructFetchInput } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
@@ -9,7 +10,7 @@ export * from './helpers/buildOrderData';
 
 export type BuildLimitOrderInput = Omit<
   BuildOrderDataInput,
-  'chainId' | 'verifyingContract' | 'AugustusAddress'
+  'chainId' | 'verifyingContract' | 'AugustusAddress' | 'AppVersion'
 >;
 
 type BuildLimitOrder = (
@@ -38,11 +39,14 @@ export const constructBuildLimitOrder = (
     const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
       await getContracts(signal);
 
+    const AppVersion = options.version ?? DEFAULT_VERSION;
+
     return buildOrderData({
       ...buildLimitOrderParams,
       chainId,
       verifyingContract,
       AugustusAddress,
+      AppVersion,
     });
   };
 

@@ -1,5 +1,5 @@
 import { getRandomInt } from '../../../helpers/misc';
-import type { Address } from '../../../types';
+import type { Address, ParaSwapVersionUnion } from '../../../types';
 import {
   Domain,
   name,
@@ -35,6 +35,7 @@ export interface BuildOrderDataInput {
   contractTaker?: Address;
 
   AugustusAddress: Address;
+  AppVersion: ParaSwapVersionUnion;
 }
 
 export type SignableOrderData = {
@@ -70,6 +71,8 @@ export function buildOrderData({
   taker: takerInNonce = ZERO_ADDRESS,
   // if given, overrides the above choices made based on `taker`
   contractTaker,
+  // for v6 only support taker=0x for OTC orders
+  AppVersion,
 }: BuildOrderDataInput): SignableOrderData {
   // first 160 bits is taker address (for p2p orders),
   // or 0 for limitOrders, so that anyone can be the taker of the Order
@@ -82,7 +85,11 @@ export function buildOrderData({
   // otherwise p2p order -> fill through Augustus only
   const taker =
     contractTaker ||
-    (takerInNonce === ZERO_ADDRESS ? ZERO_ADDRESS : AugustusAddress);
+    (AppVersion === '6' // limit taker to 0x for v6 version (no Arbitrary Token Swaps + OTC Fill, or OTC Fill through AugustusSwapper)
+      ? ZERO_ADDRESS
+      : takerInNonce === ZERO_ADDRESS
+      ? ZERO_ADDRESS
+      : AugustusAddress);
 
   const order: OrderData = {
     nonceAndMeta,
