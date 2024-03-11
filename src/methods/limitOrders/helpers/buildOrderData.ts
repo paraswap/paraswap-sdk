@@ -66,12 +66,12 @@ export function buildOrderData({
   takerAmount,
   maker,
   AugustusAddress,
-  // if taker is specified -- p2p order for that taker only to fill through Augustus -- taker = Augustus, takerInNonce = _taker
+  // if taker is specified -- p2p order for that taker only to fill through Augustus (v5) or direcly (v6)-- taker = Augustus | _taker, takerInNonce = _taker
   // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS,
   // if given, overrides the above choices made based on `taker`
   contractTaker,
-  // for v6 only support taker=0x for OTC orders
+  // for v6 only support taker=_taker for OTC orders
   AppVersion,
 }: BuildOrderDataInput): SignableOrderData {
   // first 160 bits is taker address (for p2p orders),
@@ -81,15 +81,24 @@ export function buildOrderData({
     (BigInt(nonce) << BigInt(160))
   ).toString(10);
 
-  // no takerInNonce -> not p2p order -> allow anyone to fill (not only Augustus)
-  // otherwise p2p order -> fill through Augustus only
-  const taker =
-    contractTaker ||
-    (AppVersion === '6' // limit taker to 0x for v6 version (no Arbitrary Token Swaps + OTC Fill, or OTC Fill through AugustusSwapper)
-      ? ZERO_ADDRESS
-      : takerInNonce === ZERO_ADDRESS
-      ? ZERO_ADDRESS
-      : AugustusAddress);
+  let taker: string;
+  // contractTaker overrides always
+  if (contractTaker) {
+    taker = contractTaker;
+  } else if (takerInNonce === ZERO_ADDRESS) {
+    // no takerInNonce -> not p2p order -> allow anyone to fill (not only Augustus)
+    taker = ZERO_ADDRESS;
+  } else {
+    // otherwise for p2p order ->
+    if (AppVersion === '6') {
+      // limit taker to EOA for v6 version (no Arbitrary Token Swaps + OTC Fill, or OTC Fill through AugustusSwapper)
+      taker = takerInNonce;
+    } else {
+      // on v5
+      // -> fill through Augustus only
+      taker = AugustusAddress;
+    }
+  }
 
   const order: OrderData = {
     nonceAndMeta,
