@@ -32,7 +32,6 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "testEnvironment": "node"
   },
   "engines": {
     "node": ">=12"
@@ -54,7 +53,7 @@
     "dotenv": "^16.0.0",
     "dts-cli": "^1.5.1",
     "ethers": "^5.6.5",
-    "ganache": "^7.1.0",
+    "ganache": "^7.9.2",
     "husky": "^7.0.4",
     "isomorphic-unfetch": "^3.1.0",
     "size-limit": "^7.0.8",
@@ -83,7 +82,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "https://github.com/paraswap/paraswap-core.git#feat/BACK-1406",
+    "@paraswap/core": "2.0.0",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },

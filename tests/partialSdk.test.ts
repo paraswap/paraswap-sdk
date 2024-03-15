@@ -75,7 +75,9 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId: 1,
   },
-  quiet: true,
+  logging: {
+    quiet: true,
+  },
 });
 
 const web3provider = new Web3(ganacheProvider as any);
@@ -121,7 +123,7 @@ describe.each([
 
   beforeAll(() => {
     paraSwap = constructPartialSDK(
-      { chainId, fetcher },
+      { chainId, fetcher, version: '5' },
       constructGetBalances,
       constructGetAdapters,
       constructGetTokens,
@@ -136,10 +138,7 @@ describe.each([
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.getAdapters({
-      type: 'list',
-      namesOnly: true,
-    });
+    const markets = await paraSwap.getAdapters();
     expect(markets.length).toBeGreaterThan(15);
   });
 
@@ -391,7 +390,7 @@ describe.each([
         SDKConfig<ApproveTxResult>,
         [ApproveConstructor, typeof constructGetSpender]
       >(
-        { chainId, fetcher, contractCaller },
+        { chainId, fetcher, contractCaller, version: '5' },
         constructApproveToken,
         constructGetSpender
       );

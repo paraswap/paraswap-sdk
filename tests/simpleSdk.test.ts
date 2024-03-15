@@ -46,7 +46,9 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId: 1,
   },
-  quiet: true,
+  logging: {
+    quiet: true,
+  },
 });
 
 const web3provider = new Web3(ganacheProvider as any);
@@ -65,7 +67,7 @@ describe.each([
   let paraSwap: SimpleFetchSDK;
 
   beforeAll(() => {
-    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions });
+    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions, version: '5' });
   });
   test('getBalance', async () => {
     const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
@@ -305,7 +307,7 @@ describe.each([
 
     beforeAll(() => {
       paraSwap = constructSimpleSDK(
-        { chainId, ...fetcherOptions },
+        { chainId, ...fetcherOptions, version: '5' },
         providerOptions
       );
     });
