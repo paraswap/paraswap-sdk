@@ -218,7 +218,7 @@ export class ParaSwap {
   async getAdapters() {
     assert(this.sdk.getAdapters, 'sdk must be initialized with a fetcher');
     try {
-      return await this.sdk.getAdapters({ type: 'object' });
+      return await this.sdk.getAdapters();
     } catch (e) {
       return ParaSwap.handleAPIError(e);
     }
@@ -408,7 +408,7 @@ export class ParaSwap {
   async getMarketNames(): Promise<string[] | APIError> {
     assert(this.sdk.getAdapters, 'sdk must be initialized with a fetcher');
     try {
-      return await this.sdk.getAdapters({ type: 'list', namesOnly: true });
+      return await this.sdk.getAdapters();
     } catch (e) {
       return ParaSwap.handleAPIError(e);
     }

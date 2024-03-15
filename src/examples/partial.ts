@@ -29,6 +29,6 @@ const part1 = constructPartialSDK(
 );
 
 // type Promise<AdaptersAsObject>
-const res1 = part1.getAdapters({ type: 'object' });
+const res1 = part1.getAdapters();
 // type Promise<ethers.ContractTransaction>
 const res2 = part1.approveToken('123', '0x...');

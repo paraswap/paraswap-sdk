@@ -73,10 +73,7 @@ describe.each([
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.swap.getAdapters({
-      type: 'list',
-      namesOnly: true,
-    });
+    const markets = await paraSwap.swap.getAdapters();
     expect(markets.length).toBeGreaterThan(15);
   });
 
@@ -162,12 +159,8 @@ describe.each([
   });
 
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.swap.getAdapters({ type: 'object' });
-    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.index).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.index).toBeDefined();
+    const adapters = await paraSwap.swap.getAdapters();
+    expect(adapters).toMatchSnapshot('Get_Adapters');
   });
 
   test('Build_Tx', async () => {

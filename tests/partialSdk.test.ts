@@ -235,12 +235,9 @@ describe.each([
   });
 
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.getAdapters({ type: 'object' });
-    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
+    const adapters = await paraSwap.getAdapters();
+
+    expect(adapters).toMatchSnapshot('Get_Adapters');
   });
 
   test('Build_Tx', async () => {
