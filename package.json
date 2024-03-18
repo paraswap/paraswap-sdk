@@ -1,6 +1,6 @@
 {
   "name": "@paraswap/sdk",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "main": "dist/index.js",
   "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
@@ -31,8 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "jest": {
-  },
+  "jest": {},
   "engines": {
     "node": ">=12"
   },
