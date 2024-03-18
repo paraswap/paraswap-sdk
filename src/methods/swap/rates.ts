@@ -28,6 +28,7 @@ export type RateOptions = {
   excludePricingMethods?: PricingMethod[];
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
+  excludeContractMethodsWithoutFeeModel?: boolean;
   adapterVersion?: string;
   partner?: string;
   maxImpact?: number;

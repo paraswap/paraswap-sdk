@@ -11,7 +11,6 @@ import {
   OptimalRate,
 } from '../src';
 import BigNumber from 'bignumber.js';
-import type { Adapters } from '@paraswap/core';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
@@ -48,7 +47,9 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId: 1,
   },
-  quiet: true,
+  logging: {
+    quiet: true,
+  },
 });
 
 const provider = new Web3(ganacheProvider as any);
@@ -64,7 +65,9 @@ describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
-    paraSwap = new ParaSwap({ chainId, fetch }).setWeb3Provider(provider);
+    paraSwap = new ParaSwap({ chainId, fetch, version: '5' }).setWeb3Provider(
+      provider
+    );
   });
 
   test('Get_Balance', async () => {
@@ -174,13 +177,9 @@ describe('ParaSwap SDK', () => {
   test('Get_Adapters', async () => {
     const adaptersOrError = await paraSwap.getAdapters();
 
-    const adapters = adaptersOrError as Adapters;
+    const adapters = adaptersOrError as string[];
 
-    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.index).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.index).toBeDefined();
+    expect(adapters).toMatchSnapshot('Get_Adapters');
   });
 
   test('Build_Tx', async () => {

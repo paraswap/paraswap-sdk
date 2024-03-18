@@ -38,7 +38,7 @@
 
 #### Inherited from
 
-Promise.\_\_@toStringTag@517
+Promise.\_\_@toStringTag@167
 
 #### Defined in
 

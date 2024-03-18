@@ -76,7 +76,7 @@ Iterator of values in the array.
 
 #### Inherited from
 
-ReadonlyArray.\_\_@iterator@79
+ReadonlyArray.\_\_@iterator@50
 
 ___
 

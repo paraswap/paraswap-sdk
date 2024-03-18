@@ -98,7 +98,9 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId,
   },
-  quiet: true,
+  logging: {
+    quiet: true,
+  },
 });
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
@@ -219,6 +221,7 @@ describe('Limit Orders', () => {
       contractCaller: ethersContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
+      version: '5',
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -238,6 +241,7 @@ describe('Limit Orders', () => {
       contractCaller: takerEthersContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
+      version: '5',
     },
     constructApproveTokenForLimitOrder,
     constructBuildLimitOrderTx
@@ -257,6 +261,7 @@ describe('Limit Orders', () => {
       contractCaller: web3ContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
+      version: '5',
     },
     constructBuildLimitOrder,
     constructSignLimitOrder,
@@ -273,6 +278,7 @@ describe('Limit Orders', () => {
       contractCaller: takerWeb3ContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
+      version: '5',
     },
 
     constructApproveTokenForLimitOrder
@@ -322,6 +328,7 @@ describe('Limit Orders', () => {
         contractCaller: ethersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -521,6 +528,7 @@ describe('Limit Orders', () => {
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -533,6 +541,7 @@ describe('Limit Orders', () => {
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -746,6 +755,7 @@ describe('Limit Orders', () => {
         contractCaller: makerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -758,6 +768,7 @@ describe('Limit Orders', () => {
         contractCaller: takerEthersContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructBuildLimitOrder,
       constructSignLimitOrder,
@@ -1086,6 +1097,7 @@ describe('Limit Orders', () => {
         chainId: 137,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
+        version: '5',
       },
       constructGetLimitOrders
     );

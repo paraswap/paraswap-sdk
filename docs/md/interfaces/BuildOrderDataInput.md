@@ -6,6 +6,7 @@
 
 ### Properties
 
+- [AppVersion](BuildOrderDataInput.md#appversion)
 - [AugustusAddress](BuildOrderDataInput.md#augustusaddress)
 - [chainId](BuildOrderDataInput.md#chainid)
 - [contractTaker](BuildOrderDataInput.md#contracttaker)
@@ -20,6 +21,16 @@
 - [verifyingContract](BuildOrderDataInput.md#verifyingcontract)
 
 ## Properties
+
+### AppVersion
+
+• **AppVersion**: [`ParaSwapVersion`](../modules.md#paraswapversion)
+
+#### Defined in
+
+[src/methods/limitOrders/helpers/buildOrderData.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L38)
+
+___
 
 ### AugustusAddress
 

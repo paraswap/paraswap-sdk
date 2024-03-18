@@ -146,7 +146,7 @@ ___
 
 #### Inherited from
 
-Uint8Array.\_\_@toStringTag@517
+Uint8Array.\_\_@toStringTag@167
 
 #### Defined in
 
@@ -228,7 +228,7 @@ node_modules/typescript/lib/lib.es5.d.ts:2216
 
 #### Inherited from
 
-Uint8Array.\_\_@iterator@79
+Uint8Array.\_\_@iterator@50
 
 ___
 

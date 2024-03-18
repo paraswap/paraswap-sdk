@@ -46,7 +46,9 @@ const ganacheProvider = ganache.provider({
   chain: {
     chainId: 1,
   },
-  quiet: true,
+  logging: {
+    quiet: true,
+  },
 });
 
 const web3provider = new Web3(ganacheProvider as any);
@@ -65,7 +67,7 @@ describe.each([
   let paraSwap: SimpleFetchSDK;
 
   beforeAll(() => {
-    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions });
+    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions, version: '5' });
   });
   test('getBalance', async () => {
     const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
@@ -73,10 +75,7 @@ describe.each([
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.swap.getAdapters({
-      type: 'list',
-      namesOnly: true,
-    });
+    const markets = await paraSwap.swap.getAdapters();
     expect(markets.length).toBeGreaterThan(15);
   });
 
@@ -162,12 +161,8 @@ describe.each([
   });
 
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.swap.getAdapters({ type: 'object' });
-    expect(adapters.paraswappool?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.adapter).toBeDefined();
-    expect(adapters.uniswapv2?.[0]?.index).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.adapter).toBeDefined();
-    expect(adapters.kyberdmm?.[0]?.index).toBeDefined();
+    const adapters = await paraSwap.swap.getAdapters();
+    expect(adapters).toMatchSnapshot('Get_Adapters');
   });
 
   test('Build_Tx', async () => {
@@ -312,7 +307,7 @@ describe.each([
 
     beforeAll(() => {
       paraSwap = constructSimpleSDK(
-        { chainId, ...fetcherOptions },
+        { chainId, ...fetcherOptions, version: '5' },
         providerOptions
       );
     });

@@ -7,7 +7,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `D` | extends keyof [`ContractCallerFunctions`](internal_.ContractCallerFunctions.md)<`T`\> = keyof [`ContractCallerFunctions`](internal_.ContractCallerFunctions.md)<`T`\> |
+| `D` | extends keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\> = keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\> |
 
 ## Hierarchy
 
@@ -23,6 +23,7 @@
 - [chainId](ConstructProviderFetchInput.md#chainid)
 - [contractCaller](ConstructProviderFetchInput.md#contractcaller)
 - [fetcher](ConstructProviderFetchInput.md#fetcher)
+- [version](ConstructProviderFetchInput.md#version)
 
 ## Properties
 
@@ -36,7 +37,7 @@
 
 #### Defined in
 
-[src/types.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L23)
+[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
 
 ___
 
@@ -50,17 +51,17 @@ ___
 
 #### Defined in
 
-[src/types.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L24)
+[src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
 
 ___
 
 ### contractCaller
 
-• **contractCaller**: [`Pick`](../modules/internal_.md#pick)<[`ContractCallerFunctions`](internal_.ContractCallerFunctions.md)<`T`\>, `D`\>
+• **contractCaller**: [`Pick`](../modules/internal_.md#pick)<[`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\>, `D`\>
 
 #### Defined in
 
-[src/types.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L109)
+[src/types.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L124)
 
 ___
 
@@ -74,4 +75,18 @@ ___
 
 #### Defined in
 
-[src/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L50)
+[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
+
+___
+
+### version
+
+• `Optional` **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
+
+#### Inherited from
+
+[ConstructFetchInput](ConstructFetchInput.md).[version](ConstructFetchInput.md#version)
+
+#### Defined in
+
+[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
