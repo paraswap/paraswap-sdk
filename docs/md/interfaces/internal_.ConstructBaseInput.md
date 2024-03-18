@@ -16,6 +16,7 @@
 
 - [apiURL](internal_.ConstructBaseInput.md#apiurl)
 - [chainId](internal_.ConstructBaseInput.md#chainid)
+- [version](internal_.ConstructBaseInput.md#version)
 
 ## Properties
 
@@ -25,7 +26,7 @@
 
 #### Defined in
 
-[src/types.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L23)
+[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
 
 ___
 
@@ -35,4 +36,14 @@ ___
 
 #### Defined in
 
-[src/types.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L24)
+[src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
+
+___
+
+### version
+
+• `Optional` **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
+
+#### Defined in
+
+[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)

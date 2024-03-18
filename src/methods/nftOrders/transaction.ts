@@ -1,7 +1,12 @@
 import type { Address, ConstructFetchInput, OptimalRate } from '../../types';
 
 import { assert } from 'ts-essentials';
-import { API_URL, SwapSide, ContractMethod } from '../../constants';
+import {
+  API_URL,
+  SwapSide,
+  ContractMethod,
+  DEFAULT_VERSION,
+} from '../../constants';
 import {
   BuildNFTOrderTxInput,
   BuildOptions,
@@ -53,17 +58,20 @@ type GetNFTOrdersRate = (
 
 export const constructBuildNFTOrderTx = ({
   apiURL = API_URL,
+  version = DEFAULT_VERSION,
   chainId,
   fetcher,
 }: ConstructFetchInput): BuildNFTOrdersTxFunctions => {
   const { buildTx: buildSwapTx } = constructBuildTx({
     apiURL,
+    version,
     chainId,
     fetcher,
   });
 
   const { getRate: getSwapAndNFTOrderRate } = constructGetRate({
     apiURL,
+    version,
     chainId,
     fetcher,
   });

@@ -15,49 +15,8 @@
 
 ### Enumerations
 
-- [ContractMethodV5](../enums/internal_.ContractMethodV5.md)
-- [ContractMethodV6](../enums/internal_.ContractMethodV6.md)
+- [ParaSwapVersion](../enums/internal_.ParaSwapVersion.md)
 - [PricingMethod](../enums/internal_.PricingMethod.md)
-
-### Enumeration Members
-
-- [V5](internal_.md#v5)
-- [V6](internal_.md#v6)
-- [buy](internal_.md#buy)
-- [buyOnUniswap](internal_.md#buyonuniswap)
-- [buyOnUniswapFork](internal_.md#buyonuniswapfork)
-- [buyOnUniswapV2Fork](internal_.md#buyonuniswapv2fork)
-- [directBalancerV2GivenInSwap](internal_.md#directbalancerv2giveninswap)
-- [directBalancerV2GivenOutSwap](internal_.md#directbalancerv2givenoutswap)
-- [directCurveV1Swap](internal_.md#directcurvev1swap)
-- [directCurveV2Swap](internal_.md#directcurvev2swap)
-- [directUniV3Buy](internal_.md#directuniv3buy)
-- [directUniV3Swap](internal_.md#directuniv3swap)
-- [megaSwap](internal_.md#megaswap)
-- [multiSwap](internal_.md#multiswap)
-- [protectedMegaSwap](internal_.md#protectedmegaswap)
-- [protectedMultiSwap](internal_.md#protectedmultiswap)
-- [protectedSimpleBuy](internal_.md#protectedsimplebuy)
-- [protectedSimpleSwap](internal_.md#protectedsimpleswap)
-- [simpleBuy](internal_.md#simplebuy)
-- [simpleSwap](internal_.md#simpleswap)
-- [swapExactAmountIn](internal_.md#swapexactamountin)
-- [swapExactAmountInOnBalancerV2](internal_.md#swapexactamountinonbalancerv2)
-- [swapExactAmountInOnCurveV1](internal_.md#swapexactamountinoncurvev1)
-- [swapExactAmountInOnCurveV2](internal_.md#swapexactamountinoncurvev2)
-- [swapExactAmountInOnUniswapV2](internal_.md#swapexactamountinonuniswapv2)
-- [swapExactAmountInOnUniswapV3](internal_.md#swapexactamountinonuniswapv3)
-- [swapExactAmountInOutOnAugustusRFQTryBatchFill](internal_.md#swapexactamountinoutonaugustusrfqtrybatchfill)
-- [swapExactAmountInOutOnMakerPSM](internal_.md#swapexactamountinoutonmakerpsm)
-- [swapExactAmountOut](internal_.md#swapexactamountout)
-- [swapExactAmountOutOnBalancerV2](internal_.md#swapexactamountoutonbalancerv2)
-- [swapExactAmountOutOnUniswapV2](internal_.md#swapexactamountoutonuniswapv2)
-- [swapExactAmountOutOnUniswapV3](internal_.md#swapexactamountoutonuniswapv3)
-- [swapOnUniswap](internal_.md#swaponuniswap)
-- [swapOnUniswapFork](internal_.md#swaponuniswapfork)
-- [swapOnUniswapV2Fork](internal_.md#swaponuniswapv2fork)
-- [swapOnZeroXv2](internal_.md#swaponzeroxv2)
-- [swapOnZeroXv4](internal_.md#swaponzeroxv4)
 
 ### Classes
 
@@ -193,7 +152,6 @@
 - [ContractCallInput](../interfaces/internal_.ContractCallInput.md)
 - [ContractCallStaticInput](../interfaces/internal_.ContractCallStaticInput.md)
 - [ContractCallTransactionInput](../interfaces/internal_.ContractCallTransactionInput.md)
-- [ContractCallerFunctions](../interfaces/internal_.ContractCallerFunctions.md)
 - [ContractOptions](../interfaces/internal_.ContractOptions.md)
 - [ContractReceipt](../interfaces/internal_.ContractReceipt.md)
 - [ContractSendMethod](../interfaces/internal_.ContractSendMethod.md)
@@ -232,7 +190,6 @@
 - [GenericAbortSignal](../interfaces/internal_.GenericAbortSignal.md)
 - [GenericFormData](../interfaces/internal_.GenericFormData.md)
 - [GenericHTMLFormElement](../interfaces/internal_.GenericHTMLFormElement.md)
-- [GetAdaptersFunc](../interfaces/internal_.GetAdaptersFunc.md)
 - [GetProof](../interfaces/internal_.GetProof.md)
 - [HeadersDefaults](../interfaces/internal_.HeadersDefaults.md)
 - [Hexable](../interfaces/internal_.Hexable.md)
@@ -269,7 +226,6 @@
 - [Options](../interfaces/internal_.Options.md)
 - [OverridesBase](../interfaces/internal_.OverridesBase.md)
 - [PSKCallbackNegotation](../interfaces/internal_.PSKCallbackNegotation.md)
-- [PaginationParams](../interfaces/internal_.PaginationParams.md)
 - [ParamEncoder](../interfaces/internal_.ParamEncoder.md)
 - [ParamsSerializerOptions](../interfaces/internal_.ParamsSerializerOptions.md)
 - [PastEventOptions](../interfaces/internal_.PastEventOptions.md)
@@ -349,12 +305,8 @@
 - [AbiType](internal_.md#abitype)
 - [AccessList](internal_.md#accesslist)
 - [AccessListish](internal_.md#accesslistish)
-- [Adapter](internal_.md#adapter)
-- [AdaptersAsList](internal_.md#adaptersaslist)
-- [AdaptersAsObject](internal_.md#adaptersasobject)
 - [AdaptersAsStrings](internal_.md#adaptersasstrings)
 - [Address](internal_.md#address)
-- [AllAdaptersOptions](internal_.md#alladaptersoptions)
 - [AnyFunction](internal_.md#anyfunction)
 - [ApproveNFT](internal_.md#approvenft)
 - [ApproveToken](internal_.md#approvetoken)
@@ -371,7 +323,6 @@
 - [AxiosRequestHeaders](internal_.md#axiosrequestheaders)
 - [AxiosRequirement](internal_.md#axiosrequirement)
 - [AxiosResponseHeaders](internal_.md#axiosresponseheaders)
-- [BaseRate](internal_.md#baserate)
 - [BigIntAsString](internal_.md#bigintasstring)
 - [BigNumberish](internal_.md#bignumberish)
 - [BlockNumber](internal_.md#blocknumber)
@@ -405,6 +356,7 @@
 - [ContractInterface](internal_.md#contractinterface)
 - [Deferrable](internal_.md#deferrable)
 - [Domain](internal_.md#domain)
+- [EnumerateLiteral](internal_.md#enumerateliteral)
 - [EventFilter](internal_.md#eventfilter)
 - [EventType](internal_.md#eventtype)
 - [Exclude](internal_.md#exclude)
@@ -412,6 +364,7 @@
 - [Fetch](internal_.md#fetch)
 - [FetcherErrorConstructorInput](internal_.md#fetchererrorconstructorinput)
 - [FetcherOptions](internal_.md#fetcheroptions)
+- [FillOrderDirectly](internal_.md#fillorderdirectly)
 - [FlatArray](internal_.md#flatarray)
 - [FormatFunc](internal_.md#formatfunc)
 - [FormatFuncs](internal_.md#formatfuncs)
@@ -462,14 +415,10 @@
 - [Networkish](internal_.md#networkish)
 - [NumberAsString](internal_.md#numberasstring)
 - [Omit](internal_.md#omit)
-- [OptimalRateV5](internal_.md#optimalratev5)
-- [OptimalRateV6](internal_.md#optimalratev6)
 - [OptimalRoute](internal_.md#optimalroute)
 - [OptimalSwap](internal_.md#optimalswap)
 - [OptimalSwapExchange](internal_.md#optimalswapexchange)
-- [OptionsList](internal_.md#optionslist)
-- [OptionsListNamesOnly](internal_.md#optionslistnamesonly)
-- [OptionsObject](internal_.md#optionsobject)
+- [PaginationParams](internal_.md#paginationparams)
 - [Partial](internal_.md#partial)
 - [Pick](internal_.md#pick)
 - [PostLimitOrder](internal_.md#postlimitorder)
@@ -487,6 +436,7 @@
 - [RequestInfo](internal_.md#requestinfo)
 - [RequestMode](internal_.md#requestmode)
 - [RequestRedirect](internal_.md#requestredirect)
+- [Required](internal_.md#required)
 - [ResponseType](internal_.md#responsetype)
 - [ResponseType](internal_.md#responsetype-1)
 - [ReturnType](internal_.md#returntype)
@@ -541,376 +491,6 @@
 - [Error](internal_.md#error)
 - [Object](internal_.md#object)
 
-## Enumeration Members
-
-### V5
-
-• **V5**: ``"5"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/types.d.ts:72
-
-___
-
-### V6
-
-• **V6**: ``"6"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/types.d.ts:73
-
-___
-
-### buy
-
-• **buy**: ``"buy"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:22
-
-___
-
-### buyOnUniswap
-
-• **buyOnUniswap**: ``"buyOnUniswap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:7
-
-___
-
-### buyOnUniswapFork
-
-• **buyOnUniswapFork**: ``"buyOnUniswapFork"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:9
-
-___
-
-### buyOnUniswapV2Fork
-
-• **buyOnUniswapV2Fork**: ``"buyOnUniswapV2Fork"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:11
-
-___
-
-### directBalancerV2GivenInSwap
-
-• **directBalancerV2GivenInSwap**: ``"directBalancerV2GivenInSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:27
-
-___
-
-### directBalancerV2GivenOutSwap
-
-• **directBalancerV2GivenOutSwap**: ``"directBalancerV2GivenOutSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:28
-
-___
-
-### directCurveV1Swap
-
-• **directCurveV1Swap**: ``"directCurveV1Swap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:25
-
-___
-
-### directCurveV2Swap
-
-• **directCurveV2Swap**: ``"directCurveV2Swap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:26
-
-___
-
-### directUniV3Buy
-
-• **directUniV3Buy**: ``"directUniV3Buy"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:24
-
-___
-
-### directUniV3Swap
-
-• **directUniV3Swap**: ``"directUniV3Swap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:23
-
-___
-
-### megaSwap
-
-• **megaSwap**: ``"megaSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:15
-
-___
-
-### multiSwap
-
-• **multiSwap**: ``"multiSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:14
-
-___
-
-### protectedMegaSwap
-
-• **protectedMegaSwap**: ``"protectedMegaSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:17
-
-___
-
-### protectedMultiSwap
-
-• **protectedMultiSwap**: ``"protectedMultiSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:16
-
-___
-
-### protectedSimpleBuy
-
-• **protectedSimpleBuy**: ``"protectedSimpleBuy"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:19
-
-___
-
-### protectedSimpleSwap
-
-• **protectedSimpleSwap**: ``"protectedSimpleSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:18
-
-___
-
-### simpleBuy
-
-• **simpleBuy**: ``"simpleBuy"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:12
-
-___
-
-### simpleSwap
-
-• **simpleSwap**: ``"simpleSwap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:13
-
-___
-
-### swapExactAmountIn
-
-• **swapExactAmountIn**: ``"swapExactAmountIn"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:31
-
-___
-
-### swapExactAmountInOnBalancerV2
-
-• **swapExactAmountInOnBalancerV2**: ``"swapExactAmountInOnBalancerV2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:37
-
-___
-
-### swapExactAmountInOnCurveV1
-
-• **swapExactAmountInOnCurveV1**: ``"swapExactAmountInOnCurveV1"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:39
-
-___
-
-### swapExactAmountInOnCurveV2
-
-• **swapExactAmountInOnCurveV2**: ``"swapExactAmountInOnCurveV2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:40
-
-___
-
-### swapExactAmountInOnUniswapV2
-
-• **swapExactAmountInOnUniswapV2**: ``"swapExactAmountInOnUniswapV2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:33
-
-___
-
-### swapExactAmountInOnUniswapV3
-
-• **swapExactAmountInOnUniswapV3**: ``"swapExactAmountInOnUniswapV3"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:35
-
-___
-
-### swapExactAmountInOutOnAugustusRFQTryBatchFill
-
-• **swapExactAmountInOutOnAugustusRFQTryBatchFill**: ``"swapExactAmountInOutOnAugustusRFQTryBatchFill"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:41
-
-___
-
-### swapExactAmountInOutOnMakerPSM
-
-• **swapExactAmountInOutOnMakerPSM**: ``"swapExactAmountInOutOnMakerPSM"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:42
-
-___
-
-### swapExactAmountOut
-
-• **swapExactAmountOut**: ``"swapExactAmountOut"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:32
-
-___
-
-### swapExactAmountOutOnBalancerV2
-
-• **swapExactAmountOutOnBalancerV2**: ``"swapExactAmountOutOnBalancerV2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:38
-
-___
-
-### swapExactAmountOutOnUniswapV2
-
-• **swapExactAmountOutOnUniswapV2**: ``"swapExactAmountOutOnUniswapV2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:34
-
-___
-
-### swapExactAmountOutOnUniswapV3
-
-• **swapExactAmountOutOnUniswapV3**: ``"swapExactAmountOutOnUniswapV3"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:36
-
-___
-
-### swapOnUniswap
-
-• **swapOnUniswap**: ``"swapOnUniswap"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:6
-
-___
-
-### swapOnUniswapFork
-
-• **swapOnUniswapFork**: ``"swapOnUniswapFork"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:8
-
-___
-
-### swapOnUniswapV2Fork
-
-• **swapOnUniswapV2Fork**: ``"swapOnUniswapV2Fork"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:10
-
-___
-
-### swapOnZeroXv2
-
-• **swapOnZeroXv2**: ``"swapOnZeroXv2"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:20
-
-___
-
-### swapOnZeroXv4
-
-• **swapOnZeroXv4**: ``"swapOnZeroXv4"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:21
-
 ## Type Aliases
 
 ### APIError
@@ -927,7 +507,7 @@ node_modules/@paraswap/core/build/constants.d.ts:21
 
 #### Defined in
 
-[src/legacy/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L41)
+[src/legacy/index.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L46)
 
 ___
 
@@ -961,50 +541,13 @@ node_modules/@ethersproject/transactions/lib/index.d.ts:7
 
 ___
 
-### Adapter
-
-Ƭ **Adapter**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `adapter` | `string` |
-| `index` | `number` |
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L5)
-
-___
-
-### AdaptersAsList
-
-Ƭ **AdaptersAsList**: { `adapters`: [`Adapter`](internal_.md#adapter)[] ; `name`: `string`  }[]
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L11)
-
-___
-
-### AdaptersAsObject
-
-Ƭ **AdaptersAsObject**: [`Record`](internal_.md#record)<`string`, [`Adapter`](internal_.md#adapter)[]\>
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L10)
-
-___
-
 ### AdaptersAsStrings
 
 Ƭ **AdaptersAsStrings**: `string`[]
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L12)
+[src/methods/swap/adapters.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L5)
 
 ___
 
@@ -1015,16 +558,6 @@ ___
 #### Defined in
 
 node_modules/@paraswap/core/build/types.d.ts:2
-
-___
-
-### AllAdaptersOptions
-
-Ƭ **AllAdaptersOptions**: [`OptionsObject`](internal_.md#optionsobject) \| [`OptionsList`](internal_.md#optionslist) \| [`OptionsListNamesOnly`](internal_.md#optionslistnamesonly)
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L18)
 
 ___
 
@@ -1048,7 +581,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:142](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L142)
+[src/types.ts:157](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L157)
 
 ___
 
@@ -1329,44 +862,6 @@ node_modules/axios/index.d.ts:77
 
 ___
 
-### BaseRate
-
-Ƭ **BaseRate**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `bestRoute` | [`OptimalRoute`](internal_.md#optimalroute)[] |
-| `blockNumber` | `number` |
-| `contractMethod` | `string` |
-| `destAmount` | [`NumberAsString`](internal_.md#numberasstring) |
-| `destDecimals` | `number` |
-| `destToken` | [`Address`](internal_.md#address) |
-| `destUSD` | [`NumberAsString`](internal_.md#numberasstring) |
-| `gasCost` | [`NumberAsString`](internal_.md#numberasstring) |
-| `gasCostL1Wei?` | `string` |
-| `gasCostUSD` | [`NumberAsString`](internal_.md#numberasstring) |
-| `hmac` | `string` |
-| `maxImpact?` | `number` |
-| `maxImpactReached?` | `boolean` |
-| `maxUSDImpact?` | `number` |
-| `network` | `number` |
-| `others?` | [`OptionalRate`](../modules.md#optionalrate)[] |
-| `partner?` | `string` |
-| `partnerFee` | `number` |
-| `side` | [`SwapSide`](../enums/SwapSide.md) |
-| `srcAmount` | [`NumberAsString`](internal_.md#numberasstring) |
-| `srcDecimals` | `number` |
-| `srcToken` | [`Address`](internal_.md#address) |
-| `srcUSD` | [`NumberAsString`](internal_.md#numberasstring) |
-
-#### Defined in
-
-node_modules/@paraswap/core/build/types.d.ts:36
-
-___
-
 ### BigIntAsString
 
 Ƭ **BigIntAsString**: `string`
@@ -1413,7 +908,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
+[src/types.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L77)
 
 ___
 
@@ -1468,7 +963,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L15)
+[src/methods/limitOrders/buildOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L16)
 
 ___
 
@@ -1494,7 +989,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L35)
+[src/methods/limitOrders/transaction.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L40)
 
 ___
 
@@ -1545,7 +1040,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L35)
+[src/methods/nftOrders/transaction.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L40)
 
 ___
 
@@ -1571,7 +1066,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L22)
+[src/methods/limitOrders/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L27)
 
 ___
 
@@ -1597,7 +1092,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L22)
+[src/methods/nftOrders/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L27)
 
 ___
 
@@ -1824,7 +1319,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:170](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L170)
+[src/methods/limitOrders/transaction.ts:178](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L178)
 
 ___
 
@@ -1834,7 +1329,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:165](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L165)
+[src/methods/nftOrders/transaction.ts:173](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L173)
 
 ___
 
@@ -1905,7 +1400,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L37)
+[src/methods/swap/rates.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L43)
 
 ___
 
@@ -1994,6 +1489,22 @@ ___
 
 ___
 
+### EnumerateLiteral
+
+Ƭ **EnumerateLiteral**<`T`\>: { [K in keyof T]: T[K] extends \`${infer n}\` ? n : never }[keyof `T`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`Record`](internal_.md#record)<`string`, `any`\> |
+
+#### Defined in
+
+[src/types.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L26)
+
+___
+
 ### EventFilter
 
 Ƭ **EventFilter**: `Object`
@@ -2052,7 +1563,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
 
 ___
 
@@ -2062,7 +1573,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L46)
+[src/legacy/index.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L51)
 
 ___
 
@@ -2072,7 +1583,7 @@ ___
 
 #### Defined in
 
-[src/helpers/misc.ts:91](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L91)
+[src/helpers/misc.ts:94](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L94)
 
 ___
 
@@ -2082,7 +1593,40 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:127](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L127)
+[src/sdk/simple.ts:128](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L128)
+
+___
+
+### FillOrderDirectly
+
+Ƭ **FillOrderDirectly**<`T`\>: (`order`: [`OrderData`](../modules.md#orderdata), `signature`: `string`, `overrides?`: [`TxSendOverrides`](../interfaces/TxSendOverrides.md), `signal?`: `AbortSignal`) => `Promise`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`order`, `signature`, `overrides?`, `signal?`): `Promise`<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `order` | [`OrderData`](../modules.md#orderdata) |
+| `signature` | `string` |
+| `overrides?` | [`TxSendOverrides`](../interfaces/TxSendOverrides.md) |
+| `signal?` | `AbortSignal` |
+
+##### Returns
+
+`Promise`<`T`\>
+
+#### Defined in
+
+[src/methods/limitOrders/fillOrderDirectly.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L11)
 
 ___
 
@@ -2363,7 +1907,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L47)
+[src/methods/limitOrders/transaction.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L52)
 
 ___
 
@@ -2439,7 +1983,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L47)
+[src/methods/nftOrders/transaction.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L52)
 
 ___
 
@@ -2464,7 +2008,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L51)
+[src/methods/swap/rates.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L57)
 
 ___
 
@@ -2489,7 +2033,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L60)
+[src/methods/swap/rates.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L66)
 
 ___
 
@@ -2499,7 +2043,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L56)
+[src/methods/swap/rates.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L62)
 
 ___
 
@@ -2509,7 +2053,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L46)
+[src/methods/swap/rates.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L52)
 
 ___
 
@@ -2625,7 +2169,7 @@ ___
 
 ### InferWithTxResponse
 
-Ƭ **InferWithTxResponse**<`Config`, `Funcs`\>: `Config` extends [`SDKConfig`](../modules.md#sdkconfig)<infer TxResponse\> ? [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\> extends [`Record`](internal_.md#record)<`string`, `any`\> ? [`MergeExtendableRecursively`](internal_.md#mergeextendablerecursively)<[`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\>, [[`ApproveTokenFunctions`](../modules.md#approvetokenfunctions)<`TxResponse`\>, [`CancelLimitOrderFunctions`](../modules.md#cancellimitorderfunctions)<`TxResponse`\>, [`ApproveTokenForLimitOrderFunctions`](../modules.md#approvetokenforlimitorderfunctions)<`TxResponse`\>, [`CancelNFTOrderFunctions`](../modules.md#cancelnftorderfunctions)<`TxResponse`\>, [`ApproveTokenForNFTOrderFunctions`](../modules.md#approvetokenfornftorderfunctions)<`TxResponse`\>]\> : [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\> : [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\>
+Ƭ **InferWithTxResponse**<`Config`, `Funcs`\>: `Config` extends [`SDKConfig`](../modules.md#sdkconfig)<infer TxResponse\> ? [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\> extends [`Record`](internal_.md#record)<`string`, `any`\> ? [`MergeExtendableRecursively`](internal_.md#mergeextendablerecursively)<[`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\>, [[`ApproveTokenFunctions`](../modules.md#approvetokenfunctions)<`TxResponse`\>, [`CancelLimitOrderFunctions`](../modules.md#cancellimitorderfunctions)<`TxResponse`\>, [`FillOrderDirectlyFunctions`](../modules.md#fillorderdirectlyfunctions)<`TxResponse`\>, [`ApproveTokenForLimitOrderFunctions`](../modules.md#approvetokenforlimitorderfunctions)<`TxResponse`\>, [`CancelNFTOrderFunctions`](../modules.md#cancelnftorderfunctions)<`TxResponse`\>, [`ApproveTokenForNFTOrderFunctions`](../modules.md#approvetokenfornftorderfunctions)<`TxResponse`\>]\> : [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\> : [`IntersectionOfReturns`](internal_.md#intersectionofreturns)<`Funcs`\>
 
 #### Type parameters
 
@@ -2636,7 +2180,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L33)
+[src/sdk/partial.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L35)
 
 ___
 
@@ -2652,7 +2196,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L24)
+[src/sdk/partial.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L26)
 
 ___
 
@@ -2688,11 +2232,12 @@ ___
 | `chainId?` | `number` |
 | `ethersDeps?` | [`EthersProviderDeps`](../interfaces/EthersProviderDeps.md) |
 | `fetch?` | [`Fetch`](internal_.md#fetch) |
+| `version?` | [`ParaSwapVersion`](../modules.md#paraswapversion) |
 | `web3Provider?` | [`default`](../classes/internal_.default.md) |
 
 #### Defined in
 
-[src/legacy/index.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L50)
+[src/legacy/index.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L55)
 
 ___
 
@@ -2712,7 +2257,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:103](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L103)
+[src/sdk/simple.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L104)
 
 ___
 
@@ -2835,7 +2380,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L57)
+[src/sdk/partial.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L60)
 
 ___
 
@@ -2852,7 +2397,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L66)
+[src/sdk/partial.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L69)
 
 ___
 
@@ -2882,7 +2427,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L28)
+[src/methods/limitOrders/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L33)
 
 ___
 
@@ -2892,7 +2437,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L28)
+[src/methods/nftOrders/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L33)
 
 ___
 
@@ -2902,7 +2447,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L16)
+[src/methods/limitOrders/transaction.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L21)
 
 ___
 
@@ -2912,7 +2457,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L16)
+[src/methods/nftOrders/transaction.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L21)
 
 ___
 
@@ -2932,7 +2477,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L109)
+[src/sdk/simple.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L110)
 
 ___
 
@@ -2991,26 +2536,6 @@ Construct a type with the properties of T except for those in type K.
 #### Defined in
 
 node_modules/typescript/lib/lib.es5.d.ts:1576
-
-___
-
-### OptimalRateV5
-
-Ƭ **OptimalRateV5**: [`BaseRate`](internal_.md#baserate) & { `contractAddress`: [`Address`](internal_.md#address) ; `tokenTransferProxy`: [`Address`](internal_.md#address) ; `version`: [`V5`](internal_.md#v5)  }
-
-#### Defined in
-
-node_modules/@paraswap/core/build/types.d.ts:61
-
-___
-
-### OptimalRateV6
-
-Ƭ **OptimalRateV6**: [`BaseRate`](internal_.md#baserate) & { `contractAddress`: [`Address`](internal_.md#address) ; `version`: [`V6`](internal_.md#v6)  }
-
-#### Defined in
-
-node_modules/@paraswap/core/build/types.d.ts:66
 
 ___
 
@@ -3078,53 +2603,22 @@ node_modules/@paraswap/core/build/types.d.ts:21
 
 ___
 
-### OptionsList
+### PaginationParams
 
-Ƭ **OptionsList**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `namesOnly?` | ``false`` |
-| `type` | ``"list"`` |
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L15)
-
-___
-
-### OptionsListNamesOnly
-
-Ƭ **OptionsListNamesOnly**: `Object`
+Ƭ **PaginationParams**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `namesOnly` | ``true`` |
-| `type` | ``"list"`` |
+| `hideSmallBalances?` | `boolean` |
+| `limit?` | `number` |
+| `offset?` | `number` |
+| `orderBy?` | ``"createdAt"`` \| ``"updatedAt"`` \| ``"expiry"`` |
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L16)
-
-___
-
-### OptionsObject
-
-Ƭ **OptionsObject**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `type` | ``"object"`` |
-
-#### Defined in
-
-[src/methods/swap/adapters.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L14)
+[src/methods/limitOrders/getOrders.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L18)
 
 ___
 
@@ -3237,6 +2731,7 @@ ___
 | `destTokenDexTransferFee?` | `number` |
 | `destTokenTransferFee?` | `number` |
 | `excludeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] |
+| `excludeContractMethodsWithoutFeeModel?` | `boolean` |
 | `excludeDEXS?` | `string`[] |
 | `excludePools?` | `string`[] |
 | `excludePricingMethods?` | [`PricingMethod`](../enums/internal_.PricingMethod.md)[] |
@@ -3251,7 +2746,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L19)
+[src/methods/swap/rates.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L24)
 
 ___
 
@@ -3380,6 +2875,24 @@ node_modules/typescript/lib/lib.dom.d.ts:17925
 
 ___
 
+### Required
+
+Ƭ **Required**<`T`\>: { [P in keyof T]-?: T[P] }
+
+Make all properties in T required
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:1538
+
+___
+
 ### ResponseType
 
 Ƭ **ResponseType**: ``"basic"`` \| ``"cors"`` \| ``"default"`` \| ``"error"`` \| ``"opaque"`` \| ``"opaqueredirect"``
@@ -3444,7 +2957,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L20)
+[src/sdk/partial.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L22)
 
 ___
 
@@ -3478,7 +2991,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L95)
+[src/types.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L110)
 
 ___
 
@@ -3488,7 +3001,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:136](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L136)
+[src/sdk/simple.ts:137](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L137)
 
 ___
 
@@ -3549,7 +3062,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:89](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L89)
+[src/types.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L104)
 
 ___
 
@@ -3576,7 +3089,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L29)
+[src/methods/limitOrders/index.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L33)
 
 ___
 
@@ -3630,7 +3143,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L35)
+[src/methods/limitOrders/index.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L39)
 
 ___
 
@@ -3640,7 +3153,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:96](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L96)
+[src/sdk/simple.ts:97](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L97)
 
 ___
 
@@ -3702,7 +3215,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:92](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L92)
+[src/types.ts:107](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L107)
 
 ___
 
@@ -3795,7 +3308,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L48)
+[src/legacy/index.ts:53](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L53)
 
 ___
 

@@ -19,7 +19,7 @@ export type CancelLimitOrderFunctions<T> = {
   cancelLimitOrderBulk: CancelOrderBulk<T>;
 };
 
-// much smaller than the whole ERC20_ABI
+// much smaller than the whole AugustusRFQ_ABI
 const MinAugustusRFQAbi = [
   {
     inputs: [

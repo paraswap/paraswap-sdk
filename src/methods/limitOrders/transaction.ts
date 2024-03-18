@@ -1,7 +1,12 @@
 import type { ConstructFetchInput, OptimalRate } from '../../types';
 
 import { assert } from 'ts-essentials';
-import { API_URL, SwapSide, ContractMethod } from '../../constants';
+import {
+  API_URL,
+  SwapSide,
+  ContractMethod,
+  DEFAULT_VERSION,
+} from '../../constants';
 import {
   BuildLimitOrderTxInput,
   BuildOptions,
@@ -53,6 +58,7 @@ type GetLimitOrdersRate = (
 
 export const constructBuildLimitOrderTx = ({
   apiURL = API_URL,
+  version = DEFAULT_VERSION,
   chainId,
   fetcher,
 }: ConstructFetchInput): BuildLimitOrdersTxFunctions => {
@@ -60,15 +66,17 @@ export const constructBuildLimitOrderTx = ({
     apiURL,
     chainId,
     fetcher,
+    version,
   });
 
   const { getRate: getSwapAndLimitOrderRate } = constructGetRate({
     apiURL,
+    version,
     chainId,
     fetcher,
   });
 
-  //  returns priceRoute that would allow from swap from srcToken to destToken(=order.takerAsset) followed by filling limit orders
+  //  returns priceRoute that would allow to swap from srcToken to destToken(=order.takerAsset) followed by filling limit orders
   const getLimitOrdersRate: GetLimitOrdersRate = async (
     { srcToken, destToken, amount, options: _options = {}, ...rest },
     orders,

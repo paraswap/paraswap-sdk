@@ -10,6 +10,8 @@ import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrd
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
 import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
 import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
+import { API_URL, DEFAULT_VERSION } from '../constants';
+import { FillOrderDirectlyFunctions } from '../methods/limitOrders/fillOrderDirectly';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -43,6 +45,7 @@ type InferWithTxResponse<
           // which means constructApproveToken or constructCancelLimitOrder was passed in Funcs
           ApproveTokenFunctions<TxResponse>,
           CancelLimitOrderFunctions<TxResponse>,
+          FillOrderDirectlyFunctions<TxResponse>,
           ApproveTokenForLimitOrderFunctions<TxResponse>,
           CancelNFTOrderFunctions<TxResponse>,
           ApproveTokenForNFTOrderFunctions<TxResponse>
@@ -83,7 +86,7 @@ export const constructPartialSDK = <
 >(
   config: Config, // config is auto-inferred to cover the used functions
   ...funcs: Funcs
-): PartialSDKResult<Config, Funcs> => {
+): PartialSDKResult<Config, Funcs> & Required<ConstructBaseInput> => {
   const sdkFuncs = funcs.reduce<Partial<IntersectionOfReturns<Funcs>>>(
     (accum, func) => {
       const sdkSlice = func(config);
@@ -92,5 +95,12 @@ export const constructPartialSDK = <
     {}
   );
 
-  return sdkFuncs as PartialSDKResult<Config, Funcs>;
+  const sdk = {
+    ...sdkFuncs,
+    apiURL: config.apiURL ?? API_URL,
+    version: config.version ?? DEFAULT_VERSION,
+    chainId: config.chainId,
+  } as PartialSDKResult<Config, Funcs> & Required<ConstructBaseInput>;
+
+  return sdk;
 };

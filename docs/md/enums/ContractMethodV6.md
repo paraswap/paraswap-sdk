@@ -1,25 +1,23 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / [<internal\>](../modules/internal_.md) / ContractMethodV6
+[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ContractMethodV6
 
 # Enumeration: ContractMethodV6
-
-[<internal>](../modules/internal_.md).ContractMethodV6
 
 ## Table of contents
 
 ### Enumeration Members
 
-- [swapExactAmountIn](internal_.ContractMethodV6.md#swapexactamountin)
-- [swapExactAmountInOnBalancerV2](internal_.ContractMethodV6.md#swapexactamountinonbalancerv2)
-- [swapExactAmountInOnCurveV1](internal_.ContractMethodV6.md#swapexactamountinoncurvev1)
-- [swapExactAmountInOnCurveV2](internal_.ContractMethodV6.md#swapexactamountinoncurvev2)
-- [swapExactAmountInOnUniswapV2](internal_.ContractMethodV6.md#swapexactamountinonuniswapv2)
-- [swapExactAmountInOnUniswapV3](internal_.ContractMethodV6.md#swapexactamountinonuniswapv3)
-- [swapExactAmountInOutOnAugustusRFQTryBatchFill](internal_.ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill)
-- [swapExactAmountInOutOnMakerPSM](internal_.ContractMethodV6.md#swapexactamountinoutonmakerpsm)
-- [swapExactAmountOut](internal_.ContractMethodV6.md#swapexactamountout)
-- [swapExactAmountOutOnBalancerV2](internal_.ContractMethodV6.md#swapexactamountoutonbalancerv2)
-- [swapExactAmountOutOnUniswapV2](internal_.ContractMethodV6.md#swapexactamountoutonuniswapv2)
-- [swapExactAmountOutOnUniswapV3](internal_.ContractMethodV6.md#swapexactamountoutonuniswapv3)
+- [swapExactAmountIn](ContractMethodV6.md#swapexactamountin)
+- [swapExactAmountInOnBalancerV2](ContractMethodV6.md#swapexactamountinonbalancerv2)
+- [swapExactAmountInOnCurveV1](ContractMethodV6.md#swapexactamountinoncurvev1)
+- [swapExactAmountInOnCurveV2](ContractMethodV6.md#swapexactamountinoncurvev2)
+- [swapExactAmountInOnUniswapV2](ContractMethodV6.md#swapexactamountinonuniswapv2)
+- [swapExactAmountInOnUniswapV3](ContractMethodV6.md#swapexactamountinonuniswapv3)
+- [swapExactAmountInOutOnAugustusRFQTryBatchFill](ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill)
+- [swapExactAmountInOutOnMakerPSM](ContractMethodV6.md#swapexactamountinoutonmakerpsm)
+- [swapExactAmountOut](ContractMethodV6.md#swapexactamountout)
+- [swapExactAmountOutOnBalancerV2](ContractMethodV6.md#swapexactamountoutonbalancerv2)
+- [swapExactAmountOutOnUniswapV2](ContractMethodV6.md#swapexactamountoutonuniswapv2)
+- [swapExactAmountOutOnUniswapV3](ContractMethodV6.md#swapexactamountoutonuniswapv3)
 
 ## Enumeration Members
 

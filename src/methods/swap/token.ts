@@ -17,7 +17,7 @@ export const constructGetTokens = ({
   chainId,
   fetcher,
 }: ConstructFetchInput): GetTokensFunctions => {
-  const fetchURL = `${apiURL}/tokens/${chainId}`;
+  const fetchURL = `${apiURL}/tokens/${chainId}` as const;
 
   const getTokens: GetTokens = async (signal) => {
     const data = await fetcher<TokensApiResponse>({

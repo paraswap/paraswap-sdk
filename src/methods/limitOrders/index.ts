@@ -25,6 +25,10 @@ import {
   constructBuildLimitOrderTx,
 } from './transaction';
 import type { Address } from '@paraswap/core';
+import {
+  FillOrderDirectlyFunctions,
+  constructFillOrderDirectly,
+} from './fillOrderDirectly';
 
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
@@ -107,7 +111,8 @@ export type LimitOrderHandlers<T> = SubmitLimitOrderFuncs &
   GetLimitOrdersContractFunctions &
   BuildLimitOrdersTxFunctions &
   CancelLimitOrderFunctions<T> &
-  ApproveTokenForLimitOrderFunctions<T>;
+  ApproveTokenForLimitOrderFunctions<T> &
+  FillOrderDirectlyFunctions<T>;
 
 /** @description construct SDK with every LimitOrders-related method, fetching from API and contract calls */
 export const constructAllLimitOrdersHandlers = <TxResponse>(
@@ -127,6 +132,8 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
   const limitOrdersCancel = constructCancelLimitOrder(options);
   const limitOrdersApproveToken = constructApproveTokenForLimitOrder(options);
 
+  const limitOrdersFillOrderDirectly = constructFillOrderDirectly(options);
+
   const limitOrdersBuildTx = constructBuildLimitOrderTx(options);
 
   return {
@@ -138,6 +145,7 @@ export const constructAllLimitOrdersHandlers = <TxResponse>(
     ...limitOrdersPost,
     ...limitOrdersCancel,
     ...limitOrdersApproveToken,
+    ...limitOrdersFillOrderDirectly,
     ...limitOrdersBuildTx,
   };
 };

@@ -24,7 +24,7 @@ const paraswap = constructFullSDK({
   contractCaller,
 });
 
-const res = paraswap.swap.getAdapters({ type: 'list', namesOnly: false });
+const res = paraswap.swap.getAdapters();
 
 // type Promise<ContractTransaction>
 const txResponse = paraswap.swap.approveToken('1', '0x...');
@@ -36,4 +36,4 @@ const partial = constructPartialSDK(
   constructGetAdapters
 );
 
-const res1 = partial.getAdapters({ type: 'object' });
+const res1 = partial.getAdapters();

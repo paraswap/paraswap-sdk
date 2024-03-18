@@ -18,6 +18,7 @@
 - [ethersDeps](ParaSwap.md#ethersdeps)
 - [fetcher](ParaSwap.md#fetcher)
 - [sdk](ParaSwap.md#sdk)
+- [version](ParaSwap.md#version)
 - [web3Provider](ParaSwap.md#web3provider)
 
 ### Methods
@@ -60,7 +61,7 @@
 
 #### Defined in
 
-[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L70)
+[src/legacy/index.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L77)
 
 ___
 
@@ -70,7 +71,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:67](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L67)
+[src/legacy/index.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L73)
 
 ___
 
@@ -80,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L66)
+[src/legacy/index.ts:72](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L72)
 
 ___
 
@@ -90,7 +91,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L69)
+[src/legacy/index.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L76)
 
 ___
 
@@ -100,7 +101,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:64](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L64)
+[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L70)
 
 ___
 
@@ -110,7 +111,17 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:63](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L63)
+[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L69)
+
+___
+
+### version
+
+• **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
+
+#### Defined in
+
+[src/legacy/index.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L74)
 
 ___
 
@@ -120,7 +131,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:68](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L68)
+[src/legacy/index.ts:75](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L75)
 
 ## Methods
 
@@ -195,11 +206,11 @@ ___
 
 ### getAdapters
 
-▸ **getAdapters**(): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`AdaptersAsObject`](../modules/internal_.md#adaptersasobject)\>
+▸ **getAdapters**(): `Promise`<[`AdaptersAsStrings`](../modules/internal_.md#adaptersasstrings) \| [`APIError`](../modules/internal_.md#apierror)\>
 
 #### Returns
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`AdaptersAsObject`](../modules/internal_.md#adaptersasobject)\>
+`Promise`<[`AdaptersAsStrings`](../modules/internal_.md#adaptersasstrings) \| [`APIError`](../modules/internal_.md#apierror)\>
 
 ___
 

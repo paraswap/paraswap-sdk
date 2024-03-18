@@ -35,6 +35,10 @@ import {
   constructCancelLimitOrder,
 } from './methods/limitOrders/cancelOrder';
 import {
+  FillOrderDirectlyFunctions,
+  constructFillOrderDirectly,
+} from './methods/limitOrders/fillOrderDirectly';
+import {
   GetLimitOrdersFunctions,
   constructGetLimitOrders,
   LimitOrdersUserParams,
@@ -105,6 +109,7 @@ import {
 } from './helpers';
 import type {
   ConstructFetchInput,
+  ContractCallerFunctions,
   ConstructProviderFetchInput,
   Address,
   AddressOrSymbol,
@@ -115,6 +120,7 @@ import type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
+  ParaSwapVersionUnion as ParaSwapVersion,
 } from './types';
 
 export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
@@ -168,6 +174,7 @@ export {
   constructBuildLimitOrder,
   constructSignLimitOrder,
   constructCancelLimitOrder,
+  constructFillOrderDirectly,
   constructGetLimitOrders,
   constructPostLimitOrder,
   constructApproveTokenForLimitOrder,
@@ -210,6 +217,7 @@ export type {
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,
   CancelLimitOrderFunctions,
+  FillOrderDirectlyFunctions,
   GetLimitOrdersContractFunctions,
   BuildLimitOrdersTxFunctions,
   BuildLimitOrderInput,
@@ -232,6 +240,7 @@ export type {
   NFTOrdersUserParams,
   //common
   ConstructFetchInput,
+  ContractCallerFunctions,
   ConstructProviderFetchInput,
   // other types
   Token,
@@ -243,6 +252,7 @@ export type {
   OptimalRate,
   OptionalRate,
   FetcherErrorInterface,
+  ParaSwapVersion,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';

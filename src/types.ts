@@ -1,5 +1,9 @@
 import type { JsonFragment } from '@ethersproject/abi';
-import type { OptimalRate, OptionalRate } from '@paraswap/core';
+import type {
+  OptimalRate,
+  OptionalRate,
+  ParaSwapVersion,
+} from '@paraswap/core';
 import type {
   Address,
   AddressOrSymbol,
@@ -19,8 +23,19 @@ export type {
   OptionalRate,
 };
 
+type EnumerateLiteral<T extends Record<string, any>> = {
+  [K in keyof T]: T[K] extends `${infer n}` ? n : never;
+}[keyof T];
+// keeping version as string allows for more flexibility
+// `alpha`,`beta` and other non-numbers can be used
+// allowing enum only forces users to import and pass that enum
+
+/** @description Passed to version API enpoints as ?version: to /prices and /adapters */
+export type ParaSwapVersionUnion = EnumerateLiteral<typeof ParaSwapVersion>;
+
 export interface ConstructBaseInput {
   apiURL?: string;
+  version?: ParaSwapVersionUnion;
   chainId: number;
 }
 

@@ -1,5 +1,5 @@
-import { API_URL } from '../../constants';
-import { runOnceAndCache } from '../../helpers/misc';
+import { API_URL, DEFAULT_VERSION } from '../../constants';
+import { constructSearchString, runOnceAndCache } from '../../helpers/misc';
 import type { ConstructFetchInput, Address } from '../../types';
 
 export type GetSpender = (signal?: AbortSignal) => Promise<Address>;
@@ -20,10 +20,16 @@ interface AdaptersContractsResult {
 
 export const constructGetSpender = ({
   apiURL = API_URL,
+  version = DEFAULT_VERSION,
   chainId,
   fetcher,
 }: ConstructFetchInput): GetSpenderFunctions => {
-  const fetchURL = `${apiURL}/adapters/contracts?network=${chainId}`;
+  const search = constructSearchString<{ network: number; version: string }>({
+    network: chainId,
+    version,
+  });
+
+  const fetchURL = `${apiURL}/adapters/contracts${search}` as const;
 
   const _getContracts: GetContracts = async (signal) => {
     const data = await fetcher<AdaptersContractsResult>({
