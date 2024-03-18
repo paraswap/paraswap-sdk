@@ -833,7 +833,7 @@ describe('NFT Orders', () => {
   });
 
   // @TODO investigate why broken, is the order still available?
-  test.skip(`fill NFTOrder+Swap through Augustus`, async () => {
+  test(`fill NFTOrder+Swap through Augustus`, async () => {
     // swap AAVE -> MAKER, then fill MAKER (takerAsset) for NFT (makerAsset) Order
 
     // 1 NFT
