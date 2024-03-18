@@ -1,36 +1,34 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / [<internal\>](../modules/internal_.md) / ContractMethodV5
+[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ContractMethodV5
 
 # Enumeration: ContractMethodV5
-
-[<internal>](../modules/internal_.md).ContractMethodV5
 
 ## Table of contents
 
 ### Enumeration Members
 
-- [buy](internal_.ContractMethodV5.md#buy)
-- [buyOnUniswap](internal_.ContractMethodV5.md#buyonuniswap)
-- [buyOnUniswapFork](internal_.ContractMethodV5.md#buyonuniswapfork)
-- [buyOnUniswapV2Fork](internal_.ContractMethodV5.md#buyonuniswapv2fork)
-- [directBalancerV2GivenInSwap](internal_.ContractMethodV5.md#directbalancerv2giveninswap)
-- [directBalancerV2GivenOutSwap](internal_.ContractMethodV5.md#directbalancerv2givenoutswap)
-- [directCurveV1Swap](internal_.ContractMethodV5.md#directcurvev1swap)
-- [directCurveV2Swap](internal_.ContractMethodV5.md#directcurvev2swap)
-- [directUniV3Buy](internal_.ContractMethodV5.md#directuniv3buy)
-- [directUniV3Swap](internal_.ContractMethodV5.md#directuniv3swap)
-- [megaSwap](internal_.ContractMethodV5.md#megaswap)
-- [multiSwap](internal_.ContractMethodV5.md#multiswap)
-- [protectedMegaSwap](internal_.ContractMethodV5.md#protectedmegaswap)
-- [protectedMultiSwap](internal_.ContractMethodV5.md#protectedmultiswap)
-- [protectedSimpleBuy](internal_.ContractMethodV5.md#protectedsimplebuy)
-- [protectedSimpleSwap](internal_.ContractMethodV5.md#protectedsimpleswap)
-- [simpleBuy](internal_.ContractMethodV5.md#simplebuy)
-- [simpleSwap](internal_.ContractMethodV5.md#simpleswap)
-- [swapOnUniswap](internal_.ContractMethodV5.md#swaponuniswap)
-- [swapOnUniswapFork](internal_.ContractMethodV5.md#swaponuniswapfork)
-- [swapOnUniswapV2Fork](internal_.ContractMethodV5.md#swaponuniswapv2fork)
-- [swapOnZeroXv2](internal_.ContractMethodV5.md#swaponzeroxv2)
-- [swapOnZeroXv4](internal_.ContractMethodV5.md#swaponzeroxv4)
+- [buy](ContractMethodV5.md#buy)
+- [buyOnUniswap](ContractMethodV5.md#buyonuniswap)
+- [buyOnUniswapFork](ContractMethodV5.md#buyonuniswapfork)
+- [buyOnUniswapV2Fork](ContractMethodV5.md#buyonuniswapv2fork)
+- [directBalancerV2GivenInSwap](ContractMethodV5.md#directbalancerv2giveninswap)
+- [directBalancerV2GivenOutSwap](ContractMethodV5.md#directbalancerv2givenoutswap)
+- [directCurveV1Swap](ContractMethodV5.md#directcurvev1swap)
+- [directCurveV2Swap](ContractMethodV5.md#directcurvev2swap)
+- [directUniV3Buy](ContractMethodV5.md#directuniv3buy)
+- [directUniV3Swap](ContractMethodV5.md#directuniv3swap)
+- [megaSwap](ContractMethodV5.md#megaswap)
+- [multiSwap](ContractMethodV5.md#multiswap)
+- [protectedMegaSwap](ContractMethodV5.md#protectedmegaswap)
+- [protectedMultiSwap](ContractMethodV5.md#protectedmultiswap)
+- [protectedSimpleBuy](ContractMethodV5.md#protectedsimplebuy)
+- [protectedSimpleSwap](ContractMethodV5.md#protectedsimpleswap)
+- [simpleBuy](ContractMethodV5.md#simplebuy)
+- [simpleSwap](ContractMethodV5.md#simpleswap)
+- [swapOnUniswap](ContractMethodV5.md#swaponuniswap)
+- [swapOnUniswapFork](ContractMethodV5.md#swaponuniswapfork)
+- [swapOnUniswapV2Fork](ContractMethodV5.md#swaponuniswapv2fork)
+- [swapOnZeroXv2](ContractMethodV5.md#swaponzeroxv2)
+- [swapOnZeroXv4](ContractMethodV5.md#swaponzeroxv4)
 
 ## Enumeration Members
 

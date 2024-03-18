@@ -10,6 +10,8 @@
 
 ### Enumerations
 
+- [ContractMethodV5](enums/ContractMethodV5.md)
+- [ContractMethodV6](enums/ContractMethodV6.md)
 - [SwapSide](enums/SwapSide.md)
 
 ### Classes
@@ -24,6 +26,7 @@
 - [BuildOrderDataInput](interfaces/BuildOrderDataInput.md)
 - [ConstructFetchInput](interfaces/ConstructFetchInput.md)
 - [ConstructProviderFetchInput](interfaces/ConstructProviderFetchInput.md)
+- [ContractCallerFunctions](interfaces/ContractCallerFunctions.md)
 - [EthersProviderDeps](interfaces/EthersProviderDeps.md)
 - [FetcherErrorInterface](interfaces/FetcherErrorInterface.md)
 - [TransactionParams](interfaces/TransactionParams.md)
@@ -59,6 +62,7 @@
 - [CancelNFTOrderFunctions](modules.md#cancelnftorderfunctions)
 - [ContractMethod](modules.md#contractmethod)
 - [FetcherFunction](modules.md#fetcherfunction)
+- [FillOrderDirectlyFunctions](modules.md#fillorderdirectlyfunctions)
 - [GetAdaptersFunctions](modules.md#getadaptersfunctions)
 - [GetBalancesFunctions](modules.md#getbalancesfunctions)
 - [GetLimitOrdersContractFunctions](modules.md#getlimitorderscontractfunctions)
@@ -92,6 +96,7 @@
 - [OptimalRate](modules.md#optimalrate)
 - [OptionalRate](modules.md#optionalrate)
 - [OrderData](modules.md#orderdata)
+- [ParaSwapVersion](modules.md#paraswapversion)
 - [PostLimitOrderFunctions](modules.md#postlimitorderfunctions)
 - [PostNFTOrderFunctions](modules.md#postnftorderfunctions)
 - [PriceString](modules.md#pricestring)
@@ -118,6 +123,7 @@
 - [API\_URL](modules.md#api_url)
 - [AssetType](modules.md#assettype)
 - [ContractMethod](modules.md#contractmethod-1)
+- [DEFAULT\_VERSION](modules.md#default_version)
 
 ### Functions
 
@@ -136,6 +142,7 @@
 - [constructCancelNFTOrder](modules.md#constructcancelnftorder)
 - [constructEthersContractCaller](modules.md#constructetherscontractcaller)
 - [constructFetchFetcher](modules.md#constructfetchfetcher)
+- [constructFillOrderDirectly](modules.md#constructfillorderdirectly)
 - [constructFullSDK](modules.md#constructfullsdk)
 - [constructGetAdapters](modules.md#constructgetadapters)
 - [constructGetBalances](modules.md#constructgetbalances)
@@ -297,17 +304,17 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L20)
+[src/methods/limitOrders/buildOrder.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L21)
 
 ___
 
 ### BuildLimitOrderInput
 
-Ƭ **BuildLimitOrderInput**: [`Omit`](modules/internal_.md#omit)<[`BuildOrderDataInput`](interfaces/BuildOrderDataInput.md), ``"chainId"`` \| ``"verifyingContract"`` \| ``"AugustusAddress"``\>
+Ƭ **BuildLimitOrderInput**: [`Omit`](modules/internal_.md#omit)<[`BuildOrderDataInput`](interfaces/BuildOrderDataInput.md), ``"chainId"`` \| ``"verifyingContract"`` \| ``"AugustusAddress"`` \| ``"AppVersion"``\>
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L10)
+[src/methods/limitOrders/buildOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L11)
 
 ___
 
@@ -335,7 +342,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L41)
+[src/methods/limitOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L46)
 
 ___
 
@@ -389,7 +396,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L41)
+[src/methods/nftOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L46)
 
 ___
 
@@ -546,7 +553,7 @@ ___
 
 ### ContractMethod
 
-Ƭ **ContractMethod**: [`ContractMethodV5`](enums/internal_.ContractMethodV5.md) \| [`ContractMethodV6`](enums/internal_.ContractMethodV6.md)
+Ƭ **ContractMethod**: [`ContractMethodV5`](enums/ContractMethodV5.md) \| [`ContractMethodV6`](enums/ContractMethodV6.md)
 
 #### Defined in
 
@@ -583,7 +590,29 @@ ___
 
 #### Defined in
 
-[src/types.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L42)
+[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L57)
+
+___
+
+### FillOrderDirectlyFunctions
+
+Ƭ **FillOrderDirectlyFunctions**<`T`\>: `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `fillOrderDirectly` | [`FillOrderDirectly`](modules/internal_.md#fillorderdirectly)<`T`\> |
+
+#### Defined in
+
+[src/methods/limitOrders/fillOrderDirectly.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L7)
 
 ___
 
@@ -595,11 +624,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `getAdapters` | [`GetAdaptersFunc`](interfaces/internal_.GetAdaptersFunc.md) |
+| `getAdapters` | (`signal?`: `AbortSignal`) => `Promise`<[`AdaptersAsStrings`](modules/internal_.md#adaptersasstrings)\> |
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L35)
+[src/methods/swap/adapters.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L7)
 
 ___
 
@@ -704,7 +733,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L65)
+[src/methods/swap/rates.ts:71](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L71)
 
 ___
 
@@ -818,7 +847,7 @@ ___
 
 ### LimitOrderHandlers
 
-Ƭ **LimitOrderHandlers**<`T`\>: [`SubmitLimitOrderFuncs`](modules.md#submitlimitorderfuncs) & [`BuildLimitOrderFunctions`](modules.md#buildlimitorderfunctions) & [`SignLimitOrderFunctions`](modules.md#signlimitorderfunctions) & [`PostLimitOrderFunctions`](modules.md#postlimitorderfunctions) & [`GetLimitOrdersFunctions`](modules.md#getlimitordersfunctions) & [`GetLimitOrdersContractFunctions`](modules.md#getlimitorderscontractfunctions) & [`BuildLimitOrdersTxFunctions`](modules.md#buildlimitorderstxfunctions) & [`CancelLimitOrderFunctions`](modules.md#cancellimitorderfunctions)<`T`\> & [`ApproveTokenForLimitOrderFunctions`](modules.md#approvetokenforlimitorderfunctions)<`T`\>
+Ƭ **LimitOrderHandlers**<`T`\>: [`SubmitLimitOrderFuncs`](modules.md#submitlimitorderfuncs) & [`BuildLimitOrderFunctions`](modules.md#buildlimitorderfunctions) & [`SignLimitOrderFunctions`](modules.md#signlimitorderfunctions) & [`PostLimitOrderFunctions`](modules.md#postlimitorderfunctions) & [`GetLimitOrdersFunctions`](modules.md#getlimitordersfunctions) & [`GetLimitOrdersContractFunctions`](modules.md#getlimitorderscontractfunctions) & [`BuildLimitOrdersTxFunctions`](modules.md#buildlimitorderstxfunctions) & [`CancelLimitOrderFunctions`](modules.md#cancellimitorderfunctions)<`T`\> & [`ApproveTokenForLimitOrderFunctions`](modules.md#approvetokenforlimitorderfunctions)<`T`\> & [`FillOrderDirectlyFunctions`](modules.md#fillorderdirectlyfunctions)<`T`\>
 
 #### Type parameters
 
@@ -828,7 +857,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:102](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L102)
+[src/methods/limitOrders/index.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L106)
 
 ___
 
@@ -901,7 +930,7 @@ ___
 
 ### LimitOrdersUserParams
 
-Ƭ **LimitOrdersUserParams**: { `maker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } \| { `taker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } & [`PaginationParams`](interfaces/internal_.PaginationParams.md)
+Ƭ **LimitOrdersUserParams**: { `maker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } \| { `taker`: [`Address`](modules.md#address) ; `type`: [`LimitOrderType`](modules.md#limitordertype)  } & [`PaginationParams`](modules/internal_.md#paginationparams)
 
 #### Defined in
 
@@ -1051,11 +1080,42 @@ ___
 
 ### OptimalRate
 
-Ƭ **OptimalRate**: [`OptimalRateV5`](modules/internal_.md#optimalratev5) \| [`OptimalRateV6`](modules/internal_.md#optimalratev6)
+Ƭ **OptimalRate**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `bestRoute` | [`OptimalRoute`](modules/internal_.md#optimalroute)[] |
+| `blockNumber` | `number` |
+| `contractAddress` | [`Address`](modules/internal_.md#address) |
+| `contractMethod` | `string` |
+| `destAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `destDecimals` | `number` |
+| `destToken` | [`Address`](modules/internal_.md#address) |
+| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `gasCost` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `gasCostL1Wei?` | `string` |
+| `gasCostUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `hmac` | `string` |
+| `maxImpact?` | `number` |
+| `maxImpactReached?` | `boolean` |
+| `maxUSDImpact?` | `number` |
+| `network` | `number` |
+| `others?` | [`OptionalRate`](modules.md#optionalrate)[] |
+| `partner?` | `string` |
+| `partnerFee` | `number` |
+| `side` | [`SwapSide`](enums/SwapSide.md) |
+| `srcAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `srcDecimals` | `number` |
+| `srcToken` | [`Address`](modules/internal_.md#address) |
+| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `tokenTransferProxy` | [`Address`](modules/internal_.md#address) |
+| `version` | [`ParaSwapVersion`](enums/internal_.ParaSwapVersion.md) |
 
 #### Defined in
 
-node_modules/@paraswap/core/build/types.d.ts:70
+node_modules/@paraswap/core/build/types.d.ts:36
 
 ___
 
@@ -1098,7 +1158,21 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L46)
+[src/methods/limitOrders/helpers/buildOrderData.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L47)
+
+___
+
+### ParaSwapVersion
+
+Ƭ **ParaSwapVersion**: [`EnumerateLiteral`](modules/internal_.md#enumerateliteral)<typeof [`ParaSwapVersion`](enums/internal_.ParaSwapVersion.md)\>
+
+**`Description`**
+
+Passed to version API enpoints as ?version: to /prices and /adapters
+
+#### Defined in
+
+[src/types.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L34)
 
 ___
 
@@ -1158,7 +1232,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L14)
+[src/sdk/partial.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L16)
 
 ___
 
@@ -1228,7 +1302,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L40)
+[src/methods/limitOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L41)
 
 ___
 
@@ -1252,37 +1326,21 @@ ___
 
 ### SimpleFetchSDK
 
-Ƭ **SimpleFetchSDK**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `limitOrders` | [`LimitOrdersFetchMethods`](modules/internal_.md#limitordersfetchmethods) |
-| `nftOrders` | [`NFTOrdersFetchMethods`](modules/internal_.md#nftordersfetchmethods) |
-| `swap` | [`SwapFetchMethods`](modules/internal_.md#swapfetchmethods) |
+Ƭ **SimpleFetchSDK**: { `limitOrders`: [`LimitOrdersFetchMethods`](modules/internal_.md#limitordersfetchmethods) ; `nftOrders`: [`NFTOrdersFetchMethods`](modules/internal_.md#nftordersfetchmethods) ; `swap`: [`SwapFetchMethods`](modules/internal_.md#swapfetchmethods)  } & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
 
 #### Defined in
 
-[src/sdk/simple.ts:115](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L115)
+[src/sdk/simple.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L116)
 
 ___
 
 ### SimpleSDK
 
-Ƭ **SimpleSDK**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `limitOrders` | [`LimitOrderHandlers`](modules.md#limitorderhandlers)<[`TxHash`](modules.md#txhash)\> |
-| `nftOrders` | [`NFTOrderHandlers`](modules.md#nftorderhandlers)<[`TxHash`](modules.md#txhash)\> |
-| `swap` | [`SwapSDKMethods`](modules/internal_.md#swapsdkmethods)<[`TxHash`](modules.md#txhash)\> |
+Ƭ **SimpleSDK**: { `limitOrders`: [`LimitOrderHandlers`](modules.md#limitorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `nftOrders`: [`NFTOrderHandlers`](modules.md#nftorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `swap`: [`SwapSDKMethods`](modules/internal_.md#swapsdkmethods)<[`TxHash`](modules.md#txhash)\>  } & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
 
 #### Defined in
 
-[src/sdk/simple.ts:121](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L121)
+[src/sdk/simple.ts:122](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L122)
 
 ___
 
@@ -1292,7 +1350,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:138](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L138)
+[src/sdk/simple.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L139)
 
 ___
 
@@ -1309,7 +1367,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L41)
+[src/methods/limitOrders/index.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L45)
 
 ___
 
@@ -1417,7 +1475,7 @@ ___
 
 #### Defined in
 
-[src/constants.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L3)
+[src/constants.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L10)
 
 ___
 
@@ -1447,47 +1505,57 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `buy` | [`buy`](enums/internal_.ContractMethodV5.md#buy) |
-| `buyOnUniswap` | [`buyOnUniswap`](enums/internal_.ContractMethodV5.md#buyonuniswap) |
-| `buyOnUniswapFork` | [`buyOnUniswapFork`](enums/internal_.ContractMethodV5.md#buyonuniswapfork) |
-| `buyOnUniswapV2Fork` | [`buyOnUniswapV2Fork`](enums/internal_.ContractMethodV5.md#buyonuniswapv2fork) |
-| `directBalancerV2GivenInSwap` | [`directBalancerV2GivenInSwap`](enums/internal_.ContractMethodV5.md#directbalancerv2giveninswap) |
-| `directBalancerV2GivenOutSwap` | [`directBalancerV2GivenOutSwap`](enums/internal_.ContractMethodV5.md#directbalancerv2givenoutswap) |
-| `directCurveV1Swap` | [`directCurveV1Swap`](enums/internal_.ContractMethodV5.md#directcurvev1swap) |
-| `directCurveV2Swap` | [`directCurveV2Swap`](enums/internal_.ContractMethodV5.md#directcurvev2swap) |
-| `directUniV3Buy` | [`directUniV3Buy`](enums/internal_.ContractMethodV5.md#directuniv3buy) |
-| `directUniV3Swap` | [`directUniV3Swap`](enums/internal_.ContractMethodV5.md#directuniv3swap) |
-| `megaSwap` | [`megaSwap`](enums/internal_.ContractMethodV5.md#megaswap) |
-| `multiSwap` | [`multiSwap`](enums/internal_.ContractMethodV5.md#multiswap) |
-| `protectedMegaSwap` | [`protectedMegaSwap`](enums/internal_.ContractMethodV5.md#protectedmegaswap) |
-| `protectedMultiSwap` | [`protectedMultiSwap`](enums/internal_.ContractMethodV5.md#protectedmultiswap) |
-| `protectedSimpleBuy` | [`protectedSimpleBuy`](enums/internal_.ContractMethodV5.md#protectedsimplebuy) |
-| `protectedSimpleSwap` | [`protectedSimpleSwap`](enums/internal_.ContractMethodV5.md#protectedsimpleswap) |
-| `simpleBuy` | [`simpleBuy`](enums/internal_.ContractMethodV5.md#simplebuy) |
-| `simpleSwap` | [`simpleSwap`](enums/internal_.ContractMethodV5.md#simpleswap) |
-| `swapExactAmountIn` | [`swapExactAmountIn`](enums/internal_.ContractMethodV6.md#swapexactamountin) |
-| `swapExactAmountInOnBalancerV2` | [`swapExactAmountInOnBalancerV2`](enums/internal_.ContractMethodV6.md#swapexactamountinonbalancerv2) |
-| `swapExactAmountInOnCurveV1` | [`swapExactAmountInOnCurveV1`](enums/internal_.ContractMethodV6.md#swapexactamountinoncurvev1) |
-| `swapExactAmountInOnCurveV2` | [`swapExactAmountInOnCurveV2`](enums/internal_.ContractMethodV6.md#swapexactamountinoncurvev2) |
-| `swapExactAmountInOnUniswapV2` | [`swapExactAmountInOnUniswapV2`](enums/internal_.ContractMethodV6.md#swapexactamountinonuniswapv2) |
-| `swapExactAmountInOnUniswapV3` | [`swapExactAmountInOnUniswapV3`](enums/internal_.ContractMethodV6.md#swapexactamountinonuniswapv3) |
-| `swapExactAmountInOutOnAugustusRFQTryBatchFill` | [`swapExactAmountInOutOnAugustusRFQTryBatchFill`](enums/internal_.ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill) |
-| `swapExactAmountInOutOnMakerPSM` | [`swapExactAmountInOutOnMakerPSM`](enums/internal_.ContractMethodV6.md#swapexactamountinoutonmakerpsm) |
-| `swapExactAmountOut` | [`swapExactAmountOut`](enums/internal_.ContractMethodV6.md#swapexactamountout) |
-| `swapExactAmountOutOnBalancerV2` | [`swapExactAmountOutOnBalancerV2`](enums/internal_.ContractMethodV6.md#swapexactamountoutonbalancerv2) |
-| `swapExactAmountOutOnUniswapV2` | [`swapExactAmountOutOnUniswapV2`](enums/internal_.ContractMethodV6.md#swapexactamountoutonuniswapv2) |
-| `swapExactAmountOutOnUniswapV3` | [`swapExactAmountOutOnUniswapV3`](enums/internal_.ContractMethodV6.md#swapexactamountoutonuniswapv3) |
-| `swapOnUniswap` | [`swapOnUniswap`](enums/internal_.ContractMethodV5.md#swaponuniswap) |
-| `swapOnUniswapFork` | [`swapOnUniswapFork`](enums/internal_.ContractMethodV5.md#swaponuniswapfork) |
-| `swapOnUniswapV2Fork` | [`swapOnUniswapV2Fork`](enums/internal_.ContractMethodV5.md#swaponuniswapv2fork) |
-| `swapOnZeroXv2` | [`swapOnZeroXv2`](enums/internal_.ContractMethodV5.md#swaponzeroxv2) |
-| `swapOnZeroXv4` | [`swapOnZeroXv4`](enums/internal_.ContractMethodV5.md#swaponzeroxv4) |
+| `buy` | [`buy`](enums/ContractMethodV5.md#buy) |
+| `buyOnUniswap` | [`buyOnUniswap`](enums/ContractMethodV5.md#buyonuniswap) |
+| `buyOnUniswapFork` | [`buyOnUniswapFork`](enums/ContractMethodV5.md#buyonuniswapfork) |
+| `buyOnUniswapV2Fork` | [`buyOnUniswapV2Fork`](enums/ContractMethodV5.md#buyonuniswapv2fork) |
+| `directBalancerV2GivenInSwap` | [`directBalancerV2GivenInSwap`](enums/ContractMethodV5.md#directbalancerv2giveninswap) |
+| `directBalancerV2GivenOutSwap` | [`directBalancerV2GivenOutSwap`](enums/ContractMethodV5.md#directbalancerv2givenoutswap) |
+| `directCurveV1Swap` | [`directCurveV1Swap`](enums/ContractMethodV5.md#directcurvev1swap) |
+| `directCurveV2Swap` | [`directCurveV2Swap`](enums/ContractMethodV5.md#directcurvev2swap) |
+| `directUniV3Buy` | [`directUniV3Buy`](enums/ContractMethodV5.md#directuniv3buy) |
+| `directUniV3Swap` | [`directUniV3Swap`](enums/ContractMethodV5.md#directuniv3swap) |
+| `megaSwap` | [`megaSwap`](enums/ContractMethodV5.md#megaswap) |
+| `multiSwap` | [`multiSwap`](enums/ContractMethodV5.md#multiswap) |
+| `protectedMegaSwap` | [`protectedMegaSwap`](enums/ContractMethodV5.md#protectedmegaswap) |
+| `protectedMultiSwap` | [`protectedMultiSwap`](enums/ContractMethodV5.md#protectedmultiswap) |
+| `protectedSimpleBuy` | [`protectedSimpleBuy`](enums/ContractMethodV5.md#protectedsimplebuy) |
+| `protectedSimpleSwap` | [`protectedSimpleSwap`](enums/ContractMethodV5.md#protectedsimpleswap) |
+| `simpleBuy` | [`simpleBuy`](enums/ContractMethodV5.md#simplebuy) |
+| `simpleSwap` | [`simpleSwap`](enums/ContractMethodV5.md#simpleswap) |
+| `swapExactAmountIn` | [`swapExactAmountIn`](enums/ContractMethodV6.md#swapexactamountin) |
+| `swapExactAmountInOnBalancerV2` | [`swapExactAmountInOnBalancerV2`](enums/ContractMethodV6.md#swapexactamountinonbalancerv2) |
+| `swapExactAmountInOnCurveV1` | [`swapExactAmountInOnCurveV1`](enums/ContractMethodV6.md#swapexactamountinoncurvev1) |
+| `swapExactAmountInOnCurveV2` | [`swapExactAmountInOnCurveV2`](enums/ContractMethodV6.md#swapexactamountinoncurvev2) |
+| `swapExactAmountInOnUniswapV2` | [`swapExactAmountInOnUniswapV2`](enums/ContractMethodV6.md#swapexactamountinonuniswapv2) |
+| `swapExactAmountInOnUniswapV3` | [`swapExactAmountInOnUniswapV3`](enums/ContractMethodV6.md#swapexactamountinonuniswapv3) |
+| `swapExactAmountInOutOnAugustusRFQTryBatchFill` | [`swapExactAmountInOutOnAugustusRFQTryBatchFill`](enums/ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill) |
+| `swapExactAmountInOutOnMakerPSM` | [`swapExactAmountInOutOnMakerPSM`](enums/ContractMethodV6.md#swapexactamountinoutonmakerpsm) |
+| `swapExactAmountOut` | [`swapExactAmountOut`](enums/ContractMethodV6.md#swapexactamountout) |
+| `swapExactAmountOutOnBalancerV2` | [`swapExactAmountOutOnBalancerV2`](enums/ContractMethodV6.md#swapexactamountoutonbalancerv2) |
+| `swapExactAmountOutOnUniswapV2` | [`swapExactAmountOutOnUniswapV2`](enums/ContractMethodV6.md#swapexactamountoutonuniswapv2) |
+| `swapExactAmountOutOnUniswapV3` | [`swapExactAmountOutOnUniswapV3`](enums/ContractMethodV6.md#swapexactamountoutonuniswapv3) |
+| `swapOnUniswap` | [`swapOnUniswap`](enums/ContractMethodV5.md#swaponuniswap) |
+| `swapOnUniswapFork` | [`swapOnUniswapFork`](enums/ContractMethodV5.md#swaponuniswapfork) |
+| `swapOnUniswapV2Fork` | [`swapOnUniswapV2Fork`](enums/ContractMethodV5.md#swaponuniswapv2fork) |
+| `swapOnZeroXv2` | [`swapOnZeroXv2`](enums/ContractMethodV5.md#swaponzeroxv2) |
+| `swapOnZeroXv4` | [`swapOnZeroXv4`](enums/ContractMethodV5.md#swaponzeroxv4) |
 
 #### Defined in
 
 node_modules/@paraswap/core/build/constants.d.ts:44
 
 node_modules/@paraswap/core/build/constants.d.ts:81
+
+___
+
+### DEFAULT\_VERSION
+
+• `Const` **DEFAULT\_VERSION**: [`ParaSwapVersion`](modules.md#paraswapversion) = `'6'`
+
+#### Defined in
+
+[src/constants.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L11)
 
 ## Functions
 
@@ -1752,7 +1820,7 @@ ___
 
 ### constructEthersContractCaller
 
-▸ **constructEthersContractCaller**(`__namedParameters`, `account?`): [`ContractCallerFunctions`](interfaces/internal_.ContractCallerFunctions.md)<[`ContractTransaction`](interfaces/internal_.ContractTransaction.md)\>
+▸ **constructEthersContractCaller**(`__namedParameters`, `account?`): [`ContractCallerFunctions`](interfaces/ContractCallerFunctions.md)<[`ContractTransaction`](interfaces/internal_.ContractTransaction.md)\>
 
 #### Parameters
 
@@ -1763,7 +1831,7 @@ ___
 
 #### Returns
 
-[`ContractCallerFunctions`](interfaces/internal_.ContractCallerFunctions.md)<[`ContractTransaction`](interfaces/internal_.ContractTransaction.md)\>
+[`ContractCallerFunctions`](interfaces/ContractCallerFunctions.md)<[`ContractTransaction`](interfaces/internal_.ContractTransaction.md)\>
 
 ___
 
@@ -1781,6 +1849,28 @@ ___
 #### Returns
 
 [`FetcherFunction`](modules.md#fetcherfunction)
+
+___
+
+### constructFillOrderDirectly
+
+▸ **constructFillOrderDirectly**<`T`\>(`options`): [`FillOrderDirectlyFunctions`](modules.md#fillorderdirectlyfunctions)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | [`ConstructProviderFetchInput`](interfaces/ConstructProviderFetchInput.md)<`T`, ``"transactCall"``\> |
+
+#### Returns
+
+[`FillOrderDirectlyFunctions`](modules.md#fillorderdirectlyfunctions)<`T`\>
 
 ___
 
@@ -1956,7 +2046,7 @@ ___
 
 ### constructPartialSDK
 
-▸ **constructPartialSDK**<`Config`, `Funcs`\>(`config`, ...`funcs`): [`InferWithTxResponse`](modules/internal_.md#inferwithtxresponse)<`Config`, `Funcs`\>
+▸ **constructPartialSDK**<`Config`, `Funcs`\>(`config`, ...`funcs`): [`InferWithTxResponse`](modules/internal_.md#inferwithtxresponse)<`Config`, `Funcs`\> & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
 
 **`Description`**
 
@@ -1978,7 +2068,7 @@ construct composable SDK with methods you choose yourself
 
 #### Returns
 
-[`InferWithTxResponse`](modules/internal_.md#inferwithtxresponse)<`Config`, `Funcs`\>
+[`InferWithTxResponse`](modules/internal_.md#inferwithtxresponse)<`Config`, `Funcs`\> & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
 
 ___
 
@@ -2155,7 +2245,7 @@ ___
 
 ### constructWeb3ContractCaller
 
-▸ **constructWeb3ContractCaller**(`web3`, `account?`): [`ContractCallerFunctions`](interfaces/internal_.ContractCallerFunctions.md)<[`Web3UnpromiEvent`](modules.md#web3unpromievent)\>
+▸ **constructWeb3ContractCaller**(`web3`, `account?`): [`ContractCallerFunctions`](interfaces/ContractCallerFunctions.md)<[`Web3UnpromiEvent`](modules.md#web3unpromievent)\>
 
 #### Parameters
 
@@ -2166,7 +2256,7 @@ ___
 
 #### Returns
 
-[`ContractCallerFunctions`](interfaces/internal_.ContractCallerFunctions.md)<[`Web3UnpromiEvent`](modules.md#web3unpromievent)\>
+[`ContractCallerFunctions`](interfaces/ContractCallerFunctions.md)<[`Web3UnpromiEvent`](modules.md#web3unpromievent)\>
 
 ___
 
