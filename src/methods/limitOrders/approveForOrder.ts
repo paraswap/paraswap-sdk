@@ -7,6 +7,10 @@ export type ApproveTokenForLimitOrderFunctions<T> = {
   /** @description approving AugustusRFQ as spender for makerAsset */
   approveMakerTokenForLimitOrder: ApproveToken<T>;
   /** @description approving AugustusSwapper as spender for takerAsset for Limit Orders that will be executed through it */
+  /** @deprecated for OTC Orders approve directly the contract that the Order will be filled through:
+   * AugustusSwapper for old P2P orders;
+   * AugustusRFQ for new P2P orders
+   */
   approveTakerTokenForLimitOrder: ApproveToken<T>;
 };
 
