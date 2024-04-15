@@ -90,14 +90,9 @@ export function buildOrderData({
     taker = ZERO_ADDRESS;
   } else {
     // otherwise for p2p order ->
-    if (AppVersion === '6') {
-      // limit taker to EOA for v6 version (no Arbitrary Token Swaps + OTC Fill, or OTC Fill through AugustusSwapper)
-      taker = takerInNonce;
-    } else {
-      // on v5
-      // -> fill through Augustus only
-      taker = AugustusAddress;
-    }
+    // all new P2P Orders only fillable directly by EOA taker
+    // not through Augustus, this also disables BUY+FILL Order flow
+    taker = takerInNonce;
   }
 
   const order: OrderData = {
