@@ -81,7 +81,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "2.0.0",
+    "@paraswap/core": "2.1.1",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },
