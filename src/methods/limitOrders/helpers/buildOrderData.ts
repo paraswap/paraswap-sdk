@@ -90,7 +90,7 @@ export function buildOrderData({
     taker = ZERO_ADDRESS;
   } else {
     // otherwise for p2p order ->
-    if (AppVersion === '6') {
+    if (AppVersion === '6.1') {
       // limit taker to EOA for v6 version (no Arbitrary Token Swaps + OTC Fill, or OTC Fill through AugustusSwapper)
       taker = takerInNonce;
     } else {
