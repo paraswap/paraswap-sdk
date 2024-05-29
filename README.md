@@ -27,7 +27,7 @@ There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and
 
 ### Simple SDK
 
-Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation). The resulting SDK will be able to use all methods that query the API.
+Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation), and an optional `version` (`'5'` or `'6.1'`) parameter that corresponds to the API version SDK will be making requests to. The resulting SDK will be able to use all methods that query the API.
 
 ```ts
   import { constructSimpleSDK } from '@paraswap/sdk';
@@ -36,7 +36,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
   // construct minimal SDK with fetcher only
   const paraSwapMin = constructSimpleSDK({chainId: 1, axios});
   // or
-  const paraSwapMin = constructSimpleSDK({chainId: 1, fetch: window.fetch});
+  const paraSwapMin = constructSimpleSDK({chainId: 1, fetch: window.fetch, version: '5'});
 
   const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
