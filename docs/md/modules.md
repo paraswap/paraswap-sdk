@@ -1529,12 +1529,12 @@ ___
 | `swapExactAmountInOnCurveV2` | [`swapExactAmountInOnCurveV2`](enums/ContractMethodV6.md#swapexactamountinoncurvev2) |
 | `swapExactAmountInOnUniswapV2` | [`swapExactAmountInOnUniswapV2`](enums/ContractMethodV6.md#swapexactamountinonuniswapv2) |
 | `swapExactAmountInOnUniswapV3` | [`swapExactAmountInOnUniswapV3`](enums/ContractMethodV6.md#swapexactamountinonuniswapv3) |
-| `swapExactAmountInOutOnAugustusRFQTryBatchFill` | [`swapExactAmountInOutOnAugustusRFQTryBatchFill`](enums/ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill) |
 | `swapExactAmountInOutOnMakerPSM` | [`swapExactAmountInOutOnMakerPSM`](enums/ContractMethodV6.md#swapexactamountinoutonmakerpsm) |
 | `swapExactAmountOut` | [`swapExactAmountOut`](enums/ContractMethodV6.md#swapexactamountout) |
 | `swapExactAmountOutOnBalancerV2` | [`swapExactAmountOutOnBalancerV2`](enums/ContractMethodV6.md#swapexactamountoutonbalancerv2) |
 | `swapExactAmountOutOnUniswapV2` | [`swapExactAmountOutOnUniswapV2`](enums/ContractMethodV6.md#swapexactamountoutonuniswapv2) |
 | `swapExactAmountOutOnUniswapV3` | [`swapExactAmountOutOnUniswapV3`](enums/ContractMethodV6.md#swapexactamountoutonuniswapv3) |
+| `swapOnAugustusRFQTryBatchFill` | [`swapOnAugustusRFQTryBatchFill`](enums/ContractMethodV6.md#swaponaugustusrfqtrybatchfill) |
 | `swapOnUniswap` | [`swapOnUniswap`](enums/ContractMethodV5.md#swaponuniswap) |
 | `swapOnUniswapFork` | [`swapOnUniswapFork`](enums/ContractMethodV5.md#swaponuniswapfork) |
 | `swapOnUniswapV2Fork` | [`swapOnUniswapV2Fork`](enums/ContractMethodV5.md#swaponuniswapv2fork) |
@@ -1551,7 +1551,7 @@ ___
 
 ### DEFAULT\_VERSION
 
-• `Const` **DEFAULT\_VERSION**: [`ParaSwapVersion`](modules.md#paraswapversion) = `'6'`
+• `Const` **DEFAULT\_VERSION**: [`ParaSwapVersion`](modules.md#paraswapversion) = `'5'`
 
 #### Defined in
 
