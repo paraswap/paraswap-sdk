@@ -19,6 +19,7 @@ Array [
   "BProtocol",
   "Jarvis",
   "Lido",
+  "EtherFi",
   "CurveV1",
   "Swerve",
   "BalancerV1",
@@ -52,10 +53,13 @@ Array [
   "Hashflow",
   "MaverickV1",
   "SwaapV2",
+  "AngleStakedStableUSD",
+  "AngleStakedStableEUR",
   "SolidlyV3",
   "Smardex",
   "Wombat",
   "Swell",
+  "Spark",
 ]
 `;
 
@@ -78,6 +82,7 @@ Array [
   "BProtocol",
   "Jarvis",
   "Lido",
+  "EtherFi",
   "CurveV1",
   "Swerve",
   "BalancerV1",
@@ -111,9 +116,12 @@ Array [
   "Hashflow",
   "MaverickV1",
   "SwaapV2",
+  "AngleStakedStableUSD",
+  "AngleStakedStableEUR",
   "SolidlyV3",
   "Smardex",
   "Wombat",
   "Swell",
+  "Spark",
 ]
 `;
