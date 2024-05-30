@@ -12,12 +12,12 @@
 - [swapExactAmountInOnCurveV2](ContractMethodV6.md#swapexactamountinoncurvev2)
 - [swapExactAmountInOnUniswapV2](ContractMethodV6.md#swapexactamountinonuniswapv2)
 - [swapExactAmountInOnUniswapV3](ContractMethodV6.md#swapexactamountinonuniswapv3)
-- [swapExactAmountInOutOnAugustusRFQTryBatchFill](ContractMethodV6.md#swapexactamountinoutonaugustusrfqtrybatchfill)
 - [swapExactAmountInOutOnMakerPSM](ContractMethodV6.md#swapexactamountinoutonmakerpsm)
 - [swapExactAmountOut](ContractMethodV6.md#swapexactamountout)
 - [swapExactAmountOutOnBalancerV2](ContractMethodV6.md#swapexactamountoutonbalancerv2)
 - [swapExactAmountOutOnUniswapV2](ContractMethodV6.md#swapexactamountoutonuniswapv2)
 - [swapExactAmountOutOnUniswapV3](ContractMethodV6.md#swapexactamountoutonuniswapv3)
+- [swapOnAugustusRFQTryBatchFill](ContractMethodV6.md#swaponaugustusrfqtrybatchfill)
 
 ## Enumeration Members
 
@@ -81,16 +81,6 @@ node_modules/@paraswap/core/build/constants.d.ts:35
 
 ___
 
-### swapExactAmountInOutOnAugustusRFQTryBatchFill
-
-• **swapExactAmountInOutOnAugustusRFQTryBatchFill** = ``"swapExactAmountInOutOnAugustusRFQTryBatchFill"``
-
-#### Defined in
-
-node_modules/@paraswap/core/build/constants.d.ts:41
-
-___
-
 ### swapExactAmountInOutOnMakerPSM
 
 • **swapExactAmountInOutOnMakerPSM** = ``"swapExactAmountInOutOnMakerPSM"``
@@ -138,3 +128,13 @@ ___
 #### Defined in
 
 node_modules/@paraswap/core/build/constants.d.ts:36
+
+___
+
+### swapOnAugustusRFQTryBatchFill
+
+• **swapOnAugustusRFQTryBatchFill** = ``"swapOnAugustusRFQTryBatchFill"``
+
+#### Defined in
+
+node_modules/@paraswap/core/build/constants.d.ts:41
