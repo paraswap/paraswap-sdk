@@ -32,6 +32,7 @@ export type LimitOrdersUserParams = (
 export type GetRequiredAllowanceParams = {
   maker: Address;
   token?: Address;
+  filter?: { taker?: Address; notTaker?: Address; type?: LimitOrderType };
 };
 
 type GetLimitOrderByHash = (
@@ -57,6 +58,7 @@ export type GetLimitOrdersFunctions = {
    * @param userParams - parameters to get allowance for active orders
    * @param {string} userParams.maker - user to get required allowances for
    * @param {string=} userParams.token - if given `token`, the mapping will contain that token address only
+   * @param {{taker?:Address;notTaker?:Address;type?:LimitOrderType}=} userParams.filter - extra filter to get balance required for type=P2P or type=LIMIT orders separately
    * @param {AbortSignal=} signal - AbortSignal passed to fetcher
    * @returns `{Lowercase<Address> => wei number as string}` mapping of token to fillableBalance
    */
@@ -103,9 +105,15 @@ export const constructGetLimitOrders = ({
   const getRequiredBalance: GetRequiredBalance = async (userParams, signal) => {
     const baseFetchURL = getBaseFetchURLByEntityType('fillablebalance');
     const userURL = `${baseFetchURL}/${userParams.maker}` as const;
-    const fetchURL = userParams.token
+    let routeURL = userParams.token
       ? (`${userURL}/${userParams.token}` as const)
       : userURL;
+
+    const search = constructSearchString<
+      NonNullable<GetRequiredAllowanceParams['filter']>
+    >(userParams.filter || {});
+
+    const fetchURL = `${routeURL}${search}` as const;
 
     const response = await fetcher<
       Record<string, string>,
