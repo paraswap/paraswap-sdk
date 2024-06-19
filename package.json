@@ -81,7 +81,7 @@
     }
   },
   "dependencies": {
-    "@paraswap/core": "2.1.1",
+    "@paraswap/core": "2.2.0",
     "bignumber.js": "^9.0.2",
     "ts-essentials": "^9.1.2"
   },
@@ -111,5 +111,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
+  "bugs": "https://github.com/paraswap/paraswap-sdk/issues",
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
