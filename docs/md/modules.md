@@ -733,7 +733,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:71](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L71)
+[src/methods/swap/rates.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L70)
 
 ___
 

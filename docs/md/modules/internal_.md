@@ -1400,7 +1400,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L43)
+[src/methods/swap/rates.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L42)
 
 ___
 
@@ -2008,7 +2008,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L57)
+[src/methods/swap/rates.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L56)
 
 ___
 
@@ -2033,7 +2033,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L66)
+[src/methods/swap/rates.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L65)
 
 ___
 
@@ -2043,7 +2043,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L62)
+[src/methods/swap/rates.ts:61](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L61)
 
 ___
 
@@ -2053,7 +2053,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L52)
+[src/methods/swap/rates.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L51)
 
 ___
 
@@ -2727,7 +2727,6 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `adapterVersion?` | `string` |
 | `destTokenDexTransferFee?` | `number` |
 | `destTokenTransferFee?` | `number` |
 | `excludeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] |
