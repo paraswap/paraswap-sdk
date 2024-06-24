@@ -29,7 +29,6 @@ export type RateOptions = {
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
   excludeContractMethodsWithoutFeeModel?: boolean;
-  adapterVersion?: string;
   partner?: string;
   maxImpact?: number;
   maxUSDImpact?: number;
@@ -81,6 +80,7 @@ type SearchStringParams = CommonGetRateResult & {
   srcToken: AddressOrSymbol;
   destToken: AddressOrSymbol;
   network: number;
+  version: string;
 };
 
 export const constructGetRate = ({
@@ -153,7 +153,6 @@ type CommonGetRateResult = {
   excludeDEXS?: string;
   includeDEXS?: string;
   excludePools?: string;
-  version?: string;
   excludePricingMethods?: string;
   excludeContractMethods?: string;
   includeContractMethods?: string;
@@ -173,7 +172,6 @@ function commonGetRateOptionsGetter({
     excludePricingMethods,
     excludeContractMethods,
     includeContractMethods,
-    adapterVersion,
     partner = DEFAULT_PARTNER,
     includeDEXS,
     excludeDEXS,
@@ -199,7 +197,6 @@ function commonGetRateOptionsGetter({
   ].map((array) => array?.join(',') || undefined);
 
   return {
-    version: adapterVersion,
     excludePricingMethods: _excludePricingMethods,
     excludeContractMethods: _excludeContractMethods,
     includeContractMethods: _includeContractMethods,
