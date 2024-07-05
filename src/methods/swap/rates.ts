@@ -30,6 +30,7 @@ export type RateOptions = {
   includeContractMethods?: ContractMethod[];
   excludeContractMethodsWithoutFeeModel?: boolean;
   partner?: string;
+  /** @description In %. It's a way to bypass the API price impact check (default = 15%) */
   maxImpact?: number;
   maxUSDImpact?: number;
   otherExchangePrices?: boolean;
@@ -37,6 +38,8 @@ export type RateOptions = {
   destTokenTransferFee?: number;
   srcTokenDexTransferFee?: number;
   destTokenDexTransferFee?: number;
+  /** @description proceed with priceRoute building even when tokens don't have USD price */
+  ignoreBadUsdPrice?: boolean;
 };
 
 type CommonGetRateInput = {
