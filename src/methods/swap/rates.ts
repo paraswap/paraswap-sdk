@@ -38,8 +38,6 @@ export type RateOptions = {
   ignoreBadUsdPrice?: boolean;
   /** @description 	Specify that methods without fee support should be excluded from the price route. Default: false */
   exlcudeContractMethodsWithoutFeeModel?: boolean;
-  /** @description Dash (-) separated list of tokens (addresses or symbols from /tokens) to comprise the price route. Max 4 tokens.  */
-  route?: string;
   /** @description If the source token is a tax token, you should specify the tax amount in BPS.  */
   srcTokenTransferFee?: string;
   /** @description If the destination token is a tax token, you should specify the tax amount in BPS.  */
