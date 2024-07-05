@@ -35,7 +35,7 @@ FetcherErrorConstructorInput.code
 
 #### Defined in
 
-[src/helpers/misc.ts:101](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L101)
+[src/helpers/misc.ts:101](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/misc.ts#L101)
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 #### Defined in
 
-[src/helpers/misc.ts:100](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L100)
+[src/helpers/misc.ts:100](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/misc.ts#L100)

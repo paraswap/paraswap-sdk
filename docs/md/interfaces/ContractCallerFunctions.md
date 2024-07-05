@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/types.ts:117](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L117)
+[src/types.ts:117](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/types.ts#L117)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:115](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L115)
+[src/types.ts:115](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/types.ts#L115)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-[src/types.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L116)
+[src/types.ts:116](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/types.ts#L116)

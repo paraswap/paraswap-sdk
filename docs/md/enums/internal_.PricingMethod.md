@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/methods/swap/rates.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L19)
+[src/methods/swap/rates.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/rates.ts#L19)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L20)
+[src/methods/swap/rates.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/rates.ts#L20)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L21)
+[src/methods/swap/rates.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/rates.ts#L21)
