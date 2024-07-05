@@ -61,7 +61,7 @@
 
 #### Defined in
 
-[src/legacy/index.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L77)
+[src/legacy/index.ts:77](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L77)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L73)
+[src/legacy/index.ts:73](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L73)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:72](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L72)
+[src/legacy/index.ts:72](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L72)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L76)
+[src/legacy/index.ts:76](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L76)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L70)
+[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L70)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L69)
+[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L69)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L74)
+[src/legacy/index.ts:74](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L74)
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 #### Defined in
 
-[src/legacy/index.ts:75](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L75)
+[src/legacy/index.ts:75](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/legacy/index.ts#L75)
 
 ## Methods
 

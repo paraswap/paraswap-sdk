@@ -175,7 +175,7 @@
 
 #### Defined in
 
-[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L6)
+[src/helpers/token.ts:6](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/token.ts#L6)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L10)
+[src/helpers/token.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/token.ts#L10)
 
 ___
 
@@ -209,7 +209,7 @@ ___
 
 #### Defined in
 
-[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L27)
+[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/sdk/full.ts#L27)
 
 ___
 
@@ -232,7 +232,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/approveForOrder.ts#L6)
+[src/methods/limitOrders/approveForOrder.ts:6](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/approveForOrder.ts#L6)
 
 ___
 
@@ -255,7 +255,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L16)
+[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/approveForOrder.ts#L16)
 
 ___
 
@@ -278,7 +278,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L17)
+[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/approve.ts#L17)
 
 ___
 
@@ -288,7 +288,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L50)
+[src/methods/nftOrders/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L50)
 
 ___
 
@@ -304,7 +304,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L21)
+[src/methods/limitOrders/buildOrder.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/buildOrder.ts#L21)
 
 ___
 
@@ -314,7 +314,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/buildOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L11)
+[src/methods/limitOrders/buildOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/buildOrder.ts#L11)
 
 ___
 
@@ -324,7 +324,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:101](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L101)
+[src/methods/swap/transaction.ts:110](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L110)
 
 ___
 
@@ -342,7 +342,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L46)
+[src/methods/limitOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/transaction.ts#L46)
 
 ___
 
@@ -358,7 +358,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L20)
+[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/buildOrder.ts#L20)
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L10)
+[src/methods/nftOrders/buildOrder.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/buildOrder.ts#L10)
 
 ___
 
@@ -378,7 +378,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:108](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L108)
+[src/methods/swap/transaction.ts:117](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L117)
 
 ___
 
@@ -396,7 +396,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L46)
+[src/methods/nftOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/transaction.ts#L46)
 
 ___
 
@@ -406,7 +406,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:163](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L163)
+[src/methods/swap/transaction.ts:172](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L172)
 
 ___
 
@@ -425,7 +425,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:149](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L149)
+[src/methods/swap/transaction.ts:158](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L158)
 
 ___
 
@@ -435,7 +435,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:170](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L170)
 
 ___
 
@@ -445,7 +445,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:160](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L160)
+[src/methods/swap/transaction.ts:169](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L169)
 
 ___
 
@@ -455,7 +455,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L124)
+[src/methods/swap/transaction.ts:133](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L133)
 
 ___
 
@@ -465,7 +465,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:135](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L135)
+[src/methods/swap/transaction.ts:144](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L144)
 
 ___
 
@@ -475,7 +475,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L80)
+[src/methods/swap/transaction.ts:89](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L89)
 
 ___
 
@@ -491,7 +491,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:171](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L171)
+[src/methods/swap/transaction.ts:180](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L180)
 
 ___
 
@@ -501,7 +501,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:142](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L142)
+[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L151)
 
 ___
 
@@ -524,7 +524,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L17)
+[src/methods/limitOrders/cancelOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/cancelOrder.ts#L17)
 
 ___
 
@@ -547,7 +547,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L14)
+[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/cancelOrder.ts#L14)
 
 ___
 
@@ -590,7 +590,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L57)
+[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/types.ts#L57)
 
 ___
 
@@ -612,7 +612,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/fillOrderDirectly.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L7)
+[src/methods/limitOrders/fillOrderDirectly.ts:7](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/fillOrderDirectly.ts#L7)
 
 ___
 
@@ -628,7 +628,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/adapters.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L7)
+[src/methods/swap/adapters.ts:7](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/adapters.ts#L7)
 
 ___
 
@@ -647,7 +647,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L46)
+[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/balance.ts#L46)
 
 ___
 
@@ -664,7 +664,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrdersContract.ts#L4)
+[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -682,7 +682,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L51)
+[src/methods/limitOrders/getOrders.ts:51](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/getOrders.ts#L51)
 
 ___
 
@@ -699,7 +699,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrdersContract.ts#L4)
+[src/methods/nftOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/getOrdersContract.ts#L4)
 
 ___
 
@@ -716,7 +716,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L27)
+[src/methods/nftOrders/getOrders.ts:27](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/getOrders.ts#L27)
 
 ___
 
@@ -733,7 +733,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L70)
+[src/methods/swap/rates.ts:79](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/rates.ts#L79)
 
 ___
 
@@ -752,7 +752,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L8)
+[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/spender.ts#L8)
 
 ___
 
@@ -768,7 +768,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L11)
+[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/token.ts#L11)
 
 ___
 
@@ -778,7 +778,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L5)
+[src/methods/limitOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L5)
 
 ___
 
@@ -794,7 +794,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L19)
+[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L19)
 
 ___
 
@@ -804,7 +804,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L37)
+[src/methods/limitOrders/helpers/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L37)
 
 ___
 
@@ -841,7 +841,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L44)
+[src/methods/limitOrders/helpers/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L44)
 
 ___
 
@@ -857,7 +857,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L106)
+[src/methods/limitOrders/index.ts:106](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/index.ts#L106)
 
 ___
 
@@ -867,7 +867,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L29)
+[src/methods/limitOrders/helpers/types.ts:29](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L29)
 
 ___
 
@@ -877,7 +877,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L7)
+[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L7)
 
 ___
 
@@ -894,7 +894,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L39)
+[src/methods/limitOrders/helpers/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L39)
 
 ___
 
@@ -904,7 +904,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L3)
+[src/methods/limitOrders/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L3)
 
 ___
 
@@ -924,7 +924,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L12)
+[src/methods/limitOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/types.ts#L12)
 
 ___
 
@@ -934,7 +934,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/getOrders.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L26)
+[src/methods/limitOrders/getOrders.ts:26](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/getOrders.ts#L26)
 
 ___
 
@@ -950,7 +950,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L46)
+[src/methods/nftOrders/helpers/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L46)
 
 ___
 
@@ -975,7 +975,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
+[src/methods/nftOrders/helpers/buildOrderData.ts:56](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/buildOrderData.ts#L56)
 
 ___
 
@@ -985,7 +985,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L22)
+[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L22)
 
 ___
 
@@ -1001,7 +1001,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L95)
+[src/methods/nftOrders/index.ts:95](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/index.ts#L95)
 
 ___
 
@@ -1011,7 +1011,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L20)
+[src/methods/nftOrders/helpers/types.ts:20](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L20)
 
 ___
 
@@ -1021,7 +1021,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L12)
+[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L12)
 
 ___
 
@@ -1038,7 +1038,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L5)
+[src/methods/nftOrders/helpers/types.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L5)
 
 ___
 
@@ -1048,7 +1048,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L10)
+[src/methods/nftOrders/helpers/types.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L10)
 
 ___
 
@@ -1064,7 +1064,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L43)
+[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/types.ts#L43)
 
 ___
 
@@ -1074,7 +1074,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L15)
+[src/methods/nftOrders/getOrders.ts:15](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/getOrders.ts#L15)
 
 ___
 
@@ -1093,7 +1093,7 @@ ___
 | `destAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `destDecimals` | `number` |
 | `destToken` | [`Address`](modules/internal_.md#address) |
-| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) \| ``null`` |
 | `gasCost` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `gasCostL1Wei?` | `string` |
 | `gasCostUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
@@ -1109,7 +1109,7 @@ ___
 | `srcAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `srcDecimals` | `number` |
 | `srcToken` | [`Address`](modules/internal_.md#address) |
-| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) \| ``null`` |
 | `tokenTransferProxy` | [`Address`](modules/internal_.md#address) |
 | `version` | [`ParaSwapVersion`](enums/internal_.ParaSwapVersion.md) |
 
@@ -1158,7 +1158,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L47)
+[src/methods/limitOrders/helpers/buildOrderData.ts:47](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/buildOrderData.ts#L47)
 
 ___
 
@@ -1172,7 +1172,7 @@ Passed to version API enpoints as ?version: to /prices and /adapters
 
 #### Defined in
 
-[src/types.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L34)
+[src/types.ts:34](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/types.ts#L34)
 
 ___
 
@@ -1189,7 +1189,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/postOrder.ts#L16)
+[src/methods/limitOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/postOrder.ts#L16)
 
 ___
 
@@ -1206,7 +1206,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/postOrder.ts#L16)
+[src/methods/nftOrders/postOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/postOrder.ts#L16)
 
 ___
 
@@ -1216,7 +1216,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L14)
+[src/helpers/token.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/token.ts#L14)
 
 ___
 
@@ -1232,7 +1232,7 @@ ___
 
 #### Defined in
 
-[src/sdk/partial.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L16)
+[src/sdk/partial.ts:16](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/sdk/partial.ts#L16)
 
 ___
 
@@ -1248,7 +1248,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/signOrder.ts#L5)
+[src/methods/limitOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/signOrder.ts#L5)
 
 ___
 
@@ -1264,7 +1264,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/signOrder.ts#L5)
+[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/signOrder.ts#L5)
 
 ___
 
@@ -1283,7 +1283,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
+[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
 
 ___
 
@@ -1302,7 +1302,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L41)
+[src/methods/limitOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/helpers/buildOrderData.ts#L41)
 
 ___
 
@@ -1320,7 +1320,7 @@ ___
 
 #### Defined in
 
-[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/common/orders/buildOrderData.ts#L14)
+[src/methods/common/orders/buildOrderData.ts:14](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/common/orders/buildOrderData.ts#L14)
 
 ___
 
@@ -1330,7 +1330,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L116)
+[src/sdk/simple.ts:116](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/sdk/simple.ts#L116)
 
 ___
 
@@ -1340,7 +1340,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:122](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L122)
+[src/sdk/simple.ts:122](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/sdk/simple.ts#L122)
 
 ___
 
@@ -1350,7 +1350,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L139)
+[src/sdk/simple.ts:139](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/sdk/simple.ts#L139)
 
 ___
 
@@ -1367,7 +1367,7 @@ ___
 
 #### Defined in
 
-[src/methods/limitOrders/index.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L45)
+[src/methods/limitOrders/index.ts:45](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/limitOrders/index.ts#L45)
 
 ___
 
@@ -1384,7 +1384,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L34)
+[src/methods/nftOrders/index.ts:34](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/index.ts#L34)
 
 ___
 
@@ -1400,7 +1400,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/index.ts#L11)
+[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/index.ts#L11)
 
 ___
 
@@ -1410,7 +1410,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L33)
+[src/methods/swap/transaction.ts:33](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L33)
 
 ___
 
@@ -1420,7 +1420,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L28)
+[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L28)
 
 ___
 
@@ -1445,7 +1445,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L37)
+[src/helpers/token.ts:37](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/token.ts#L37)
 
 ___
 
@@ -1455,7 +1455,7 @@ ___
 
 #### Defined in
 
-[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L18)
+[src/helpers/token.ts:18](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/token.ts#L18)
 
 ___
 
@@ -1465,7 +1465,7 @@ ___
 
 #### Defined in
 
-[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/web3.ts#L22)
+[src/helpers/providers/web3.ts:22](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/providers/web3.ts#L22)
 
 ## Variables
 
@@ -1475,7 +1475,7 @@ ___
 
 #### Defined in
 
-[src/constants.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L10)
+[src/constants.ts:10](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/constants.ts#L10)
 
 ___
 
@@ -1493,7 +1493,7 @@ ___
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/misc.ts#L21)
+[src/methods/nftOrders/helpers/misc.ts:21](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/nftOrders/helpers/misc.ts#L21)
 
 ___
 
@@ -1555,7 +1555,7 @@ ___
 
 #### Defined in
 
-[src/constants.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L11)
+[src/constants.ts:11](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/constants.ts#L11)
 
 ## Functions
 

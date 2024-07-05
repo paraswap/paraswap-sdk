@@ -21,6 +21,7 @@ export enum PricingMethod {
   simplepath = 'simplepath',
 }
 
+// more details in the docs https://developers.paraswap.network/api/get-rate-for-a-token-pair#query-parameters
 export type RateOptions = {
   excludeDEXS?: string[];
   includeDEXS?: string[];
@@ -33,10 +34,18 @@ export type RateOptions = {
   maxImpact?: number;
   maxUSDImpact?: number;
   otherExchangePrices?: boolean;
-  srcTokenTransferFee?: number;
-  destTokenTransferFee?: number;
-  srcTokenDexTransferFee?: number;
-  destTokenDexTransferFee?: number;
+  /** @description proceed with priceRoute building even when tokens don't have USD price. Default: false */
+  ignoreBadUsdPrice?: boolean;
+  /** @description 	Specify that methods without fee support should be excluded from the price route. Default: false */
+  exlcudeContractMethodsWithoutFeeModel?: boolean;
+  /** @description If the source token is a tax token, you should specify the tax amount in BPS.  */
+  srcTokenTransferFee?: string;
+  /** @description If the destination token is a tax token, you should specify the tax amount in BPS.  */
+  destTokenTransferFee?: string;
+  /** @description Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers.  */
+  srcTokenDexTransferFee?: string;
+  /** @description Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers.  */
+  destTokenDexTransferFee?: string;
 };
 
 type CommonGetRateInput = {

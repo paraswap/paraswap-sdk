@@ -14,7 +14,7 @@
 <li><a href="../modules/_internal_.html">&lt;internal&gt;</a></li>
 <li><a href="_internal_.BuildTxInputBase.html">BuildTxInputBase</a></li></ul>
 <h1>Type alias BuildTxInputBase</h1></div>
-<div class="tsd-signature">Build<wbr/>Tx<wbr/>Input<wbr/>Base<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>deadline<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>destDecimals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>destToken<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>partner<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>partnerAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>partnerFeeBps<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>permit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>positiveSlippageToUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>receiver<span class="tsd-signature-symbol">?: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>referrer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>srcDecimals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>srcToken<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>takeSurplus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>userAddress<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol"> }</span></div>
+<div class="tsd-signature">Build<wbr/>Tx<wbr/>Input<wbr/>Base<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>deadline<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>destDecimals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>destToken<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>isCapSurplus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>isDirectFeeTransfer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>isSurplusToUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>partner<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>partnerAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>partnerFeeBps<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>permit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>positiveSlippageToUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>receiver<span class="tsd-signature-symbol">?: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>referrer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>srcDecimals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>srcToken<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol">; </span>takeSurplus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>txOrigin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>userAddress<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a><span class="tsd-signature-symbol"> }</span></div>
 <div class="tsd-type-declaration">
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
@@ -24,6 +24,21 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> dest<wbr/>Decimals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5></li>
 <li class="tsd-parameter">
 <h5>dest<wbr/>Token<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> is<wbr/>Cap<wbr/>Surplus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography">
+<h3>Description</h3><p>Cap the surplus at 1% maximum. Default: false</p>
+</div></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> is<wbr/>Direct<wbr/>Fee<wbr/>Transfer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography">
+<h3>Description</h3><p>If fees should be sent directly to the partner instead of registering them on FeeClaimer. v6 only. Default: false</p>
+</div></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> is<wbr/>Surplus<wbr/>To<wbr/>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+<div class="tsd-comment tsd-typography">
+<h3>Description</h3><p>If user should receive surplus instead of partner. Default: false</p>
+</div></li>
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> partner<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5></li>
 <li class="tsd-parameter">
@@ -51,12 +66,17 @@
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> take<wbr/>Surplus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
 <div class="tsd-comment tsd-typography">
-<h3>Description</h3><p>Set to true to take positive slippage. Default: false</p>
+<h3>Description</h3><p>Set to true to take positive slippage. Works with partnerAddress. Default: false</p>
+</div></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> tx<wbr/>Origin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography">
+<h3>Description</h3><p>Whenever msg.sender (<code>userAddress</code>) i.e. address calling the ParaSwap contract is different than the address sending the transaction, <code>txOrigin</code> must be passed along with <code>userAddress</code></p>
 </div></li>
 <li class="tsd-parameter">
 <h5>user<wbr/>Address<span class="tsd-signature-symbol">: </span><a href="Address.html" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L59">src/methods/swap/transaction.ts:59</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/methods/swap/transaction.ts#L60">src/methods/swap/transaction.ts:60</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
