@@ -76,7 +76,7 @@ export type BuildTxInputBase = {
   positiveSlippageToUser?: boolean;
   /** @description Set to true to take positive slippage. Works with partnerAddress. Default: false */
   takeSurplus?: boolean;
-  /** @description Cap the surplus at 1% maximum. Default: false */
+  /** @description Cap the surplus at 1% maximum. Default: true */
   isCapSurplus?: boolean;
   receiver?: Address;
   srcDecimals?: number;
