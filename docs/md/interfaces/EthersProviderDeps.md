@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[src/helpers/providers/ethers.ts:26](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/providers/ethers.ts#L26)
+[src/helpers/providers/ethers.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/ethers.ts#L26)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[src/helpers/providers/ethers.ts:25](https://github.com/paraswap/paraswap-sdk/blob/feat/new_v6_params/src/helpers/providers/ethers.ts#L25)
+[src/helpers/providers/ethers.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/ethers.ts#L25)
