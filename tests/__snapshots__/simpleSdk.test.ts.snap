@@ -51,6 +51,85 @@ Array [
 ]
 `;
 
+exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
+Object {
+  "bestRoute": Array [
+    Object {
+      "percent": 100,
+      "swaps": Array [
+        Object {
+          "destDecimals": 18,
+          "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "srcDecimals": 18,
+          "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "swapExchanges": Array [
+            Object {
+              "data": Object {
+                "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+                "feeFactor": 10000,
+                "gasUSD": "dynamic_number",
+                "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+                "path": Array [
+                  "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                  "0x6b175474e89094c44da98b954eedeac495271d0f",
+                ],
+                "pools": Array [
+                  Object {
+                    "address": "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+                    "direction": false,
+                    "fee": 30,
+                  },
+                ],
+                "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
+              },
+              "destAmount": "dynamic_number",
+              "exchange": "UniswapV2",
+              "percent": 100,
+              "poolAddresses": Array [
+                "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+              ],
+              "srcAmount": "1000000000000000000",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  "blockNumber": "dynamic_number",
+  "contractAddress": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+  "contractMethod": "swapOnUniswapV2Fork",
+  "destAmount": "dynamic_number",
+  "destDecimals": 18,
+  "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "destUSD": "dynamic_number",
+  "gasCost": "dynamic_number",
+  "gasCostUSD": "dynamic_number",
+  "hmac": "dynamic_number",
+  "maxImpactReached": false,
+  "network": 1,
+  "partner": "anon",
+  "partnerFee": 0,
+  "side": "SELL",
+  "srcAmount": "1000000000000000000",
+  "srcDecimals": 18,
+  "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "srcUSD": "dynamic_number",
+  "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
+  "version": "5",
+}
+`;
+
+exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
+Object {
+  "chainId": 1,
+  "data": "dynamic_string",
+  "from": "dynamic_string",
+  "gasPrice": "dynamic_number",
+  "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+  "value": "1000000000000000000",
+}
+`;
+
 exports[`ParaSwap SDK: fetcher made with: fetch Get_Adapters: Get_Adapters 1`] = `
 Array [
   "Bancor",
@@ -100,4 +179,83 @@ Array [
   "Spark",
   "AugustusRFQ",
 ]
+`;
+
+exports[`ParaSwap SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
+Object {
+  "bestRoute": Array [
+    Object {
+      "percent": 100,
+      "swaps": Array [
+        Object {
+          "destDecimals": 18,
+          "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "srcDecimals": 18,
+          "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "swapExchanges": Array [
+            Object {
+              "data": Object {
+                "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+                "feeFactor": 10000,
+                "gasUSD": "dynamic_number",
+                "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+                "path": Array [
+                  "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                  "0x6b175474e89094c44da98b954eedeac495271d0f",
+                ],
+                "pools": Array [
+                  Object {
+                    "address": "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+                    "direction": false,
+                    "fee": 30,
+                  },
+                ],
+                "router": "0xF9234CB08edb93c0d4a4d4c70cC3FfD070e78e07",
+              },
+              "destAmount": "dynamic_number",
+              "exchange": "UniswapV2",
+              "percent": 100,
+              "poolAddresses": Array [
+                "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+              ],
+              "srcAmount": "1000000000000000000",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  "blockNumber": "dynamic_number",
+  "contractAddress": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+  "contractMethod": "swapOnUniswapV2Fork",
+  "destAmount": "dynamic_number",
+  "destDecimals": 18,
+  "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "destUSD": "dynamic_number",
+  "gasCost": "dynamic_number",
+  "gasCostUSD": "dynamic_number",
+  "hmac": "dynamic_number",
+  "maxImpactReached": false,
+  "network": 1,
+  "partner": "anon",
+  "partnerFee": 0,
+  "side": "SELL",
+  "srcAmount": "1000000000000000000",
+  "srcDecimals": 18,
+  "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "srcUSD": "dynamic_number",
+  "tokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
+  "version": "5",
+}
+`;
+
+exports[`ParaSwap SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
+Object {
+  "chainId": 1,
+  "data": "dynamic_string",
+  "from": "dynamic_string",
+  "gasPrice": "dynamic_number",
+  "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+  "value": "1000000000000000000",
+}
 `;

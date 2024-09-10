@@ -29,6 +29,8 @@ import {
   GetRateFunctions,
   isAllowance,
   SwapSide,
+  GetSwapTxFunctions,
+  constructSwapTx,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -119,7 +121,8 @@ describe.each([
     GetTokensFunctions &
     GetRateFunctions &
     GetSpenderFunctions &
-    BuildTxFunctions;
+    BuildTxFunctions &
+    GetSwapTxFunctions;
 
   beforeAll(() => {
     paraSwap = constructPartialSDK(
@@ -129,7 +132,8 @@ describe.each([
       constructGetTokens,
       constructGetRate,
       constructGetSpender,
-      constructBuildTx
+      constructBuildTx,
+      constructSwapTx
     );
   });
   test('getBalance', async () => {
@@ -205,6 +209,59 @@ describe.each([
     expect(firstRoute.unit && new BigNumber(firstRoute.unit).isNaN()).toBe(
       false
     );
+  });
+
+  test('Get_SwapTxData', async () => {
+    const { priceRoute, txParams } = await paraSwap.getSwapTxData({
+      srcToken: ETH,
+      destToken: DAI,
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+      slippage: 500,
+      options: {
+        includeDEXS: ['UniswapV2'],
+      },
+    });
+
+    const bestRouteStable = priceRoute.bestRoute.map((b) => ({
+      ...b,
+      swaps: b.swaps.map((s) => ({
+        ...s,
+        swapExchanges: s.swapExchanges.map((se) => ({
+          ...se,
+          destAmount: 'dynamic_number',
+          data: {
+            ...se.data,
+            gasUSD: 'dynamic_number',
+          },
+        })),
+      })),
+    }));
+
+    const priceRouteStable = {
+      ...priceRoute,
+      gasCost: 'dynamic_number',
+      gasCostUSD: 'dynamic_number',
+      hmac: 'dynamic_number',
+      destAmount: 'dynamic_number',
+      blockNumber: 'dynamic_number',
+      srcUSD: 'dynamic_number',
+      destUSD: 'dynamic_number',
+      bestRoute: bestRouteStable,
+    };
+
+    const txParamsStable = {
+      ...txParams,
+      data: 'dynamic_string',
+      from: 'dynamic_string',
+      gasPrice: 'dynamic_number',
+    };
+
+    expect(txParams.from).toEqual(senderAddress);
+
+    expect(priceRouteStable).toMatchSnapshot('Get_SwapTxData::priceRoute');
+    expect(txParamsStable).toMatchSnapshot('Get_SwapTxData::txParams');
   });
 
   test('Get_Spender', async () => {
