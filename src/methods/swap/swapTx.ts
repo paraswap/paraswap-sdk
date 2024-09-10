@@ -60,7 +60,7 @@ type SwapQueryParams = {
   /**
    * @description User's Wallet Address.
    */
-  userAddress?: string;
+  userAddress: string;
 
   /**
    * @description Dash (-) separated list of tokens (addresses or symbols from `/tokens`) to comprise the price route. _Max 4 tokens._ _**\*Note:**_ _If_ `_route_` _is specified, the response will only comprise of the route specified which might not be the optimal route._
