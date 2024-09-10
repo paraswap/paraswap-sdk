@@ -230,7 +230,7 @@ export const constructSwapTx = ({
     { srcToken, destToken, amount, route, ...rest },
     signal
   ) => {
-    const parsedOptions = noramalizeRateOptions(rest);
+    const parsedOptions = normalizeRateOptions(rest);
 
     const _route = route?.join('-');
 

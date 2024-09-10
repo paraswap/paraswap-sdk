@@ -15,7 +15,7 @@ type NormalizedRateOptions<
 
 const DEFAULT_PARTNER = 'paraswap.io';
 
-export function noramalizeRateOptions<
+export function normalizeRateOptions<
   O extends MinRateOptionsInput,
   T extends { options?: Partial<O> }
 >({ options = {}, ...restInput }: T): NormalizedRateOptions<O, T> {

@@ -13,7 +13,7 @@ import type {
   PriceString,
   OptimalRate,
 } from '../../types';
-import { noramalizeRateOptions } from './helpers/normalizeRateOptions';
+import { normalizeRateOptions } from './helpers/normalizeRateOptions';
 
 // TODO: This is legacy and can be removed
 export enum PricingMethod {
@@ -214,7 +214,7 @@ export const constructGetRate = ({
   const pricesUrl = `${apiURL}/prices` as const;
 
   const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
-    const parsedOptions = noramalizeRateOptions(rest);
+    const parsedOptions = normalizeRateOptions(rest);
 
     // always pass explicit type to make sure UrlSearchParams are correct
     const search = constructSearchString<Omit<RateQueryParams, 'route'>>({
@@ -241,7 +241,7 @@ export const constructGetRate = ({
       throw new Error(INVALID_ROUTE);
     }
 
-    const parsedOptions = noramalizeRateOptions(rest);
+    const parsedOptions = normalizeRateOptions(rest);
 
     const _route = route.join('-');
 
