@@ -1,9 +1,4 @@
-import {
-  SwapSide,
-  ContractMethod,
-  API_URL,
-  DEFAULT_VERSION,
-} from '../../constants';
+import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type {
   ConstructFetchInput,
