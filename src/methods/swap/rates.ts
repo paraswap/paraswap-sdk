@@ -174,7 +174,7 @@ export type RateOptions = {
 type CommonGetRateInput = {
   amount: PriceString;
   userAddress?: Address;
-  side?: SwapSide;
+  side?: 'SELL' | 'BUY';
   options?: RateOptions;
   srcDecimals?: number;
   destDecimals?: number;
