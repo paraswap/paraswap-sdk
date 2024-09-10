@@ -1,53 +1,7 @@
-import {
-  SwapSide,
-  ContractMethod,
-  API_URL,
-  DEFAULT_VERSION,
-} from '../../constants';
+import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type {
-  ConstructFetchInput,
-  Address,
-  AddressOrSymbol,
-  PriceString,
-  OptimalRate,
-  SwapApiResponse,
-} from '../../types';
+import type { ConstructFetchInput, SwapApiResponse } from '../../types';
 import { noramalizeRateOptions } from './helpers/normalizeRateOptions';
-
-// TODO: This is legacy and can be removed
-export enum PricingMethod {
-  megapath = 'megapath',
-  multipath = 'multipath',
-  simplepath = 'simplepath',
-}
-
-// more details in the docs https://developers.paraswap.network/api/get-rate-for-a-token-pair#query-parameters
-export type RateOptions = {
-  excludeDEXS?: string[];
-  includeDEXS?: string[];
-  excludePools?: string[];
-  excludePricingMethods?: PricingMethod[];
-  excludeContractMethods?: ContractMethod[];
-  includeContractMethods?: ContractMethod[];
-  excludeContractMethodsWithoutFeeModel?: boolean;
-  partner?: string;
-  maxImpact?: number;
-  maxUSDImpact?: number;
-  otherExchangePrices?: boolean;
-  /** @description proceed with priceRoute building even when tokens don't have USD price. Default: false */
-  ignoreBadUsdPrice?: boolean;
-  /** @description 	Specify that methods without fee support should be excluded from the price route. Default: false */
-  exlcudeContractMethodsWithoutFeeModel?: boolean;
-  /** @description If the source token is a tax token, you should specify the tax amount in BPS.  */
-  srcTokenTransferFee?: string;
-  /** @description If the destination token is a tax token, you should specify the tax amount in BPS.  */
-  destTokenTransferFee?: string;
-  /** @description Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers.  */
-  srcTokenDexTransferFee?: string;
-  /** @description Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers.  */
-  destTokenDexTransferFee?: string;
-};
 
 /**
  * Types for transaction parameters.
@@ -222,9 +176,7 @@ type SwapTxInputListFields =
 type SwapRateOptions = Omit<
   SwapQueryParams,
   SwapTxInputFields | SwapTxInputListFields | 'network' | 'version'
->;
-
-type SwapTxInput = Pick<SwapQueryParams, SwapTxInputFields> & {
+> & {
   /**
    * @description List of DEXs to include. **Supported DEXs:** Uniswap, Kyber, Bancor, AugustusRFQ, Oasis, Compound, Fulcrum, 0x, MakerDAO, Chai, Aave, Aave2, MultiPath, MegaPath, Curve, Curve3, Saddle, IronV2, BDai, idle, Weth, Beth, UniswapV2, Balancer, 0xRFQt, SushiSwap, LINKSWAP, Synthetix, DefiSwap, Swerve, CoFiX, Shell, DODOV1, DODOV2, OnChainPricing, PancakeSwap, PancakeSwapV2, ApeSwap, Wbnb, acryptos, streetswap, bakeryswap, julswap, vswap, vpegswap, beltfi, ellipsis, QuickSwap, COMETH, Wmatic, Nerve, Dfyn, UniswapV3, Smoothy, PantherSwap, OMM1, OneInchLP, CurveV2, mStable, WaultFinance, MDEX, ShibaSwap, CoinSwap, SakeSwap, JetSwap, Biswap, BProtocol eg: `UniswapV3,0x`.
    */
@@ -238,13 +190,15 @@ type SwapTxInput = Pick<SwapQueryParams, SwapTxInputFields> & {
   /**
    * @description List of Contract Methods to include without spaces. **Available values:** swapOnUniswap, buyOnUniswap, swapOnUniswapFork, buyOnUniswapFork, swapOnUniswapV2Fork, buyOnUniswapV2Fork, simpleBuy, simpleSwap, multiSwap, megaSwap, protectedMultiSwap, protectedMegaSwap, protectedSimpleSwap, protectedSimpleBuy, swapOnZeroXv2, swapOnZeroXv4, buy. eg: `simpleSwap,multiSwap`.
    */
-  includeContractMethods?: string[];
+  includeContractMethods?: ContractMethod[];
 
   /**
    * @description List of Contract Methods to exclude without spaces. (from the list of contract methods mentioned above).
    */
-  excludeContractMethods?: string[];
+  excludeContractMethods?: ContractMethod[];
+};
 
+type SwapTxInput = Pick<SwapQueryParams, SwapTxInputFields> & {
   /**
    * @description List of tokens (addresses or symbols from `/tokens`) to comprise the price route. _Max 4 tokens._ _**\*Note:**_ _If_ `_route_` _is specified, the response will only comprise of the route specified which might not be the optimal route._
    */
@@ -262,39 +216,6 @@ export type GetSwapTxData = (
 
 export type GetSwapTxFunctions = {
   getSwapTxData: GetSwapTxData;
-};
-
-type CommonGetRateInput = {
-  amount: PriceString;
-  userAddress?: Address;
-  side?: SwapSide;
-  options?: RateOptions;
-  srcDecimals?: number;
-  destDecimals?: number;
-};
-
-export type GetRateInput = CommonGetRateInput & {
-  srcToken: AddressOrSymbol;
-  destToken: AddressOrSymbol;
-};
-
-export type GetRate = (
-  options: GetRateInput,
-  signal?: AbortSignal
-) => Promise<OptimalRate>;
-
-type GetRateByRouteInput = CommonGetRateInput & {
-  route: AddressOrSymbol[];
-};
-
-type GetRateByRoute = (
-  options: GetRateByRouteInput,
-  signal?: AbortSignal
-) => Promise<OptimalRate>;
-
-export type GetRateFunctions = {
-  getRate: GetRate;
-  getRateByRoute: GetRateByRoute;
 };
 
 export const constructSwapTx = ({
