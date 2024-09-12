@@ -387,6 +387,7 @@
 - [GetRequiredAllowanceParams](internal_.md#getrequiredallowanceparams)
 - [GetRequiredBalance](internal_.md#getrequiredbalance)
 - [GetSpender](internal_.md#getspender)
+- [GetSwapTxData](internal_.md#getswaptxdata)
 - [GetTokens](internal_.md#gettokens)
 - [HeadersInit](internal_.md#headersinit)
 - [Hex](internal_.md#hex)
@@ -451,8 +452,14 @@
 - [SubmitLimitOrder](internal_.md#submitlimitorder)
 - [SubmitNFTOrder](internal_.md#submitnftorder)
 - [SubmitP2POrder](internal_.md#submitp2porder)
+- [SwapApiResponse](internal_.md#swapapiresponse)
 - [SwapFetchMethods](internal_.md#swapfetchmethods)
-- [SwapSDKMethods](internal_.md#swapsdkmethods)
+- [SwapQueryParams](internal_.md#swapqueryparams)
+- [SwapRateOptions](internal_.md#swaprateoptions)
+- [SwapTxInput](internal_.md#swaptxinput)
+- [SwapTxInputFields](internal_.md#swaptxinputfields)
+- [SwapTxInputListFields](internal_.md#swaptxinputlistfields)
+- [SwapTxResult](internal_.md#swaptxresult)
 - [TokenType](internal_.md#tokentype)
 - [TransactionContractCallerFn](internal_.md#transactioncontractcallerfn)
 - [TransactionRequest](internal_.md#transactionrequest)
@@ -581,7 +588,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:157](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L157)
+[src/types.ts:163](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L163)
 
 ___
 
@@ -908,7 +915,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L77)
+[src/types.ts:78](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L78)
 
 ___
 
@@ -1398,13 +1405,13 @@ ___
 | `amount` | [`PriceString`](../modules.md#pricestring) |
 | `destDecimals?` | `number` |
 | `options?` | [`RateOptions`](internal_.md#rateoptions) |
-| `side?` | [`SwapSide`](../enums/SwapSide.md) |
+| `side?` | ``"SELL"`` \| ``"BUY"`` |
 | `srcDecimals?` | `number` |
 | `userAddress?` | [`Address`](../modules.md#address) |
 
 #### Defined in
 
-[src/methods/swap/rates.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L51)
+[src/methods/swap/rates.ts:168](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L168)
 
 ___
 
@@ -1505,7 +1512,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L26)
+[src/types.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L27)
 
 ___
 
@@ -1567,7 +1574,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L62)
+[src/types.ts:63](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L63)
 
 ___
 
@@ -1597,7 +1604,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:128](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L128)
+[src/sdk/simple.ts:130](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L130)
 
 ___
 
@@ -2012,7 +2019,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L65)
+[src/methods/swap/rates.ts:182](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L182)
 
 ___
 
@@ -2037,7 +2044,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L74)
+[src/methods/swap/rates.ts:191](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L191)
 
 ___
 
@@ -2047,7 +2054,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L70)
+[src/methods/swap/rates.ts:187](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L187)
 
 ___
 
@@ -2057,7 +2064,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L60)
+[src/methods/swap/rates.ts:177](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L177)
 
 ___
 
@@ -2124,6 +2131,31 @@ ___
 #### Defined in
 
 [src/methods/swap/spender.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L5)
+
+___
+
+### GetSwapTxData
+
+Ƭ **GetSwapTxData**: (`options`: [`SwapTxInput`](internal_.md#swaptxinput), `signal?`: `AbortSignal`) => `Promise`<[`SwapTxResult`](internal_.md#swaptxresult)\>
+
+#### Type declaration
+
+▸ (`options`, `signal?`): `Promise`<[`SwapTxResult`](internal_.md#swaptxresult)\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | [`SwapTxInput`](internal_.md#swaptxinput) |
+| `signal?` | `AbortSignal` |
+
+##### Returns
+
+`Promise`<[`SwapTxResult`](internal_.md#swaptxresult)\>
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:208](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L208)
 
 ___
 
@@ -2261,7 +2293,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L104)
+[src/sdk/simple.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L106)
 
 ___
 
@@ -2481,7 +2513,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L110)
+[src/sdk/simple.ts:112](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L112)
 
 ___
 
@@ -2734,11 +2766,10 @@ ___
 | `destTokenDexTransferFee?` | `string` | **`Description`**  Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers. |
 | `destTokenTransferFee?` | `string` | **`Description`**  If the destination token is a tax token, you should specify the tax amount in BPS. |
 | `excludeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] | - |
-| `excludeContractMethodsWithoutFeeModel?` | `boolean` | - |
+| `excludeContractMethodsWithoutFeeModel?` | `boolean` | **`Description`**  Specify that methods without fee support should be excluded from the price route. Default: false |
 | `excludeDEXS?` | `string`[] | - |
 | `excludePools?` | `string`[] | - |
 | `excludePricingMethods?` | [`PricingMethod`](../enums/internal_.PricingMethod.md)[] | - |
-| `exlcudeContractMethodsWithoutFeeModel?` | `boolean` | **`Description`**  Specify that methods without fee support should be excluded from the price route. Default: false |
 | `ignoreBadUsdPrice?` | `boolean` | **`Description`**  proceed with priceRoute building even when tokens don't have USD price. Default: false |
 | `includeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] | - |
 | `includeDEXS?` | `string`[] | - |
@@ -2751,7 +2782,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L25)
+[src/methods/swap/rates.ts:143](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L143)
 
 ___
 
@@ -2996,7 +3027,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L110)
+[src/types.ts:111](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L111)
 
 ___
 
@@ -3006,7 +3037,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:137](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L137)
+[src/sdk/simple.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L139)
 
 ___
 
@@ -3067,7 +3098,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L104)
+[src/types.ts:105](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L105)
 
 ___
 
@@ -3152,29 +3183,126 @@ ___
 
 ___
 
-### SwapFetchMethods
+### SwapApiResponse
 
-Ƭ **SwapFetchMethods**: [`GetBalancesFunctions`](../modules.md#getbalancesfunctions) & [`GetTokensFunctions`](../modules.md#gettokensfunctions) & [`GetSpenderFunctions`](../modules.md#getspenderfunctions) & [`BuildTxFunctions`](../modules.md#buildtxfunctions) & [`GetAdaptersFunctions`](../modules.md#getadaptersfunctions) & [`GetRateFunctions`](../modules.md#getratefunctions)
+Ƭ **SwapApiResponse**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `priceRoute` | [`OptimalRate`](../modules.md#optimalrate) |
+| `txParams` | [`Omit`](internal_.md#omit)<[`TransactionParams`](../interfaces/TransactionParams.md), ``"gas"``\> |
 
 #### Defined in
 
-[src/sdk/simple.ts:97](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L97)
+[src/types.ts:152](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L152)
 
 ___
 
-### SwapSDKMethods
+### SwapFetchMethods
 
-Ƭ **SwapSDKMethods**<`TxResponse`\>: [`GetBalancesFunctions`](../modules.md#getbalancesfunctions) & [`GetTokensFunctions`](../modules.md#gettokensfunctions) & [`GetSpenderFunctions`](../modules.md#getspenderfunctions) & [`ApproveTokenFunctions`](../modules.md#approvetokenfunctions)<`TxResponse`\> & [`BuildTxFunctions`](../modules.md#buildtxfunctions) & [`GetAdaptersFunctions`](../modules.md#getadaptersfunctions) & [`GetRateFunctions`](../modules.md#getratefunctions)
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TxResponse` |
+Ƭ **SwapFetchMethods**: [`GetBalancesFunctions`](../modules.md#getbalancesfunctions) & [`GetTokensFunctions`](../modules.md#gettokensfunctions) & [`GetSpenderFunctions`](../modules.md#getspenderfunctions) & [`BuildTxFunctions`](../modules.md#buildtxfunctions) & [`GetAdaptersFunctions`](../modules.md#getadaptersfunctions) & [`GetRateFunctions`](../modules.md#getratefunctions) & [`GetSwapTxFunctions`](../modules.md#getswaptxfunctions)
 
 #### Defined in
 
-[src/sdk/full.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L19)
+[src/sdk/simple.ts:98](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L98)
+
+___
+
+### SwapQueryParams
+
+Ƭ **SwapQueryParams**: `Object`
+
+Types for transaction parameters.
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `amount` | `string` | **`Description`**  srcToken amount (in case of SELL) or destToken amount (in case of BUY). The amount should be in **WEI/Raw units** (eg. 1WBTC -> 100000000). |
+| `destDecimals?` | `number` | **`Description`**  Destination Token Decimals. (Can be omitted if Token Symbol is used in `destToken`). |
+| `destToken` | `string` | **`Description`**  Destination Token Address. Instead, **Token Symbol** could be used for tokens listed in the `/tokens` endpoint. |
+| `destTokenDexTransferFee?` | `string` | **`Description`**  If the destination token is a tax token, you should specify the tax amount in BPS. Some tokens only charge tax when swapped in/out DEXs, not on ordinary transfers. |
+| `destTokenTransferFee?` | `string` | **`Description`**  If the destination token is a tax token, you should specify the tax amount in BPS. For example: for a token with a 5% tax, you should set it to 500 as `[(500/10000)*100=5%]`. Note: not all DEXs and contract methods support trading tax tokens, so we will filter those that don't. |
+| `excludeContractMethods?` | `string` | **`Description`**  Comma Separated List of Contract Methods to exclude without spaces. (from the list of contract methods mentioned above). |
+| `excludeDEXS?` | `string` | **`Description`**  Comma Separated List of DEXs to exclude. (from the list of DEXs mentioned above). |
+| `ignoreBadUsdPrice?` | `boolean` | **`Description`**  If tokens USD prices are not available, `Bad USD Price` error will be thrown. Use this param to skip this check. Default: `false`. |
+| `includeContractMethods?` | `string` | **`Description`**  Comma Separated List of Contract Methods to include without spaces. **Available values:** swapOnUniswap, buyOnUniswap, swapOnUniswapFork, buyOnUniswapFork, swapOnUniswapV2Fork, buyOnUniswapV2Fork, simpleBuy, simpleSwap, multiSwap, megaSwap, protectedMultiSwap, protectedMegaSwap, protectedSimpleSwap, protectedSimpleBuy, swapOnZeroXv2, swapOnZeroXv4, buy. eg: `simpleSwap,multiSwap`. |
+| `includeDEXS?` | `string` | **`Description`**  Comma Separated List of DEXs to include. **Supported DEXs:** Uniswap, Kyber, Bancor, AugustusRFQ, Oasis, Compound, Fulcrum, 0x, MakerDAO, Chai, Aave, Aave2, MultiPath, MegaPath, Curve, Curve3, Saddle, IronV2, BDai, idle, Weth, Beth, UniswapV2, Balancer, 0xRFQt, SushiSwap, LINKSWAP, Synthetix, DefiSwap, Swerve, CoFiX, Shell, DODOV1, DODOV2, OnChainPricing, PancakeSwap, PancakeSwapV2, ApeSwap, Wbnb, acryptos, streetswap, bakeryswap, julswap, vswap, vpegswap, beltfi, ellipsis, QuickSwap, COMETH, Wmatic, Nerve, Dfyn, UniswapV3, Smoothy, PantherSwap, OMM1, OneInchLP, CurveV2, mStable, WaultFinance, MDEX, ShibaSwap, CoinSwap, SakeSwap, JetSwap, Biswap, BProtocol eg: `UniswapV3,0x`. |
+| `isCapSurplus?` | `boolean` | **`Description`**  Allows for capping the surplus at 1% maximum. Default: `true`. |
+| `isDirectFeeTransfer?` | `boolean` | **`Description`**  Specify if fees should be sent directly to the partner instead of registering them on FeeClaimer. Default: `false`. |
+| `isSurplusToUser?` | `boolean` | **`Description`**  Specify if user should receive surplus instead of partner. Default: `false`. |
+| `maxImpact?` | `number` | **`Description`**  In %. It's a way to bypass the API price impact check (default = 15%). |
+| `network?` | `number` | **`Description`**  Network ID. (Mainnet - 1, Optimism - 10, BSC - 56, Polygon - 137, Fantom - 250, zkEVM - 1101, Base - 8453, Arbitrum - 42161, Avalanche - 43114). Default: `1`. |
+| `partner?` | `string` | **`Description`**  Partner string. |
+| `partnerAddress?` | `string` | **`Description`**  Address that will be entitled to claim fees or surplus. Fees have to be claimed from the Fee Claimer contract unless `_isSurplusToUser_` or `_isDirectFeeTransfer_` are used. |
+| `partnerFeeBps?` | `string` | **`Description`**  If provided it is used together with `partnerAddress`. Should be in basis points percentage. Look at `slippage` parameter description for understanding better. Eg: `200` (for 2% fee percent). Fees have to be claimed from the Fee Claimer contract unless `_isSurplusToUser_` or `_isDirectFeeTransfer_` are used. |
+| `receiver?` | `string` | **`Description`**  Receiver's Wallet address. (Can be omitted if swapping tokens from and to same account). |
+| `route?` | `string` | **`Description`**  Dash (-) separated list of tokens (addresses or symbols from `/tokens`) to comprise the price route. _Max 4 tokens._ _**\*Note:**_ _If_ `_route_` _is specified, the response will only comprise of the route specified which might not be the optimal route._ |
+| `side` | ``"SELL"`` \| ``"BUY"`` | **`Description`**  **SELL** or **BUY**. Default: `SELL`. |
+| `slippage` | `number` | **`Description`**  Allowed slippage percentage represented in basis points. _Eg:_ for **2.5%** slippage, set the value to **2.5 \* 100 = 250**; for 10% = 1000. |
+| `srcDecimals?` | `number` | **`Description`**  Source Token Decimals. (Can be omitted if Token Symbol is used in `srcToken`). |
+| `srcToken` | `string` | **`Description`**  Source Token Address. Instead, **Token Symbol** could be used for tokens listed in the `/tokens` endpoint. |
+| `srcTokenDexTransferFee?` | `string` | **`Description`**  If the source token is a tax token, you should specify the tax amount in BPS. Some tokens only charge tax when swapped in/out DEXs and not on ordinary transfers. |
+| `srcTokenTransferFee?` | `string` | **`Description`**  If the source token is a tax token, you should specify the tax amount in BPS. For example: for a token with a 5% tax, you should set it to 500 as `[(500/10000)*100=5%]`. Note: not all DEXs and contract methods support trading tax tokens, so we will filter those that don't. |
+| `takeSurplus?` | `boolean` | **`Description`**  Allows to collect surplus. Works with `partnerAddress`. Default: `false`. |
+| `userAddress` | `string` | **`Description`**  User's Wallet Address. |
+| `version?` | `number` \| `string` | **`Description`**  To specify the protocol version. **Values:** 5 or 6.2 **Default**: 5. |
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L9)
+
+___
+
+### SwapRateOptions
+
+Ƭ **SwapRateOptions**: [`Omit`](internal_.md#omit)<[`SwapQueryParams`](internal_.md#swapqueryparams), [`SwapTxInputFields`](internal_.md#swaptxinputfields) \| [`SwapTxInputListFields`](internal_.md#swaptxinputlistfields) \| ``"network"`` \| ``"version"``\> & { `excludeContractMethods?`: [`ContractMethod`](../modules.md#contractmethod-1)[] ; `excludeDEXS?`: `string`[] ; `includeContractMethods?`: [`ContractMethod`](../modules.md#contractmethod-1)[] ; `includeDEXS?`: `string`[]  }
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:172](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L172)
+
+___
+
+### SwapTxInput
+
+Ƭ **SwapTxInput**: [`Pick`](internal_.md#pick)<[`SwapQueryParams`](internal_.md#swapqueryparams), [`SwapTxInputFields`](internal_.md#swaptxinputfields)\> & { `options?`: [`SwapRateOptions`](internal_.md#swaprateoptions) ; `route?`: `string`[]  }
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:197](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L197)
+
+___
+
+### SwapTxInputFields
+
+Ƭ **SwapTxInputFields**: ``"srcToken"`` \| ``"destToken"`` \| ``"amount"`` \| ``"side"`` \| ``"srcDecimals"`` \| ``"destDecimals"`` \| ``"userAddress"`` \| ``"slippage"``
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:156](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L156)
+
+___
+
+### SwapTxInputListFields
+
+Ƭ **SwapTxInputListFields**: ``"includeDEXS"`` \| ``"excludeDEXS"`` \| ``"includeContractMethods"`` \| ``"excludeContractMethods"`` \| ``"route"``
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:165](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L165)
+
+___
+
+### SwapTxResult
+
+Ƭ **SwapTxResult**: [`SwapApiResponse`](internal_.md#swapapiresponse)
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:206](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L206)
 
 ___
 
@@ -3220,7 +3348,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:107](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L107)
+[src/types.ts:108](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L108)
 
 ___
 
