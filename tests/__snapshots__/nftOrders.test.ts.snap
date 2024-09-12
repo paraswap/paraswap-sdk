@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NFT Orders buildNFTOrder p2p: P2P_Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
@@ -14,51 +14,51 @@ Object {
     "takerAsset": "454839140962945226527790820083642630354574802003",
     "takerAssetId": "0",
   },
-  "domain": Object {
+  "domain": {
     "chainId": 1,
     "name": "AUGUSTUS RFQ",
     "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
     "version": "1",
   },
-  "types": Object {
-    "OrderNFT": Array [
-      Object {
+  "types": {
+    "OrderNFT": [
+      {
         "name": "nonceAndMeta",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "expiry",
         "type": "uint128",
       },
-      Object {
+      {
         "name": "makerAsset",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "makerAssetId",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAsset",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAssetId",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "maker",
         "type": "address",
       },
-      Object {
+      {
         "name": "taker",
         "type": "address",
       },
-      Object {
+      {
         "name": "makerAmount",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAmount",
         "type": "uint256",
       },
@@ -68,8 +68,8 @@ Object {
 `;
 
 exports[`NFT Orders buildNFTOrder: Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
@@ -81,51 +81,51 @@ Object {
     "takerAsset": "454839140962945226527790820083642630354574802003",
     "takerAssetId": "0",
   },
-  "domain": Object {
+  "domain": {
     "chainId": 1,
     "name": "AUGUSTUS RFQ",
     "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
     "version": "1",
   },
-  "types": Object {
-    "OrderNFT": Array [
-      Object {
+  "types": {
+    "OrderNFT": [
+      {
         "name": "nonceAndMeta",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "expiry",
         "type": "uint128",
       },
-      Object {
+      {
         "name": "makerAsset",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "makerAssetId",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAsset",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAssetId",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "maker",
         "type": "address",
       },
-      Object {
+      {
         "name": "taker",
         "type": "address",
       },
-      Object {
+      {
         "name": "makerAmount",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAmount",
         "type": "uint256",
       },

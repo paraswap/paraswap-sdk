@@ -455,7 +455,7 @@ describe('Limit Orders', () => {
       chainId: swapAndLOPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
@@ -995,7 +995,7 @@ describe('Limit Orders', () => {
       chainId: swapTxPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
@@ -1023,7 +1023,7 @@ describe('Limit Orders', () => {
       chainId: swapAndLOPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
