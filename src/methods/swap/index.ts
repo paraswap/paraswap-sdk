@@ -1,5 +1,4 @@
 import { constructPartialSDK, SDKConfig } from '../../sdk/partial';
-import { ConstructProviderFetchInput } from '../../types';
 import { constructGetAdapters, GetAdaptersFunctions } from './adapters';
 import { ApproveTokenFunctions, constructApproveToken } from './approve';
 import { constructGetBalances, GetBalancesFunctions } from './balance';
@@ -21,18 +20,19 @@ export type SwapSDKMethods<TxResponse> = GetBalancesFunctions &
 /** @description construct SDK with every Swap-related method, fetching from API and token approval */
 export const constructSwapSDK = <TxResponse>(
   config: SDKConfig<TxResponse>
-): SwapSDKMethods<TxResponse> =>
+): SwapSDKMethods<TxResponse> => {
+  const constructApproveTokenWithTxResponse = constructApproveToken<TxResponse>;
+
   // include all available Swap methods
-  constructPartialSDK(
+  return constructPartialSDK(
     config,
     constructGetBalances,
     constructGetTokens,
     constructGetSpender,
-    constructApproveToken as (
-      options: ConstructProviderFetchInput<TxResponse, 'transactCall'>
-    ) => ApproveTokenFunctions<TxResponse>, // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
+    constructApproveTokenWithTxResponse,
     constructBuildTx,
     constructGetAdapters,
     constructGetRate,
     constructSwapTx
   );
+};
