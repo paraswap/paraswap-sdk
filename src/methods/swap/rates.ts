@@ -147,7 +147,6 @@ export type RateOptions = {
   excludePricingMethods?: PricingMethod[];
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
-  excludeContractMethodsWithoutFeeModel?: boolean;
   partner?: string;
   maxImpact?: number;
   maxUSDImpact?: number;
@@ -155,7 +154,7 @@ export type RateOptions = {
   /** @description proceed with priceRoute building even when tokens don't have USD price. Default: false */
   ignoreBadUsdPrice?: boolean;
   /** @description 	Specify that methods without fee support should be excluded from the price route. Default: false */
-  exlcudeContractMethodsWithoutFeeModel?: boolean;
+  excludeContractMethodsWithoutFeeModel?: boolean;
   /** @description If the source token is a tax token, you should specify the tax amount in BPS.  */
   srcTokenTransferFee?: string;
   /** @description If the destination token is a tax token, you should specify the tax amount in BPS.  */
