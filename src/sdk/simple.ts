@@ -17,6 +17,7 @@ import {
   BuildTxFunctions,
   constructBuildTx,
 } from '../methods/swap/transaction';
+import { constructSwapTx, GetSwapTxFunctions } from '../methods/swap/swapTx';
 
 import {
   constructAxiosFetcher,
@@ -39,7 +40,7 @@ import type {
 import type { EthersProviderDeps } from '../helpers';
 import type Web3 from 'web3';
 
-import type { SwapSDKMethods } from './full';
+import type { SwapSDKMethods } from '../methods/swap';
 import {
   BuildLimitOrderFunctions,
   constructBuildLimitOrder,
@@ -99,7 +100,8 @@ export type SwapFetchMethods = GetBalancesFunctions &
   GetSpenderFunctions &
   BuildTxFunctions &
   GetAdaptersFunctions &
-  GetRateFunctions;
+  GetRateFunctions &
+  GetSwapTxFunctions;
 
 export type LimitOrdersFetchMethods = GetLimitOrdersContractFunctions &
   GetLimitOrdersFunctions &
@@ -186,7 +188,8 @@ export function constructSimpleSDK(
       constructGetSpender,
       constructBuildTx,
       constructGetAdapters,
-      constructGetRate
+      constructGetRate,
+      constructSwapTx
     );
 
     const limitOrders = constructPartialSDK(
