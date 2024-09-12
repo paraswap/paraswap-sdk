@@ -60,10 +60,10 @@
     "ethers": "^5.6.5",
     "ganache": "^7.9.2",
     "isomorphic-unfetch": "^3.1.0",
-    "typedoc": "^0.23.7",
-    "typedoc-plugin-markdown": "^3.13.3",
-    "typedoc-plugin-missing-exports": "^0.23.0",
-    "typedoc-plugin-replace-text": "^2.0.0",
+    "typedoc": "^0.26.7",
+    "typedoc-plugin-markdown": "^4.2.7",
+    "typedoc-plugin-missing-exports": "^3.0.0",
+    "typedoc-plugin-replace-text": "^4.0.0",
     "web3": "^1.7.3"
   },
   "peerDependencies": {
