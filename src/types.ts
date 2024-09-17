@@ -91,7 +91,7 @@ interface ContractCallInput<T extends string> {
   args: any[];
 }
 
-interface ContractCallStaticInput<T extends string>
+export interface ContractCallStaticInput<T extends string>
   extends ContractCallInput<T> {
   overrides: StaticCallOverrides;
 }
