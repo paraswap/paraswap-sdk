@@ -1,32 +1,16 @@
 /* esslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Chain,
-  createClient,
-  createPublicClient,
-  createWalletClient,
-  custom,
-  Hex,
-  http,
-  parseAbi,
-  PublicActions,
-  publicActions,
-  SendTransactionRequest,
-  WalletActions,
-} from 'viem';
+import { createWalletClient, custom, Hex } from 'viem';
 import { mainnet } from 'viem/chains';
 
 // declares types for window.ethereum
 import 'viem/window';
+import axios from 'axios';
 import {
+  constructViemContractCaller,
+  constructAxiosFetcher,
   constructPartialSDK,
   constructSimpleSDK,
   constructSubmitLimitOrder,
-} from '../';
-import { constructViemContractCaller } from '../';
-import { constructAxiosFetcher } from '../helpers';
-import axios from 'axios';
-import {
-  constructAllLimitOrdersHandlers,
   type BuildLimitOrderInput,
 } from '../';
 import { assert } from 'ts-essentials';
@@ -95,11 +79,9 @@ async function simpleSDKExample() {
   const [account] = await walletClient.getAddresses();
   assert(account, 'account is necessary for Order signing');
 
-  const fetcher = constructAxiosFetcher(axios);
-
   const simpleSDK = constructSimpleSDK(
     {
-      fetcher,
+      axios,
       chainId: 1, // same chain as for walletClient
     },
     { viemClient: walletClient, account }
@@ -157,5 +139,5 @@ async function simpleSDKExample() {
 
   const vTxParams = txParamsToViemTxParams(txParams);
 
-  walletClient.sendTransaction(vTxParams);
+  const txHash = await walletClient.sendTransaction(vTxParams);
 }
