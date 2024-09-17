@@ -24,6 +24,7 @@ import {
   constructFetchFetcher,
   constructEthersContractCaller,
   constructWeb3ContractCaller,
+  constructViemContractCaller,
 } from '../helpers';
 
 import type {
@@ -37,7 +38,7 @@ import type {
   ExtraFetchParams,
 } from '../types';
 
-import type { EthersProviderDeps } from '../helpers';
+import type { EthersProviderDeps, MinViemClient } from '../helpers';
 import type Web3 from 'web3';
 
 import type { SwapSDKMethods } from '../methods/swap';
@@ -138,7 +139,11 @@ export type FetcherOptions = (
 
 type SimpleOptions = ConstructBaseInput & FetcherOptions;
 
-export type ProviderOptions = (EthersProviderDeps | { web3: Web3 }) & {
+export type ProviderOptions = (
+  | EthersProviderDeps
+  | { web3: Web3 }
+  | { viemClient: MinViemClient }
+) & {
   account: Address;
 };
 
@@ -269,6 +274,14 @@ function constructSimpleContractCaller(
     };
 
     return { staticCall, transactCall, signTypedDataCall };
+  }
+
+  if ('viemClient' in providerOptions) {
+    const contractCaller = constructViemContractCaller(
+      providerOptions.viemClient,
+      providerOptions.account
+    );
+    return contractCaller;
   }
 
   const {
