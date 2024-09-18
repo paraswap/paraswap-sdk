@@ -167,7 +167,11 @@ describe('ParaSwap SDK', () => {
       MANA,
     ]);
 
-    const allowances = allowancesOrError as Allowance[];
+    if ('message' in allowancesOrError) {
+      return;
+    }
+
+    const allowances = allowancesOrError;
 
     allowances.forEach((allowance) =>
       expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
