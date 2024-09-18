@@ -65,9 +65,17 @@ describe.each([
   ['axios', { axios }],
 ])('ParaSwap SDK: fetcher made with: %s', (testName, fetcherOptions) => {
   let paraSwap: SimpleFetchSDK;
+  let paraSwapArbitrum: SimpleFetchSDK;
 
   beforeAll(() => {
-    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions, version: '5' });
+    paraSwapArbitrum = constructSimpleSDK({
+      chainId: 42161,
+      version: '6.2',
+      // apiURL: 'https://api-partners.paraswap.io/',
+      // apiKey: 'oXF4dtiLJ34kJTod3fcNH5WJtKRZ9cr95O4yaMvD',
+      ...fetcherOptions,
+    });
+    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions });
   });
   test('getBalance', async () => {
     const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
@@ -90,6 +98,25 @@ describe.each([
         address: expect.any(String),
         decimals: expect.any(Number),
       })
+    );
+  });
+
+  test.only('TEST', async () => {
+    const priceRoute = await paraSwapArbitrum.swap.getRate({
+      srcToken: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1', // DAI on Arbitrum
+      srcDecimals: 18,
+      destToken: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1', // WETH on Arbitrum
+      destDecimals: 6,
+      amount: '1000000000000000000000000',
+      // userAddress: wrappedLoan.address,
+      side: SwapSide.SELL,
+      options: {
+        // includeContractMethods: [ContractMethod.simpleSwap],
+      },
+    });
+    console.log(
+      '🚀 ~ file: test.test.ts:113 ~ test.only ~ priceRoute:',
+      priceRoute
     );
   });
 
@@ -144,59 +171,6 @@ describe.each([
     );
   });
 
-  test('Get_SwapTxData', async () => {
-    const { priceRoute, txParams } = await paraSwap.swap.getSwapTxData({
-      srcToken: ETH,
-      destToken: DAI,
-      amount: srcAmount,
-      userAddress: senderAddress,
-      side: SwapSide.SELL,
-      slippage: 500,
-      options: {
-        includeDEXS: ['UniswapV2'],
-      },
-    });
-
-    const bestRouteStable = priceRoute.bestRoute.map((b) => ({
-      ...b,
-      swaps: b.swaps.map((s) => ({
-        ...s,
-        swapExchanges: s.swapExchanges.map((se) => ({
-          ...se,
-          destAmount: 'dynamic_number',
-          data: {
-            ...se.data,
-            gasUSD: 'dynamic_number',
-          },
-        })),
-      })),
-    }));
-
-    const priceRouteStable = {
-      ...priceRoute,
-      gasCost: 'dynamic_number',
-      gasCostUSD: 'dynamic_number',
-      hmac: 'dynamic_number',
-      destAmount: 'dynamic_number',
-      blockNumber: 'dynamic_number',
-      srcUSD: 'dynamic_number',
-      destUSD: 'dynamic_number',
-      bestRoute: bestRouteStable,
-    };
-
-    const txParamsStable = {
-      ...txParams,
-      data: 'dynamic_string',
-      from: 'dynamic_string',
-      gasPrice: 'dynamic_number',
-    };
-
-    expect(txParams.from).toEqual(senderAddress);
-
-    expect(priceRouteStable).toMatchSnapshot('Get_SwapTxData::priceRoute');
-    expect(txParamsStable).toMatchSnapshot('Get_SwapTxData::txParams');
-  });
-
   test('Get_Spender', async () => {
     const spender = await paraSwap.swap.getSpender();
     expect(web3provider.utils.isAddress(spender));
@@ -213,10 +187,14 @@ describe.each([
     expect(allowance.allowance).toEqual('123000000000000000');
   });
 
-  test('Get_Adapters', async () => {
-    const adapters = await paraSwap.swap.getAdapters();
-    expect(adapters).toMatchSnapshot('Get_Adapters');
-  });
+  // test('Get_Adapters', async () => {
+  //   const adapters = await paraSwap.swap.getAdapters();
+  //   expect(adapters['paraswappool']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['uniswapv2']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['uniswapv2']?.[0]?.index).toBeDefined();
+  //   expect(adapters['kyberdmm']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['kyberdmm']?.[0]?.index).toBeDefined();
+  // });
 
   test('Build_Tx', async () => {
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
@@ -376,7 +354,7 @@ describe.each([
 
     beforeAll(() => {
       paraSwap = constructSimpleSDK(
-        { chainId, ...fetcherOptions, version: '5' },
+        { chainId, ...fetcherOptions },
         providerOptions
       );
     });

@@ -249,7 +249,12 @@ describe('ParaSwap SDK', () => {
     const _tx = txOrError as TransactionParams;
     const transaction = {
       ..._tx,
-      gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      gasPrice: _tx.gasPrice && '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      maxFeePerGas:
+        _tx.maxFeePerGas && '0x' + new BigNumber(_tx.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        _tx.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(_tx.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(_tx.value).toString(16),
     };
@@ -295,7 +300,12 @@ describe('ParaSwap SDK', () => {
     const _tx = txOrError as TransactionParams;
     const transaction = {
       ..._tx,
-      gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      gasPrice: _tx.gasPrice && '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      maxFeePerGas:
+        _tx.maxFeePerGas && '0x' + new BigNumber(_tx.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        _tx.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(_tx.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(_tx.value).toString(16),
     };

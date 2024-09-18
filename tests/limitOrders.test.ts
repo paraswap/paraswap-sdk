@@ -626,7 +626,16 @@ describe('Limit Orders', () => {
 
     const transaction = {
       ...LOPayloadTxParams,
-      gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+      gasPrice:
+        LOPayloadTxParams.gasPrice &&
+        '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+      maxFeePerGas:
+        LOPayloadTxParams.maxFeePerGas &&
+        '0x' + new BigNumber(LOPayloadTxParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        LOPayloadTxParams.maxPriorityFeePerGas &&
+        '0x' +
+          new BigNumber(LOPayloadTxParams.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
     };
@@ -851,7 +860,18 @@ describe('Limit Orders', () => {
     const transaction = {
       ...swapAndLOPayloadTxParams,
       gasPrice:
+        swapAndLOPayloadTxParams.gasPrice &&
         '0x' + new BigNumber(swapAndLOPayloadTxParams.gasPrice).toString(16),
+      maxFeePerGas:
+        swapAndLOPayloadTxParams.maxFeePerGas &&
+        '0x' +
+          new BigNumber(swapAndLOPayloadTxParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        swapAndLOPayloadTxParams.maxPriorityFeePerGas &&
+        '0x' +
+          new BigNumber(swapAndLOPayloadTxParams.maxPriorityFeePerGas).toString(
+            16
+          ),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(swapAndLOPayloadTxParams.value).toString(16),
     };
