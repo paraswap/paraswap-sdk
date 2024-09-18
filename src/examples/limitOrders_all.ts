@@ -108,7 +108,15 @@ async function run() {
 
   const tx5Params = {
     ...LOPayloadTxParams,
-    gasPrice: '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+    gasPrice:
+      LOPayloadTxParams.gasPrice &&
+      '0x' + new BigNumber(LOPayloadTxParams.gasPrice).toString(16),
+    maxFeePerGas:
+      LOPayloadTxParams.maxFeePerGas &&
+      '0x' + new BigNumber(LOPayloadTxParams.maxFeePerGas).toString(16),
+    maxPriorityFeePerGas:
+      LOPayloadTxParams.maxPriorityFeePerGas &&
+      '0x' + new BigNumber(LOPayloadTxParams.maxPriorityFeePerGas).toString(16),
     gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
     value: '0x' + new BigNumber(LOPayloadTxParams.value).toString(16),
   };
