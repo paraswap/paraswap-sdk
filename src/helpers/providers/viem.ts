@@ -21,12 +21,10 @@ import type {
 import { findPrimaryType } from './helpers';
 import { TransactionParams } from '../../methods/swap/transaction';
 
-export type MinViemClient<
-  account extends Account | undefined = Account | undefined
-> = Partial<
+export type MinViemClient = Partial<
   Pick<PublicActions<Transport, Chain>, 'readContract'> &
-    Pick<WalletActions<Chain, account>, 'writeContract' | 'signTypedData'>
-> & { account?: account };
+    Pick<WalletActions<Chain>, 'writeContract' | 'signTypedData'>
+> & { account?: Account };
 
 export const constructContractCaller = (
   viemClient: MinViemClient,
@@ -52,6 +50,7 @@ export const constructContractCaller = (
         : { blockTag: block as BlockTag };
 
     const result = viemClient.readContract({
+      account: viemClient.account || (account as Hex),
       address: address as Hex,
       abi,
       functionName: contractMethod,
@@ -64,36 +63,13 @@ export const constructContractCaller = (
   };
 
   const transactCall: TransactionContractCallerFn<Hex> = async (params) => {
-    assert(account, 'account must be specified to create a signer');
-    assert(
-      isViemClientWithAccount(viemClient),
-      'account must be specified to create a signer'
-    );
+    assert(account, 'account must be specified sign transactions');
     assert(
       viemClient.writeContract,
       'Viem client must have writeContract Wallet Action'
     );
 
     const { address, abi, contractMethod, args, overrides } = params;
-    console.log(
-      '🚀 ~ consttransactCall:TransactionContractCallerFn<Hex>= ~ overrides:',
-      overrides
-    );
-
-    const gas = overrides.gas !== undefined ? BigInt(overrides.gas) : undefined;
-    const gasPrice =
-      overrides.gasPrice !== undefined ? BigInt(overrides.gasPrice) : undefined;
-    const maxFeePerGas =
-      overrides.maxFeePerGas !== undefined
-        ? BigInt(overrides.maxFeePerGas)
-        : undefined;
-    const maxPriorityFeePerGas =
-      overrides.maxPriorityFeePerGas !== undefined
-        ? BigInt(overrides.maxPriorityFeePerGas)
-        : undefined;
-
-    const value =
-      overrides.value !== undefined ? BigInt(overrides.value) : undefined;
 
     const viemTxParams = txParamsToViemTxParams({
       ...overrides,
@@ -101,37 +77,6 @@ export const constructContractCaller = (
       gas: overrides.gas?.toString(10),
       value: overrides.value?.toString(10),
     });
-
-    /*     console.log('View.writeContract', {
-      address: address as Hex,
-      // abi,
-      functionName: contractMethod,
-      args: argsToViemArgs(args),
-      ...viemTxParams,
-      nonce: overrides.nonce,
-    }); */
-
-    /*     const t = await viemClient.writeContract({
-      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-      abi: [
-        {
-          constant: false,
-          inputs: [
-            { name: '_spender', type: 'address' },
-            { name: '_value', type: 'uint256' },
-          ],
-          name: 'approve',
-          outputs: [{ name: '', type: 'bool' }],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-      ],
-      functionName: 'approve',
-      args: ['0x216b4b4ba9f3e719726886d34a177484278bfcae', 12345n],
-    });
-
-    return t; */
 
     const gasPriceParams =
       'maxFeePerGas' in viemTxParams
@@ -144,6 +89,10 @@ export const constructContractCaller = (
         : {};
 
     const txHash = await viemClient.writeContract({
+      // either `viemClient` has account assigned to it,
+      // or provider `viemClient` was created with controls `account` (viemClient.getAddresses()[0]===account);
+      // otherwise breaks with ` ProviderError: Unknown account 0x...`
+      account: viemClient.account || (account as Hex),
       address: address as Hex,
       abi,
       functionName: contractMethod,
@@ -181,7 +130,9 @@ export const constructContractCaller = (
     };
 
     const signature = await viemClient.signTypedData({
-      account: account as Hex,
+      // either `viemClient` has account assigned to it,
+      // or provider `viemClient` was created with controls `account` (viemClient.getAddresses()[0]===account)
+      account: viemClient.account || (account as Hex),
       domain: viemDomain,
       types,
       primaryType,
@@ -249,10 +200,4 @@ function argsToViemArgs(args: any[]): any[] {
     }
     return arg;
   });
-}
-
-function isViemClientWithAccount(
-  viemClient: MinViemClient<Account | undefined>
-): viemClient is MinViemClient<Account> {
-  return !!viemClient.account;
 }
