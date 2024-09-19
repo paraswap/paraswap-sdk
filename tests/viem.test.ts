@@ -37,9 +37,6 @@ const viemTestClient = createTestClient({
   chain: hardhat,
   mode: 'hardhat',
   transport: custom(hre.network.provider),
-  // transport: http(),
-  // transport: http('http://localhost:8545'),
-  // transport: custom(ganacheProvider),
 }).extend(publicActions);
 
 const viewWalletClient = createWalletClient({
