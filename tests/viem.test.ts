@@ -179,7 +179,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
     expect(allowance2).toEqual(1234567n);
   }, 120000);
 
-  test.only('signOrder', async () => {
+  test('signOrder', async () => {
     const signableOrderData = await SDKwithEthers.limitOrders.buildLimitOrder(
       orderInput
     );
