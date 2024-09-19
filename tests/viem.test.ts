@@ -1,77 +1,29 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { BigNumber as BigNumberEthers, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import axios from 'axios';
-import fetch from 'isomorphic-unfetch';
-import { isAllowance, SwapSide, SimpleFetchSDK } from '../src';
-import BigNumber from 'bignumber.js';
-
 import {
   createTestClient,
   custom,
   Hex,
-  http,
   publicActions,
-  walletActions,
-  defineChain,
   parseEther,
   createWalletClient,
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
-import { hardhat, localhost } from 'viem/chains';
-
-import erc20abi from './abi/ERC20.json';
-
-import ganache from 'ganache';
+import { hardhat } from 'viem/chains';
 import hre from 'hardhat';
-import { assert } from 'ts-essentials';
 
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
-
-// hre.network.config.accounts = 'remote';
 
 dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
-const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
-const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
-// const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
-
-const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
-  '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
-
 const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
-const srcToken = ETH;
-const destToken = DAI;
-const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
-
-const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
-const wallet2 = ethers.Wallet.createRandom();
-
-// hre.network.provider.request({method: "hardhat_impersonateAccount", params: [wallet.address]});
-// hre.config
-
-/* const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [{ balance: 8e18, secretKey: wallet.privateKey }],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId,
-  },
-  logging: {
-    // quiet: true,
-    quiet: false,
-  },
-}); */
 
 const web3provider = new Web3(hre.network.provider as any);
 
@@ -81,13 +33,6 @@ const ethersProvider = new ethers.providers.Web3Provider(
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address as Hex;
-console.log('🚀 ~ senderAddress:', senderAddress);
-
-const ganacheChain = defineChain({
-  ...localhost, // same rpcUrl=http://127.0.0.1:8545
-  name: 'Ganache',
-  id: chainId,
-});
 
 const viemTestClient = createTestClient({
   chain: hardhat,
@@ -109,13 +54,10 @@ const viewWalletClient = createWalletClient({
 
 describe('ParaSwap SDK: contract calling methods', () => {
   let SDKwithEthers: SimpleSDK;
-  let SDKwithWeb3: SimpleSDK;
   let SDKwithViem: SimpleSDK;
 
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
   const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
-  const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
-  const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 
   const srcToken = DAI;
   const destToken = HEX;
@@ -166,15 +108,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
         EthersContract: ethers.Contract,
         account: senderAddress,
       }
-    );
-
-    SDKwithWeb3 = constructSimpleSDK(
-      {
-        chainId,
-        axios,
-        // version: '5',
-      },
-      { web3: web3provider, account: senderAddress }
     );
 
     SDKwithViem = constructSimpleSDK(
