@@ -194,7 +194,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
     );
 
     expect(viemSignature).toMatchInlineSnapshot(
-      `"0x8db9e56aad09db63873ee92eade2fcf3f7071dfee3cfacc58643888d3c1bd02e4c4a0171f54ac309441ff84887de9312fa76a7fe55aeb0f12d02e0eee1d063ef1b"`
+      `"0x18b022691daab1d8a3486aab5a006f2e98932b1c2fe4f04726c766e7a4e6d4935cbbf6d03ef945f23bef5cf4e250086f14581b1b8097f6c3ffd62653c8b2454b1b"`
     );
     expect(ethersSignature).toEqual(viemSignature);
   });
