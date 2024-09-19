@@ -4,7 +4,7 @@ exports[`ParaSwap SDK: contract calling methods signOrder: LimitOrder to sign 1`
 {
   "data": {
     "expiry": 1766188800,
-    "maker": "0x1834f699C7dd3CD8EC20D04977D16eFa337014C9",
+    "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
     "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     "nonceAndMeta": "1461501637330902918203684832716283019655932542976",
