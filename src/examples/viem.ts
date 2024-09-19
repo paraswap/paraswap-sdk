@@ -139,5 +139,5 @@ async function simpleSDKExample() {
 
   const vTxParams = txParamsToViemTxParams(txParams);
 
-  const txHash = await walletClient.sendTransaction(vTxParams);
+  const txHash = await walletClient.sendTransaction({ ...vTxParams, account });
 }
