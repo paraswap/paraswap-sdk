@@ -90,7 +90,7 @@ export const constructContractCaller = (
 
     const txHash = await viemClient.writeContract({
       // either `viemClient` has account assigned to it,
-      // or provider `viemClient` was created with controls `account` (viemClient.getAddresses()[0]===account);
+      // or the provider `viemClient` was created with must control `account` (viemClient.getAddresses()[0]===account);
       // otherwise breaks with ` ProviderError: Unknown account 0x...`
       account: viemClient.account || (account as Hex),
       address: address as Hex,
@@ -131,7 +131,7 @@ export const constructContractCaller = (
 
     const signature = await viemClient.signTypedData({
       // either `viemClient` has account assigned to it,
-      // or provider `viemClient` was created with controls `account` (viemClient.getAddresses()[0]===account)
+      // or the provider `viemClient` was created with must control `account` (viemClient.getAddresses()[0]===account)
       account: viemClient.account || (account as Hex),
       domain: viemDomain,
       types,

@@ -1,5 +1,5 @@
-/* esslint-disable @typescript-eslint/no-unused-vars */
-import { createWalletClient, custom, Hex } from 'viem';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { createWalletClient, custom } from 'viem';
 import { mainnet } from 'viem/chains';
 
 // declares types for window.ethereum
@@ -16,13 +16,15 @@ import {
 import { assert } from 'ts-essentials';
 import { txParamsToViemTxParams } from '../helpers/providers/viem';
 
-// necessary when using write methods from SDK (transactions: approve Token, signTypedData: signing Orders)
 /**
  * necessary when using write methods from SDK:
  * transactions: approve Token, Fill or Cancel Order,
  * signTypedData: signing Orders.
  */
 const walletClient = createWalletClient({
+  // either `viemClient` has account assigned to it at creation time,
+  // or the provider `viemClient` was created with must control `account` (viemClient.getAddresses()[0]===account);
+  // otherwise breaks with ` ProviderError: Unknown account 0x...`
   chain: mainnet,
   transport: custom(window.ethereum!),
 });
