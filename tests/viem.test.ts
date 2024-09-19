@@ -148,7 +148,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
   test('approval with viem', async () => {
     const allowance1 = await getDaiAllowance();
 
-    console.log('allowance1', allowance1);
     expect(allowance1).toEqual(0n);
 
     const txHash = await SDKwithViem.swap.approveToken('12345', DAI);
