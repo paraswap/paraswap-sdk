@@ -216,7 +216,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
     return allowance;
   }
 
-  test.only('approval with viem', async () => {
+  test('approval with viem', async () => {
     const allowance1 = await getDaiAllowance();
 
     console.log('allowance1', allowance1);
@@ -231,7 +231,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
     expect(allowance2).toEqual(12345n);
   });
 
-  test.only('approveToken', async () => {
+  test('approveToken', async () => {
     const ethersTxHash = await SDKwithEthers.swap.approveToken('12345', DAI);
     await viemTestClient.waitForTransactionReceipt({
       hash: ethersTxHash as Hex,
@@ -246,25 +246,24 @@ describe('ParaSwap SDK: contract calling methods', () => {
     expect(allowance2).toEqual(1234567n);
   }, 120000);
 
-  test('signOrder', async () => {
+  test.only('signOrder', async () => {
     const signableOrderData = await SDKwithEthers.limitOrders.buildLimitOrder(
       orderInput
     );
 
+    expect(signableOrderData).toMatchSnapshot('LimitOrder to sign');
+
     const ethersSignature = await SDKwithEthers.limitOrders.signLimitOrder(
       signableOrderData
     );
-    const web3Signature = await SDKwithWeb3.limitOrders.signLimitOrder(
-      signableOrderData
-    );
+
     const viemSignature = await SDKwithViem.limitOrders.signLimitOrder(
       signableOrderData
     );
 
-    console.log('signatures', {
-      ethersSignature,
-      web3Signature,
-      viemSignature,
-    });
+    expect(viemSignature).toMatchInlineSnapshot(
+      `"0x8db9e56aad09db63873ee92eade2fcf3f7071dfee3cfacc58643888d3c1bd02e4c4a0171f54ac309441ff84887de9312fa76a7fe55aeb0f12d02e0eee1d063ef1b"`
+    );
+    expect(ethersSignature).toEqual(viemSignature);
   });
 });
