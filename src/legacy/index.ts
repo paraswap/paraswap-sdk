@@ -3,20 +3,8 @@ import type { SendOptions } from 'web3-eth-contract';
 import type { ContractTransaction } from '@ethersproject/contracts';
 
 import { API_URL, DEFAULT_VERSION, SwapSide } from '../constants';
-import {
-  SwapSDKMethods,
-  constructBuildTx,
-  constructGetAdapters,
-  constructGetBalances,
-  constructGetSpender,
-  constructGetTokens,
-  constructPartialSDK,
-  constructGetRate,
-  constructSwapSDK,
-  PriceString,
-  Address,
-  OptimalRate,
-} from '..';
+
+import { SwapSDKMethods, constructSwapSDK } from '../methods/swap';
 import { assert } from 'ts-essentials';
 import {
   constructAxiosFetcher,
@@ -28,20 +16,28 @@ import {
   EthersProviderDeps,
 } from '../helpers';
 
-import type { RateOptions } from '../methods/swap/rates';
-import type {
-  BuildOptions,
-  TransactionParams,
+import { constructGetRate, type RateOptions } from '../methods/swap/rates';
+import {
+  constructBuildTx,
+  type BuildOptions,
+  type TransactionParams,
 } from '../methods/swap/transaction';
 import type {
   AddressOrSymbol,
   Token,
   FetcherFunction,
   ParaSwapVersionUnion,
+  Address,
+  PriceString,
+  OptimalRate,
 } from '../types';
-import type { Allowance } from '../methods/swap/balance';
+import { constructGetBalances, type Allowance } from '../methods/swap/balance';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
 import { isDataWithError } from '../helpers/misc';
+import { constructPartialSDK } from '../sdk/partial';
+import { constructGetTokens } from '../methods/swap/token';
+import { constructGetSpender } from '../methods/swap/spender';
+import { constructGetAdapters } from '../methods/swap/adapters';
 
 export type APIError = {
   message: string;
