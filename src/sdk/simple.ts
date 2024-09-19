@@ -270,7 +270,7 @@ function constructSimpleContractCaller(
 
       // as soon as tx is sent
       // returning tx hash, it's up to the user to wait for tx
-      return contractTx.hash;
+      return contractTx.hash as TxHash;
     };
 
     return { staticCall, transactCall, signTypedDataCall };
@@ -299,7 +299,7 @@ function constructSimpleContractCaller(
     // as soon as tx is sent
     // returning tx hash, it's up to the user to wait for tx
     return new Promise<TxHash>((resolve, reject) => {
-      unpromiEvent.once('transactionHash', resolve);
+      unpromiEvent.once('transactionHash', (hash) => resolve(hash as TxHash));
       unpromiEvent.once('error', reject);
     });
   };
