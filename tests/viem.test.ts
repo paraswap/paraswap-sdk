@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import Web3 from 'web3';
 import { ethers } from 'ethers';
 import axios from 'axios';
 import {
@@ -23,9 +22,9 @@ jest.setTimeout(30 * 1000);
 const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
 
-const wallet = ethers.Wallet.createRandom();
-
-const web3provider = new Web3(hre.network.provider as any);
+const TEST_MNEMONIC =
+  'radar blur cabbage chef fix engine embark joy scheme fiction master release';
+const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
 
 const ethersProvider = new ethers.providers.Web3Provider(
   hre.network.provider as any
