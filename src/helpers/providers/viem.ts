@@ -16,14 +16,17 @@ import type {
   Chain,
   Transport,
   TypedDataDomain,
+  Account,
 } from 'viem';
 import { findPrimaryType } from './helpers';
 import { TransactionParams } from '../../methods/swap/transaction';
 
-export type MinViemClient = Partial<
+export type MinViemClient<
+  account extends Account | undefined = Account | undefined
+> = Partial<
   Pick<PublicActions<Transport, Chain>, 'readContract'> &
-    Pick<WalletActions<Chain>, 'writeContract' | 'signTypedData'>
->;
+    Pick<WalletActions<Chain, account>, 'writeContract' | 'signTypedData'>
+> & { account?: account };
 
 export const constructContractCaller = (
   viemClient: MinViemClient,
@@ -53,7 +56,6 @@ export const constructContractCaller = (
       abi,
       functionName: contractMethod,
       args,
-      account: account as Hex,
       blockTag,
       blockNumber,
     });
@@ -64,11 +66,19 @@ export const constructContractCaller = (
   const transactCall: TransactionContractCallerFn<Hex> = async (params) => {
     assert(account, 'account must be specified to create a signer');
     assert(
+      isViemClientWithAccount(viemClient),
+      'account must be specified to create a signer'
+    );
+    assert(
       viemClient.writeContract,
       'Viem client must have writeContract Wallet Action'
     );
 
     const { address, abi, contractMethod, args, overrides } = params;
+    console.log(
+      '🚀 ~ consttransactCall:TransactionContractCallerFn<Hex>= ~ overrides:',
+      overrides
+    );
 
     const gas = overrides.gas !== undefined ? BigInt(overrides.gas) : undefined;
     const gasPrice =
@@ -88,24 +98,62 @@ export const constructContractCaller = (
     const viemTxParams = txParamsToViemTxParams({
       ...overrides,
       to: address,
-      from: overrides.from || account,
       gas: overrides.gas?.toString(10),
       value: overrides.value?.toString(10),
     });
+
+    /*     console.log('View.writeContract', {
+      address: address as Hex,
+      // abi,
+      functionName: contractMethod,
+      args: argsToViemArgs(args),
+      ...viemTxParams,
+      nonce: overrides.nonce,
+    }); */
+
+    /*     const t = await viemClient.writeContract({
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      abi: [
+        {
+          constant: false,
+          inputs: [
+            { name: '_spender', type: 'address' },
+            { name: '_value', type: 'uint256' },
+          ],
+          name: 'approve',
+          outputs: [{ name: '', type: 'bool' }],
+          payable: false,
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+      ],
+      functionName: 'approve',
+      args: ['0x216b4b4ba9f3e719726886d34a177484278bfcae', 12345n],
+    });
+
+    return t; */
+
+    const gasPriceParams =
+      'maxFeePerGas' in viemTxParams
+        ? {
+            maxFeePerGas: viemTxParams.maxFeePerGas,
+            maxPriorityFeePerGas: viemTxParams.maxPriorityFeePerGas,
+          }
+        : 'gasPrice' in viemTxParams
+        ? { gasPrice: viemTxParams.gasPrice }
+        : {};
 
     const txHash = await viemClient.writeContract({
       address: address as Hex,
       abi,
       functionName: contractMethod,
-      args,
-      ...viemTxParams,
+      args: argsToViemArgs(args),
+      value: viemTxParams.value,
+      gas: viemTxParams.gas,
+      // ...viemTxParams,
       // account: (overrides.from || account) as Hex,
       nonce: overrides.nonce,
-      // value,
-      // gas,
-      // ...(maxFeePerGas !== undefined
-      //   ? { maxFeePerGas, maxPriorityFeePerGas }
-      //   : { gasPrice }),
+      ...gasPriceParams,
     });
 
     return txHash;
@@ -147,7 +195,6 @@ export const constructContractCaller = (
 };
 
 type ViemTxParams = {
-  account: Hex;
   to: Hex;
   data?: Hex;
   value?: bigint;
@@ -159,7 +206,10 @@ type ViemTxParams = {
 );
 
 export function txParamsToViemTxParams(
-  txParams: Omit<MarkOptional<TransactionParams, 'data' | 'value'>, 'chainId'>
+  txParams: Omit<
+    MarkOptional<TransactionParams, 'data' | 'value'>,
+    'chainId' | 'from'
+  >
 ): ViemTxParams {
   const gas = txParams.gas !== undefined ? BigInt(txParams.gas) : undefined;
   const gasPrice =
@@ -174,7 +224,6 @@ export function txParamsToViemTxParams(
       : undefined;
 
   const viemTxParams = {
-    account: txParams.from as Hex,
     to: txParams.to as Hex,
     data: txParams.data as Hex,
     value: txParams.value !== undefined ? BigInt(txParams.value) : undefined,
@@ -183,6 +232,27 @@ export function txParamsToViemTxParams(
       ? { maxFeePerGas, maxPriorityFeePerGas }
       : { gasPrice }),
   };
-
   return viemTxParams;
+}
+
+function argsToViemArgs(args: any[]): any[] {
+  return args.map((arg) => {
+    if (typeof arg === 'string') {
+      if (arg.startsWith('0x')) {
+        return arg;
+      }
+      const asNumber = Number(arg);
+      if (Number.isNaN(asNumber)) {
+        return arg;
+      }
+      return BigInt(asNumber);
+    }
+    return arg;
+  });
+}
+
+function isViemClientWithAccount(
+  viemClient: MinViemClient<Account | undefined>
+): viemClient is MinViemClient<Account> {
+  return !!viemClient.account;
 }
