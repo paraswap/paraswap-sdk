@@ -110,33 +110,8 @@ async function simpleSDKExample() {
     priceRoute,
     userAddress: account,
   });
-  /*   ...(maxFeePerGas !== undefined
-    ? { maxFeePerGas, maxPriorityFeePerGas }
-    : { gasPrice }), */
 
-  const gas = txParams.gas !== undefined ? BigInt(txParams.gas) : undefined;
-  const gasPrice =
-    txParams.gasPrice !== undefined ? BigInt(txParams.gasPrice) : undefined;
-  const maxFeePerGas =
-    txParams.maxFeePerGas !== undefined
-      ? BigInt(txParams.maxFeePerGas)
-      : undefined;
-  const maxPriorityFeePerGas =
-    txParams.maxPriorityFeePerGas !== undefined
-      ? BigInt(txParams.maxPriorityFeePerGas)
-      : undefined;
-
-  const viemTxParams = {
-    account: txParams.from as Hex,
-    to: txParams.to as Hex,
-    data: txParams.data as Hex,
-    value: txParams.value !== undefined ? BigInt(txParams.value) : undefined,
-    gas,
-    ...(txParams.maxFeePerGas !== undefined
-      ? { maxFeePerGas, maxPriorityFeePerGas }
-      : { gasPrice }),
-  };
-
+  // helper to cast all relevant string values to BigInt
   const vTxParams = txParamsToViemTxParams(txParams);
 
   const txHash = await walletClient.sendTransaction({ ...vTxParams, account });

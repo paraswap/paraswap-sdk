@@ -9,9 +9,8 @@ import {
   createConfig,
 } from '@wagmi/core';
 import { injected } from '@wagmi/connectors';
-import { constructSimpleSDK } from '../';
+import { constructSimpleSDK, txParamsToViemTxParams } from '../';
 import { assert } from 'ts-essentials';
-import { txParamsToViemTxParams } from '../helpers/providers/viem';
 
 export const config = createConfig({
   chains: [mainnet],
@@ -65,4 +64,4 @@ async function simpleSDKExample() {
   const txReceipt = waitForTransactionReceipt(config, { hash: txHash });
 }
 
-// Look into examples/viem for more examples
+// Look at examples/viem for more examples

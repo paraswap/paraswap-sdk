@@ -11,6 +11,7 @@ export {
 export {
   constructContractCaller as constructViemContractCaller,
   MinViemClient,
+  txParamsToViemTxParams,
 } from './providers/viem';
 export { constructToken } from './token';
 export { isFetcherError } from './misc';
