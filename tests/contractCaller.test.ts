@@ -96,9 +96,7 @@ const viemTestClient = createTestClient({
   // transport: http(),
   // transport: http('http://localhost:8545'),
   // transport: custom(ganacheProvider),
-})
-  .extend(publicActions)
-  .extend(walletActions);
+}).extend(publicActions);
 
 const viewWalletClient = createWalletClient({
   // either walletClient needs to have account set at creation
@@ -179,13 +177,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
       { web3: web3provider, account: senderAddress }
     );
 
-    const client: Pick<typeof viemTestClient, 'writeContract'> = {
-      writeContract: (options) => {
-        console.log('🚀 ~ writeContract', options);
-        return viemTestClient.writeContract(options);
-      },
-    };
-
     SDKwithViem = constructSimpleSDK(
       {
         chainId,
@@ -225,115 +216,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
     return allowance;
   }
 
-  test('read stuff', async () => {
-    const balance = await viemTestClient.getBalance({
-      address: senderAddress as Hex,
-    });
-    expect(balance).toEqual(parseEther('1'));
-  });
-  test('send ETH', async () => {
-    const balance1 = await viemTestClient.getBalance({
-      address: senderAddress as Hex,
-    });
-
-    const txHash = await viemTestClient.sendTransaction({
-      to: wallet2.address as Hex,
-      value: parseEther('0.1'),
-    } as any);
-
-    await viemTestClient.waitForTransactionReceipt({
-      hash: txHash,
-    });
-
-    const balance2 = await viemTestClient.getBalance({
-      address: senderAddress as Hex,
-    });
-
-    const balance3 = await viemTestClient.getBalance({
-      address: wallet2.address as Hex,
-    });
-
-    expect(Number(balance1 - parseEther('0.1'))).toBeGreaterThan(
-      Number(balance2)
-    );
-    expect(balance3).toEqual(parseEther('0.1'));
-  });
-
-  test('approval with ethers', async () => {
-    const snapshotId = await viemTestClient.snapshot();
-    const spender = await SDKwithEthers.swap.getSpender();
-
-    const allowance1 = await viemTestClient.readContract({
-      address: DAI as Hex,
-      abi: [
-        {
-          constant: true,
-          inputs: [{ name: '_owner', type: 'address' }],
-          name: 'balanceOf',
-          outputs: [{ name: 'balance', type: 'uint256' }],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
-          constant: true,
-          inputs: [
-            { name: '_owner', type: 'address' },
-            { name: '_spender', type: 'address' },
-          ],
-          name: 'allowance',
-          outputs: [{ name: '', type: 'uint256' }],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      functionName: 'allowance',
-      args: [senderAddress as Hex, spender as Hex],
-    });
-
-    console.log('allowance1', allowance1);
-    expect(allowance1).toEqual(0n);
-
-    const ethersTxHash = await SDKwithEthers.swap.approveToken('12345', DAI);
-
-    await viemTestClient.waitForTransactionReceipt({
-      hash: ethersTxHash as Hex,
-    });
-
-    const allowance2 = await viemTestClient.readContract({
-      address: DAI as Hex,
-      abi: [
-        {
-          constant: true,
-          inputs: [{ name: '_owner', type: 'address' }],
-          name: 'balanceOf',
-          outputs: [{ name: 'balance', type: 'uint256' }],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
-          constant: true,
-          inputs: [
-            { name: '_owner', type: 'address' },
-            { name: '_spender', type: 'address' },
-          ],
-          name: 'allowance',
-          outputs: [{ name: '', type: 'uint256' }],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      functionName: 'allowance',
-      args: [senderAddress as Hex, spender as Hex],
-    });
-    console.log('🚀 ~ test.only ~ allowance2:', allowance2);
-
-    expect(allowance2).toEqual(12345n);
-    await viemTestClient.revert({ id: snapshotId });
-  });
   test.only('approval with viem', async () => {
     const allowance1 = await getDaiAllowance();
 
