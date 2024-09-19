@@ -15,6 +15,7 @@ import {
   walletActions,
   defineChain,
   parseEther,
+  createWalletClient,
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { hardhat, localhost } from 'viem/chains';
@@ -88,8 +89,7 @@ const ganacheChain = defineChain({
   id: chainId,
 });
 
-const viemClient = createTestClient({
-  // account: privateKeyToAccount(wallet.privateKey as Hex),
+const viemTestClient = createTestClient({
   chain: hardhat,
   mode: 'hardhat',
   transport: custom(hre.network.provider),
@@ -100,7 +100,14 @@ const viemClient = createTestClient({
   .extend(publicActions)
   .extend(walletActions);
 
-console.log('🚀1 ~ viemClient', viemClient.account);
+const viewWalletClient = createWalletClient({
+  // either walletClient needs to have account set at creation
+  // or provider must own the account (for testing can `await viemTestClient.impersonateAccount({ address: senderAddress });`)
+  // to be able to sign transactions
+  account: privateKeyToAccount(wallet.privateKey as Hex),
+  chain: hardhat,
+  transport: custom(hre.network.provider),
+});
 
 describe('ParaSwap SDK: contract calling methods', () => {
   let SDKwithEthers: SimpleSDK;
@@ -131,7 +138,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let spender: Hex;
 
   beforeAll(async () => {
-    console.log('🚀2 ~ viemClient', viemClient.account);
     await hre.network.provider.request({
       method: 'hardhat_reset',
       params: [
@@ -145,15 +151,11 @@ describe('ParaSwap SDK: contract calling methods', () => {
         },
       ],
     });
-    console.log('🚀3 ~ viemClient', viemClient.account);
 
-    await viemClient.setBalance({
+    await viemTestClient.setBalance({
       address: senderAddress as Hex,
       value: parseEther('10'),
     });
-    console.log('🚀 ~ viemClient', viemClient.account);
-
-    // await viemClient.impersonateAccount({ address: senderAddress as Hex });
 
     SDKwithEthers = constructSimpleSDK(
       {
@@ -177,10 +179,10 @@ describe('ParaSwap SDK: contract calling methods', () => {
       { web3: web3provider, account: senderAddress }
     );
 
-    const client: Pick<typeof viemClient, 'writeContract'> = {
+    const client: Pick<typeof viemTestClient, 'writeContract'> = {
       writeContract: (options) => {
         console.log('🚀 ~ writeContract', options);
-        return viemClient.writeContract(options);
+        return viemTestClient.writeContract(options);
       },
     };
 
@@ -190,14 +192,17 @@ describe('ParaSwap SDK: contract calling methods', () => {
         axios,
         // version: '5',
       },
-      { viemClient: client, account: senderAddress }
+      {
+        viemClient: viewWalletClient,
+        account: senderAddress,
+      }
     );
 
     spender = (await SDKwithEthers.swap.getSpender()) as Hex;
   });
 
   async function getDaiAllowance() {
-    const allowance = await viemClient.readContract({
+    const allowance = await viemTestClient.readContract({
       address: DAI as Hex,
       abi: [
         {
@@ -221,30 +226,30 @@ describe('ParaSwap SDK: contract calling methods', () => {
   }
 
   test('read stuff', async () => {
-    const balance = await viemClient.getBalance({
+    const balance = await viemTestClient.getBalance({
       address: senderAddress as Hex,
     });
     expect(balance).toEqual(parseEther('1'));
   });
   test('send ETH', async () => {
-    const balance1 = await viemClient.getBalance({
+    const balance1 = await viemTestClient.getBalance({
       address: senderAddress as Hex,
     });
 
-    const txHash = await viemClient.sendTransaction({
+    const txHash = await viemTestClient.sendTransaction({
       to: wallet2.address as Hex,
       value: parseEther('0.1'),
     } as any);
 
-    const receipt = await viemClient.waitForTransactionReceipt({
+    await viemTestClient.waitForTransactionReceipt({
       hash: txHash,
     });
 
-    const balance2 = await viemClient.getBalance({
+    const balance2 = await viemTestClient.getBalance({
       address: senderAddress as Hex,
     });
 
-    const balance3 = await viemClient.getBalance({
+    const balance3 = await viemTestClient.getBalance({
       address: wallet2.address as Hex,
     });
 
@@ -255,10 +260,10 @@ describe('ParaSwap SDK: contract calling methods', () => {
   });
 
   test('approval with ethers', async () => {
-    const snapshotId = await viemClient.snapshot();
+    const snapshotId = await viemTestClient.snapshot();
     const spender = await SDKwithEthers.swap.getSpender();
 
-    const allowance1 = await viemClient.readContract({
+    const allowance1 = await viemTestClient.readContract({
       address: DAI as Hex,
       abi: [
         {
@@ -292,9 +297,11 @@ describe('ParaSwap SDK: contract calling methods', () => {
 
     const ethersTxHash = await SDKwithEthers.swap.approveToken('12345', DAI);
 
-    await viemClient.waitForTransactionReceipt({ hash: ethersTxHash as Hex });
+    await viemTestClient.waitForTransactionReceipt({
+      hash: ethersTxHash as Hex,
+    });
 
-    const allowance2 = await viemClient.readContract({
+    const allowance2 = await viemTestClient.readContract({
       address: DAI as Hex,
       abi: [
         {
@@ -325,50 +332,36 @@ describe('ParaSwap SDK: contract calling methods', () => {
     console.log('🚀 ~ test.only ~ allowance2:', allowance2);
 
     expect(allowance2).toEqual(12345n);
-    await viemClient.revert({ id: snapshotId });
+    await viemTestClient.revert({ id: snapshotId });
   });
   test.only('approval with viem', async () => {
     const allowance1 = await getDaiAllowance();
-    console.log('🚀4 ~ viemClient', viemClient.account);
 
     console.log('allowance1', allowance1);
     expect(allowance1).toEqual(0n);
 
     const txHash = await SDKwithViem.swap.approveToken('12345', DAI);
 
-    await viemClient.waitForTransactionReceipt({ hash: txHash as Hex });
+    await viemTestClient.waitForTransactionReceipt({ hash: txHash as Hex });
 
     const allowance2 = await getDaiAllowance();
-    console.log('🚀 ~ test.only ~ allowance2:', allowance2);
 
     expect(allowance2).toEqual(12345n);
   });
 
   test.only('approveToken', async () => {
-    console.log('🚀5 ~ viemClient', viemClient.account);
     const ethersTxHash = await SDKwithEthers.swap.approveToken('12345', DAI);
-    await viemClient.waitForTransactionReceipt({ hash: ethersTxHash as Hex });
+    await viemTestClient.waitForTransactionReceipt({
+      hash: ethersTxHash as Hex,
+    });
     const allowance1 = await getDaiAllowance();
     expect(allowance1).toEqual(12345n);
 
-    // web3 doesn't have a separate signer that would do eth_signTx +eth_sendRawTx
-    // it will only do eth_sendTx and rely on provider having the account unlocked
-    // which works seamlessly with injected providers (as they are wallets) but not chain forks
-    await viemClient.impersonateAccount({ address: senderAddress });
-    const web3TxHash = await SDKwithWeb3.swap.approveToken('123456', DAI);
-    await viemClient.stopImpersonatingAccount({
-      address: senderAddress,
-    });
-    await viemClient.waitForTransactionReceipt({ hash: web3TxHash });
+    const viemTxHash = await SDKwithViem.swap.approveToken('1234567', DAI);
+    await viemTestClient.waitForTransactionReceipt({ hash: viemTxHash });
 
     const allowance2 = await getDaiAllowance();
-    expect(allowance2).toEqual(123456n);
-
-    const viemTxHash = await SDKwithViem.swap.approveToken('1234567', DAI);
-    await viemClient.waitForTransactionReceipt({ hash: viemTxHash });
-
-    const allowance3 = await getDaiAllowance();
-    expect(allowance3).toEqual(1234567n);
+    expect(allowance2).toEqual(1234567n);
   }, 120000);
 
   test('signOrder', async () => {
