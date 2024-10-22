@@ -14,6 +14,8 @@ import { hardhat } from 'viem/chains';
 import hre from 'hardhat';
 
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
+import BigNumber from 'bignumber.js';
+import { txParamsToViemTxParams } from '../src/helpers';
 
 dotenv.config();
 
@@ -39,7 +41,7 @@ const viemTestClient = createTestClient({
   transport: custom(hre.network.provider),
 }).extend(publicActions);
 
-const viewWalletClient = createWalletClient({
+const viemWalletClient = createWalletClient({
   // either walletClient needs to have account set at creation
   // or provider must own the account (for testing can `await viemTestClient.impersonateAccount({ address: senderAddress });`)
   // to be able to sign transactions
@@ -52,6 +54,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let SDKwithEthers: SimpleSDK;
   let SDKwithViem: SimpleSDK;
 
+  const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
   const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 
@@ -75,6 +78,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
 
   beforeAll(async () => {
     await hre.network.provider.request({
+      // forks chain
       method: 'hardhat_reset',
       params: [
         {
@@ -89,7 +93,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
     });
 
     await viemTestClient.setBalance({
-      address: senderAddress as Hex,
+      address: senderAddress,
       value: parseEther('10'),
     });
 
@@ -97,7 +101,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
       {
         chainId,
         axios,
-        // version: '5',
+        version: '6.2',
       },
       {
         ethersProviderOrSigner: signer,
@@ -110,10 +114,10 @@ describe('ParaSwap SDK: contract calling methods', () => {
       {
         chainId,
         axios,
-        // version: '5',
+        version: '6.2',
       },
       {
-        viemClient: viewWalletClient,
+        viemClient: viemWalletClient,
         account: senderAddress,
       }
     );
@@ -123,7 +127,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
 
   async function getDaiAllowance() {
     const allowance = await viemTestClient.readContract({
-      address: DAI as Hex,
+      address: DAI,
       abi: [
         {
           constant: true,
@@ -139,10 +143,31 @@ describe('ParaSwap SDK: contract calling methods', () => {
         },
       ],
       functionName: 'allowance',
-      args: [senderAddress as Hex, spender as Hex],
+      args: [senderAddress, spender],
     });
 
     return allowance;
+  }
+
+  async function getDaiBalance() {
+    const balance = await viemTestClient.readContract({
+      address: DAI,
+      abi: [
+        {
+          constant: true,
+          inputs: [{ name: '_owner', type: 'address' }],
+          name: 'balanceOf',
+          outputs: [{ name: 'balance', type: 'uint256' }],
+          payable: false,
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ],
+      functionName: 'balanceOf',
+      args: [senderAddress],
+    });
+
+    return balance;
   }
 
   test('approval with viem', async () => {
@@ -193,5 +218,61 @@ describe('ParaSwap SDK: contract calling methods', () => {
       `"0x18b022691daab1d8a3486aab5a006f2e98932b1c2fe4f04726c766e7a4e6d4935cbbf6d03ef945f23bef5cf4e250086f14581b1b8097f6c3ffd62653c8b2454b1b"`
     );
     expect(ethersSignature).toEqual(viemSignature);
+  });
+
+  test('market swap', async () => {
+    const srcAmount = (1 * 1e18).toString();
+    const srcToken = ETH;
+    const destToken = DAI;
+    const userAddress = senderAddress;
+
+    const priceRoute = await SDKwithViem.swap.getRate({
+      srcToken,
+      destToken,
+      amount: srcAmount,
+      userAddress,
+      options: {
+        includeDEXS: ['Uniswap', 'UniswapV2', 'Balancer'],
+      },
+    });
+
+    const destAmount = new BigNumber(priceRoute.destAmount)
+      .times(0.99) // slippage 1%
+      .toFixed(0);
+
+    const txParams = await SDKwithViem.swap.buildTx(
+      {
+        srcToken,
+        destToken,
+        srcAmount,
+        destAmount,
+        priceRoute,
+        userAddress,
+      },
+      { ignoreChecks: true }
+    );
+
+    const viemTxParams = txParamsToViemTxParams(txParams);
+
+    const balanceDAI1 = await getDaiBalance();
+    expect(balanceDAI1).toEqual(0n);
+    const balanceETH1 = await viemTestClient.getBalance({
+      address: senderAddress,
+    });
+
+    const txHash = await viemWalletClient.sendTransaction(viemTxParams);
+    await viemTestClient.waitForTransactionReceipt({
+      hash: txHash,
+    });
+
+    const balanceDAI2 = await getDaiBalance();
+    // destAmount + a bit more if lucky enough
+    expect(balanceDAI2).toBeGreaterThanOrEqual(BigInt(destAmount));
+
+    const balanceETH2 = await viemTestClient.getBalance({
+      address: senderAddress,
+    });
+    // bal1 - srcAmount - some gas
+    expect(balanceETH2).toBeLessThan(balanceETH1 - BigInt(srcAmount));
   });
 });
