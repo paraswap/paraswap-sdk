@@ -56,19 +56,28 @@ export type TxInputAmountsPartBuyOrSell = {
   destAmount: PriceString;
 };
 
+// more details in the docs https://developers.paraswap.network/api/build-parameters-for-transaction#request-body
 export type BuildTxInputBase = {
   srcToken: Address;
   destToken: Address;
   userAddress: Address;
+  /** @description Whenever msg.sender (`userAddress`) i.e. address calling the ParaSwap contract is different than the address sending the transaction, `txOrigin` must be passed along with `userAddress` */
+  txOrigin?: string;
   /** @description used with referral link */
   referrer?: string;
   partner?: string;
   partnerAddress?: string;
   partnerFeeBps?: number;
+  /** @description If user should receive surplus instead of partner. Default: false */
+  isSurplusToUser?: boolean;
+  /** @description If fees should be sent directly to the partner instead of registering them on FeeClaimer. v6 only. Default: false */
+  isDirectFeeTransfer?: boolean;
   /** @deprecated Use "takeSurplus" instead. Positive slippage goes to user, true by default */
   positiveSlippageToUser?: boolean;
-  /** @description Set to true to take positive slippage. Default: false */
+  /** @description Set to true to take positive slippage. Works with partnerAddress. Default: false */
   takeSurplus?: boolean;
+  /** @description Cap the surplus at 1% maximum. Default: true */
+  isCapSurplus?: boolean;
   receiver?: Address;
   srcDecimals?: number;
   destDecimals?: number;

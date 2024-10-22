@@ -17,6 +17,7 @@ import {
   GetAdaptersFunctions,
 } from './methods/swap/adapters';
 import { constructGetRate, GetRateFunctions } from './methods/swap/rates';
+import { constructSwapTx, GetSwapTxFunctions } from './methods/swap/swapTx';
 import { constructGetTokens, GetTokensFunctions } from './methods/swap/token';
 import { BuildTxFunctions, constructBuildTx } from './methods/swap/transaction';
 
@@ -170,6 +171,7 @@ export {
   constructBuildTx,
   constructGetAdapters,
   constructGetRate,
+  constructSwapTx,
   // limitOrders methods:
   constructBuildLimitOrder,
   constructSignLimitOrder,
@@ -213,6 +215,7 @@ export type {
   GetAdaptersFunctions,
   GetRateFunctions,
   BuildTxFunctions,
+  GetSwapTxFunctions,
   // types for limitOrders methods:
   BuildLimitOrderFunctions,
   SignLimitOrderFunctions,

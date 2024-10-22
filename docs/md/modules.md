@@ -71,6 +71,7 @@
 - [GetNFTOrdersFunctions](modules.md#getnftordersfunctions)
 - [GetRateFunctions](modules.md#getratefunctions)
 - [GetSpenderFunctions](modules.md#getspenderfunctions)
+- [GetSwapTxFunctions](modules.md#getswaptxfunctions)
 - [GetTokensFunctions](modules.md#gettokensfunctions)
 - [LimitOrder](modules.md#limitorder)
 - [LimitOrderApiResponse](modules.md#limitorderapiresponse)
@@ -162,6 +163,7 @@
 - [constructSubmitLimitOrder](modules.md#constructsubmitlimitorder)
 - [constructSubmitNFTOrder](modules.md#constructsubmitnftorder)
 - [constructSwapSDK](modules.md#constructswapsdk)
+- [constructSwapTx](modules.md#constructswaptx)
 - [constructToken](modules.md#constructtoken)
 - [constructWeb3ContractCaller](modules.md#constructweb3contractcaller)
 - [isAllowance](modules.md#isallowance)
@@ -205,11 +207,11 @@ ___
 | :------ | :------ |
 | `limitOrders` | [`LimitOrderHandlers`](modules.md#limitorderhandlers)<`TxResponse`\> |
 | `nftOrders` | [`NFTOrderHandlers`](modules.md#nftorderhandlers)<`TxResponse`\> |
-| `swap` | [`SwapSDKMethods`](modules/internal_.md#swapsdkmethods)<`TxResponse`\> |
+| `swap` | [`SwapSDKMethods`](modules.md#swapsdkmethods)<`TxResponse`\> |
 
 #### Defined in
 
-[src/sdk/full.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L27)
+[src/sdk/full.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L12)
 
 ___
 
@@ -324,7 +326,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:101](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L101)
+[src/methods/swap/transaction.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L110)
 
 ___
 
@@ -378,7 +380,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:108](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L108)
+[src/methods/swap/transaction.ts:117](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L117)
 
 ___
 
@@ -406,7 +408,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:163](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L163)
+[src/methods/swap/transaction.ts:172](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L172)
 
 ___
 
@@ -425,7 +427,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:149](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L149)
+[src/methods/swap/transaction.ts:158](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L158)
 
 ___
 
@@ -435,7 +437,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:170](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L170)
 
 ___
 
@@ -445,7 +447,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:160](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L160)
+[src/methods/swap/transaction.ts:169](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L169)
 
 ___
 
@@ -455,7 +457,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L124)
+[src/methods/swap/transaction.ts:133](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L133)
 
 ___
 
@@ -465,7 +467,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:135](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L135)
+[src/methods/swap/transaction.ts:144](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L144)
 
 ___
 
@@ -475,7 +477,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L80)
+[src/methods/swap/transaction.ts:89](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L89)
 
 ___
 
@@ -491,7 +493,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:171](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L171)
+[src/methods/swap/transaction.ts:180](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L180)
 
 ___
 
@@ -501,7 +503,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:142](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L142)
+[src/methods/swap/transaction.ts:151](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L151)
 
 ___
 
@@ -590,7 +592,7 @@ ___
 
 #### Defined in
 
-[src/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L57)
+[src/types.ts:58](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L58)
 
 ___
 
@@ -733,7 +735,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L70)
+[src/methods/swap/rates.ts:196](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L196)
 
 ___
 
@@ -753,6 +755,22 @@ ___
 #### Defined in
 
 [src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L8)
+
+___
+
+### GetSwapTxFunctions
+
+Ƭ **GetSwapTxFunctions**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `getSwapTxData` | [`GetSwapTxData`](modules/internal_.md#getswaptxdata) |
+
+#### Defined in
+
+[src/methods/swap/swapTx.ts:213](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L213)
 
 ___
 
@@ -1172,7 +1190,7 @@ Passed to version API enpoints as ?version: to /prices and /adapters
 
 #### Defined in
 
-[src/types.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L34)
+[src/types.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L35)
 
 ___
 
@@ -1330,17 +1348,17 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L116)
+[src/sdk/simple.ts:118](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L118)
 
 ___
 
 ### SimpleSDK
 
-Ƭ **SimpleSDK**: { `limitOrders`: [`LimitOrderHandlers`](modules.md#limitorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `nftOrders`: [`NFTOrderHandlers`](modules.md#nftorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `swap`: [`SwapSDKMethods`](modules/internal_.md#swapsdkmethods)<[`TxHash`](modules.md#txhash)\>  } & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
+Ƭ **SimpleSDK**: { `limitOrders`: [`LimitOrderHandlers`](modules.md#limitorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `nftOrders`: [`NFTOrderHandlers`](modules.md#nftorderhandlers)<[`TxHash`](modules.md#txhash)\> ; `swap`: [`SwapSDKMethods`](modules.md#swapsdkmethods)<[`TxHash`](modules.md#txhash)\>  } & [`Required`](modules/internal_.md#required)<[`ConstructBaseInput`](interfaces/internal_.ConstructBaseInput.md)\>
 
 #### Defined in
 
-[src/sdk/simple.ts:122](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L122)
+[src/sdk/simple.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L124)
 
 ___
 
@@ -1350,7 +1368,7 @@ ___
 
 #### Defined in
 
-[src/sdk/simple.ts:139](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L139)
+[src/sdk/simple.ts:141](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L141)
 
 ___
 
@@ -1390,7 +1408,7 @@ ___
 
 ### SwapSDKMethods
 
-Ƭ **SwapSDKMethods**<`TxResponse`\>: [`GetBalancesFunctions`](modules.md#getbalancesfunctions) & [`GetTokensFunctions`](modules.md#gettokensfunctions) & [`GetSpenderFunctions`](modules.md#getspenderfunctions) & [`ApproveTokenFunctions`](modules.md#approvetokenfunctions)<`TxResponse`\> & [`BuildTxFunctions`](modules.md#buildtxfunctions) & [`GetAdaptersFunctions`](modules.md#getadaptersfunctions) & [`GetRateFunctions`](modules.md#getratefunctions)
+Ƭ **SwapSDKMethods**<`TxResponse`\>: [`GetBalancesFunctions`](modules.md#getbalancesfunctions) & [`GetTokensFunctions`](modules.md#gettokensfunctions) & [`GetSpenderFunctions`](modules.md#getspenderfunctions) & [`ApproveTokenFunctions`](modules.md#approvetokenfunctions)<`TxResponse`\> & [`BuildTxFunctions`](modules.md#buildtxfunctions) & [`GetAdaptersFunctions`](modules.md#getadaptersfunctions) & [`GetRateFunctions`](modules.md#getratefunctions) & [`GetSwapTxFunctions`](modules.md#getswaptxfunctions)
 
 #### Type parameters
 
@@ -1400,7 +1418,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/index.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/index.ts#L11)
+[src/methods/swap/index.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/index.ts#L12)
 
 ___
 
@@ -2224,6 +2242,22 @@ construct SDK with every Swap-related method, fetching from API and token approv
 #### Returns
 
 [`SwapSDKMethods`](modules.md#swapsdkmethods)<`TxResponse`\>
+
+___
+
+### constructSwapTx
+
+▸ **constructSwapTx**(`__namedParameters`): [`GetSwapTxFunctions`](modules.md#getswaptxfunctions)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`ConstructFetchInput`](interfaces/ConstructFetchInput.md) |
+
+#### Returns
+
+[`GetSwapTxFunctions`](modules.md#getswaptxfunctions)
 
 ___
 

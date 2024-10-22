@@ -12,6 +12,7 @@ import type {
   TxHash,
 } from './helpers/token';
 import type { SignableTypedData } from './methods/common/orders/buildOrderData';
+import { TransactionParams } from './methods/swap/transaction';
 
 export type {
   Address,
@@ -146,6 +147,11 @@ export type NoExtraKeysCheck<Checking, CheckAgainst> = Exclude<
 
 export type PriceRouteApiResponse = {
   priceRoute: OptimalRate;
+};
+
+export type SwapApiResponse = {
+  priceRoute: OptimalRate;
+  txParams: Omit<TransactionParams, 'gas'>;
 };
 
 export type PriceRouteApiErrorResponse =

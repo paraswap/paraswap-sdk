@@ -144,6 +144,59 @@ describe.each([
     );
   });
 
+  test('Get_SwapTxData', async () => {
+    const { priceRoute, txParams } = await paraSwap.swap.getSwapTxData({
+      srcToken: ETH,
+      destToken: DAI,
+      amount: srcAmount,
+      userAddress: senderAddress,
+      side: SwapSide.SELL,
+      slippage: 500,
+      options: {
+        includeDEXS: ['UniswapV2'],
+      },
+    });
+
+    const bestRouteStable = priceRoute.bestRoute.map((b) => ({
+      ...b,
+      swaps: b.swaps.map((s) => ({
+        ...s,
+        swapExchanges: s.swapExchanges.map((se) => ({
+          ...se,
+          destAmount: 'dynamic_number',
+          data: {
+            ...se.data,
+            gasUSD: 'dynamic_number',
+          },
+        })),
+      })),
+    }));
+
+    const priceRouteStable = {
+      ...priceRoute,
+      gasCost: 'dynamic_number',
+      gasCostUSD: 'dynamic_number',
+      hmac: 'dynamic_number',
+      destAmount: 'dynamic_number',
+      blockNumber: 'dynamic_number',
+      srcUSD: 'dynamic_number',
+      destUSD: 'dynamic_number',
+      bestRoute: bestRouteStable,
+    };
+
+    const txParamsStable = {
+      ...txParams,
+      data: 'dynamic_string',
+      from: 'dynamic_string',
+      gasPrice: 'dynamic_number',
+    };
+
+    expect(txParams.from).toEqual(senderAddress);
+
+    expect(priceRouteStable).toMatchSnapshot('Get_SwapTxData::priceRoute');
+    expect(txParamsStable).toMatchSnapshot('Get_SwapTxData::txParams');
+  });
+
   test('Get_Spender', async () => {
     const spender = await paraSwap.swap.getSpender();
     expect(web3provider.utils.isAddress(spender));

@@ -1,12 +1,5 @@
-import type { ApproveTokenFunctions } from '../methods/swap/approve';
-import type { GetBalancesFunctions } from '../methods/swap/balance';
-import type { GetSpenderFunctions } from '../methods/swap/spender';
-import type { GetAdaptersFunctions } from '../methods/swap/adapters';
-import type { GetRateFunctions } from '../methods/swap/rates';
-import type { GetTokensFunctions } from '../methods/swap/token';
-import type { BuildTxFunctions } from '../methods/swap/transaction';
 import type { SDKConfig } from './partial';
-import { constructSwapSDK } from '../methods/swap';
+import { constructSwapSDK, SwapSDKMethods } from '../methods/swap';
 import {
   constructAllLimitOrdersHandlers,
   LimitOrderHandlers,
@@ -15,14 +8,6 @@ import {
   constructAllNFTOrdersHandlers,
   NFTOrderHandlers,
 } from '../methods/nftOrders';
-
-export type SwapSDKMethods<TxResponse> = GetBalancesFunctions &
-  GetTokensFunctions &
-  GetSpenderFunctions &
-  ApproveTokenFunctions<TxResponse> &
-  BuildTxFunctions &
-  GetAdaptersFunctions &
-  GetRateFunctions;
 
 export type AllSDKMethods<TxResponse> = {
   swap: SwapSDKMethods<TxResponse>;

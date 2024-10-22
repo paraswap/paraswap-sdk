@@ -5,6 +5,7 @@ import { ApproveTokenFunctions, constructApproveToken } from './approve';
 import { constructGetBalances, GetBalancesFunctions } from './balance';
 import { constructGetRate, GetRateFunctions } from './rates';
 import { constructGetSpender, GetSpenderFunctions } from './spender';
+import { constructSwapTx, GetSwapTxFunctions } from './swapTx';
 import { constructGetTokens, GetTokensFunctions } from './token';
 import { BuildTxFunctions, constructBuildTx } from './transaction';
 
@@ -14,7 +15,8 @@ export type SwapSDKMethods<TxResponse> = GetBalancesFunctions &
   ApproveTokenFunctions<TxResponse> &
   BuildTxFunctions &
   GetAdaptersFunctions &
-  GetRateFunctions;
+  GetRateFunctions &
+  GetSwapTxFunctions;
 
 /** @description construct SDK with every Swap-related method, fetching from API and token approval */
 export const constructSwapSDK = <TxResponse>(
@@ -31,5 +33,6 @@ export const constructSwapSDK = <TxResponse>(
     ) => ApproveTokenFunctions<TxResponse>, // @TODO try Instantiation Expression when TS 4.7 `as constructApproveToken<TxResponse>`
     constructBuildTx,
     constructGetAdapters,
-    constructGetRate
+    constructGetRate,
+    constructSwapTx
   );
