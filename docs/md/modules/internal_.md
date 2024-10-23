@@ -1411,7 +1411,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:168](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L168)
+[src/methods/swap/rates.ts:169](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L169)
 
 ___
 
@@ -2019,7 +2019,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:182](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L182)
+[src/methods/swap/rates.ts:183](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L183)
 
 ___
 
@@ -2044,7 +2044,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:191](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L191)
+[src/methods/swap/rates.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L192)
 
 ___
 
@@ -2054,7 +2054,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:187](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L187)
+[src/methods/swap/rates.ts:188](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L188)
 
 ___
 
@@ -2064,7 +2064,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:177](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L177)
+[src/methods/swap/rates.ts:178](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L178)
 
 ___
 
@@ -2773,7 +2773,7 @@ ___
 | `ignoreBadUsdPrice?` | `boolean` | **`Description`**  proceed with priceRoute building even when tokens don't have USD price. Default: false |
 | `includeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] | - |
 | `includeDEXS?` | `string`[] | - |
-| `maxImpact?` | `number` | - |
+| `maxImpact?` | `number` | **`Description`**  In %. It's a way to bypass the API price impact check (default = 15%) |
 | `maxUSDImpact?` | `number` | - |
 | `otherExchangePrices?` | `boolean` | - |
 | `partner?` | `string` | - |

@@ -735,7 +735,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:196](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L196)
+[src/methods/swap/rates.ts:197](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L197)
 
 ___
 
@@ -1111,7 +1111,7 @@ ___
 | `destAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `destDecimals` | `number` |
 | `destToken` | [`Address`](modules/internal_.md#address) |
-| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `destUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) \| ``null`` |
 | `gasCost` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `gasCostL1Wei?` | `string` |
 | `gasCostUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
@@ -1127,7 +1127,7 @@ ___
 | `srcAmount` | [`NumberAsString`](modules/internal_.md#numberasstring) |
 | `srcDecimals` | `number` |
 | `srcToken` | [`Address`](modules/internal_.md#address) |
-| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) |
+| `srcUSD` | [`NumberAsString`](modules/internal_.md#numberasstring) \| ``null`` |
 | `tokenTransferProxy` | [`Address`](modules/internal_.md#address) |
 | `version` | [`ParaSwapVersion`](enums/internal_.ParaSwapVersion.md) |
 
