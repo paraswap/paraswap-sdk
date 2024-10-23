@@ -17,8 +17,6 @@ dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 // const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
@@ -26,7 +24,6 @@ const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
@@ -36,7 +33,7 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const { setBalance, provider, startFork } = forkChain();
+const { provider, setupFork } = forkChain();
 
 const web3provider = new Web3(provider as any);
 
@@ -52,8 +49,7 @@ describe.each([
   let paraSwap: SimpleFetchSDK;
 
   beforeAll(async () => {
-    await startFork();
-    await setBalance({ address: senderAddress, balance: 8e18 });
+    await setupFork({ accounts: [{ address: senderAddress, balance: 8e18 }] });
 
     paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions, version: '5' });
   });

@@ -35,7 +35,7 @@ const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address as Hex;
 
 const viemTestClient = createTestClient({
-  chain: hardhat,
+  chain: { ...hardhat, id: chainId }, // may need to override chainId
   mode: 'hardhat',
   transport: custom(provider),
 }).extend(publicActions);
@@ -45,7 +45,7 @@ const viemWalletClient = createWalletClient({
   // or provider must own the account (for testing can `await viemTestClient.impersonateAccount({ address: senderAddress });`)
   // to be able to sign transactions
   account: privateKeyToAccount(wallet.privateKey as Hex),
-  chain: hardhat,
+  chain: { ...hardhat, id: chainId },
   transport: custom(provider),
 });
 
@@ -76,7 +76,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let spender: Hex;
 
   beforeAll(async () => {
-    // await startFork();
+    await startFork();
 
     await viemTestClient.setBalance({
       address: senderAddress,
