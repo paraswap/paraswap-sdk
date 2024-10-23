@@ -10,7 +10,7 @@ import type {
 } from 'web3-eth-contract';
 import { assert, Primitive } from 'ts-essentials';
 
-import type { AxiosError } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 
 export type EthersContractWithMethod<T extends string> = EthersContract & {
   readonly [method in T]: EthersContractFunction;
@@ -77,8 +77,8 @@ export const objectToFilledEntries = <T extends Record<string, unknown>>(
   );
 };
 
-//                                                            not arrays or mappings
 export const constructSearchString = <
+  //                               not arrays or mappings
   U extends Record<string, Exclude<Primitive, symbol>>
 >(
   queryOptions: U
@@ -93,8 +93,15 @@ export const constructSearchString = <
 
 type FetcherErrorConstructorInput = Pick<
   AxiosError,
-  'code' | 'request' | 'response' | 'isAxiosError' | 'message'
->;
+  'code' | 'request' | 'isAxiosError' | 'message'
+> & {
+  response?: Pick<
+    AxiosResponse,
+    'data' | 'status' | 'statusText' | 'headers'
+  > & {
+    config: { url?: string; method?: string };
+  };
+};
 
 export interface FetcherErrorInterface extends FetcherErrorConstructorInput {
   status?: number;

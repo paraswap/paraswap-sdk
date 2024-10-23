@@ -47,6 +47,7 @@ exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_Adapters: Get_Adapters
   "Wombat",
   "Swell",
   "Spark",
+  "sUSDS",
   "AugustusRFQ",
 ]
 `;
@@ -187,6 +188,7 @@ exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_Adapters: Get_Adapters
   "Wombat",
   "Swell",
   "Spark",
+  "sUSDS",
   "AugustusRFQ",
 ]
 `;

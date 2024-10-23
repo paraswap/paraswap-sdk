@@ -47,6 +47,7 @@ exports[`ParaSwap SDK Get_Adapters: Get_Adapters 1`] = `
   "Wombat",
   "Swell",
   "Spark",
+  "sUSDS",
   "AugustusRFQ",
 ]
 `;

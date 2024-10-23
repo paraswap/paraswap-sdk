@@ -100,11 +100,14 @@ import {
 import {
   constructEthersContractCaller,
   constructWeb3ContractCaller,
+  constructViemContractCaller,
+  txParamsToViemTxParams,
   constructAxiosFetcher,
   constructFetchFetcher,
   isFetcherError,
   FetcherErrorInterface,
   EthersProviderDeps,
+  MinViemClient,
   constructToken,
   FetcherError,
 } from './helpers';
@@ -194,6 +197,8 @@ export {
   // different helpers
   constructEthersContractCaller,
   constructWeb3ContractCaller,
+  constructViemContractCaller,
+  txParamsToViemTxParams,
   constructAxiosFetcher,
   constructFetchFetcher,
   isFetcherError,
@@ -206,8 +211,10 @@ export {
 
 export type {
   Allowance,
-  // types for swap methods:
+  // contractCaller requirements
   EthersProviderDeps,
+  MinViemClient,
+  // types for swap methods:
   ApproveTokenFunctions,
   GetBalancesFunctions,
   GetSpenderFunctions,

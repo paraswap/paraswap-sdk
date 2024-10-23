@@ -52,7 +52,7 @@ declare let process: any;
 
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
-const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
+// const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 
 const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
@@ -359,7 +359,15 @@ describe.each([
 
     const transaction = {
       ...txParams,
-      gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      gasPrice:
+        txParams.gasPrice &&
+        '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      maxFeePerGas:
+        txParams.maxFeePerGas &&
+        '0x' + new BigNumber(txParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        txParams.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(txParams.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(txParams.value).toString(16),
     };
@@ -403,7 +411,15 @@ describe.each([
 
     const transaction = {
       ...txParams,
-      gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      gasPrice:
+        txParams.gasPrice &&
+        '0x' + new BigNumber(txParams.gasPrice).toString(16),
+      maxFeePerGas:
+        txParams.maxFeePerGas &&
+        '0x' + new BigNumber(txParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        txParams.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(txParams.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(txParams.value).toString(16),
     };

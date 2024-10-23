@@ -124,7 +124,6 @@ const ethersProvider = tenderlyForkUrl
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
 
-const maker = signer;
 const taker = walletStable2.connect(ethersProvider);
 
 const axiosFetcher = constructAxiosFetcher(axios);
@@ -779,7 +778,16 @@ describe('NFT Orders', () => {
 
     const transaction: ethers.providers.TransactionRequest = {
       ...NFTPayloadTxParams,
-      gasPrice: '0x' + new BigNumber(NFTPayloadTxParams.gasPrice).toString(16),
+      gasPrice:
+        NFTPayloadTxParams.gasPrice &&
+        '0x' + new BigNumber(NFTPayloadTxParams.gasPrice).toString(16),
+      maxFeePerGas:
+        NFTPayloadTxParams.maxFeePerGas &&
+        '0x' + new BigNumber(NFTPayloadTxParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        NFTPayloadTxParams.maxPriorityFeePerGas &&
+        '0x' +
+          new BigNumber(NFTPayloadTxParams.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(payloadGas || 5000000).toString(16),
       value: '0x' + new BigNumber(NFTPayloadTxParams.value).toString(16),
     };
@@ -956,7 +964,7 @@ describe('NFT Orders', () => {
     // without SDK
     // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
 
-    const { balance: aaveBalance } = await buyErc20TokenForEth({
+    await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: AAVE,
       amount: priceRoute.srcAmount,
@@ -1001,14 +1009,25 @@ describe('NFT Orders', () => {
     const transaction = {
       ...swapAndNFTPayloadTxParams,
       gasPrice:
+        swapAndNFTPayloadTxParams.gasPrice &&
         '0x' + new BigNumber(swapAndNFTPayloadTxParams.gasPrice).toString(16),
+      maxFeePerGas:
+        swapAndNFTPayloadTxParams.maxFeePerGas &&
+        '0x' +
+          new BigNumber(swapAndNFTPayloadTxParams.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        swapAndNFTPayloadTxParams.maxPriorityFeePerGas &&
+        '0x' +
+          new BigNumber(
+            swapAndNFTPayloadTxParams.maxPriorityFeePerGas
+          ).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(swapAndNFTPayloadTxParams.value).toString(16),
     };
 
     const takerFillsOrderTx = await taker.sendTransaction(transaction);
 
-    const result = await awaitTx(takerFillsOrderTx);
+    await awaitTx(takerFillsOrderTx);
 
     const makerTokenNFTAfterBalance: BigNumberEthers =
       await NFT_Token.balanceOf(maker.address);

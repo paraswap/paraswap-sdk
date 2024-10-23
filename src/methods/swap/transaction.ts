@@ -20,9 +20,12 @@ export interface TransactionParams {
   from: string;
   value: string;
   data: string;
-  gasPrice: string;
   gas?: string;
   chainId: number;
+  // either gasPrice or maxFeePerGas & maxPriorityFeePerGas will be present
+  gasPrice?: string;
+  maxFeePerGas?: string;
+  maxPriorityFeePerGas?: string;
 }
 
 export type SwappableOrder = OrderData & {
