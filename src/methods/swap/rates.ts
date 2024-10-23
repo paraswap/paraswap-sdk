@@ -148,6 +148,7 @@ export type RateOptions = {
   excludeContractMethods?: ContractMethod[];
   includeContractMethods?: ContractMethod[];
   partner?: string;
+  /** @description In %. It's a way to bypass the API price impact check (default = 15%) */
   maxImpact?: number;
   maxUSDImpact?: number;
   otherExchangePrices?: boolean;
