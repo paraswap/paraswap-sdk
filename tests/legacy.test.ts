@@ -14,8 +14,8 @@ import BigNumber from 'bignumber.js';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
-import ganache from 'ganache';
 import { assert } from 'ts-essentials';
+import { forkChain } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -37,26 +37,11 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [{ balance: 8e18, secretKey: wallet.privateKey }],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId: 1,
-  },
-  logging: {
-    quiet: true,
-  },
-});
+const { provider, setupFork } = forkChain();
 
-const provider = new Web3(ganacheProvider as any);
+const web3Provider = new Web3(provider as any);
 
-const ethersProvider = new ethers.providers.Web3Provider(
-  ganacheProvider as any
-);
+const ethersProvider = new ethers.providers.Web3Provider(provider as any);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -65,8 +50,11 @@ describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
+    await setupFork({
+      accounts: [{ address: senderAddress, balance: 8e18 }],
+    });
     paraSwap = new ParaSwap({ chainId, fetch, version: '5' }).setWeb3Provider(
-      provider
+      web3Provider
     );
   });
 
@@ -145,7 +133,7 @@ describe('ParaSwap SDK', () => {
 
   test('Get_Spender', async () => {
     const spender = await paraSwap.getTokenTransferProxy();
-    expect(provider.utils.isAddress(spender as string));
+    expect(web3Provider.utils.isAddress(spender as string));
   });
 
   test('Get_Allowance', async () => {

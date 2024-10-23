@@ -48,8 +48,6 @@ import { bytecode as ERC721MintableBytecode } from './bytecode/ERC721Mintable.js
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
-import ganache from 'ganache';
-
 import {
   BuildNFTOrderInput,
   SignableNFTOrderData,
@@ -57,6 +55,7 @@ import {
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
+import { forkChain } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -91,35 +90,13 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   "m/44'/60'/0'/0/1"
 );
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [
-      {
-        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
-        secretKey: walletStable.privateKey,
-      },
-      {
-        balance: '0x' + new BigNumber(1000).multipliedBy(10 ** 18).toString(16),
-        secretKey: walletStable2.privateKey,
-      },
-    ],
-  },
-  fork: {
-    url: process.env.PROVIDER_URL,
-  },
-  chain: {
-    chainId,
-  },
-  logging: {
-    quiet: true,
-  },
-});
+const { provider, setupFork } = forkChain();
 
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
 const ethersProvider = tenderlyForkUrl
   ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
-  : new ethers.providers.Web3Provider(ganacheProvider as any);
+  : new ethers.providers.Web3Provider(provider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -143,7 +120,7 @@ const takerEthersContractCaller = constructEthersContractCaller(
   walletStable2.address
 );
 
-const web3provider = new Web3(ganacheProvider as any);
+const web3provider = new Web3(provider as any);
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,
@@ -320,6 +297,13 @@ describe('NFT Orders', () => {
   // let initialChainId2verifyingContract = { ...chainId2verifyingContract };
 
   beforeAll(async () => {
+    await setupFork({
+      accounts: [
+        { balance: 1000e18, address: walletStable.address },
+        { balance: 1000e18, address: walletStable2.address },
+      ],
+    });
+
     orderInput = {
       nonce: 1,
       expiry: orderExpiry,

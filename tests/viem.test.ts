@@ -11,26 +11,25 @@ import {
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { hardhat } from 'viem/chains';
-import hre from 'hardhat';
 
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
 import BigNumber from 'bignumber.js';
 import { txParamsToViemTxParams } from '../src/helpers';
+import { forkChain } from './helpers/hardhat';
 
 dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
 const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
 
-const ethersProvider = new ethers.providers.Web3Provider(
-  hre.network.provider as any
-);
+const { provider, startFork } = forkChain();
+
+const ethersProvider = new ethers.providers.Web3Provider(provider as any);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address as Hex;
@@ -38,7 +37,7 @@ const senderAddress = signer.address as Hex;
 const viemTestClient = createTestClient({
   chain: hardhat,
   mode: 'hardhat',
-  transport: custom(hre.network.provider),
+  transport: custom(provider),
 }).extend(publicActions);
 
 const viemWalletClient = createWalletClient({
@@ -47,7 +46,7 @@ const viemWalletClient = createWalletClient({
   // to be able to sign transactions
   account: privateKeyToAccount(wallet.privateKey as Hex),
   chain: hardhat,
-  transport: custom(hre.network.provider),
+  transport: custom(provider),
 });
 
 describe('ParaSwap SDK: contract calling methods', () => {
@@ -77,20 +76,7 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let spender: Hex;
 
   beforeAll(async () => {
-    await hre.network.provider.request({
-      // forks chain
-      method: 'hardhat_reset',
-      params: [
-        {
-          forking: {
-            jsonRpcUrl: PROVIDER_URL,
-            // Optionally, specify the block number
-            // blockNumber: 12345678,
-          },
-          // chainId: 1, // Set to Ethereum Mainnet's chainId
-        },
-      ],
-    });
+    // await startFork();
 
     await viemTestClient.setBalance({
       address: senderAddress,

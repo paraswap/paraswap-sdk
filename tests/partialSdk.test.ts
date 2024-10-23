@@ -36,13 +36,13 @@ import BigNumber from 'bignumber.js';
 
 import erc20abi from './abi/ERC20.json';
 
-import ganache from 'ganache';
 import { assert } from 'ts-essentials';
 import type {
   ContractCallerFunctions,
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../src/types';
+import { forkChain } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -67,26 +67,11 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [{ balance: 8e18, secretKey: wallet.privateKey }],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId: 1,
-  },
-  logging: {
-    quiet: true,
-  },
-});
+const { setBalance, provider, startFork, impersonateAccount } = forkChain();
 
-const web3provider = new Web3(ganacheProvider as any);
+const web3provider = new Web3(provider as any);
 
-const ethersProvider = new ethers.providers.Web3Provider(
-  ganacheProvider as any
-);
+const ethersProvider = new ethers.providers.Web3Provider(provider as any);
 
 const fetchFetcher = constructFetchFetcher(fetch);
 const axiosFetcher = constructAxiosFetcher(axios);
@@ -108,7 +93,7 @@ const web3ContractCaller = constructWeb3ContractCaller(
 );
 
 const customGanacheContractCaller = constructProviderOnlyContractCaller(
-  ganacheProvider,
+  provider,
   senderAddress
 );
 
@@ -124,7 +109,11 @@ describe.each([
     BuildTxFunctions &
     GetSwapTxFunctions;
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    await startFork({ chainId });
+    await setBalance({ address: senderAddress, balance: 8e18 });
+    await impersonateAccount(senderAddress);
+
     paraSwap = constructPartialSDK(
       { chainId, fetcher, version: '5' },
       constructGetBalances,

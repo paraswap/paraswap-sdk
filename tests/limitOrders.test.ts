@@ -46,12 +46,11 @@ import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
-import ganache from 'ganache';
-
 import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
+import { forkChain } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -85,28 +84,13 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   "m/44'/60'/0'/0/1"
 );
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [
-      { balance: 80e18, secretKey: walletStable.privateKey },
-      { balance: 80e18, secretKey: walletStable2.privateKey },
-    ],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId,
-  },
-  logging: {
-    quiet: true,
-  },
-});
+const { provider, setupFork } = forkChain();
+
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
 const ethersProvider = tenderlyForkUrl
   ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
-  : new ethers.providers.Web3Provider(ganacheProvider as any);
+  : new ethers.providers.Web3Provider(provider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -131,7 +115,7 @@ const takerEthersContractCaller = constructEthersContractCaller(
   walletStable2.address
 );
 
-const web3provider = new Web3(ganacheProvider as any);
+const web3provider = new Web3(provider as any);
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,
@@ -298,6 +282,13 @@ describe('Limit Orders', () => {
   // let initialChainId2verifyingContract = { ...chainId2verifyingContract };
 
   beforeAll(async () => {
+    await setupFork({
+      accounts: [
+        { balance: 80e18, address: walletStable.address },
+        { balance: 80e18, address: walletStable2.address },
+      ],
+    });
+
     orderInput = {
       nonce: 1,
       expiry: orderExpiry,
