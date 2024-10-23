@@ -55,7 +55,6 @@
     "dotenv": "^16.4.5",
     "dts-cli": "^2.0.5",
     "ethers": "^5.6.5",
-    "ganache": "^7.9.2",
     "hardhat": "^2.22.14",
     "husky": "^9.1.6",
     "isomorphic-unfetch": "^4.0.2",
