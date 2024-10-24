@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_Adapters: Get_Adapters 1`] = `
-Array [
+[
   "Bancor",
   "Compound",
   "DODOV1",
@@ -52,7 +52,7 @@ Array [
 `;
 
 exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_Contracts: axiosFetcher 1`] = `
-Object {
+{
   "AugustusRFQ": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
   "AugustusSwapper": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
   "ParaswapDelta": "0x1D7405DF25FD2fe80390DA3A696dcFd5120cA9Ce",
@@ -62,29 +62,29 @@ Object {
 `;
 
 exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
-Object {
-  "bestRoute": Array [
-    Object {
+{
+  "bestRoute": [
+    {
       "percent": 100,
-      "swaps": Array [
-        Object {
+      "swaps": [
+        {
           "destDecimals": 18,
           "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
           "srcDecimals": 18,
           "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "swapExchanges": Array [
-            Object {
-              "data": Object {
+          "swapExchanges": [
+            {
+              "data": {
                 "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                 "feeFactor": 10000,
                 "gasUSD": "dynamic_number",
                 "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
-                "path": Array [
+                "path": [
                   "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
                   "0x6b175474e89094c44da98b954eedeac495271d0f",
                 ],
-                "pools": Array [
-                  Object {
+                "pools": [
+                  {
                     "address": "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
                     "direction": false,
                     "fee": 30,
@@ -95,7 +95,7 @@ Object {
               "destAmount": "dynamic_number",
               "exchange": "UniswapV2",
               "percent": 100,
-              "poolAddresses": Array [
+              "poolAddresses": [
                 "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
               ],
               "srcAmount": "1000000000000000000",
@@ -130,7 +130,7 @@ Object {
 `;
 
 exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
-Object {
+{
   "chainId": 1,
   "data": "dynamic_string",
   "from": "dynamic_string",
@@ -141,7 +141,7 @@ Object {
 `;
 
 exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_Adapters: Get_Adapters 1`] = `
-Array [
+[
   "Bancor",
   "Compound",
   "DODOV1",
@@ -192,7 +192,7 @@ Array [
 `;
 
 exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_Contracts: fetchFetcher 1`] = `
-Object {
+{
   "AugustusRFQ": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
   "AugustusSwapper": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
   "ParaswapDelta": "0x1D7405DF25FD2fe80390DA3A696dcFd5120cA9Ce",
@@ -202,29 +202,29 @@ Object {
 `;
 
 exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
-Object {
-  "bestRoute": Array [
-    Object {
+{
+  "bestRoute": [
+    {
       "percent": 100,
-      "swaps": Array [
-        Object {
+      "swaps": [
+        {
           "destDecimals": 18,
           "destToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
           "srcDecimals": 18,
           "srcToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "swapExchanges": Array [
-            Object {
-              "data": Object {
+          "swapExchanges": [
+            {
+              "data": {
                 "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                 "feeFactor": 10000,
                 "gasUSD": "dynamic_number",
                 "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
-                "path": Array [
+                "path": [
                   "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
                   "0x6b175474e89094c44da98b954eedeac495271d0f",
                 ],
-                "pools": Array [
-                  Object {
+                "pools": [
+                  {
                     "address": "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
                     "direction": false,
                     "fee": 30,
@@ -235,7 +235,7 @@ Object {
               "destAmount": "dynamic_number",
               "exchange": "UniswapV2",
               "percent": 100,
-              "poolAddresses": Array [
+              "poolAddresses": [
                 "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
               ],
               "srcAmount": "1000000000000000000",
@@ -270,7 +270,7 @@ Object {
 `;
 
 exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
-Object {
+{
   "chainId": 1,
   "data": "dynamic_string",
   "from": "dynamic_string",

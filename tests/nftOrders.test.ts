@@ -433,7 +433,7 @@ describe('NFT Orders', () => {
 
     const order = await sdk.getNFTOrderByHash(knownOrderHash);
     expect(order).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 137,
         "createdAt": 1658989256,
         "expiry": 1658992856,
@@ -594,7 +594,7 @@ describe('NFT Orders', () => {
       chainId: swapAndNFTPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xdef171fe48cf0115b1d80b88dc8eab59176fee57",
@@ -747,7 +747,7 @@ describe('NFT Orders', () => {
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
 
     expect(orderWithSignature).toMatchInlineSnapshot(`
-      Object {
+      {
         "expiry": 1766188800,
         "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
@@ -1128,19 +1128,19 @@ describe('NFT Orders', () => {
 
     // @CONSIDER this may change
     expect(stablePriceRouteMatch).toMatchInlineSnapshot(`
-      Object {
-        "bestRoute": Array [
-          Object {
+      {
+        "bestRoute": [
+          {
             "percent": 100,
-            "swaps": Array [
-              Object {
+            "swaps": [
+              {
                 "destDecimals": 18,
                 "destToken": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
                 "srcDecimals": 18,
                 "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
-                "swapExchanges": Array [
-                  Object {
-                    "data": Object {
+                "swapExchanges": [
+                  {
+                    "data": {
                       "factory": "---",
                       "feeFactor": "---",
                       "gasUSD": "---",
@@ -1151,7 +1151,7 @@ describe('NFT Orders', () => {
                     "destAmount": "6000000000000000000",
                     "exchange": "---",
                     "percent": 100,
-                    "poolAddresses": Array [
+                    "poolAddresses": [
                       "---",
                     ],
                     "srcAmount": "---",
@@ -1207,7 +1207,7 @@ describe('NFT Orders', () => {
       chainId: swapTxPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
@@ -1239,7 +1239,7 @@ describe('NFT Orders', () => {
       chainId: swapAndNFTPayload.chainId,
       //  data & gasPrice vary from run to run
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "chainId": 1,
         "from": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "to": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",

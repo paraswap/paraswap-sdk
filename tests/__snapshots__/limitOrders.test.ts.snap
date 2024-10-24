@@ -1,29 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Limit Orders Build_Swap+LO_Tx 1`] = `
-Object {
-  "bestRoute": Array [
-    Object {
+{
+  "bestRoute": [
+    {
       "percent": 100,
-      "swaps": Array [
-        Object {
+      "swaps": [
+        {
           "destDecimals": 18,
           "destToken": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
           "srcDecimals": 18,
           "srcToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
-          "swapExchanges": Array [
-            Object {
-              "data": Object {
+          "swapExchanges": [
+            {
+              "data": {
                 "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
                 "feeFactor": 10000,
                 "gasUSD": "---",
                 "initCode": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
-                "path": Array [
+                "path": [
                   "0x6b175474e89094c44da98b954eedeac495271d0f",
                   "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
                 ],
-                "pools": Array [
-                  Object {
+                "pools": [
+                  {
                     "address": "0x6929abD7931D0243777d3CD147fE863646A752ba",
                     "direction": false,
                     "fee": 30,
@@ -34,7 +34,7 @@ Object {
               "destAmount": "6000000000000000000",
               "exchange": "UniswapV2",
               "percent": 100,
-              "poolAddresses": Array [
+              "poolAddresses": [
                 "0x6929abD7931D0243777d3CD147fE863646A752ba",
               ],
               "srcAmount": "---",
@@ -69,8 +69,8 @@ Object {
 `;
 
 exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
@@ -80,43 +80,43 @@ Object {
     "takerAmount": "8000000000000000000",
     "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
   },
-  "domain": Object {
+  "domain": {
     "chainId": 1,
     "name": "AUGUSTUS RFQ",
     "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
     "version": "1",
   },
-  "types": Object {
-    "Order": Array [
-      Object {
+  "types": {
+    "Order": [
+      {
         "name": "nonceAndMeta",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "expiry",
         "type": "uint128",
       },
-      Object {
+      {
         "name": "makerAsset",
         "type": "address",
       },
-      Object {
+      {
         "name": "takerAsset",
         "type": "address",
       },
-      Object {
+      {
         "name": "maker",
         "type": "address",
       },
-      Object {
+      {
         "name": "taker",
         "type": "address",
       },
-      Object {
+      {
         "name": "makerAmount",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAmount",
         "type": "uint256",
       },
@@ -126,8 +126,8 @@ Object {
 `;
 
 exports[`Limit Orders buildLimitOrder: Order_Data_Snapshot 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "expiry": 1766188800,
     "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
     "makerAmount": "1000000000000000000",
@@ -137,43 +137,43 @@ Object {
     "takerAmount": "8000000000000000000",
     "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
   },
-  "domain": Object {
+  "domain": {
     "chainId": 1,
     "name": "AUGUSTUS RFQ",
     "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
     "version": "1",
   },
-  "types": Object {
-    "Order": Array [
-      Object {
+  "types": {
+    "Order": [
+      {
         "name": "nonceAndMeta",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "expiry",
         "type": "uint128",
       },
-      Object {
+      {
         "name": "makerAsset",
         "type": "address",
       },
-      Object {
+      {
         "name": "takerAsset",
         "type": "address",
       },
-      Object {
+      {
         "name": "maker",
         "type": "address",
       },
-      Object {
+      {
         "name": "taker",
         "type": "address",
       },
-      Object {
+      {
         "name": "makerAmount",
         "type": "uint256",
       },
-      Object {
+      {
         "name": "takerAmount",
         "type": "uint256",
       },
@@ -183,8 +183,8 @@ Object {
 `;
 
 exports[`Limit Orders getLimitOrders 1`] = `
-Array [
-  Object {
+[
+  {
     "chainId": 137,
     "createdAt": 1661185927,
     "expiry": 0,
@@ -207,7 +207,7 @@ Array [
     "type": "LIMIT",
     "updatedAt": 1661186323,
   },
-  Object {
+  {
     "chainId": 137,
     "createdAt": 1661102635,
     "expiry": 0,
@@ -230,7 +230,7 @@ Array [
     "type": "LIMIT",
     "updatedAt": 1661162748,
   },
-  Object {
+  {
     "chainId": 137,
     "createdAt": 1661102624,
     "expiry": 0,
