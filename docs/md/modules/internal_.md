@@ -1411,7 +1411,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:169](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L169)
+[src/methods/swap/rates.ts:175](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L175)
 
 ___
 
@@ -2019,7 +2019,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:183](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L183)
+[src/methods/swap/rates.ts:189](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L189)
 
 ___
 
@@ -2044,7 +2044,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L192)
+[src/methods/swap/rates.ts:198](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L198)
 
 ___
 
@@ -2054,7 +2054,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:188](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L188)
+[src/methods/swap/rates.ts:194](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L194)
 
 ___
 
@@ -2064,7 +2064,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:178](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L178)
+[src/methods/swap/rates.ts:184](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L184)
 
 ___
 
@@ -2770,6 +2770,7 @@ ___
 | `excludeDEXS?` | `string`[] | - |
 | `excludePools?` | `string`[] | - |
 | `excludePricingMethods?` | [`PricingMethod`](../enums/internal_.PricingMethod.md)[] | - |
+| `excludeRFQ?` | `boolean` | **`Description`**  Exclude all RFQs from pricing, e.g.: AugustusRFQ, Hashflow. Default: false |
 | `ignoreBadUsdPrice?` | `boolean` | **`Description`**  proceed with priceRoute building even when tokens don't have USD price. Default: false |
 | `includeContractMethods?` | [`ContractMethod`](../modules.md#contractmethod-1)[] | - |
 | `includeDEXS?` | `string`[] | - |
@@ -2782,7 +2783,7 @@ ___
 
 #### Defined in
 
-[src/methods/swap/rates.ts:143](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L143)
+[src/methods/swap/rates.ts:147](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L147)
 
 ___
 
