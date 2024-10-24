@@ -137,6 +137,10 @@ type RateQueryParams = {
    * @description If tokens USD prices are not available, `Bad USD Price` error will be thrown. Use this param to skip this check. Default: `false`.
    */
   ignoreBadUsdPrice?: boolean;
+  /**
+   * @description 	Exclude all RFQs from pricing, e.g.: AugustusRFQ, Hashflow. Default: false
+   */
+  excludeRFQ?: boolean;
 };
 
 // more details in the docs https://developers.paraswap.network/api/get-rate-for-a-token-pair#query-parameters
@@ -154,6 +158,8 @@ export type RateOptions = {
   otherExchangePrices?: boolean;
   /** @description proceed with priceRoute building even when tokens don't have USD price. Default: false */
   ignoreBadUsdPrice?: boolean;
+  /** @description Exclude all RFQs from pricing, e.g.: AugustusRFQ, Hashflow. Default: false */
+  excludeRFQ?: boolean;
   /** @description 	Specify that methods without fee support should be excluded from the price route. Default: false */
   excludeContractMethodsWithoutFeeModel?: boolean;
   /** @description If the source token is a tax token, you should specify the tax amount in BPS.  */
