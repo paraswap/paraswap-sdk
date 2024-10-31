@@ -50,7 +50,7 @@ import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
-import { forkChain } from './helpers/hardhat';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -84,13 +84,11 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   "m/44'/60'/0'/0/1"
 );
 
-const { provider, setupFork } = forkChain();
-
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
 const ethersProvider = tenderlyForkUrl
   ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
-  : new ethers.providers.Web3Provider(provider as any);
+  : new ethers.providers.Web3Provider(HardhatProvider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -115,7 +113,7 @@ const takerEthersContractCaller = constructEthersContractCaller(
   walletStable2.address
 );
 
-const web3provider = new Web3(provider as any);
+const web3provider = new Web3(HardhatProvider as any);
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,

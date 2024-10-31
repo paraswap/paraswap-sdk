@@ -15,7 +15,7 @@ import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
 import { assert } from 'ts-essentials';
-import { forkChain } from './helpers/hardhat';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -37,11 +37,11 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const { provider, setupFork } = forkChain();
+const web3Provider = new Web3(HardhatProvider as any);
 
-const web3Provider = new Web3(provider as any);
-
-const ethersProvider = new ethers.providers.Web3Provider(provider as any);
+const ethersProvider = new ethers.providers.Web3Provider(
+  HardhatProvider as any
+);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;

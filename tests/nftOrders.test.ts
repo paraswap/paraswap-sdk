@@ -55,7 +55,7 @@ import {
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
-import { forkChain } from './helpers/hardhat';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 

@@ -15,7 +15,7 @@ import { hardhat } from 'viem/chains';
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
 import BigNumber from 'bignumber.js';
 import { txParamsToViemTxParams } from '../src/helpers';
-import { forkChain } from './helpers/hardhat';
+import { HardhatProvider } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -27,9 +27,9 @@ const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
 const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
 
-const { provider, startFork } = forkChain();
-
-const ethersProvider = new ethers.providers.Web3Provider(provider as any);
+const ethersProvider = new ethers.providers.Web3Provider(
+  HardhatProvider as any
+);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address as Hex;
@@ -37,7 +37,7 @@ const senderAddress = signer.address as Hex;
 const viemTestClient = createTestClient({
   chain: { ...hardhat, id: chainId }, // may need to override chainId
   mode: 'hardhat',
-  transport: custom(provider),
+  transport: custom(HardhatProvider),
 }).extend(publicActions);
 
 const viemWalletClient = createWalletClient({
@@ -46,7 +46,7 @@ const viemWalletClient = createWalletClient({
   // to be able to sign transactions
   account: privateKeyToAccount(wallet.privateKey as Hex),
   chain: { ...hardhat, id: chainId },
-  transport: custom(provider),
+  transport: custom(HardhatProvider),
 });
 
 describe('ParaSwap SDK: contract calling methods', () => {
@@ -76,8 +76,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let spender: Hex;
 
   beforeAll(async () => {
-    await startFork();
-
     await viemTestClient.setBalance({
       address: senderAddress,
       value: parseEther('10'),

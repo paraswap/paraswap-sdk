@@ -42,7 +42,7 @@ import type {
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../src/types';
-import { forkChain } from './helpers/hardhat';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -67,11 +67,11 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const { setBalance, provider, startFork, impersonateAccount } = forkChain();
+const web3provider = new Web3(HardhatProvider as any);
 
-const web3provider = new Web3(provider as any);
-
-const ethersProvider = new ethers.providers.Web3Provider(provider as any);
+const ethersProvider = new ethers.providers.Web3Provider(
+  HardhatProvider as any
+);
 
 const fetchFetcher = constructFetchFetcher(fetch);
 const axiosFetcher = constructAxiosFetcher(axios);
@@ -93,7 +93,7 @@ const web3ContractCaller = constructWeb3ContractCaller(
 );
 
 const customGanacheContractCaller = constructProviderOnlyContractCaller(
-  provider,
+  HardhatProvider,
   senderAddress
 );
 
@@ -110,9 +110,9 @@ describe.each([
     GetSwapTxFunctions;
 
   beforeAll(async () => {
-    await startFork({ chainId });
-    await setBalance({ address: senderAddress, balance: 8e18 });
-    await impersonateAccount(senderAddress);
+    await setupFork({
+      accounts: [{ address: senderAddress, balance: 8e18 }],
+    });
 
     paraSwap = constructPartialSDK(
       { chainId, fetcher, version: '5' },
@@ -566,10 +566,10 @@ function constructProviderOnlyContractCaller(
     ];
 
     // what provider here returns will depend on provider
-    // ganache returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
+    // hardhat returns `result` from {"id":1, "jsonrpc": "2.0", "result": "0x..."} JsonRpcResponse
     // `string`
     const res = await provider.request({
-      // we can only sendTransaction right away because accounts in ganache are unlocked
+      // we can only sendTransaction right away because we asked hardhat to impersonate account
       // for other provider we may need to signTransaction first, then sendRawTransaction
       method: 'eth_sendTransaction',
       params,
