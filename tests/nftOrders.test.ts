@@ -822,7 +822,6 @@ describe('NFT Orders', () => {
     );
   });
 
-  // @TODO investigate why broken, is the order still available?
   test(`fill NFTOrder+Swap through Augustus`, async () => {
     // swap AAVE -> MAKER, then fill MAKER (takerAsset) for NFT (makerAsset) Order
 
@@ -946,9 +945,9 @@ describe('NFT Orders', () => {
     // without SDK
     // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
 
-    // a bit more to account for possible slippage
+    //more to account for rogue Insufficient Balance errors
     const buyAmount = new BigNumber(priceRoute.srcAmount)
-      .multipliedBy(1.2)
+      .multipliedBy(2)
       .toString(10);
 
     await buyErc20TokenForEth({
