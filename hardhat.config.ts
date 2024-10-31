@@ -16,6 +16,8 @@ const config: HardhatUserConfig = {
       chainId: 1,
       // dynamically switch between networks configured here
       // by calling `hre.switchNetwork(networkName)` thanks to hardhat-switch-network plugin
+      gasPrice: 8e9,
+      initialBaseFeePerGas: 1e10, // will break if used with a chain without eip1559
     },
   },
 };
