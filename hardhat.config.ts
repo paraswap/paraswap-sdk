@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import type { HardhatUserConfig } from 'hardhat/config';
+import 'hardhat-switch-network';
 
 dotenv.config();
 
@@ -9,11 +10,12 @@ const config: HardhatUserConfig = {
     hardhat: {
       forking: {
         url: process.env.PROVIDER_URL!, // Replace with your actual Alchemy/Infura URL
+        // Optional forking configurations (e.g., block number):
+        // blockNumber: 12345678,
       },
-      // Can't dynamically switch chain between tests, very inflexible, "hardhat_reset" doesn't work
       chainId: 1,
-      // Optional forking configurations (e.g., block number):
-      // blockNumber: 12345678,
+      // dynamically switch between networks configured here
+      // by calling `hre.switchNetwork(networkName)` thanks to hardhat-switch-network plugin
     },
   },
 };
