@@ -90,13 +90,11 @@ const walletStable2 = ethers.Wallet.fromMnemonic(
   "m/44'/60'/0'/0/1"
 );
 
-const { provider, setupFork } = forkChain();
-
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
 const ethersProvider = tenderlyForkUrl
   ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
-  : new ethers.providers.Web3Provider(provider as any);
+  : new ethers.providers.Web3Provider(HardhatProvider as any);
 
 const signer = walletStable.connect(ethersProvider);
 const senderAddress = signer.address;
@@ -120,7 +118,7 @@ const takerEthersContractCaller = constructEthersContractCaller(
   walletStable2.address
 );
 
-const web3provider = new Web3(provider as any);
+const web3provider = new Web3(HardhatProvider as any);
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,
@@ -948,10 +946,15 @@ describe('NFT Orders', () => {
     // without SDK
     // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
 
+    // a bit more to account for possible slippage
+    const buyAmount = new BigNumber(priceRoute.srcAmount)
+      .multipliedBy(1.2)
+      .toString(10);
+
     await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: AAVE,
-      amount: priceRoute.srcAmount,
+      amount: buyAmount,
       signer: taker,
       providerOptions: {
         ethersProviderOrSigner: taker,
@@ -975,7 +978,7 @@ describe('NFT Orders', () => {
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
-      priceRoute.srcAmount,
+      buyAmount,
       AAVE_Token.address
     );
     await awaitTx(approveForTakerTx);
