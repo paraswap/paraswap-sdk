@@ -699,7 +699,7 @@ describe('NFT Orders', () => {
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
     // withSDK
-    const approveForMakerTx = await makerSDK.approveNFTorNFTOrder(
+    const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
       NFT_Token.address
     );
 
@@ -916,7 +916,7 @@ describe('NFT Orders', () => {
     // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
 
     // withSDK
-    const approveForMakerTx = await makerSDK.approveNFTorNFTOrder(
+    const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
       NFT_Token.address
     );
 
