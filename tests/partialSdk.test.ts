@@ -48,8 +48,6 @@ dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 // const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
@@ -57,7 +55,6 @@ const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES =
   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
 
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;

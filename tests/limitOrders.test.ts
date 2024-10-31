@@ -56,8 +56,6 @@ dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
 const referrer = 'sdk-test';
 
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
@@ -70,7 +68,6 @@ const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 
 const chainId = 1;
 
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const srcToken = DAI;
 const destToken = HEX;
 
@@ -1046,10 +1043,10 @@ describe('Limit Orders', () => {
     ({ lib, sdk, takerSDK }) => {
       test(`signLimitOrder with ${lib}`, async () => {
         if (lib === 'web3') {
-          // @TOOD update web3 to latest, current breaks Hardhat provider expectations with
+          // @TODO update web3 to latest, current breaks Hardhat provider expectations with
           // Hardhat Network doesn't support JSON-RPC params sent as an object
           console.error(
-            "Skipped 'signLimitOrder with web3' test, @TOOD update web3 to latest"
+            "Skipped 'signLimitOrder with web3' test, @TODO update web3 to latest"
           );
           return;
         }

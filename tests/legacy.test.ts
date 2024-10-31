@@ -21,13 +21,10 @@ dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 const MANA = '0x0f5d2fb29fb7d3cfee444a200298f468908cc942';
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
