@@ -10650,10 +10650,15 @@ tslib@1.14.1, tslib@^1.8.1, tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.3, tslib@^2.3.1, tslib@^2.6.2, tslib@^2.8.0:
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.3.1, tslib@^2.6.2:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.0.tgz#d124c86c3c05a40a91e6fdea4021bd31d377971b"
   integrity sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==
+
+tslib@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 tsort@0.0.1:
   version "0.0.1"
@@ -11137,10 +11142,25 @@ vfile@^6.0.0:
     "@types/unist" "^3.0.0"
     vfile-message "^4.0.0"
 
-viem@^2.1.1, viem@^2.21.37:
+viem@^2.1.1:
   version "2.21.37"
   resolved "https://registry.yarnpkg.com/viem/-/viem-2.21.37.tgz#4d67bee8749321b0fd142c54df2021d5774403b1"
   integrity sha512-JupwyttT4aJNnP9+kD7E8jorMS5VmgpC3hm3rl5zXsO8WNBTsP3JJqZUSg4AG6s2lTrmmpzS/qpmXMZu5gJw5Q==
+  dependencies:
+    "@adraffy/ens-normalize" "1.11.0"
+    "@noble/curves" "1.6.0"
+    "@noble/hashes" "1.5.0"
+    "@scure/bip32" "1.5.0"
+    "@scure/bip39" "1.4.0"
+    abitype "1.0.6"
+    isows "1.0.6"
+    webauthn-p256 "0.0.10"
+    ws "8.18.0"
+
+viem@^2.21.38:
+  version "2.21.38"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.21.38.tgz#607b25483b363c6f1a807f0fc39fb2f1e7d42d5a"
+  integrity sha512-MxhURy+F3eRtxkOoj7YdJTStJxqnWcP0MQZycVsxsVB4eZLKZPZfh7AgpfPjWHmPHmeVZcOqaGzFTmuPpqp06w==
   dependencies:
     "@adraffy/ens-normalize" "1.11.0"
     "@noble/curves" "1.6.0"
@@ -11603,10 +11623,10 @@ write-file-atomic@^4.0.2:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
 
-ws@7.5.10, ws@^7.4.6, ws@^7.5.1, ws@^7.5.10:
-  version "7.5.10"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.10.tgz#58b5c20dc281633f6c19113f39b349bd8bd558d9"
-  integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
+ws@7.4.6:
+  version "7.4.6"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
+  integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
 
 ws@8.18.0, ws@^8.11.0:
   version "8.18.0"
@@ -11621,6 +11641,11 @@ ws@^3.0.0:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
+
+ws@^7.4.6, ws@^7.5.1:
+  version "7.5.10"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.10.tgz#58b5c20dc281633f6c19113f39b349bd8bd558d9"
+  integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
 
 ws@~8.17.1:
   version "8.17.1"
