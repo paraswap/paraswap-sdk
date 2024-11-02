@@ -603,10 +603,13 @@ describe('NFT Orders', () => {
 
     const taker = walletStable2.connect(ethersProvider);
 
+    //more to account for rogue Insufficient Balance errors
+    const buyAmount = new BigNumber(takerAmount).multipliedBy(2).toString(10);
+
     const { balance: compBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: COMP,
-      amount: takerAmount,
+      amount: buyAmount,
       signer: taker,
       providerOptions: {
         ethersProviderOrSigner: taker,
@@ -825,7 +828,10 @@ describe('NFT Orders', () => {
 
     // if augustus contained some dust, it'll be transferred to the taker in the result of a swap,
     // except 1 wei may be left over
-    expect([takerAmountAfter, '0']).toContain(AugustusAmountAfter);
+    expect([
+      takerAmountAfter,
+      new BigNumber(takerAmountAfter).minus(1).toString(10),
+    ]).toContain(AugustusAmountAfter);
   });
 
   test(`fill NFTOrder+Swap through Augustus`, async () => {
