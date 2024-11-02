@@ -4,13 +4,13 @@ import type {
   PopulatedTransaction as EthersPopulatedTransaction,
   BigNumber as EthersBigNumber,
 } from 'ethers';
-import type {
-  ContractSendMethod as Web3ContractSendMethod,
-  Contract as Web3Contract,
-} from 'web3-eth-contract';
 import { assert, Primitive } from 'ts-essentials';
 
 import type { AxiosError, AxiosResponse } from 'axios';
+import type { ContractAbi, Contract as Web3Contract } from 'web3';
+
+export type Web3ContractSendMethod =
+  Web3Contract<ContractAbi>['methods'][string];
 
 export type EthersContractWithMethod<T extends string> = EthersContract & {
   readonly [method in T]: EthersContractFunction;
@@ -43,12 +43,13 @@ export function assertEthersContractHasMethods<T extends string>(
   );
 }
 
-export type Web3ContractWithMethod<T extends string> = Web3Contract & {
-  methods: { [method in T]: Web3ContractSendMethod };
-};
+export type Web3ContractWithMethod<T extends string> =
+  Web3Contract<ContractAbi> & {
+    methods: { [method in T]: Web3ContractSendMethod };
+  };
 
 export function web3ContractHasMethods<T extends string>(
-  contract: Web3Contract,
+  contract: Web3Contract<ContractAbi>,
   ...methods: T[]
 ): contract is Web3ContractWithMethod<T> {
   return methods.every(
@@ -57,7 +58,7 @@ export function web3ContractHasMethods<T extends string>(
 }
 
 export function assertWeb3ContractHasMethods<T extends string>(
-  contract: Web3Contract,
+  contract: Web3Contract<ContractAbi>,
   ...methods: T[]
 ): asserts contract is Web3ContractWithMethod<T> {
   assert(
