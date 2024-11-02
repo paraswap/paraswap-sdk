@@ -5,21 +5,45 @@ import type {
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../../types';
-import type Web3 from 'web3';
-import type { AbiItem } from 'web3-utils';
 import type {
-  ContractSendMethod,
-  SendOptions,
-  CallOptions,
-  Contract,
+  // type JsonRpcResponse,
+  // type Web3PromiEvent,
+  // providers,
+  // ContractMethodSend,
+  // type Contract,
+  // ContractMethod,
+  // AbiFunctionFragment,
+  // ContractMethod,
+  PayableCallOptions,
+  // Web3EventMap,
+  Web3BaseProvider,
+  AbiItem,
+} from 'web3';
+import type Web3 from 'web3';
+import type {
+  // ContractSendMethod,
+  // SendOptions,
+  // CallOptions,
+  PayableTxOptions,
+  // Contract,
 } from 'web3-eth-contract';
-import type { PromiEvent, provider, AbstractProvider } from 'web3-core';
-import type { JsonRpcResponse } from 'web3-core-helpers';
 import { assert } from 'ts-essentials';
-import { assertWeb3ContractHasMethods } from '../misc';
+import { assertWeb3ContractHasMethods, Web3ContractSendMethod } from '../misc';
 import { findPrimaryType } from './helpers';
 
-export type Web3UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
+// export type Web3UnpromiEvent = Pick<
+//   Web3PromiEvent<any, Web3EventMap>,
+//   'on' | 'once'
+// >;
+
+type ContractMethodRes = ReturnType<Web3ContractSendMethod>;
+export type Web3UnpromiEvent = Pick<
+  ReturnType<ContractMethodRes['send']>,
+  'on' | 'once'
+>;
+
+type SendOptions = PayableTxOptions;
+type CallOptions = PayableCallOptions;
 
 export const constructContractCaller = (
   web3: Web3,
@@ -37,11 +61,12 @@ export const constructContractCaller = (
 
     assertWeb3ContractHasMethods(contract, contractMethod);
 
-    const { block, gas, ...restOverrides } = overrides;
+    const { block, gas, value, ...restOverrides } = overrides;
 
     const normalizedOverrides: CallOptions = {
       ...restOverrides,
-      gas,
+      gas: gas?.toString(10),
+      value: value?.toString(10),
     };
 
     return contract.methods[contractMethod](...args).call(normalizedOverrides);
@@ -63,7 +88,7 @@ export const constructContractCaller = (
 
     assertWeb3ContractHasMethods(contract, contractMethod);
 
-    const { gas, from, ...restOverrides } = overrides;
+    const { gas, from, value, nonce, ...restOverrides } = overrides;
 
     const _from = from || account;
 
@@ -72,12 +97,12 @@ export const constructContractCaller = (
     const normalizedOverrides: SendOptions = {
       ...restOverrides,
       from: _from,
-      gas: gas,
+      gas: gas?.toString(10),
+      value: value?.toString(10),
+      nonce: nonce?.toString(10),
     };
 
-    const preparedCall = contract.methods[contractMethod](
-      ...args
-    ) as ContractSendMethod;
+    const preparedCall = contract.methods[contractMethod](...args);
 
     const promiEvent = preparedCall.send(normalizedOverrides);
 
@@ -87,6 +112,7 @@ export const constructContractCaller = (
     // so that functionality becomes lost
     // transactCall can be made sync, but approve has to be async to await getSpender()
     const unpromiEvent: Web3UnpromiEvent = {
+      //@TODO try to change to real PromiEvent
       on: promiEvent.on.bind(promiEvent),
       once: promiEvent.once.bind(promiEvent),
     };
@@ -124,32 +150,45 @@ export const constructContractCaller = (
       message: data,
     };
 
-    const response = await new Promise<JsonRpcResponse>((resolve, reject) => {
-      provider.send(
-        {
-          jsonrpc: '2.0',
-          // method: 'eth_signTypedData_v4',
-          method: 'eth_signTypedData',
-          params: [account, _typedData],
-        },
-        (error, result) => {
-          if (error) return reject(error);
-          if (!result) {
-            throw new Error('No result in response to eth_signTypedData');
-          }
-          resolve(result);
-        }
-      );
-    });
+    const accs = await web3.eth.getAccounts();
+    console.error('🚀 ~ accs:', accs, accs.includes(account));
 
-    return response.result;
+    const res = await web3.eth.signTypedData(account, _typedData as any);
+    console.error('🚀 ~ res:', res);
+    return res;
+
+    /* const response = await provider.request<'eth_signTypedData_v4', string>({
+      method: 'eth_signTypedData_v4',
+      params: [account, _typedData],
+    });
+    console.error('🚀 ~ response:', response);
+
+    // const response = await new Promise<JsonRpcResponse>((resolve, reject) => {
+    //   provider.send(
+    //     {
+    //       jsonrpc: '2.0',
+    //       // method: 'eth_signTypedData_v4',
+    //       method: 'eth_signTypedData',
+    //       params: [account, _typedData],
+    //     },
+    //     (error, result) => {
+    //       if (error) return reject(error);
+    //       if (!result) {
+    //         throw new Error('No result in response to eth_signTypedData');
+    //       }
+    //       resolve(result);
+    //     }
+    //   );
+    // });
+
+    return response as any; */
   };
 
   return { staticCall, transactCall, signTypedDataCall };
 };
 
-function isProviderWithSendMethod<T extends provider>(
+function isProviderWithSendMethod<T extends Web3BaseProvider>(
   provider: T
-): provider is T & Required<Pick<AbstractProvider, 'send'>> {
-  return !!provider && typeof provider === 'object' && 'send' in provider;
+): provider is T & Required<Pick<Web3BaseProvider, 'request'>> {
+  return !!provider && typeof provider === 'object' && 'request' in provider;
 }
