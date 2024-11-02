@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import type { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
+import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
 import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
 import type {
   TransactionResponse as EthersTransactionResponse,
@@ -1268,14 +1268,14 @@ describe('NFT Orders', () => {
     'ethereum lib tests: $lib',
     ({ lib, sdk, takerSDK }) => {
       test(`signNFTOrder with ${lib}`, async () => {
-        if (lib === 'web3') {
-          // @TODO update web3 to latest, current breaks Hardhat provider expectations with
-          // Hardhat Network doesn't support JSON-RPC params sent as an object
-          console.error(
-            "Skipped 'signNFTOrder with web3' test, @TODO update web3 to latest"
-          );
-          return;
-        }
+        // if (lib === 'web3') {
+        //   // @TODO update web3 to latest, current breaks Hardhat provider expectations with
+        //   // Hardhat Network doesn't support JSON-RPC params sent as an object
+        //   console.error(
+        //     "Skipped 'signNFTOrder with web3' test, @TODO update web3 to latest"
+        //   );
+        //   return;
+        // }
         const signableOrderData = await sdk.buildNFTOrder(orderInput);
 
         const signature = await sdk.signNFTOrder(signableOrderData);
