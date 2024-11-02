@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import type { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
+import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
 import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
 import type {
   TransactionResponse as EthersTransactionResponse,
@@ -50,7 +50,13 @@ import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
-import { HardhatProvider, setupFork } from './helpers/hardhat';
+import {
+  HardhatProvider,
+  impersonateAccount,
+  setupFork,
+} from './helpers/hardhat';
+// import hre from 'hardhat';
+// import { LazyInitializationProviderAdapter } from 'hardhat/internal/core/providers/lazy-initialization';
 
 dotenv.config();
 
@@ -1038,18 +1044,10 @@ describe('Limit Orders', () => {
     `);
   });
 
-  describe.each(txSDKs)(
+  describe.only.each(txSDKs)(
     'ethereum lib tests: $lib',
     ({ lib, sdk, takerSDK }) => {
       test(`signLimitOrder with ${lib}`, async () => {
-        if (lib === 'web3') {
-          // @TODO update web3 to latest, current breaks Hardhat provider expectations with
-          // Hardhat Network doesn't support JSON-RPC params sent as an object
-          console.error(
-            "Skipped 'signLimitOrder with web3' test, @TODO update web3 to latest"
-          );
-          return;
-        }
         const signableOrderData = await sdk.buildLimitOrder(orderInput);
 
         const signature = await sdk.signLimitOrder(signableOrderData);
