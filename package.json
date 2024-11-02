@@ -73,7 +73,8 @@
   "peerDependencies": {
     "axios": ">=0.25.0 <2.0.0",
     "ethers": "^5.5.0",
-    "web3": "^1.7.1"
+    "web3": "^4.14.0",
+    "viem": "^2.21.0"
   },
   "peerDependenciesMeta": {
     "axios": {
@@ -83,6 +84,9 @@
       "optional": true
     },
     "web3": {
+      "optional": true
+    },
+    "viem": {
       "optional": true
     }
   },
