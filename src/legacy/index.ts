@@ -1,5 +1,4 @@
 import type Web3 from 'web3';
-import type { SendOptions } from 'web3-eth-contract';
 import type { ContractTransaction } from '@ethersproject/contracts';
 
 import { API_URL, DEFAULT_VERSION, SwapSide } from '../constants';
@@ -30,6 +29,7 @@ import type {
   Address,
   PriceString,
   OptimalRate,
+  TxSendOverrides,
 } from '../types';
 import { constructGetBalances, type Allowance } from '../methods/swap/balance';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
@@ -387,13 +387,17 @@ export class ParaSwap {
     tokenAddress: Address,
     /** @deprecated */
     _provider?: any, // not used, can't detect if Ethers or Web3 provider without importing them
-    sendOptions?: Omit<SendOptions, 'from'>
+    sendOptions?: Omit<TxSendOverrides, 'from'>
   ): Promise<string | APIError> {
     // @TODO expand sendOptions
     assert(this.sdk.approveToken, 'sdk must be initialized with a provider');
     try {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
-      const txResponse = await this.sdk.approveToken(amount, tokenAddress);
+      const txResponse = await this.sdk.approveToken(
+        amount,
+        tokenAddress,
+        sendOptions
+      );
 
       return await ParaSwap.extractHashFromTxResponse(txResponse);
     } catch (e) {
