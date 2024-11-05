@@ -99,6 +99,8 @@ import {
 
 import {
   constructEthersContractCaller,
+  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   constructWeb3ContractCaller,
   constructViemContractCaller,
   txParamsToViemTxParams,
@@ -107,6 +109,8 @@ import {
   isFetcherError,
   FetcherErrorInterface,
   EthersProviderDeps,
+  EthersV5ProviderDeps,
+  EthersV6ProviderDeps,
   MinViemClient,
   constructToken,
   FetcherError,
@@ -195,7 +199,9 @@ export {
   constructGetNFTOrdersContract,
   constructBuildNFTOrderTx,
   // different helpers
-  constructEthersContractCaller,
+  constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
+  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   constructWeb3ContractCaller,
   constructViemContractCaller,
   txParamsToViemTxParams,
@@ -213,6 +219,8 @@ export type {
   Allowance,
   // contractCaller requirements
   EthersProviderDeps,
+  EthersV5ProviderDeps,
+  EthersV6ProviderDeps,
   MinViemClient,
   // types for swap methods:
   ApproveTokenFunctions,

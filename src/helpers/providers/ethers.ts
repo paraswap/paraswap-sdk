@@ -18,19 +18,19 @@ import type {
   CallOverrides,
   ContractTransaction,
 } from '@ethersproject/contracts';
-import { assertEthersContractHasMethods } from '../misc';
+import { assertEthersContractHasMethodsV5 } from '../misc';
 import { assert } from 'ts-essentials';
 
-export interface EthersProviderDeps {
+export interface EthersV5ProviderDeps {
   ethersProviderOrSigner: BaseProvider | Signer;
   EthersContract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
 }
 
-export const constructContractCaller = (
+export const constructEthersV5ContractCaller = (
   {
     ethersProviderOrSigner: providerOrSigner,
     EthersContract: Contract,
-  }: EthersProviderDeps,
+  }: EthersV5ProviderDeps,
   account?: Address
 ): ContractCallerFunctions<ContractTransaction> => {
   const staticCall: StaticContractCallerFn = async (params) => {
@@ -38,7 +38,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, providerOrSigner);
 
-    assertEthersContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in CallOverrides
     const { block, gas, ...restOverrides } = overrides;
     // reassign values to keys in CallOverrides
@@ -80,7 +80,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, signer);
 
-    assertEthersContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in PayableOverrides
     const { gas, from, ...restOverrides } = overrides;
     // reassign values to keys in PayableOverrides

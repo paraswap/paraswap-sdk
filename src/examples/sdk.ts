@@ -5,14 +5,14 @@ import {
   constructPartialSDK,
   constructFullSDK,
   constructGetAdapters,
-  constructEthersContractCaller,
+  constructEthersV5ContractCaller,
   constructAxiosFetcher,
 } from '..';
 
 const fetcher = constructAxiosFetcher(axios);
 
 const provider = ethers.getDefaultProvider(1);
-const contractCaller = constructEthersContractCaller({
+const contractCaller = constructEthersV5ContractCaller({
   ethersProviderOrSigner: provider,
   EthersContract: ethers.Contract,
 });
