@@ -21,7 +21,7 @@ const config: HardhatUserConfig = {
       // which breaks web3.js
       // ethers signs data and txs locally off-chain as long as it has provate key
       // web3 is a bit harder to init wallets for locally.
-      // impersonateAccounts doesn't work, even though it should locgically fully unlock accounts,
+      // impersonateAccounts doesn't work, even though it should logically fully unlock accounts,
       // but only remore accounts are unlocked, fixed are not,
       // so we always need to only use accounts generated from this mnemonic
 
@@ -32,7 +32,7 @@ const config: HardhatUserConfig = {
       // dynamically switch between networks configured here
       // by calling `hre.switchNetwork(networkName)` thanks to hardhat-switch-network plugin
       gasPrice: 8e9,
-      initialBaseFeePerGas: 1e9, // will break if used with a chain without eip1559
+      initialBaseFeePerGas: 1e8, // will break if used with a chain without eip1559
     },
   },
 };
