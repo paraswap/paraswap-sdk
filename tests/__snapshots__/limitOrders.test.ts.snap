@@ -68,6 +68,120 @@ exports[`Limit Orders Build_Swap+LO_Tx 1`] = `
 }
 `;
 
+exports[`Limit Orders buildLimitOrder p2p: P2P_Order_Data_Snapshot 1`] = `
+{
+  "data": {
+    "expiry": 1766188800,
+    "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
+    "makerAmount": "1000000000000000000",
+    "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "nonceAndMeta": "2693234308085732315020447542820174961101890254772",
+    "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+    "takerAmount": "8000000000000000000",
+    "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
+  },
+  "domain": {
+    "chainId": 1,
+    "name": "AUGUSTUS RFQ",
+    "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
+    "version": "1",
+  },
+  "types": {
+    "Order": [
+      {
+        "name": "nonceAndMeta",
+        "type": "uint256",
+      },
+      {
+        "name": "expiry",
+        "type": "uint128",
+      },
+      {
+        "name": "makerAsset",
+        "type": "address",
+      },
+      {
+        "name": "takerAsset",
+        "type": "address",
+      },
+      {
+        "name": "maker",
+        "type": "address",
+      },
+      {
+        "name": "taker",
+        "type": "address",
+      },
+      {
+        "name": "makerAmount",
+        "type": "uint256",
+      },
+      {
+        "name": "takerAmount",
+        "type": "uint256",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Limit Orders buildLimitOrder: Order_Data_Snapshot 1`] = `
+{
+  "data": {
+    "expiry": 1766188800,
+    "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
+    "makerAmount": "1000000000000000000",
+    "makerAsset": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "nonceAndMeta": "1461501637330902918203684832716283019655932542976",
+    "taker": "0x0000000000000000000000000000000000000000",
+    "takerAmount": "8000000000000000000",
+    "takerAsset": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
+  },
+  "domain": {
+    "chainId": 1,
+    "name": "AUGUSTUS RFQ",
+    "verifyingContract": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
+    "version": "1",
+  },
+  "types": {
+    "Order": [
+      {
+        "name": "nonceAndMeta",
+        "type": "uint256",
+      },
+      {
+        "name": "expiry",
+        "type": "uint128",
+      },
+      {
+        "name": "makerAsset",
+        "type": "address",
+      },
+      {
+        "name": "takerAsset",
+        "type": "address",
+      },
+      {
+        "name": "maker",
+        "type": "address",
+      },
+      {
+        "name": "taker",
+        "type": "address",
+      },
+      {
+        "name": "makerAmount",
+        "type": "uint256",
+      },
+      {
+        "name": "takerAmount",
+        "type": "uint256",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Limit Orders getLimitOrders 1`] = `
 [
   {
