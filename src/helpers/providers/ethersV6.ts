@@ -1,33 +1,16 @@
 import type {
   Address,
   ContractCallerFunctions,
-  NoExtraKeysCheck,
   SignTypedDataContractCallerFn,
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../../types';
-import type {
-  // JsonRpcProvider,
-  // BaseProvider,
-  JsonRpcSigner,
-} from '@ethersproject/providers';
-// import type { Signer } from '@ethersproject/abstract-signer';
-import type {
-  // Contract as EthersContract,
-  PayableOverrides,
-  CallOverrides,
-} from '@ethersproject/contracts';
-import { assertEthersContractHasMethodsV5 } from '../misc';
 import { assert } from 'ts-essentials';
 import type {
-  BrowserProvider,
   JsonRpcProvider,
-  Provider,
   Signer,
   ContractRunner,
-  JsonRpcApiProvider,
   Contract as EthersContract,
-  ContractMethod,
   Overrides,
   TypedDataDomain,
   ContractTransactionResponse,
@@ -50,7 +33,6 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, providerOrSigner);
 
-    // assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in CallOverrides
     const { block, gas, ...restOverrides } = overrides;
     // reassign values to keys in CallOverrides
@@ -60,22 +42,10 @@ export const constructContractCaller = (
       gasLimit: gas,
     };
 
-    // type FinalCallOverrides = normalizedOverrides has extra props ? never : normalizedOverrides
-    type FinalCallOverrides = NoExtraKeysCheck<
-      typeof normalizedOverrides,
-      Overrides
-    >;
-
     const callableContractFunction = contract.getFunction(contractMethod);
 
     // returns whatever the Contract.method returns: BigNumber, string, boolean
     return callableContractFunction(...args, normalizedOverrides);
-
-    // enforce overrides shape ethers accepts
-    // TS will break if normalizedOverrides type has any keys not also present in CallOverrides
-    // const callOverrides: FinalCallOverrides = normalizedOverrides;
-    // // returns whatever the Contract.method returns: BigNumber, string, boolean
-    // return contract.callStatic[contractMethod](...args, callOverrides);
   };
 
   const transactCall: TransactionContractCallerFn<
@@ -97,7 +67,6 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, signer);
 
-    // assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in PayableOverrides
     const { gas, from, ...restOverrides } = overrides;
     // reassign values to keys in PayableOverrides
@@ -115,22 +84,6 @@ export const constructContractCaller = (
     );
 
     return txResponse;
-
-    // type FinalPayableOverrides = normalizedOverrides has extra props ? never : normalizedOverrides
-    // type FinalPayableOverrides = NoExtraKeysCheck<
-    //   typeof normalizedOverrides,
-    //   PayableOverrides
-    // >;
-
-    // // enforce overrides shape ethers accepts
-    // // TS will break if normalizedOverrides type has any keys not also present in PayableOverrides
-    // const txOverrides: FinalPayableOverrides = normalizedOverrides;
-    // const txResponse: ContractTransaction = await contract[contractMethod](
-    //   ...args,
-    //   txOverrides
-    // );
-
-    // return txResponse;
   };
 
   const signTypedDataCall: SignTypedDataContractCallerFn = async (
@@ -147,8 +100,6 @@ export const constructContractCaller = (
       'getSigner' in providerOrSigner
         ? await providerOrSigner.getSigner(account)
         : providerOrSigner;
-
-    // assert(isTypedDataCapableSigner(signer), 'Signer can sign typed data');
 
     const { data, domain, types } = typedData;
 
