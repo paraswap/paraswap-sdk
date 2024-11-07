@@ -16,6 +16,10 @@ interface AdaptersContractsResult {
   AugustusSwapper: string;
   TokenTransferProxy: string;
   AugustusRFQ: string;
+  Executors: {
+    [key: `Executor${number}`]: string;
+  };
+  ParaswapDelta?: string; // only available on chains with Delta support
 }
 
 export const constructGetSpender = ({
