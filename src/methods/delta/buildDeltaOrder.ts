@@ -1,15 +1,26 @@
 import type { ConstructFetchInput } from '../../types';
 import { constructGetDeltaContract } from './getDeltaContract';
+import { DeltaPrice } from './getDeltaPrice';
 import { constructGetPartnerFee } from './getPartnerFee';
 import {
   buildDeltaSignableOrderData,
-  type DeltaOrderDataInput,
+  type BuildDeltaOrderDataInput,
   type SignableDeltaOrderData,
 } from './helpers/buildDeltaOrderData';
 
-// reqrite to be { partner, srcAmount, srcToken, destToken, destAmount: (with slippage), destPrice (take expectedAmount=destAmount from it) }
-export type BuildDeltaOrderDataParams = DeltaOrderDataInput & {
+export type BuildDeltaOrderDataParams = {
+  owner: string;
+  beneficiary?: string; // beneficiary==owner if no transferTo
+  srcToken: string; // lowercase
+  destToken: string; // lowercase
+  srcAmount: string; // wei
+  destAmount: string; // wei, deltaPrice.destAmount - slippage
+  deadline?: number; // seconds
+  nonce?: number; // can be random, can even be Date.now()
+  permit?: string; //can be "0x"
   partner: string;
+
+  deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
 };
 
 type BuildDeltaOrder = (
@@ -42,13 +53,26 @@ export const constructBuildDeltaOrder = (
       signal
     );
 
-    return buildDeltaSignableOrderData({
-      ...options,
+    const input: BuildDeltaOrderDataInput = {
+      owner: options.owner,
+      beneficiary: options.beneficiary,
+      srcToken: options.srcToken,
+      destToken: options.destToken,
+      srcAmount: options.srcAmount,
+      destAmount: options.destAmount,
+      expectedDestAmount: options.deltaPrice.destAmount,
+      deadline: options.deadline,
+      nonce: options.nonce,
+      permit: options.permit,
+
       chainId,
       paraswapDeltaAddress: ParaswapDelta,
       partnerAddress: partnerFeeResponse.partnerAddress,
-      partnerFee: options.partnerFee ?? partnerFeeResponse.partnerFee, // should be the same, but give priority to externally provided
-    });
+      partnerFee:
+        options.deltaPrice.partnerFee ?? partnerFeeResponse.partnerFee, // should be the same, but give priority to externally provided
+    };
+
+    return buildDeltaSignableOrderData(input);
   };
 
   return {
