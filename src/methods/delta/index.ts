@@ -90,7 +90,7 @@ export type DeltaOrderHandlers<T> = SubmitDeltaOrderFuncs &
   SignDeltaOrderFunctions;
 
 /** @description construct SDK with every Delta Order-related method, fetching from API and Order signing */
-export const constructDeltaOrdersHandlers = <TxResponse>(
+export const constructAllDeltaOrdersHandlers = <TxResponse>(
   options: ConstructProviderFetchInput<
     TxResponse,
     'signTypedDataCall' | 'transactCall'
