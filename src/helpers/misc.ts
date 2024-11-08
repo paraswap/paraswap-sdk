@@ -94,16 +94,23 @@ export const constructSearchString = <
   return queryString && `?${queryString}`;
 };
 
-type FetcherErrorConstructorInput = Pick<
-  AxiosError,
-  'code' | 'request' | 'isAxiosError' | 'message'
-> & {
-  response?: Pick<
-    AxiosResponse,
-    'data' | 'status' | 'statusText' | 'headers'
-  > & {
-    config: { url?: string; method?: string };
-  };
+type MinAxiosError = {
+  code?: string;
+  request?: any;
+  isAxiosError: boolean;
+  message: string;
+};
+
+type MinAxiosResponse = {
+  data: any;
+  status: number;
+  statusText: string;
+  headers: Record<string, any>;
+  config: { url?: string; method?: string };
+};
+
+type FetcherErrorConstructorInput = MinAxiosError & {
+  response?: MinAxiosResponse;
 };
 
 export interface FetcherErrorInterface extends FetcherErrorConstructorInput {
