@@ -53,20 +53,6 @@ export const constructSubmitDeltaOrder = (
     const orderData = await buildDeltaOrder(orderParams);
     const signature = await signDeltaOrder(orderData);
 
-    const postOrderData: DeltaAuctionOrder = {
-      owner: orderData.data.owner,
-      beneficiary: orderData.data.beneficiary,
-      srcToken: orderData.data.srcToken,
-      destToken: orderData.data.destToken,
-      srcAmount: orderData.data.srcAmount,
-      destAmount: orderData.data.destAmount,
-      expectedDestAmount: orderData.data.expectedDestAmount,
-      deadline: orderData.data.deadline,
-      nonce: orderData.data.nonce,
-      permit: orderData.data.permit,
-      partnerAndFee: orderData.data.partnerAndFee,
-    };
-
     const response = await postDeltaOrder({
       signature,
       partner: orderParams.partner,
