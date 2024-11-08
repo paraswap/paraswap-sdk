@@ -96,6 +96,34 @@ import {
 import { constructSwapSDK } from '../methods/swap';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
 import { API_URL, DEFAULT_VERSION } from '../constants';
+import {
+  constructAllDeltaOrdersHandlers,
+  DeltaOrderHandlers,
+} from '../methods/delta';
+import {
+  BuildDeltaOrderFunctions,
+  constructBuildDeltaOrder,
+} from '../methods/delta/buildDeltaOrder';
+import {
+  constructGetDeltaOrders,
+  GetDeltaOrdersFunctions,
+} from '../methods/delta/getDeltaOrders';
+import {
+  constructGetDeltaPrice,
+  GetDeltaPriceFunctions,
+} from '../methods/delta/getDeltaPrice';
+import {
+  constructGetDeltaContract,
+  GetDeltaContractFunctions,
+} from '../methods/delta/getDeltaContract';
+import {
+  constructGetPartnerFee,
+  GetPartnerFeeFunctions,
+} from '../methods/delta/getPartnerFee';
+import {
+  constructPostDeltaOrder,
+  PostDeltaOrderFunctions,
+} from '../methods/delta/postDeltaOrder';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -117,16 +145,25 @@ export type NFTOrdersFetchMethods = GetNFTOrdersContractFunctions &
   PostNFTOrderFunctions &
   BuildNFTOrdersTxFunctions;
 
+export type DeltaFetchMehods = BuildDeltaOrderFunctions &
+  GetDeltaOrdersFunctions &
+  GetDeltaPriceFunctions &
+  GetDeltaContractFunctions &
+  GetPartnerFeeFunctions &
+  PostDeltaOrderFunctions;
+
 export type SimpleFetchSDK = {
   swap: SwapFetchMethods;
   limitOrders: LimitOrdersFetchMethods;
   nftOrders: NFTOrdersFetchMethods;
+  delta: DeltaFetchMehods;
 } & Required<ConstructBaseInput>;
 
 export type SimpleSDK = {
   swap: SwapSDKMethods<TxHash>;
   limitOrders: LimitOrderHandlers<TxHash>;
   nftOrders: NFTOrderHandlers<TxHash>;
+  delta: DeltaOrderHandlers<TxHash>;
 } & Required<ConstructBaseInput>;
 
 export type FetcherOptions = (
@@ -216,10 +253,21 @@ export function constructSimpleSDK(
       constructBuildNFTOrderTx
     );
 
+    const delta = constructPartialSDK(
+      config,
+      constructBuildDeltaOrder,
+      constructPostDeltaOrder,
+      constructGetDeltaOrders,
+      constructGetDeltaPrice,
+      constructGetDeltaContract,
+      constructGetPartnerFee
+    );
+
     return {
       swap,
       limitOrders,
       nftOrders,
+      delta,
       apiURL: options.apiURL ?? API_URL,
       chainId: options.chainId,
       version: options.version ?? DEFAULT_VERSION,
@@ -244,10 +292,14 @@ export function constructSimpleSDK(
   const nftOrders: NFTOrderHandlers<TxHash> =
     constructAllNFTOrdersHandlers<TxHash>(config);
 
+  const delta: DeltaOrderHandlers<TxHash> =
+    constructAllDeltaOrdersHandlers<TxHash>(config);
+
   return {
     swap,
     limitOrders,
     nftOrders,
+    delta,
     apiURL: options.apiURL ?? API_URL,
     chainId: options.chainId,
     version: options.version ?? DEFAULT_VERSION,
