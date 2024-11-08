@@ -3,8 +3,9 @@ import { constructSearchString } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 
 export type PartnerFeeResponse = {
-  partnerFee: number;
+  partnerFee: number; // in %, e.g. 0.12
   partnerAddress: string;
+  takeSurplus: boolean;
 };
 
 type PartnerFeeQueryParams = {
