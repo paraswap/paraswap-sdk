@@ -2,7 +2,7 @@ import { API_URL } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 
-type DeltaPriceParams = {
+export type DeltaPriceParams = {
   /** @description Not Native Token */
   srcToken: string;
   destToken: string;
