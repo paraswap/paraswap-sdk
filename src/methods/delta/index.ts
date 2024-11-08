@@ -1,5 +1,5 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { DeltaAuctionOrder, ParaswapDeltaAuction } from './helpers/types';
+import type { ParaswapDeltaAuction } from './helpers/types';
 import {
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
