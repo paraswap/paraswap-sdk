@@ -3,11 +3,12 @@ import { constructSearchString } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 
 type DeltaPriceParams = {
+  /** @description Not Native Token */
   srcToken: string;
   destToken: string;
   amount: string;
-  srcDecimals?: number;
-  destDecimals?: number;
+  srcDecimals: number;
+  destDecimals: number;
   // side?: SwapSide; // no BUY side for now
   userAddress?: string;
   partner?: string; // @TODO not sure if this is optional, need to check
