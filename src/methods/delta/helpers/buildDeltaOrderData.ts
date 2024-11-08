@@ -82,6 +82,7 @@ export type DeltaOrderDataInput = MarkOptional<
 export type BuildDeltaOrderDataInput = DeltaOrderDataInput & {
   partnerAddress: string;
   paraswapDeltaAddress: string;
+  takeSurplus: boolean;
   chainId: number;
 };
 
@@ -105,6 +106,7 @@ export function buildDeltaSignableOrderData({
 
   partnerAddress,
   partnerFee,
+  takeSurplus,
 
   chainId,
   paraswapDeltaAddress,
@@ -120,7 +122,11 @@ export function buildDeltaSignableOrderData({
     deadline,
     nonce,
     permit: composeDeltaOrderPermit({ permit, nonce }),
-    partnerAndFee: producePartnerAndFee({ partnerFee, partnerAddress }),
+    partnerAndFee: producePartnerAndFee({
+      partnerFee,
+      partnerAddress,
+      takeSurplus,
+    }),
   };
 
   return produceDeltaOrderTypedData({
@@ -133,15 +139,20 @@ export function buildDeltaSignableOrderData({
 type ProducePartnerAndFeeInput = {
   partnerFee: number;
   partnerAddress: string;
+  takeSurplus: boolean;
 };
 
 // fee and address are encoded together
 function producePartnerAndFee({
   partnerFee,
   partnerAddress,
+  takeSurplus,
 }: ProducePartnerAndFeeInput): string {
   const partnerFeeBps = BigInt((partnerFee * 100).toFixed(0));
-  const partnerAndFee = (BigInt(partnerAddress) << BigInt(96)) | partnerFeeBps;
+  const partnerAndFee =
+    (BigInt(partnerAddress) << BigInt(96)) |
+    partnerFeeBps |
+    (BigInt(takeSurplus) << BigInt(8));
 
   return partnerAndFee.toString(10);
 }

@@ -68,6 +68,7 @@ export const constructBuildDeltaOrder = (
       chainId,
       paraswapDeltaAddress: ParaswapDelta,
       partnerAddress: partnerFeeResponse.partnerAddress,
+      takeSurplus: partnerFeeResponse.takeSurplus,
       partnerFee:
         options.deltaPrice.partnerFee ?? partnerFeeResponse.partnerFee, // should be the same, but give priority to externally provided
     };
