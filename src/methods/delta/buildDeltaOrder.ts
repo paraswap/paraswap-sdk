@@ -18,7 +18,7 @@ export type BuildDeltaOrderDataParams = {
   deadline?: number; // seconds
   nonce?: number; // can be random, can even be Date.now()
   permit?: string; //can be "0x"
-  partner: string;
+  partner?: string;
 
   deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
 };
@@ -49,7 +49,7 @@ export const constructBuildDeltaOrder = (
       throw new Error(`Delta is not available on chain ${chainId}`);
     }
     const partnerFeeResponse = await getPartnerFee(
-      { partner: options.partner },
+      { partner: options.partner || options.deltaPrice.partner },
       signal
     );
 
