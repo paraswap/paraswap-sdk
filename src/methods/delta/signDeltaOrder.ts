@@ -1,3 +1,4 @@
+import { deriveCompactSignature } from '../../helpers/misc';
 import type { ConstructProviderFetchInput } from '../../types';
 import { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 import { sanitizeDeltaOrderData } from './helpers/misc';
@@ -24,13 +25,23 @@ export const constructSignDeltaOrder = (
     'contractCaller'
   >
 ): SignDeltaOrderFunctions => {
-  const signDeltaOrder: SignDeltaOrder = (typedData) => {
+  const signDeltaOrder: SignDeltaOrder = async (typedData) => {
     // types allow to pass OrderData & extra_stuff, but tx will break like that
     const typedDataOnly: SignableDeltaOrderData = {
       ...typedData,
       data: sanitizeDeltaOrderData(typedData.data),
     };
-    return options.contractCaller.signTypedDataCall(typedDataOnly);
+    const signature = await options.contractCaller.signTypedDataCall(
+      typedDataOnly
+    );
+
+    // both full and compact signatures work in the ParaswapDelta contract;
+    // compact signature can be marginally more gas efficient
+    try {
+      return deriveCompactSignature(signature);
+    } catch {
+      return signature;
+    }
   };
 
   return { signDeltaOrder };
