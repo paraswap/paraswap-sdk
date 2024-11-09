@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
-import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
-import { ethers as ethersV6 } from 'ethersV6';
+import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethersV5';
+import { ethers as ethersV6 } from 'ethers';
 import { hexValue, hexZeroPad } from '@ethersproject/bytes';
 import axios from 'axios';
 import {

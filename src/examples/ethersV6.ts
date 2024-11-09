@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { ethers } from 'ethersV6';
+import { ethers } from 'ethers';
 import {
   constructPartialSDK,
   constructFullSDK,

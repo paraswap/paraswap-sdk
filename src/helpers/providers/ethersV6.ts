@@ -14,7 +14,7 @@ import type {
   Overrides,
   TypedDataDomain,
   ContractTransactionResponse,
-} from 'ethersV6';
+} from 'ethers';
 
 export interface EthersV6ProviderDeps {
   ethersV6ProviderOrSigner: ContractRunner | Signer;

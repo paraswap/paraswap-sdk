@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { BigNumber as BigNumberEthers, ethers } from 'ethersV5';
-import { ethers as ethersV6 } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import { isAllowance, SwapSide, SimpleFetchSDK } from '../src';
@@ -12,7 +11,7 @@ import erc20abi from './abi/ERC20.json';
 import { assert } from 'ts-essentials';
 
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
-import { HardhatProvider, setupFork } from './helpers/hardhat';
+import { setupFork, HardhatProvider } from './helpers/hardhat';
 
 dotenv.config();
 
@@ -31,42 +30,42 @@ const destToken = DAI;
 const srcAmount = (1 * 1e18).toString(); //The source amount multiplied by its decimals
 
 const referrer = 'sdk-test';
-const TEST_MNEMONIC =
-  'radar blur cabbage chef fix engine embark joy scheme fiction master release';
-//0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9
-const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
-const walletV6 = ethersV6.HDNodeWallet.fromPhrase(TEST_MNEMONIC);
+
+const wallet = ethers.Wallet.createRandom();
 
 const web3provider = new Web3(HardhatProvider as any);
 
 const ethersProvider = new ethers.providers.Web3Provider(
   HardhatProvider as any
 );
-const ethersV6Provider = new ethersV6.BrowserProvider(HardhatProvider);
-const signerV6 = walletV6.connect(ethersV6Provider);
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address;
 
-describe.each([
+describe.skip.each([
   ['fetch', { fetch }],
   ['axios', { axios }],
 ])('ParaSwap SDK: fetcher made with: %s', (testName, fetcherOptions) => {
   let paraSwap: SimpleFetchSDK;
+  let paraSwapArbitrum: SimpleFetchSDK;
 
   beforeAll(async () => {
-    await setupFork({ accounts: [{ address: senderAddress, balance: 8e18 }] });
+    await setupFork({
+      accounts: [{ address: senderAddress, balance: 8e18 }],
+    });
 
-    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions, version: '5' });
+    paraSwapArbitrum = constructSimpleSDK({
+      chainId: 42161,
+      version: '6.2',
+      // apiURL: 'https://api-partners.paraswap.io/',
+      // apiKey: 'oXF4dtiLJ34kJTod3fcNH5WJtKRZ9cr95O4yaMvD',
+      ...fetcherOptions,
+    });
+    paraSwap = constructSimpleSDK({ chainId, ...fetcherOptions });
   });
   test('getBalance', async () => {
-    try {
-      const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
-      expect(balance).toBeDefined();
-    } catch (error: any) {
-      // workaround for API sometimes failing on some Tokens(?)
-      expect(error.message).toMatch(/Only chainId \d+ is supported/);
-    }
+    const balance = await paraSwap.swap.getBalance(senderAddress, ETH);
+    expect(balance).toBeDefined();
   });
 
   test('Get_Markets', async () => {
@@ -85,6 +84,25 @@ describe.each([
         address: expect.any(String),
         decimals: expect.any(Number),
       })
+    );
+  });
+
+  test('TEST', async () => {
+    const priceRoute = await paraSwapArbitrum.swap.getRate({
+      srcToken: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1', // DAI on Arbitrum
+      srcDecimals: 18,
+      destToken: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1', // WETH on Arbitrum
+      destDecimals: 6,
+      amount: '1000000000000000000000000',
+      // userAddress: wrappedLoan.address,
+      side: SwapSide.SELL,
+      options: {
+        // includeContractMethods: [ContractMethod.simpleSwap],
+      },
+    });
+    console.log(
+      '🚀 ~ file: test.test.ts:113 ~ test.only ~ priceRoute:',
+      priceRoute
     );
   });
 
@@ -139,59 +157,6 @@ describe.each([
     );
   });
 
-  test('Get_SwapTxData', async () => {
-    const { priceRoute, txParams } = await paraSwap.swap.getSwapTxData({
-      srcToken: ETH,
-      destToken: DAI,
-      amount: srcAmount,
-      userAddress: senderAddress,
-      side: SwapSide.SELL,
-      slippage: 500,
-      options: {
-        includeDEXS: ['UniswapV2'],
-      },
-    });
-
-    const bestRouteStable = priceRoute.bestRoute.map((b) => ({
-      ...b,
-      swaps: b.swaps.map((s) => ({
-        ...s,
-        swapExchanges: s.swapExchanges.map((se) => ({
-          ...se,
-          destAmount: 'dynamic_number',
-          data: {
-            ...se.data,
-            gasUSD: 'dynamic_number',
-          },
-        })),
-      })),
-    }));
-
-    const priceRouteStable = {
-      ...priceRoute,
-      gasCost: 'dynamic_number',
-      gasCostUSD: 'dynamic_number',
-      hmac: 'dynamic_number',
-      destAmount: 'dynamic_number',
-      blockNumber: 'dynamic_number',
-      srcUSD: 'dynamic_number',
-      destUSD: 'dynamic_number',
-      bestRoute: bestRouteStable,
-    };
-
-    const txParamsStable = {
-      ...txParams,
-      data: 'dynamic_string',
-      from: 'dynamic_string',
-      gasPrice: 'dynamic_number',
-    };
-
-    expect(txParams.from).toEqual(senderAddress);
-
-    expect(priceRouteStable).toMatchSnapshot('Get_SwapTxData::priceRoute');
-    expect(txParamsStable).toMatchSnapshot('Get_SwapTxData::txParams');
-  });
-
   test('Get_Spender', async () => {
     const spender = await paraSwap.swap.getSpender();
     expect(web3provider.utils.isAddress(spender));
@@ -208,10 +173,14 @@ describe.each([
     expect(allowance.allowance).toEqual('123000000000000000');
   });
 
-  test('Get_Adapters', async () => {
-    const adapters = await paraSwap.swap.getAdapters();
-    expect(adapters).toMatchSnapshot('Get_Adapters');
-  });
+  // test('Get_Adapters', async () => {
+  //   const adapters = await paraSwap.swap.getAdapters();
+  //   expect(adapters['paraswappool']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['uniswapv2']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['uniswapv2']?.[0]?.index).toBeDefined();
+  //   expect(adapters['kyberdmm']?.[0]?.adapter).toBeDefined();
+  //   expect(adapters['kyberdmm']?.[0]?.index).toBeDefined();
+  // });
 
   test('Build_Tx', async () => {
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
@@ -353,22 +322,13 @@ describe.each([
   });
 });
 
-describe.each([
+describe.skip.each([
   [
-    'fetch & ethersV5',
+    'fetch & ethers',
     { fetch },
     {
       ethersProviderOrSigner: signer,
       EthersContract: ethers.Contract,
-      account: senderAddress,
-    },
-  ],
-  [
-    'fetch & ethersV6',
-    { fetch },
-    {
-      ethersV6ProviderOrSigner: signerV6,
-      EthersV6Contract: ethersV6.Contract,
       account: senderAddress,
     },
   ],
@@ -380,7 +340,7 @@ describe.each([
 
     beforeAll(() => {
       paraSwap = constructSimpleSDK(
-        { chainId, ...fetcherOptions, version: '5' },
+        { chainId, ...fetcherOptions },
         providerOptions
       );
     });

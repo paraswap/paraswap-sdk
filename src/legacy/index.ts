@@ -39,7 +39,7 @@ import { constructPartialSDK } from '../sdk/partial';
 import { constructGetTokens } from '../methods/swap/token';
 import { constructGetSpender } from '../methods/swap/spender';
 import { constructGetAdapters } from '../methods/swap/adapters';
-import { ContractTransactionResponse as EthersV6ContractTransactionResponse } from 'ethersV6';
+import { ContractTransactionResponse as EthersV6ContractTransactionResponse } from 'ethers';
 
 export type APIError = {
   message: string;
