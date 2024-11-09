@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
 import { TransactionReceipt as Web3TransactionReceipt } from 'web3';
-import { BigNumber as BigNumberEthers, ethers } from 'ethers';
-import { ethers as ethersV6 } from 'ethersV6';
+import { BigNumber as BigNumberEthers, ethers } from 'ethersV5';
+import { ethers as ethersV6 } from 'ethers';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import {

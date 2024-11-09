@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { ethers, Wallet } from 'ethers';
+import { ethers, Wallet } from 'ethersV5';
 import {
   constructPartialSDK,
   constructGetAdapters,

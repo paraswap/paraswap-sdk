@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import axios from 'axios';
 import {
   createTestClient,
