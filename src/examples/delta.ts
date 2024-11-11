@@ -52,9 +52,11 @@ async function simpleDeltaFlow() {
   await deltaSDK.approveTokenForDelta(amount, DAI_TOKEN);
 
   const slippagePercent = 0.5;
-  const destAmountAfterSlippage = (
-    +deltaPrice.destAmount *
-    (1 - slippagePercent / 100)
+  const destAmountAfterSlippage = BigInt(
+    // get rid of exponential notation
+
+    +(+deltaPrice.destAmount * (1 - slippagePercent / 100)).toFixed(0)
+    // get rid of decimals
   ).toString(10);
 
   const deltaAuction = await deltaSDK.submitDeltaOrder({
