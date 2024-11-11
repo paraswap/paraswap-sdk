@@ -1,5 +1,4 @@
 import { MarkOptional } from 'ts-essentials';
-import type { Address, ParaSwapVersionUnion } from '../../../types';
 import { Domain } from '../../common/orders/buildOrderData';
 import { DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
@@ -27,26 +26,6 @@ export type SignableDeltaOrderData = {
   domain: Domain;
   data: DeltaAuctionOrder;
 };
-
-export interface BuildOrderDataInput {
-  chainId: number;
-  verifyingContract: Address;
-  nonce?: number;
-  expiry: number;
-  makerAsset: Address;
-  takerAsset: Address;
-  makerAmount: string;
-  takerAmount: string;
-  maker: Address;
-  // OrderData.taker must be Augustus (or other Executor) for p2p limitOrders to involve swap through Augustus
-  /** @description actual user taker which will go into nonceAndMeta */
-  taker?: Address;
-  /** @description contract executor (Augustus or similar) that is allowed to execute the order, gois in Order.taker */
-  contractTaker?: Address;
-
-  AugustusAddress: Address;
-  AppVersion: ParaSwapVersionUnion;
-}
 
 type SignDeltaOrderInput = {
   orderInput: DeltaAuctionOrder;
