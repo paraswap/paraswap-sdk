@@ -139,10 +139,12 @@ import {
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   constructBuildDeltaOrder,
+  SignableDeltaOrderData,
 } from './methods/delta/buildDeltaOrder';
 import {
   constructPostDeltaOrder,
   PostDeltaOrderFunctions,
+  PostDeltaOrderParams,
 } from './methods/delta/postDeltaOrder';
 import {
   constructSignDeltaOrder,
@@ -318,7 +320,9 @@ export type {
   ParaswapDeltaAuction,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
+  SignableDeltaOrderData,
   PostDeltaOrderFunctions,
+  PostDeltaOrderParams,
   SignDeltaOrderFunctions,
   GetDeltaContractFunctions,
   GetDeltaPriceFunctions,
