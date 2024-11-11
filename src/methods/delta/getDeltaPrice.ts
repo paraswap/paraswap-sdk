@@ -25,8 +25,10 @@ export type DeltaPrice = {
   srcAmount: string;
   destAmount: string;
   destAmountBeforeFee: string;
-  gasCostUSD: string;
   gasCost: string;
+  gasCostBeforeFee: string;
+  gasCostUSD: string;
+  gasCostUSDBeforeFee: string;
   srcUSD: string;
   destUSD: string;
   destUSDBeforeFee: string;
