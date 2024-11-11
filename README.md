@@ -13,7 +13,7 @@ Refer to the documentation of the ParaSwap API: https://developers.paraswap.netw
 
 **Canonical**: bring only the functions you actually need
 
-**Lightweight**: 400B Gzipped for the minimal variant
+**Lightweight**: 10KB Gzipped for the minimal variant
 
 ## Installing ParaSwap SDK
 
