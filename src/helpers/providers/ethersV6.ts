@@ -12,7 +12,6 @@ import type {
   ContractRunner,
   Contract as EthersContract,
   Overrides,
-  TypedDataDomain,
   ContractTransactionResponse,
 } from 'ethers';
 
@@ -103,14 +102,7 @@ export const constructContractCaller = (
 
     const { data, domain, types } = typedData;
 
-    const normalizedDomain: TypedDataDomain = {
-      ...domain,
-      salt: isArrayLikeNumber(domain.salt)
-        ? new Uint8Array(domain.salt)
-        : domain.salt,
-    };
-
-    return signer.signTypedData(normalizedDomain, types, data);
+    return signer.signTypedData(domain, types, data);
   };
 
   return { staticCall, transactCall, signTypedDataCall };
@@ -126,15 +118,4 @@ function isEthersSigner(
   providerOrSigner: ContractRunner | Signer
 ): providerOrSigner is Signer {
   return 'getAddress' in providerOrSigner;
-}
-
-function isArrayLikeNumber(arr: unknown): arr is ArrayLike<number> {
-  const isArrLike =
-    typeof arr === 'object' &&
-    arr !== null &&
-    'length' in arr &&
-    typeof arr['length'] === 'number';
-  if (!isArrLike) return false;
-  if (arr.length === 0) return true;
-  return '0' in arr && typeof arr[0] === 'number';
 }

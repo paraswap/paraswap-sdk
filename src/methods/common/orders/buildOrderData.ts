@@ -1,14 +1,18 @@
-import type {
-  TypedDataDomain as EthersTypedDataDomain,
-  TypedDataField,
-} from '@ethersproject/abstract-signer';
-
 export const name = 'AUGUSTUS RFQ';
 export const version = '1';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-type TypedDataDomain = Omit<EthersTypedDataDomain, 'chainId'> & {
-  chainId: number;
+type TypedDataDomain = {
+  name?: string;
+  version?: string;
+  chainId?: bigint | string | number;
+  verifyingContract?: string;
+  salt?: string;
+};
+
+export type TypedDataField = {
+  name: string;
+  type: string;
 };
 
 export type SignableTypedData = {
