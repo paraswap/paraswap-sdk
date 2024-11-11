@@ -47,6 +47,11 @@ export const constructGetPartnerFee = ({
       signal,
     });
 
+    // @TODO remove when API returns {takeSurplus: boolean}
+    if (data.takeSurplus === undefined) {
+      data.takeSurplus = false;
+    }
+
     cachedPartnerFee.set(options.partner, data);
 
     return data;
