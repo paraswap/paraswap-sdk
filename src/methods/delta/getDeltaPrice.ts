@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants';
+import { API_URL, SwapSide } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 
@@ -16,6 +16,7 @@ export type DeltaPriceParams = {
 
 type DeltaPriceQueryOptions = DeltaPriceParams & {
   chainId: number; // will return error from API on unsupported chains
+  side: SwapSide.SELL;
 };
 
 export type DeltaPrice = {
@@ -57,6 +58,7 @@ export const constructGetDeltaPrice = ({
     const search = constructSearchString<DeltaPriceQueryOptions>({
       ...options,
       chainId,
+      side: SwapSide.SELL, // so far SELL side only
     });
 
     const fetchURL = `${pricesUrl}/${search}` as const;
