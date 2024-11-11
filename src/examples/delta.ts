@@ -3,8 +3,6 @@ import axios from 'axios';
 import { ethers, Wallet } from 'ethersV5';
 import {
   constructPartialSDK,
-  constructGetAdapters,
-  constructApproveToken,
   constructEthersContractCaller,
   constructAxiosFetcher,
   constructAllDeltaOrdersHandlers,
