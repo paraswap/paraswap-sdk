@@ -1,235 +1,214 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / FetcherError
+[**@paraswap/sdk**](../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../globals.md) / FetcherError
 
 # Class: FetcherError
 
-## Hierarchy
+## Extends
 
-- [`Error`](../modules/internal_.md#error)
-
-  ↳ **`FetcherError`**
+- [`Error`](../-internal-/interfaces/Error.md)
 
 ## Implements
 
 - [`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md)
 
-## Table of contents
-
-### Constructors
-
-- [constructor](FetcherError.md#constructor)
-
-### Properties
-
-- [code](FetcherError.md#code)
-- [isAxiosError](FetcherError.md#isaxioserror)
-- [message](FetcherError.md#message)
-- [name](FetcherError.md#name)
-- [request](FetcherError.md#request)
-- [response](FetcherError.md#response)
-- [stack](FetcherError.md#stack)
-- [status](FetcherError.md#status)
-- [prepareStackTrace](FetcherError.md#preparestacktrace)
-- [stackTraceLimit](FetcherError.md#stacktracelimit)
-
-### Methods
-
-- [captureStackTrace](FetcherError.md#capturestacktrace)
-
 ## Constructors
 
-### constructor
+### new FetcherError()
 
-• **new FetcherError**(`__namedParameters`)
+> **new FetcherError**(`__namedParameters`): [`FetcherError`](FetcherError.md)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`FetcherErrorConstructorInput`](../modules/internal_.md#fetchererrorconstructorinput) |
+• **\_\_namedParameters**: [`FetcherErrorConstructorInput`](../-internal-/type-aliases/FetcherErrorConstructorInput.md)
+
+#### Returns
+
+[`FetcherError`](FetcherError.md)
 
 #### Overrides
 
-Error.constructor
+`Error.constructor`
+
+#### Defined in
+
+[src/helpers/misc.ts:63](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L63)
 
 ## Properties
 
 ### code
 
-• **code**: `undefined` \| `string`
+> **code**: `undefined` \| `string`
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[code](../interfaces/FetcherErrorInterface.md#code)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`code`](../interfaces/FetcherErrorInterface.md#code)
 
 #### Defined in
 
-[src/helpers/misc.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L109)
+[src/helpers/misc.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L57)
 
-___
+***
 
 ### isAxiosError
 
-• **isAxiosError**: `boolean` = `false`
+> **isAxiosError**: `boolean` = `false`
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[isAxiosError](../interfaces/FetcherErrorInterface.md#isaxioserror)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`isAxiosError`](../interfaces/FetcherErrorInterface.md#isaxioserror)
 
 #### Defined in
 
-[src/helpers/misc.ts:113](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L113)
+[src/helpers/misc.ts:61](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L61)
 
-___
+***
 
 ### message
 
-• **message**: `string`
+> **message**: `string`
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[message](../interfaces/FetcherErrorInterface.md#message)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`message`](../interfaces/FetcherErrorInterface.md#message)
 
 #### Inherited from
 
-Error.message
+[`Error`](../-internal-/interfaces/Error.md).[`message`](../-internal-/interfaces/Error.md#message)
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1023
+node\_modules/typescript/lib/lib.es5.d.ts:1077
 
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 #### Inherited from
 
-Error.name
+[`Error`](../-internal-/interfaces/Error.md).[`name`](../-internal-/interfaces/Error.md#name)
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1022
+node\_modules/typescript/lib/lib.es5.d.ts:1076
 
-___
+***
 
 ### request
 
-• **request**: `any`
+> **request**: `any`
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[request](../interfaces/FetcherErrorInterface.md#request)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`request`](../interfaces/FetcherErrorInterface.md#request)
 
 #### Defined in
 
-[src/helpers/misc.ts:111](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L111)
+[src/helpers/misc.ts:59](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L59)
 
-___
+***
 
 ### response
 
-• **response**: `undefined` \| [`AxiosResponse`](../interfaces/internal_.AxiosResponse.md)<`unknown`, `any`\>
+> **response**: `undefined` \| [`MinAxiosResponse`](../-internal-/type-aliases/MinAxiosResponse.md)
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[response](../interfaces/FetcherErrorInterface.md#response)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`response`](../interfaces/FetcherErrorInterface.md#response)
 
 #### Defined in
 
-[src/helpers/misc.ts:112](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L112)
+[src/helpers/misc.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L60)
 
-___
+***
 
-### stack
+### stack?
 
-• `Optional` **stack**: `string`
+> `optional` **stack**: `string`
 
 #### Inherited from
 
-Error.stack
+[`Error`](../-internal-/interfaces/Error.md).[`stack`](../-internal-/interfaces/Error.md#stack)
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1024
+node\_modules/typescript/lib/lib.es5.d.ts:1078
 
-___
+***
 
 ### status
 
-• **status**: `undefined` \| `number`
+> **status**: `undefined` \| `number`
 
 #### Implementation of
 
-[FetcherErrorInterface](../interfaces/FetcherErrorInterface.md).[status](../interfaces/FetcherErrorInterface.md#status)
+[`FetcherErrorInterface`](../interfaces/FetcherErrorInterface.md).[`status`](../interfaces/FetcherErrorInterface.md#status)
 
 #### Defined in
 
-[src/helpers/misc.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L110)
+[src/helpers/misc.ts:58](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L58)
 
-___
+***
 
-### prepareStackTrace
+### prepareStackTrace()?
 
-▪ `Static` `Optional` **prepareStackTrace**: (`err`: [`Error`](../modules/internal_.md#error), `stackTraces`: [`CallSite`](../interfaces/internal_.CallSite.md)[]) => `any`
-
-#### Type declaration
-
-▸ (`err`, `stackTraces`): `any`
+> `static` `optional` **prepareStackTrace**: (`err`, `stackTraces`) => `any`
 
 Optional override for formatting stack traces
 
-**`See`**
+#### Parameters
 
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+• **err**: [`Error`](../-internal-/interfaces/Error.md)
 
-##### Parameters
+• **stackTraces**: [`CallSite`](../-internal-/interfaces/CallSite.md)[]
 
-| Name | Type |
-| :------ | :------ |
-| `err` | [`Error`](../modules/internal_.md#error) |
-| `stackTraces` | [`CallSite`](../interfaces/internal_.CallSite.md)[] |
-
-##### Returns
+#### Returns
 
 `any`
 
+#### See
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+
 #### Inherited from
 
-Error.prepareStackTrace
+`Error.prepareStackTrace`
 
 #### Defined in
 
-node_modules/@types/node/globals.d.ts:11
+node\_modules/@types/node/globals.d.ts:143
 
-___
+***
 
 ### stackTraceLimit
 
-▪ `Static` **stackTraceLimit**: `number`
+> `static` **stackTraceLimit**: `number`
 
 #### Inherited from
 
-Error.stackTraceLimit
+`Error.stackTraceLimit`
 
 #### Defined in
 
-node_modules/@types/node/globals.d.ts:13
+node\_modules/@types/node/globals.d.ts:145
 
 ## Methods
 
-### captureStackTrace
+### captureStackTrace()
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
 
 Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
-| `constructorOpt?` | `Function` |
+• **targetObject**: `object`
+
+• **constructorOpt?**: `Function`
 
 #### Returns
 
@@ -237,4 +216,8 @@ Create .stack property on a target object
 
 #### Inherited from
 
-Error.captureStackTrace
+`Error.captureStackTrace`
+
+#### Defined in
+
+node\_modules/@types/node/globals.d.ts:136

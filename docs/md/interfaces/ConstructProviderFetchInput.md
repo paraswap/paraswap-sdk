@@ -1,92 +1,83 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ConstructProviderFetchInput
+[**@paraswap/sdk**](../README.md) • **Docs**
 
-# Interface: ConstructProviderFetchInput<T, D\>
+***
 
-## Type parameters
+[@paraswap/sdk](../globals.md) / ConstructProviderFetchInput
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `D` | extends keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\> = keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\> |
+# Interface: ConstructProviderFetchInput\<T, D\>
 
-## Hierarchy
+## Extends
 
 - [`ConstructFetchInput`](ConstructFetchInput.md)
 
-  ↳ **`ConstructProviderFetchInput`**
+## Type Parameters
 
-## Table of contents
+• **T**
 
-### Properties
-
-- [apiURL](ConstructProviderFetchInput.md#apiurl)
-- [chainId](ConstructProviderFetchInput.md#chainid)
-- [contractCaller](ConstructProviderFetchInput.md#contractcaller)
-- [fetcher](ConstructProviderFetchInput.md#fetcher)
-- [version](ConstructProviderFetchInput.md#version)
+• **D** *extends* keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)\<`T`\> = keyof [`ContractCallerFunctions`](ContractCallerFunctions.md)\<`T`\>
 
 ## Properties
 
-### apiURL
+### apiURL?
 
-• `Optional` **apiURL**: `string`
+> `optional` **apiURL**: `string`
 
 #### Inherited from
 
-[ConstructFetchInput](ConstructFetchInput.md).[apiURL](ConstructFetchInput.md#apiurl)
+[`ConstructFetchInput`](ConstructFetchInput.md).[`apiURL`](ConstructFetchInput.md#apiurl)
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
+[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
 
-___
+***
 
 ### chainId
 
-• **chainId**: `number`
+> **chainId**: `number`
 
 #### Inherited from
 
-[ConstructFetchInput](ConstructFetchInput.md).[chainId](ConstructFetchInput.md#chainid)
-
-#### Defined in
-
-[src/types.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L40)
-
-___
-
-### contractCaller
-
-• **contractCaller**: [`Pick`](../modules/internal_.md#pick)<[`ContractCallerFunctions`](ContractCallerFunctions.md)<`T`\>, `D`\>
-
-#### Defined in
-
-[src/types.ts:125](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L125)
-
-___
-
-### fetcher
-
-• **fetcher**: [`FetcherFunction`](../modules.md#fetcherfunction)
-
-#### Inherited from
-
-[ConstructFetchInput](ConstructFetchInput.md).[fetcher](ConstructFetchInput.md#fetcher)
-
-#### Defined in
-
-[src/types.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L66)
-
-___
-
-### version
-
-• `Optional` **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
-
-#### Inherited from
-
-[ConstructFetchInput](ConstructFetchInput.md).[version](ConstructFetchInput.md#version)
+[`ConstructFetchInput`](ConstructFetchInput.md).[`chainId`](ConstructFetchInput.md#chainid)
 
 #### Defined in
 
 [src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
+
+***
+
+### contractCaller
+
+> **contractCaller**: [`Pick`](../-internal-/type-aliases/Pick.md)\<[`ContractCallerFunctions`](ContractCallerFunctions.md)\<`T`\>, `D`\>
+
+#### Defined in
+
+[src/types.ts:124](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L124)
+
+***
+
+### fetcher
+
+> **fetcher**: [`FetcherFunction`](../type-aliases/FetcherFunction.md)
+
+#### Inherited from
+
+[`ConstructFetchInput`](ConstructFetchInput.md).[`fetcher`](ConstructFetchInput.md#fetcher)
+
+#### Defined in
+
+[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
+
+***
+
+### version?
+
+> `optional` **version**: [`ParaSwapVersion`](../type-aliases/ParaSwapVersion.md)
+
+#### Inherited from
+
+[`ConstructFetchInput`](ConstructFetchInput.md).[`version`](ConstructFetchInput.md#version)
+
+#### Defined in
+
+[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)

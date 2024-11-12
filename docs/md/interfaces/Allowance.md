@@ -1,29 +1,26 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / Allowance
+[**@paraswap/sdk**](../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../globals.md) / Allowance
 
 # Interface: Allowance
-
-## Table of contents
-
-### Properties
-
-- [allowance](Allowance.md#allowance)
-- [tokenAddress](Allowance.md#tokenaddress)
 
 ## Properties
 
 ### allowance
 
-• **allowance**: `string`
+> **allowance**: `string`
 
 #### Defined in
 
 [src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L26)
 
-___
+***
 
 ### tokenAddress
 
-• **tokenAddress**: `string`
+> **tokenAddress**: `string`
 
 #### Defined in
 
