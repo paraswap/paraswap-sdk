@@ -66,7 +66,7 @@ export function buildOrderData({
   takerAmount,
   maker,
   AugustusAddress,
-  // if taker is specified -- p2p order for that taker only to fill through Augustus (v5) or direcly (v6)-- taker = Augustus | _taker, takerInNonce = _taker
+  // if taker is specified -- p2p order for that taker only to fill through Augustus (v5) or directly (v6)-- taker = Augustus | _taker, takerInNonce = _taker
   // if taker is not specified -- limitOrder for anyone to fill through Augustus or not -- taker = Zero, takerInNonce = Zero
   taker: takerInNonce = ZERO_ADDRESS,
   // if given, overrides the above choices made based on `taker`

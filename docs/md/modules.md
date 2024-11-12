@@ -1186,7 +1186,7 @@ ___
 
 **`Description`**
 
-Passed to version API enpoints as ?version: to /prices and /adapters
+Passed to version API endpoints as ?version: to /prices and /adapters
 
 #### Defined in
 
