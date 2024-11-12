@@ -56,8 +56,8 @@ exports[`ParaSwap SDK: fetching methods: axiosFetcher Get_Contracts: axiosFetche
 {
   "AugustusRFQ": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
   "AugustusSwapper": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
-  "ParaswapDelta": "0x1D7405DF25FD2fe80390DA3A696dcFd5120cA9Ce",
-  "Portikus": "0x36fF475499E928590659D5b8aA3A34330a583FD9",
+  "ParaswapDelta": "0x0000000000bbf5c5fd284e657f01bd000933c96d",
+  "Portikus": "0x0007005729e310000c6003402d8a0fb700da0c00",
   "TokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
 }
 `;
@@ -197,8 +197,8 @@ exports[`ParaSwap SDK: fetching methods: fetchFetcher Get_Contracts: fetchFetche
 {
   "AugustusRFQ": "0xe92b586627ccA7a83dC919cc7127196d70f55a06",
   "AugustusSwapper": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
-  "ParaswapDelta": "0x1D7405DF25FD2fe80390DA3A696dcFd5120cA9Ce",
-  "Portikus": "0x36fF475499E928590659D5b8aA3A34330a583FD9",
+  "ParaswapDelta": "0x0000000000bbf5c5fd284e657f01bd000933c96d",
+  "Portikus": "0x0007005729e310000c6003402d8a0fb700da0c00",
   "TokenTransferProxy": "0x216b4b4ba9f3e719726886d34a177484278bfcae",
 }
 `;

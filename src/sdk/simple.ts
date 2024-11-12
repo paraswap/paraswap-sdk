@@ -22,7 +22,8 @@ import { constructSwapTx, GetSwapTxFunctions } from '../methods/swap/swapTx';
 import {
   constructAxiosFetcher,
   constructFetchFetcher,
-  constructEthersContractCaller,
+  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   constructWeb3ContractCaller,
   constructViemContractCaller,
 } from '../helpers';
@@ -261,7 +262,33 @@ function constructSimpleContractCaller(
       staticCall,
       transactCall: _transactCall,
       signTypedDataCall,
-    } = constructEthersContractCaller(providerOptions, providerOptions.account);
+    } = constructEthersV5ContractCaller(
+      providerOptions,
+      providerOptions.account
+    );
+
+    const transactCall: TransactionContractCallerFn<TxHash> = async (
+      params
+    ) => {
+      const contractTx = await _transactCall(params);
+
+      // as soon as tx is sent
+      // returning tx hash, it's up to the user to wait for tx
+      return contractTx.hash as TxHash;
+    };
+
+    return { staticCall, transactCall, signTypedDataCall };
+  }
+
+  if ('ethersV6ProviderOrSigner' in providerOptions) {
+    const {
+      staticCall,
+      transactCall: _transactCall,
+      signTypedDataCall,
+    } = constructEthersV6ContractCaller(
+      providerOptions,
+      providerOptions.account
+    );
 
     const transactCall: TransactionContractCallerFn<TxHash> = async (
       params

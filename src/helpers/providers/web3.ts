@@ -7,9 +7,9 @@ import type {
 } from '../../types';
 import type { PayableCallOptions, AbiItem } from 'web3';
 import type Web3 from 'web3';
+import type { ContractAbi, Contract as Web3Contract } from 'web3';
 import type { PayableTxOptions } from 'web3-eth-contract';
 import { assert } from 'ts-essentials';
-import { assertWeb3ContractHasMethods, Web3ContractSendMethod } from '../misc';
 import { findPrimaryType } from './helpers';
 
 type ContractMethodRes = ReturnType<Web3ContractSendMethod>;
@@ -126,3 +126,29 @@ export const constructContractCaller = (
 
   return { staticCall, transactCall, signTypedDataCall };
 };
+
+/// web3@4
+type Web3ContractSendMethod = Web3Contract<ContractAbi>['methods'][string];
+
+type Web3ContractWithMethod<T extends string> = Web3Contract<ContractAbi> & {
+  methods: { [method in T]: Web3ContractSendMethod };
+};
+
+function web3ContractHasMethods<T extends string>(
+  contract: Web3Contract<ContractAbi>,
+  ...methods: T[]
+): contract is Web3ContractWithMethod<T> {
+  return methods.every(
+    (method) => typeof contract.methods[method] === 'function'
+  );
+}
+
+function assertWeb3ContractHasMethods<T extends string>(
+  contract: Web3Contract<ContractAbi>,
+  ...methods: T[]
+): asserts contract is Web3ContractWithMethod<T> {
+  assert(
+    web3ContractHasMethods(contract, ...methods),
+    `Contract must have methods: ${methods.join(', ')}`
+  );
+}

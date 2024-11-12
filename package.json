@@ -54,7 +54,8 @@
     "bignumber.js": "^9.1.2",
     "dotenv": "^16.4.5",
     "dts-cli": "^2.0.5",
-    "ethers": "^5.7.2",
+    "ethers": "^6.13.4",
+    "ethersV5": "npm:ethers@5",
     "hardhat": "^2.22.15",
     "hardhat-switch-network": "^1.1.1",
     "husky": "^9.1.6",
@@ -72,9 +73,9 @@
   },
   "peerDependencies": {
     "axios": ">=0.25.0 <2.0.0",
-    "ethers": "^5.5.0",
-    "web3": "^4.14.0",
-    "viem": "^2.21.0"
+    "ethers": "^5.5.0 || ^6.0.0",
+    "viem": "^2.21.0",
+    "web3": "^4.14.0"
   },
   "peerDependenciesMeta": {
     "axios": {
