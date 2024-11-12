@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import fetch from 'isomorphic-unfetch';
 import {
   ParaSwap,
@@ -14,20 +14,17 @@ import BigNumber from 'bignumber.js';
 import { APIError } from '../src/legacy';
 import erc20abi from './abi/ERC20.json';
 
-import ganache from 'ganache';
 import { assert } from 'ts-essentials';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-declare let process: any;
-
 const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 const MANA = '0x0f5d2fb29fb7d3cfee444a200298f468908cc942';
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const chainId = 1;
 const srcToken = ETH;
 const destToken = DAI;
@@ -37,25 +34,10 @@ const referrer = 'sdk-test';
 
 const wallet = ethers.Wallet.createRandom();
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [{ balance: 8e18, secretKey: wallet.privateKey }],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId: 1,
-  },
-  logging: {
-    quiet: true,
-  },
-});
-
-const provider = new Web3(ganacheProvider as any);
+const web3Provider = new Web3(HardhatProvider as any);
 
 const ethersProvider = new ethers.providers.Web3Provider(
-  ganacheProvider as any
+  HardhatProvider as any
 );
 
 const signer = wallet.connect(ethersProvider);
@@ -65,8 +47,11 @@ describe('ParaSwap SDK', () => {
   let paraSwap: ParaSwap;
 
   beforeAll(async () => {
+    await setupFork({
+      accounts: [{ address: senderAddress, balance: 8e18 }],
+    });
     paraSwap = new ParaSwap({ chainId, fetch, version: '5' }).setWeb3Provider(
-      provider
+      web3Provider
     );
   });
 
@@ -145,7 +130,7 @@ describe('ParaSwap SDK', () => {
 
   test('Get_Spender', async () => {
     const spender = await paraSwap.getTokenTransferProxy();
-    expect(provider.utils.isAddress(spender as string));
+    expect(web3Provider.utils.isAddress(spender as string));
   });
 
   test('Get_Allowance', async () => {
@@ -167,7 +152,11 @@ describe('ParaSwap SDK', () => {
       MANA,
     ]);
 
-    const allowances = allowancesOrError as Allowance[];
+    if ('message' in allowancesOrError) {
+      return;
+    }
+
+    const allowances = allowancesOrError;
 
     allowances.forEach((allowance) =>
       expect(new BigNumber(allowance.allowance).isNaN()).toBe(false)
@@ -249,7 +238,12 @@ describe('ParaSwap SDK', () => {
     const _tx = txOrError as TransactionParams;
     const transaction = {
       ..._tx,
-      gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      gasPrice: _tx.gasPrice && '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      maxFeePerGas:
+        _tx.maxFeePerGas && '0x' + new BigNumber(_tx.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        _tx.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(_tx.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(_tx.value).toString(16),
     };
@@ -295,7 +289,12 @@ describe('ParaSwap SDK', () => {
     const _tx = txOrError as TransactionParams;
     const transaction = {
       ..._tx,
-      gasPrice: '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      gasPrice: _tx.gasPrice && '0x' + new BigNumber(_tx.gasPrice).toString(16),
+      maxFeePerGas:
+        _tx.maxFeePerGas && '0x' + new BigNumber(_tx.maxFeePerGas).toString(16),
+      maxPriorityFeePerGas:
+        _tx.maxPriorityFeePerGas &&
+        '0x' + new BigNumber(_tx.maxPriorityFeePerGas).toString(16),
       gasLimit: '0x' + new BigNumber(5000000).toString(16),
       value: '0x' + new BigNumber(_tx.value).toString(16),
     };

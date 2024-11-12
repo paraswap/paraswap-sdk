@@ -15,7 +15,7 @@ export type PriceString = string;
 /**
  * @type transaction hash
  */
-export type TxHash = string;
+export type TxHash = `0x${string}`;
 
 // @TODO sync with what it actually is
 export type LendingToken =

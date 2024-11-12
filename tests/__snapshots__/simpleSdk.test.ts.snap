@@ -47,6 +47,7 @@ exports[`ParaSwap SDK: fetcher made with: axios Get_Adapters: Get_Adapters 1`] =
   "Wombat",
   "Swell",
   "Spark",
+  "sUSDS",
   "AugustusRFQ",
 ]
 `;
@@ -177,6 +178,7 @@ exports[`ParaSwap SDK: fetcher made with: fetch Get_Adapters: Get_Adapters 1`] =
   "Wombat",
   "Swell",
   "Spark",
+  "sUSDS",
   "AugustusRFQ",
 ]
 `;

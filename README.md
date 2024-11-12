@@ -9,11 +9,11 @@
 Refer to the documentation of the ParaSwap API: https://developers.paraswap.network
 
 ## Features
-**Versatility**: works with both [web3](https://www.npmjs.com/package/web3) and [ethers](https://www.npmjs.com/package/ethers) without direct dependency
+**Versatility**: works with [web3](https://www.npmjs.com/package/web3), [ethers](https://www.npmjs.com/package/ethers) or [viem](https://viem.sh/) without direct dependency
 
 **Canonical**: bring only the functions you actually need
 
-**Lightweight**: 400B Gzipped for the minimal variant
+**Lightweight**: 10KB Gzipped for the minimal variant
 
 ## Installing ParaSwap SDK
 
@@ -25,9 +25,11 @@ yarn add @paraswap/sdk
 
 There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and-use approach to a fully composable _bring what you need_ approach which allows for advanced tree-shaking and minimizes bundle size.
 
+You can see some examples in [/src/examples](src/examples) directory.
+
 ### Simple SDK
 
-Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation), and an optional `version` (`'5'` or `'6.1'`) parameter that corresponds to the API version SDK will be making requests to. The resulting SDK will be able to use all methods that query the API.
+Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation), and an optional `version` (`'5'` or `'6.2'`) parameter that corresponds to the API version SDK will be making requests to. The resulting SDK will be able to use all methods that query the API.
 
 ```ts
   import { constructSimpleSDK } from '@paraswap/sdk';
@@ -87,6 +89,12 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
+  // or with viem (from wagmi or standalone)
+    const providerOptionsViem = {
+    viemClient, // made with createWalletClient()
+    account: senderAddress,
+  };
+
   // or with web3.js
   const providerOptionsWeb3 = {
     web3, // new Web3(...) instance
@@ -112,7 +120,7 @@ const account = '__signer_address__';
 const contractCaller = constructEthersContractCaller({
   ethersProviderOrSigner: signer,
   EthersContract: ethers.Contract,
-}, account); // alternatively constructWeb3ContractCaller
+}, account); // alternatively constructViemContractCaller or constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
 const paraswap = constructFullSDK({

@@ -5,21 +5,21 @@ import type {
   StaticContractCallerFn,
   TransactionContractCallerFn,
 } from '../../types';
+import type { PayableCallOptions, AbiItem } from 'web3';
 import type Web3 from 'web3';
-import type { AbiItem } from 'web3-utils';
-import type {
-  ContractSendMethod,
-  SendOptions,
-  CallOptions,
-  Contract,
-} from 'web3-eth-contract';
-import type { PromiEvent, provider, AbstractProvider } from 'web3-core';
-import type { JsonRpcResponse } from 'web3-core-helpers';
+import type { ContractAbi, Contract as Web3Contract } from 'web3';
+import type { PayableTxOptions } from 'web3-eth-contract';
 import { assert } from 'ts-essentials';
-import { assertWeb3ContractHasMethods } from '../misc';
-import type { TypedDataField } from '@ethersproject/abstract-signer';
+import { findPrimaryType } from './helpers';
 
-export type Web3UnpromiEvent = Pick<PromiEvent<Contract>, 'on' | 'once'>;
+type ContractMethodRes = ReturnType<Web3ContractSendMethod>;
+export type Web3UnpromiEvent = Pick<
+  ReturnType<ContractMethodRes['send']>,
+  'on' | 'once'
+>;
+
+type SendOptions = PayableTxOptions;
+type CallOptions = PayableCallOptions;
 
 export const constructContractCaller = (
   web3: Web3,
@@ -37,11 +37,12 @@ export const constructContractCaller = (
 
     assertWeb3ContractHasMethods(contract, contractMethod);
 
-    const { block, gas, ...restOverrides } = overrides;
+    const { block, gas, value, ...restOverrides } = overrides;
 
     const normalizedOverrides: CallOptions = {
       ...restOverrides,
-      gas,
+      gas: gas?.toString(10),
+      value: value?.toString(10),
     };
 
     return contract.methods[contractMethod](...args).call(normalizedOverrides);
@@ -63,7 +64,7 @@ export const constructContractCaller = (
 
     assertWeb3ContractHasMethods(contract, contractMethod);
 
-    const { gas, from, ...restOverrides } = overrides;
+    const { gas, from, value, nonce, ...restOverrides } = overrides;
 
     const _from = from || account;
 
@@ -72,12 +73,12 @@ export const constructContractCaller = (
     const normalizedOverrides: SendOptions = {
       ...restOverrides,
       from: _from,
-      gas: gas,
+      gas: gas?.toString(10),
+      value: value?.toString(10),
+      nonce: nonce?.toString(10),
     };
 
-    const preparedCall = contract.methods[contractMethod](
-      ...args
-    ) as ContractSendMethod;
+    const preparedCall = contract.methods[contractMethod](...args);
 
     const promiEvent = preparedCall.send(normalizedOverrides);
 
@@ -101,12 +102,6 @@ export const constructContractCaller = (
 
     assert(account, 'account must be specified to sign data');
 
-    const provider = web3.currentProvider;
-    assert(
-      isProviderWithSendMethod(provider),
-      'web3.currentProvider needs to be capable of sending arbitrary rpc calls'
-    );
-
     const { data, domain, types } = typedData;
 
     const _typedData = {
@@ -124,64 +119,36 @@ export const constructContractCaller = (
       message: data,
     };
 
-    const response = await new Promise<JsonRpcResponse>((resolve, reject) => {
-      provider.send(
-        {
-          jsonrpc: '2.0',
-          // method: 'eth_signTypedData_v4',
-          method: 'eth_signTypedData',
-          params: [account, _typedData],
-        },
-        (error, result) => {
-          if (error) return reject(error);
-          if (!result) {
-            throw new Error('No result in response to eth_signTypedData');
-          }
-          resolve(result);
-        }
-      );
-    });
-
-    return response.result;
+    // account must be among unlocked accounts
+    const signature = await web3.eth.signTypedData(account, _typedData as any);
+    return signature;
   };
 
   return { staticCall, transactCall, signTypedDataCall };
 };
 
-function isProviderWithSendMethod<T extends provider>(
-  provider: T
-): provider is T & Required<Pick<AbstractProvider, 'send'>> {
-  return !!provider && typeof provider === 'object' && 'send' in provider;
+/// web3@4
+type Web3ContractSendMethod = Web3Contract<ContractAbi>['methods'][string];
+
+type Web3ContractWithMethod<T extends string> = Web3Contract<ContractAbi> & {
+  methods: { [method in T]: Web3ContractSendMethod };
+};
+
+function web3ContractHasMethods<T extends string>(
+  contract: Web3Contract<ContractAbi>,
+  ...methods: T[]
+): contract is Web3ContractWithMethod<T> {
+  return methods.every(
+    (method) => typeof contract.methods[method] === 'function'
+  );
 }
 
-// regex from @ethersproject/hash TypedDataEncoder.constructor
-// may be overly strict, but reliable
-const baseTypeRegex = /^([^\x5b]*)(\x5b|$)/;
-
-function findPrimaryType(types: Record<string, TypedDataField[]>): string {
-  const candidates = Object.keys(types);
-  const candidatesSet = new Set(candidates);
-
-  candidates.forEach((candidate) => {
-    const typedDataFields = types[candidate];
-    if (!typedDataFields) return;
-
-    typedDataFields.forEach(({ type }) => {
-      // Get the base type (drop any array specifiers)
-      const baseType = type.match(baseTypeRegex)?.[1];
-      if (!baseType) return;
-
-      // if type was referred to as a child of another type, it can't be the primaryType
-      candidatesSet.delete(baseType);
-    });
-  });
-
-  const [primaryType] = Array.from(candidatesSet);
-
+function assertWeb3ContractHasMethods<T extends string>(
+  contract: Web3Contract<ContractAbi>,
+  ...methods: T[]
+): asserts contract is Web3ContractWithMethod<T> {
   assert(
-    primaryType,
-    `No primary type found in SignableTypedData types, ${JSON.stringify(types)}`
+    web3ContractHasMethods(contract, ...methods),
+    `Contract must have methods: ${methods.join(', ')}`
   );
-
-  return primaryType;
 }

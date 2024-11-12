@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import { SwapSide } from '@paraswap/core';
 import {
   constructSimpleSDK,
@@ -67,7 +67,14 @@ export async function buyErc20TokenForEth({
 
   const transaction = {
     ...txParams,
-    gasPrice: '0x' + new BigNumber(txParams.gasPrice).toString(16),
+    gasPrice:
+      txParams.gasPrice && '0x' + new BigNumber(txParams.gasPrice).toString(16),
+    maxFeePerGas:
+      txParams.maxFeePerGas &&
+      '0x' + new BigNumber(txParams.maxFeePerGas).toString(16),
+    maxPriorityFeePerGas:
+      txParams.maxPriorityFeePerGas &&
+      '0x' + new BigNumber(txParams.maxPriorityFeePerGas).toString(16),
     gasLimit: '0x' + new BigNumber(5000000).toString(16),
     value: '0x' + new BigNumber(txParams.value).toString(16),
   };

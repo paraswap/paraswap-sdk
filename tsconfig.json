@@ -2,6 +2,7 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["src", "types"],
   "compilerOptions": {
+    "target": "es2020",
     "module": "esnext",
     "resolveJsonModule": true,
     "moduleResolution": "node",
