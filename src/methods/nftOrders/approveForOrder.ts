@@ -17,7 +17,7 @@ export type ApproveTokenForNFTOrderFunctions<T> = {
   /** @description approving AugustusSwapper as spender for takerAsset (ERC20) for Limit Orders that will be executed through it */
   approveERC20ForNFTOrder: ApproveToken<T>;
   /** @description approving AugustusRFQ as spender for makerAsset (NFT) */
-  approveNFTorNFTOrder: ApproveNFT<T>;
+  approveNFTForNFTOrder: ApproveNFT<T>;
 };
 
 const MinNFTAbi = [
@@ -57,7 +57,7 @@ export const constructApproveTokenForNFTOrder = <T>(
   // @TODO add approvetakerAssetForNFTOrder to use AugustusSwapper as spender if we ever have SELL NFT swaps
   const AugustusRFQ = getNFTOrdersContract();
 
-  const approveNFTorNFTOrder: ApproveNFT<T> = async (
+  const approveNFTForNFTOrder: ApproveNFT<T> = async (
     tokenAddress,
     overrides = {}
   ) => {
@@ -72,5 +72,5 @@ export const constructApproveTokenForNFTOrder = <T>(
     return res;
   };
 
-  return { approveERC20ForNFTOrder, approveNFTorNFTOrder };
+  return { approveERC20ForNFTOrder, approveNFTForNFTOrder };
 };

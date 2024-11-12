@@ -47,4 +47,4 @@ export type NFTOrderApiResponse = {
   order: NFTOrderFromAPI;
 };
 
-export type AssetTypeVariant = typeof AssetType[keyof typeof AssetType];
+export type AssetTypeVariant = (typeof AssetType)[keyof typeof AssetType];

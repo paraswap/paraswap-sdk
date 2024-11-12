@@ -1,24 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { ethers } from 'ethersV5';
+import { ethers } from 'ethers';
 import {
   constructPartialSDK,
   constructFullSDK,
   constructGetAdapters,
-  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   constructAxiosFetcher,
 } from '..';
 
 const fetcher = constructAxiosFetcher(axios);
 
 const provider = ethers.getDefaultProvider(1);
-const contractCaller = constructEthersV5ContractCaller({
-  ethersProviderOrSigner: provider,
-  EthersContract: ethers.Contract,
+const contractCaller = constructEthersV6ContractCaller({
+  ethersV6ProviderOrSigner: provider,
+  EthersV6Contract: ethers.Contract,
 });
 
 const paraswap = constructFullSDK({
-  apiURL: '',
   chainId: 1,
   fetcher,
   contractCaller,

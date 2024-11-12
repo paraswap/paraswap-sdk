@@ -17,3 +17,7 @@ build
 src/*.js
 
 dist
+
+*.log
+
+/cache
