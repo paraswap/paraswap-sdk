@@ -121,8 +121,10 @@ export const constructContractCaller = (
 
     const primaryType = findPrimaryType(types);
 
+    const chainId =
+      domain.chainId === undefined ? undefined : Number(domain.chainId);
     const viemDomain: TypedDataDomain = {
-      chainId: domain.chainId,
+      chainId,
       name: domain.name,
       version: domain.version,
       verifyingContract: domain.verifyingContract as Hex,

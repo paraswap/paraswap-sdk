@@ -1,6 +1,5 @@
 import type Web3 from 'web3';
-import type { SendOptions } from 'web3-eth-contract';
-import type { ContractTransaction } from '@ethersproject/contracts';
+import type { ContractTransaction as EthersV5ContractTransaction } from '@ethersproject/contracts';
 
 import { API_URL, DEFAULT_VERSION, SwapSide } from '../constants';
 
@@ -9,7 +8,8 @@ import { assert } from 'ts-essentials';
 import {
   constructAxiosFetcher,
   constructFetchFetcher,
-  constructEthersContractCaller,
+  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   constructWeb3ContractCaller,
   isFetcherError,
   Web3UnpromiEvent,
@@ -30,6 +30,7 @@ import type {
   Address,
   PriceString,
   OptimalRate,
+  TxSendOverrides,
 } from '../types';
 import { constructGetBalances, type Allowance } from '../methods/swap/balance';
 import type { AxiosRequirement } from '../helpers/fetchers/axios';
@@ -38,6 +39,7 @@ import { constructPartialSDK } from '../sdk/partial';
 import { constructGetTokens } from '../methods/swap/token';
 import { constructGetSpender } from '../methods/swap/spender';
 import { constructGetAdapters } from '../methods/swap/adapters';
+import { ContractTransactionResponse as EthersV6ContractTransactionResponse } from 'ethers';
 
 export type APIError = {
   message: string;
@@ -46,7 +48,10 @@ export type APIError = {
 };
 type Fetch = typeof fetch;
 
-type TxResponse = Web3UnpromiEvent | ContractTransaction;
+type TxResponse =
+  | Web3UnpromiEvent
+  | EthersV5ContractTransaction
+  | EthersV6ContractTransactionResponse;
 
 type LegacyOptions = {
   chainId?: number;
@@ -114,7 +119,9 @@ export class ParaSwap {
     }
 
     const contractCaller = ethersDeps
-      ? constructEthersContractCaller(ethersDeps, account)
+      ? 'ethersV6ProviderOrSigner' in ethersDeps
+        ? constructEthersV6ContractCaller(ethersDeps, account)
+        : constructEthersV5ContractCaller(ethersDeps, account)
       : web3Provider
       ? constructWeb3ContractCaller(web3Provider, account)
       : null;
@@ -183,16 +190,33 @@ export class ParaSwap {
   }
 
   setEthersProvider(ethersDeps: EthersProviderDeps, account?: string): this {
-    const contractCaller = constructEthersContractCaller(ethersDeps, account);
     const { apiURL, chainId, fetcher } = this;
 
-    this.sdk = constructSwapSDK({
-      fetcher,
-      contractCaller,
-      apiURL,
-      version: this.version,
-      chainId,
-    });
+    if ('ethersV6ProviderOrSigner' in ethersDeps) {
+      const contractCaller = constructEthersV6ContractCaller(
+        ethersDeps,
+        account
+      );
+      this.sdk = constructSwapSDK({
+        fetcher,
+        contractCaller,
+        apiURL,
+        version: this.version,
+        chainId,
+      });
+    } else {
+      const contractCaller = constructEthersV5ContractCaller(
+        ethersDeps,
+        account
+      );
+      this.sdk = constructSwapSDK({
+        fetcher,
+        contractCaller,
+        apiURL,
+        version: this.version,
+        chainId,
+      });
+    }
 
     this.web3Provider = undefined;
     this.ethersDeps = ethersDeps;
@@ -387,13 +411,17 @@ export class ParaSwap {
     tokenAddress: Address,
     /** @deprecated */
     _provider?: any, // not used, can't detect if Ethers or Web3 provider without importing them
-    sendOptions?: Omit<SendOptions, 'from'>
+    sendOptions?: Omit<TxSendOverrides, 'from'>
   ): Promise<string | APIError> {
     // @TODO expand sendOptions
     assert(this.sdk.approveToken, 'sdk must be initialized with a provider');
     try {
       // @TODO allow to pass Web3 specific sendOptions ({from: userAddress})
-      const txResponse = await this.sdk.approveToken(amount, tokenAddress);
+      const txResponse = await this.sdk.approveToken(
+        amount,
+        tokenAddress,
+        sendOptions
+      );
 
       return await ParaSwap.extractHashFromTxResponse(txResponse);
     } catch (e) {

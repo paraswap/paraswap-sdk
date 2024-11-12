@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import fetch from 'isomorphic-unfetch';
 import {
   ParaSwap,

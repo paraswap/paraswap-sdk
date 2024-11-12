@@ -13,24 +13,28 @@ import type {
 } from '@ethersproject/providers';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type {
-  Contract as EthersContract,
+  Contract as EthersV5Contract,
+  ContractFunction as EthersContractFunctionV5,
+  PopulatedTransaction as EthersPopulatedTransactionV5,
   PayableOverrides,
   CallOverrides,
   ContractTransaction,
 } from '@ethersproject/contracts';
-import { assertEthersContractHasMethods } from '../misc';
+
+import type { BigNumber as EthersBigNumberV5 } from '@ethersproject/bignumber';
+
 import { assert } from 'ts-essentials';
 
-export interface EthersProviderDeps {
+export interface EthersV5ProviderDeps {
   ethersProviderOrSigner: BaseProvider | Signer;
-  EthersContract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+  EthersContract: typeof EthersV5Contract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
 }
 
-export const constructContractCaller = (
+export const constructEthersV5ContractCaller = (
   {
     ethersProviderOrSigner: providerOrSigner,
     EthersContract: Contract,
-  }: EthersProviderDeps,
+  }: EthersV5ProviderDeps,
   account?: Address
 ): ContractCallerFunctions<ContractTransaction> => {
   const staticCall: StaticContractCallerFn = async (params) => {
@@ -38,7 +42,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, providerOrSigner);
 
-    assertEthersContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in CallOverrides
     const { block, gas, ...restOverrides } = overrides;
     // reassign values to keys in CallOverrides
@@ -80,7 +84,7 @@ export const constructContractCaller = (
 
     const contract = new Contract(address, abi, signer);
 
-    assertEthersContractHasMethods(contract, contractMethod);
+    assertEthersContractHasMethodsV5(contract, contractMethod);
     // drop keys not in PayableOverrides
     const { gas, from, ...restOverrides } = overrides;
     // reassign values to keys in PayableOverrides
@@ -153,4 +157,36 @@ function isTypedDataCapableSigner(
   signer: Signer
 ): signer is Signer & Pick<JsonRpcSigner, '_signTypedData'> {
   return '_signTypedData' in signer;
+}
+
+/// ethers v5
+type EthersContractWithMethodV5<T extends string> = EthersV5Contract & {
+  readonly [method in T]: EthersContractFunctionV5;
+} & {
+  readonly functions: { [method in T]: EthersContractFunctionV5 };
+
+  readonly callStatic: { [method in T]: EthersContractFunctionV5 };
+  readonly estimateGas: {
+    [method in T]: EthersContractFunctionV5<EthersBigNumberV5>;
+  };
+  readonly populateTransaction: {
+    [method in T]: EthersContractFunctionV5<EthersPopulatedTransactionV5>;
+  };
+};
+
+function ethersContractHasMethodsV5<T extends string>(
+  contract: EthersV5Contract,
+  ...methods: T[]
+): contract is EthersContractWithMethodV5<T> {
+  return methods.every((method) => typeof contract[method] === 'function');
+}
+
+function assertEthersContractHasMethodsV5<T extends string>(
+  contract: EthersV5Contract,
+  ...methods: T[]
+): asserts contract is EthersContractWithMethodV5<T> {
+  assert(
+    ethersContractHasMethodsV5(contract, ...methods),
+    `Contract must have methods: ${methods.join(', ')}`
+  );
 }

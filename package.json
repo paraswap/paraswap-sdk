@@ -35,7 +35,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "size-limit": [
     {
@@ -54,26 +54,28 @@
     "bignumber.js": "^9.1.2",
     "dotenv": "^16.4.5",
     "dts-cli": "^2.0.5",
-    "ethers": "^5.7.2",
+    "ethers": "^6.13.4",
+    "ethersV5": "npm:ethers@5",
     "hardhat": "^2.22.15",
     "hardhat-switch-network": "^1.1.1",
     "husky": "^9.1.6",
     "isomorphic-unfetch": "^4.0.2",
     "size-limit": "^11.1.6",
-    "tslib": "^2.8.0",
-    "typedoc": "^0.26.10",
-    "typedoc-plugin-markdown": "^4.2.9",
+    "tslib": "^2.8.1",
+    "typedoc": "^0.26.11",
+    "typedoc-plugin-markdown": "^4.2.10",
     "typedoc-plugin-missing-exports": "^3.0.0",
     "typedoc-plugin-replace-text": "^4.0.0",
     "typescript": "^5.6.3",
-    "viem": "^2.21.37",
+    "viem": "^2.21.39",
     "wagmi": "^2.12.25",
-    "web3": "^1.10.4"
+    "web3": "^4.14.0"
   },
   "peerDependencies": {
     "axios": ">=0.25.0 <2.0.0",
-    "ethers": "^5.5.0",
-    "web3": "^1.7.1"
+    "ethers": "^5.5.0 || ^6.0.0",
+    "viem": "^2.21.0",
+    "web3": "^4.14.0"
   },
   "peerDependenciesMeta": {
     "axios": {
@@ -84,11 +86,14 @@
     },
     "web3": {
       "optional": true
+    },
+    "viem": {
+      "optional": true
     }
   },
   "dependencies": {
     "@paraswap/core": "2.4.0",
-    "ts-essentials": "^10.0.2"
+    "ts-essentials": "^10.0.3"
   },
   "author": "ParaSwap",
   "description": "ParaSwap SDK",

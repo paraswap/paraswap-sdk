@@ -1,5 +1,5 @@
-import type { TypedDataField } from '@ethersproject/abstract-signer';
 import { assert } from 'ts-essentials';
+import { TypedDataField } from '../../methods/common/orders/buildOrderData';
 
 // regex from @ethersproject/hash TypedDataEncoder.constructor
 // may be overly strict, but reliable
