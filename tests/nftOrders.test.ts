@@ -102,6 +102,7 @@ const takerV5 = walletV5Stable2.connect(ethersV5Provider);
 const walletV6Stable = ethersV6.HDNodeWallet.fromPhrase(TEST_MNEMONIC);
 const walletV6Stable2 = ethersV6.HDNodeWallet.fromPhrase(
   TEST_MNEMONIC,
+  undefined,
   "m/44'/60'/0'/0/1"
 );
 
