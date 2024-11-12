@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import { SwapSide } from '@paraswap/core';
 import {
   constructSimpleSDK,

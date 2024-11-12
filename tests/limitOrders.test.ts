@@ -1,11 +1,8 @@
 import * as dotenv from 'dotenv';
 import Web3 from 'web3';
-import type { TransactionReceipt as Web3TransactionReceipt } from 'web3-core';
-import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethers';
-import type {
-  TransactionResponse as EthersTransactionResponse,
-  TransactionReceipt as EthersTransactionReceipt,
-} from '@ethersproject/abstract-provider';
+import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
+import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethersV5';
+import { ethers as ethersV6 } from 'ethers';
 import { hexValue, hexZeroPad } from '@ethersproject/bytes';
 import axios from 'axios';
 import {
@@ -16,7 +13,8 @@ import {
   SignLimitOrderFunctions,
   constructCancelLimitOrder,
   CancelLimitOrderFunctions,
-  constructEthersContractCaller,
+  constructEthersV5ContractCaller,
+  constructEthersV6ContractCaller,
   SDKConfig,
   ConstructProviderFetchInput,
   constructAxiosFetcher,
@@ -46,18 +44,15 @@ import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json
 import AugustusRFQAbi from './abi/AugustusRFQ.json';
 import { bytecode as AugustusRFQBytecode } from './bytecode/AugustusRFQ.json';
 
-import ganache from 'ganache';
-
 import type { BuildLimitOrderInput } from '../src/methods/limitOrders/buildOrder';
 import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 import { buyErc20TokenForEth } from './helpers';
+import { HardhatProvider, setupFork } from './helpers/hardhat';
 
 dotenv.config();
 
 jest.setTimeout(30 * 1000);
-
-declare let process: any;
 
 const referrer = 'sdk-test';
 
@@ -71,67 +66,76 @@ const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
 
 const chainId = 1;
 
-const PROVIDER_URL: string = process.env.PROVIDER_URL;
 const srcToken = DAI;
 const destToken = HEX;
 
 const TEST_MNEMONIC =
   'radar blur cabbage chef fix engine embark joy scheme fiction master release';
 //0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9
-const walletStable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
+const walletV5Stable = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
 //0xD7c0Cd9e7d2701c710D64Fc492C7086679BdF7b4
-const walletStable2 = ethers.Wallet.fromMnemonic(
+const walletV5Stable2 = ethers.Wallet.fromMnemonic(
   TEST_MNEMONIC,
   "m/44'/60'/0'/0/1"
 );
 
-const ganacheProvider = ganache.provider({
-  wallet: {
-    accounts: [
-      { balance: 80e18, secretKey: walletStable.privateKey },
-      { balance: 80e18, secretKey: walletStable2.privateKey },
-    ],
-  },
-  fork: {
-    url: PROVIDER_URL,
-  },
-  chain: {
-    chainId,
-  },
-  logging: {
-    quiet: true,
-  },
-});
 // if test against tenderly fork, make sure accounts have enough ETH and zero nonce
 const tenderlyForkUrl = process.env.TENDERLY_FORK_URL;
-const ethersProvider = tenderlyForkUrl
+const ethersV5Provider = tenderlyForkUrl
   ? new ethers.providers.JsonRpcProvider(tenderlyForkUrl)
-  : new ethers.providers.Web3Provider(ganacheProvider as any);
+  : new ethers.providers.Web3Provider(HardhatProvider as any);
 
-const signer = walletStable.connect(ethersProvider);
-const senderAddress = signer.address;
+const signerV5 = walletV5Stable.connect(ethersV5Provider);
+const senderAddress = signerV5.address;
 
-const maker = signer;
-const taker = walletStable2.connect(ethersProvider);
+const maker = signerV5;
+const takerV5 = walletV5Stable2.connect(ethersV5Provider);
+
+const walletV6Stable = ethersV6.HDNodeWallet.fromPhrase(TEST_MNEMONIC);
+const walletV6Stable2 = ethersV6.HDNodeWallet.fromPhrase(
+  TEST_MNEMONIC,
+  undefined,
+  "m/44'/60'/0'/0/1"
+);
+
+const ethersV6Provider = new ethersV6.BrowserProvider(HardhatProvider);
+
+const signerV6 = walletV6Stable.connect(ethersV6Provider);
+const takerV6 = walletV6Stable2.connect(ethersV6Provider);
 
 const axiosFetcher = constructAxiosFetcher(axios);
 
-const ethersContractCaller = constructEthersContractCaller(
+const ethersV5ContractCaller = constructEthersV5ContractCaller(
   {
-    ethersProviderOrSigner: signer,
+    ethersProviderOrSigner: signerV5,
     EthersContract: ethers.Contract,
   },
   senderAddress
 );
-const takerEthersContractCaller = constructEthersContractCaller(
+const takerEthersV5ContractCaller = constructEthersV5ContractCaller(
   {
-    ethersProviderOrSigner: taker,
+    ethersProviderOrSigner: takerV5,
     EthersContract: ethers.Contract,
   },
-  walletStable2.address
+  walletV5Stable2.address
 );
 
-const web3provider = new Web3(ganacheProvider as any);
+const ethersV6ContractCaller = constructEthersV6ContractCaller(
+  {
+    ethersV6ProviderOrSigner: signerV6,
+    EthersV6Contract: ethersV6.Contract,
+  },
+  senderAddress
+);
+const takerEthersV6ContractCaller = constructEthersV6ContractCaller(
+  {
+    ethersV6ProviderOrSigner: takerV6,
+    EthersV6Contract: ethersV6.Contract,
+  },
+  walletV6Stable2.address
+);
+
+const web3provider = new Web3(HardhatProvider as any);
 
 const web3ContractCaller = constructWeb3ContractCaller(
   web3provider,
@@ -139,19 +143,19 @@ const web3ContractCaller = constructWeb3ContractCaller(
 );
 const takerWeb3ContractCaller = constructWeb3ContractCaller(
   web3provider,
-  walletStable2.address
+  walletV5Stable2.address
 );
 
 const ERC20MintableFactory = new ethers.ContractFactory(
   ERC20MinableABI,
   ERC20MintableBytecode,
-  signer
+  signerV5
 );
 
 const AugustusRFQFactory = new ethers.ContractFactory(
   AugustusRFQAbi,
   AugustusRFQBytecode,
-  signer
+  signerV5
 );
 
 const expectTxParamsScheme = expect.objectContaining({
@@ -175,30 +179,51 @@ describe('Limit Orders', () => {
     BuildLimitOrdersTxFunctions &
     BuildTxFunctions;
 
-  type MinEthersSDK = BuildLimitOrderFunctions &
+  type MinEthersV5SDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     CancelLimitOrderFunctions<ethers.ContractTransaction> &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
-  type MinTakerEthersSDK = BuildLimitOrdersTxFunctions &
+  type MinTakerEthersV5SDK = BuildLimitOrdersTxFunctions &
     ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+
+  type MinEthersV6SDK = BuildLimitOrderFunctions &
+    SignLimitOrderFunctions &
+    CancelLimitOrderFunctions<ethersV6.ContractTransactionResponse> &
+    ApproveTokenForLimitOrderFunctions<ethersV6.ContractTransactionResponse>;
+  type MinTakerEthersV6SDK = BuildLimitOrdersTxFunctions &
+    ApproveTokenForLimitOrderFunctions<ethersV6.ContractTransactionResponse>;
+
   type MinWeb3SDK = BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     CancelLimitOrderFunctions<Web3UnpromiEvent> &
     ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
   type MinTakerWeb3SDK = ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
 
-  type EthersCancelOrderConstructor = (
+  type EthersV5CancelOrderConstructor = (
     options: ConstructProviderFetchInput<
       ethers.ContractTransaction,
       'transactCall'
     >
   ) => CancelLimitOrderFunctions<ethers.ContractTransaction>;
-  type EthersApproveTokenForLimitOrderConstructor = (
+  type EthersV5ApproveTokenForLimitOrderConstructor = (
     options: ConstructProviderFetchInput<
       ethers.ContractTransaction,
       'transactCall'
     >
   ) => ApproveTokenForLimitOrderFunctions<ethers.ContractTransaction>;
+
+  type EthersV6CancelOrderConstructor = (
+    options: ConstructProviderFetchInput<
+      ethersV6.ContractTransactionResponse,
+      'transactCall'
+    >
+  ) => CancelLimitOrderFunctions<ethersV6.ContractTransactionResponse>;
+  type EthersV6ApproveTokenForLimitOrderConstructor = (
+    options: ConstructProviderFetchInput<
+      ethersV6.ContractTransactionResponse,
+      'transactCall'
+    >
+  ) => ApproveTokenForLimitOrderFunctions<ethersV6.ContractTransactionResponse>;
 
   type Web3CancelOrderConstructor = (
     options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
@@ -207,18 +232,18 @@ describe('Limit Orders', () => {
     options: ConstructProviderFetchInput<Web3UnpromiEvent, 'transactCall'>
   ) => ApproveTokenForLimitOrderFunctions<Web3UnpromiEvent>;
 
-  const ethersSDK: MinEthersSDK = constructPartialSDK<
+  const ethersV5SDK: MinEthersV5SDK = constructPartialSDK<
     SDKConfig<ethers.ContractTransaction>,
     [
       typeof constructBuildLimitOrder,
       typeof constructSignLimitOrder,
-      EthersCancelOrderConstructor,
-      EthersApproveTokenForLimitOrderConstructor
+      EthersV5CancelOrderConstructor,
+      EthersV5ApproveTokenForLimitOrderConstructor
     ]
   >(
     {
       chainId,
-      contractCaller: ethersContractCaller,
+      contractCaller: ethersV5ContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
       version: '5',
@@ -229,16 +254,56 @@ describe('Limit Orders', () => {
     constructApproveTokenForLimitOrder
   );
 
-  const takerEthersSDK: MinTakerEthersSDK = constructPartialSDK<
+  const takerEthersV5SDK: MinTakerEthersV5SDK = constructPartialSDK<
     SDKConfig<ethers.ContractTransaction>,
     [
-      EthersApproveTokenForLimitOrderConstructor,
+      EthersV5ApproveTokenForLimitOrderConstructor,
       typeof constructBuildLimitOrderTx
     ]
   >(
     {
       chainId,
-      contractCaller: takerEthersContractCaller,
+      contractCaller: takerEthersV5ContractCaller,
+      fetcher: axiosFetcher,
+      apiURL: process.env.API_URL,
+      version: '5',
+    },
+    constructApproveTokenForLimitOrder,
+    constructBuildLimitOrderTx
+  );
+
+  const ethersV6SDK: MinEthersV6SDK = constructPartialSDK<
+    SDKConfig<ethersV6.ContractTransactionResponse>,
+    [
+      typeof constructBuildLimitOrder,
+      typeof constructSignLimitOrder,
+      EthersV6CancelOrderConstructor,
+      EthersV6ApproveTokenForLimitOrderConstructor
+    ]
+  >(
+    {
+      chainId,
+      contractCaller: ethersV6ContractCaller,
+      fetcher: axiosFetcher,
+      apiURL: process.env.API_URL,
+      version: '5',
+    },
+    constructBuildLimitOrder,
+    constructSignLimitOrder,
+    constructCancelLimitOrder,
+    constructApproveTokenForLimitOrder
+  );
+
+  const takerEthersV6SDK: MinTakerEthersV6SDK = constructPartialSDK<
+    SDKConfig<ethersV6.ContractTransactionResponse>,
+    [
+      EthersV6ApproveTokenForLimitOrderConstructor,
+      typeof constructBuildLimitOrderTx
+    ]
+  >(
+    {
+      chainId,
+      contractCaller: takerEthersV6ContractCaller,
       fetcher: axiosFetcher,
       apiURL: process.env.API_URL,
       version: '5',
@@ -285,7 +350,8 @@ describe('Limit Orders', () => {
   );
 
   const txSDKs = [
-    { lib: 'ethers', sdk: ethersSDK, takerSDK: takerEthersSDK },
+    { lib: 'ethersV5', sdk: ethersV5SDK, takerSDK: takerEthersV5SDK },
+    { lib: 'ethersV6', sdk: ethersV6SDK, takerSDK: takerEthersV6SDK },
     { lib: 'web3', sdk: web3SDK, takerSDK: takerWeb3SDK },
   ] as const;
 
@@ -298,6 +364,13 @@ describe('Limit Orders', () => {
   // let initialChainId2verifyingContract = { ...chainId2verifyingContract };
 
   beforeAll(async () => {
+    await setupFork({
+      accounts: [
+        { balance: 80e18, address: walletV5Stable.address },
+        { balance: 80e18, address: walletV5Stable2.address },
+      ],
+    });
+
     orderInput = {
       nonce: 1,
       expiry: orderExpiry,
@@ -316,8 +389,8 @@ describe('Limit Orders', () => {
         typeof constructGetLimitOrdersContract,
         typeof constructPostLimitOrder,
         typeof constructGetLimitOrders,
-        EthersCancelOrderConstructor,
-        EthersApproveTokenForLimitOrderConstructor,
+        EthersV5CancelOrderConstructor,
+        EthersV5ApproveTokenForLimitOrderConstructor,
         typeof constructGetSpender,
         typeof constructBuildLimitOrderTx,
         typeof constructBuildTx
@@ -325,7 +398,7 @@ describe('Limit Orders', () => {
     >(
       {
         chainId,
-        contractCaller: ethersContractCaller,
+        contractCaller: ethersV5ContractCaller,
         fetcher: axiosFetcher,
         apiURL: process.env.API_URL,
         version: '5',
@@ -386,11 +459,11 @@ describe('Limit Orders', () => {
   test('buildLimitOrder p2p', async () => {
     const p2pOrderInput = {
       ...orderInput,
-      taker: taker.address,
+      taker: takerV5.address,
     };
     const signableOrderData = await paraSwap.buildLimitOrder({
       ...orderInput,
-      taker: taker.address,
+      taker: takerV5.address,
     });
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
@@ -471,7 +544,10 @@ describe('Limit Orders', () => {
     const takerAmount = (6e18).toString(10);
 
     // get some WETH onto maker wallet
-    const maker = new ethers.Wallet(walletStable.privateKey, ethersProvider);
+    const maker = new ethers.Wallet(
+      walletV5Stable.privateKey,
+      ethersV5Provider
+    );
     const { balance: wethBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: WETH,
@@ -483,14 +559,17 @@ describe('Limit Orders', () => {
         account: maker.address,
       },
       chainId,
-      ethersProvider,
+      ethersProvider: ethersV5Provider,
     });
 
     // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
     expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
 
     // get some BAT onto the taker wallet
-    const taker = new ethers.Wallet(walletStable2.privateKey, ethersProvider);
+    const taker = new ethers.Wallet(
+      walletV5Stable2.privateKey,
+      ethersV5Provider
+    );
     const { balance: batBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: BAT,
@@ -502,19 +581,19 @@ describe('Limit Orders', () => {
         account: taker.address,
       },
       chainId,
-      ethersProvider,
+      ethersProvider: ethersV5Provider,
     });
 
     expect(new BigNumber(batBalance).gte(takerAmount)).toBeTruthy();
 
-    const makerEthersContractCaller = constructEthersContractCaller(
+    const makerEthersContractCaller = constructEthersV5ContractCaller(
       {
         ethersProviderOrSigner: maker,
         EthersContract: ethers.Contract,
       },
       maker.address
     );
-    const takerEthersContractCaller = constructEthersContractCaller(
+    const takerEthersContractCaller = constructEthersV5ContractCaller(
       {
         ethersProviderOrSigner: taker,
         EthersContract: ethers.Contract,
@@ -696,7 +775,10 @@ describe('Limit Orders', () => {
     const takerAmount = (6e18).toString(10);
 
     // get some WETH onto maker account
-    const maker = new ethers.Wallet(walletStable.privateKey, ethersProvider);
+    const maker = new ethers.Wallet(
+      walletV5Stable.privateKey,
+      ethersV5Provider
+    );
     const { balance: wethBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: WETH,
@@ -708,14 +790,17 @@ describe('Limit Orders', () => {
         account: maker.address,
       },
       chainId,
-      ethersProvider,
+      ethersProvider: ethersV5Provider,
     });
 
     // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
     expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
 
     // get some DAI onto taker account
-    const taker = new ethers.Wallet(walletStable2.privateKey, ethersProvider);
+    const taker = new ethers.Wallet(
+      walletV5Stable2.privateKey,
+      ethersV5Provider
+    );
     const { balance: daiBalance } = await buyErc20TokenForEth({
       fetcherOptions: { axios },
       tokenAddress: DAI,
@@ -727,7 +812,7 @@ describe('Limit Orders', () => {
         account: taker.address,
       },
       chainId,
-      ethersProvider,
+      ethersProvider: ethersV5Provider,
     });
 
     expect(new BigNumber(daiBalance).gte(takerAmount)).toBeTruthy();
@@ -743,14 +828,14 @@ describe('Limit Orders', () => {
       taker: taker.address,
     };
 
-    const makerEthersContractCaller = constructEthersContractCaller(
+    const makerEthersContractCaller = constructEthersV5ContractCaller(
       {
         ethersProviderOrSigner: maker,
         EthersContract: ethers.Contract,
       },
       maker.address
     );
-    const takerEthersContractCaller = constructEthersContractCaller(
+    const takerEthersContractCaller = constructEthersV5ContractCaller(
       {
         ethersProviderOrSigner: taker,
         EthersContract: ethers.Contract,
@@ -1070,10 +1155,11 @@ describe('Limit Orders', () => {
         ).toEqual(senderAddress);
       });
 
+      let libDependentNumber = 1;
+
       test(`cancelLimitOrder with ${lib}`, async () => {
-        const libDependentNumber = lib === 'ethers' ? 1 : 2;
         // bytes32
-        const randomOrderHash = `0x${libDependentNumber}000000000000000000000000000000000000000000000000000000000000000`;
+        const randomOrderHash = `0x${libDependentNumber++}000000000000000000000000000000000000000000000000000000000000000`;
 
         const tx = await sdk.cancelLimitOrder(randomOrderHash);
         await awaitTx(tx);
@@ -1086,11 +1172,10 @@ describe('Limit Orders', () => {
       });
 
       test(`cancelLimitOrder Bulk with ${lib}`, async () => {
-        const libDependentNumber = lib === 'ethers' ? 1 : 2;
         // bytes32[]
         const randomOrderHashes = [
-          `0x20${libDependentNumber}0000000000000000000000000000000000000000000000000000000000000`,
-          `0x30${libDependentNumber}0000000000000000000000000000000000000000000000000000000000000`,
+          `0x20${libDependentNumber++}0000000000000000000000000000000000000000000000000000000000000`,
+          `0x30${libDependentNumber++}0000000000000000000000000000000000000000000000000000000000000`,
         ];
 
         const tx = await sdk.cancelLimitOrderBulk(randomOrderHashes);
@@ -1187,27 +1272,18 @@ function calculateOrderHash({
 }
 
 async function awaitTx(
-  tx: EthersTransactionResponse
-): Promise<EthersTransactionReceipt>;
-async function awaitTx(tx: Web3UnpromiEvent): Promise<Web3TransactionReceipt>;
-async function awaitTx(
-  tx: EthersTransactionResponse | Web3UnpromiEvent
-): Promise<EthersTransactionReceipt | Web3TransactionReceipt>;
-async function awaitTx(
-  tx: EthersTransactionResponse | Web3UnpromiEvent
-): Promise<EthersTransactionReceipt | Web3TransactionReceipt> {
+  tx: { wait(): Promise<unknown> } | Web3UnpromiEvent
+): Promise<void> {
   if ('wait' in tx) {
-    const res = await tx.wait();
+    await tx.wait();
 
-    return res;
+    return;
   }
 
-  const res = await new Promise<Web3TransactionReceipt>((resolve, reject) => {
+  await new Promise<Web3TransactionReceipt>((resolve, reject) => {
     tx.once('receipt', resolve);
     tx.once('error', reject);
   });
-
-  return res;
 }
 
 function deriveTakerFromNonceAndTaker(nonceAndMeta: string): string {

@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { ethers } from 'ethers';
+import { ethers } from 'ethersV5';
 import axios from 'axios';
 import {
   createTestClient,
@@ -11,17 +11,16 @@ import {
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { hardhat } from 'viem/chains';
-import hre from 'hardhat';
 
 import { constructSimpleSDK, SimpleSDK } from '../src/sdk/simple';
 import BigNumber from 'bignumber.js';
 import { txParamsToViemTxParams } from '../src/helpers';
+import { HardhatProvider } from './helpers/hardhat';
 
 dotenv.config();
 
 jest.setTimeout(30 * 1000);
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
 const chainId = 1;
 
 const TEST_MNEMONIC =
@@ -29,16 +28,16 @@ const TEST_MNEMONIC =
 const wallet = ethers.Wallet.fromMnemonic(TEST_MNEMONIC);
 
 const ethersProvider = new ethers.providers.Web3Provider(
-  hre.network.provider as any
+  HardhatProvider as any
 );
 
 const signer = wallet.connect(ethersProvider);
 const senderAddress = signer.address as Hex;
 
 const viemTestClient = createTestClient({
-  chain: hardhat,
+  chain: { ...hardhat, id: chainId }, // may need to override chainId
   mode: 'hardhat',
-  transport: custom(hre.network.provider),
+  transport: custom(HardhatProvider),
 }).extend(publicActions);
 
 const viemWalletClient = createWalletClient({
@@ -46,8 +45,8 @@ const viemWalletClient = createWalletClient({
   // or provider must own the account (for testing can `await viemTestClient.impersonateAccount({ address: senderAddress });`)
   // to be able to sign transactions
   account: privateKeyToAccount(wallet.privateKey as Hex),
-  chain: hardhat,
-  transport: custom(hre.network.provider),
+  chain: { ...hardhat, id: chainId },
+  transport: custom(HardhatProvider),
 });
 
 describe('ParaSwap SDK: contract calling methods', () => {
@@ -77,21 +76,6 @@ describe('ParaSwap SDK: contract calling methods', () => {
   let spender: Hex;
 
   beforeAll(async () => {
-    await hre.network.provider.request({
-      // forks chain
-      method: 'hardhat_reset',
-      params: [
-        {
-          forking: {
-            jsonRpcUrl: PROVIDER_URL,
-            // Optionally, specify the block number
-            // blockNumber: 12345678,
-          },
-          // chainId: 1, // Set to Ethereum Mainnet's chainId
-        },
-      ],
-    });
-
     await viemTestClient.setBalance({
       address: senderAddress,
       value: parseEther('10'),
