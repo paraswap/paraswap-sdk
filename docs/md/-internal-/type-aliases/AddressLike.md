@@ -1,0 +1,15 @@
+[**@paraswap/sdk**](../../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / AddressLike
+
+# Type Alias: AddressLike
+
+> **AddressLike**: `string` \| `Promise`\<`string`\> \| [`Addressable`](../interfaces/Addressable.md)
+
+Anything that can be used to return or resolve an address.
+
+## Defined in
+
+node\_modules/ethers/lib.commonjs/address/index.d.ts:32

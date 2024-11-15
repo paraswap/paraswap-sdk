@@ -1,94 +1,78 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / BuildNFTOrderDataInput
+[**@paraswap/sdk**](../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../globals.md) / BuildNFTOrderDataInput
 
 # Interface: BuildNFTOrderDataInput
-
-## Table of contents
-
-### Properties
-
-- [AugustusAddress](BuildNFTOrderDataInput.md#augustusaddress)
-- [chainId](BuildNFTOrderDataInput.md#chainid)
-- [expiry](BuildNFTOrderDataInput.md#expiry)
-- [maker](BuildNFTOrderDataInput.md#maker)
-- [makerAmount](BuildNFTOrderDataInput.md#makeramount)
-- [makerAsset](BuildNFTOrderDataInput.md#makerasset)
-- [makerAssetId](BuildNFTOrderDataInput.md#makerassetid)
-- [makerAssetType](BuildNFTOrderDataInput.md#makerassettype)
-- [nonce](BuildNFTOrderDataInput.md#nonce)
-- [taker](BuildNFTOrderDataInput.md#taker)
-- [takerAmount](BuildNFTOrderDataInput.md#takeramount)
-- [takerAsset](BuildNFTOrderDataInput.md#takerasset)
-- [takerAssetId](BuildNFTOrderDataInput.md#takerassetid)
-- [takerAssetType](BuildNFTOrderDataInput.md#takerassettype)
-- [verifyingContract](BuildNFTOrderDataInput.md#verifyingcontract)
 
 ## Properties
 
 ### AugustusAddress
 
-• **AugustusAddress**: `string`
+> **AugustusAddress**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L45)
 
-___
+***
 
 ### chainId
 
-• **chainId**: `number`
+> **chainId**: `number`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L25)
 
-___
+***
 
 ### expiry
 
-• **expiry**: `number`
+> **expiry**: `number`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L28)
 
-___
+***
 
 ### maker
 
-• **maker**: `string`
+> **maker**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L41)
 
-___
+***
 
 ### makerAmount
 
-• **makerAmount**: `string`
+> **makerAmount**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L31)
 
-___
+***
 
 ### makerAsset
 
-• **makerAsset**: `string`
+> **makerAsset**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L29)
 
-___
+***
 
 ### makerAssetId
 
-• **makerAssetId**: `string`
+> **makerAssetId**: `string`
 
-**`Description`**
+#### Description
 
 NFT Token id, will default to 0 (ERC20), provide for NFT
 
@@ -96,13 +80,13 @@ NFT Token id, will default to 0 (ERC20), provide for NFT
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L34)
 
-___
+***
 
 ### makerAssetType
 
-• **makerAssetType**: [`AssetTypeVariant`](../modules.md#assettypevariant)
+> **makerAssetType**: [`AssetTypeVariant`](../type-aliases/AssetTypeVariant.md)
 
-**`Description`**
+#### Description
 
 Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
@@ -110,53 +94,53 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L38)
 
-___
+***
 
-### nonce
+### nonce?
 
-• `Optional` **nonce**: `number`
+> `optional` **nonce**: `number`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L27)
 
-___
+***
 
-### taker
+### taker?
 
-• `Optional` **taker**: `string`
+> `optional` **taker**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L44)
 
-___
+***
 
 ### takerAmount
 
-• **takerAmount**: `string`
+> **takerAmount**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L32)
 
-___
+***
 
 ### takerAsset
 
-• **takerAsset**: `string`
+> **takerAsset**: `string`
 
 #### Defined in
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L30)
 
-___
+***
 
-### takerAssetId
+### takerAssetId?
 
-• `Optional` **takerAssetId**: `string`
+> `optional` **takerAssetId**: `string`
 
-**`Description`**
+#### Description
 
 NFT Token id, will default to 0 (ERC20), provide for NFT
 
@@ -164,13 +148,13 @@ NFT Token id, will default to 0 (ERC20), provide for NFT
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L36)
 
-___
+***
 
 ### takerAssetType
 
-• **takerAssetType**: [`AssetTypeVariant`](../modules.md#assettypevariant)
+> **takerAssetType**: [`AssetTypeVariant`](../type-aliases/AssetTypeVariant.md)
 
-**`Description`**
+#### Description
 
 Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
@@ -178,11 +162,11 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 [src/methods/nftOrders/helpers/buildOrderData.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L40)
 
-___
+***
 
 ### verifyingContract
 
-• **verifyingContract**: `string`
+> **verifyingContract**: `string`
 
 #### Defined in
 

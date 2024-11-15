@@ -1,427 +1,447 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ParaSwap
+[**@paraswap/sdk**](../README.md) • **Docs**
 
-# Class: ParaSwap
+***
 
-**`Deprecated`**
+[@paraswap/sdk](../globals.md) / ParaSwap
 
-## Table of contents
+# Class: ~~ParaSwap~~
 
-### Constructors
-
-- [constructor](ParaSwap.md#constructor)
-
-### Properties
-
-- [account](ParaSwap.md#account)
-- [apiURL](ParaSwap.md#apiurl)
-- [chainId](ParaSwap.md#chainid)
-- [ethersDeps](ParaSwap.md#ethersdeps)
-- [fetcher](ParaSwap.md#fetcher)
-- [sdk](ParaSwap.md#sdk)
-- [version](ParaSwap.md#version)
-- [web3Provider](ParaSwap.md#web3provider)
-
-### Methods
-
-- [approveToken](ParaSwap.md#approvetoken)
-- [approveTokenBulk](ParaSwap.md#approvetokenbulk)
-- [buildTx](ParaSwap.md#buildtx)
-- [getAdapters](ParaSwap.md#getadapters)
-- [getAllowance](ParaSwap.md#getallowance)
-- [getAllowances](ParaSwap.md#getallowances)
-- [getBalance](ParaSwap.md#getbalance)
-- [getBalances](ParaSwap.md#getbalances)
-- [getMarketNames](ParaSwap.md#getmarketnames)
-- [getRate](ParaSwap.md#getrate)
-- [getRateByRoute](ParaSwap.md#getratebyroute)
-- [getTokenTransferProxy](ParaSwap.md#gettokentransferproxy)
-- [getTokens](ParaSwap.md#gettokens)
-- [setEthersProvider](ParaSwap.md#setethersprovider)
-- [setWeb3Provider](ParaSwap.md#setweb3provider)
-- [extractHashFromTxResponse](ParaSwap.md#extracthashfromtxresponse)
-- [handleAPIError](ParaSwap.md#handleapierror)
+## Deprecated
 
 ## Constructors
 
-### constructor
+### new ParaSwap()
 
-• **new ParaSwap**(`__namedParameters`)
+> **new ParaSwap**(`__namedParameters`): [`ParaSwap`](ParaSwap.md)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`LegacyOptions`](../modules/internal_.md#legacyoptions) |
+• **\_\_namedParameters**: [`LegacyOptions`](../-internal-/type-aliases/LegacyOptions.md)
+
+#### Returns
+
+[`ParaSwap`](ParaSwap.md)
+
+#### Defined in
+
+[src/legacy/index.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L80)
 
 ## Properties
 
-### account
+### ~~account?~~
 
-• `Optional` **account**: `string`
-
-#### Defined in
-
-[src/legacy/index.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L77)
-
-___
-
-### apiURL
-
-• **apiURL**: `string`
+> `optional` **account**: `string`
 
 #### Defined in
 
-[src/legacy/index.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L73)
+[src/legacy/index.ts:78](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L78)
 
-___
+***
 
-### chainId
+### ~~apiURL~~
 
-• **chainId**: `number`
-
-#### Defined in
-
-[src/legacy/index.ts:72](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L72)
-
-___
-
-### ethersDeps
-
-• `Optional` **ethersDeps**: [`EthersProviderDeps`](../interfaces/EthersProviderDeps.md)
-
-#### Defined in
-
-[src/legacy/index.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L76)
-
-___
-
-### fetcher
-
-• **fetcher**: [`FetcherFunction`](../modules.md#fetcherfunction)
-
-#### Defined in
-
-[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L70)
-
-___
-
-### sdk
-
-• **sdk**: [`Partial`](../modules/internal_.md#partial)<[`SwapSDKMethods`](../modules.md#swapsdkmethods)<[`TxResponse`](../modules/internal_.md#txresponse)\>\> = `{}`
-
-#### Defined in
-
-[src/legacy/index.ts:69](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L69)
-
-___
-
-### version
-
-• **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
+> **apiURL**: `string`
 
 #### Defined in
 
 [src/legacy/index.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L74)
 
-___
+***
 
-### web3Provider
+### ~~chainId~~
 
-• `Optional` **web3Provider**: [`default`](internal_.default.md)
+> **chainId**: `number`
+
+#### Defined in
+
+[src/legacy/index.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L73)
+
+***
+
+### ~~ethersDeps?~~
+
+> `optional` **ethersDeps**: [`EthersProviderDeps`](../type-aliases/EthersProviderDeps.md)
+
+#### Defined in
+
+[src/legacy/index.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L77)
+
+***
+
+### ~~fetcher~~
+
+> **fetcher**: [`FetcherFunction`](../type-aliases/FetcherFunction.md)
+
+#### Defined in
+
+[src/legacy/index.ts:71](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L71)
+
+***
+
+### ~~sdk~~
+
+> **sdk**: [`Partial`](../-internal-/type-aliases/Partial.md)\<[`SwapSDKMethods`](../type-aliases/SwapSDKMethods.md)\<[`TxResponse`](../-internal-/type-aliases/TxResponse.md)\>\> = `{}`
+
+#### Defined in
+
+[src/legacy/index.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L70)
+
+***
+
+### ~~version~~
+
+> **version**: [`ParaSwapVersion`](../type-aliases/ParaSwapVersion.md)
 
 #### Defined in
 
 [src/legacy/index.ts:75](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L75)
 
+***
+
+### ~~web3Provider?~~
+
+> `optional` **web3Provider**: [`Web3`](../-internal-/classes/Web3.md)\<[`RegisteredSubscription`](../-internal-/type-aliases/RegisteredSubscription.md)\>
+
+#### Defined in
+
+[src/legacy/index.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L76)
+
 ## Methods
 
-### approveToken
+### ~~approveToken()~~
 
-▸ **approveToken**(`amount`, `userAddress`, `tokenAddress`, `_provider?`, `sendOptions?`): `Promise`<`string` \| [`APIError`](../modules/internal_.md#apierror)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `amount` | `string` |
-| `userAddress` | `string` |
-| `tokenAddress` | `string` |
-| `_provider?` | `any` |
-| `sendOptions?` | [`Omit`](../modules/internal_.md#omit)<[`SendOptions`](../interfaces/internal_.SendOptions.md), ``"from"``\> |
-
-#### Returns
-
-`Promise`<`string` \| [`APIError`](../modules/internal_.md#apierror)\>
-
-___
-
-### approveTokenBulk
-
-▸ **approveTokenBulk**(`amount`, `userAddress`, `tokenAddresses`, `_provider?`): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| `string`[]\>
+> **approveToken**(`amount`, `userAddress`, `tokenAddress`, `_provider`?, `sendOptions`?): `Promise`\<`string` \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `amount` | `string` |
-| `userAddress` | `string` |
-| `tokenAddresses` | `string`[] |
-| `_provider?` | `any` |
+• **amount**: `string`
+
+• **userAddress**: `string`
+
+• **tokenAddress**: `string`
+
+• **\_provider?**: `any`
+
+**Deprecated**
+
+• **sendOptions?**: [`Omit`](../-internal-/type-aliases/Omit.md)\<[`TxSendOverrides`](../interfaces/TxSendOverrides.md), `"from"`\>
 
 #### Returns
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| `string`[]\>
+`Promise`\<`string` \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### buildTx
+[src/legacy/index.ts:408](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L408)
 
-▸ **buildTx**(`srcToken`, `destToken`, `srcAmount`, `destAmount`, `priceRoute`, `userAddress`, `partner?`, `partnerAddress?`, `partnerFeeBps?`, `receiver?`, `options?`, `srcDecimals?`, `destDecimals?`, `permit?`, `deadline?`): `Promise`<[`TransactionParams`](../interfaces/TransactionParams.md) \| [`APIError`](../modules/internal_.md#apierror)\>
+***
+
+### ~~approveTokenBulk()~~
+
+> **approveTokenBulk**(`amount`, `userAddress`, `tokenAddresses`, `_provider`?): `Promise`\<`string`[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `srcToken` | `string` |
-| `destToken` | `string` |
-| `srcAmount` | `string` |
-| `destAmount` | `string` |
-| `priceRoute` | [`OptimalRate`](../modules.md#optimalrate) |
-| `userAddress` | `string` |
-| `partner?` | `string` |
-| `partnerAddress?` | `string` |
-| `partnerFeeBps?` | `number` |
-| `receiver?` | `string` |
-| `options` | [`BuildOptions`](../modules.md#buildoptions) |
-| `srcDecimals?` | `number` |
-| `destDecimals?` | `number` |
-| `permit?` | `string` |
-| `deadline?` | `string` |
+• **amount**: `string`
+
+• **userAddress**: `string`
+
+• **tokenAddresses**: `string`[]
+
+• **\_provider?**: `any`
+
+**Deprecated**
 
 #### Returns
 
-`Promise`<[`TransactionParams`](../interfaces/TransactionParams.md) \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<`string`[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getAdapters
+[src/legacy/index.ts:381](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L381)
 
-▸ **getAdapters**(): `Promise`<[`AdaptersAsStrings`](../modules/internal_.md#adaptersasstrings) \| [`APIError`](../modules/internal_.md#apierror)\>
+***
 
-#### Returns
+### ~~buildTx()~~
 
-`Promise`<[`AdaptersAsStrings`](../modules/internal_.md#adaptersasstrings) \| [`APIError`](../modules/internal_.md#apierror)\>
-
-___
-
-### getAllowance
-
-▸ **getAllowance**(`userAddress`, `tokenAddress`): `Promise`<[`Allowance`](../interfaces/Allowance.md) \| [`APIError`](../modules/internal_.md#apierror)\>
+> **buildTx**(`srcToken`, `destToken`, `srcAmount`, `destAmount`, `priceRoute`, `userAddress`, `partner`?, `partnerAddress`?, `partnerFeeBps`?, `receiver`?, `options`?, `srcDecimals`?, `destDecimals`?, `permit`?, `deadline`?): `Promise`\<[`TransactionParams`](../interfaces/TransactionParams.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userAddress` | `string` |
-| `tokenAddress` | `string` |
+• **srcToken**: `string`
+
+• **destToken**: `string`
+
+• **srcAmount**: `string`
+
+• **destAmount**: `string`
+
+• **priceRoute**: [`OptimalRate`](../type-aliases/OptimalRate.md)
+
+• **userAddress**: `string`
+
+• **partner?**: `string`
+
+• **partnerAddress?**: `string`
+
+• **partnerFeeBps?**: `number`
+
+• **receiver?**: `string`
+
+• **options?**: [`BuildOptions`](../type-aliases/BuildOptions.md) = `{}`
+
+• **srcDecimals?**: `number`
+
+• **destDecimals?**: `number`
+
+• **permit?**: `string`
+
+• **deadline?**: `string`
 
 #### Returns
 
-`Promise`<[`Allowance`](../interfaces/Allowance.md) \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<[`TransactionParams`](../interfaces/TransactionParams.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getAllowances
+[src/legacy/index.ts:305](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L305)
 
-▸ **getAllowances**(`userAddress`, `tokenAddresses`): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Allowance`](../interfaces/Allowance.md)[]\>
+***
+
+### ~~getAdapters()~~
+
+> **getAdapters**(): `Promise`\<[`AdaptersAsStrings`](../-internal-/type-aliases/AdaptersAsStrings.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
+
+#### Returns
+
+`Promise`\<[`AdaptersAsStrings`](../-internal-/type-aliases/AdaptersAsStrings.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
+
+#### Defined in
+
+[src/legacy/index.ts:238](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L238)
+
+***
+
+### ~~getAllowance()~~
+
+> **getAllowance**(`userAddress`, `tokenAddress`): `Promise`\<[`Allowance`](../interfaces/Allowance.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userAddress` | `string` |
-| `tokenAddresses` | `string`[] |
+• **userAddress**: `string`
+
+• **tokenAddress**: `string`
 
 #### Returns
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Allowance`](../interfaces/Allowance.md)[]\>
+`Promise`\<[`Allowance`](../interfaces/Allowance.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getBalance
+[src/legacy/index.ts:369](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L369)
 
-▸ **getBalance**(`userAddress`, `token`): `Promise`<[`Token`](../modules.md#token) \| [`APIError`](../modules/internal_.md#apierror)\>
+***
+
+### ~~getAllowances()~~
+
+> **getAllowances**(`userAddress`, `tokenAddresses`): `Promise`\<[`Allowance`](../interfaces/Allowance.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userAddress` | `string` |
-| `token` | `string` |
+• **userAddress**: `string`
+
+• **tokenAddresses**: `string`[]
 
 #### Returns
 
-`Promise`<[`Token`](../modules.md#token) \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<[`Allowance`](../interfaces/Allowance.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getBalances
+[src/legacy/index.ts:357](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L357)
 
-▸ **getBalances**(`userAddress`): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Token`](../modules.md#token)[]\>
+***
+
+### ~~getBalance()~~
+
+> **getBalance**(`userAddress`, `token`): `Promise`\<[`Token`](../type-aliases/Token.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userAddress` | `string` |
+• **userAddress**: `string`
+
+• **token**: `string`
 
 #### Returns
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Token`](../modules.md#token)[]\>
+`Promise`\<[`Token`](../type-aliases/Token.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getMarketNames
+[src/legacy/index.ts:441](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L441)
 
-▸ **getMarketNames**(): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| `string`[]\>
+***
 
-#### Returns
+### ~~getBalances()~~
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| `string`[]\>
-
-___
-
-### getRate
-
-▸ **getRate**(`srcToken`, `destToken`, `amount`, `userAddress?`, `side?`, `options?`, `srcDecimals?`, `destDecimals?`): `Promise`<[`OptimalRate`](../modules.md#optimalrate) \| [`APIError`](../modules/internal_.md#apierror)\>
+> **getBalances**(`userAddress`): `Promise`\<[`Token`](../type-aliases/Token.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `srcToken` | `string` | `undefined` |
-| `destToken` | `string` | `undefined` |
-| `amount` | `string` | `undefined` |
-| `userAddress?` | `string` | `undefined` |
-| `side` | [`SwapSide`](../enums/SwapSide.md) | `SwapSide.SELL` |
-| `options` | [`RateOptions`](../modules/internal_.md#rateoptions) | `{}` |
-| `srcDecimals?` | `number` | `undefined` |
-| `destDecimals?` | `number` | `undefined` |
+• **userAddress**: `string`
 
 #### Returns
 
-`Promise`<[`OptimalRate`](../modules.md#optimalrate) \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<[`Token`](../type-aliases/Token.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getRateByRoute
+[src/legacy/index.ts:453](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L453)
 
-▸ **getRateByRoute**(`route`, `amount`, `userAddress?`, `side?`, `options?`, `srcDecimals?`, `destDecimals?`): `Promise`<[`OptimalRate`](../modules.md#optimalrate) \| [`APIError`](../modules/internal_.md#apierror)\>
+***
+
+### ~~getMarketNames()~~
+
+> **getMarketNames**(): `Promise`\<`string`[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
+
+#### Returns
+
+`Promise`\<`string`[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
+
+#### Defined in
+
+[src/legacy/index.ts:432](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L432)
+
+***
+
+### ~~getRate()~~
+
+> **getRate**(`srcToken`, `destToken`, `amount`, `userAddress`?, `side`?, `options`?, `srcDecimals`?, `destDecimals`?): `Promise`\<[`OptimalRate`](../type-aliases/OptimalRate.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `route` | `string`[] | `undefined` |
-| `amount` | `string` | `undefined` |
-| `userAddress?` | `string` | `undefined` |
-| `side` | [`SwapSide`](../enums/SwapSide.md) | `SwapSide.SELL` |
-| `options?` | [`RateOptions`](../modules/internal_.md#rateoptions) | `undefined` |
-| `srcDecimals?` | `number` | `undefined` |
-| `destDecimals?` | `number` | `undefined` |
+• **srcToken**: `string`
+
+• **destToken**: `string`
+
+• **amount**: `string`
+
+• **userAddress?**: `string`
+
+• **side?**: [`SwapSide`](../enumerations/SwapSide.md) = `SwapSide.SELL`
+
+• **options?**: [`RateOptions`](../-internal-/type-aliases/RateOptions.md) = `{}`
+
+• **srcDecimals?**: `number`
+
+• **destDecimals?**: `number`
 
 #### Returns
 
-`Promise`<[`OptimalRate`](../modules.md#optimalrate) \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<[`OptimalRate`](../type-aliases/OptimalRate.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getTokenTransferProxy
+[src/legacy/index.ts:278](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L278)
 
-▸ **getTokenTransferProxy**(`_provider?`): `Promise`<`string` \| [`APIError`](../modules/internal_.md#apierror)\>
+***
+
+### ~~getRateByRoute()~~
+
+> **getRateByRoute**(`route`, `amount`, `userAddress`?, `side`?, `options`?, `srcDecimals`?, `destDecimals`?): `Promise`\<[`OptimalRate`](../type-aliases/OptimalRate.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `_provider?` | `any` |
+• **route**: `string`[]
+
+• **amount**: `string`
+
+• **userAddress?**: `string`
+
+• **side?**: [`SwapSide`](../enumerations/SwapSide.md) = `SwapSide.SELL`
+
+• **options?**: [`RateOptions`](../-internal-/type-aliases/RateOptions.md)
+
+• **srcDecimals?**: `number`
+
+• **destDecimals?**: `number`
 
 #### Returns
 
-`Promise`<`string` \| [`APIError`](../modules/internal_.md#apierror)\>
+`Promise`\<[`OptimalRate`](../type-aliases/OptimalRate.md) \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### getTokens
+[src/legacy/index.ts:247](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L247)
 
-▸ **getTokens**(): `Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Token`](../modules.md#token)[]\>
+***
+
+### ~~getTokens()~~
+
+> **getTokens**(): `Promise`\<[`Token`](../type-aliases/Token.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Returns
 
-`Promise`<[`APIError`](../modules/internal_.md#apierror) \| [`Token`](../modules.md#token)[]\>
+`Promise`\<[`Token`](../type-aliases/Token.md)[] \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### setEthersProvider
+[src/legacy/index.ts:229](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L229)
 
-▸ **setEthersProvider**(`ethersDeps`, `account?`): [`ParaSwap`](ParaSwap.md)
+***
+
+### ~~getTokenTransferProxy()~~
+
+> **getTokenTransferProxy**(`_provider`?): `Promise`\<`string` \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `ethersDeps` | [`EthersProviderDeps`](../interfaces/EthersProviderDeps.md) |
-| `account?` | `string` |
+• **\_provider?**: `any`
 
 #### Returns
 
-[`ParaSwap`](ParaSwap.md)
+`Promise`\<`string` \| [`APIError`](../-internal-/type-aliases/APIError.md)\>
 
-___
+#### Defined in
 
-### setWeb3Provider
+[src/legacy/index.ts:348](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L348)
 
-▸ **setWeb3Provider**(`web3Provider`, `account?`): [`ParaSwap`](ParaSwap.md)
+***
+
+### ~~setEthersProvider()~~
+
+> **setEthersProvider**(`ethersDeps`, `account`?): `this`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `web3Provider` | [`default`](internal_.default.md) |
-| `account?` | `string` |
+• **ethersDeps**: [`EthersProviderDeps`](../type-aliases/EthersProviderDeps.md)
+
+• **account?**: `string`
 
 #### Returns
 
-[`ParaSwap`](ParaSwap.md)
+`this`
 
-___
+#### Defined in
 
-### extractHashFromTxResponse
+[src/legacy/index.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L192)
 
-▸ `Static` `Private` **extractHashFromTxResponse**(`txResponse`): `Promise`<`string`\>
+***
+
+### ~~setWeb3Provider()~~
+
+> **setWeb3Provider**(`web3Provider`, `account`?): `this`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `txResponse` | [`TxResponse`](../modules/internal_.md#txresponse) |
+• **web3Provider**: [`Web3`](../-internal-/classes/Web3.md)\<[`RegisteredSubscription`](../-internal-/type-aliases/RegisteredSubscription.md)\>
+
+• **account?**: `string`
 
 #### Returns
 
-`Promise`<`string`\>
+`this`
 
-___
+#### Defined in
 
-### handleAPIError
-
-▸ `Static` `Private` **handleAPIError**(`e`): [`APIError`](../modules/internal_.md#apierror)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `e` | `unknown` |
-
-#### Returns
-
-[`APIError`](../modules/internal_.md#apierror)
+[src/legacy/index.ts:173](https://github.com/paraswap/paraswap-sdk/blob/master/src/legacy/index.ts#L173)

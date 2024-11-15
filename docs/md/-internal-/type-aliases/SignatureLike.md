@@ -1,0 +1,17 @@
+[**@paraswap/sdk**](../../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SignatureLike
+
+# Type Alias: SignatureLike
+
+> **SignatureLike**: [`Signature`](../classes/Signature.md) \| `string` \| `object` \| `object` \| `object`
+
+A SignatureLike
+
+ @_docloc: api/crypto:Signing
+
+## Defined in
+
+node\_modules/ethers/lib.commonjs/crypto/signature.d.ts:7

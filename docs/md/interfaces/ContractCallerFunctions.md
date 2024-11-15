@@ -1,47 +1,41 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ContractCallerFunctions
+[**@paraswap/sdk**](../README.md) • **Docs**
 
-# Interface: ContractCallerFunctions<T\>
+***
 
-## Type parameters
+[@paraswap/sdk](../globals.md) / ContractCallerFunctions
 
-| Name |
-| :------ |
-| `T` |
+# Interface: ContractCallerFunctions\<T\>
 
-## Table of contents
+## Type Parameters
 
-### Properties
-
-- [signTypedDataCall](ContractCallerFunctions.md#signtypeddatacall)
-- [staticCall](ContractCallerFunctions.md#staticcall)
-- [transactCall](ContractCallerFunctions.md#transactcall)
+• **T**
 
 ## Properties
 
 ### signTypedDataCall
 
-• **signTypedDataCall**: [`SignTypedDataContractCallerFn`](../modules/internal_.md#signtypeddatacontractcallerfn)
-
-#### Defined in
-
-[src/types.ts:118](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L118)
-
-___
-
-### staticCall
-
-• **staticCall**: [`StaticContractCallerFn`](../modules/internal_.md#staticcontractcallerfn)
-
-#### Defined in
-
-[src/types.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L116)
-
-___
-
-### transactCall
-
-• **transactCall**: [`TransactionContractCallerFn`](../modules/internal_.md#transactioncontractcallerfn)<`T`\>
+> **signTypedDataCall**: [`SignTypedDataContractCallerFn`](../-internal-/type-aliases/SignTypedDataContractCallerFn.md)
 
 #### Defined in
 
 [src/types.ts:117](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L117)
+
+***
+
+### staticCall
+
+> **staticCall**: [`StaticContractCallerFn`](../-internal-/type-aliases/StaticContractCallerFn.md)
+
+#### Defined in
+
+[src/types.ts:115](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L115)
+
+***
+
+### transactCall
+
+> **transactCall**: [`TransactionContractCallerFn`](../-internal-/type-aliases/TransactionContractCallerFn.md)\<`T`\>
+
+#### Defined in
+
+[src/types.ts:116](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L116)

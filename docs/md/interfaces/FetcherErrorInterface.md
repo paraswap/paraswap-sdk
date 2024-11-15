@@ -1,104 +1,91 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / FetcherErrorInterface
+[**@paraswap/sdk**](../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../globals.md) / FetcherErrorInterface
 
 # Interface: FetcherErrorInterface
 
-## Hierarchy
+## Extends
 
-- [`FetcherErrorConstructorInput`](../modules/internal_.md#fetchererrorconstructorinput)
-
-  ↳ **`FetcherErrorInterface`**
-
-## Implemented by
-
-- [`FetcherError`](../classes/FetcherError.md)
-
-## Table of contents
-
-### Properties
-
-- [code](FetcherErrorInterface.md#code)
-- [isAxiosError](FetcherErrorInterface.md#isaxioserror)
-- [message](FetcherErrorInterface.md#message)
-- [request](FetcherErrorInterface.md#request)
-- [response](FetcherErrorInterface.md#response)
-- [status](FetcherErrorInterface.md#status)
+- [`FetcherErrorConstructorInput`](../-internal-/type-aliases/FetcherErrorConstructorInput.md)
 
 ## Properties
 
-### code
+### code?
 
-• `Optional` **code**: `string`
+> `optional` **code**: `string`
 
 #### Overrides
 
-FetcherErrorConstructorInput.code
+`FetcherErrorConstructorInput.code`
 
 #### Defined in
 
-[src/helpers/misc.ts:101](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L101)
+[src/helpers/misc.ts:49](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L49)
 
-___
+***
 
 ### isAxiosError
 
-• **isAxiosError**: `boolean`
+> **isAxiosError**: `boolean`
 
 #### Inherited from
 
-FetcherErrorConstructorInput.isAxiosError
+`FetcherErrorConstructorInput.isAxiosError`
 
 #### Defined in
 
-node_modules/axios/index.d.ts:362
+[src/helpers/misc.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L31)
 
-___
+***
 
 ### message
 
-• **message**: `string`
+> **message**: `string`
 
 #### Inherited from
 
-FetcherErrorConstructorInput.message
+`FetcherErrorConstructorInput.message`
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1023
+[src/helpers/misc.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L32)
 
-___
+***
 
-### request
+### request?
 
-• `Optional` **request**: `any`
+> `optional` **request**: `any`
 
 #### Inherited from
 
-FetcherErrorConstructorInput.request
+`FetcherErrorConstructorInput.request`
 
 #### Defined in
 
-node_modules/axios/index.d.ts:360
+[src/helpers/misc.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L30)
 
-___
+***
 
-### response
+### response?
 
-• `Optional` **response**: [`AxiosResponse`](internal_.AxiosResponse.md)<`unknown`, `any`\>
+> `optional` **response**: [`MinAxiosResponse`](../-internal-/type-aliases/MinAxiosResponse.md)
 
 #### Inherited from
 
-FetcherErrorConstructorInput.response
+`FetcherErrorConstructorInput.response`
 
 #### Defined in
 
-node_modules/axios/index.d.ts:361
+[src/helpers/misc.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L44)
 
-___
+***
 
-### status
+### status?
 
-• `Optional` **status**: `number`
+> `optional` **status**: `number`
 
 #### Defined in
 
-[src/helpers/misc.ts:100](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L100)
+[src/helpers/misc.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L48)

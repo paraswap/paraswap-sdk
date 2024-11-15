@@ -1,72 +1,67 @@
-[@paraswap/sdk](../README.md) / [Exports](../modules.md) / ConstructFetchInput
+[**@paraswap/sdk**](../README.md) • **Docs**
+
+***
+
+[@paraswap/sdk](../globals.md) / ConstructFetchInput
 
 # Interface: ConstructFetchInput
 
-## Hierarchy
+## Extends
 
-- [`ConstructBaseInput`](internal_.ConstructBaseInput.md)
+- [`ConstructBaseInput`](../-internal-/interfaces/ConstructBaseInput.md)
 
-  ↳ **`ConstructFetchInput`**
+## Extended by
 
-  ↳↳ [`ConstructProviderFetchInput`](ConstructProviderFetchInput.md)
-
-## Table of contents
-
-### Properties
-
-- [apiURL](ConstructFetchInput.md#apiurl)
-- [chainId](ConstructFetchInput.md#chainid)
-- [fetcher](ConstructFetchInput.md#fetcher)
-- [version](ConstructFetchInput.md#version)
+- [`ConstructProviderFetchInput`](ConstructProviderFetchInput.md)
 
 ## Properties
 
-### apiURL
+### apiURL?
 
-• `Optional` **apiURL**: `string`
+> `optional` **apiURL**: `string`
 
 #### Inherited from
 
-[ConstructBaseInput](internal_.ConstructBaseInput.md).[apiURL](internal_.ConstructBaseInput.md#apiurl)
+[`ConstructBaseInput`](../-internal-/interfaces/ConstructBaseInput.md).[`apiURL`](../-internal-/interfaces/ConstructBaseInput.md#apiurl)
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
+[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
 
-___
+***
 
 ### chainId
 
-• **chainId**: `number`
+> **chainId**: `number`
 
 #### Inherited from
 
-[ConstructBaseInput](internal_.ConstructBaseInput.md).[chainId](internal_.ConstructBaseInput.md#chainid)
-
-#### Defined in
-
-[src/types.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L40)
-
-___
-
-### fetcher
-
-• **fetcher**: [`FetcherFunction`](../modules.md#fetcherfunction)
-
-#### Defined in
-
-[src/types.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L66)
-
-___
-
-### version
-
-• `Optional` **version**: [`ParaSwapVersion`](../modules.md#paraswapversion)
-
-#### Inherited from
-
-[ConstructBaseInput](internal_.ConstructBaseInput.md).[version](internal_.ConstructBaseInput.md#version)
+[`ConstructBaseInput`](../-internal-/interfaces/ConstructBaseInput.md).[`chainId`](../-internal-/interfaces/ConstructBaseInput.md#chainid)
 
 #### Defined in
 
 [src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
+
+***
+
+### fetcher
+
+> **fetcher**: [`FetcherFunction`](../type-aliases/FetcherFunction.md)
+
+#### Defined in
+
+[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
+
+***
+
+### version?
+
+> `optional` **version**: [`ParaSwapVersion`](../type-aliases/ParaSwapVersion.md)
+
+#### Inherited from
+
+[`ConstructBaseInput`](../-internal-/interfaces/ConstructBaseInput.md).[`version`](../-internal-/interfaces/ConstructBaseInput.md#version)
+
+#### Defined in
+
+[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
