@@ -3,7 +3,7 @@ import type { ConstructFetchInput } from '../../types';
 import { DeltaAuctionOrder, ParaswapDeltaAuction } from './helpers/types';
 
 export type DeltaOrderToPost = {
-  partner?: string; // @TODO not sure if this is optional, need to check
+  partner?: string;
   order: DeltaAuctionOrder;
   signature: string;
   chainId: number;

@@ -11,7 +11,7 @@ export type DeltaPriceParams = {
   destDecimals: number;
   // side?: SwapSide; // no BUY side for now
   userAddress?: string;
-  partner?: string; // @TODO not sure if this is optional, need to check
+  partner?: string;
 };
 
 type DeltaPriceQueryOptions = DeltaPriceParams & {
