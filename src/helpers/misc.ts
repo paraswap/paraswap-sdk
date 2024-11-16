@@ -185,13 +185,10 @@ export function deriveCompactSignature(signature: string): string {
   // Handle 64-byte (EIP-2098 compact) and 65-byte signatures
   if (bytes.length === 64) {
     // Extract v from the highest bit of s and clear the bit in s
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     v = 27 + (bytes[32]! >> 7);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     bytes[32]! &= 0x7f; // Clear the highest bit
   } else {
     // Extract v directly for 65-byte signature
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     v = bytes[64]!;
 
     // Normalize v to canonical form (27 or 28)
