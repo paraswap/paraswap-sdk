@@ -27,6 +27,7 @@ export type ParaswapDeltaAuction = {
   signature: string;
   status: DeltaAuctionStatus;
   order: DeltaAuctionOrder;
+  orderHash: string | null;
   transaction: EthersV6TransactionReceipt | null;
   chainId: number;
   partner: string;
