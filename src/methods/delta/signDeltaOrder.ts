@@ -35,6 +35,12 @@ export const constructSignDeltaOrder = (
       typedDataOnly
     );
 
+    if (signature.length > 132) {
+      // signature more than 65 bytes, likely a multisig
+      // not compatible with EIP-2098 Compact Signatures
+      return signature;
+    }
+
     // both full and compact signatures work in the ParaswapDelta contract;
     // compact signature can be marginally more gas efficient
     try {
