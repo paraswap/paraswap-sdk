@@ -168,7 +168,7 @@ export function deriveCompactSignature(signature: string): string {
   // Convert the hex string to a byte array
   const bytes = new Uint8Array(signature.length / 2);
   for (let i = 0; i < signature.length; i += 2) {
-    bytes[i / 2] = parseInt(signature.substr(i, 2), 16);
+    bytes[i / 2] = parseInt(signature.slice(i, i + 2), 16);
   }
 
   // Validate the signature length (64 or 65 bytes)
