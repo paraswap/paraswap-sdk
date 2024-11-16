@@ -145,7 +145,7 @@ export type NFTOrdersFetchMethods = GetNFTOrdersContractFunctions &
   PostNFTOrderFunctions &
   BuildNFTOrdersTxFunctions;
 
-export type DeltaFetchMehods = BuildDeltaOrderFunctions &
+export type DeltaFetchMethods = BuildDeltaOrderFunctions &
   GetDeltaOrdersFunctions &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
@@ -156,7 +156,7 @@ export type SimpleFetchSDK = {
   swap: SwapFetchMethods;
   limitOrders: LimitOrdersFetchMethods;
   nftOrders: NFTOrdersFetchMethods;
-  delta: DeltaFetchMehods;
+  delta: DeltaFetchMethods;
 } & Required<ConstructBaseInput>;
 
 export type SimpleSDK = {

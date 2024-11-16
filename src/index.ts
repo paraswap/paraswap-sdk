@@ -313,7 +313,7 @@ export type {
   BuildNFTOrderInput,
   BuildNFTOrderDataInput,
   NFTOrdersUserParams,
-  //types for Delta methos
+  //types for Delta methods
   DeltaPrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
