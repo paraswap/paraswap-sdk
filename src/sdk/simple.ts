@@ -124,6 +124,10 @@ import {
   constructPostDeltaOrder,
   PostDeltaOrderFunctions,
 } from '../methods/delta/postDeltaOrder';
+import {
+  constructGetQuote,
+  GetQuoteFunctions,
+} from '../methods/quote/getQuote';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -157,13 +161,17 @@ export type SimpleFetchSDK = {
   limitOrders: LimitOrdersFetchMethods;
   nftOrders: NFTOrdersFetchMethods;
   delta: DeltaFetchMethods;
+  quote: QuoteFetchMethods;
 } & Required<ConstructBaseInput>;
+
+export type QuoteFetchMethods = GetQuoteFunctions;
 
 export type SimpleSDK = {
   swap: SwapSDKMethods<TxHash>;
   limitOrders: LimitOrderHandlers<TxHash>;
   nftOrders: NFTOrderHandlers<TxHash>;
   delta: DeltaOrderHandlers<TxHash>;
+  quote: QuoteFetchMethods;
 } & Required<ConstructBaseInput>;
 
 export type FetcherOptions = (
@@ -263,11 +271,14 @@ export function constructSimpleSDK(
       constructGetPartnerFee
     );
 
+    const quote = constructPartialSDK(config, constructGetQuote);
+
     return {
       swap,
       limitOrders,
       nftOrders,
       delta,
+      quote,
       apiURL: options.apiURL ?? API_URL,
       chainId: options.chainId,
       version: options.version ?? DEFAULT_VERSION,
@@ -295,11 +306,14 @@ export function constructSimpleSDK(
   const delta: DeltaOrderHandlers<TxHash> =
     constructAllDeltaOrdersHandlers<TxHash>(config);
 
+  const quote = constructGetQuote(config);
+
   return {
     swap,
     limitOrders,
     nftOrders,
     delta,
+    quote,
     apiURL: options.apiURL ?? API_URL,
     chainId: options.chainId,
     version: options.version ?? DEFAULT_VERSION,
