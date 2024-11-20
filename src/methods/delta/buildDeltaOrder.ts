@@ -1,7 +1,10 @@
 import type { ConstructFetchInput } from '../../types';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
-import { constructGetPartnerFee } from './getPartnerFee';
+import {
+  constructGetPartnerFee,
+  type PartnerFeeResponse,
+} from './getPartnerFee';
 import {
   buildDeltaSignableOrderData,
   type BuildDeltaOrderDataInput,
@@ -22,7 +25,7 @@ export type BuildDeltaOrderDataParams = {
   partner?: string;
 
   deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
-};
+} & Partial<PartnerFeeResponse>; // can override partnerFee, partnerAddress, takeSurplus, which otherwise will be fetched
 
 type BuildDeltaOrder = (
   buildOrderParams: BuildDeltaOrderDataParams,
@@ -49,10 +52,24 @@ export const constructBuildDeltaOrder = (
     if (!ParaswapDelta) {
       throw new Error(`Delta is not available on chain ${chainId}`);
     }
-    const partnerFeeResponse = await getPartnerFee(
-      { partner: options.partner || options.deltaPrice.partner },
-      signal
-    );
+
+    let partnerAddress = options.partnerAddress;
+    let partnerFee = options.partnerFee ?? options.deltaPrice.partnerFee;
+    let takeSurplus = options.takeSurplus;
+
+    if (
+      partnerAddress === undefined ||
+      partnerFee === undefined ||
+      takeSurplus === undefined
+    ) {
+      const partner = options.partner || options.deltaPrice.partner;
+      const partnerFeeResponse = await getPartnerFee({ partner }, signal);
+
+      partnerAddress = partnerAddress ?? partnerFeeResponse.partnerAddress;
+      // deltaPrice.partnerFee and partnerFeeResponse.partnerFee should be the same, but give priority to externally provided
+      partnerFee = partnerFee ?? partnerFeeResponse.partnerFee;
+      takeSurplus = takeSurplus ?? partnerFeeResponse.takeSurplus;
+    }
 
     const input: BuildDeltaOrderDataInput = {
       owner: options.owner,
@@ -68,10 +85,9 @@ export const constructBuildDeltaOrder = (
 
       chainId,
       paraswapDeltaAddress: ParaswapDelta,
-      partnerAddress: partnerFeeResponse.partnerAddress,
-      takeSurplus: partnerFeeResponse.takeSurplus,
-      partnerFee:
-        options.deltaPrice.partnerFee ?? partnerFeeResponse.partnerFee, // should be the same, but give priority to externally provided
+      partnerAddress,
+      takeSurplus,
+      partnerFee,
     };
 
     return buildDeltaSignableOrderData(input);
