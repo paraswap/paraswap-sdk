@@ -1,5 +1,5 @@
 import { MarkOptional } from 'ts-essentials';
-import { Domain } from '../../common/orders/buildOrderData';
+import { Domain, ZERO_ADDRESS } from '../../common/orders/buildOrderData';
 import { DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
 import { DeltaPrice } from '../getDeltaPrice';
@@ -127,6 +127,8 @@ function producePartnerAndFee({
   partnerAddress,
   takeSurplus,
 }: ProducePartnerAndFeeInput): string {
+  if (partnerAddress === ZERO_ADDRESS) return '0';
+
   const partnerFeeBps = BigInt((partnerFee * 100).toFixed(0));
   const partnerAndFee =
     (BigInt(partnerAddress) << BigInt(96)) |
