@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quote:methods Get Quote for market 1`] = `
+{
+  "bestRoute": [
+    {
+      "percent": 100,
+      "percentage": "dynamic_number",
+      "swaps": "dynamic_array",
+    },
+  ],
+  "blockNumber": "dynamic_number",
+  "contractAddress": "0x6a000f20005980200259b80c5102003040001068",
+  "contractMethod": "dynamic_string",
+  "destAmount": "dynamic_number",
+  "destDecimals": 18,
+  "destToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "destUSD": "dynamic_number",
+  "gasCost": "dynamic_number",
+  "gasCostUSD": "dynamic_number",
+  "hmac": "dynamic_number",
+  "maxImpactReached": false,
+  "network": 1,
+  "partner": "anon",
+  "partnerFee": 0,
+  "side": "SELL",
+  "srcAmount": "100000000000",
+  "srcDecimals": 6,
+  "srcToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "srcUSD": "dynamic_number",
+  "tokenTransferProxy": "0x6a000f20005980200259b80c5102003040001068",
+  "version": "6.2",
+}
+`;
