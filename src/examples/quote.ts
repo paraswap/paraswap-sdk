@@ -46,7 +46,7 @@ async function deltaQuote() {
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
     destToken: PSP_TOKEN,
-    amount: '1000000000000',
+    amount,
     userAddress: account,
     srcDecimals: 18,
     destDecimals: 18,
@@ -72,7 +72,7 @@ async function marketQuote() {
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
     destToken: PSP_TOKEN,
-    amount: '1000000000000',
+    amount,
     userAddress: account,
     srcDecimals: 18,
     destDecimals: 18,
@@ -84,7 +84,7 @@ async function marketQuote() {
   const TokenTransferProxy = await quoteSDK.getSpender();
 
   // or sign a Permit1 or Permit2 TransferFrom for TokenTransferProxy
-  const approveTxHash = quoteSDK.approveToken('1000000000000', DAI_TOKEN);
+  const approveTxHash = quoteSDK.approveToken(amount, DAI_TOKEN);
 
   const txParams = await quoteSDK.buildTx({
     srcToken: DAI_TOKEN,
@@ -108,7 +108,7 @@ async function allQuote() {
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
     destToken: PSP_TOKEN,
-    amount: '1000000000000',
+    amount,
     userAddress: account,
     srcDecimals: 18,
     destDecimals: 18,
@@ -184,7 +184,7 @@ async function handleMarketQuote({
   const TokenTransferProxy = await quoteSDK.getSpender();
 
   // or sign a Permit1 or Permit2 TransferFrom for TokenTransferProxy
-  const approveTxHash = quoteSDK.approveToken('1000000000000', DAI_TOKEN);
+  const approveTxHash = quoteSDK.approveToken(amount, DAI_TOKEN);
 
   const txParams = await quoteSDK.buildTx({
     srcToken: DAI_TOKEN,
