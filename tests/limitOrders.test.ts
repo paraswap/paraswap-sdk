@@ -660,7 +660,7 @@ describe('Limit Orders', () => {
     );
 
     // without SDK
-    // await WETH_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await WETH_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveMakerTokenForLimitOrder(
@@ -671,7 +671,7 @@ describe('Limit Orders', () => {
     await awaitTx(approveForMakerTx);
 
     // without SDK
-    // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
+    // await BAT_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveTakerTokenForLimitOrder(
@@ -687,7 +687,7 @@ describe('Limit Orders', () => {
       signableOrderData.data.nonceAndMeta
     );
 
-    // taker in nonceAndTaker = Zero
+    // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
 
     const { gas: payloadGas, ...LOPayloadTxParams } =
@@ -893,7 +893,7 @@ describe('Limit Orders', () => {
     );
 
     // without SDK
-    // await WETH_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await WETH_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveMakerTokenForLimitOrder(
@@ -904,7 +904,7 @@ describe('Limit Orders', () => {
     await awaitTx(approveForMakerTx);
 
     // without SDK
-    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
+    // await DAI_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveTakerTokenForLimitOrder(
@@ -920,7 +920,7 @@ describe('Limit Orders', () => {
       signableOrderData.data.nonceAndMeta
     );
 
-    // taker in nonceAndTaker = Zero
+    // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
 
     const priceRoute = await takerSDK.getLimitOrdersRate(
