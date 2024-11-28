@@ -62,6 +62,7 @@ const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
+const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 
 // const DUMMY_ADDRESS_FOR_TESTING_ORDERS =
 //   '0xb9A079479A7b0F4E7F398F7ED3946bE6d9a40E79';
@@ -1440,6 +1441,258 @@ describe('Limit Orders', () => {
       maker.address
     );
     const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString())
+        .minus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString())
+        .plus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString())
+        .plus(takerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString())
+        .minus(takerAmount)
+        .toString(10)
+    );
+  });
+
+  test.only(`fill OTC Order directly with Taker Permit`, async () => {
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 60 USDC
+    const takerAmount = (60e6).toString(10);
+
+    // get some WETH onto maker wallet
+    const maker = new ethers.Wallet(
+      walletV5Stable.privateKey,
+      ethersV5Provider
+    );
+    const { balance: wethBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: WETH,
+      amount: makerAmount,
+      signer: maker,
+      providerOptions: {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+        account: maker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
+    expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
+
+    // get some USDC onto the taker wallet
+    const taker = new ethers.Wallet(
+      walletV5Stable2.privateKey,
+      ethersV5Provider
+    );
+    const { balance: usdcBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: USDC,
+      destDecimals: 6,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    expect(new BigNumber(usdcBalance).gte(takerAmount)).toBeTruthy();
+
+    const makerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      maker.address
+    );
+    const takerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      taker.address
+    );
+
+    const makerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: makerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2',
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder
+    );
+
+    const takerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: takerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2', // direct Order filling is supported on v6 only
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder,
+      constructBuildLimitOrderTx,
+      constructFillOrderDirectly
+    );
+
+    const order = {
+      nonce: 9992,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: WETH,
+      makerAmount,
+      takerAsset: USDC,
+      takerAmount,
+      taker: taker.address,
+    };
+
+    const signableOrderData = await makerSDK.buildLimitOrder(order);
+
+    const signature = await makerSDK.signLimitOrder(signableOrderData);
+
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const USDC_Token = ERC20MintableFactory.attach(USDC);
+
+    const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await USDC_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await USDC_Token.balanceOf(
+      taker.address
+    );
+
+    // without SDK
+    // await WETH_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await makerSDK.approveMakerTokenForLimitOrder(
+      makerAmount,
+      WETH_Token.address
+    );
+
+    await awaitTx(approveForMakerTx);
+
+    // without SDK
+    // await BAT_Token.connect(taker).approve(AugustusRFQ.address, takerAmount);
+
+    // withSDK
+    // const approveForTakerTx =
+    //   await takerSDK.approveTakerTokenForFillingP2POrderDirectly(
+    //     takerAmount,
+    //     USDC_Token.address
+    //   );
+    // await awaitTx(approveForTakerTx);
+
+    const orderWithSignature = { ...signableOrderData.data, signature };
+
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = p2pOrderInput.taker
+    expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
+    // taker = p2pOrderInput.taker
+    expect(orderWithSignature.taker.toLowerCase()).toBe(
+      taker.address.toLowerCase()
+    );
+
+    const AugustusRFQAddress = await paraSwap.getLimitOrdersContract();
+
+    const deadline = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
+
+    const takerPermitSignature = await signPermit1({
+      signer: taker,
+      user: taker.address,
+      spender: AugustusRFQAddress,
+      tokenName: 'USD Coin',
+      tokenAddress: USDC,
+      version: '2',
+      chainId,
+      amount: takerAmount,
+      nonce: 0,
+      deadline,
+    });
+
+    console.log('🚀 ~ test.only ~ takerPermitSignature:', takerPermitSignature);
+
+    // const permitTx = await executePermit1({
+    //   permitSignature: takerPermit,
+    //   tokenAddress: USDC,
+    //   user: taker.address,
+    //   spender: AugustusRFQAddress,
+    //   amount: takerAmount,
+    //   deadline,
+    //   provider: taker,
+    // });
+
+    // awaitTx(permitTx);
+
+    const takerPermit = encodeEIP_2612PermitFunctionData({
+      user: taker.address,
+      spender: AugustusRFQAddress,
+      amount: takerAmount,
+      deadline,
+      permitSignature: takerPermitSignature,
+    });
+
+    console.log('🚀 ~ test.only ~ takerPermit:', takerPermit);
+
+    const takerFillsOrderTx = await takerSDK.fillOrderDirectly({
+      order: orderWithSignature,
+      signature: orderWithSignature.signature,
+      takerPermit,
+    });
+
+    await awaitTx(takerFillsOrderTx);
+
+    const makerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
       taker.address
     );
 
