@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
 import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethersV5';
 import { ethers as ethersV6 } from 'ethers';
-import { hexValue, hexZeroPad } from '@ethersproject/bytes';
+import { hexValue, hexZeroPad, splitSignature } from '@ethersproject/bytes';
 import axios from 'axios';
 import {
   constructPartialSDK,
@@ -1503,3 +1503,189 @@ function deriveTakerFromNonceAndTaker(nonceAndMeta: string): string {
     20
   );
 }
+
+type SignPermit1Input = {
+  signer: ethers.providers.JsonRpcSigner | ethers.Wallet;
+  user: string;
+  spender: string;
+  tokenName: string;
+  tokenAddress: string;
+  version: string;
+  chainId: number;
+  amount: string;
+  nonce: number;
+  deadline: number;
+};
+
+async function signPermit1({
+  signer,
+  user,
+  spender,
+  tokenAddress,
+  tokenName,
+  version,
+  chainId,
+  amount,
+  nonce,
+  deadline,
+}: SignPermit1Input) {
+  // set the domain parameters
+  const domain = {
+    name: tokenName,
+    version,
+    chainId,
+    verifyingContract: tokenAddress,
+  };
+
+  const types = {
+    Permit: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        name: 'nonce',
+        type: 'uint256',
+      },
+      {
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+  };
+
+  // set the Permit type values
+  const values = {
+    owner: user,
+    spender,
+    value: amount,
+    nonce,
+    deadline,
+  };
+
+  // sign the Permit type data with the deployer's private key
+  const signature = await signer._signTypedData(domain, types, values);
+
+  // split the signature into its components
+  const sig = ethers.utils.splitSignature(signature);
+  return signature;
+}
+
+type ExecutePermit1Input = {
+  permitSignature: string;
+  provider: ethers.Signer | ethers.providers.Provider;
+  tokenAddress: string;
+  user: string;
+  spender: string;
+  amount: string;
+  deadline: number;
+};
+
+async function executePermit1({
+  provider,
+  permitSignature,
+  tokenAddress,
+  user,
+  spender,
+  amount,
+  deadline,
+}: ExecutePermit1Input) {
+  const TokenContract = new ethers.Contract(
+    tokenAddress,
+    EIP_2612_PERMIT_ABI,
+    provider
+  );
+
+  const { v, r, s } = splitSignature(permitSignature);
+
+  const tx = await TokenContract.permit(
+    user,
+    spender,
+    amount,
+    deadline,
+    v,
+    r,
+    s
+  );
+
+  return tx;
+}
+
+type EncodeEIP_2612PermitFunctionData = {
+  permitSignature: string;
+  user: string;
+  spender: string;
+  amount: string;
+  deadline: number;
+};
+
+function encodeEIP_2612PermitFunctionData({
+  user,
+  spender,
+  amount,
+  deadline,
+  permitSignature,
+}: EncodeEIP_2612PermitFunctionData) {
+  const { v, r, s } = splitSignature(permitSignature);
+
+  const iface = new ethers.utils.Interface(EIP_2612_PERMIT_ABI);
+  const contractFunc = iface.getFunction('permit');
+  return ethers.utils.defaultAbiCoder.encode(contractFunc.inputs, [
+    user,
+    spender,
+    amount,
+    deadline,
+    v,
+    r,
+    s,
+  ]);
+}
+
+const EIP_2612_PERMIT_ABI = [
+  {
+    constant: false,
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        name: 's',
+        type: 'bytes32',
+      },
+    ],
+    name: 'permit',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
