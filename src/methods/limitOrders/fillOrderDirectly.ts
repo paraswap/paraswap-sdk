@@ -9,8 +9,12 @@ export type FillOrderDirectlyFunctions<T> = {
 };
 
 export type FillOrderDirectly<T> = (
-  order: OrderData,
-  signature: string,
+  orderFillData: {
+    order: OrderData;
+    signature: string;
+    /** @description Permit1 or DAI Permit by taker for Taker Asset with AugustusRFQ as spender */
+    takerPermit?: string;
+  },
   overrides?: TxSendOverrides,
   signal?: AbortSignal
 ) => Promise<T>;
@@ -77,6 +81,92 @@ const MinAugustusRFQAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'nonceAndMeta',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint128',
+            name: 'expiry',
+            type: 'uint128',
+          },
+          {
+            internalType: 'address',
+            name: 'makerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'takerAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'maker',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'taker',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'makerAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'takerAmount',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct AugustusRFQ.Order',
+        name: 'order',
+        type: 'tuple',
+      },
+      {
+        internalType: 'bytes',
+        name: 'signature',
+        type: 'bytes',
+      },
+      {
+        internalType: 'uint256',
+        name: 'takerTokenFillAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'target',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'permitTakerAsset',
+        type: 'bytes',
+      },
+      {
+        internalType: 'bytes',
+        name: 'permitMakerAsset',
+        type: 'bytes',
+      },
+    ],
+    name: 'partialFillOrderWithTargetPermit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'makerTokenFilledAmount',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ] as const;
 
 type FillOrderMethods = ExtractAbiMethodNames<typeof MinAugustusRFQAbi>;
@@ -91,8 +181,7 @@ export function constructFillOrderDirectly<T>(
   const { getAugustusRFQ } = constructGetSpender(options);
 
   const fillOrderDirectly: FillOrderDirectly<T> = async (
-    order,
-    signature,
+    { order, signature, takerPermit },
     overrides = {},
     signal
   ) => {
@@ -100,11 +189,30 @@ export function constructFillOrderDirectly<T>(
 
     const sanitizedOrder = sanitizeOrderData(order);
 
+    if (!takerPermit || takerPermit === '0x') {
+      const res = await options.contractCaller.transactCall<FillOrderMethods>({
+        address: AugustusRFQ,
+        abi: MinAugustusRFQAbi,
+        contractMethod: 'fillOrder',
+        args: [sanitizedOrder, signature],
+        overrides,
+      });
+
+      return res;
+    }
+
     const res = await options.contractCaller.transactCall<FillOrderMethods>({
       address: AugustusRFQ,
       abi: MinAugustusRFQAbi,
-      contractMethod: 'fillOrder',
-      args: [sanitizedOrder, signature],
+      contractMethod: 'partialFillOrderWithTargetPermit',
+      args: [
+        sanitizedOrder, // order
+        signature, // order.signature
+        order.takerAmount, // takerTokenFillAmount, can even partially fill
+        order.taker, // target
+        takerPermit, // encoded TakerAsset.permit() function params by taker with AugustusRFQ as spender, Permit1 and DAI Permit oonly
+        '0x', // permitMakerAsset, unused because hard to account for changing nonce for long running Orders
+      ],
       overrides,
     });
 
