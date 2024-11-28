@@ -36,6 +36,8 @@ import {
   constructBuildLimitOrderTx,
   BuildTxFunctions,
   constructBuildTx,
+  constructFillOrderDirectly,
+  FillOrderDirectlyFunctions,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -1260,6 +1262,215 @@ describe('Limit Orders', () => {
     expect(recoveredAddress).toEqual(senderAddress);
 
     // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
+  });
+
+  test(`fill OTC Order directly`, async () => {
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 6 BAT
+    const takerAmount = (6e18).toString(10);
+
+    // get some WETH onto maker wallet
+    const maker = new ethers.Wallet(
+      walletV5Stable.privateKey,
+      ethersV5Provider
+    );
+    const { balance: wethBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: WETH,
+      amount: makerAmount,
+      signer: maker,
+      providerOptions: {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+        account: maker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
+    expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
+
+    // get some BAT onto the taker wallet
+    const taker = new ethers.Wallet(
+      walletV5Stable2.privateKey,
+      ethersV5Provider
+    );
+    const { balance: batBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: BAT,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    expect(new BigNumber(batBalance).gte(takerAmount)).toBeTruthy();
+
+    const makerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      maker.address
+    );
+    const takerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      taker.address
+    );
+
+    const makerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: makerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2',
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder
+    );
+
+    const takerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: takerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2', // direct Order filling is supported on v6 only
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder,
+      constructBuildLimitOrderTx,
+      constructFillOrderDirectly
+    );
+
+    const order = {
+      nonce: 9991,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: WETH,
+      makerAmount,
+      takerAsset: BAT,
+      takerAmount,
+      taker: taker.address,
+    };
+
+    const signableOrderData = await makerSDK.buildLimitOrder(order);
+
+    const signature = await makerSDK.signLimitOrder(signableOrderData);
+
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const BAT_Token = ERC20MintableFactory.attach(BAT);
+
+    const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    // without SDK
+    // await WETH_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await makerSDK.approveMakerTokenForLimitOrder(
+      makerAmount,
+      WETH_Token.address
+    );
+
+    await awaitTx(approveForMakerTx);
+
+    // without SDK
+    // await BAT_Token.connect(taker).approve(AugustusRFQ.address, takerAmount);
+
+    // withSDK
+    const approveForTakerTx =
+      await takerSDK.approveTakerTokenForFillingP2POrderDirectly(
+        takerAmount,
+        BAT_Token.address
+      );
+    await awaitTx(approveForTakerTx);
+
+    const orderWithSignature = { ...signableOrderData.data, signature };
+
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = p2pOrderInput.taker
+    expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
+    // taker = p2pOrderInput.taker
+    expect(orderWithSignature.taker.toLowerCase()).toBe(
+      taker.address.toLowerCase()
+    );
+
+    const takerFillsOrderTx = await takerSDK.fillOrderDirectly({
+      order: orderWithSignature,
+      signature: orderWithSignature.signature,
+    });
+
+    await awaitTx(takerFillsOrderTx);
+
+    const makerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2AfterBalance: BigNumberEthers = await BAT_Token.balanceOf(
+      taker.address
+    );
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString())
+        .minus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString())
+        .plus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString())
+        .plus(takerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString())
+        .minus(takerAmount)
+        .toString(10)
+    );
   });
 });
 
