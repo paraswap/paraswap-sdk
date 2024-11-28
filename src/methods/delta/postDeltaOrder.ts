@@ -7,6 +7,7 @@ export type DeltaOrderToPost = {
   order: DeltaAuctionOrder;
   signature: string;
   chainId: number;
+  partiallyFillable?: boolean;
 };
 
 export type PostDeltaOrderParams = Omit<DeltaOrderToPost, 'chainId'>;

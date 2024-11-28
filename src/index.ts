@@ -195,6 +195,7 @@ export {
   constructAllDeltaOrdersHandlers,
   constructSubmitDeltaOrder,
   DeltaOrderHandlers,
+  SubmitDeltaOrderParams,
 } from './methods/delta';
 
 export type {

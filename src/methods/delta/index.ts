@@ -34,8 +34,12 @@ import {
   constructApproveTokenForDelta,
 } from './approveForDelta';
 
+export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
+  partiallyFillable?: boolean;
+};
+
 type SubmitDeltaOrder = (
-  orderParams: BuildDeltaOrderDataParams
+  orderParams: SubmitDeltaOrderParams
 ) => Promise<ParaswapDeltaAuction>;
 
 export type SubmitDeltaOrderFuncs = {
@@ -57,6 +61,7 @@ export const constructSubmitDeltaOrder = (
       signature,
       partner: orderParams.partner,
       order: orderData.data,
+      partiallyFillable: orderParams.partiallyFillable,
     });
 
     return response;

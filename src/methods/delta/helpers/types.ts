@@ -21,47 +21,39 @@ type DeltaAuctionStatus =
   | 'FAILED'
   | 'EXPIRED';
 
+type DeltaAuctionTransaction = {
+  id: string;
+  hash: string;
+  blockNumber: number;
+  blockHash: string;
+  gasUsed: bigint;
+  gasPrice: bigint;
+  blobGasUsed: bigint;
+  blobGasPrice: bigint;
+  index: number;
+  status: number;
+  from: string;
+  to: string;
+  receivedAmount?: string;
+  protocolFee: string;
+  partnerFee: string;
+  agent: string;
+  auctionId: string;
+};
+
 export type ParaswapDeltaAuction = {
   id: string;
   user: string;
   signature: string;
   status: DeltaAuctionStatus;
   order: DeltaAuctionOrder;
-  orderHash: string | null;
-  transaction: EthersV6TransactionReceipt | null;
+  orderHash: string;
+  transactions: DeltaAuctionTransaction[];
   chainId: number;
   partner: string;
   receivedAmount: string | null;
   expiresAt: string;
   createdAt: string;
   updatedAt: string;
-};
-
-type EthersV6TransactionReceipt = {
-  to: string | null;
-  from: string;
-  contractAddress: string | null;
-  hash: string;
-  index: number;
-  blockHash: string;
-  blockNumber: number;
-  logs: {
-    _type: 'log';
-    address: string;
-    blockHash: string;
-    blockNumber: number;
-    data: string;
-    index: number;
-    topics: string[];
-    transactionHash: string;
-    transactionIndex: number;
-  }[];
-  logsBloom: string;
-  gasUsed: bigint;
-  blobGasUsed: bigint | null;
-  cumulativeGasUsed: bigint;
-  gasPrice: bigint;
-  blobGasPrice: bigint | null;
-  _type: 'TransactionReceipt';
-  status: number | null;
+  partiallyFillable: boolean;
 };
