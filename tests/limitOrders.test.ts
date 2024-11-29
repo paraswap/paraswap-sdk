@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import type { TransactionReceipt as Web3TransactionReceipt } from 'web3';
 import { BigNumber as BigNumberEthers, Contract, ethers } from 'ethersV5';
 import { ethers as ethersV6 } from 'ethers';
-import { hexValue, hexZeroPad, splitSignature } from '@ethersproject/bytes';
+import { hexValue, hexZeroPad } from '@ethersproject/bytes';
 import axios from 'axios';
 import {
   constructPartialSDK,
@@ -37,10 +37,8 @@ import {
   BuildTxFunctions,
   constructBuildTx,
   constructFillOrderDirectly,
-  FillOrderDirectlyFunctions,
 } from '../src';
 import BigNumber from 'bignumber.js';
-import { encodeEIP_2612PermitFunctionInput } from '../src/methods/common/orders/encoding';
 
 import ERC20MinableABI from './abi/ERC20Mintable.json';
 import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
@@ -1860,41 +1858,6 @@ describe('Limit Orders', () => {
       expiry: permitExpiry,
     });
 
-    console.log('🚀 ~ test.only ~ takerPermitSignature:', takerPermitSignature);
-
-    // const permitTx = await executeDAIPermit({
-    //   permitSignature: takerPermitSignature,
-    //   tokenAddress: DAI,
-    //   user: taker.address,
-    //   spender: AugustusRFQAddress,
-    //   expiry: permitExpiry,
-    //   nonce: 0,
-    //   provider: taker,
-    // });
-
-    // awaitTx(permitTx);
-    // console.log('🚀 ~ test.only ~ permitTx:', permitTx.hash);
-
-    // const permitTx = await executePermit1({
-    //   permitSignature: takerPermit,
-    //   tokenAddress: USDC,
-    //   user: taker.address,
-    //   spender: AugustusRFQAddress,
-    //   amount: takerAmount,
-    //   deadline,
-    //   provider: taker,
-    // });
-
-    // awaitTx(permitTx);
-
-    // const takerPermit = encodeEIP_2612PermitFunctionInput({
-    //   owner: taker.address,
-    //   spender: AugustusRFQAddress,
-    //   value: takerAmount,
-    //   deadline,
-    //   permitSignature: takerPermitSignature,
-    // });
-
     const takerFillsOrderTx = await takerSDK.fillOrderDirectly({
       order: orderWithSignature,
       signature: orderWithSignature.signature,
@@ -2007,7 +1970,6 @@ async function signPermit1({
   nonce,
   deadline,
 }: SignPermit1Input) {
-  // set the domain parameters
   const domain = {
     name: tokenName,
     version,
@@ -2040,7 +2002,6 @@ async function signPermit1({
     ],
   };
 
-  // set the Permit type values
   const message = {
     owner: user,
     spender,
@@ -2120,208 +2081,3 @@ async function signDaiPermit({
 
   return signature;
 }
-
-type ExecutePermit1Input = {
-  permitSignature: string;
-  provider: ethers.Signer | ethers.providers.Provider;
-  tokenAddress: string;
-  user: string;
-  spender: string;
-  amount: string;
-  deadline: number;
-};
-
-async function executePermit1({
-  provider,
-  permitSignature,
-  tokenAddress,
-  user,
-  spender,
-  amount,
-  deadline,
-}: ExecutePermit1Input) {
-  const TokenContract = new ethers.Contract(
-    tokenAddress,
-    EIP_2612_PERMIT_ABI,
-    provider
-  );
-
-  const { v, r, s } = splitSignature(permitSignature);
-
-  const tx = await TokenContract.permit(
-    user,
-    spender,
-    amount,
-    deadline,
-    v,
-    r,
-    s
-  );
-
-  return tx;
-}
-
-type ExecuteDAIPermitInput = {
-  permitSignature: string;
-  provider: ethers.Signer | ethers.providers.Provider;
-  tokenAddress: string;
-  user: string;
-  spender: string;
-  nonce: number;
-  expiry: number;
-};
-
-async function executeDAIPermit({
-  provider,
-  permitSignature,
-  tokenAddress,
-  user,
-  spender,
-  nonce,
-  expiry,
-}: ExecuteDAIPermitInput) {
-  const TokenContract = new ethers.Contract(
-    tokenAddress,
-    DAI_EIP_2612_PERMIT_ABI,
-    provider
-  );
-
-  const { v, r, s } = splitSignature(permitSignature);
-
-  const tx = await TokenContract.permit(
-    user,
-    spender,
-    nonce,
-    expiry,
-    true,
-    v,
-    r,
-    s
-  );
-
-  return tx;
-}
-
-type EncodeEIP_2612PermitFunctionData = {
-  permitSignature: string;
-  user: string;
-  spender: string;
-  amount: string;
-  deadline: number;
-};
-
-function encodeEIP_2612PermitFunctionData({
-  user,
-  spender,
-  amount,
-  deadline,
-  permitSignature,
-}: EncodeEIP_2612PermitFunctionData) {
-  const { v, r, s } = splitSignature(permitSignature);
-
-  const iface = new ethers.utils.Interface(EIP_2612_PERMIT_ABI);
-  const contractFunc = iface.getFunction('permit');
-  return ethers.utils.defaultAbiCoder.encode(contractFunc.inputs, [
-    user,
-    spender,
-    amount,
-    deadline,
-    v,
-    r,
-    s,
-  ]);
-}
-
-const EIP_2612_PERMIT_ABI = [
-  {
-    constant: false,
-    inputs: [
-      {
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        name: 'value',
-        type: 'uint256',
-      },
-      {
-        name: 'deadline',
-        type: 'uint256',
-      },
-      {
-        name: 'v',
-        type: 'uint8',
-      },
-      {
-        name: 'r',
-        type: 'bytes32',
-      },
-      {
-        name: 's',
-        type: 'bytes32',
-      },
-    ],
-    name: 'permit',
-    outputs: [],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-];
-
-const DAI_EIP_2612_PERMIT_ABI = [
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'holder',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nonce',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'expiry',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: 'allowed',
-        type: 'bool',
-      },
-      {
-        internalType: 'uint8',
-        name: 'v',
-        type: 'uint8',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'r',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'bytes32',
-        name: 's',
-        type: 'bytes32',
-      },
-    ],
-    name: 'permit',
-    outputs: [],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-];
