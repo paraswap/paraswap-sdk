@@ -1693,7 +1693,7 @@ describe('Limit Orders', () => {
     );
   });
 
-  test.only(`fill OTC Order directly with Taker DAI Permit`, async () => {
+  test(`fill OTC Order directly with Taker DAI Permit`, async () => {
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 60 DAI
