@@ -40,6 +40,7 @@ import {
   FillOrderDirectlyFunctions,
 } from '../src';
 import BigNumber from 'bignumber.js';
+import { encodeEIP_2612PermitFunctionInput } from '../src/methods/common/orders/encoding';
 
 import ERC20MinableABI from './abi/ERC20Mintable.json';
 import { bytecode as ERC20MintableBytecode } from './bytecode/ERC20Mintable.json';
@@ -1265,7 +1266,7 @@ describe('Limit Orders', () => {
     // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
 
-  test(`fill OTC Order directly`, async () => {
+  test.only(`fill OTC Order directly`, async () => {
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
@@ -1636,7 +1637,7 @@ describe('Limit Orders', () => {
 
     const AugustusRFQAddress = await paraSwap.getLimitOrdersContract();
 
-    const deadline = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
+    const permitDeadline = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
 
     const takerPermitSignature = await signPermit1({
       signer: taker,
@@ -1648,10 +1649,8 @@ describe('Limit Orders', () => {
       chainId,
       amount: takerAmount,
       nonce: 0,
-      deadline,
+      deadline: permitDeadline,
     });
-
-    console.log('🚀 ~ test.only ~ takerPermitSignature:', takerPermitSignature);
 
     // const permitTx = await executePermit1({
     //   permitSignature: takerPermit,
@@ -1665,20 +1664,21 @@ describe('Limit Orders', () => {
 
     // awaitTx(permitTx);
 
-    const takerPermit = encodeEIP_2612PermitFunctionData({
-      user: taker.address,
-      spender: AugustusRFQAddress,
-      amount: takerAmount,
-      deadline,
-      permitSignature: takerPermitSignature,
-    });
-
-    console.log('🚀 ~ test.only ~ takerPermit:', takerPermit);
+    // const takerPermit = encodeEIP_2612PermitFunctionInput({
+    //   owner: taker.address,
+    //   spender: AugustusRFQAddress,
+    //   value: takerAmount,
+    //   deadline,
+    //   permitSignature: takerPermitSignature,
+    // });
 
     const takerFillsOrderTx = await takerSDK.fillOrderDirectly({
       order: orderWithSignature,
       signature: orderWithSignature.signature,
-      takerPermit,
+      takerPermit: {
+        signature: takerPermitSignature,
+        deadline: permitDeadline,
+      },
     });
 
     await awaitTx(takerFillsOrderTx);
