@@ -3,6 +3,7 @@ import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import type { OrderData } from './buildOrder';
 import { constructGetSpender } from '../swap/spender';
 import { sanitizeOrderData } from './helpers/misc';
+import { encodeEIP_2612PermitFunctionInput } from '../common/orders/encoding';
 
 export type FillOrderDirectlyFunctions<T> = {
   fillOrderDirectly: FillOrderDirectly<T>;
@@ -13,7 +14,11 @@ export type FillOrderDirectly<T> = (
     order: OrderData;
     signature: string;
     /** @description Permit1 or DAI Permit by taker for Taker Asset with AugustusRFQ as spender */
-    takerPermit?: string;
+    takerPermit?: {
+      signature: string;
+      deadline: number;
+      value?: string;
+    };
   },
   overrides?: TxSendOverrides,
   signal?: AbortSignal
@@ -189,7 +194,7 @@ export function constructFillOrderDirectly<T>(
 
     const sanitizedOrder = sanitizeOrderData(order);
 
-    if (!takerPermit || takerPermit === '0x') {
+    if (!takerPermit || takerPermit.signature === '0x') {
       const res = await options.contractCaller.transactCall<FillOrderMethods>({
         address: AugustusRFQ,
         abi: MinAugustusRFQAbi,
@@ -201,6 +206,15 @@ export function constructFillOrderDirectly<T>(
       return res;
     }
 
+    // encoded TakerAsset.permit() function params by taker with AugustusRFQ as spender, Permit1 and DAI Permit only
+    const permitTakerAsset = encodeEIP_2612PermitFunctionInput({
+      owner: order.taker,
+      spender: AugustusRFQ,
+      value: takerPermit.value || order.takerAmount, // can use permit with a bigger value, fallback to exact Order takerAmount
+      deadline: takerPermit.deadline,
+      permitSignature: takerPermit.signature,
+    });
+
     const res = await options.contractCaller.transactCall<FillOrderMethods>({
       address: AugustusRFQ,
       abi: MinAugustusRFQAbi,
@@ -210,7 +224,7 @@ export function constructFillOrderDirectly<T>(
         signature, // order.signature
         order.takerAmount, // takerTokenFillAmount, can even partially fill
         order.taker, // target
-        takerPermit, // encoded TakerAsset.permit() function params by taker with AugustusRFQ as spender, Permit1 and DAI Permit oonly
+        permitTakerAsset,
         '0x', // permitMakerAsset, unused because hard to account for changing nonce for long running Orders
       ],
       overrides,
