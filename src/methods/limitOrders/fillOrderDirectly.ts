@@ -3,22 +3,44 @@ import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
 import type { OrderData } from './buildOrder';
 import { constructGetSpender } from '../swap/spender';
 import { sanitizeOrderData } from './helpers/misc';
-import { encodeEIP_2612PermitFunctionInput } from '../common/orders/encoding';
+import {
+  encodeDAIlikePermitFunctionInput,
+  encodeEIP_2612PermitFunctionInput,
+} from '../common/orders/encoding';
 
 export type FillOrderDirectlyFunctions<T> = {
   fillOrderDirectly: FillOrderDirectly<T>;
 };
 
+type TakerPermitEncodedInputParams = {
+  encodedPermitParams: string;
+};
+
+type TakerPermit1Data = {
+  signature: string;
+  deadline: number | bigint | string;
+  amount?: string;
+  isDaiPermit?: false;
+};
+
+type TakerDaiPermitData = {
+  signature: string;
+  expiry: number | bigint | string;
+  nonce: number | bigint | string;
+  isDaiPermit: true;
+};
+
+type TakerPermitObject =
+  | TakerPermitEncodedInputParams
+  | TakerPermit1Data
+  | TakerDaiPermitData;
+
 export type FillOrderDirectly<T> = (
   orderFillData: {
     order: OrderData;
     signature: string;
-    /** @description Permit1 or DAI Permit by taker for Taker Asset with AugustusRFQ as spender */
-    takerPermit?: {
-      signature: string;
-      deadline: number;
-      value?: string;
-    };
+    /** @description Permit1 data or DAI Permit data or Token.parmit() input params encoded; Permit by taker for Taker Asset with AugustusRFQ as spender */
+    takerPermit?: TakerPermitObject;
   },
   overrides?: TxSendOverrides,
   signal?: AbortSignal
@@ -194,7 +216,7 @@ export function constructFillOrderDirectly<T>(
 
     const sanitizedOrder = sanitizeOrderData(order);
 
-    if (!takerPermit || takerPermit.signature === '0x') {
+    if (!takerPermit) {
       const res = await options.contractCaller.transactCall<FillOrderMethods>({
         address: AugustusRFQ,
         abi: MinAugustusRFQAbi,
@@ -206,14 +228,28 @@ export function constructFillOrderDirectly<T>(
       return res;
     }
 
-    // encoded TakerAsset.permit() function params by taker with AugustusRFQ as spender, Permit1 and DAI Permit only
-    const permitTakerAsset = encodeEIP_2612PermitFunctionInput({
-      owner: order.taker,
-      spender: AugustusRFQ,
-      value: takerPermit.value || order.takerAmount, // can use permit with a bigger value, fallback to exact Order takerAmount
-      deadline: takerPermit.deadline,
-      permitSignature: takerPermit.signature,
-    });
+    let permitTakerAsset: string;
+    if ('encodedPermitParams' in takerPermit) {
+      permitTakerAsset = takerPermit.encodedPermitParams;
+    } else if ('isDaiPermit' in takerPermit && takerPermit.isDaiPermit) {
+      // encoded DAI.permit() function params by taker with AugustusRFQ as spender
+      permitTakerAsset = encodeDAIlikePermitFunctionInput({
+        holder: order.taker,
+        spender: AugustusRFQ,
+        expiry: takerPermit.expiry,
+        nonce: takerPermit.nonce,
+        permitSignature: takerPermit.signature,
+      });
+    } else {
+      // encoded TakerAsset.permit() function params by taker with AugustusRFQ as spender, Permit1 only
+      permitTakerAsset = encodeEIP_2612PermitFunctionInput({
+        owner: order.taker,
+        spender: AugustusRFQ,
+        value: takerPermit.amount || order.takerAmount, // can use permit with a bigger value, fallback to exact Order takerAmount
+        deadline: takerPermit.deadline,
+        permitSignature: takerPermit.signature,
+      });
+    }
 
     const res = await options.contractCaller.transactCall<FillOrderMethods>({
       address: AugustusRFQ,
