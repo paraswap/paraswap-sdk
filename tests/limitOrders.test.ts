@@ -59,7 +59,7 @@ jest.setTimeout(30 * 1000);
 
 const referrer = 'sdk-test';
 
-const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
+const DAI = '0x6b175474e89094c44da98b954eedeac495271d0f';
 const HEX = '0x2b591e99afe9f32eaa6214f7b7629768c40eeb39';
 const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 const BAT = '0x0d8775f648430679a709e98d2b0cb6250d2887ef';
@@ -1266,7 +1266,7 @@ describe('Limit Orders', () => {
     // expect(newOrder).toMatchSnapshot('Order_from_API_Snapshot');
   });
 
-  test.only(`fill OTC Order directly`, async () => {
+  test(`fill OTC Order directly`, async () => {
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 6 BAT
@@ -1475,7 +1475,7 @@ describe('Limit Orders', () => {
     );
   });
 
-  test.only(`fill OTC Order directly with Taker Permit`, async () => {
+  test(`fill OTC Order directly with Taker Permit1`, async () => {
     // 0.01 WETH
     const makerAmount = (0.01e18).toString(10);
     // for 60 USDC
@@ -1610,17 +1610,6 @@ describe('Limit Orders', () => {
 
     await awaitTx(approveForMakerTx);
 
-    // without SDK
-    // await BAT_Token.connect(taker).approve(AugustusRFQ.address, takerAmount);
-
-    // withSDK
-    // const approveForTakerTx =
-    //   await takerSDK.approveTakerTokenForFillingP2POrderDirectly(
-    //     takerAmount,
-    //     USDC_Token.address
-    //   );
-    // await awaitTx(approveForTakerTx);
-
     const orderWithSignature = { ...signableOrderData.data, signature };
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
@@ -1652,6 +1641,240 @@ describe('Limit Orders', () => {
       deadline: permitDeadline,
     });
 
+    const takerFillsOrderTx = await takerSDK.fillOrderDirectly({
+      order: orderWithSignature,
+      signature: orderWithSignature.signature,
+      takerPermit: {
+        signature: takerPermitSignature,
+        deadline: permitDeadline,
+      },
+    });
+
+    await awaitTx(takerFillsOrderTx);
+
+    const makerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
+      taker.address
+    );
+
+    expect(
+      new BigNumber(makerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken1InitBalance.toString())
+        .minus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken1AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken1InitBalance.toString())
+        .plus(makerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(makerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(makerToken2InitBalance.toString())
+        .plus(takerAmount)
+        .toString(10)
+    );
+    expect(
+      new BigNumber(takerToken2AfterBalance.toString()).toString(10)
+    ).toEqual(
+      new BigNumber(takerToken2InitBalance.toString())
+        .minus(takerAmount)
+        .toString(10)
+    );
+  });
+
+  test.only(`fill OTC Order directly with Taker DAI Permit`, async () => {
+    // 0.01 WETH
+    const makerAmount = (0.01e18).toString(10);
+    // for 60 DAI
+    const takerAmount = (60e18).toString(10);
+
+    // get some WETH onto maker wallet
+    const maker = new ethers.Wallet(
+      walletV5Stable.privateKey,
+      ethersV5Provider
+    );
+    const { balance: wethBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: WETH,
+      amount: makerAmount,
+      signer: maker,
+      providerOptions: {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+        account: maker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    // for some reason BUY WETH may result into greater amount, unlike BUY other ERC20
+    expect(new BigNumber(wethBalance).gt(makerAmount)).toBeTruthy();
+
+    // get some USDC onto the taker wallet
+    const taker = new ethers.Wallet(
+      walletV5Stable2.privateKey,
+      ethersV5Provider
+    );
+    const { balance: daiBalance } = await buyErc20TokenForEth({
+      fetcherOptions: { axios },
+      tokenAddress: DAI,
+      amount: takerAmount,
+      signer: taker,
+      providerOptions: {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+        account: taker.address,
+      },
+      chainId,
+      ethersProvider: ethersV5Provider,
+    });
+
+    expect(new BigNumber(daiBalance).gte(takerAmount)).toBeTruthy();
+
+    const makerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: maker,
+        EthersContract: ethers.Contract,
+      },
+      maker.address
+    );
+    const takerEthersContractCaller = constructEthersV5ContractCaller(
+      {
+        ethersProviderOrSigner: taker,
+        EthersContract: ethers.Contract,
+      },
+      taker.address
+    );
+
+    const makerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: makerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2',
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder
+    );
+
+    const takerSDK = constructPartialSDK(
+      {
+        chainId,
+        contractCaller: takerEthersContractCaller,
+        fetcher: axiosFetcher,
+        apiURL: process.env.API_URL,
+        version: '6.2', // direct Order filling is supported on v6 only
+      },
+      constructBuildLimitOrder,
+      constructSignLimitOrder,
+      constructApproveTokenForLimitOrder,
+      constructBuildLimitOrderTx,
+      constructFillOrderDirectly
+    );
+
+    const order = {
+      nonce: 9993,
+      expiry: orderExpiry,
+      maker: maker.address,
+      makerAsset: WETH,
+      makerAmount,
+      takerAsset: DAI,
+      takerAmount,
+      taker: taker.address,
+    };
+
+    const signableOrderData = await makerSDK.buildLimitOrder(order);
+
+    const signature = await makerSDK.signLimitOrder(signableOrderData);
+
+    const WETH_Token = ERC20MintableFactory.attach(WETH);
+    const DAI_Token = ERC20MintableFactory.attach(DAI);
+
+    const makerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      maker.address
+    );
+    const takerToken1InitBalance: BigNumberEthers = await WETH_Token.balanceOf(
+      taker.address
+    );
+    const makerToken2InitBalance: BigNumberEthers = await DAI_Token.balanceOf(
+      maker.address
+    );
+    const takerToken2InitBalance: BigNumberEthers = await DAI_Token.balanceOf(
+      taker.address
+    );
+
+    // without SDK
+    // await WETH_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
+
+    // withSDK
+    const approveForMakerTx = await makerSDK.approveMakerTokenForLimitOrder(
+      makerAmount,
+      WETH_Token.address
+    );
+
+    await awaitTx(approveForMakerTx);
+
+    const orderWithSignature = { ...signableOrderData.data, signature };
+
+    // taker address that would be checked as part of nonceAndMeta in Augustus
+    const metaAddress = deriveTakerFromNonceAndTaker(
+      signableOrderData.data.nonceAndMeta
+    );
+
+    // taker in nonceAndTaker = p2pOrderInput.taker
+    expect(metaAddress.toLowerCase()).toBe(taker.address.toLowerCase());
+    // taker = p2pOrderInput.taker
+    expect(orderWithSignature.taker.toLowerCase()).toBe(
+      taker.address.toLowerCase()
+    );
+
+    const AugustusRFQAddress = await paraSwap.getLimitOrdersContract();
+
+    const permitExpiry = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
+
+    const takerPermitSignature = await signDaiPermit({
+      signer: taker,
+      user: taker.address,
+      spender: AugustusRFQAddress,
+      tokenName: 'Dai Stablecoin',
+      tokenAddress: DAI,
+      version: '1',
+      chainId,
+      amount: takerAmount,
+      nonce: 0,
+      expiry: permitExpiry,
+    });
+
+    console.log('🚀 ~ test.only ~ takerPermitSignature:', takerPermitSignature);
+
+    // const permitTx = await executeDAIPermit({
+    //   permitSignature: takerPermitSignature,
+    //   tokenAddress: DAI,
+    //   user: taker.address,
+    //   spender: AugustusRFQAddress,
+    //   expiry: permitExpiry,
+    //   nonce: 0,
+    //   provider: taker,
+    // });
+
+    // awaitTx(permitTx);
+    // console.log('🚀 ~ test.only ~ permitTx:', permitTx.hash);
+
     // const permitTx = await executePermit1({
     //   permitSignature: takerPermit,
     //   tokenAddress: USDC,
@@ -1676,8 +1899,10 @@ describe('Limit Orders', () => {
       order: orderWithSignature,
       signature: orderWithSignature.signature,
       takerPermit: {
+        isDaiPermit: true,
         signature: takerPermitSignature,
-        deadline: permitDeadline,
+        expiry: permitExpiry,
+        nonce: 0,
       },
     });
 
@@ -1689,10 +1914,10 @@ describe('Limit Orders', () => {
     const takerToken1AfterBalance: BigNumberEthers = await WETH_Token.balanceOf(
       taker.address
     );
-    const makerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
+    const makerToken2AfterBalance: BigNumberEthers = await DAI_Token.balanceOf(
       maker.address
     );
-    const takerToken2AfterBalance: BigNumberEthers = await USDC_Token.balanceOf(
+    const takerToken2AfterBalance: BigNumberEthers = await DAI_Token.balanceOf(
       taker.address
     );
 
@@ -1816,7 +2041,7 @@ async function signPermit1({
   };
 
   // set the Permit type values
-  const values = {
+  const message = {
     owner: user,
     spender,
     value: amount,
@@ -1824,11 +2049,75 @@ async function signPermit1({
     deadline,
   };
 
-  // sign the Permit type data with the deployer's private key
-  const signature = await signer._signTypedData(domain, types, values);
+  const signature = await signer._signTypedData(domain, types, message);
 
-  // split the signature into its components
-  const sig = ethers.utils.splitSignature(signature);
+  return signature;
+}
+
+type SignDAIPermitInput = {
+  signer: ethers.providers.JsonRpcSigner | ethers.Wallet;
+  user: string;
+  spender: string;
+  tokenName: string;
+  tokenAddress: string;
+  version: string;
+  chainId: number;
+  amount: string;
+  nonce: number;
+  expiry: number;
+};
+
+async function signDaiPermit({
+  signer,
+  user,
+  spender,
+  tokenName,
+  tokenAddress,
+  version,
+  chainId,
+  nonce,
+  expiry,
+}: SignDAIPermitInput) {
+  const domain = {
+    name: tokenName,
+    verifyingContract: tokenAddress,
+    chainId,
+    version,
+  };
+  const types = {
+    Permit: [
+      {
+        name: 'holder',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'nonce',
+        type: 'uint256',
+      },
+      {
+        name: 'expiry',
+        type: 'uint256',
+      },
+      {
+        name: 'allowed',
+        type: 'bool',
+      },
+    ],
+  };
+
+  const message = {
+    holder: user,
+    spender,
+    allowed: true,
+    nonce,
+    expiry,
+  };
+  const signature = await signer._signTypedData(domain, types, message);
+
   return signature;
 }
 
@@ -1864,6 +2153,47 @@ async function executePermit1({
     spender,
     amount,
     deadline,
+    v,
+    r,
+    s
+  );
+
+  return tx;
+}
+
+type ExecuteDAIPermitInput = {
+  permitSignature: string;
+  provider: ethers.Signer | ethers.providers.Provider;
+  tokenAddress: string;
+  user: string;
+  spender: string;
+  nonce: number;
+  expiry: number;
+};
+
+async function executeDAIPermit({
+  provider,
+  permitSignature,
+  tokenAddress,
+  user,
+  spender,
+  nonce,
+  expiry,
+}: ExecuteDAIPermitInput) {
+  const TokenContract = new ethers.Contract(
+    tokenAddress,
+    DAI_EIP_2612_PERMIT_ABI,
+    provider
+  );
+
+  const { v, r, s } = splitSignature(permitSignature);
+
+  const tx = await TokenContract.permit(
+    user,
+    spender,
+    nonce,
+    expiry,
+    true,
     v,
     r,
     s
@@ -1931,6 +2261,59 @@ const EIP_2612_PERMIT_ABI = [
         type: 'bytes32',
       },
       {
+        name: 's',
+        type: 'bytes32',
+      },
+    ],
+    name: 'permit',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
+
+const DAI_EIP_2612_PERMIT_ABI = [
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'holder',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'nonce',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'expiry',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'allowed',
+        type: 'bool',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
         name: 's',
         type: 'bytes32',
       },
