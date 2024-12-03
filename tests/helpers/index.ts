@@ -19,6 +19,8 @@ type BuyErc20TokenForEthInput = {
   signer: ethers.Wallet;
   chainId: number;
   ethersProvider: ethers.providers.JsonRpcProvider;
+  srcDecimals?: number;
+  destDecimals?: number;
 };
 
 type BuyErc20TokenForEthReturn = {
@@ -32,6 +34,8 @@ export async function buyErc20TokenForEth({
   signer,
   chainId,
   ethersProvider,
+  srcDecimals = 18,
+  destDecimals = 18,
 }: BuyErc20TokenForEthInput): Promise<BuyErc20TokenForEthReturn> {
   const _paraSwap = constructSimpleSDK(
     { chainId, ...fetcherOptions },
@@ -39,8 +43,8 @@ export async function buyErc20TokenForEth({
   );
 
   const priceRoute = await _paraSwap.swap.getRate({
-    srcDecimals: 18,
-    destDecimals: 18,
+    srcDecimals,
+    destDecimals,
     srcToken: ETH,
     destToken: tokenAddress,
     amount,
@@ -52,8 +56,8 @@ export async function buyErc20TokenForEth({
 
   const txParams = await _paraSwap.swap.buildTx(
     {
-      srcDecimals: 18,
-      destDecimals: 18,
+      srcDecimals,
+      destDecimals,
       srcToken: ETH,
       srcAmount,
       destToken: tokenAddress,

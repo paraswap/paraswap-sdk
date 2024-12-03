@@ -787,7 +787,7 @@ describe('NFT Orders', () => {
       await COMP_Token.balanceOf(taker.address);
 
     // without SDK
-    // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await NFT_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
@@ -797,7 +797,7 @@ describe('NFT Orders', () => {
     await awaitTx(approveForMakerTx);
 
     // without SDK
-    // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
+    // await BAT_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
@@ -1012,7 +1012,7 @@ describe('NFT Orders', () => {
     const AAVE_Token = erc20Token1.attach(AAVE);
 
     // without SDK
-    // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await NFT_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
@@ -1044,9 +1044,6 @@ describe('NFT Orders', () => {
       [order]
     );
 
-    // without SDK
-    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
-
     //more to account for rogue Insufficient Balance errors
     const buyAmount = new BigNumber(priceRoute.srcAmount)
       .multipliedBy(2)
@@ -1076,6 +1073,9 @@ describe('NFT Orders', () => {
       await MAKER_Token.balanceOf(maker.address);
     const taker3rdTokenInitBalance: BigNumberEthers =
       await AAVE_Token.balanceOf(taker.address);
+
+    // without SDK
+    // await DAI_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(

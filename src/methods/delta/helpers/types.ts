@@ -34,7 +34,9 @@ type DeltaAuctionTransaction = {
   status: number;
   from: string;
   to: string;
-  receivedAmount?: string;
+  receivedAmount: string;
+  spentAmount: string;
+  filledPercent: number; // in base points
   protocolFee: string;
   partnerFee: string;
   agent: string;
@@ -51,7 +53,6 @@ export type ParaswapDeltaAuction = {
   transactions: DeltaAuctionTransaction[];
   chainId: number;
   partner: string;
-  receivedAmount: string | null;
   expiresAt: string;
   createdAt: string;
   updatedAt: string;

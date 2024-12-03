@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/approveForOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/approveForOrder.ts#L15)
+[src/methods/limitOrders/approveForOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/approveForOrder.ts#L17)
