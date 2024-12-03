@@ -19,7 +19,7 @@ export function composeDeltaOrderPermit({
     return permit;
   }
 
-  return encodePermit2Transfer(nonce, permit);
+  return encodePermit2Transfer(BigInt(nonce), permit);
 }
 
 function uintTo32ByteArrayBuffer(nonce: number | bigint) {

@@ -7,7 +7,7 @@ export type DeltaAuctionOrder = {
   destAmount: string; // wei
   expectedDestAmount: string; // wei
   deadline: number; // seconds
-  nonce: number; // can be random, can even be Date.now()
+  nonce: string; // can be random, can even be Date.now()
   permit: string; //can be "0x"
   partnerAndFee: string;
 };

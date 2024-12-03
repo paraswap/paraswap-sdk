@@ -20,7 +20,7 @@ export type BuildDeltaOrderDataParams = {
   srcAmount: string; // wei
   destAmount: string; // wei, deltaPrice.destAmount - slippage
   deadline?: number; // seconds
-  nonce?: number; // can be random, can even be Date.now()
+  nonce?: number | string; // can be random, can even be Date.now()
   permit?: string; //can be "0x"
   partner?: string;
 
@@ -80,7 +80,7 @@ export const constructBuildDeltaOrder = (
       destAmount: options.destAmount,
       expectedDestAmount: options.deltaPrice.destAmount,
       deadline: options.deadline,
-      nonce: options.nonce,
+      nonce: options.nonce?.toString(10),
       permit: options.permit,
 
       chainId,

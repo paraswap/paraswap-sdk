@@ -79,7 +79,7 @@ export function buildDeltaSignableOrderData({
   expectedDestAmount,
 
   deadline = Math.floor(Date.now() / 1000 + DELTA_DEFAULT_EXPIRY),
-  nonce = Date.now(), // random enough to not cause collisions
+  nonce = Date.now().toString(10), // random enough to not cause collisions
 
   permit = '0x',
 
