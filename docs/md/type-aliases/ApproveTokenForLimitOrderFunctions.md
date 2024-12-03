@@ -22,6 +22,14 @@
 
 approving AugustusRFQ as spender for makerAsset
 
+### approveTakerTokenForFillingP2POrderDirectly
+
+> **approveTakerTokenForFillingP2POrderDirectly**: [`ApproveToken`](../-internal-/type-aliases/ApproveToken.md)\<`T`\>
+
+#### Description
+
+approving AugustusRFQ as spender for takerAsset to call SDK.fillOrderDirectly
+
 ### approveTakerTokenForLimitOrder
 
 > **approveTakerTokenForLimitOrder**: [`ApproveToken`](../-internal-/type-aliases/ApproveToken.md)\<`T`\>
