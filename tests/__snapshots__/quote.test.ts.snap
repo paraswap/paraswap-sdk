@@ -1,5 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Quote:methods Get Fallback Market Quote for all 2`] = `
+{
+  "bestRoute": [
+    {
+      "percent": 100,
+      "swaps": [
+        {
+          "destDecimals": 18,
+          "destToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "srcDecimals": 6,
+          "srcToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "swapExchanges": [
+            {
+              "data": {
+                "gasUSD": "dynamic_number",
+                "poolAddress": "0x831bf48183b999fde45294b14b55199072f0801b",
+                "zeroForOne": true,
+              },
+              "destAmount": "dynamic_number",
+              "exchange": "SolidlyV3",
+              "percent": 100,
+              "poolAddresses": [
+                "0x831bf48183b999fde45294b14b55199072f0801b",
+              ],
+              "srcAmount": "10000000",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  "blockNumber": "dynamic_number",
+  "contractAddress": "0x6a000f20005980200259b80c5102003040001068",
+  "contractMethod": "swapExactAmountIn",
+  "destAmount": "dynamic_number",
+  "destDecimals": 18,
+  "destToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "destUSD": "dynamic_number",
+  "gasCost": "dynamic_number",
+  "gasCostUSD": "dynamic_number",
+  "hmac": "dynamic_number",
+  "maxImpactReached": false,
+  "network": 1,
+  "partner": "anon",
+  "partnerFee": 0,
+  "side": "SELL",
+  "srcAmount": "10000000",
+  "srcDecimals": 6,
+  "srcToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "srcUSD": "dynamic_number",
+  "tokenTransferProxy": "0x6a000f20005980200259b80c5102003040001068",
+  "version": "6.2",
+}
+`;
+
 exports[`Quote:methods Get Quote for market 1`] = `
 {
   "bestRoute": [
