@@ -71,7 +71,7 @@ async function allQuote() {
     }
   } else {
     console.log(
-      `Delta Quote failed: ${quote.fallback_reason.errorType} - ${quote.fallback_reason.details}`
+      `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
     );
     const priceRoute = quote.market;
 

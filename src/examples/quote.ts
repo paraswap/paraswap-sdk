@@ -122,7 +122,7 @@ async function allQuote() {
     await handleDeltaQuote({ amount, deltaPrice });
   } else {
     console.log(
-      `Delta Quote failed: ${quote.fallback_reason.errorType} - ${quote.fallback_reason.details}`
+      `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
     );
     const swapTx = await handleMarketQuote({
       amount,

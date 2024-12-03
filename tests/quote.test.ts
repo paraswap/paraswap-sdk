@@ -216,7 +216,7 @@ describe('Quote:methods', () => {
 
     assert(!('delta' in quote), 'Delta price not found in quote');
 
-    expect(quote.fallback_reason).toMatchInlineSnapshot(`
+    expect(quote.fallbackReason).toMatchInlineSnapshot(`
       {
         "details": "Gas cost exceeds trade amount",
         "errorType": "GasCostExceedsTradeAmount",

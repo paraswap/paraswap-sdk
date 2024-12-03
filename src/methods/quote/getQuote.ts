@@ -55,7 +55,7 @@ interface GetQuoteFunc {
   ): Promise<QuoteWithMarketPrice>;
   (options: QuoteParams<'all'>, signal?: AbortSignal): Promise<
     | QuoteWithDeltaPrice
-    | (QuoteWithMarketPrice & { fallback_reason: QuoteWithFallbackReason }) // "all" mode tries for deltaPrice and falls back to market priceRoute
+    | (QuoteWithMarketPrice & { fallbackReason: QuoteWithFallbackReason }) // "all" mode tries for deltaPrice and falls back to market priceRoute
   >;
   (options: QuoteParams, signal?: AbortSignal): Promise<QuoteResponse>;
 }
@@ -84,7 +84,7 @@ export const constructGetQuote = ({
     signal?: AbortSignal
   ): Promise<
     | QuoteWithDeltaPrice
-    | (QuoteWithMarketPrice & { fallback_reason: QuoteWithFallbackReason })
+    | (QuoteWithMarketPrice & { fallbackReason: QuoteWithFallbackReason })
   >;
   function getQuote(
     options: QuoteParams,
