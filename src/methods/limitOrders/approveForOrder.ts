@@ -6,6 +6,8 @@ import { constructGetSpender } from '../swap/spender';
 export type ApproveTokenForLimitOrderFunctions<T> = {
   /** @description approving AugustusRFQ as spender for makerAsset */
   approveMakerTokenForLimitOrder: ApproveToken<T>;
+  /** @description approving AugustusRFQ as spender for takerAsset to call SDK.fillOrderDirectly */
+  approveTakerTokenForFillingP2POrderDirectly: ApproveToken<T>;
   /** @description approving AugustusSwapper as spender for takerAsset for Limit Orders that will be executed through it */
   approveTakerTokenForLimitOrder: ApproveToken<T>;
 };
@@ -28,6 +30,7 @@ export const constructApproveTokenForLimitOrder = <T>(
 
   return {
     approveMakerTokenForLimitOrder,
+    approveTakerTokenForFillingP2POrderDirectly: approveMakerTokenForLimitOrder,
     approveTakerTokenForLimitOrder,
   };
 };

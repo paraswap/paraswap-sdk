@@ -787,7 +787,7 @@ describe('NFT Orders', () => {
       await COMP_Token.balanceOf(taker.address);
 
     // without SDK
-    // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await NFT_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
@@ -797,7 +797,7 @@ describe('NFT Orders', () => {
     await awaitTx(approveForMakerTx);
 
     // without SDK
-    // await BAT_Token.connect(taker).approve(Augustus.address, takerAmount);
+    // await BAT_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
@@ -825,12 +825,12 @@ describe('NFT Orders', () => {
         "expiry": 1766188800,
         "maker": "0xaC39b311DCEb2A4b2f5d8461c1cdaF756F4F7Ae9",
         "makerAmount": "1",
-        "makerAsset": "4315429714524158815340545734471553671933189254538",
+        "makerAsset": "3020601824397600362935497100210020097557564572013",
         "makerAssetId": "0",
         "makerAssetType": 2,
         "nonce": 999,
         "nonceAndMeta": "1461271868364326844682297910593670628577722568144820",
-        "signature": "0x9360585f74eee3de2a12f6dc8c084b3c2646eaf62c3f1c829352bc2eb1e278d2542d36652fe864e3e717f26ed4b6c59554ba1b162ca5ed59a7b5bb32792409281b",
+        "signature": "0x227877ac7b3e39e602f35072aa1aebfd0dcba165f99cd5f53908312897c5c55b0eeac277396821631993fe3413f7562daabf6c68d26bb532685a2166bacfaabc1b",
         "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
         "takerAmount": "6000000000000000000",
         "takerAsset": "1096451400262405796991039590211805051831004063880",
@@ -1012,7 +1012,7 @@ describe('NFT Orders', () => {
     const AAVE_Token = erc20Token1.attach(AAVE);
 
     // without SDK
-    // await NFT_Token.connect(maker).approve(Augustus.address, makerAmount);
+    // await NFT_Token.connect(maker).approve(AugustusRFQ.address, makerAmount);
 
     // withSDK
     const approveForMakerTx = await makerSDK.approveNFTForNFTOrder(
@@ -1044,9 +1044,6 @@ describe('NFT Orders', () => {
       [order]
     );
 
-    // without SDK
-    // await DAI_Token.connect(taker).approve(Augustus.address, takerAmount);
-
     //more to account for rogue Insufficient Balance errors
     const buyAmount = new BigNumber(priceRoute.srcAmount)
       .multipliedBy(2)
@@ -1076,6 +1073,9 @@ describe('NFT Orders', () => {
       await MAKER_Token.balanceOf(maker.address);
     const taker3rdTokenInitBalance: BigNumberEthers =
       await AAVE_Token.balanceOf(taker.address);
+
+    // without SDK
+    // await DAI_Token.connect(taker).approve(AugustusSwapper.address, takerAmount);
 
     // withSDK
     const approveForTakerTx = await takerSDK.approveERC20ForNFTOrder(
