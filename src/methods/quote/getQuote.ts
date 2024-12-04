@@ -12,14 +12,23 @@ type TradeMode = 'delta' | 'market' | 'all';
 type SwapSideUnion = EnumerateLiteral<typeof SwapSide>;
 
 export type QuoteParams<M extends TradeMode = TradeMode> = {
+  /** @description Source Token Address */
   srcToken: string;
+  /** @description Destination Token Address */
   destToken: string;
+  /** @description srcToken amount (in case of SELL) or destToken amount (in case of BUY), in wei */
   amount: string;
+  /** @description Source Token Decimals.  */
   srcDecimals: number;
+  /** @description Destination Token Decimals */
   destDecimals: number;
+  /** @description SELL or BUY */
   side: SwapSideUnion;
+  /** @description User's Wallet Address */
   userAddress?: string;
+  /** @description Partner string */
   partner?: string;
+  /** @description Preferred mode for the trade. In case of "all", Delta pricing is returned, with Market as a fallback */
   mode: M;
 };
 
@@ -97,7 +106,7 @@ export const constructGetQuote = ({
     const search = constructSearchString<QuoteQueryOptions>({
       ...options,
       chainId,
-      // side: SwapSide.SELL, // so far SELL side only
+      // side: SwapSide.SELL, // so far SELL side only for Delta
     });
 
     const fetchURL = `${pricesUrl}/${search}` as const;
