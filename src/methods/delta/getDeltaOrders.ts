@@ -11,6 +11,7 @@ type GetDeltaOrderById = (
 ) => Promise<OrderFromAPI | null>;
 
 type OrdersFilter = {
+  /**@description Order.owner to fetch Delta Order for */
   userAddress: Address;
 };
 type OrderFiltersQuery = OrdersFilter;

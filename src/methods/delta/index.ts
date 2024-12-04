@@ -35,6 +35,7 @@ import {
 } from './approveForDelta';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
+  /** @description designates the Order as being able to partilly filled, as opposed to fill-or-kill */
   partiallyFillable?: boolean;
 };
 

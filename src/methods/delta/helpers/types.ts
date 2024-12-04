@@ -1,14 +1,25 @@
 export type DeltaAuctionOrder = {
+  /** @description The address of the order owner */
   owner: string;
+  /** @description The address of the order beneficiary */
   beneficiary: string; // beneficiary==owner if no transferTo
+  /** @description The address of the src token */
   srcToken: string; // lowercase
+  /** @description The address of the dest token */
   destToken: string; // lowercase
+  /** @description The amount of src token to swap */
   srcAmount: string; // wei
+  /** @description The minimum amount of dest token to receive */
   destAmount: string; // wei
+  /** @description The expected amount of dest token to receive */
   expectedDestAmount: string; // wei
+  /** @description The deadline for the order */
   deadline: number; // seconds
+  /** @description The nonce of the order */
   nonce: string; // can be random, can even be Date.now()
+  /** @description Optional permit signature for the src token */
   permit: string; //can be "0x"
+  /** @description Encoded partner address, fee bps, and flags for the order. partnerAndFee = (partner << 96) | (partnerTakesSurplus << 8) | fee in bps (max fee is 2%) */
   partnerAndFee: string;
 };
 
