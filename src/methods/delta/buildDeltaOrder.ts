@@ -10,17 +10,28 @@ import {
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
+  /** @description The address of the order owner */
   owner: string;
+  /** @description The address of the order beneficiary */
   beneficiary?: string; // beneficiary==owner if no transferTo
+  /** @description The address of the src token */
   srcToken: string; // lowercase
+  /** @description The address of the dest token */
   destToken: string; // lowercase
+  /** @description The amount of src token to swap */
   srcAmount: string; // wei
+  /** @description The minimum amount of dest token to receive */
   destAmount: string; // wei, deltaPrice.destAmount - slippage
+  /** @description The deadline for the order */
   deadline?: number; // seconds
+  /** @description The nonce of the order */
   nonce?: number; // can be random, can even be Date.now()
+  /** @description Optional permit signature for the src token https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits */
   permit?: string; //can be "0x"
+  /** @description Partner string. */
   partner?: string;
 
+  /** @description price response received from /delta/prices (getDeltaPrice method) */
   deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
 };
 

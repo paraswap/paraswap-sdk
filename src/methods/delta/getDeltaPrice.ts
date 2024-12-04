@@ -3,14 +3,20 @@ import { constructSearchString } from '../../helpers/misc';
 import type { ConstructFetchInput } from '../../types';
 
 export type DeltaPriceParams = {
-  /** @description Not Native Token */
+  /** @description Source Token Address. Not Native Token */
   srcToken: string;
+  /** @description Destination Token Address */
   destToken: string;
+  /** @description srcToken amount in wei */
   amount: string;
+  /** @description Source Token Decimals */
   srcDecimals: number;
+  /** @description Destination Token Decimals */
   destDecimals: number;
   // side?: SwapSide; // no BUY side for now
+  /** @description User's Wallet Address */
   userAddress?: string;
+  /** @description Partner string. */
   partner?: string;
 };
 
