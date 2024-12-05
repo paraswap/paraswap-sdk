@@ -259,11 +259,6 @@ describe('Delta:methods', () => {
     ['ethersV6', ethersV6ContractCaller],
     ['web3', web3ContractCaller],
     ['viem', viemContractCaller],
-    // [
-    //   'axiosFetcher & customGanacheContractCaller',
-    //   axiosFetcher,
-    //   customGanacheContractCaller,
-    // ],
   ])('sign Delta Order with %s', async (libName, contractCaller) => {
     const sdk = constructPartialSDK(
       { chainId: 1, fetcher: fetchFetcher, contractCaller },
