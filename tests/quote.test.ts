@@ -4,6 +4,7 @@ import {
   constructFetchFetcher,
   constructPartialSDK,
   constructGetQuote,
+  isFetcherError,
 } from '../src';
 
 import { assert } from 'ts-essentials';
@@ -74,6 +75,34 @@ describe('Quote:methods', () => {
         "srcAmount": "100000000000",
         "srcToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
         "srcUSD": "dynamic_number",
+      }
+    `);
+  });
+
+  test('Fail Quote for delta for small amounts', async () => {
+    const quotePromise = quoteSDK.getQuote({
+      srcToken: USDC,
+      destToken: ETH,
+      amount: (+amount / 1e6).toFixed(0),
+      srcDecimals: 18,
+      destDecimals: 18,
+      mode: 'delta',
+      side: 'SELL',
+    });
+
+    await expect(quotePromise).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Bad Request"`
+    );
+
+    const error = await quotePromise.catch((e) => e);
+
+    assert(isFetcherError(error), 'Error should be a FetchError');
+    const { details, errorType } = error.response?.data;
+
+    expect({ details, errorType }).toMatchInlineSnapshot(`
+      {
+        "details": "Gas cost exceeds trade amount",
+        "errorType": "GasCostExceedsTradeAmount",
       }
     `);
   });
