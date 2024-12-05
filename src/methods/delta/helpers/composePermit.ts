@@ -7,7 +7,8 @@ export function composeDeltaOrderPermit({
   nonce,
 }: DeltaOrderPermitInput): string {
   // Can be empty Permit if allowance is available for srcToken
-  if (permit === '0x') {
+  if (permit === '0x' || permit === '0x01') {
+    // 0x01 is a special permit value that signifies existing Permit2 allowance.
     return permit;
   }
 
@@ -16,6 +17,7 @@ export function composeDeltaOrderPermit({
 
   if (permit.length >= 194) {
     // "0x".length + 96bytes*2 = 194, means permit already concatenated with nonce
+    // or it's a different type of Permit all together
     return permit;
   }
 
