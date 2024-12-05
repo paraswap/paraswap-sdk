@@ -10,6 +10,7 @@ import {
   constructSwapSDK,
   OptimalRate,
   DeltaPrice,
+  isFetcherError,
 } from '..';
 
 const fetcher = constructAxiosFetcher(axios);
@@ -55,11 +56,14 @@ async function deltaQuote() {
     // partner: "..." // if available
   });
 
-  if ('delta' in quote) {
+  try {
     const deltaPrice = quote.delta;
     await handleDeltaQuote({ amount, deltaPrice });
-  } else {
-    console.log(`Delta Quote failed: ${quote.errorType} - ${quote.details}`);
+  } catch (error) {
+    if (isFetcherError(error)) {
+      const data = error.response?.data;
+      console.log(`Delta Quote failed: ${data.errorType} - ${data.details}`);
+    }
   }
 }
 
