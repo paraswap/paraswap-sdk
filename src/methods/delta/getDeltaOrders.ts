@@ -11,8 +11,12 @@ type GetDeltaOrderById = (
 ) => Promise<OrderFromAPI | null>;
 
 type OrdersFilter = {
-  /**@description Order.owner to fetch Delta Order for */
+  /** @description Order.owner to fetch Delta Order for */
   userAddress: Address;
+  /** @description Pagination option, page. Default 1 */
+  page?: number;
+  /** @description Pagination option, limit. Default 100 */
+  limit?: number;
 };
 type OrderFiltersQuery = OrdersFilter;
 
@@ -47,6 +51,8 @@ export const constructGetDeltaOrders = ({
   const getDeltaOrders: GetDeltaOrders = async (options, signal) => {
     const search = constructSearchString<OrderFiltersQuery>({
       userAddress: options.userAddress,
+      page: options.page,
+      limit: options.limit,
     });
 
     const fetchURL = `${baseUrl}${search}` as const;
