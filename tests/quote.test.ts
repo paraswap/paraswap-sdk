@@ -231,11 +231,10 @@ describe('Quote:methods', () => {
         ...s,
         swapExchanges: s.swapExchanges.map((se) => ({
           ...se,
+          exchange: 'dynamic_string',
           destAmount: 'dynamic_number',
-          data: {
-            ...se.data,
-            gasUSD: 'dynamic_number',
-          },
+          data: 'largerly dynamic object',
+          poolAddresses: 'dynamic_array',
         })),
       })),
     }));

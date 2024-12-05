@@ -13,17 +13,11 @@ exports[`Quote:methods Get Fallback Market Quote for all 2`] = `
           "srcToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
           "swapExchanges": [
             {
-              "data": {
-                "gasUSD": "dynamic_number",
-                "poolAddress": "0x831bf48183b999fde45294b14b55199072f0801b",
-                "zeroForOne": true,
-              },
+              "data": "largerly dynamic object",
               "destAmount": "dynamic_number",
-              "exchange": "SolidlyV3",
+              "exchange": "dynamic_string",
               "percent": 100,
-              "poolAddresses": [
-                "0x831bf48183b999fde45294b14b55199072f0801b",
-              ],
+              "poolAddresses": "dynamic_array",
               "srcAmount": "10000000",
             },
           ],
