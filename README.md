@@ -82,10 +82,17 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
 If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
 
 ```ts
-  // with ethers.js
-  const providerOptionsEther = {
+  // with ethers@5
+  const providerOptionsEtherV5 = {
     ethersProviderOrSigner: provider, // JsonRpcProvider
     EthersContract: ethers.Contract,
+    account: senderAddress,
+  };
+
+  // with ethers@6
+  const providerOptionsEtherV6 = {
+    ethersV6ProviderOrSigner: provider, // JsonRpcProvider
+    EthersV6Contract: ethers.Contract,
     account: senderAddress,
   };
 
@@ -101,7 +108,7 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
-  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEther);
+  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEtherV5);
 
   // approve token through sdk
   const txHash = await paraSwap.approveToken(amountInWei, DAI);
@@ -151,7 +158,7 @@ const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 
 ### Basic usage
 
-The easiest way to make a trade is to rely on Quote method that communicates with [/quote API endpoint](link to docs)
+The easiest way to make a trade is to rely on Quote method that communicates with [/quote API endpoint](https://developers.paraswap.network/api/paraswap-delta/retrieve-delta-price-with-fallback-to-market-quote)
 
 ```typescript
 import axios from 'axios';
@@ -223,7 +230,7 @@ if ('delta' in quote) {
   }
 } else {
   console.log(
-    `Delta Quote failed: ${quote.fallback_reason.errorType} - ${quote.fallback_reason.details}`
+    `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
   );
   const priceRoute = quote.market;
 
@@ -245,6 +252,8 @@ if ('delta' in quote) {
   const swapTx = await signer.sendTransaction(txParams);
 }
 ```
+
+#### For Delta protol usage refer to [DELTA.md](./DELTA.md)
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
