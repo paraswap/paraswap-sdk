@@ -36,7 +36,7 @@ type QuoteQueryOptions = QuoteParams & {
   chainId: number; // will return error from API on unsupported chains
 };
 
- type FallbackReason = {
+type FallbackReason = {
   errorType: string;
   details: string;
 };
@@ -49,7 +49,9 @@ export type QuoteWithDeltaPrice = {
   delta: DeltaPrice;
 };
 
-export type QuoteWithMarketPriceAsFallback = QuoteWithMarketPrice & {fallbackReason: FallbackReason};
+export type QuoteWithMarketPriceAsFallback = QuoteWithMarketPrice & {
+  fallbackReason: FallbackReason;
+};
 
 export type QuoteResponse =
   | QuoteWithDeltaPrice
@@ -57,16 +59,16 @@ export type QuoteResponse =
   | QuoteWithMarketPriceAsFallback;
 
 interface GetQuoteFunc {
-  (options: QuoteParams<'delta'>, signal?: AbortSignal): Promise<
-    QuoteWithDeltaPrice
-  >;
+  (
+    options: QuoteParams<'delta'>,
+    signal?: AbortSignal
+  ): Promise<QuoteWithDeltaPrice>;
   (
     options: QuoteParams<'market'>,
     signal?: AbortSignal
   ): Promise<QuoteWithMarketPrice>;
   (options: QuoteParams<'all'>, signal?: AbortSignal): Promise<
-    | QuoteWithDeltaPrice
-    | QuoteWithMarketPriceAsFallback // "all" mode tries for deltaPrice and falls back to market priceRoute
+    QuoteWithDeltaPrice | QuoteWithMarketPriceAsFallback // "all" mode tries for deltaPrice and falls back to market priceRoute
   >;
   (options: QuoteParams, signal?: AbortSignal): Promise<QuoteResponse>;
 }
@@ -93,10 +95,7 @@ export const constructGetQuote = ({
   function getQuote(
     options: QuoteParams<'all'>,
     signal?: AbortSignal
-  ): Promise<
-    | QuoteWithDeltaPrice
-    | QuoteWithMarketPriceAsFallback
-  >;
+  ): Promise<QuoteWithDeltaPrice | QuoteWithMarketPriceAsFallback>;
   function getQuote(
     options: QuoteParams,
     signal?: AbortSignal
