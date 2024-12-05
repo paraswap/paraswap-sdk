@@ -180,7 +180,7 @@ import {
   QuoteResponse,
   QuoteWithDeltaPrice,
   QuoteWithMarketPrice,
-  QuoteWithFallbackReason,
+  QuoteWithMarketPriceAsFallback,
 } from './methods/quote/getQuote';
 
 export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
@@ -347,7 +347,7 @@ export type {
   QuoteResponse,
   QuoteWithDeltaPrice,
   QuoteWithMarketPrice,
-  QuoteWithFallbackReason,
+  QuoteWithMarketPriceAsFallback,
   //common
   ConstructFetchInput,
   ContractCallerFunctions,
