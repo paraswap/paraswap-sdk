@@ -13,8 +13,6 @@ type NormalizedRateOptions<
   Partial<Omit<O, StringArrKeys | 'partner'>> &
   Omit<T, 'options'>;
 
-const DEFAULT_PARTNER = 'paraswap.io';
-
 export function normalizeRateOptions<
   O extends MinRateOptionsInput,
   T extends { options?: Partial<O> }
@@ -23,7 +21,7 @@ export function normalizeRateOptions<
     excludePricingMethods,
     excludeContractMethods,
     includeContractMethods,
-    partner = DEFAULT_PARTNER,
+    partner,
     includeDEXS,
     excludeDEXS,
     excludePools,

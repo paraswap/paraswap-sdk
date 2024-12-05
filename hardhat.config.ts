@@ -19,7 +19,7 @@ const config: HardhatUserConfig = {
       chainId: 1,
       // have to config hardhat with fixed accounts unlocked, otherwise signTx and signTyped data fail when used in RPC calls to Node
       // which breaks web3.js
-      // ethers signs data and txs locally off-chain as long as it has provate key
+      // ethers signs data and txs locally off-chain as long as it has private key
       // web3 is a bit harder to init wallets for locally.
       // impersonateAccounts doesn't work, even though it should logically fully unlock accounts,
       // but only remore accounts are unlocked, fixed are not,

@@ -20,7 +20,7 @@ export const constructFetcher =
 
       // adding apiKey to headers if it's provided
       const apiHeaders = extra?.apiKey
-        ? { 'X-API-KEY': extra.apiKey, ...params.headers }
+        ? { 'X-API-KEY': extra.apiKey }
         : undefined;
 
       // all headers combined

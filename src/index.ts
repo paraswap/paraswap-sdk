@@ -131,6 +131,48 @@ import type {
   ParaSwapVersionUnion as ParaSwapVersion,
 } from './types';
 
+import type {
+  DeltaAuctionOrder,
+  ParaswapDeltaAuction,
+} from './methods/delta/helpers/types';
+import {
+  BuildDeltaOrderDataParams,
+  BuildDeltaOrderFunctions,
+  constructBuildDeltaOrder,
+  SignableDeltaOrderData,
+} from './methods/delta/buildDeltaOrder';
+import {
+  constructPostDeltaOrder,
+  PostDeltaOrderFunctions,
+  PostDeltaOrderParams,
+} from './methods/delta/postDeltaOrder';
+import {
+  constructSignDeltaOrder,
+  SignDeltaOrderFunctions,
+} from './methods/delta/signDeltaOrder';
+import {
+  GetDeltaContractFunctions,
+  constructGetDeltaContract,
+} from './methods/delta/getDeltaContract';
+import {
+  constructGetDeltaPrice,
+  GetDeltaPriceFunctions,
+  DeltaPrice,
+  DeltaPriceParams,
+} from './methods/delta/getDeltaPrice';
+import {
+  constructGetDeltaOrders,
+  GetDeltaOrdersFunctions,
+} from './methods/delta/getDeltaOrders';
+import {
+  ApproveTokenForDeltaFunctions,
+  constructApproveTokenForDelta,
+} from './methods/delta/approveForDelta';
+import {
+  constructGetPartnerFee,
+  GetPartnerFeeFunctions,
+} from './methods/delta/getPartnerFee';
+
 export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
 
 export {
@@ -138,6 +180,13 @@ export {
   constructSubmitLimitOrder,
   LimitOrderHandlers,
 } from './methods/limitOrders';
+
+export {
+  constructAllDeltaOrdersHandlers,
+  constructSubmitDeltaOrder,
+  DeltaOrderHandlers,
+  SubmitDeltaOrderParams,
+} from './methods/delta';
 
 export type {
   TransactionParams,
@@ -198,7 +247,16 @@ export {
   constructApproveTokenForNFTOrder,
   constructGetNFTOrdersContract,
   constructBuildNFTOrderTx,
+  // Delta methods
+  constructBuildDeltaOrder,
+  constructPostDeltaOrder,
+  constructSignDeltaOrder,
+  constructGetDeltaContract,
+  constructGetDeltaPrice,
+  constructGetDeltaOrders,
+  constructApproveTokenForDelta,
   // different helpers
+  constructGetPartnerFee,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
   constructEthersV5ContractCaller,
   constructEthersV6ContractCaller,
@@ -256,11 +314,27 @@ export type {
   BuildNFTOrderInput,
   BuildNFTOrderDataInput,
   NFTOrdersUserParams,
+  //types for Delta methods
+  DeltaPrice,
+  DeltaPriceParams,
+  DeltaAuctionOrder,
+  ParaswapDeltaAuction,
+  BuildDeltaOrderDataParams,
+  BuildDeltaOrderFunctions,
+  SignableDeltaOrderData,
+  PostDeltaOrderFunctions,
+  PostDeltaOrderParams,
+  SignDeltaOrderFunctions,
+  GetDeltaContractFunctions,
+  GetDeltaPriceFunctions,
+  GetDeltaOrdersFunctions,
+  ApproveTokenForDeltaFunctions,
   //common
   ConstructFetchInput,
   ContractCallerFunctions,
   ConstructProviderFetchInput,
   // other types
+  GetPartnerFeeFunctions,
   Token,
   Address,
   AddressOrSymbol,
