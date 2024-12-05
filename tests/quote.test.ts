@@ -108,7 +108,7 @@ describe('Quote:methods', () => {
   });
 
   test('Fail to Get Quote for delta with Native Token', async () => {
-    const quote = await quoteSDK.getQuote({
+    const quotePromise = quoteSDK.getQuote({
       srcToken: ETH,
       destToken: USDC,
       amount,
@@ -118,9 +118,16 @@ describe('Quote:methods', () => {
       side: 'SELL',
     });
 
-    assert(!('delta' in quote), 'elta price should not be available in Quote');
+    await expect(quotePromise).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Bad Request"`
+    );
 
-    expect(quote).toMatchInlineSnapshot(`
+    const error = await quotePromise.catch((e) => e);
+
+    assert(isFetcherError(error), 'Error should be a FetchError');
+    const { details, errorType } = error.response?.data;
+
+    expect({ details, errorType }).toMatchInlineSnapshot(`
       {
         "details": "ETH as source token is not supported",
         "errorType": "SourceEth",
@@ -129,7 +136,7 @@ describe('Quote:methods', () => {
   });
 
   test('Fail to Get Quote for delta for BUY', async () => {
-    const quote = await quoteSDK.getQuote({
+    const quotePromise = quoteSDK.getQuote({
       srcToken: USDC,
       destToken: ETH,
       amount,
@@ -139,9 +146,16 @@ describe('Quote:methods', () => {
       side: 'BUY',
     });
 
-    assert(!('delta' in quote), 'Delta price should not be available in Quote');
+    await expect(quotePromise).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Bad Request"`
+    );
 
-    expect(quote).toMatchInlineSnapshot(`
+    const error = await quotePromise.catch((e) => e);
+
+    assert(isFetcherError(error), 'Error should be a FetchError');
+    const { details, errorType } = error.response?.data;
+
+    expect({ details, errorType }).toMatchInlineSnapshot(`
       {
         "details": "BUY is not supported",
         "errorType": "UnsupportedSide",
