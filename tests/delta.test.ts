@@ -183,7 +183,7 @@ describe('Delta:methods', () => {
     });
 
     // Orders that we know the user had in the past
-    const staticSliceOfPastOrders = deltaOrders.slice(0, 2);
+    const staticSliceOfPastOrders = deltaOrders.slice(-2); // first 2 orders historically
     expect(staticSliceOfPastOrders).toMatchSnapshot();
   });
 
