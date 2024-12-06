@@ -56,6 +56,7 @@ type DeltaAuctionTransaction = {
 
 export type ParaswapDeltaAuction = {
   id: string;
+  deltaVersion: string; // 1.0 or 2.0 currently
   user: string;
   signature: string;
   status: DeltaAuctionStatus;
