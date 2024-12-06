@@ -40,5 +40,5 @@ const SDKwithApprove = constructSimpleSDK(
 
 const approveTxHash = SDKwithApprove.swap.approveToken(
   '1000000000000',
-  PSP_TOKEN
+  DAI_TOKEN
 );

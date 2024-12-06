@@ -23,7 +23,7 @@ export type {
   OptionalRate,
 };
 
-type EnumerateLiteral<T extends Record<string, any>> = {
+export type EnumerateLiteral<T extends Record<string, any>> = {
   [K in keyof T]: T[K] extends `${infer n}` ? n : never;
 }[keyof T];
 // keeping version as string allows for more flexibility

@@ -16,7 +16,7 @@ export type DeltaAuctionOrder = {
   /** @description The deadline for the order */
   deadline: number; // seconds
   /** @description The nonce of the order */
-  nonce: number; // can be random, can even be Date.now()
+  nonce: string; // can be random, can even be Date.now()
   /** @description Optional permit signature for the src token */
   permit: string; //can be "0x"
   /** @description Encoded partner address, fee bps, and flags for the order. partnerAndFee = (partner << 96) | (partnerTakesSurplus << 8) | fee in bps (max fee is 2%) */
@@ -56,6 +56,7 @@ type DeltaAuctionTransaction = {
 
 export type ParaswapDeltaAuction = {
   id: string;
+  deltaVersion: string; // 1.0 or 2.0 currently
   user: string;
   signature: string;
   status: DeltaAuctionStatus;

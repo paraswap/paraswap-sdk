@@ -37,7 +37,7 @@ async function simpleDeltaFlow() {
   const deltaPrice = await deltaSDK.getDeltaPrice({
     srcToken: DAI_TOKEN,
     destToken: PSP_TOKEN,
-    amount: '1000000000000',
+    amount,
     userAddress: account,
     srcDecimals: 18,
     destDecimals: 18,
@@ -47,7 +47,8 @@ async function simpleDeltaFlow() {
   const DeltaContract = await deltaSDK.getDeltaContract();
 
   // or sign a Permit1 or Permit2 TransferFrom for DeltaContract
-  await deltaSDK.approveTokenForDelta(amount, DAI_TOKEN);
+  const tx = await deltaSDK.approveTokenForDelta(amount, DAI_TOKEN);
+  await tx.wait();
 
   const slippagePercent = 0.5;
   const destAmountAfterSlippage = BigInt(
@@ -80,7 +81,7 @@ async function manualDeltaFlow() {
   const deltaPrice = await deltaSDK.getDeltaPrice({
     srcToken: DAI_TOKEN,
     destToken: PSP_TOKEN,
-    amount: '1000000000000',
+    amount,
     userAddress: account,
     srcDecimals: 18,
     destDecimals: 18,
@@ -90,7 +91,8 @@ async function manualDeltaFlow() {
   const DeltaContract = await deltaSDK.getDeltaContract();
 
   // or sign a Permit1 or Permit2 TransferFrom for DeltaContract
-  await deltaSDK.approveTokenForDelta(amount, DAI_TOKEN);
+  const tx = await deltaSDK.approveTokenForDelta(amount, DAI_TOKEN);
+  await tx.wait();
 
   const slippagePercent = 0.5;
   const destAmountAfterSlippage = (
