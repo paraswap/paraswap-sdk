@@ -26,7 +26,7 @@ export const constructGetTokens = ({
       signal,
     });
 
-    const tokens = data.tokens.map(constructToken);
+    const tokens = data.data.tokens.map(constructToken);
     return tokens;
   };
 
