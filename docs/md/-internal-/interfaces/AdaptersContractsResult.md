@@ -28,6 +28,30 @@
 
 ***
 
+### Executors
+
+> **Executors**: `object`
+
+#### Index Signature
+
+ \[`key`: \`Executor$\{number\}\`\]: `string`
+
+#### Defined in
+
+[src/methods/swap/spender.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L19)
+
+***
+
+### ParaswapDelta?
+
+> `optional` **ParaswapDelta**: `string`
+
+#### Defined in
+
+[src/methods/swap/spender.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L22)
+
+***
+
 ### TokenTransferProxy
 
 > **TokenTransferProxy**: `string`

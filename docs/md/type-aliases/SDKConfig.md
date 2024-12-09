@@ -14,4 +14,4 @@
 
 ## Defined in
 
-[src/sdk/partial.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L16)
+[src/sdk/partial.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L17)

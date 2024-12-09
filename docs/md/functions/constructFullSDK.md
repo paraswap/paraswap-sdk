@@ -26,4 +26,4 @@ construct SDK with every method, for swap and limitOrders
 
 ## Defined in
 
-[src/sdk/full.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L19)
+[src/sdk/full.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L31)

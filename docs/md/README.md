@@ -86,10 +86,17 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
 If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
 
 ```ts
-  // with ethers.js
-  const providerOptionsEther = {
+  // with ethers@5
+  const providerOptionsEtherV5 = {
     ethersProviderOrSigner: provider, // JsonRpcProvider
     EthersContract: ethers.Contract,
+    account: senderAddress,
+  };
+
+  // with ethers@6
+  const providerOptionsEtherV6 = {
+    ethersV6ProviderOrSigner: provider, // JsonRpcProvider
+    EthersV6Contract: ethers.Contract,
     account: senderAddress,
   };
 
@@ -105,7 +112,7 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
-  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEther);
+  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEtherV5);
 
   // approve token through sdk
   const txHash = await paraSwap.approveToken(amountInWei, DAI);
@@ -152,6 +159,105 @@ const minParaSwap = constructPartialSDK({
 const priceRoute = await minParaSwap.getRate(params);
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
+
+### Basic usage
+
+The easiest way to make a trade is to rely on Quote method that communicates with [/quote API endpoint](https://developers.paraswap.network/api/paraswap-delta/retrieve-delta-price-with-fallback-to-market-quote)
+
+```typescript
+import axios from 'axios';
+import { ethers } from 'ethersV5';
+import { constructSimpleSDK } from '@paraswap/sdk';
+
+const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+
+const accounts = await ethersProvider.listAccounts();
+const account = accounts[0]!;
+const signer = ethersProvider.getSigner(account);
+
+const simpleSDK = constructSimpleSDK(
+  { chainId: 1, axios },
+  {
+    ethersProviderOrSigner: signer,
+    EthersContract: ethers.Contract,
+    account,
+  }
+);
+
+const amount = '1000000000000'; // wei
+const Token1 = '0x1234...'
+const Token2 = '0xabcde...'
+
+const quote = await simpleSDK.quote.getQuote({
+  srcToken: Token1,
+  destToken: Token2,
+  amount,
+  userAddress: account,
+  srcDecimals: 18,
+  destDecimals: 18,
+  mode: 'all', // Delta quote if possible, with fallback to Market price
+  side: 'SELL',
+  // partner: "..." // if available
+});
+
+if ('delta' in quote) {
+  const deltaPrice = quote.delta;
+
+  const DeltaContract = await simpleSDK.delta.getDeltaContract();
+
+  // or sign a Permit1 or Permit2 TransferFrom for DeltaContract
+  await simpleSDK.delta.approveTokenForDelta(amount, Token1);
+
+  const slippagePercent = 0.5;
+  const destAmountAfterSlippage = BigInt(
+    // get rid of exponential notation
+
+    +(+deltaPrice.destAmount * (1 - slippagePercent / 100)).toFixed(0)
+    // get rid of decimals
+  ).toString(10);
+
+  const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
+    deltaPrice,
+    owner: account,
+    // beneficiary: anotherAccount, // if need to send destToken to another account
+    // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+    srcToken: Token1,
+    destToken: Token2,
+    srcAmount: amount,
+    destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  });
+
+  // poll if necessary
+  const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
+  if (auction?.status === 'EXECUTED') {
+    console.log('Auction was executed');
+  }
+} else {
+  console.log(
+    `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
+  );
+  const priceRoute = quote.market;
+
+  const TokenTransferProxy = await simpleSDK.swap.getSpender();
+
+  // or sign a Permit1 or Permit2 TransferFrom for TokenTransferProxy
+  const approveTxHash = simpleSDK.swap.approveToken(amount, Token1);
+
+  const txParams = await simpleSDK.swap.buildTx({
+    srcToken: Token1,
+    destToken: Token2,
+    srcAmount: amount,
+    slippage: 250, // 2.5%
+    priceRoute,
+    userAddress: account,
+    // partner: '...' // if available
+  });
+
+  const swapTx = await signer.sendTransaction(txParams);
+}
+```
+
+#### For Delta protocol usage refer to [DELTA.md](_media/DELTA.md)
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
@@ -207,4 +313,4 @@ Refer to [SDK API documentation](docs/md/modules.md) for detailed documentation 
 To run `yarn test` it is necessary to provide `PROVIDER_URL=<mainnet_rpc_url>` environment variable.
 If it is necessary to run tests against a different API endpoint, provide `API_URL=url_to_API` environment variable.
 
-<img src="./docs/passed_tests.jpg" width=350 />
+<img src="_media/passed_tests.png" width=350 />

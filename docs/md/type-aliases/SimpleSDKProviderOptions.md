@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:143](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L143)
+[src/sdk/simple.ts:188](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L188)

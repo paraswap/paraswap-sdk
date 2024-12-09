@@ -30,4 +30,4 @@ construct composable SDK with methods you choose yourself
 
 ## Defined in
 
-[src/sdk/partial.ts:83](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L83)
+[src/sdk/partial.ts:84](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L84)
