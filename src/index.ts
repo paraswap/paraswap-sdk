@@ -173,6 +173,16 @@ import {
   GetPartnerFeeFunctions,
 } from './methods/delta/getPartnerFee';
 
+import {
+  constructGetQuote,
+  GetQuoteFunctions,
+  QuoteParams,
+  QuoteResponse,
+  QuoteWithDeltaPrice,
+  QuoteWithMarketPrice,
+  QuoteWithMarketPriceAsFallback,
+} from './methods/quote/getQuote';
+
 export { constructSwapSDK, SwapSDKMethods } from './methods/swap';
 
 export {
@@ -255,6 +265,8 @@ export {
   constructGetDeltaPrice,
   constructGetDeltaOrders,
   constructApproveTokenForDelta,
+  // Quote methods
+  constructGetQuote,
   // different helpers
   constructGetPartnerFee,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
@@ -329,6 +341,13 @@ export type {
   GetDeltaPriceFunctions,
   GetDeltaOrdersFunctions,
   ApproveTokenForDeltaFunctions,
+  // types for Quote methods
+  GetQuoteFunctions,
+  QuoteParams,
+  QuoteResponse,
+  QuoteWithDeltaPrice,
+  QuoteWithMarketPrice,
+  QuoteWithMarketPriceAsFallback,
   //common
   ConstructFetchInput,
   ContractCallerFunctions,

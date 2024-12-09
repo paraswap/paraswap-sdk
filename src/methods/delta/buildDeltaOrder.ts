@@ -1,7 +1,10 @@
 import type { ConstructFetchInput } from '../../types';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
-import { constructGetPartnerFee } from './getPartnerFee';
+import {
+  constructGetPartnerFee,
+  type PartnerFeeResponse,
+} from './getPartnerFee';
 import {
   buildDeltaSignableOrderData,
   type BuildDeltaOrderDataInput,
@@ -25,7 +28,7 @@ export type BuildDeltaOrderDataParams = {
   /** @description The deadline for the order */
   deadline?: number; // seconds
   /** @description The nonce of the order */
-  nonce?: number; // can be random, can even be Date.now()
+  nonce?: number | string; // can be random, can even be Date.now()
   /** @description Optional permit signature for the src token https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits */
   permit?: string; //can be "0x"
   /** @description Partner string. */
@@ -33,7 +36,7 @@ export type BuildDeltaOrderDataParams = {
 
   /** @description price response received from /delta/prices (getDeltaPrice method) */
   deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
-};
+} & Partial<PartnerFeeResponse>; // can override partnerFee, partnerAddress, takeSurplus, which otherwise will be fetched
 
 type BuildDeltaOrder = (
   buildOrderParams: BuildDeltaOrderDataParams,
@@ -60,10 +63,24 @@ export const constructBuildDeltaOrder = (
     if (!ParaswapDelta) {
       throw new Error(`Delta is not available on chain ${chainId}`);
     }
-    const partnerFeeResponse = await getPartnerFee(
-      { partner: options.partner || options.deltaPrice.partner },
-      signal
-    );
+
+    let partnerAddress = options.partnerAddress;
+    let partnerFee = options.partnerFee ?? options.deltaPrice.partnerFee;
+    let takeSurplus = options.takeSurplus;
+
+    if (
+      partnerAddress === undefined ||
+      partnerFee === undefined ||
+      takeSurplus === undefined
+    ) {
+      const partner = options.partner || options.deltaPrice.partner;
+      const partnerFeeResponse = await getPartnerFee({ partner }, signal);
+
+      partnerAddress = partnerAddress ?? partnerFeeResponse.partnerAddress;
+      // deltaPrice.partnerFee and partnerFeeResponse.partnerFee should be the same, but give priority to externally provided
+      partnerFee = partnerFee ?? partnerFeeResponse.partnerFee;
+      takeSurplus = takeSurplus ?? partnerFeeResponse.takeSurplus;
+    }
 
     const input: BuildDeltaOrderDataInput = {
       owner: options.owner,
@@ -74,15 +91,14 @@ export const constructBuildDeltaOrder = (
       destAmount: options.destAmount,
       expectedDestAmount: options.deltaPrice.destAmount,
       deadline: options.deadline,
-      nonce: options.nonce,
+      nonce: options.nonce?.toString(10),
       permit: options.permit,
 
       chainId,
       paraswapDeltaAddress: ParaswapDelta,
-      partnerAddress: partnerFeeResponse.partnerAddress,
-      takeSurplus: partnerFeeResponse.takeSurplus,
-      partnerFee:
-        options.deltaPrice.partnerFee ?? partnerFeeResponse.partnerFee, // should be the same, but give priority to externally provided
+      partnerAddress,
+      takeSurplus,
+      partnerFee,
     };
 
     return buildDeltaSignableOrderData(input);
