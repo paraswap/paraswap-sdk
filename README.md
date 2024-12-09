@@ -253,7 +253,7 @@ if ('delta' in quote) {
 }
 ```
 
-#### For Delta protol usage refer to [DELTA.md](./DELTA.md)
+#### For Delta protocol usage refer to [DELTA.md](./DELTA.md)
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
