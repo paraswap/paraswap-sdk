@@ -177,11 +177,14 @@ describe('Quote:methods', () => {
     expect(quote.market).toBeDefined();
     const priceRoute = quote.market;
 
-    const bestRouteStable = priceRoute.bestRoute.map((b) => ({
-      ...b,
-      percentage: 'dynamic_number',
-      swaps: 'dynamic_array',
-    }));
+    const bestRouteStable = priceRoute.bestRoute
+      .map((b) => ({
+        ...b,
+        percentage: 'dynamic_number',
+        percent: 'dynamic_number',
+        swaps: 'dynamic_array',
+      }))
+      .slice(0, 1); // dynamic length, grab first only
 
     const priceRouteStable = {
       ...priceRoute,

@@ -53,7 +53,7 @@ exports[`Quote:methods Get Quote for market 1`] = `
 {
   "bestRoute": [
     {
-      "percent": 100,
+      "percent": "dynamic_number",
       "percentage": "dynamic_number",
       "swaps": "dynamic_array",
     },
