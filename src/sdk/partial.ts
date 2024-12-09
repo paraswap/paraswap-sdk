@@ -10,8 +10,9 @@ import type { CancelLimitOrderFunctions } from '../methods/limitOrders/cancelOrd
 import type { ApproveTokenForLimitOrderFunctions } from '../methods/limitOrders/approveForOrder';
 import type { CancelNFTOrderFunctions } from '../methods/nftOrders/cancelOrder';
 import type { ApproveTokenForNFTOrderFunctions } from '../methods/nftOrders/approveForOrder';
+import type { FillOrderDirectlyFunctions } from '../methods/limitOrders/fillOrderDirectly';
+import type { ApproveTokenForDeltaFunctions } from '../methods/delta/approveForDelta';
 import { API_URL, DEFAULT_VERSION } from '../constants';
-import { FillOrderDirectlyFunctions } from '../methods/limitOrders/fillOrderDirectly';
 
 export type SDKConfig<TxResponse = any> = ConstructProviderFetchInput<
   TxResponse,
@@ -48,7 +49,8 @@ type InferWithTxResponse<
           FillOrderDirectlyFunctions<TxResponse>,
           ApproveTokenForLimitOrderFunctions<TxResponse>,
           CancelNFTOrderFunctions<TxResponse>,
-          ApproveTokenForNFTOrderFunctions<TxResponse>
+          ApproveTokenForNFTOrderFunctions<TxResponse>,
+          ApproveTokenForDeltaFunctions<TxResponse>
         ]
         // then merge IntersectionOfReturns<Funcs> with them recursively
       >
@@ -69,14 +71,13 @@ type MergeExtendableOnce<
 type MergeExtendableRecursively<
   Accum extends Record<string, any>,
   Replacements extends Record<string, any>[]
-> = Replacements extends [head: infer Head, ...tail: infer Tail] // use [head: infer Head extends Record<string, any>, ...tail: infer Tail] after Ts update
+> = Replacements extends [
+  head: infer Head extends Record<string, any>,
+  ...tail: infer Tail
+]
   ? Tail extends Record<string, any>[]
-    ? Head extends Record<string, any>
-      ? MergeExtendableRecursively<MergeExtendableOnce<Accum, Head>, Tail>
-      : Accum
-    : Head extends Record<string, any>
-    ? MergeExtendableOnce<Accum, Head>
-    : Accum
+    ? MergeExtendableRecursively<MergeExtendableOnce<Accum, Head>, Tail>
+    : MergeExtendableOnce<Accum, Head>
   : Accum;
 
 /** @description construct composable SDK with methods you choose yourself */

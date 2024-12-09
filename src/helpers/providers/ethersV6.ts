@@ -43,8 +43,8 @@ export const constructContractCaller = (
 
     const callableContractFunction = contract.getFunction(contractMethod);
 
-    // returns whatever the Contract.method returns: BigNumber, string, boolean
-    return callableContractFunction(...args, normalizedOverrides);
+    // returns whatever the Contract["method"].staticCall returns: BigNumber, string, boolean
+    return callableContractFunction.staticCall(...args, normalizedOverrides);
   };
 
   const transactCall: TransactionContractCallerFn<
@@ -77,7 +77,7 @@ export const constructContractCaller = (
     // if no method for contractMethod, ethers will throw
     const callableContractFunction = contract.getFunction(contractMethod);
 
-    const txResponse = await callableContractFunction(
+    const txResponse = await callableContractFunction.send(
       ...args,
       normalizedOverrides
     );
