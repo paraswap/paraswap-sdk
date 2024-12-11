@@ -6,7 +6,9 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "docs/DELTA.md",
+    "docs/passed_tests.png"
   ],
   "scripts": {
     "analyze": "size-limit --why",
