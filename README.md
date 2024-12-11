@@ -79,7 +79,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
   }
 ```
 
-If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
+If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap, sign Orders, etc.
 
 ```ts
   // with ethers@5
@@ -185,14 +185,14 @@ const Token1 = '0x1234...'
 const Token2 = '0xabcde...'
 
 const quote = await simpleSDK.quote.getQuote({
-  srcToken: Token1,
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
   destToken: Token2,
   amount,
   userAddress: account,
   srcDecimals: 18,
   destDecimals: 18,
   mode: 'all', // Delta quote if possible, with fallback to Market price
-  side: 'SELL',
+  side: 'SELL', // Delta mode only supports side: SELL currenly
   // partner: "..." // if available
 });
 
@@ -253,7 +253,156 @@ if ('delta' in quote) {
 }
 ```
 
-#### For Delta protocol usage refer to [DELTA.md](./docs/DELTA.md)
+### Delta Order handling
+
+A more detailed overview of the Trade Flow, Delta Order variant.
+
+**ParaSwap Delta** is an intent-based protocol that enables a ParaSwap user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
+This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
+
+After getting **deltaPrice** from **/quote** endpoint, there are additional steps to sign the Order and wait for its execution.
+
+### 1. Get deltaPrice from /quote
+
+```ts
+const amount = '1000000000000'; // wei
+const Token1 = '0x1234...'
+const Token2 = '0xabcde...'
+
+const quote = await simpleSDK.quote.getQuote({
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
+  destToken: Token2,
+  amount,
+  userAddress: account,
+  srcDecimals: 18,
+  destDecimals: 18,
+  mode: 'delta' // or mode: 'all'
+  // partner: "..." // if available
+})
+
+// if used mode: 'all'
+if ('delta' in quote) {
+  const deltaPrice = quote.delta;
+}
+
+// if used mode: 'delta'
+const deltaPrice = quote.delta;
+```
+
+
+### 2. Approve srcToken for DeltaContract
+
+```ts
+const tx = await deltaSDK.approveTokenForDelta(amount, Token1);
+await tx.wait();
+```
+
+Alternatively sign Permit (DAI or Permit1) or Permit2 TransferFrom with DeltaContract as the verifyingContract
+
+```ts
+const DeltaContract = await deltaSDK.getDeltaContract();
+
+// values depend on the Permit type and the srcToken
+const signature = await signer._signTypedData(domain, types, message);
+```
+
+See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits)
+
+
+### 3. Sign and submit a Delta Order
+
+```ts
+// calculate acceptable destAmount
+const slippagePercent = 0.5;
+  const destAmountAfterSlippage = (
+    +deltaPrice.destAmount *
+    (1 - slippagePercent / 100)
+  ).toString(10);
+
+const signableOrderData = await deltaSDK.buildDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  // partner: "..." // if available
+});
+
+const signature = await deltaSDK.signDeltaOrder(signableOrderData);
+
+const deltaAuction = await deltaSDK.postDeltaOrder({
+  // partner: "..." // if available
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  order: signableOrderData.data,
+  signature,
+});
+```
+
+#### 3.a.
+
+As an option the `buildDeltaOrder + signDeltaOrder + signDeltaOrder` can be combined into one SDK call with the following code
+
+```ts
+const deltaAuction = await deltaSDK.submitDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  });
+```
+
+This allows to simplify the flow at the expense of control over the Order signing.
+
+#### 3.b adding partner fee
+
+A portion of destToken will be collected as a partner fee if `partner` parameter is provided to `buildDeltaOrder` (and `submitDeltaOrder`). The `partnerFee` itself is `deltaPrice.partnerFee`
+
+To examine the default partnerFee parameters (`{partnerAddress: Address, partnerFee: number, takeSurplus: boolean}`), you can call. These parameters are then encoded in Order.partnerAndFee field.
+
+```ts
+const partnerFeeResponse = await deltaSDK.getPartnerFee({ partner });
+```
+
+Alternatively, you can supply your own partnerFee parameters that will be encoded in Order.partnerAndFee field
+
+```ts
+const signableOrderData = await deltaSDK.buildDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  partnerAddress: '0x1234...',
+  partnerFee: 0.12,
+  takeSurplus: true,
+});
+```
+
+### 4. Wait for Delta Order execution
+
+```ts
+// poll if necessary
+const auction = await deltaSDK.getDeltaOrderById(deltaAuction.id);
+if (auction?.status === 'EXECUTED') {
+  console.log('Auction was executed');
+}
+```
+
+#### A more detailed example of Delta Order usage can be found in [examples/delta](./src/examples/delta.ts)
+
+#### For more Delta protocol usage refer to [DELTA.md](./docs/DELTA.md)
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
