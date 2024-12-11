@@ -155,6 +155,7 @@ const minParaSwap = constructPartialSDK({
 const priceRoute = await minParaSwap.getRate(params);
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
+--------------
 
 ### Basic usage
 
@@ -215,7 +216,7 @@ if ('delta' in quote) {
   const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
     deltaPrice,
     owner: account,
-    // beneficiary: anotherAccount, // if need to send destToken to another account
+    // beneficiary: anotherAccount, // if need to send the output destToken to another account
     // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
     srcToken: Token1,
     destToken: Token2,
@@ -255,7 +256,7 @@ if ('delta' in quote) {
 
 ### Delta Order handling
 
-A more detailed overview of the Trade Flow, Delta Order variant.
+#### A more detailed overview of the Trade Flow, Delta Order variant.
 
 **ParaSwap Delta** is an intent-based protocol that enables a ParaSwap user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
 This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
@@ -293,14 +294,13 @@ const deltaPrice = quote.delta;
 ### 2. Approve srcToken for DeltaContract
 
 ```ts
-const tx = await deltaSDK.approveTokenForDelta(amount, Token1);
-await tx.wait();
+const approveTxHash = await simpleSDK.delta.approveTokenForDelta(amount, Token1);
 ```
 
 Alternatively sign Permit (DAI or Permit1) or Permit2 TransferFrom with DeltaContract as the verifyingContract
 
 ```ts
-const DeltaContract = await deltaSDK.getDeltaContract();
+const DeltaContract = await simpleSDK.delta.getDeltaContract();
 
 // values depend on the Permit type and the srcToken
 const signature = await signer._signTypedData(domain, types, message);
@@ -319,10 +319,10 @@ const slippagePercent = 0.5;
     (1 - slippagePercent / 100)
   ).toString(10);
 
-const signableOrderData = await deltaSDK.buildDeltaOrder({
+const signableOrderData = await simpleSDK.delta.buildDeltaOrder({
   deltaPrice,
   owner: account,
-  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // beneficiary: anotherAccount, // if need to send the output destToken to another account
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   srcToken: Token1,
   destToken: Token2,
@@ -331,9 +331,9 @@ const signableOrderData = await deltaSDK.buildDeltaOrder({
   // partner: "..." // if available
 });
 
-const signature = await deltaSDK.signDeltaOrder(signableOrderData);
+const signature = await simpleSDK.delta.signDeltaOrder(signableOrderData);
 
-const deltaAuction = await deltaSDK.postDeltaOrder({
+const deltaAuction = await simpleSDK.delta.postDeltaOrder({
   // partner: "..." // if available
   // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
   order: signableOrderData.data,
@@ -346,17 +346,17 @@ const deltaAuction = await deltaSDK.postDeltaOrder({
 As an option the `buildDeltaOrder + signDeltaOrder + signDeltaOrder` can be combined into one SDK call with the following code
 
 ```ts
-const deltaAuction = await deltaSDK.submitDeltaOrder({
+const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
   deltaPrice,
   owner: account,
-  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // beneficiary: anotherAccount, // if need to send output destToken to another account
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
   srcToken: Token1,
   destToken: Token2,
   srcAmount: amount,
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
-  });
+});
 ```
 
 This allows to simplify the flow at the expense of control over the Order signing.
@@ -368,16 +368,16 @@ A portion of destToken will be collected as a partner fee if `partner` parameter
 To examine the default partnerFee parameters (`{partnerAddress: Address, partnerFee: number, takeSurplus: boolean}`), you can call. These parameters are then encoded in Order.partnerAndFee field.
 
 ```ts
-const partnerFeeResponse = await deltaSDK.getPartnerFee({ partner });
+const partnerFeeResponse = await simpleSDK.delta.getPartnerFee({ partner });
 ```
 
 Alternatively, you can supply your own partnerFee parameters that will be encoded in Order.partnerAndFee field
 
 ```ts
-const signableOrderData = await deltaSDK.buildDeltaOrder({
+const signableOrderData = await simpleSDK.delta.buildDeltaOrder({
   deltaPrice,
   owner: account,
-  // beneficiary: anotherAccount, // if need to send destToken to another account
+  // beneficiary: anotherAccount, // if need to send the output destToken to another account
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
   srcToken: Token1,
@@ -394,7 +394,7 @@ const signableOrderData = await deltaSDK.buildDeltaOrder({
 
 ```ts
 // poll if necessary
-const auction = await deltaSDK.getDeltaOrderById(deltaAuction.id);
+const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
 if (auction?.status === 'EXECUTED') {
   console.log('Auction was executed');
 }
