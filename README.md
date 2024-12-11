@@ -403,6 +403,81 @@ if (auction?.status === 'EXECUTED') {
 #### A more detailed example of Delta Order usage can be found in [examples/delta](./src/examples/delta.ts)
 
 #### For more Delta protocol usage refer to [DELTA.md](./docs/DELTA.md)
+------------
+
+### Market Swap handling
+
+#### A more detailed overview of the Trade Flow, Market variant.
+
+Unlike the Delta Order, a Market swap  requires the user themselves to submit a Swap transaction
+
+### 1. Get Market priceRoute from /quote
+
+```ts
+const amount = '1000000000000'; // wei
+const Token1 = '0x1234...'
+const Token2 = '0xabcde...'
+
+const quote = await simpleSDK.quote.getQuote({
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
+  destToken: Token2,
+  amount,
+  userAddress: account,
+  srcDecimals: 18,
+  destDecimals: 18,
+  mode: 'market'
+  // partner: "..." // if available
+})
+
+// if used mode: 'all'
+if ('market' in quote) {
+  const priceRoute = quote.market;
+}
+
+// if used mode: 'market'
+const priceRoute = quote.market;
+```
+
+
+### 2. Approve srcToken for TokenTransferProxy
+
+```ts
+const approveTxHash = simpleSDK.swap.approveToken(amount, DAI_TOKEN);
+```
+
+Alternatively sign Permit (DAI or Permit1) or Permit2 TransferFrom with TokenTransferProxy as the verifyingContract
+
+```ts
+const TokenTransferProxy = await simpleSDK.swap.getSpender();
+
+// values depend on the Permit type and the srcToken
+const signature = await signer._signTypedData(domain, types, message);
+```
+
+See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+
+
+### 3. Send Swap transaction
+
+```ts
+const txParams = await simpleSDK.swap.buildTx({
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  slippage: 250, // 2.5%
+  // can pass `destAmount` (adjusted for slippage) instead of `slippage`
+  priceRoute,
+  userAddress: account,
+  // partner: '...' // if available
+  // receiver: '0x123ae...' // if need to send the output destToken to another account
+});
+
+const swapTxHash = await signer.sendTransaction(txParams);
+```
+
+#### See more details on `buildTx` parameters in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+
+------------------------
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
