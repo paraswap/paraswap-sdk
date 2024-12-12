@@ -365,7 +365,7 @@ This allows to simplify the flow at the expense of control over the Order signin
 
 A portion of destToken will be collected as a partner fee if `partner` parameter is provided to `buildDeltaOrder` (and `submitDeltaOrder`). The `partnerFee` itself is `deltaPrice.partnerFee`
 
-To examine the default partnerFee parameters (`{partnerAddress: Address, partnerFee: number, takeSurplus: boolean}`), you can call. These parameters are then encoded in Order.partnerAndFee field.
+To examine the default partnerFee parameters (`{partnerAddress: Address, partnerFee: number, takeSurplus: boolean}`), you can call `getPartnerFee` method. These parameters are then encoded in Order.partnerAndFee field.
 
 ```ts
 const partnerFeeResponse = await simpleSDK.delta.getPartnerFee({ partner });
