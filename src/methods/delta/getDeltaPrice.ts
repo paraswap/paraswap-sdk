@@ -40,6 +40,7 @@ export type DeltaPrice = {
   destUSDBeforeFee: string;
   partner: string;
   partnerFee: number;
+  hmac: string;
 };
 
 type DeltaPriceResponse = {

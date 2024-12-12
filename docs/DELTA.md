@@ -64,7 +64,7 @@ const slippagePercent = 0.5;
     (1 - slippagePercent / 100)
   ).toString(10);
 
-const signableOrderData = await deltaSDK.buildDeltaOrder({
+const deltaAuction = await deltaSDK.submitDeltaOrder({
   deltaPrice,
   owner: account,
   // beneficiary: anotherAccount, // if need to send destToken to another account
