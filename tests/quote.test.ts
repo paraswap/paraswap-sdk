@@ -48,6 +48,7 @@ describe('Quote:methods', () => {
 
     const staticDeltaPrice: typeof quote.delta = {
       ...quote.delta,
+      hmac: 'dynamic_string',
       destAmount: 'dynamic_number',
       destAmountBeforeFee: 'dynamic_number',
       srcUSD: 'dynamic_number',
@@ -70,6 +71,7 @@ describe('Quote:methods', () => {
         "gasCostBeforeFee": "dynamic_number",
         "gasCostUSD": "dynamic_number",
         "gasCostUSDBeforeFee": "dynamic_number",
+        "hmac": "dynamic_string",
         "partner": "anon",
         "partnerFee": 0,
         "srcAmount": "100000000000",
@@ -190,7 +192,7 @@ describe('Quote:methods', () => {
       ...priceRoute,
       gasCost: 'dynamic_number',
       gasCostUSD: 'dynamic_number',
-      hmac: 'dynamic_number',
+      hmac: 'dynamic_string',
       destAmount: 'dynamic_number',
       blockNumber: 'dynamic_number',
       srcUSD: 'dynamic_number',
@@ -218,6 +220,7 @@ describe('Quote:methods', () => {
 
     const staticDeltaPrice: typeof quote.delta = {
       ...quote.delta,
+      hmac: 'dynamic_string',
       destAmount: 'dynamic_number',
       destAmountBeforeFee: 'dynamic_number',
       srcUSD: 'dynamic_number',
@@ -240,6 +243,7 @@ describe('Quote:methods', () => {
         "gasCostBeforeFee": "dynamic_number",
         "gasCostUSD": "dynamic_number",
         "gasCostUSDBeforeFee": "dynamic_number",
+        "hmac": "dynamic_string",
         "partner": "anon",
         "partnerFee": 0,
         "srcAmount": "100000000000",
@@ -289,7 +293,7 @@ describe('Quote:methods', () => {
       ...priceRoute,
       gasCost: 'dynamic_number',
       gasCostUSD: 'dynamic_number',
-      hmac: 'dynamic_number',
+      hmac: 'dynamic_string',
       destAmount: 'dynamic_number',
       blockNumber: 'dynamic_number',
       srcUSD: 'dynamic_number',

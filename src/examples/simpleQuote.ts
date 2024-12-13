@@ -43,7 +43,10 @@ async function allQuote() {
     const DeltaContract = await simpleSDK.delta.getDeltaContract();
 
     // or sign a Permit1 or Permit2 TransferFrom for DeltaContract
-    await simpleSDK.delta.approveTokenForDelta(amount, DAI_TOKEN);
+    const approveTxHash = await simpleSDK.delta.approveTokenForDelta(
+      amount,
+      DAI_TOKEN
+    );
 
     const slippagePercent = 0.5;
     const destAmountAfterSlippage = BigInt(

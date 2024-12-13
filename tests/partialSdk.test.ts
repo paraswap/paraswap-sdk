@@ -251,7 +251,7 @@ describe.each([
       ...priceRoute,
       gasCost: 'dynamic_number',
       gasCostUSD: 'dynamic_number',
-      hmac: 'dynamic_number',
+      hmac: 'dynamic_string',
       destAmount: 'dynamic_number',
       blockNumber: 'dynamic_number',
       srcUSD: 'dynamic_number',
