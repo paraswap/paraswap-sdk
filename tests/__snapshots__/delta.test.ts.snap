@@ -244,7 +244,7 @@ exports[`Delta:methods Get Delta Price 1`] = `
   "gasCostBeforeFee": "dynamic_number",
   "gasCostUSD": "dynamic_number",
   "gasCostUSDBeforeFee": "dynamic_number",
-  "hmac": "dynamic_hex_string",
+  "hmac": "dynamic_string",
   "partner": "anon",
   "partnerFee": 0,
   "srcAmount": "1000000000000000000",

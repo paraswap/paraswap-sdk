@@ -137,7 +137,7 @@ describe('Delta:methods', () => {
       gasCostBeforeFee: 'dynamic_number',
       gasCostUSD: 'dynamic_number',
       gasCostUSDBeforeFee: 'dynamic_number',
-      hmac: 'dynamic_hex_string',
+      hmac: 'dynamic_string',
     };
 
     expect(staticDeltaPrice).toMatchSnapshot();
@@ -221,7 +221,7 @@ describe('Delta:methods', () => {
       srcAmount: '1000000000000000000',
       srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       srcUSD: '3191.5500000000',
-      hmac: '0x1234',
+      hmac: '1234aeb',
     };
 
     const slippagePercent = 0.5;
@@ -411,7 +411,7 @@ describe('Delta:methods', () => {
       srcAmount: '1000000000000000000',
       srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       srcUSD: '3191.5500000000',
-      hmac: '0x1234',
+      hmac: '1234aeb',
     };
 
     const slippagePercent = 0.5;
