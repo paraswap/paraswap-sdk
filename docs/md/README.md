@@ -83,7 +83,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
   }
 ```
 
-If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap.
+If optional `providerOptions` is provided as the second parameter, then the resulting SDK will also be able to approve Tokens for swap, sign Orders, etc.
 
 ```ts
   // with ethers@5
@@ -159,6 +159,7 @@ const minParaSwap = constructPartialSDK({
 const priceRoute = await minParaSwap.getRate(params);
 const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
 ```
+--------------
 
 ### Basic usage
 
@@ -189,14 +190,14 @@ const Token1 = '0x1234...'
 const Token2 = '0xabcde...'
 
 const quote = await simpleSDK.quote.getQuote({
-  srcToken: Token1,
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
   destToken: Token2,
   amount,
   userAddress: account,
   srcDecimals: 18,
   destDecimals: 18,
   mode: 'all', // Delta quote if possible, with fallback to Market price
-  side: 'SELL',
+  side: 'SELL', // Delta mode only supports side: SELL currenly
   // partner: "..." // if available
 });
 
@@ -219,7 +220,7 @@ if ('delta' in quote) {
   const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
     deltaPrice,
     owner: account,
-    // beneficiary: anotherAccount, // if need to send destToken to another account
+    // beneficiary: anotherAccount, // if need to send the output destToken to another account
     // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
     srcToken: Token1,
     destToken: Token2,
@@ -257,7 +258,226 @@ if ('delta' in quote) {
 }
 ```
 
-#### For Delta protocol usage refer to [DELTA.md](_media/DELTA.md)
+### Delta Order handling
+
+#### A more detailed overview of the Trade Flow, Delta Order variant.
+
+**ParaSwap Delta** is an intent-based protocol that enables a ParaSwap user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
+This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
+
+After getting **deltaPrice** from **/quote** endpoint, there are additional steps to sign the Order and wait for its execution.
+
+### 1. Get deltaPrice from /quote
+
+```ts
+const amount = '1000000000000'; // wei
+const Token1 = '0x1234...'
+const Token2 = '0xabcde...'
+
+const quote = await simpleSDK.quote.getQuote({
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
+  destToken: Token2,
+  amount,
+  userAddress: account,
+  srcDecimals: 18,
+  destDecimals: 18,
+  mode: 'delta' // or mode: 'all'
+  // partner: "..." // if available
+})
+
+// if used mode: 'all'
+if ('delta' in quote) {
+  const deltaPrice = quote.delta;
+}
+
+// if used mode: 'delta'
+const deltaPrice = quote.delta;
+```
+
+### 2. Approve srcToken for DeltaContract
+
+```ts
+const approveTxHash = await simpleSDK.delta.approveTokenForDelta(amount, Token1);
+```
+
+Alternatively sign Permit (DAI or Permit1) or Permit2 TransferFrom with DeltaContract as the verifyingContract
+
+```ts
+const DeltaContract = await simpleSDK.delta.getDeltaContract();
+
+// values depend on the Permit type and the srcToken
+const signature = await signer._signTypedData(domain, types, message);
+```
+
+See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits)
+
+### 3. Sign and submit a Delta Order
+
+```ts
+// calculate acceptable destAmount
+const slippagePercent = 0.5;
+  const destAmountAfterSlippage = (
+    +deltaPrice.destAmount *
+    (1 - slippagePercent / 100)
+  ).toString(10);
+
+const signableOrderData = await simpleSDK.delta.buildDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send the output destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  // partner: "..." // if available
+});
+
+const signature = await simpleSDK.delta.signDeltaOrder(signableOrderData);
+
+const deltaAuction = await simpleSDK.delta.postDeltaOrder({
+  // partner: "..." // if available
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  order: signableOrderData.data,
+  signature,
+});
+```
+
+#### 3.a.
+
+As an option the `buildDeltaOrder + signDeltaOrder + signDeltaOrder` can be combined into one SDK call with the following code
+
+```ts
+const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send output destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+});
+```
+
+This allows to simplify the flow at the expense of control over the Order signing.
+
+#### 3.b adding partner fee
+
+A portion of destToken will be collected as a partner fee if `partner` parameter is provided to `buildDeltaOrder` (and `submitDeltaOrder`). The `partnerFee` itself is `deltaPrice.partnerFee`
+
+To examine the default partnerFee parameters (`{partnerAddress: Address, partnerFee: number, takeSurplus: boolean}`), you can call `getPartnerFee` method. These parameters are then encoded in Order.partnerAndFee field.
+
+```ts
+const partnerFeeResponse = await simpleSDK.delta.getPartnerFee({ partner });
+```
+
+Alternatively, you can supply your own partnerFee parameters that will be encoded in Order.partnerAndFee field
+
+```ts
+const signableOrderData = await simpleSDK.delta.buildDeltaOrder({
+  deltaPrice,
+  owner: account,
+  // beneficiary: anotherAccount, // if need to send the output destToken to another account
+  // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
+  // partiallyFillabel: true, // allow the Order to be partially filled as opposed to fill-or-kill
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
+  partnerAddress: '0x1234...',
+  partnerFee: 0.12,
+  takeSurplus: true,
+});
+```
+
+### 4. Wait for Delta Order execution
+
+```ts
+// poll if necessary
+const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
+if (auction?.status === 'EXECUTED') {
+  console.log('Auction was executed');
+}
+```
+
+#### A more detailed example of Delta Order usage can be found in [examples/delta](_media/delta.ts)
+
+#### For more Delta protocol usage refer to [DELTA.md](_media/DELTA.md)
+------------
+
+### Market Swap handling
+
+#### A more detailed overview of the Trade Flow, Market variant.
+
+Unlike the Delta Order, a Market swap  requires the user themselves to submit a Swap transaction
+
+### 1. Get Market priceRoute from /quote
+
+```ts
+const amount = '1000000000000'; // wei
+const Token1 = '0x1234...'
+const Token2 = '0xabcde...'
+
+const quote = await simpleSDK.quote.getQuote({
+  srcToken: Token1, // Native token (ETH) is only supported in mode: 'market'
+  destToken: Token2,
+  amount,
+  userAddress: account,
+  srcDecimals: 18,
+  destDecimals: 18,
+  mode: 'market'
+  // partner: "..." // if available
+})
+
+// if used mode: 'all'
+if ('market' in quote) {
+  const priceRoute = quote.market;
+}
+
+// if used mode: 'market'
+const priceRoute = quote.market;
+```
+
+### 2. Approve srcToken for TokenTransferProxy
+
+```ts
+const approveTxHash = simpleSDK.swap.approveToken(amount, DAI_TOKEN);
+```
+
+Alternatively sign Permit (DAI or Permit1) or Permit2 TransferFrom with TokenTransferProxy as the verifyingContract
+
+```ts
+const TokenTransferProxy = await simpleSDK.swap.getSpender();
+
+// values depend on the Permit type and the srcToken
+const signature = await signer._signTypedData(domain, types, message);
+```
+
+See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+
+### 3. Send Swap transaction
+
+```ts
+const txParams = await simpleSDK.swap.buildTx({
+  srcToken: Token1,
+  destToken: Token2,
+  srcAmount: amount,
+  slippage: 250, // 2.5%
+  // can pass `destAmount` (adjusted for slippage) instead of `slippage`
+  priceRoute,
+  userAddress: account,
+  // partner: '...' // if available
+  // receiver: '0x123ae...' // if need to send the output destToken to another account
+});
+
+const swapTxHash = await signer.sendTransaction(txParams);
+```
+
+#### See more details on `buildTx` parameters in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+
+------------------------
 
 ### Legacy
 The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.

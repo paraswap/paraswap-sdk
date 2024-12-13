@@ -46,6 +46,10 @@
 
 > **gasCostUSDBeforeFee**: `string`
 
+### hmac
+
+> **hmac**: `string`
+
 ### partner
 
 > **partner**: `string`
