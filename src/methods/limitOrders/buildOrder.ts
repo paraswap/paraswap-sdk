@@ -1,5 +1,5 @@
 import { DEFAULT_VERSION } from '../../constants';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
@@ -15,7 +15,7 @@ export type BuildLimitOrderInput = Omit<
 
 type BuildLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<SignableOrderData>;
 
 export type BuildLimitOrderFunctions = {
@@ -34,10 +34,10 @@ export const constructBuildLimitOrder = (
 
   const buildLimitOrder: BuildLimitOrder = async (
     buildLimitOrderParams,
-    signal
+    requestParams
   ) => {
     const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
-      await getContracts(signal);
+      await getContracts(requestParams);
 
     const AppVersion = options.version ?? DEFAULT_VERSION;
 

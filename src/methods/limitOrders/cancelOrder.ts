@@ -1,17 +1,21 @@
 import type { ExtractAbiMethodNames } from '../../helpers/misc';
-import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+  TxSendOverrides,
+} from '../../types';
 import { constructGetSpender } from '../swap/spender';
 
-type CancelOrder<T> = (
+export type CancelOrder<T> = (
   orderHash: string,
   overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<T>;
 
-type CancelOrderBulk<T> = (
+export type CancelOrderBulk<T> = (
   orderHashes: string[],
   overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<T>;
 
 export type CancelLimitOrderFunctions<T> = {
@@ -63,9 +67,9 @@ export const constructCancelLimitOrder = <T>(
   const cancelLimitOrder: CancelOrder<T> = async (
     orderHash,
     overrides = {},
-    signal
+    requestParams
   ) => {
-    const verifyingContract = await getAugustusRFQ(signal);
+    const verifyingContract = await getAugustusRFQ(requestParams);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       // @CHECK if verifyingContract is the one we need to approve
@@ -83,9 +87,9 @@ export const constructCancelLimitOrder = <T>(
   const cancelLimitOrderBulk: CancelOrderBulk<T> = async (
     orderHashes,
     overrides = {},
-    signal
+    requestParams
   ) => {
-    const verifyingContract = await getAugustusRFQ(signal);
+    const verifyingContract = await getAugustusRFQ(requestParams);
 
     const res = await options.contractCaller.transactCall<AvailableMethods>({
       // @CHECK if verifyingContract is the one we need to approve

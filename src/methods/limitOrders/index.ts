@@ -1,4 +1,7 @@
-import type { ConstructProviderFetchInput } from '../../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+} from '../../types';
 import type { LimitOrderToSend, LimitOrderFromApi } from './helpers/types';
 import {
   BuildLimitOrderFunctions,
@@ -33,13 +36,13 @@ import {
 type SubmitLimitOrder = (
   buildLimitOrderParams: BuildLimitOrderInput,
   extra?: { permitMakerAsset?: string },
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<LimitOrderFromApi>;
 
 type SubmitP2POrder = (
   buildLimitOrderParams: BuildLimitOrderInput & { taker: Address },
   extra?: { permitMakerAsset?: string },
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<LimitOrderFromApi>;
 
 export type SubmitLimitOrderFuncs = {
@@ -73,14 +76,14 @@ export const constructSubmitLimitOrder = (
   const submitLimitOrder: SubmitLimitOrder = async (
     buildLimitOrderParams,
     extra = {},
-    signal
+    requestParams
   ) => {
     const orderWithSignature: LimitOrderToSend = await prepareLimitOrder(
       buildLimitOrderParams,
       extra
     );
 
-    const newOrder = await postLimitOrder(orderWithSignature, signal);
+    const newOrder = await postLimitOrder(orderWithSignature, requestParams);
 
     return newOrder;
   };
@@ -88,14 +91,14 @@ export const constructSubmitLimitOrder = (
   const submitP2POrder: SubmitP2POrder = async (
     buildLimitOrderParams,
     extra = {},
-    signal
+    requestParams
   ) => {
     const orderWithSignature: LimitOrderToSend = await prepareLimitOrder(
       buildLimitOrderParams,
       extra
     );
 
-    const newOrder = await postP2POrder(orderWithSignature, signal);
+    const newOrder = await postP2POrder(orderWithSignature, requestParams);
 
     return newOrder;
   };
