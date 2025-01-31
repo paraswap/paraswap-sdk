@@ -7,6 +7,7 @@ import type {
   AddressOrSymbol,
   PriceString,
   OptimalRate,
+  RequestParameters,
 } from '../../types';
 import { normalizeRateOptions } from './helpers/normalizeRateOptions';
 
@@ -188,7 +189,7 @@ export type GetRateInput = CommonGetRateInput & {
 
 export type GetRate = (
   options: GetRateInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OptimalRate>;
 
 type GetRateByRouteInput = CommonGetRateInput & {
@@ -197,7 +198,7 @@ type GetRateByRouteInput = CommonGetRateInput & {
 
 type GetRateByRoute = (
   options: GetRateByRouteInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OptimalRate>;
 
 export type GetRateFunctions = {
@@ -214,7 +215,10 @@ export const constructGetRate = ({
 }: ConstructFetchInput): GetRateFunctions => {
   const pricesUrl = `${apiURL}/prices` as const;
 
-  const getRate: GetRate = async ({ srcToken, destToken, ...rest }, signal) => {
+  const getRate: GetRate = async (
+    { srcToken, destToken, ...rest },
+    requestParams
+  ) => {
     const parsedOptions = normalizeRateOptions(rest);
 
     // always pass explicit type to make sure UrlSearchParams are correct
@@ -231,13 +235,16 @@ export const constructGetRate = ({
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data.priceRoute;
   };
 
-  const getRateByRoute: GetRateByRoute = async ({ route, ...rest }, signal) => {
+  const getRateByRoute: GetRateByRoute = async (
+    { route, ...rest },
+    requestParams
+  ) => {
     if (route.length < 2) {
       throw new Error(INVALID_ROUTE);
     }
@@ -260,7 +267,7 @@ export const constructGetRate = ({
     const data = await fetcher<PriceRouteApiResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data.priceRoute;

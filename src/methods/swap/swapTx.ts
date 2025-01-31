@@ -1,6 +1,10 @@
 import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { ConstructFetchInput, SwapApiResponse } from '../../types';
+import type {
+  ConstructFetchInput,
+  RequestParameters,
+  SwapApiResponse,
+} from '../../types';
 import { normalizeRateOptions } from './helpers/normalizeRateOptions';
 
 /**
@@ -207,7 +211,7 @@ export type SwapTxResult = SwapApiResponse;
 
 export type GetSwapTxData = (
   options: SwapTxInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<SwapTxResult>;
 
 export type GetSwapTxFunctions = {
@@ -224,7 +228,7 @@ export const constructSwapTx = ({
 
   const getSwapTxData: GetSwapTxData = async (
     { srcToken, destToken, amount, route, ...rest },
-    signal
+    requestParams
   ) => {
     const parsedOptions = normalizeRateOptions(rest);
 
@@ -246,7 +250,7 @@ export const constructSwapTx = ({
     const data = await fetcher<SwapApiResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data;

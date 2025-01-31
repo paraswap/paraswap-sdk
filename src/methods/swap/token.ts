@@ -1,12 +1,13 @@
 import { API_URL } from '../../constants';
 import { constructToken } from '../../helpers/token';
 import type {
+  RequestParameters,
   ConstructFetchInput,
   Token,
   TokensApiResponse,
 } from '../../types';
 
-type GetTokens = (signal?: AbortSignal) => Promise<Token[]>;
+type GetTokens = (extra?: RequestParameters) => Promise<Token[]>;
 
 export type GetTokensFunctions = {
   getTokens: GetTokens;
@@ -19,11 +20,11 @@ export const constructGetTokens = ({
 }: ConstructFetchInput): GetTokensFunctions => {
   const fetchURL = `${apiURL}/tokens/${chainId}` as const;
 
-  const getTokens: GetTokens = async (signal) => {
+  const getTokens: GetTokens = async (requestParams) => {
     const data = await fetcher<TokensApiResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     const tokens = data.tokens.map(constructToken);

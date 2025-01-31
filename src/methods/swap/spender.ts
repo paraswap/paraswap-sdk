@@ -1,9 +1,17 @@
 import { API_URL, DEFAULT_VERSION } from '../../constants';
 import { constructSearchString, runOnceAndCache } from '../../helpers/misc';
-import type { ConstructFetchInput, Address } from '../../types';
+import type {
+  ConstructFetchInput,
+  Address,
+  RequestParameters,
+} from '../../types';
 
-export type GetSpender = (signal?: AbortSignal) => Promise<Address>;
-type GetContracts = (signal?: AbortSignal) => Promise<AdaptersContractsResult>;
+export type GetSpender = (
+  requestParams?: RequestParameters
+) => Promise<Address>;
+type GetContracts = (
+  requestParams?: RequestParameters
+) => Promise<AdaptersContractsResult>;
 
 export type GetSpenderFunctions = {
   getSpender: GetSpender;
@@ -35,11 +43,11 @@ export const constructGetSpender = ({
 
   const fetchURL = `${apiURL}/adapters/contracts${search}` as const;
 
-  const _getContracts: GetContracts = async (signal) => {
+  const _getContracts: GetContracts = async (requestParams) => {
     const data = await fetcher<AdaptersContractsResult>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data;
@@ -49,18 +57,18 @@ export const constructGetSpender = ({
   // so should persist across same apiUrl & network
   const getContracts = runOnceAndCache(_getContracts);
 
-  const getSpender: GetSpender = async (signal) => {
-    const { TokenTransferProxy } = await getContracts(signal);
+  const getSpender: GetSpender = async (requestParams) => {
+    const { TokenTransferProxy } = await getContracts(requestParams);
     return TokenTransferProxy;
   };
 
-  const getAugustusSwapper: GetSpender = async (signal) => {
-    const { AugustusSwapper } = await getContracts(signal);
+  const getAugustusSwapper: GetSpender = async (requestParams) => {
+    const { AugustusSwapper } = await getContracts(requestParams);
     return AugustusSwapper;
   };
 
-  const getAugustusRFQ: GetSpender = async (signal) => {
-    const { AugustusRFQ } = await getContracts(signal);
+  const getAugustusRFQ: GetSpender = async (requestParams) => {
+    const { AugustusRFQ } = await getContracts(requestParams);
     return AugustusRFQ;
   };
 
