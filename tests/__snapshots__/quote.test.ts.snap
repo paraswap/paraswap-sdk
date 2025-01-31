@@ -37,7 +37,7 @@ exports[`Quote:methods Get Fallback Market Quote for all 2`] = `
   "hmac": "dynamic_string",
   "maxImpactReached": false,
   "network": 1,
-  "partner": "anon",
+  "partner": "paraswap.io",
   "partnerFee": 0,
   "side": "SELL",
   "srcAmount": "10000000",
