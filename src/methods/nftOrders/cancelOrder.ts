@@ -1,15 +1,9 @@
-import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
-import { constructCancelLimitOrder } from '../limitOrders/cancelOrder';
-
-type CancelOrder<T> = (
-  orderHash: string,
-  overrides?: TxSendOverrides
-) => Promise<T>;
-
-type CancelOrderBulk<T> = (
-  orderHashes: string[],
-  overrides?: TxSendOverrides
-) => Promise<T>;
+import type { ConstructProviderFetchInput } from '../../types';
+import {
+  CancelOrder,
+  CancelOrderBulk,
+  constructCancelLimitOrder,
+} from '../limitOrders/cancelOrder';
 
 export type CancelNFTOrderFunctions<T> = {
   cancelNFTOrder: CancelOrder<T>;
