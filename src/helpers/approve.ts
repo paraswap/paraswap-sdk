@@ -1,4 +1,8 @@
-import type { ConstructProviderFetchInput, TxSendOverrides } from '../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+  TxSendOverrides,
+} from '../types';
 import type { ExtractAbiMethodNames } from '../helpers/misc';
 import type { Address, PriceString } from './token';
 
@@ -29,19 +33,19 @@ export type ApproveToken<T> = (
   amount: PriceString,
   tokenAddress: Address,
   overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<T>;
 
 export type GetSpenderAsyncOrSync = (
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Address | Promise<Address>;
 
 export function approveTokenMethodFactory<T>(
   contractCaller: ApproveContractCaller<T>,
   getSpender: GetSpenderAsyncOrSync
 ): ApproveToken<T> {
-  return async (amount, tokenAddress, overrides = {}, signal) => {
-    const spender = await getSpender(signal);
+  return async (amount, tokenAddress, overrides = {}, requestParams) => {
+    const spender = await getSpender(requestParams);
 
     const res = await contractCaller.transactCall<ApprovalMethods>({
       address: tokenAddress,
