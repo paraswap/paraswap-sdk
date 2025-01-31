@@ -1,13 +1,17 @@
 import { API_URL } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { Address, ConstructFetchInput } from '../../types';
+import type {
+  Address,
+  ConstructFetchInput,
+  RequestParameters,
+} from '../../types';
 import type { ParaswapDeltaAuction } from './helpers/types';
 
 type OrderFromAPI = Omit<ParaswapDeltaAuction, 'signature'>;
 
 type GetDeltaOrderById = (
   orderId: string,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OrderFromAPI | null>;
 
 type OrdersFilter = {
@@ -22,7 +26,7 @@ type OrderFiltersQuery = OrdersFilter;
 
 type GetDeltaOrders = (
   options: OrdersFilter,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OrderFromAPI[]>;
 
 export type GetDeltaOrdersFunctions = {
@@ -36,19 +40,22 @@ export const constructGetDeltaOrders = ({
 }: ConstructFetchInput): GetDeltaOrdersFunctions => {
   const baseUrl = `${apiURL}/delta/orders` as const;
 
-  const getDeltaOrderById: GetDeltaOrderById = async (orderId, signal) => {
+  const getDeltaOrderById: GetDeltaOrderById = async (
+    orderId,
+    requestParams
+  ) => {
     const fetchURL = `${baseUrl}/${orderId}` as const;
 
     const order = await fetcher<OrderFromAPI | null>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return order;
   };
 
-  const getDeltaOrders: GetDeltaOrders = async (options, signal) => {
+  const getDeltaOrders: GetDeltaOrders = async (options, requestParams) => {
     const search = constructSearchString<OrderFiltersQuery>({
       userAddress: options.userAddress,
       page: options.page,
@@ -60,7 +67,7 @@ export const constructGetDeltaOrders = ({
     const orders = await fetcher<OrderFromAPI[]>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return orders;

@@ -1,6 +1,6 @@
 import { API_URL, SwapSide } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 
 export type DeltaPriceParams = {
   /** @description Source Token Address. Not Native Token */
@@ -49,7 +49,7 @@ type DeltaPriceResponse = {
 
 type GetDeltaPrice = (
   options: DeltaPriceParams,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<DeltaPrice>;
 
 export type GetDeltaPriceFunctions = {
@@ -63,7 +63,7 @@ export const constructGetDeltaPrice = ({
 }: ConstructFetchInput): GetDeltaPriceFunctions => {
   const pricesUrl = `${apiURL}/delta/prices` as const;
 
-  const getDeltaPrice: GetDeltaPrice = async (options, signal) => {
+  const getDeltaPrice: GetDeltaPrice = async (options, requestParams) => {
     const search = constructSearchString<DeltaPriceQueryOptions>({
       ...options,
       chainId,
@@ -75,7 +75,7 @@ export const constructGetDeltaPrice = ({
     const data = await fetcher<DeltaPriceResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data.price;

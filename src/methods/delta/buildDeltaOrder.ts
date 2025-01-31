@@ -1,4 +1,4 @@
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
 import {
@@ -40,7 +40,7 @@ export type BuildDeltaOrderDataParams = {
 
 type BuildDeltaOrder = (
   buildOrderParams: BuildDeltaOrderDataParams,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<SignableDeltaOrderData>;
 
 export type BuildDeltaOrderFunctions = {
@@ -58,8 +58,8 @@ export const constructBuildDeltaOrder = (
   // cached internally for `partner`
   const { getPartnerFee } = constructGetPartnerFee(options);
 
-  const buildDeltaOrder: BuildDeltaOrder = async (options, signal) => {
-    const ParaswapDelta = await getDeltaContract(signal);
+  const buildDeltaOrder: BuildDeltaOrder = async (options, requestParams) => {
+    const ParaswapDelta = await getDeltaContract(requestParams);
     if (!ParaswapDelta) {
       throw new Error(`Delta is not available on chain ${chainId}`);
     }
@@ -74,7 +74,10 @@ export const constructBuildDeltaOrder = (
       takeSurplus === undefined
     ) {
       const partner = options.partner || options.deltaPrice.partner;
-      const partnerFeeResponse = await getPartnerFee({ partner }, signal);
+      const partnerFeeResponse = await getPartnerFee(
+        { partner },
+        requestParams
+      );
 
       partnerAddress = partnerAddress ?? partnerFeeResponse.partnerAddress;
       // deltaPrice.partnerFee and partnerFeeResponse.partnerFee should be the same, but give priority to externally provided

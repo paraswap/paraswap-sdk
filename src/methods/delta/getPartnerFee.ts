@@ -1,6 +1,6 @@
 import { API_URL } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 
 export type PartnerFeeResponse = {
   partnerFee: number; // in %, e.g. 0.12
@@ -14,7 +14,7 @@ type PartnerFeeQueryParams = {
 
 type GetPartnerFee = (
   options: PartnerFeeQueryParams,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<PartnerFeeResponse>;
 
 export type GetPartnerFeeFunctions = {
@@ -32,7 +32,7 @@ export const constructGetPartnerFee = ({
   // to avoid unnecessary network requests
   const cachedPartnerFee = new Map<string, PartnerFeeResponse>();
 
-  const getPartnerFee: GetPartnerFee = async (options, signal) => {
+  const getPartnerFee: GetPartnerFee = async (options, requestParams) => {
     if (cachedPartnerFee.has(options.partner)) {
       return cachedPartnerFee.get(options.partner)!;
     }
@@ -44,7 +44,7 @@ export const constructGetPartnerFee = ({
     const data = await fetcher<PartnerFeeResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     cachedPartnerFee.set(options.partner, data);

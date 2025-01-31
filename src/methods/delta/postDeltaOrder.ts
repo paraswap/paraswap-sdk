@@ -1,5 +1,5 @@
 import { API_URL } from '../../constants';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { DeltaAuctionOrder, ParaswapDeltaAuction } from './helpers/types';
 
 export type DeltaOrderToPost = {
@@ -19,7 +19,7 @@ type DeltaOrderApiResponse = ParaswapDeltaAuction;
 
 type PostDeltaOrder = (
   postData: PostDeltaOrderParams,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<DeltaOrderApiResponse>;
 
 export type PostDeltaOrderFunctions = {
@@ -33,14 +33,14 @@ export const constructPostDeltaOrder = ({
 }: ConstructFetchInput): PostDeltaOrderFunctions => {
   const postOrderUrl = `${apiURL}/delta/orders` as const;
 
-  const postDeltaOrder: PostDeltaOrder = (postData, signal) => {
+  const postDeltaOrder: PostDeltaOrder = (postData, requestParams) => {
     const deltaOrderToPost: DeltaOrderToPost = { ...postData, chainId };
 
     return fetcher<DeltaOrderApiResponse>({
       url: postOrderUrl,
       method: 'POST',
       data: deltaOrderToPost,
-      signal,
+      requestParams,
     });
   };
 
