@@ -16,7 +16,7 @@ export const constructFetcher =
             ...rest.headers,
             ...requestParams?.headers,
           }
-        : { ...rest.headers, ...requestParams };
+        : { ...rest.headers, ...requestParams?.headers };
 
       const allParams = { ...rest, ...requestParams, headers };
 
