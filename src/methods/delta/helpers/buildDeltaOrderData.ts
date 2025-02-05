@@ -27,21 +27,6 @@ const SWAP_ORDER_EIP_712_TYPES = {
   ],
 };
 
-// Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit)";
-const Order = [
-  { name: 'owner', type: 'address' },
-  { name: 'beneficiary', type: 'address' },
-  { name: 'srcToken', type: 'address' },
-  { name: 'destToken', type: 'address' },
-  { name: 'srcAmount', type: 'uint256' },
-  { name: 'destAmount', type: 'uint256' },
-  { name: 'expectedDestAmount', type: 'uint256' },
-  { name: 'deadline', type: 'uint256' },
-  { name: 'nonce', type: 'uint256' },
-  { name: 'partnerAndFee', type: 'uint256' },
-  { name: 'permit', type: 'bytes' },
-];
-
 export type SignableDeltaOrderData = {
   types: {
     Order: typeof SWAP_ORDER_EIP_712_TYPES.Order;
