@@ -172,6 +172,10 @@ import {
   constructGetPartnerFee,
   GetPartnerFeeFunctions,
 } from './methods/delta/getPartnerFee';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+} from './methods/delta/getBridgeInfo';
 
 import {
   constructGetQuote,
@@ -269,6 +273,7 @@ export {
   constructGetQuote,
   // different helpers
   constructGetPartnerFee,
+  constructGetBridgeInfo,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
   constructEthersV5ContractCaller,
   constructEthersV6ContractCaller,
@@ -354,6 +359,7 @@ export type {
   ConstructProviderFetchInput,
   // other types
   GetPartnerFeeFunctions,
+  GetBridgeInfoFunctions,
   Token,
   Address,
   AddressOrSymbol,
