@@ -12,6 +12,7 @@ export function sanitizeDeltaOrderData({
   nonce,
   permit,
   partnerAndFee,
+  bridge,
 }: SignableDeltaOrderData['data'] &
   Record<string, any>): SignableDeltaOrderData['data'] {
   return {
@@ -26,5 +27,6 @@ export function sanitizeDeltaOrderData({
     nonce,
     permit,
     partnerAndFee,
+    bridge,
   };
 }
