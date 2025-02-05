@@ -33,6 +33,7 @@ import { HardhatProvider } from './helpers/hardhat';
 import { privateKeyToAccount } from 'viem/accounts';
 import { createWalletClient, custom, Hex } from 'viem';
 import { hardhat } from 'viem/chains';
+import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 
 dotenv.config();
 
@@ -198,7 +199,7 @@ describe('Delta:methods', () => {
     const partnerFee = await deltaSDK.getPartnerFee({ partner: 'paraswap.io' });
     expect(partnerFee).toMatchInlineSnapshot(`
       {
-        "partnerAddress": "0x81037e7be71bce9591de0c54bb485ad3e048b8de",
+        "partnerAddress": "0xc85f5d432b7fa25287c7e0cb88139a1a4c37f565",
         "partnerFee": 0.15,
         "takeSurplus": false,
       }
@@ -280,6 +281,11 @@ describe('Delta:methods', () => {
         permit: '0x',
         srcAmount: '1000000000000000000',
         srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        bridge: {
+          maxRelayerFee: '0',
+          destinationChainId: 0,
+          outputToken: ZERO_ADDRESS,
+        },
       },
       domain: {
         chainId: 1,
@@ -333,6 +339,24 @@ describe('Delta:methods', () => {
             name: 'permit',
             type: 'bytes',
           },
+          {
+            name: 'bridge',
+            type: 'Bridge',
+          },
+        ],
+        Bridge: [
+          {
+            name: 'maxRelayerFee',
+            type: 'uint256',
+          },
+          {
+            name: 'destinationChainId',
+            type: 'uint256',
+          },
+          {
+            name: 'outputToken',
+            type: 'address',
+          },
         ],
       },
     };
@@ -377,6 +401,11 @@ describe('Delta:methods', () => {
       permit: '0x',
       srcAmount: '1000000000000000000',
       srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+      bridge: {
+        maxRelayerFee: '0',
+        destinationChainId: 0,
+        outputToken: ZERO_ADDRESS,
+      },
     };
 
     const sampleSignature = '0x1234....';
