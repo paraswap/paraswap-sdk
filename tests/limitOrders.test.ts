@@ -1059,6 +1059,7 @@ describe('Limit Orders', () => {
       srcAmount: '---', //will change based on srcToken/destToken rate
       hmac: '---', // will change with any other change
       destUSD: '---',
+      gasCost: '---',
       gasCostUSD: '---',
       srcUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({
