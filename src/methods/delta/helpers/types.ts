@@ -80,8 +80,8 @@ export type ParaswapDeltaAuction = {
   updatedAt: string;
   partiallyFillable: boolean;
 
-  bridgeMetadata: BridgeMetadata;
-  bridgeStatus: BridgeStatus;
+  bridgeMetadata: BridgeMetadata | null;
+  bridgeStatus: BridgeStatus | null;
 };
 
 export type BridgeMetadata = {
