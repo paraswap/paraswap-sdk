@@ -134,6 +134,9 @@ import type {
 import type {
   DeltaAuctionOrder,
   ParaswapDeltaAuction,
+  BridgeMetadata,
+  BridgeStatus,
+  BridgeInput,
 } from './methods/delta/helpers/types';
 import {
   BuildDeltaOrderDataParams,
@@ -336,6 +339,10 @@ export type {
   DeltaPriceParams,
   DeltaAuctionOrder,
   ParaswapDeltaAuction,
+  // bridge part of DeltaOrder
+  BridgeMetadata,
+  BridgeStatus,
+  BridgeInput,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
