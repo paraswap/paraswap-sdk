@@ -21,7 +21,7 @@ export const constructGetBridgeInfo = ({
   apiURL = API_URL,
   fetcher,
 }: ConstructFetchInput): GetBridgeInfoFunctions => {
-  const bridgeInfoUrl = `${apiURL}/prices/bridgeinfo` as const;
+  const bridgeInfoUrl = `${apiURL}/prices/bridge-info` as const;
 
   const getBridgeInfo: GetBridgeInfo = async (requestParams) => {
     const data = await fetcher<BridgeInfoResponse>({
