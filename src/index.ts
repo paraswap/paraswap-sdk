@@ -137,6 +137,7 @@ import type {
   BridgeMetadata,
   BridgeStatus,
   BridgeInput,
+  Bridge,
 } from './methods/delta/helpers/types';
 import {
   BuildDeltaOrderDataParams,
@@ -180,6 +181,10 @@ import {
   constructGetBridgeInfo,
   GetBridgeInfoFunctions,
 } from './methods/delta/getBridgeInfo';
+import {
+  constructGetMulticallHandlers,
+  GetMulticallHandlersFunctions,
+} from './methods/delta/getMulticallHandlers';
 
 import {
   constructGetQuote,
@@ -278,6 +283,7 @@ export {
   // different helpers
   constructGetPartnerFee,
   constructGetBridgeInfo,
+  constructGetMulticallHandlers,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
   constructEthersV5ContractCaller,
   constructEthersV6ContractCaller,
@@ -345,6 +351,7 @@ export type {
   BridgeMetadata,
   BridgeStatus,
   BridgeInput,
+  Bridge,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
@@ -369,6 +376,7 @@ export type {
   // other types
   GetPartnerFeeFunctions,
   GetBridgeInfoFunctions,
+  GetMulticallHandlersFunctions,
   Token,
   Address,
   AddressOrSymbol,
