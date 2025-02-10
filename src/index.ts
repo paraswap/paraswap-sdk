@@ -161,6 +161,7 @@ import {
   constructGetDeltaPrice,
   GetDeltaPriceFunctions,
   DeltaPrice,
+  BridgePrice,
   DeltaPriceParams,
 } from './methods/delta/getDeltaPrice';
 import {
@@ -336,6 +337,7 @@ export type {
   NFTOrdersUserParams,
   //types for Delta methods
   DeltaPrice,
+  BridgePrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
   ParaswapDeltaAuction,
