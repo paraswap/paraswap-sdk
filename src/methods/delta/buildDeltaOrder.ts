@@ -2,6 +2,7 @@ import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { ZERO_ADDRESS } from '../common/orders/buildOrderData';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
+import { constructGetMulticallHandlers } from './getMulticallHandlers';
 import {
   constructGetPartnerFee,
   type PartnerFeeResponse,
@@ -11,7 +12,7 @@ import {
   type BuildDeltaOrderDataInput,
   type SignableDeltaOrderData,
 } from './helpers/buildDeltaOrderData';
-import { BridgeInput } from './helpers/types';
+import { Bridge, BridgeInput } from './helpers/types';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
@@ -71,6 +72,9 @@ export const constructBuildDeltaOrder = (
   // cached internally for `partner`
   const { getPartnerFee } = constructGetPartnerFee(options);
 
+  // cached internally
+  const { getMulticallHandlers } = constructGetMulticallHandlers(options);
+
   const buildDeltaOrder: BuildDeltaOrder = async (options, requestParams) => {
     const ParaswapDelta = await getDeltaContract(requestParams);
     if (!ParaswapDelta) {
@@ -98,6 +102,18 @@ export const constructBuildDeltaOrder = (
       takeSurplus = takeSurplus ?? partnerFeeResponse.takeSurplus;
     }
 
+    const multiCallHandler =
+      (options.bridge && options.bridge.multiCallHandler) ||
+      (await getMulticallHandlers(requestParams))[chainId] ||
+      DEFAULT_BRIDGE.multiCallHandler;
+
+    const bridge: Bridge = options.bridge
+      ? {
+          ...options.bridge,
+          multiCallHandler,
+        }
+      : DEFAULT_BRIDGE;
+
     const input: BuildDeltaOrderDataInput = {
       owner: options.owner,
       beneficiary: options.beneficiary,
@@ -116,7 +132,7 @@ export const constructBuildDeltaOrder = (
       takeSurplus,
       partnerFee,
 
-      bridge: options.bridge || DEFAULT_BRIDGE,
+      bridge,
     };
 
     return buildDeltaSignableOrderData(input);

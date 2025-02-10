@@ -1,3 +1,5 @@
+import type { MarkOptional } from 'ts-essentials';
+
 export type DeltaAuctionOrder = {
   /** @description The address of the order owner */
   owner: string;
@@ -32,7 +34,7 @@ export type Bridge = {
   multiCallHandler: string; // address of the multiCallHandler on destination chain, used to unwrap WETh and sed to Smart Contract receiver
 };
 
-export type BridgeInput = Bridge;
+export type BridgeInput = MarkOptional<Bridge, 'multiCallHandler'>;
 
 type DeltaAuctionStatus =
   | 'NOT_STARTED'
