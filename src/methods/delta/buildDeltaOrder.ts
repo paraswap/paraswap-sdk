@@ -2,7 +2,6 @@ import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { ZERO_ADDRESS } from '../common/orders/buildOrderData';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
-import { constructGetMulticallHandlers } from './getMulticallHandlers';
 import {
   constructGetPartnerFee,
   type PartnerFeeResponse,
@@ -72,9 +71,6 @@ export const constructBuildDeltaOrder = (
   // cached internally for `partner`
   const { getPartnerFee } = constructGetPartnerFee(options);
 
-  // cached internally
-  const { getMulticallHandlers } = constructGetMulticallHandlers(options);
-
   const buildDeltaOrder: BuildDeltaOrder = async (options, requestParams) => {
     const ParaswapDelta = await getDeltaContract(requestParams);
     if (!ParaswapDelta) {
@@ -102,15 +98,13 @@ export const constructBuildDeltaOrder = (
       takeSurplus = takeSurplus ?? partnerFeeResponse.takeSurplus;
     }
 
-    const multiCallHandler =
-      (options.bridge && options.bridge.multiCallHandler) ||
-      (await getMulticallHandlers(requestParams))[chainId] ||
-      DEFAULT_BRIDGE.multiCallHandler;
-
     const bridge: Bridge = options.bridge
       ? {
           ...options.bridge,
-          multiCallHandler,
+          multiCallHandler:
+            // multicallHandler will be provided when transferring Native ETH to a Smart Contract receiver
+            // otherwise Smart Contract receiver will get WETH
+            options.bridge.multiCallHandler || DEFAULT_BRIDGE.multiCallHandler,
         }
       : DEFAULT_BRIDGE;
 

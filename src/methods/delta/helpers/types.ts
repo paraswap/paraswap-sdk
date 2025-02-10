@@ -30,8 +30,10 @@ export type DeltaAuctionOrder = {
 export type Bridge = {
   maxRelayerFee: string;
   destinationChainId: number;
-  outputToken: string; // same as Order.destToken but on destination chain, so can still be a different address
-  multiCallHandler: string; // address of the multiCallHandler on destination chain, used to unwrap WETh and sed to Smart Contract receiver
+  /** @description The address of the output token. Same as Order.destToken but on destination chain, so can still be a different address */
+  outputToken: string;
+  /** @description The address of the multiCallHandler on destination chain, used to unwrap WETH and send to Smart Contract receiver. Must be non-zero when receiver address is a SmartContract wallet and need to send Native ETH */
+  multiCallHandler: string;
 };
 
 export type BridgeInput = MarkOptional<Bridge, 'multiCallHandler'>;
