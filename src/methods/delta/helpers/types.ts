@@ -29,6 +29,7 @@ export type Bridge = {
   maxRelayerFee: string;
   destinationChainId: number;
   outputToken: string; // same as Order.destToken but on destination chain, so can still be a different address
+  multiCallHandler: string; // address of the multiCallHandler on destination chain, used to unwrap WETh and sed to Smart Contract receiver
 };
 
 export type BridgeInput = Bridge;

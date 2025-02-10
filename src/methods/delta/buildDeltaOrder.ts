@@ -54,10 +54,11 @@ export type BuildDeltaOrderFunctions = {
 };
 
 // for same-chain Orders, all 0 params
-const DEFAULT_BRIDGE: BridgeInput = {
+const DEFAULT_BRIDGE: Bridge = {
   maxRelayerFee: '0',
   destinationChainId: 0,
   outputToken: ZERO_ADDRESS,
+  multiCallHandler: ZERO_ADDRESS,
 };
 
 export const constructBuildDeltaOrder = (
