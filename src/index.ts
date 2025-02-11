@@ -180,7 +180,7 @@ import {
 import {
   constructGetBridgeInfo,
   GetBridgeInfoFunctions,
-  BridgeInfoResponse,
+  BridgeInfo,
 } from './methods/delta/getBridgeInfo';
 import {
   constructGetMulticallHandlers,
@@ -354,6 +354,7 @@ export type {
   BridgeStatus,
   BridgeInput,
   Bridge,
+  BridgeInfo,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
@@ -378,7 +379,6 @@ export type {
   // other types
   GetPartnerFeeFunctions,
   GetBridgeInfoFunctions,
-  BridgeInfoResponse,
   GetMulticallHandlersFunctions,
   MulticallHandlersResponse,
   Token,
