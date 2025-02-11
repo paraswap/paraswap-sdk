@@ -7,11 +7,10 @@ import type {
 
 // srcChainId -> destChainId -> outputToken[]
 // output Tokens that are supported for a srcChainId -> destChainId pair
-export type BridgeInfoResponse = Record<number, Record<number, Address[]>>;
+export type BridgeInfo = Record<number, Record<number, Address[]>>;
+type BridgeInfoResponse = { supportedTokens: BridgeInfo };
 
-type GetBridgeInfo = (
-  requestParams?: RequestParameters
-) => Promise<BridgeInfoResponse>;
+type GetBridgeInfo = (requestParams?: RequestParameters) => Promise<BridgeInfo>;
 
 export type GetBridgeInfoFunctions = {
   getBridgeInfo: GetBridgeInfo;
@@ -21,7 +20,7 @@ export const constructGetBridgeInfo = ({
   apiURL = API_URL,
   fetcher,
 }: ConstructFetchInput): GetBridgeInfoFunctions => {
-  const bridgeInfoUrl = `${apiURL}/prices/bridge-info` as const;
+  const bridgeInfoUrl = `${apiURL}/delta/prices/bridge-info` as const;
 
   const getBridgeInfo: GetBridgeInfo = async (requestParams) => {
     const data = await fetcher<BridgeInfoResponse>({
@@ -30,7 +29,7 @@ export const constructGetBridgeInfo = ({
       requestParams,
     });
 
-    return data;
+    return data.supportedTokens;
   };
 
   return {
