@@ -179,6 +179,7 @@ import {
 import {
   constructGetBridgeInfo,
   GetBridgeInfoFunctions,
+  BridgeInfo,
 } from './methods/delta/getBridgeInfo';
 
 import {
@@ -345,6 +346,7 @@ export type {
   BridgeMetadata,
   BridgeStatus,
   BridgeInput,
+  BridgeInfo,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
