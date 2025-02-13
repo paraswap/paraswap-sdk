@@ -96,8 +96,10 @@ export type BridgeMetadata = {
   fillDeadline: number;
   /** @description The deposit id */
   depositId: number;
-  /** @description The transaction hash on the destination chain that fulfilled the order. WHen bridgeStatus='filled' */
+  /** @description The transaction hash on the destination chain that fulfilled the order. When bridgeStatus='filled' */
   fillTx?: string;
+  /** @description The transaction hash on the source chain that refunded the deposit. When bridgeStatus='refunded' */
+  depositRefundTxHash?: string;
 };
 
 //                                                             refunded is basically failed
