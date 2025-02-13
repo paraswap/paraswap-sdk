@@ -136,6 +136,10 @@ import {
   constructGetMulticallHandlers,
   GetMulticallHandlersFunctions,
 } from '../methods/delta/getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from '../methods/delta/isTokenSupportedInDelta';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -164,6 +168,7 @@ export type DeltaFetchMethods = BuildDeltaOrderFunctions &
   GetPartnerFeeFunctions &
   GetMulticallHandlersFunctions &
   GetBridgeInfoFunctions &
+  IsTokenSupportedInDeltaFunctions &
   PostDeltaOrderFunctions;
 
 export type SimpleFetchSDK = {
@@ -284,7 +289,8 @@ export function constructSimpleSDK(
       constructGetDeltaContract,
       constructGetPartnerFee,
       constructGetMulticallHandlers,
-      constructGetBridgeInfo
+      constructGetBridgeInfo,
+      constructIsTokenSupportedInDelta
     );
 
     const quote = constructPartialSDK(config, constructGetQuote);
