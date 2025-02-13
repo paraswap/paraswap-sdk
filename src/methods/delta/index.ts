@@ -41,6 +41,10 @@ import {
   constructGetMulticallHandlers,
   GetMulticallHandlersFunctions,
 } from './getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from './isTokenSupportedInDelta';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
   /** @description designates the Order as being able to be partilly filled, as opposed to fill-or-kill */
@@ -88,6 +92,7 @@ export type DeltaOrderHandlers<T> = SubmitDeltaOrderFuncs &
   GetPartnerFeeFunctions &
   GetMulticallHandlersFunctions &
   GetBridgeInfoFunctions &
+  IsTokenSupportedInDeltaFunctions &
   PostDeltaOrderFunctions &
   SignDeltaOrderFunctions;
 
@@ -104,6 +109,7 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
 
   const partnerFee = constructGetPartnerFee(options);
   const bridgeInfo = constructGetBridgeInfo(options);
+  const isTokenSupportedInDelta = constructIsTokenSupportedInDelta(options);
   const multicallHandlers = constructGetMulticallHandlers(options);
 
   const approveTokenForDelta = constructApproveTokenForDelta(options);
@@ -120,6 +126,7 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
     ...deltaPrice,
     ...partnerFee,
     ...bridgeInfo,
+    ...isTokenSupportedInDelta,
     ...multicallHandlers,
     ...approveTokenForDelta,
     ...deltaOrdersSubmit,
