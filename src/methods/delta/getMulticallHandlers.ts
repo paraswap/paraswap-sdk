@@ -21,7 +21,8 @@ export const constructGetMulticallHandlers = ({
   apiURL = API_URL,
   fetcher,
 }: ConstructFetchInput): GetMulticallHandlersFunctions => {
-  const multicallHandlersUrl = `${apiURL}/multicall-handlers` as const;
+  const multicallHandlersUrl =
+    `${apiURL}/delta/prices/multicall-handlers` as const;
 
   const _getMulticallHandlers: GetMulticallHandlers = async (requestParams) => {
     const data = await fetcher<MulticallHandlersResponse>({
