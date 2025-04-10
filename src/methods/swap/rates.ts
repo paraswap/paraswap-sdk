@@ -1,4 +1,8 @@
-import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
+import {
+  API_URL,
+  DEFAULT_VERSION,
+  ContractMethodByName,
+} from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type {
   ConstructFetchInput,
@@ -8,6 +12,7 @@ import type {
   PriceString,
   OptimalRate,
   RequestParameters,
+  EnumerateLiteral,
 } from '../../types';
 import { normalizeRateOptions } from './helpers/normalizeRateOptions';
 
@@ -17,6 +22,8 @@ export enum PricingMethod {
   multipath = 'multipath',
   simplepath = 'simplepath',
 }
+
+type PricingMethodByName = EnumerateLiteral<typeof PricingMethod>;
 
 type RateQueryParams = {
   /**
@@ -149,9 +156,9 @@ export type RateOptions = {
   excludeDEXS?: string[];
   includeDEXS?: string[];
   excludePools?: string[];
-  excludePricingMethods?: PricingMethod[];
-  excludeContractMethods?: ContractMethod[];
-  includeContractMethods?: ContractMethod[];
+  excludePricingMethods?: PricingMethodByName[];
+  excludeContractMethods?: ContractMethodByName[];
+  includeContractMethods?: ContractMethodByName[];
   partner?: string;
   /** @description In %. It's a way to bypass the API price impact check (default = 15%) */
   maxImpact?: number;
