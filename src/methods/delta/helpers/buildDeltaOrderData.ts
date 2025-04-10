@@ -2,7 +2,6 @@ import { MarkOptional } from 'ts-essentials';
 import { Domain, ZERO_ADDRESS } from '../../common/orders/buildOrderData';
 import { BridgeInput, DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
-import { DeltaPrice } from '../getDeltaPrice';
 
 // Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit, bridge Bridge)";
 const SWAP_ORDER_EIP_712_TYPES = {
@@ -68,13 +67,13 @@ function produceDeltaOrderTypedData({
 export type DeltaOrderDataInput = MarkOptional<
   Omit<DeltaAuctionOrder, 'partnerAndFee'>,
   'beneficiary' | 'deadline' | 'nonce' | 'permit'
-> &
-  Pick<DeltaPrice, 'partnerFee'>;
+>;
 
 export type BuildDeltaOrderDataInput = DeltaOrderDataInput & {
   partnerAddress: string;
   paraswapDeltaAddress: string;
-  takeSurplus: boolean;
+  partnerFeeBps: number;
+  partnerTakesSurplus?: boolean;
   chainId: number;
   bridge: BridgeInput;
 };
@@ -98,8 +97,8 @@ export function buildDeltaSignableOrderData({
   permit = '0x',
 
   partnerAddress,
-  partnerFee,
-  takeSurplus,
+  partnerFeeBps,
+  partnerTakesSurplus = false,
 
   chainId,
   paraswapDeltaAddress,
@@ -117,9 +116,9 @@ export function buildDeltaSignableOrderData({
     nonce,
     permit: composeDeltaOrderPermit({ permit, nonce }),
     partnerAndFee: producePartnerAndFee({
-      partnerFee,
+      partnerFeeBps,
       partnerAddress,
-      takeSurplus,
+      partnerTakesSurplus,
     }),
     bridge,
   };
@@ -132,24 +131,23 @@ export function buildDeltaSignableOrderData({
 }
 
 type ProducePartnerAndFeeInput = {
-  partnerFee: number;
+  partnerFeeBps: number;
   partnerAddress: string;
-  takeSurplus: boolean;
+  partnerTakesSurplus: boolean;
 };
 
 // fee and address are encoded together
 function producePartnerAndFee({
-  partnerFee,
+  partnerFeeBps,
   partnerAddress,
-  takeSurplus,
+  partnerTakesSurplus,
 }: ProducePartnerAndFeeInput): string {
   if (partnerAddress === ZERO_ADDRESS) return '0';
 
-  const partnerFeeBps = BigInt((partnerFee * 100).toFixed(0));
   const partnerAndFee =
     (BigInt(partnerAddress) << BigInt(96)) |
-    partnerFeeBps |
-    (BigInt(takeSurplus) << BigInt(8));
+    BigInt(partnerFeeBps.toFixed(0)) |
+    (BigInt(partnerTakesSurplus) << BigInt(8));
 
   return partnerAndFee.toString(10);
 }

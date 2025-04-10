@@ -41,7 +41,7 @@ export type DeltaPrice = {
   destUSD: string;
   destUSDBeforeFee: string;
   partner: string;
-  partnerFee: number;
+  partnerFee: number; // in %
   hmac: string;
 };
 
