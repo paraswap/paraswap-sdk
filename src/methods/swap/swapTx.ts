@@ -1,4 +1,8 @@
-import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
+import {
+  API_URL,
+  DEFAULT_VERSION,
+  ContractMethodByName,
+} from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
 import type {
   ConstructFetchInput,
@@ -190,12 +194,12 @@ type SwapRateOptions = Omit<
   /**
    * @description List of Contract Methods to include without spaces. **Available values:** swapOnUniswap, buyOnUniswap, swapOnUniswapFork, buyOnUniswapFork, swapOnUniswapV2Fork, buyOnUniswapV2Fork, simpleBuy, simpleSwap, multiSwap, megaSwap, protectedMultiSwap, protectedMegaSwap, protectedSimpleSwap, protectedSimpleBuy, swapOnZeroXv2, swapOnZeroXv4, buy. eg: `simpleSwap,multiSwap`.
    */
-  includeContractMethods?: ContractMethod[];
+  includeContractMethods?: ContractMethodByName[];
 
   /**
    * @description List of Contract Methods to exclude without spaces. (from the list of contract methods mentioned above).
    */
-  excludeContractMethods?: ContractMethod[];
+  excludeContractMethods?: ContractMethodByName[];
 };
 
 type SwapTxInput = Pick<SwapQueryParams, SwapTxInputFields> & {

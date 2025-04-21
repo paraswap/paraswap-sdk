@@ -50,6 +50,8 @@ type DeltaAuctionStatus =
 type DeltaAuctionTransaction = {
   id: string;
   hash: string;
+  orderId: string;
+  bidId: string | null;
   blockNumber: number;
   blockHash: string;
   gasUsed: bigint;
@@ -61,7 +63,9 @@ type DeltaAuctionTransaction = {
   from: string;
   to: string;
   receivedAmount: string;
+  receivedAmountUSD: number;
   spentAmount: string;
+  spentAmountUSD: number;
   filledPercent: number; // in base points
   protocolFee: string;
   partnerFee: string;
@@ -80,10 +84,14 @@ export type ParaswapDeltaAuction = {
   transactions: DeltaAuctionTransaction[];
   chainId: number;
   partner: string;
+  referrerAddress: string | null;
   expiresAt: string;
   createdAt: string;
   updatedAt: string;
   partiallyFillable: boolean;
+
+  excludeAgents: string[] | null;
+  includeAgents: string[] | null;
 
   bridgeMetadata: BridgeMetadata | null;
   bridgeStatus: BridgeStatus | null;

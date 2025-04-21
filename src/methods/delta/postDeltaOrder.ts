@@ -5,6 +5,8 @@ import { DeltaAuctionOrder, ParaswapDeltaAuction } from './helpers/types';
 export type DeltaOrderToPost = {
   /** @description Partner string */
   partner?: string;
+  /** @description Referrer address */
+  referrerAddress?: string;
   order: DeltaAuctionOrder;
   /** @description Signature of the order from order.owner address. EOA signatures must be submitted in ERC-2098 Compact Representation. */
   signature: string;
