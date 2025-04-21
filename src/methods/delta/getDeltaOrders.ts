@@ -14,6 +14,11 @@ type GetDeltaOrderById = (
   requestParams?: RequestParameters
 ) => Promise<OrderFromAPI | null>;
 
+type GetDeltaOrderByHash = (
+  orderHash: string,
+  requestParams?: RequestParameters
+) => Promise<OrderFromAPI | null>;
+
 type OrdersFilter = {
   /** @description Order.owner to fetch Delta Order for */
   userAddress: Address;
@@ -31,6 +36,7 @@ type GetDeltaOrders = (
 
 export type GetDeltaOrdersFunctions = {
   getDeltaOrderById: GetDeltaOrderById;
+  getDeltaOrderByHash: GetDeltaOrderByHash;
   getDeltaOrders: GetDeltaOrders;
 };
 
@@ -45,6 +51,21 @@ export const constructGetDeltaOrders = ({
     requestParams
   ) => {
     const fetchURL = `${baseUrl}/${orderId}` as const;
+
+    const order = await fetcher<OrderFromAPI | null>({
+      url: fetchURL,
+      method: 'GET',
+      requestParams,
+    });
+
+    return order;
+  };
+
+  const getDeltaOrderByHash: GetDeltaOrderByHash = async (
+    orderHash,
+    requestParams
+  ) => {
+    const fetchURL = `${baseUrl}/hash/${orderHash}` as const;
 
     const order = await fetcher<OrderFromAPI | null>({
       url: fetchURL,
@@ -75,6 +96,7 @@ export const constructGetDeltaOrders = ({
 
   return {
     getDeltaOrderById,
+    getDeltaOrderByHash,
     getDeltaOrders,
   };
 };
