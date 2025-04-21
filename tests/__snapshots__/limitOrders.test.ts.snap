@@ -51,7 +51,7 @@ exports[`Limit Orders Build_Swap+LO_Tx 1`] = `
   "destDecimals": 18,
   "destToken": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
   "destUSD": "---",
-  "gasCost": "189300",
+  "gasCost": "---",
   "gasCostUSD": "---",
   "hmac": "---",
   "maxImpactReached": false,

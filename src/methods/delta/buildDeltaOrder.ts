@@ -1,4 +1,5 @@
 import type { ConstructFetchInput, RequestParameters } from '../../types';
+import { ZERO_ADDRESS } from '../common/orders/buildOrderData';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { DeltaPrice } from './getDeltaPrice';
 import {
@@ -10,6 +11,7 @@ import {
   type BuildDeltaOrderDataInput,
   type SignableDeltaOrderData,
 } from './helpers/buildDeltaOrderData';
+import { BridgeInput } from './helpers/types';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
@@ -34,6 +36,9 @@ export type BuildDeltaOrderDataParams = {
   /** @description Partner string. */
   partner?: string;
 
+  /** @description The bridge input */
+  bridge?: BridgeInput;
+
   /** @description price response received from /delta/prices (getDeltaPrice method) */
   deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'>;
 } & Partial<PartnerFeeResponse>; // can override partnerFee, partnerAddress, takeSurplus, which otherwise will be fetched
@@ -46,6 +51,13 @@ type BuildDeltaOrder = (
 export type BuildDeltaOrderFunctions = {
   /** @description Build Orders to be posted to Delta API for execution */
   buildDeltaOrder: BuildDeltaOrder;
+};
+
+// for same-chain Orders, all 0 params
+const DEFAULT_BRIDGE: BridgeInput = {
+  maxRelayerFee: '0',
+  destinationChainId: 0,
+  outputToken: ZERO_ADDRESS,
 };
 
 export const constructBuildDeltaOrder = (
@@ -102,6 +114,8 @@ export const constructBuildDeltaOrder = (
       partnerAddress,
       takeSurplus,
       partnerFee,
+
+      bridge: options.bridge || DEFAULT_BRIDGE,
     };
 
     return buildDeltaSignableOrderData(input);

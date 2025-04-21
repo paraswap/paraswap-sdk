@@ -21,7 +21,17 @@ export type DeltaAuctionOrder = {
   permit: string; //can be "0x"
   /** @description Encoded partner address, fee bps, and flags for the order. partnerAndFee = (partner << 96) | (partnerTakesSurplus << 8) | fee in bps (max fee is 2%) */
   partnerAndFee: string;
+  /** @description The bridge input */
+  bridge: Bridge;
 };
+
+export type Bridge = {
+  maxRelayerFee: string;
+  destinationChainId: number;
+  outputToken: string; // same as Order.destToken but on destination chain, so can still be a different address
+};
+
+export type BridgeInput = Bridge;
 
 type DeltaAuctionStatus =
   | 'NOT_STARTED'
@@ -69,4 +79,21 @@ export type ParaswapDeltaAuction = {
   createdAt: string;
   updatedAt: string;
   partiallyFillable: boolean;
+
+  bridgeMetadata: BridgeMetadata | null;
+  bridgeStatus: BridgeStatus | null;
 };
+
+export type BridgeMetadata = {
+  /** @description The amount that user should expect to get */
+  outputAmount: string;
+  /** @description The cross-chain deadline. If deadline passes, the bridgeStatus would be expired */
+  fillDeadline: number;
+  /** @description The deposit id */
+  depositId: number;
+  /** @description The transaction hash on the destination chain that fulfilled the order. WHen bridgeStatus='filled' */
+  fillTx?: string;
+};
+
+//                                                             refunded is basically failed
+export type BridgeStatus = 'pending' | 'filled' | 'expired' | 'refunded';

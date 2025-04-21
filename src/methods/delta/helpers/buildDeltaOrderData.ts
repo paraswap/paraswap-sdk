@@ -1,27 +1,36 @@
 import { MarkOptional } from 'ts-essentials';
 import { Domain, ZERO_ADDRESS } from '../../common/orders/buildOrderData';
-import { DeltaAuctionOrder } from './types';
+import { BridgeInput, DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
 import { DeltaPrice } from '../getDeltaPrice';
 
-// Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit)";
-const Order = [
-  { name: 'owner', type: 'address' },
-  { name: 'beneficiary', type: 'address' },
-  { name: 'srcToken', type: 'address' },
-  { name: 'destToken', type: 'address' },
-  { name: 'srcAmount', type: 'uint256' },
-  { name: 'destAmount', type: 'uint256' },
-  { name: 'expectedDestAmount', type: 'uint256' },
-  { name: 'deadline', type: 'uint256' },
-  { name: 'nonce', type: 'uint256' },
-  { name: 'partnerAndFee', type: 'uint256' },
-  { name: 'permit', type: 'bytes' },
-];
+// Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit, bridge Bridge)";
+const SWAP_ORDER_EIP_712_TYPES = {
+  Order: [
+    { name: 'owner', type: 'address' },
+    { name: 'beneficiary', type: 'address' },
+    { name: 'srcToken', type: 'address' },
+    { name: 'destToken', type: 'address' },
+    { name: 'srcAmount', type: 'uint256' },
+    { name: 'destAmount', type: 'uint256' },
+    { name: 'expectedDestAmount', type: 'uint256' },
+    { name: 'deadline', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'partnerAndFee', type: 'uint256' },
+    { name: 'permit', type: 'bytes' },
+    { name: 'bridge', type: 'Bridge' },
+  ],
+  Bridge: [
+    { name: 'maxRelayerFee', type: 'uint256' },
+    { name: 'destinationChainId', type: 'uint256' },
+    { name: 'outputToken', type: 'address' },
+  ],
+};
 
 export type SignableDeltaOrderData = {
   types: {
-    Order: typeof Order;
+    Order: typeof SWAP_ORDER_EIP_712_TYPES.Order;
+    Bridge: typeof SWAP_ORDER_EIP_712_TYPES.Bridge;
   };
   domain: Domain;
   data: DeltaAuctionOrder;
@@ -39,7 +48,10 @@ function produceDeltaOrderTypedData({
   paraswapDeltaAddress,
 }: SignDeltaOrderInput): SignableDeltaOrderData {
   const typedData = {
-    types: { Order },
+    types: {
+      Order: SWAP_ORDER_EIP_712_TYPES.Order,
+      Bridge: SWAP_ORDER_EIP_712_TYPES.Bridge,
+    },
     domain: {
       name: 'Portikus',
       version: '2.0.0',
@@ -63,6 +75,7 @@ export type BuildDeltaOrderDataInput = DeltaOrderDataInput & {
   paraswapDeltaAddress: string;
   takeSurplus: boolean;
   chainId: number;
+  bridge: BridgeInput;
 };
 
 // default deadline = 1 hour from now (may be changed later)
@@ -89,6 +102,7 @@ export function buildDeltaSignableOrderData({
 
   chainId,
   paraswapDeltaAddress,
+  bridge,
 }: BuildDeltaOrderDataInput): SignableDeltaOrderData {
   const orderInput: DeltaAuctionOrder = {
     owner,
@@ -106,6 +120,7 @@ export function buildDeltaSignableOrderData({
       partnerAddress,
       takeSurplus,
     }),
+    bridge,
   };
 
   return produceDeltaOrderTypedData({

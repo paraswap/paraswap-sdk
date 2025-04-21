@@ -33,6 +33,10 @@ import {
   ApproveTokenForDeltaFunctions,
   constructApproveTokenForDelta,
 } from './approveForDelta';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+} from './getBridgeInfo';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
   /** @description designates the Order as being able to be partilly filled, as opposed to fill-or-kill */
@@ -78,6 +82,7 @@ export type DeltaOrderHandlers<T> = SubmitDeltaOrderFuncs &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
   GetPartnerFeeFunctions &
+  GetBridgeInfoFunctions &
   PostDeltaOrderFunctions &
   SignDeltaOrderFunctions;
 
@@ -93,6 +98,7 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
   const deltaPrice = constructGetDeltaPrice(options);
 
   const partnerFee = constructGetPartnerFee(options);
+  const bridgeInfo = constructGetBridgeInfo(options);
 
   const approveTokenForDelta = constructApproveTokenForDelta(options);
 
@@ -102,13 +108,12 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
   const deltaOrdersSign = constructSignDeltaOrder(options);
   const deltaOrdersPost = constructPostDeltaOrder(options);
 
-  // const DeltaOrdersApproveToken = constructApproveTokenForDeltaOrder(options);
-
   return {
     ...deltaOrdersGetters,
     ...deltaOrdersContractGetter,
     ...deltaPrice,
     ...partnerFee,
+    ...bridgeInfo,
     ...approveTokenForDelta,
     ...deltaOrdersSubmit,
     ...deltaOrdersBuild,
