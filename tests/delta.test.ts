@@ -285,6 +285,7 @@ describe('Delta:methods', () => {
           maxRelayerFee: '0',
           destinationChainId: 0,
           outputToken: ZERO_ADDRESS,
+          multiCallHandler: ZERO_ADDRESS,
         },
       },
       domain: {
@@ -405,6 +406,7 @@ describe('Delta:methods', () => {
         maxRelayerFee: '0',
         destinationChainId: 0,
         outputToken: ZERO_ADDRESS,
+        multiCallHandler: ZERO_ADDRESS,
       },
     };
 

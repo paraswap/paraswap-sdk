@@ -11,7 +11,7 @@ import {
   type BuildDeltaOrderDataInput,
   type SignableDeltaOrderData,
 } from './helpers/buildDeltaOrderData';
-import { BridgeInput } from './helpers/types';
+import { Bridge, BridgeInput } from './helpers/types';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
@@ -54,10 +54,11 @@ export type BuildDeltaOrderFunctions = {
 };
 
 // for same-chain Orders, all 0 params
-const DEFAULT_BRIDGE: BridgeInput = {
+const DEFAULT_BRIDGE: Bridge = {
   maxRelayerFee: '0',
   destinationChainId: 0,
   outputToken: ZERO_ADDRESS,
+  multiCallHandler: ZERO_ADDRESS,
 };
 
 export const constructBuildDeltaOrder = (
@@ -97,6 +98,16 @@ export const constructBuildDeltaOrder = (
       takeSurplus = takeSurplus ?? partnerFeeResponse.takeSurplus;
     }
 
+    const bridge: Bridge = options.bridge
+      ? {
+          ...options.bridge,
+          multiCallHandler:
+            // multicallHandler will be provided when transferring Native ETH to a Smart Contract receiver
+            // otherwise Smart Contract receiver will get WETH
+            options.bridge.multiCallHandler || DEFAULT_BRIDGE.multiCallHandler,
+        }
+      : DEFAULT_BRIDGE;
+
     const input: BuildDeltaOrderDataInput = {
       owner: options.owner,
       beneficiary: options.beneficiary,
@@ -115,7 +126,7 @@ export const constructBuildDeltaOrder = (
       takeSurplus,
       partnerFee,
 
-      bridge: options.bridge || DEFAULT_BRIDGE,
+      bridge,
     };
 
     return buildDeltaSignableOrderData(input);

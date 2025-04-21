@@ -31,6 +31,7 @@ const SWAP_ORDER_EIP_712_TYPES = {
     { name: 'maxRelayerFee', type: 'uint256' },
     { name: 'destinationChainId', type: 'uint256' },
     { name: 'outputToken', type: 'address' },
+    { name: 'multiCallHandler', type: 'address' },
   ],
 };
 
@@ -71,6 +72,7 @@ function buildOrder(
       destinationChainId: 10,
       maxRelayerFee: (BigInt(price.bridgeFee) * 2n).toString(),
       outputToken: USDC_OP,
+      multiCallHandler: '0x924a9f036260DdD5808007E1AA95f08eD08aA569',
     },
   };
 }

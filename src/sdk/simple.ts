@@ -128,6 +128,14 @@ import {
   constructGetQuote,
   GetQuoteFunctions,
 } from '../methods/quote/getQuote';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+} from '../methods/delta/getBridgeInfo';
+import {
+  constructGetMulticallHandlers,
+  GetMulticallHandlersFunctions,
+} from '../methods/delta/getMulticallHandlers';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -154,6 +162,8 @@ export type DeltaFetchMethods = BuildDeltaOrderFunctions &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
   GetPartnerFeeFunctions &
+  GetMulticallHandlersFunctions &
+  GetBridgeInfoFunctions &
   PostDeltaOrderFunctions;
 
 export type SimpleFetchSDK = {
@@ -272,7 +282,9 @@ export function constructSimpleSDK(
       constructGetDeltaOrders,
       constructGetDeltaPrice,
       constructGetDeltaContract,
-      constructGetPartnerFee
+      constructGetPartnerFee,
+      constructGetMulticallHandlers,
+      constructGetBridgeInfo
     );
 
     const quote = constructPartialSDK(config, constructGetQuote);
