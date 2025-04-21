@@ -187,6 +187,10 @@ import {
   GetMulticallHandlersFunctions,
   MulticallHandlersResponse,
 } from './methods/delta/getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from './methods/delta/isTokenSupportedInDelta';
 
 import {
   constructGetQuote,
@@ -285,6 +289,7 @@ export {
   // different helpers
   constructGetPartnerFee,
   constructGetBridgeInfo,
+  constructIsTokenSupportedInDelta,
   constructGetMulticallHandlers,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
   constructEthersV5ContractCaller,
@@ -379,6 +384,7 @@ export type {
   // other types
   GetPartnerFeeFunctions,
   GetBridgeInfoFunctions,
+  IsTokenSupportedInDeltaFunctions,
   GetMulticallHandlersFunctions,
   MulticallHandlersResponse,
   Token,
