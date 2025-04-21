@@ -928,6 +928,8 @@ describe('Limit Orders', () => {
     const priceRoute = await takerSDK.getLimitOrdersRate(
       {
         srcToken: DAI,
+        srcDecimals: 18,
+        destDecimals: 18,
         destToken: BAT,
         userAddress: taker.address,
       },
