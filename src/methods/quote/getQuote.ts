@@ -4,6 +4,7 @@ import type { DeltaPrice } from '../delta/getDeltaPrice';
 import type {
   ConstructFetchInput,
   EnumerateLiteral,
+  RequestParameters,
   OptimalRate,
 } from '../../types';
 
@@ -61,16 +62,19 @@ export type QuoteResponse =
 interface GetQuoteFunc {
   (
     options: QuoteParams<'delta'>,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteWithDeltaPrice>;
   (
     options: QuoteParams<'market'>,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteWithMarketPrice>;
-  (options: QuoteParams<'all'>, signal?: AbortSignal): Promise<
+  (options: QuoteParams<'all'>, requestParams?: RequestParameters): Promise<
     QuoteWithDeltaPrice | QuoteWithMarketPriceAsFallback // "all" mode tries for deltaPrice and falls back to market priceRoute
   >;
-  (options: QuoteParams, signal?: AbortSignal): Promise<QuoteResponse>;
+  (
+    options: QuoteParams,
+    requestParams?: RequestParameters
+  ): Promise<QuoteResponse>;
 }
 
 export type GetQuoteFunctions = {
@@ -86,23 +90,23 @@ export const constructGetQuote = ({
 
   function getQuote(
     options: QuoteParams<'delta'>,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteWithDeltaPrice>;
   function getQuote(
     options: QuoteParams<'market'>,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteWithMarketPrice>;
   function getQuote(
     options: QuoteParams<'all'>,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteWithDeltaPrice | QuoteWithMarketPriceAsFallback>;
   function getQuote(
     options: QuoteParams,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteResponse>;
   async function getQuote(
     options: QuoteParams,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<QuoteResponse> {
     const search = constructSearchString<QuoteQueryOptions>({
       ...options,
@@ -115,7 +119,7 @@ export const constructGetQuote = ({
     const data = await fetcher<QuoteResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data;

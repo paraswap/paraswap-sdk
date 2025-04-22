@@ -128,6 +128,18 @@ import {
   constructGetQuote,
   GetQuoteFunctions,
 } from '../methods/quote/getQuote';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+} from '../methods/delta/getBridgeInfo';
+import {
+  constructGetMulticallHandlers,
+  GetMulticallHandlersFunctions,
+} from '../methods/delta/getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from '../methods/delta/isTokenSupportedInDelta';
 
 export type SwapFetchMethods = GetBalancesFunctions &
   GetTokensFunctions &
@@ -154,6 +166,9 @@ export type DeltaFetchMethods = BuildDeltaOrderFunctions &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
   GetPartnerFeeFunctions &
+  GetMulticallHandlersFunctions &
+  GetBridgeInfoFunctions &
+  IsTokenSupportedInDeltaFunctions &
   PostDeltaOrderFunctions;
 
 export type SimpleFetchSDK = {
@@ -203,7 +218,11 @@ const constructFetcher = (options: FetcherOptions): FetcherFunction => {
   return (params) => {
     // adding apiKey to headers if it's provided
     const headers = options?.apiKey
-      ? { 'X-API-KEY': options.apiKey, ...params.headers }
+      ? {
+          'X-API-KEY': options.apiKey,
+          ...params.headers,
+          ...params.requestParams?.headers,
+        }
       : params.headers;
 
     return options.fetcher({ ...params, headers });
@@ -268,7 +287,10 @@ export function constructSimpleSDK(
       constructGetDeltaOrders,
       constructGetDeltaPrice,
       constructGetDeltaContract,
-      constructGetPartnerFee
+      constructGetPartnerFee,
+      constructGetMulticallHandlers,
+      constructGetBridgeInfo,
+      constructIsTokenSupportedInDelta
     );
 
     const quote = constructPartialSDK(config, constructGetQuote);

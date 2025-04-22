@@ -17,7 +17,7 @@ import {
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
 import type { BigIntAsString, NFTOrderData } from './buildOrder';
 import { isFilledArray } from '../../helpers/misc';
-
+import type { RequestParameters } from '../../types';
 type MinBuildSwapAndNFTOrderTxInput = Omit<
   // these are derived from `orders`
   BuildSwapAndNFTOrderTxInput,
@@ -27,7 +27,7 @@ type MinBuildSwapAndNFTOrderTxInput = Omit<
 type BuildSwapAndNFTOrdersTx = (
   params: MinBuildSwapAndNFTOrderTxInput,
   options?: BuildOptions,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<TransactionParams>;
 
 type MinBuildNFTOrderTxInput = Omit<
@@ -40,7 +40,7 @@ type MinBuildNFTOrderTxInput = Omit<
 type BuildNFTOrdersTx = (
   params: MinBuildNFTOrderTxInput,
   options?: BuildOptions,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<TransactionParams>;
 
 export type BuildNFTOrdersTxFunctions = {
@@ -53,7 +53,7 @@ type GetNFTOrdersRate = (
   // `amount`, if given, must equal the total of the orders' `takerAmounts`
   options: Omit<GetRateInput, 'amount' | 'side'> & { amount?: string },
   orders: CheckableOrderData[],
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OptimalRate>;
 
 export const constructBuildNFTOrderTx = ({
@@ -80,7 +80,7 @@ export const constructBuildNFTOrderTx = ({
   const getNFTOrdersRate: GetNFTOrdersRate = async (
     { srcToken, destToken, amount, options: _options = {}, ...rest },
     orders,
-    signal
+    requestParams
   ) => {
     assert(orders.length > 0, 'must pass at least 1 order');
 
@@ -118,12 +118,16 @@ export const constructBuildNFTOrderTx = ({
     };
 
     // priceRoute
-    const optimalRate = await getSwapAndNFTOrderRate(rateInput, signal);
+    const optimalRate = await getSwapAndNFTOrderRate(rateInput, requestParams);
     return optimalRate;
   };
 
   // derive srcToken, destToken and srcAmount from orders[]
-  const buildNFTOrderTx: BuildNFTOrdersTx = (params, options, signal) => {
+  const buildNFTOrderTx: BuildNFTOrdersTx = (
+    params,
+    options,
+    requestParams
+  ) => {
     const { takerAsset, totalTakerAmount } = checkAndParseOrders(params.orders);
 
     const fillParams: BuildNFTOrderTxInput = {
@@ -135,12 +139,12 @@ export const constructBuildNFTOrderTx = ({
       destToken: 'NFT', // support any NFT
     };
 
-    return buildSwapTx(fillParams, options, signal);
+    return buildSwapTx(fillParams, options, requestParams);
   };
   const buildSwapAndNFTOrderTx: BuildSwapAndNFTOrdersTx = (
     params,
     options,
-    signal
+    requestParams
   ) => {
     checkAndParseOrders(params.orders);
 
@@ -156,7 +160,7 @@ export const constructBuildNFTOrderTx = ({
       destToken: 'NFT', // support any NFT,
       destDecimals: params.priceRoute.destDecimals,
     };
-    return buildSwapTx(fillParams, options, signal);
+    return buildSwapTx(fillParams, options, requestParams);
   };
 
   return {

@@ -1,11 +1,17 @@
-import type { ConstructFetchInput, ParaSwapVersionUnion } from '../../types';
+import type {
+  ConstructFetchInput,
+  ParaSwapVersionUnion,
+  RequestParameters,
+} from '../../types';
 import { constructSearchString } from '../../helpers/misc';
 import { API_URL, DEFAULT_VERSION } from '../../constants';
 
 type AdaptersAsStrings = string[];
 
 export type GetAdaptersFunctions = {
-  getAdapters: (signal?: AbortSignal) => Promise<AdaptersAsStrings>;
+  getAdapters: (
+    requestParams?: RequestParameters
+  ) => Promise<AdaptersAsStrings>;
 };
 
 type SearchStringParams = {
@@ -20,7 +26,7 @@ export const constructGetAdapters = ({
   fetcher,
 }: ConstructFetchInput): GetAdaptersFunctions => {
   const getAdapters: GetAdaptersFunctions['getAdapters'] = async (
-    signal?: AbortSignal
+    requestParams
   ): Promise<AdaptersAsStrings> => {
     // always pass explicit type to make sure UrlSearchParams are correct
     const query = constructSearchString<SearchStringParams>({
@@ -33,7 +39,7 @@ export const constructGetAdapters = ({
     const data = await fetcher<AdaptersAsStrings>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data;

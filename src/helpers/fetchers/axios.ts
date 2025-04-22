@@ -8,11 +8,19 @@ export const constructFetcher =
   (axios: AxiosRequirement, extra?: ExtraFetchParams): FetcherFunction =>
   async (params) => {
     try {
+      const { requestParams, ...rest } = params;
       // adding apiKey to headers if it's provided
       const headers = extra?.apiKey
-        ? { 'X-API-KEY': extra.apiKey, ...params.headers }
-        : params.headers;
-      const { data } = await axios.request({ ...params, headers });
+        ? {
+            'X-API-KEY': extra.apiKey,
+            ...rest.headers,
+            ...requestParams?.headers,
+          }
+        : { ...rest.headers, ...requestParams?.headers };
+
+      const allParams = { ...rest, ...requestParams, headers };
+
+      const { data } = await axios.request(allParams);
 
       return data;
     } catch (error: any) {

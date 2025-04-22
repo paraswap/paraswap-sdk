@@ -3,6 +3,7 @@ import type { ExtractAbiMethodNames } from '../../helpers/misc';
 import type {
   Address,
   ConstructProviderFetchInput,
+  RequestParameters,
   TxSendOverrides,
 } from '../../types';
 import { constructApproveToken } from '../swap/approve';
@@ -10,7 +11,8 @@ import { constructGetNFTOrdersContract } from './getOrdersContract';
 
 type ApproveNFT<T> = (
   tokenAddress: Address,
-  overrides?: TxSendOverrides
+  overrides?: TxSendOverrides,
+  requestParams?: RequestParameters
 ) => Promise<T>;
 
 export type ApproveTokenForNFTOrderFunctions<T> = {
@@ -54,13 +56,14 @@ export const constructApproveTokenForNFTOrder = <T>(
 
   const { getNFTOrdersContract } = constructGetNFTOrdersContract(options);
 
-  // @TODO add approvetakerAssetForNFTOrder to use AugustusSwapper as spender if we ever have SELL NFT swaps
-  const AugustusRFQ = getNFTOrdersContract();
-
   const approveNFTForNFTOrder: ApproveNFT<T> = async (
     tokenAddress,
-    overrides = {}
+    overrides = {},
+    requestParams
   ) => {
+    // @TODO add approvetakerAssetForNFTOrder to use AugustusSwapper as spender if we ever have SELL NFT swaps
+    const AugustusRFQ = await getNFTOrdersContract(requestParams);
+
     const res = await options.contractCaller.transactCall<ApprovalMethods>({
       address: tokenAddress,
       abi: MinNFTAbi,

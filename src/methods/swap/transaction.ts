@@ -5,6 +5,7 @@ import type {
   FetcherPostInput,
   PriceString,
   OptimalRate,
+  RequestParameters,
 } from '../../types';
 
 import { assert } from 'ts-essentials';
@@ -177,7 +178,7 @@ export type BuildOptions = BuildOptionsWithGasPrice | BuildOptionsWitWithMaxFee;
 type BuildTx = (
   params: BuildTxInput,
   options?: BuildOptions,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<TransactionParams>;
 
 export type BuildTxFunctions = {
@@ -193,7 +194,7 @@ export const constructBuildTx = ({
 }: ConstructFetchInput): BuildTxFunctions => {
   const transactionsURL = `${apiURL}/transactions/${chainId}` as const;
 
-  const buildTx: BuildTx = async (params, options = {}, signal) => {
+  const buildTx: BuildTx = async (params, options = {}, requestParams) => {
     if (
       'priceRoute' in params &&
       'destAmount' in params && // isn't provided together with `orders`
@@ -268,7 +269,7 @@ export const constructBuildTx = ({
       url: fetchURL,
       method: 'POST',
       data: sanitizedParams,
-      signal,
+      requestParams,
     };
 
     const builtTx = await fetcher<TransactionParams>(fetchParams);

@@ -928,6 +928,8 @@ describe('Limit Orders', () => {
     const priceRoute = await takerSDK.getLimitOrdersRate(
       {
         srcToken: DAI,
+        srcDecimals: 18,
+        destDecimals: 18,
         destToken: BAT,
         userAddress: taker.address,
       },
@@ -1059,6 +1061,7 @@ describe('Limit Orders', () => {
       srcAmount: '---', //will change based on srcToken/destToken rate
       hmac: '---', // will change with any other change
       destUSD: '---',
+      gasCost: '---',
       gasCostUSD: '---',
       srcUSD: '---',
       bestRoute: priceRoute.bestRoute.map((route) => ({

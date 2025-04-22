@@ -1,6 +1,14 @@
-import { ContractMethod, API_URL, DEFAULT_VERSION } from '../../constants';
+import {
+  API_URL,
+  DEFAULT_VERSION,
+  ContractMethodByName,
+} from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { ConstructFetchInput, SwapApiResponse } from '../../types';
+import type {
+  ConstructFetchInput,
+  RequestParameters,
+  SwapApiResponse,
+} from '../../types';
 import { normalizeRateOptions } from './helpers/normalizeRateOptions';
 
 /**
@@ -186,12 +194,12 @@ type SwapRateOptions = Omit<
   /**
    * @description List of Contract Methods to include without spaces. **Available values:** swapOnUniswap, buyOnUniswap, swapOnUniswapFork, buyOnUniswapFork, swapOnUniswapV2Fork, buyOnUniswapV2Fork, simpleBuy, simpleSwap, multiSwap, megaSwap, protectedMultiSwap, protectedMegaSwap, protectedSimpleSwap, protectedSimpleBuy, swapOnZeroXv2, swapOnZeroXv4, buy. eg: `simpleSwap,multiSwap`.
    */
-  includeContractMethods?: ContractMethod[];
+  includeContractMethods?: ContractMethodByName[];
 
   /**
    * @description List of Contract Methods to exclude without spaces. (from the list of contract methods mentioned above).
    */
-  excludeContractMethods?: ContractMethod[];
+  excludeContractMethods?: ContractMethodByName[];
 };
 
 type SwapTxInput = Pick<SwapQueryParams, SwapTxInputFields> & {
@@ -207,7 +215,7 @@ export type SwapTxResult = SwapApiResponse;
 
 export type GetSwapTxData = (
   options: SwapTxInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<SwapTxResult>;
 
 export type GetSwapTxFunctions = {
@@ -224,7 +232,7 @@ export const constructSwapTx = ({
 
   const getSwapTxData: GetSwapTxData = async (
     { srcToken, destToken, amount, route, ...rest },
-    signal
+    requestParams
   ) => {
     const parsedOptions = normalizeRateOptions(rest);
 
@@ -246,7 +254,7 @@ export const constructSwapTx = ({
     const data = await fetcher<SwapApiResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data;

@@ -1,4 +1,4 @@
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { constructGetSpender } from '../swap/spender';
 import {
   buildOrderData,
@@ -14,7 +14,7 @@ export type BuildNFTOrderInput = Omit<
 
 type BuildNFTOrder = (
   buildNFTOrderParams: BuildNFTOrderInput,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<SignableNFTOrderData>;
 
 export type BuildNFTOrderFunctions = {
@@ -31,9 +31,12 @@ export const constructBuildNFTOrder = (
   // so should persist across same apiUrl & network
   const { getContracts } = constructGetSpender(options);
 
-  const buildNFTOrder: BuildNFTOrder = async (buildNFTOrderParams, signal) => {
+  const buildNFTOrder: BuildNFTOrder = async (
+    buildNFTOrderParams,
+    requestParams
+  ) => {
     const { AugustusSwapper: AugustusAddress, AugustusRFQ: verifyingContract } =
-      await getContracts(signal);
+      await getContracts(requestParams);
 
     return buildOrderData({
       ...buildNFTOrderParams,

@@ -33,9 +33,21 @@ import {
   ApproveTokenForDeltaFunctions,
   constructApproveTokenForDelta,
 } from './approveForDelta';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+} from './getBridgeInfo';
+import {
+  constructGetMulticallHandlers,
+  GetMulticallHandlersFunctions,
+} from './getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from './isTokenSupportedInDelta';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
-  /** @description designates the Order as being able to partilly filled, as opposed to fill-or-kill */
+  /** @description designates the Order as being able to be partilly filled, as opposed to fill-or-kill */
   partiallyFillable?: boolean;
 };
 
@@ -78,6 +90,9 @@ export type DeltaOrderHandlers<T> = SubmitDeltaOrderFuncs &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
   GetPartnerFeeFunctions &
+  GetMulticallHandlersFunctions &
+  GetBridgeInfoFunctions &
+  IsTokenSupportedInDeltaFunctions &
   PostDeltaOrderFunctions &
   SignDeltaOrderFunctions;
 
@@ -93,6 +108,9 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
   const deltaPrice = constructGetDeltaPrice(options);
 
   const partnerFee = constructGetPartnerFee(options);
+  const bridgeInfo = constructGetBridgeInfo(options);
+  const isTokenSupportedInDelta = constructIsTokenSupportedInDelta(options);
+  const multicallHandlers = constructGetMulticallHandlers(options);
 
   const approveTokenForDelta = constructApproveTokenForDelta(options);
 
@@ -102,18 +120,18 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
   const deltaOrdersSign = constructSignDeltaOrder(options);
   const deltaOrdersPost = constructPostDeltaOrder(options);
 
-  // const DeltaOrdersApproveToken = constructApproveTokenForDeltaOrder(options);
-
   return {
     ...deltaOrdersGetters,
     ...deltaOrdersContractGetter,
     ...deltaPrice,
     ...partnerFee,
+    ...bridgeInfo,
+    ...isTokenSupportedInDelta,
+    ...multicallHandlers,
     ...approveTokenForDelta,
     ...deltaOrdersSubmit,
     ...deltaOrdersBuild,
     ...deltaOrdersSign,
     ...deltaOrdersPost,
-    // ...deltaOrdersApproveToken,
   };
 };

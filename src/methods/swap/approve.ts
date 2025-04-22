@@ -4,6 +4,7 @@ import type {
   TxSendOverrides,
   Address,
   PriceString,
+  RequestParameters,
 } from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
 
@@ -11,7 +12,7 @@ type ApproveTokenBulk<T> = (
   amount: PriceString,
   tokenAddresses: Address[],
   overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<Awaited<T>[]>;
 
 export type ApproveTokenFunctions<T> = {
@@ -37,11 +38,11 @@ export const constructApproveToken = <T>(
     amount,
     tokenAddresses,
     overrides,
-    signal
+    requestParams
   ) => {
     return Promise.all(
       tokenAddresses.map((tokenAddress) =>
-        approveToken(amount, tokenAddress, overrides, signal)
+        approveToken(amount, tokenAddress, overrides, requestParams)
       )
     );
   };

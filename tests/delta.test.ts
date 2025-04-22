@@ -33,6 +33,7 @@ import { HardhatProvider } from './helpers/hardhat';
 import { privateKeyToAccount } from 'viem/accounts';
 import { createWalletClient, custom, Hex } from 'viem';
 import { hardhat } from 'viem/chains';
+import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
 
 dotenv.config();
 
@@ -188,17 +189,27 @@ describe('Delta:methods', () => {
     expect(staticSliceOfPastOrders).toMatchSnapshot();
   });
 
-  test('Get Delta Order by Id', async () => {
-    const orderId = '50950528-d362-4359-a89e-ed6e49be1a20';
+  test('Get Delta Order by Id and Hash', async () => {
+    const orderId = '7ec0dc82-98ad-4501-9f46-03e31e51098f';
     const deltaOrder = await deltaSDK.getDeltaOrderById(orderId);
     expect(deltaOrder).toMatchSnapshot();
+    expect(deltaOrder).toBeDefined();
+    assert(
+      deltaOrder?.orderHash,
+      "Delta order not found or doesn't have orderHash"
+    );
+
+    const orderByHash = await deltaSDK.getDeltaOrderByHash(
+      deltaOrder.orderHash
+    );
+    expect(orderByHash).toEqual(deltaOrder);
   });
 
   test('Get PartnerFee', async () => {
     const partnerFee = await deltaSDK.getPartnerFee({ partner: 'paraswap.io' });
     expect(partnerFee).toMatchInlineSnapshot(`
       {
-        "partnerAddress": "0x81037e7be71bce9591de0c54bb485ad3e048b8de",
+        "partnerAddress": "0xc85f5d432b7fa25287c7e0cb88139a1a4c37f565",
         "partnerFee": 0.15,
         "takeSurplus": false,
       }
@@ -280,6 +291,12 @@ describe('Delta:methods', () => {
         permit: '0x',
         srcAmount: '1000000000000000000',
         srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        bridge: {
+          maxRelayerFee: '0',
+          destinationChainId: 0,
+          outputToken: ZERO_ADDRESS,
+          multiCallHandler: ZERO_ADDRESS,
+        },
       },
       domain: {
         chainId: 1,
@@ -333,6 +350,24 @@ describe('Delta:methods', () => {
             name: 'permit',
             type: 'bytes',
           },
+          {
+            name: 'bridge',
+            type: 'Bridge',
+          },
+        ],
+        Bridge: [
+          {
+            name: 'maxRelayerFee',
+            type: 'uint256',
+          },
+          {
+            name: 'destinationChainId',
+            type: 'uint256',
+          },
+          {
+            name: 'outputToken',
+            type: 'address',
+          },
         ],
       },
     };
@@ -377,6 +412,12 @@ describe('Delta:methods', () => {
       permit: '0x',
       srcAmount: '1000000000000000000',
       srcToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+      bridge: {
+        maxRelayerFee: '0',
+        destinationChainId: 0,
+        outputToken: ZERO_ADDRESS,
+        multiCallHandler: ZERO_ADDRESS,
+      },
     };
 
     const sampleSignature = '0x1234....';

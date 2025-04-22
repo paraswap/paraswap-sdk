@@ -1,4 +1,7 @@
-import type { ConstructProviderFetchInput } from '../../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+} from '../../types';
 import type { NFTOrderToSend, NFTOrderFromAPI } from './helpers/types';
 import {
   BuildNFTOrderFunctions,
@@ -28,7 +31,7 @@ import {
 type SubmitNFTOrder = (
   buildNFTOrderParams: BuildNFTOrderInput,
   extra?: { permitMakerAsset?: string },
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<NFTOrderFromAPI>;
 
 export type SubmitNFTOrderFuncs = {
@@ -62,14 +65,14 @@ export const constructSubmitNFTOrder = (
   const submitNFTOrder: SubmitNFTOrder = async (
     buildNFTOrderParams,
     extra = {},
-    signal
+    requestParams
   ) => {
     const orderWithSignature: NFTOrderToSend = await prepareNFTOrder(
       buildNFTOrderParams,
       extra
     );
 
-    const newOrder = await postNFTLimitOrder(orderWithSignature, signal);
+    const newOrder = await postNFTLimitOrder(orderWithSignature, requestParams);
 
     return newOrder;
   };
@@ -77,14 +80,14 @@ export const constructSubmitNFTOrder = (
   const submitP2POrder: SubmitNFTOrder = async (
     buildNFTOrderParams,
     extra = {},
-    signal
+    requestParams
   ) => {
     const orderWithSignature: NFTOrderToSend = await prepareNFTOrder(
       buildNFTOrderParams,
       extra
     );
 
-    const newOrder = await postNFTP2POrder(orderWithSignature, signal);
+    const newOrder = await postNFTP2POrder(orderWithSignature, requestParams);
 
     return newOrder;
   };

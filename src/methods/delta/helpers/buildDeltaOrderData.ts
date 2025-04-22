@@ -1,27 +1,36 @@
 import { MarkOptional } from 'ts-essentials';
 import { Domain, ZERO_ADDRESS } from '../../common/orders/buildOrderData';
-import { DeltaAuctionOrder } from './types';
+import { BridgeInput, DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
-import { DeltaPrice } from '../getDeltaPrice';
 
-// Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit)";
-const Order = [
-  { name: 'owner', type: 'address' },
-  { name: 'beneficiary', type: 'address' },
-  { name: 'srcToken', type: 'address' },
-  { name: 'destToken', type: 'address' },
-  { name: 'srcAmount', type: 'uint256' },
-  { name: 'destAmount', type: 'uint256' },
-  { name: 'expectedDestAmount', type: 'uint256' },
-  { name: 'deadline', type: 'uint256' },
-  { name: 'nonce', type: 'uint256' },
-  { name: 'partnerAndFee', type: 'uint256' },
-  { name: 'permit', type: 'bytes' },
-];
+// Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit, bridge Bridge)";
+const SWAP_ORDER_EIP_712_TYPES = {
+  Order: [
+    { name: 'owner', type: 'address' },
+    { name: 'beneficiary', type: 'address' },
+    { name: 'srcToken', type: 'address' },
+    { name: 'destToken', type: 'address' },
+    { name: 'srcAmount', type: 'uint256' },
+    { name: 'destAmount', type: 'uint256' },
+    { name: 'expectedDestAmount', type: 'uint256' },
+    { name: 'deadline', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'partnerAndFee', type: 'uint256' },
+    { name: 'permit', type: 'bytes' },
+    { name: 'bridge', type: 'Bridge' },
+  ],
+  Bridge: [
+    { name: 'maxRelayerFee', type: 'uint256' },
+    { name: 'destinationChainId', type: 'uint256' },
+    { name: 'outputToken', type: 'address' },
+    { name: 'multiCallHandler', type: 'address' },
+  ],
+};
 
 export type SignableDeltaOrderData = {
   types: {
-    Order: typeof Order;
+    Order: typeof SWAP_ORDER_EIP_712_TYPES.Order;
+    Bridge: typeof SWAP_ORDER_EIP_712_TYPES.Bridge;
   };
   domain: Domain;
   data: DeltaAuctionOrder;
@@ -39,7 +48,10 @@ function produceDeltaOrderTypedData({
   paraswapDeltaAddress,
 }: SignDeltaOrderInput): SignableDeltaOrderData {
   const typedData = {
-    types: { Order },
+    types: {
+      Order: SWAP_ORDER_EIP_712_TYPES.Order,
+      Bridge: SWAP_ORDER_EIP_712_TYPES.Bridge,
+    },
     domain: {
       name: 'Portikus',
       version: '2.0.0',
@@ -55,14 +67,15 @@ function produceDeltaOrderTypedData({
 export type DeltaOrderDataInput = MarkOptional<
   Omit<DeltaAuctionOrder, 'partnerAndFee'>,
   'beneficiary' | 'deadline' | 'nonce' | 'permit'
-> &
-  Pick<DeltaPrice, 'partnerFee'>;
+>;
 
 export type BuildDeltaOrderDataInput = DeltaOrderDataInput & {
   partnerAddress: string;
   paraswapDeltaAddress: string;
-  takeSurplus: boolean;
+  partnerFeeBps: number;
+  partnerTakesSurplus?: boolean;
   chainId: number;
+  bridge: BridgeInput;
 };
 
 // default deadline = 1 hour from now (may be changed later)
@@ -84,11 +97,12 @@ export function buildDeltaSignableOrderData({
   permit = '0x',
 
   partnerAddress,
-  partnerFee,
-  takeSurplus,
+  partnerFeeBps,
+  partnerTakesSurplus = false,
 
   chainId,
   paraswapDeltaAddress,
+  bridge,
 }: BuildDeltaOrderDataInput): SignableDeltaOrderData {
   const orderInput: DeltaAuctionOrder = {
     owner,
@@ -102,10 +116,11 @@ export function buildDeltaSignableOrderData({
     nonce,
     permit: composeDeltaOrderPermit({ permit, nonce }),
     partnerAndFee: producePartnerAndFee({
-      partnerFee,
+      partnerFeeBps,
       partnerAddress,
-      takeSurplus,
+      partnerTakesSurplus,
     }),
+    bridge,
   };
 
   return produceDeltaOrderTypedData({
@@ -116,24 +131,23 @@ export function buildDeltaSignableOrderData({
 }
 
 type ProducePartnerAndFeeInput = {
-  partnerFee: number;
+  partnerFeeBps: number;
   partnerAddress: string;
-  takeSurplus: boolean;
+  partnerTakesSurplus: boolean;
 };
 
 // fee and address are encoded together
 function producePartnerAndFee({
-  partnerFee,
+  partnerFeeBps,
   partnerAddress,
-  takeSurplus,
+  partnerTakesSurplus,
 }: ProducePartnerAndFeeInput): string {
   if (partnerAddress === ZERO_ADDRESS) return '0';
 
-  const partnerFeeBps = BigInt((partnerFee * 100).toFixed(0));
   const partnerAndFee =
     (BigInt(partnerAddress) << BigInt(96)) |
-    partnerFeeBps |
-    (BigInt(takeSurplus) << BigInt(8));
+    BigInt(partnerFeeBps.toFixed(0)) |
+    (BigInt(partnerTakesSurplus) << BigInt(8));
 
   return partnerAndFee.toString(10);
 }

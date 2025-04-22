@@ -2,7 +2,11 @@
 // onchain from contract can't distinguish between filled or cancelled
 import { API_URL } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { Address, ConstructFetchInput } from '../../types';
+import type {
+  Address,
+  ConstructFetchInput,
+  RequestParameters,
+} from '../../types';
 import {
   constructBaseFetchUrlGetter,
   GetOrdersURLs,
@@ -36,16 +40,16 @@ export type GetRequiredAllowanceParams = {
 
 type GetLimitOrderByHash = (
   orderHash: string,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<LimitOrderFromApi>;
 type GetLimitOrders = (
   userParams: LimitOrdersUserParams,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<LimitOrdersApiResponse>;
 
 type GetRequiredBalance = (
   userParams: GetRequiredAllowanceParams,
-  singal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<Record<string, string>>;
 
 export type GetLimitOrdersFunctions = {
@@ -57,7 +61,7 @@ export type GetLimitOrdersFunctions = {
    * @param userParams - parameters to get allowance for active orders
    * @param {string} userParams.maker - user to get required allowances for
    * @param {string=} userParams.token - if given `token`, the mapping will contain that token address only
-   * @param {AbortSignal=} signal - AbortSignal passed to fetcher
+   * @param {RequestParameters=} requestParams - requestParams passed to fetcher, can include {signal: AbortSignal, timeout: for axios, etc.}
    * @returns `{Lowercase<Address> => wei number as string}` mapping of token to fillableBalance
    */
   getRequiredBalance: GetRequiredBalance;
@@ -73,7 +77,7 @@ export const constructGetLimitOrders = ({
     chainId,
   });
 
-  const getLimitOrders: GetLimitOrders = async (userParams, signal) => {
+  const getLimitOrders: GetLimitOrders = async (userParams, requestParams) => {
     const baseFetchURL = getBaseFetchURLByEntityType(userParams.type);
     const userURL =
       'maker' in userParams
@@ -93,14 +97,17 @@ export const constructGetLimitOrders = ({
     const response = await fetcher<LimitOrdersApiResponse, GetOrdersURLs>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     // without any extra calls, return  what API returns
     return response;
   };
 
-  const getRequiredBalance: GetRequiredBalance = async (userParams, signal) => {
+  const getRequiredBalance: GetRequiredBalance = async (
+    userParams,
+    requestParams
+  ) => {
     const baseFetchURL = getBaseFetchURLByEntityType('fillablebalance');
     const userURL = `${baseFetchURL}/${userParams.maker}` as const;
     const fetchURL = userParams.token
@@ -113,7 +120,7 @@ export const constructGetLimitOrders = ({
     >({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     // without any extra calls, return  what API returns
@@ -122,7 +129,7 @@ export const constructGetLimitOrders = ({
 
   const getLimitOrderByHash: GetLimitOrderByHash = async (
     orderHash,
-    signal
+    requestParams
   ) => {
     const baseFetchURL = getBaseFetchURLByEntityType();
     const fetchURL = `${baseFetchURL}/${orderHash}` as const;
@@ -130,7 +137,7 @@ export const constructGetLimitOrders = ({
     const order = await fetcher<LimitOrderFromApi, GetOrderURL>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return order;

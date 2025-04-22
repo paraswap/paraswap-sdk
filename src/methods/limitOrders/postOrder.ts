@@ -1,5 +1,5 @@
 import { API_URL } from '../../constants';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { constructBaseFetchUrlGetter, PostOrderURLs } from './helpers/misc';
 import type {
   LimitOrderApiResponse,
@@ -10,7 +10,7 @@ import type {
 
 type PostLimitOrder = (
   limitOrderWithSignatureAndPermit: LimitOrderToSend,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<LimitOrderFromApi>;
 
 export type PostLimitOrderFunctions = {
@@ -31,7 +31,7 @@ export const constructPostLimitOrder = ({
   const postTypedOrder = async (
     limitOrderWithSignatureAndPermit: LimitOrderToSend,
     type: LimitOrderType,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<LimitOrderFromApi> => {
     const fetchURL = getBaseFetchURLByOrderType(type);
 
@@ -42,7 +42,7 @@ export const constructPostLimitOrder = ({
       url: fetchURL,
       method: 'POST',
       data: limitOrderWithSignatureAndPermit,
-      signal,
+      requestParams,
     });
 
     return newOrder;
@@ -50,16 +50,24 @@ export const constructPostLimitOrder = ({
 
   const postLimitOrder: PostLimitOrder = (
     limitOrderWithSignatureAndPermit,
-    signal
+    requestParams
   ) => {
-    return postTypedOrder(limitOrderWithSignatureAndPermit, 'LIMIT', signal);
+    return postTypedOrder(
+      limitOrderWithSignatureAndPermit,
+      'LIMIT',
+      requestParams
+    );
   };
 
   const postP2POrder: PostLimitOrder = (
     limitOrderWithSignatureAndPermit,
-    signal
+    requestParams
   ) => {
-    return postTypedOrder(limitOrderWithSignatureAndPermit, 'P2P', signal);
+    return postTypedOrder(
+      limitOrderWithSignatureAndPermit,
+      'P2P',
+      requestParams
+    );
   };
 
   return { postLimitOrder, postP2POrder };

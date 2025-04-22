@@ -17,6 +17,7 @@ import {
 import { constructGetRate, GetRateInput, RateOptions } from '../swap/rates';
 import type { OrderData } from './buildOrder';
 import { isFilledArray } from '../../helpers/misc';
+import type { RequestParameters } from '../../types';
 
 type MinBuildSwapAndLimitOrderTxInput = Omit<
   // these are derived from `orders`
@@ -27,7 +28,7 @@ type MinBuildSwapAndLimitOrderTxInput = Omit<
 type BuildSwapAndLimitOrdersTx = (
   params: MinBuildSwapAndLimitOrderTxInput,
   options?: BuildOptions,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<TransactionParams>;
 
 type MinBuildLimitOrderTxInput = Omit<
@@ -40,7 +41,7 @@ type MinBuildLimitOrderTxInput = Omit<
 type BuildLimitOrdersTx = (
   params: MinBuildLimitOrderTxInput,
   options?: BuildOptions,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<TransactionParams>;
 
 export type BuildLimitOrdersTxFunctions = {
@@ -53,7 +54,7 @@ type GetLimitOrdersRate = (
   // `amount`, if given, must equal the total of the orders' `takerAmounts`
   options: Omit<GetRateInput, 'amount' | 'side'> & { amount?: string },
   orders: CheckableOrderData[],
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<OptimalRate>;
 
 export const constructBuildLimitOrderTx = ({
@@ -80,7 +81,7 @@ export const constructBuildLimitOrderTx = ({
   const getLimitOrdersRate: GetLimitOrdersRate = async (
     { srcToken, destToken, amount, options: _options = {}, ...rest },
     orders,
-    signal
+    requestParams
   ) => {
     assert(orders.length > 0, 'must pass at least 1 order');
 
@@ -117,12 +118,19 @@ export const constructBuildLimitOrderTx = ({
     };
 
     // priceRoute
-    const optimalRate = await getSwapAndLimitOrderRate(rateInput, signal);
+    const optimalRate = await getSwapAndLimitOrderRate(
+      rateInput,
+      requestParams
+    );
     return optimalRate;
   };
 
   // derive srcToken, destToken and srcAmount from orders[]
-  const buildLimitOrderTx: BuildLimitOrdersTx = (params, options, signal) => {
+  const buildLimitOrderTx: BuildLimitOrdersTx = (
+    params,
+    options,
+    requestParams
+  ) => {
     const { makerAsset, takerAsset, totalTakerAmount } = checkAndParseOrders(
       params.orders
     );
@@ -137,13 +145,13 @@ export const constructBuildLimitOrderTx = ({
       destToken: makerAsset,
     };
 
-    return buildSwapTx(fillParams, options, signal);
+    return buildSwapTx(fillParams, options, requestParams);
   };
 
   const buildSwapAndLimitOrderTx: BuildSwapAndLimitOrdersTx = (
     params,
     options,
-    signal
+    requestParams
   ) => {
     const { makerAsset } = checkAndParseOrders(params.orders);
 
@@ -161,7 +169,7 @@ export const constructBuildLimitOrderTx = ({
           { srcAmount: params.priceRoute.srcAmount, slippage: undefined }),
     };
 
-    return buildSwapTx(fillParams, options, signal);
+    return buildSwapTx(fillParams, options, requestParams);
   };
 
   return {

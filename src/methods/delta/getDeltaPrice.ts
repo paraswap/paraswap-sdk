@@ -1,6 +1,6 @@
 import { API_URL, SwapSide } from '../../constants';
 import { constructSearchString } from '../../helpers/misc';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 
 export type DeltaPriceParams = {
   /** @description Source Token Address. Not Native Token */
@@ -18,6 +18,8 @@ export type DeltaPriceParams = {
   userAddress?: string;
   /** @description Partner string. */
   partner?: string;
+  /** @description Destination Chain ID for Crosschain Orders */
+  destChainId?: number;
 };
 
 type DeltaPriceQueryOptions = DeltaPriceParams & {
@@ -39,18 +41,36 @@ export type DeltaPrice = {
   destUSD: string;
   destUSDBeforeFee: string;
   partner: string;
-  partnerFee: number;
+  partnerFee: number; // in %
   hmac: string;
 };
 
-type DeltaPriceResponse = {
-  price: DeltaPrice;
+export type BridgePrice = DeltaPrice & {
+  destTokenSrcChain: string;
+  destAmountAfterBridge: string;
+  destUSDAfterBridge: string;
+  bridgeFee: string;
+  bridgeFeeUSD: string;
+  poolAddress: string;
 };
 
-type GetDeltaPrice = (
-  options: DeltaPriceParams,
-  signal?: AbortSignal
-) => Promise<DeltaPrice>;
+type DeltaPriceResponse = {
+  price: DeltaPrice | BridgePrice;
+};
+
+interface GetDeltaPrice {
+  (
+    options: DeltaPriceParams & { destChainId: number },
+    requestParams?: RequestParameters
+  ): Promise<BridgePrice>;
+  (
+    options: DeltaPriceParams & { destChainId?: undefined },
+    requestParams?: RequestParameters
+  ): Promise<DeltaPrice>;
+  (options: DeltaPriceParams, requestParams?: RequestParameters): Promise<
+    DeltaPrice | BridgePrice
+  >;
+}
 
 export type GetDeltaPriceFunctions = {
   getDeltaPrice: GetDeltaPrice;
@@ -63,7 +83,22 @@ export const constructGetDeltaPrice = ({
 }: ConstructFetchInput): GetDeltaPriceFunctions => {
   const pricesUrl = `${apiURL}/delta/prices` as const;
 
-  const getDeltaPrice: GetDeltaPrice = async (options, signal) => {
+  async function getDeltaPrice(
+    options: DeltaPriceParams & { destChainId: number },
+    requestParams?: RequestParameters
+  ): Promise<BridgePrice>;
+  async function getDeltaPrice(
+    options: DeltaPriceParams & { destChainId?: undefined },
+    requestParams?: RequestParameters
+  ): Promise<DeltaPrice>;
+  async function getDeltaPrice(
+    options: DeltaPriceParams,
+    requestParams?: RequestParameters
+  ): Promise<DeltaPrice | BridgePrice>;
+  async function getDeltaPrice(
+    options: DeltaPriceParams,
+    requestParams?: RequestParameters
+  ): Promise<DeltaPrice | BridgePrice> {
     const search = constructSearchString<DeltaPriceQueryOptions>({
       ...options,
       chainId,
@@ -75,11 +110,11 @@ export const constructGetDeltaPrice = ({
     const data = await fetcher<DeltaPriceResponse>({
       url: fetchURL,
       method: 'GET',
-      signal,
+      requestParams,
     });
 
     return data.price;
-  };
+  }
 
   return {
     getDeltaPrice,

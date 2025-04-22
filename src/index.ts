@@ -134,6 +134,10 @@ import type {
 import type {
   DeltaAuctionOrder,
   ParaswapDeltaAuction,
+  BridgeMetadata,
+  BridgeStatus,
+  BridgeInput,
+  Bridge,
 } from './methods/delta/helpers/types';
 import {
   BuildDeltaOrderDataParams,
@@ -158,6 +162,7 @@ import {
   constructGetDeltaPrice,
   GetDeltaPriceFunctions,
   DeltaPrice,
+  BridgePrice,
   DeltaPriceParams,
 } from './methods/delta/getDeltaPrice';
 import {
@@ -172,6 +177,20 @@ import {
   constructGetPartnerFee,
   GetPartnerFeeFunctions,
 } from './methods/delta/getPartnerFee';
+import {
+  constructGetBridgeInfo,
+  GetBridgeInfoFunctions,
+  BridgeInfo,
+} from './methods/delta/getBridgeInfo';
+import {
+  constructGetMulticallHandlers,
+  GetMulticallHandlersFunctions,
+  MulticallHandlersResponse,
+} from './methods/delta/getMulticallHandlers';
+import {
+  constructIsTokenSupportedInDelta,
+  IsTokenSupportedInDeltaFunctions,
+} from './methods/delta/isTokenSupportedInDelta';
 
 import {
   constructGetQuote,
@@ -269,6 +288,9 @@ export {
   constructGetQuote,
   // different helpers
   constructGetPartnerFee,
+  constructGetBridgeInfo,
+  constructIsTokenSupportedInDelta,
+  constructGetMulticallHandlers,
   constructEthersContractCaller, // same as constructEthersV5ContractCaller for backwards compatibility
   constructEthersV5ContractCaller,
   constructEthersV6ContractCaller,
@@ -328,9 +350,16 @@ export type {
   NFTOrdersUserParams,
   //types for Delta methods
   DeltaPrice,
+  BridgePrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
   ParaswapDeltaAuction,
+  // bridge part of DeltaOrder
+  BridgeMetadata,
+  BridgeStatus,
+  BridgeInput,
+  Bridge,
+  BridgeInfo,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
@@ -354,6 +383,10 @@ export type {
   ConstructProviderFetchInput,
   // other types
   GetPartnerFeeFunctions,
+  GetBridgeInfoFunctions,
+  IsTokenSupportedInDeltaFunctions,
+  GetMulticallHandlersFunctions,
+  MulticallHandlersResponse,
   Token,
   Address,
   AddressOrSymbol,

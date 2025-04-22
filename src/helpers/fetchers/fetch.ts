@@ -8,7 +8,7 @@ export const constructFetcher =
   (fetch: Fetch, extra?: ExtraFetchParams): FetcherFunction =>
   async (params) => {
     try {
-      const { url, method, signal } = params;
+      const { url, method, requestParams } = params;
       const body = method === 'POST' ? JSON.stringify(params.data) : null;
       // Only JSON response for POST requests
       const POSTheaders =
@@ -25,11 +25,21 @@ export const constructFetcher =
 
       // all headers combined
       const headers =
-        POSTheaders || apiHeaders || params.headers
-          ? { ...apiHeaders, ...POSTheaders, ...params.headers }
+        POSTheaders || apiHeaders || params.headers || requestParams?.headers
+          ? {
+              ...apiHeaders,
+              ...POSTheaders,
+              ...params.headers,
+              ...requestParams?.headers,
+            }
           : undefined;
 
-      const response = await fetch(url, { method, body, signal, headers });
+      const response = await fetch(url, {
+        method,
+        body,
+        ...requestParams,
+        headers,
+      });
 
       const data = await response.json();
 

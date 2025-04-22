@@ -1,5 +1,5 @@
 import { API_URL } from '../../constants';
-import type { ConstructFetchInput } from '../../types';
+import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { constructBaseFetchUrlGetter, PostOrderURLs } from './helpers/misc';
 import type {
   NFTOrderToSend,
@@ -10,7 +10,7 @@ import type {
 
 type PostNFTOrder = (
   NFTOrderWithSignatureAndPermit: NFTOrderToSend,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<NFTOrderFromAPI>;
 
 export type PostNFTOrderFunctions = {
@@ -31,7 +31,7 @@ export const constructPostNFTOrder = ({
   const postTypedOrder = async (
     NFTOrderWithSignatureAndPermit: NFTOrderToSend,
     type: NFTOrderType,
-    signal?: AbortSignal
+    requestParams?: RequestParameters
   ): Promise<NFTOrderFromAPI> => {
     const fetchURL = getBaseFetchURLByOrderType(type);
 
@@ -43,7 +43,7 @@ export const constructPostNFTOrder = ({
       url: fetchURL,
       method: 'POST',
       data: NFTOrderWithSignatureAndPermit,
-      signal,
+      requestParams,
     });
 
     return { ...newOrder };
@@ -51,16 +51,20 @@ export const constructPostNFTOrder = ({
 
   const postNFTLimitOrder: PostNFTOrder = (
     NFTOrderWithSignatureAndPermit,
-    signal
+    requestParams
   ) => {
-    return postTypedOrder(NFTOrderWithSignatureAndPermit, 'LIMIT', signal);
+    return postTypedOrder(
+      NFTOrderWithSignatureAndPermit,
+      'LIMIT',
+      requestParams
+    );
   };
 
   const postNFTP2POrder: PostNFTOrder = (
     NFTOrderWithSignatureAndPermit,
-    signal
+    requestParams
   ) => {
-    return postTypedOrder(NFTOrderWithSignatureAndPermit, 'P2P', signal);
+    return postTypedOrder(NFTOrderWithSignatureAndPermit, 'P2P', requestParams);
   };
 
   return { postNFTLimitOrder, postNFTP2POrder };

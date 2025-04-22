@@ -39,10 +39,13 @@ export interface ConstructBaseInput {
   chainId: number;
 }
 
+/** @description Any params that can be passed to fetcher. E.g. Axios fetcher can accept signal and timeout, fetch can accept signal */
+export type RequestParameters = { [K: string]: any; signal?: AbortSignal };
+
 interface FetcherInputBase<URL extends string = string> {
   url: URL;
   headers?: Record<string, string>;
-  signal?: AbortSignal;
+  requestParams?: RequestParameters;
 }
 export interface FetcherGetInput<URL extends string = string>
   extends FetcherInputBase<URL> {

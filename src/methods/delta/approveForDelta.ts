@@ -1,4 +1,7 @@
-import type { ConstructProviderFetchInput } from '../../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+} from '../../types';
 import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
 import { constructGetDeltaContract } from './getDeltaContract';
 
@@ -16,8 +19,8 @@ export const constructApproveTokenForDelta = <T>(
   // so should persist across same apiUrl & network
   const { getDeltaContract } = constructGetDeltaContract(options);
 
-  const getParaswapDelta = async () => {
-    const deltaContract = await getDeltaContract();
+  const getParaswapDelta = async (requestParams?: RequestParameters) => {
+    const deltaContract = await getDeltaContract(requestParams);
     if (!deltaContract) {
       throw new Error(`Delta is not available on chain ${options.chainId}`);
     }

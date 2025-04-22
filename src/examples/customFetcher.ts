@@ -35,8 +35,9 @@ export const superagentFetcher = (): FetcherFunction =>
       return response.body;
     }
 
-    // Add error handling with FetcherError
-    // handle options.signal
+    // Add error handling with FetcherError;
+    // handle options.requestParams.signal;
+    // pass any other paramteres in requestParams
   };
 
 const fetcher: FetcherFunction = superagentFetcher();

@@ -1,5 +1,9 @@
 import type { ExtractAbiMethodNames } from '../../helpers/misc';
-import type { ConstructProviderFetchInput, TxSendOverrides } from '../../types';
+import type {
+  ConstructProviderFetchInput,
+  RequestParameters,
+  TxSendOverrides,
+} from '../../types';
 import type { OrderData } from './buildOrder';
 import { constructGetSpender } from '../swap/spender';
 import { sanitizeOrderData } from './helpers/misc';
@@ -43,7 +47,7 @@ export type FillOrderDirectly<T> = (
     takerPermit?: TakerPermitObject;
   },
   overrides?: TxSendOverrides,
-  signal?: AbortSignal
+  requestParams?: RequestParameters
 ) => Promise<T>;
 
 // much smaller than the whole AugustusRFQ_ABI
@@ -210,9 +214,9 @@ export function constructFillOrderDirectly<T>(
   const fillOrderDirectly: FillOrderDirectly<T> = async (
     { order, signature, takerPermit },
     overrides = {},
-    signal
+    requestParams
   ) => {
-    const AugustusRFQ = await getAugustusRFQ(signal);
+    const AugustusRFQ = await getAugustusRFQ(requestParams);
 
     const sanitizedOrder = sanitizeOrderData(order);
 
