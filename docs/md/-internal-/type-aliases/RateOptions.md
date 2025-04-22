@@ -28,7 +28,7 @@ If the destination token is a tax token, you should specify the tax amount in BP
 
 ### excludeContractMethods?
 
-> `optional` **excludeContractMethods**: [`ContractMethod`](../../type-aliases/ContractMethod.md)[]
+> `optional` **excludeContractMethods**: [`ContractMethodByName`](../../type-aliases/ContractMethodByName.md)[]
 
 ### excludeContractMethodsWithoutFeeModel?
 
@@ -48,7 +48,7 @@ Specify that methods without fee support should be excluded from the price route
 
 ### excludePricingMethods?
 
-> `optional` **excludePricingMethods**: [`PricingMethod`](../enumerations/PricingMethod.md)[]
+> `optional` **excludePricingMethods**: [`PricingMethodByName`](PricingMethodByName.md)[]
 
 ### excludeRFQ?
 
@@ -68,7 +68,7 @@ proceed with priceRoute building even when tokens don't have USD price. Default:
 
 ### includeContractMethods?
 
-> `optional` **includeContractMethods**: [`ContractMethod`](../../type-aliases/ContractMethod.md)[]
+> `optional` **includeContractMethods**: [`ContractMethodByName`](../../type-aliases/ContractMethodByName.md)[]
 
 ### includeDEXS?
 
@@ -112,4 +112,4 @@ If the source token is a tax token, you should specify the tax amount in BPS.
 
 ## Defined in
 
-[src/methods/swap/rates.ts:147](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L147)
+[src/methods/swap/rates.ts:155](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L155)

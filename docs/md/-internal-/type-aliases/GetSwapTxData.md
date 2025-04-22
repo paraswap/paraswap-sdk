@@ -6,13 +6,13 @@
 
 # Type Alias: GetSwapTxData()
 
-> **GetSwapTxData**: (`options`, `signal`?) => `Promise`\<[`SwapTxResult`](SwapTxResult.md)\>
+> **GetSwapTxData**: (`options`, `requestParams`?) => `Promise`\<[`SwapTxResult`](SwapTxResult.md)\>
 
 ## Parameters
 
 • **options**: [`SwapTxInput`](SwapTxInput.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:208](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L208)
+[src/methods/swap/swapTx.ts:216](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L216)

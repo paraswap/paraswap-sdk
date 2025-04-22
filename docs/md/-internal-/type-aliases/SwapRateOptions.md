@@ -12,7 +12,7 @@
 
 ### excludeContractMethods?
 
-> `optional` **excludeContractMethods**: [`ContractMethod`](../../type-aliases/ContractMethod.md)[]
+> `optional` **excludeContractMethods**: [`ContractMethodByName`](../../type-aliases/ContractMethodByName.md)[]
 
 #### Description
 
@@ -28,7 +28,7 @@ List of DEXs to exclude. (from the list of DEXs mentioned above).
 
 ### includeContractMethods?
 
-> `optional` **includeContractMethods**: [`ContractMethod`](../../type-aliases/ContractMethod.md)[]
+> `optional` **includeContractMethods**: [`ContractMethodByName`](../../type-aliases/ContractMethodByName.md)[]
 
 #### Description
 
@@ -44,4 +44,4 @@ List of DEXs to include. **Supported DEXs:** Uniswap, Kyber, Bancor, AugustusRFQ
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:172](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L172)
+[src/methods/swap/swapTx.ts:180](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L180)

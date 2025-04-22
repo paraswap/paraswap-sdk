@@ -36,4 +36,4 @@ Order.owner to fetch Delta Order for
 
 ## Defined in
 
-[src/methods/delta/getDeltaOrders.ts:13](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L13)
+[src/methods/delta/getDeltaOrders.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L22)

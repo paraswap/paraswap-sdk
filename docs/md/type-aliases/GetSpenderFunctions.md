@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/swap/spender.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L8)
+[src/methods/swap/spender.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L16)

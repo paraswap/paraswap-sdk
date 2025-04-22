@@ -6,11 +6,11 @@
 
 # Type Alias: GetDeltaContract()
 
-> **GetDeltaContract**: (`signal`?) => `Promise`\<[`Address`](../../type-aliases/Address.md) \| `null`\>
+> **GetDeltaContract**: (`requestParams`?) => `Promise`\<[`Address`](../../type-aliases/Address.md) \| `null`\>
 
 ## Parameters
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L4)
+[src/methods/delta/getDeltaContract.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L8)

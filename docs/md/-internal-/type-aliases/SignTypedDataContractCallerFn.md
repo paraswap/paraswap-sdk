@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/types.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L110)
+[src/types.ts:113](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L113)

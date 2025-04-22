@@ -32,4 +32,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:159](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L159)
+[src/sdk/simple.ts:174](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L174)

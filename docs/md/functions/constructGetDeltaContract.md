@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaContract.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L10)
+[src/methods/delta/getDeltaContract.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L16)

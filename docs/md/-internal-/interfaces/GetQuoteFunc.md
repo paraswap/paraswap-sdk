@@ -6,13 +6,13 @@
 
 # Interface: GetQuoteFunc()
 
-> **GetQuoteFunc**(`options`, `signal`?): `Promise`\<[`QuoteWithDeltaPrice`](../../type-aliases/QuoteWithDeltaPrice.md)\>
+> **GetQuoteFunc**(`options`, `requestParams`?): `Promise`\<[`QuoteWithDeltaPrice`](../../type-aliases/QuoteWithDeltaPrice.md)\>
 
 ## Parameters
 
 • **options**: [`QuoteParams`](../../type-aliases/QuoteParams.md)\<`"delta"`\>
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](../type-aliases/RequestParameters.md)
 
 ## Returns
 
@@ -20,15 +20,15 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L62)
+[src/methods/quote/getQuote.ts:63](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L63)
 
-> **GetQuoteFunc**(`options`, `signal`?): `Promise`\<[`QuoteWithMarketPrice`](../../type-aliases/QuoteWithMarketPrice.md)\>
+> **GetQuoteFunc**(`options`, `requestParams`?): `Promise`\<[`QuoteWithMarketPrice`](../../type-aliases/QuoteWithMarketPrice.md)\>
 
 ## Parameters
 
 • **options**: [`QuoteParams`](../../type-aliases/QuoteParams.md)\<`"market"`\>
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](../type-aliases/RequestParameters.md)
 
 ## Returns
 
@@ -36,15 +36,15 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L66)
+[src/methods/quote/getQuote.ts:67](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L67)
 
-> **GetQuoteFunc**(`options`, `signal`?): `Promise`\<[`QuoteWithDeltaPrice`](../../type-aliases/QuoteWithDeltaPrice.md) \| [`QuoteWithMarketPriceAsFallback`](../../type-aliases/QuoteWithMarketPriceAsFallback.md)\>
+> **GetQuoteFunc**(`options`, `requestParams`?): `Promise`\<[`QuoteWithDeltaPrice`](../../type-aliases/QuoteWithDeltaPrice.md) \| [`QuoteWithMarketPriceAsFallback`](../../type-aliases/QuoteWithMarketPriceAsFallback.md)\>
 
 ## Parameters
 
 • **options**: [`QuoteParams`](../../type-aliases/QuoteParams.md)\<`"all"`\>
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](../type-aliases/RequestParameters.md)
 
 ## Returns
 
@@ -52,15 +52,15 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L70)
+[src/methods/quote/getQuote.ts:71](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L71)
 
-> **GetQuoteFunc**(`options`, `signal`?): `Promise`\<[`QuoteResponse`](../../type-aliases/QuoteResponse.md)\>
+> **GetQuoteFunc**(`options`, `requestParams`?): `Promise`\<[`QuoteResponse`](../../type-aliases/QuoteResponse.md)\>
 
 ## Parameters
 
 • **options**: [`QuoteParams`](../../type-aliases/QuoteParams.md)\<[`TradeMode`](../type-aliases/TradeMode.md)\>
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](../type-aliases/RequestParameters.md)
 
 ## Returns
 
@@ -68,4 +68,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L73)
+[src/methods/quote/getQuote.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L74)

@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:66](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L66)
+[src/methods/limitOrders/getOrders.ts:70](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L70)

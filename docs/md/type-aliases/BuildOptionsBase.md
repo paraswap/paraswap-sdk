@@ -44,4 +44,4 @@ Allows the API to return the contract parameters only.
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L161)
+[src/methods/swap/transaction.ts:162](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L162)

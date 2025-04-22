@@ -26,4 +26,4 @@ construct SDK with every NFTOrders-related method, fetching from API and contrac
 
 ## Defined in
 
-[src/methods/nftOrders/index.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L106)
+[src/methods/nftOrders/index.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L109)

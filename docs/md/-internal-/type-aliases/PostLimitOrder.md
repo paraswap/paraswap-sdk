@@ -6,13 +6,13 @@
 
 # Type Alias: PostLimitOrder()
 
-> **PostLimitOrder**: (`limitOrderWithSignatureAndPermit`, `signal`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
+> **PostLimitOrder**: (`limitOrderWithSignatureAndPermit`, `requestParams`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
 
 ## Parameters
 
 • **limitOrderWithSignatureAndPermit**: [`LimitOrderToSend`](../../type-aliases/LimitOrderToSend.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

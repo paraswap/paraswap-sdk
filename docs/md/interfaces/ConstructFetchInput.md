@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
+[src/types.ts:68](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L68)
 
 ***
 

@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L26)
+[src/methods/swap/balance.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L27)
 
 ***
 
@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L25)
+[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L26)

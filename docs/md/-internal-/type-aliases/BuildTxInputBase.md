@@ -112,4 +112,4 @@ Whenever msg.sender (`userAddress`) i.e. address calling the ParaSwap contract i
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:63](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L63)
+[src/methods/swap/transaction.ts:64](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L64)

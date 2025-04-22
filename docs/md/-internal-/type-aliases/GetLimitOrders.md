@@ -6,13 +6,13 @@
 
 # Type Alias: GetLimitOrders()
 
-> **GetLimitOrders**: (`userParams`, `signal`?) => `Promise`\<[`LimitOrdersApiResponse`](../../type-aliases/LimitOrdersApiResponse.md)\>
+> **GetLimitOrders**: (`userParams`, `requestParams`?) => `Promise`\<[`LimitOrdersApiResponse`](../../type-aliases/LimitOrdersApiResponse.md)\>
 
 ## Parameters
 
 • **userParams**: [`LimitOrdersUserParams`](../../type-aliases/LimitOrdersUserParams.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L41)
+[src/methods/limitOrders/getOrders.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L45)

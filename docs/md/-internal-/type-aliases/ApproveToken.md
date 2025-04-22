@@ -6,7 +6,7 @@
 
 # Type Alias: ApproveToken()\<T\>
 
-> **ApproveToken**\<`T`\>: (`amount`, `tokenAddress`, `overrides`?, `signal`?) => `Promise`\<`T`\>
+> **ApproveToken**\<`T`\>: (`amount`, `tokenAddress`, `overrides`?, `requestParams`?) => `Promise`\<`T`\>
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@
 
 • **overrides?**: [`TxSendOverrides`](../../interfaces/TxSendOverrides.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/helpers/approve.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/approve.ts#L28)
+[src/helpers/approve.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/approve.ts#L32)

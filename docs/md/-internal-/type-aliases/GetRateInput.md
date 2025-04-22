@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/rates.ts:184](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L184)
+[src/methods/swap/rates.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L192)

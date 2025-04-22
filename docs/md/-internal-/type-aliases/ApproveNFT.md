@@ -6,7 +6,7 @@
 
 # Type Alias: ApproveNFT()\<T\>
 
-> **ApproveNFT**\<`T`\>: (`tokenAddress`, `overrides`?) => `Promise`\<`T`\>
+> **ApproveNFT**\<`T`\>: (`tokenAddress`, `overrides`?, `requestParams`?) => `Promise`\<`T`\>
 
 ## Type Parameters
 
@@ -18,10 +18,12 @@
 
 • **overrides?**: [`TxSendOverrides`](../../interfaces/TxSendOverrides.md)
 
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
+
 ## Returns
 
 `Promise`\<`T`\>
 
 ## Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L11)
+[src/methods/nftOrders/approveForOrder.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L12)

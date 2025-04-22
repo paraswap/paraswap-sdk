@@ -6,13 +6,13 @@
 
 # Type Alias: BuildDeltaOrder()
 
-> **BuildDeltaOrder**: (`buildOrderParams`, `signal`?) => `Promise`\<[`SignableDeltaOrderData`](../../type-aliases/SignableDeltaOrderData.md)\>
+> **BuildDeltaOrder**: (`buildOrderParams`, `requestParams`?) => `Promise`\<[`SignableDeltaOrderData`](../../type-aliases/SignableDeltaOrderData.md)\>
 
 ## Parameters
 
 • **buildOrderParams**: [`BuildDeltaOrderDataParams`](../../type-aliases/BuildDeltaOrderDataParams.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/delta/buildDeltaOrder.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/buildDeltaOrder.ts#L41)
+[src/methods/delta/buildDeltaOrder.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/buildDeltaOrder.ts#L50)

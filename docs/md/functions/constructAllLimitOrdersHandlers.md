@@ -26,4 +26,4 @@ construct SDK with every LimitOrders-related method, fetching from API and contr
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:118](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L118)
+[src/methods/limitOrders/index.ts:121](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L121)

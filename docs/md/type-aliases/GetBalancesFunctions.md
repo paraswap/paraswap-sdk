@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L46)
+[src/methods/swap/balance.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L47)

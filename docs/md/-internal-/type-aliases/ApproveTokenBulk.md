@@ -6,7 +6,7 @@
 
 # Type Alias: ApproveTokenBulk()\<T\>
 
-> **ApproveTokenBulk**\<`T`\>: (`amount`, `tokenAddresses`, `overrides`?, `signal`?) => `Promise`\<[`Awaited`](Awaited.md)\<`T`\>[]\>
+> **ApproveTokenBulk**\<`T`\>: (`amount`, `tokenAddresses`, `overrides`?, `requestParams`?) => `Promise`\<[`Awaited`](Awaited.md)\<`T`\>[]\>
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@
 
 • **overrides?**: [`TxSendOverrides`](../../interfaces/TxSendOverrides.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/swap/approve.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L10)
+[src/methods/swap/approve.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L11)

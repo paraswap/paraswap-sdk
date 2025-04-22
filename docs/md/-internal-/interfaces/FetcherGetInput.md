@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[src/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L44)
+[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
 
 ***
 
@@ -36,21 +36,21 @@
 
 #### Defined in
 
-[src/types.ts:49](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L49)
+[src/types.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L52)
 
 ***
 
-### signal?
+### requestParams?
 
-> `optional` **signal**: `AbortSignal`
+> `optional` **requestParams**: [`RequestParameters`](../type-aliases/RequestParameters.md)
 
 #### Inherited from
 
-[`FetcherInputBase`](FetcherInputBase.md).[`signal`](FetcherInputBase.md#signal)
+[`FetcherInputBase`](FetcherInputBase.md).[`requestParams`](FetcherInputBase.md#requestparams)
 
 #### Defined in
 
-[src/types.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L45)
+[src/types.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L48)
 
 ***
 
@@ -64,4 +64,4 @@
 
 #### Defined in
 
-[src/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L43)
+[src/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L46)

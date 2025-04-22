@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/adapters.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L16)
+[src/methods/swap/adapters.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L22)

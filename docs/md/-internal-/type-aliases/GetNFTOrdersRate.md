@@ -6,7 +6,7 @@
 
 # Type Alias: GetNFTOrdersRate()
 
-> **GetNFTOrdersRate**: (`options`, `orders`, `signal`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
+> **GetNFTOrdersRate**: (`options`, `orders`, `requestParams`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **orders**: [`CheckableOrderData`](CheckableOrderData.md)[]
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

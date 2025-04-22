@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L24)
+[src/methods/swap/transaction.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L25)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L22)
+[src/methods/swap/transaction.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L23)
 
 ***
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L20)
+[src/methods/swap/transaction.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L21)
 
 ***
 
@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L23)
+[src/methods/swap/transaction.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L24)
 
 ***
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L26)
+[src/methods/swap/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L27)
 
 ***
 
@@ -64,7 +64,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L27)
+[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L28)
 
 ***
 
@@ -74,7 +74,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L28)
+[src/methods/swap/transaction.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L29)
 
 ***
 
@@ -84,7 +84,7 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L19)
+[src/methods/swap/transaction.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L20)
 
 ***
 
@@ -94,4 +94,4 @@
 
 #### Defined in
 
-[src/methods/swap/transaction.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L21)
+[src/methods/swap/transaction.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L22)

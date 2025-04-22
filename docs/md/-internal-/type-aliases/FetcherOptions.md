@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:177](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L177)
+[src/sdk/simple.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L192)

@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L56)
+[src/methods/limitOrders/cancelOrder.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L60)

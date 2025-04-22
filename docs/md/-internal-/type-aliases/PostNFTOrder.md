@@ -6,13 +6,13 @@
 
 # Type Alias: PostNFTOrder()
 
-> **PostNFTOrder**: (`NFTOrderWithSignatureAndPermit`, `signal`?) => `Promise`\<[`NFTOrderFromAPI`](../../type-aliases/NFTOrderFromAPI.md)\>
+> **PostNFTOrder**: (`NFTOrderWithSignatureAndPermit`, `requestParams`?) => `Promise`\<[`NFTOrderFromAPI`](../../type-aliases/NFTOrderFromAPI.md)\>
 
 ## Parameters
 
 • **NFTOrderWithSignatureAndPermit**: [`NFTOrderToSend`](../../type-aliases/NFTOrderToSend.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

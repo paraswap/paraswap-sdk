@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/swap/approve.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L17)
+[src/methods/swap/approve.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L18)

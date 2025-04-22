@@ -39,7 +39,7 @@ if given `token`, the mapping will contain that token address only
 
 #### Param
 
-AbortSignal passed to fetcher
+requestParams passed to fetcher, can include {signal: AbortSignal, timeout: for axios, etc.}
 
 #### Returns
 
@@ -47,4 +47,4 @@ AbortSignal passed to fetcher
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:51](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L51)
+[src/methods/limitOrders/getOrders.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L55)

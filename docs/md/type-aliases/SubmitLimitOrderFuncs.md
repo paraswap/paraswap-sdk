@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L45)
+[src/methods/limitOrders/index.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L48)

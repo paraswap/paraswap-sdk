@@ -6,13 +6,13 @@
 
 # Type Alias: GetPartnerFee()
 
-> **GetPartnerFee**: (`options`, `signal`?) => `Promise`\<[`PartnerFeeResponse`](PartnerFeeResponse.md)\>
+> **GetPartnerFee**: (`options`, `requestParams`?) => `Promise`\<[`PartnerFeeResponse`](PartnerFeeResponse.md)\>
 
 ## Parameters
 
 • **options**: [`PartnerFeeQueryParams`](PartnerFeeQueryParams.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

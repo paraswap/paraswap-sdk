@@ -20,4 +20,4 @@ returns ParaswapDelta contract address when Delta is available on current chain
 
 ## Defined in
 
-[src/methods/delta/getDeltaContract.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L5)
+[src/methods/delta/getDeltaContract.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L11)

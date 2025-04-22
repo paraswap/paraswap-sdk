@@ -16,7 +16,7 @@ The components for a tuple.
 
 #### Defined in
 
-[src/types.ts:189](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L189)
+[src/types.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L192)
 
 ***
 
@@ -28,7 +28,7 @@ If the parameter is indexed.
 
 #### Defined in
 
-[src/types.ts:174](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L174)
+[src/types.ts:177](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L177)
 
 ***
 
@@ -40,7 +40,7 @@ The internal Solidity type.
 
 #### Defined in
 
-[src/types.ts:184](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L184)
+[src/types.ts:187](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L187)
 
 ***
 
@@ -52,7 +52,7 @@ The parameter name.
 
 #### Defined in
 
-[src/types.ts:169](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L169)
+[src/types.ts:172](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L172)
 
 ***
 
@@ -64,4 +64,4 @@ The type of the parameter.
 
 #### Defined in
 
-[src/types.ts:179](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L179)
+[src/types.ts:182](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L182)

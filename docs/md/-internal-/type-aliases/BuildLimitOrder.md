@@ -6,13 +6,13 @@
 
 # Type Alias: BuildLimitOrder()
 
-> **BuildLimitOrder**: (`buildLimitOrderParams`, `signal`?) => `Promise`\<[`SignableOrderData`](../../type-aliases/SignableOrderData.md)\>
+> **BuildLimitOrder**: (`buildLimitOrderParams`, `requestParams`?) => `Promise`\<[`SignableOrderData`](../../type-aliases/SignableOrderData.md)\>
 
 ## Parameters
 
 • **buildLimitOrderParams**: [`BuildLimitOrderInput`](../../type-aliases/BuildLimitOrderInput.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

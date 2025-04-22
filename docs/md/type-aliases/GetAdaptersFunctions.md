@@ -12,11 +12,11 @@
 
 ### getAdapters()
 
-> **getAdapters**: (`signal`?) => `Promise`\<[`AdaptersAsStrings`](../-internal-/type-aliases/AdaptersAsStrings.md)\>
+> **getAdapters**: (`requestParams`?) => `Promise`\<[`AdaptersAsStrings`](../-internal-/type-aliases/AdaptersAsStrings.md)\>
 
 #### Parameters
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](../-internal-/type-aliases/RequestParameters.md)
 
 #### Returns
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/swap/adapters.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L7)
+[src/methods/swap/adapters.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L11)

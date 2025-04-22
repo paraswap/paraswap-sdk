@@ -6,11 +6,11 @@
 
 # Type Alias: GetTokens()
 
-> **GetTokens**: (`signal`?) => `Promise`\<[`Token`](../../type-aliases/Token.md)[]\>
+> **GetTokens**: (`extra`?) => `Promise`\<[`Token`](../../type-aliases/Token.md)[]\>
 
 ## Parameters
 
-• **signal?**: `AbortSignal`
+• **extra?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/token.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L9)
+[src/methods/swap/token.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L10)

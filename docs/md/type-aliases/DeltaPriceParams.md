@@ -18,6 +18,14 @@
 
 srcToken amount in wei
 
+### destChainId?
+
+> `optional` **destChainId**: `number`
+
+#### Description
+
+Destination Chain ID for Crosschain Orders
+
 ### destDecimals
 
 > **destDecimals**: `number`

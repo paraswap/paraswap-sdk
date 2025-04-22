@@ -14,4 +14,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:106](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L106)
+[src/methods/limitOrders/index.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L109)

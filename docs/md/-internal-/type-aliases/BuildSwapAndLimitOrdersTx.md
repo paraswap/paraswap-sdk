@@ -6,7 +6,7 @@
 
 # Type Alias: BuildSwapAndLimitOrdersTx()
 
-> **BuildSwapAndLimitOrdersTx**: (`params`, `options`?, `signal`?) => `Promise`\<[`TransactionParams`](../../interfaces/TransactionParams.md)\>
+> **BuildSwapAndLimitOrdersTx**: (`params`, `options`?, `requestParams`?) => `Promise`\<[`TransactionParams`](../../interfaces/TransactionParams.md)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **options?**: [`BuildOptions`](../../type-aliases/BuildOptions.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L27)
+[src/methods/limitOrders/transaction.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L28)

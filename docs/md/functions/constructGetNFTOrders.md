@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/getOrders.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L32)
+[src/methods/nftOrders/getOrders.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L36)

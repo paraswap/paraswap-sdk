@@ -6,7 +6,7 @@
 
 # Type Alias: FillOrderDirectly()\<T\>
 
-> **FillOrderDirectly**\<`T`\>: (`orderFillData`, `overrides`?, `signal`?) => `Promise`\<`T`\>
+> **FillOrderDirectly**\<`T`\>: (`orderFillData`, `overrides`?, `requestParams`?) => `Promise`\<`T`\>
 
 ## Type Parameters
 
@@ -28,7 +28,7 @@ Permit1 data or DAI Permit data or Token.parmit() input params encoded; Permit b
 
 • **overrides?**: [`TxSendOverrides`](../../interfaces/TxSendOverrides.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -36,4 +36,4 @@ Permit1 data or DAI Permit data or Token.parmit() input params encoded; Permit b
 
 ## Defined in
 
-[src/methods/limitOrders/fillOrderDirectly.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L38)
+[src/methods/limitOrders/fillOrderDirectly.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L42)

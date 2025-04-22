@@ -6,7 +6,7 @@
 
 # Type Alias: SubmitNFTOrder()
 
-> **SubmitNFTOrder**: (`buildNFTOrderParams`, `extra`?, `signal`?) => `Promise`\<[`NFTOrderFromAPI`](../../type-aliases/NFTOrderFromAPI.md)\>
+> **SubmitNFTOrder**: (`buildNFTOrderParams`, `extra`?, `requestParams`?) => `Promise`\<[`NFTOrderFromAPI`](../../type-aliases/NFTOrderFromAPI.md)\>
 
 ## Parameters
 
@@ -16,7 +16,7 @@
 
 • **extra.permitMakerAsset?**: `string`
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/index.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L28)
+[src/methods/nftOrders/index.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L31)

@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L48)
+[src/methods/nftOrders/approveForOrder.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L50)

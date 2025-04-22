@@ -6,11 +6,11 @@
 
 # Type Alias: GetSpender()
 
-> **GetSpender**: (`signal`?) => `Promise`\<[`Address`](../../type-aliases/Address.md)\>
+> **GetSpender**: (`requestParams`?) => `Promise`\<[`Address`](../../type-aliases/Address.md)\>
 
 ## Parameters
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/spender.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L5)
+[src/methods/swap/spender.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L9)

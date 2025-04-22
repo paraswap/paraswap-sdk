@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/buildDeltaOrderData.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/buildDeltaOrderData.ts#L8)
+[src/methods/limitOrders/helpers/buildOrderData.ts:10](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L10)

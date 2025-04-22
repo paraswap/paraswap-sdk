@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/swap/approve.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L24)
+[src/methods/swap/approve.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L25)

@@ -10,6 +10,14 @@
 
 ## Type declaration
 
+### bridgeMetadata
+
+> **bridgeMetadata**: [`BridgeMetadata`](BridgeMetadata.md) \| `null`
+
+### bridgeStatus
+
+> **bridgeStatus**: [`BridgeStatus`](BridgeStatus.md) \| `null`
+
 ### chainId
 
 > **chainId**: `number`
@@ -22,6 +30,10 @@
 
 > **deltaVersion**: `string`
 
+### excludeAgents
+
+> **excludeAgents**: `string`[] \| `null`
+
 ### expiresAt
 
 > **expiresAt**: `string`
@@ -30,13 +42,17 @@
 
 > **id**: `string`
 
+### includeAgents
+
+> **includeAgents**: `string`[] \| `null`
+
 ### order
 
 > **order**: [`DeltaAuctionOrder`](DeltaAuctionOrder.md)
 
 ### orderHash
 
-> **orderHash**: `string`
+> **orderHash**: `string` \| `null`
 
 ### partiallyFillable
 
@@ -45,6 +61,10 @@
 ### partner
 
 > **partner**: `string`
+
+### referrerAddress
+
+> **referrerAddress**: `string` \| `null`
 
 ### signature
 
@@ -68,4 +88,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L57)
+[src/methods/delta/helpers/types.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L76)

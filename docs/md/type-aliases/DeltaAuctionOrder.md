@@ -18,6 +18,14 @@
 
 The address of the order beneficiary
 
+### bridge
+
+> **bridge**: [`Bridge`](Bridge.md)
+
+#### Description
+
+The bridge input
+
 ### deadline
 
 > **deadline**: `number`
@@ -100,4 +108,4 @@ The address of the src token
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:1](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L1)
+[src/methods/delta/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L3)

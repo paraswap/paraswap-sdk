@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L48)
+[src/methods/quote/getQuote.ts:49](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L49)

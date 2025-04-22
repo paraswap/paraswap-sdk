@@ -24,4 +24,4 @@ approving ParaswapDelta as spender for Token
 
 ## Defined in
 
-[src/methods/delta/approveForDelta.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/approveForDelta.ts#L5)
+[src/methods/delta/approveForDelta.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/approveForDelta.ts#L8)

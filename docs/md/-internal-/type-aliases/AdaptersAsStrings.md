@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/swap/adapters.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L5)
+[src/methods/swap/adapters.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L9)

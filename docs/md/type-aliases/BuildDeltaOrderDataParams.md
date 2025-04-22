@@ -6,7 +6,7 @@
 
 # Type Alias: BuildDeltaOrderDataParams
 
-> **BuildDeltaOrderDataParams**: `object` & [`Partial`](../-internal-/type-aliases/Partial.md)\<[`PartnerFeeResponse`](../-internal-/type-aliases/PartnerFeeResponse.md)\>
+> **BuildDeltaOrderDataParams**: `object`
 
 ## Type declaration
 
@@ -17,6 +17,14 @@
 #### Description
 
 The address of the order beneficiary
+
+### bridge?
+
+> `optional` **bridge**: [`BridgeInput`](BridgeInput.md)
+
+#### Description
+
+The bridge input
 
 ### deadline?
 
@@ -74,6 +82,30 @@ The address of the order owner
 
 Partner string.
 
+### partnerAddress?
+
+> `optional` **partnerAddress**: `string`
+
+#### Description
+
+partner address
+
+### partnerFeeBps?
+
+> `optional` **partnerFeeBps**: `number`
+
+#### Description
+
+partner fee in basis points (bps), 50bps=0.5%
+
+### partnerTakesSurplus?
+
+> `optional` **partnerTakesSurplus**: `boolean`
+
+#### Description
+
+take surplus
+
 ### permit?
 
 > `optional` **permit**: `string`
@@ -100,4 +132,4 @@ The address of the src token
 
 ## Defined in
 
-[src/methods/delta/buildDeltaOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/buildDeltaOrder.ts#L15)
+[src/methods/delta/buildDeltaOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/buildDeltaOrder.ts#L14)

@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:173](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L173)
+[src/methods/swap/transaction.ts:174](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L174)

@@ -18,6 +18,10 @@
 
 > **auctionId**: `string`
 
+### bidId
+
+> **bidId**: `string` \| `null`
+
 ### blobGasPrice
 
 > **blobGasPrice**: `bigint`
@@ -62,6 +66,10 @@
 
 > **index**: `number`
 
+### orderId
+
+> **orderId**: `string`
+
 ### partnerFee
 
 > **partnerFee**: `string`
@@ -74,9 +82,17 @@
 
 > **receivedAmount**: `string`
 
+### receivedAmountUSD
+
+> **receivedAmountUSD**: `number`
+
 ### spentAmount
 
 > **spentAmount**: `string`
+
+### spentAmountUSD
+
+> **spentAmountUSD**: `number`
 
 ### status
 
@@ -88,4 +104,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L35)
+[src/methods/delta/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L50)

@@ -6,13 +6,13 @@
 
 # Type Alias: BuildNFTOrder()
 
-> **BuildNFTOrder**: (`buildNFTOrderParams`, `signal`?) => `Promise`\<[`SignableNFTOrderData`](../../type-aliases/SignableNFTOrderData.md)\>
+> **BuildNFTOrder**: (`buildNFTOrderParams`, `requestParams`?) => `Promise`\<[`SignableNFTOrderData`](../../type-aliases/SignableNFTOrderData.md)\>
 
 ## Parameters
 
 • **buildNFTOrderParams**: [`BuildNFTOrderInput`](../../type-aliases/BuildNFTOrderInput.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

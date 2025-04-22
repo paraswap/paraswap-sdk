@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/constants.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L11)
+[src/constants.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L16)

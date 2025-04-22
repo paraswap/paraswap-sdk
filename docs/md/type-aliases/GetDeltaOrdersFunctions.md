@@ -10,6 +10,10 @@
 
 ## Type declaration
 
+### getDeltaOrderByHash
+
+> **getDeltaOrderByHash**: [`GetDeltaOrderByHash`](../-internal-/type-aliases/GetDeltaOrderByHash.md)
+
 ### getDeltaOrderById
 
 > **getDeltaOrderById**: [`GetDeltaOrderById`](../-internal-/type-aliases/GetDeltaOrderById.md)
@@ -20,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaOrders.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L28)
+[src/methods/delta/getDeltaOrders.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L37)

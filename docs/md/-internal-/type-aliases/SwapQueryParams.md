@@ -246,4 +246,4 @@ To specify the protocol version. **Values:** 5 or 6.2 **Default**: 5.
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L9)
+[src/methods/swap/swapTx.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L17)

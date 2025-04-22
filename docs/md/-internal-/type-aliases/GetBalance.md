@@ -6,7 +6,7 @@
 
 # Type Alias: GetBalance()
 
-> **GetBalance**: (`userAddress`, `tokenAddressOrSymbol`, `signal`?) => `Promise`\<[`Token`](../../type-aliases/Token.md) \| *typeof* [`NOT_FOUND_RESPONSE`](../variables/NOT_FOUND_RESPONSE.md)\>
+> **GetBalance**: (`userAddress`, `tokenAddressOrSymbol`, `requestParams`?) => `Promise`\<[`Token`](../../type-aliases/Token.md) \| *typeof* [`NOT_FOUND_RESPONSE`](../variables/NOT_FOUND_RESPONSE.md)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **tokenAddressOrSymbol**: [`AddressOrSymbol`](../../type-aliases/AddressOrSymbol.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L18)
+[src/methods/swap/balance.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L19)

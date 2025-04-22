@@ -32,4 +32,4 @@ approving AugustusRFQ as spender for makerAsset (NFT)
 
 ## Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L16)
+[src/methods/nftOrders/approveForOrder.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L18)

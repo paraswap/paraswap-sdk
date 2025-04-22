@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/delta/approveForDelta.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/approveForDelta.ts#L12)
+[src/methods/delta/approveForDelta.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/approveForDelta.ts#L15)

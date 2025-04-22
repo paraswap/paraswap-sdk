@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/types.ts:104](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L104)
+[src/types.ts:107](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L107)

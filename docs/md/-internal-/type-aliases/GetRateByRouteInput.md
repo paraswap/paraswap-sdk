@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/rates.ts:194](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L194)
+[src/methods/swap/rates.ts:202](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L202)

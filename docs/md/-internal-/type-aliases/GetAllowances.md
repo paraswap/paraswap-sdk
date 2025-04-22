@@ -6,7 +6,7 @@
 
 # Type Alias: GetAllowances()
 
-> **GetAllowances**: (`userAddress`, `tokenAddresses`, `signal`?) => `Promise`\<[`Allowance`](../../interfaces/Allowance.md)[]\>
+> **GetAllowances**: (`userAddress`, `tokenAddresses`, `requestParams`?) => `Promise`\<[`Allowance`](../../interfaces/Allowance.md)[]\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **tokenAddresses**: [`Address`](../../type-aliases/Address.md)[]
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L29)
+[src/methods/swap/balance.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L30)

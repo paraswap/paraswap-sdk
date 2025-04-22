@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L36)
+[src/methods/swap/transaction.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L37)

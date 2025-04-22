@@ -6,13 +6,13 @@
 
 # Type Alias: GetBalances()
 
-> **GetBalances**: (`userAddress`, `signal`?) => `Promise`\<[`Token`](../../type-aliases/Token.md)[]\>
+> **GetBalances**: (`userAddress`, `requestParams`?) => `Promise`\<[`Token`](../../type-aliases/Token.md)[]\>
 
 ## Parameters
 
 • **userAddress**: [`Address`](../../type-aliases/Address.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L14)
+[src/methods/swap/balance.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L15)

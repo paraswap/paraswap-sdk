@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaPrice.ts:59](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L59)
+[src/methods/delta/getDeltaPrice.ts:79](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L79)

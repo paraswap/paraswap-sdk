@@ -6,13 +6,13 @@
 
 # Type Alias: GetLimitOrderByHash()
 
-> **GetLimitOrderByHash**: (`orderHash`, `signal`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
+> **GetLimitOrderByHash**: (`orderHash`, `requestParams`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
 
 ## Parameters
 
 • **orderHash**: `string`
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L37)
+[src/methods/limitOrders/getOrders.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L41)

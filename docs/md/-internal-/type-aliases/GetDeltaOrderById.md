@@ -6,18 +6,18 @@
 
 # Type Alias: GetDeltaOrderById()
 
-> **GetDeltaOrderById**: (`orderId`, `signal`?) => `Promise`\<[`OrderFromAPI`](OrderFromAPI.md) \| `null`\>
+> **GetDeltaOrderById**: (`orderId`, `requestParams`?) => `Promise`\<[`OrderFromAPI`](OrderFromAPI.md)\>
 
 ## Parameters
 
 • **orderId**: `string`
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
-`Promise`\<[`OrderFromAPI`](OrderFromAPI.md) \| `null`\>
+`Promise`\<[`OrderFromAPI`](OrderFromAPI.md)\>
 
 ## Defined in
 
-[src/methods/delta/getDeltaOrders.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L8)
+[src/methods/delta/getDeltaOrders.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L12)

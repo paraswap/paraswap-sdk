@@ -6,11 +6,11 @@
 
 # Type Alias: GetContracts()
 
-> **GetContracts**: (`signal`?) => `Promise`\<[`AdaptersContractsResult`](../interfaces/AdaptersContractsResult.md)\>
+> **GetContracts**: (`requestParams`?) => `Promise`\<[`AdaptersContractsResult`](../interfaces/AdaptersContractsResult.md)\>
 
 ## Parameters
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/spender.ts:6](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L6)
+[src/methods/swap/spender.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L12)

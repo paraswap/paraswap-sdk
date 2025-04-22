@@ -6,13 +6,13 @@
 
 # Type Alias: GetNFTOrders()
 
-> **GetNFTOrders**: (`userParams`, `signal`?) => `Promise`\<[`NFTOrdersApiResponse`](../../type-aliases/NFTOrdersApiResponse.md)\>
+> **GetNFTOrders**: (`userParams`, `requestParams`?) => `Promise`\<[`NFTOrdersApiResponse`](../../type-aliases/NFTOrdersApiResponse.md)\>
 
 ## Parameters
 
 • **userParams**: [`NFTOrdersUserParams`](../../type-aliases/NFTOrdersUserParams.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/getOrders.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L22)
+[src/methods/nftOrders/getOrders.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/getOrders.ts#L26)

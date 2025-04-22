@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/token.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L11)
+[src/methods/swap/token.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L12)

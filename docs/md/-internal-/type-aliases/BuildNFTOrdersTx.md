@@ -6,7 +6,7 @@
 
 # Type Alias: BuildNFTOrdersTx()
 
-> **BuildNFTOrdersTx**: (`params`, `options`?, `signal`?) => `Promise`\<[`TransactionParams`](../../interfaces/TransactionParams.md)\>
+> **BuildNFTOrdersTx**: (`params`, `options`?, `requestParams`?) => `Promise`\<[`TransactionParams`](../../interfaces/TransactionParams.md)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **options?**: [`BuildOptions`](../../type-aliases/BuildOptions.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 

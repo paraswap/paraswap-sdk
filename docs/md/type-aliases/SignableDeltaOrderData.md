@@ -22,10 +22,14 @@
 
 > **types**: `object`
 
+### types.Bridge
+
+> **Bridge**: *typeof* `SWAP_ORDER_EIP_712_TYPES.Bridge`
+
 ### types.Order
 
-> **Order**: *typeof* [`Order`](../-internal-/variables/Order.md)
+> **Order**: *typeof* `SWAP_ORDER_EIP_712_TYPES.Order`
 
 ## Defined in
 
-[src/methods/delta/helpers/buildDeltaOrderData.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/buildDeltaOrderData.ts#L22)
+[src/methods/delta/helpers/buildDeltaOrderData.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/buildDeltaOrderData.ts#L30)

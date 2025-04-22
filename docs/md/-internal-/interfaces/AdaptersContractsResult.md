@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L18)
+[src/methods/swap/spender.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L26)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L16)
+[src/methods/swap/spender.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L24)
 
 ***
 
@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L19)
+[src/methods/swap/spender.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L27)
 
 ***
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L22)
+[src/methods/swap/spender.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L30)
 
 ***
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[src/methods/swap/spender.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L17)
+[src/methods/swap/spender.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L25)

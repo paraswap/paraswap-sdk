@@ -34,6 +34,14 @@ designates the Order as being able to partilly filled, as opposed to fill-or-kil
 
 Partner string
 
+### referrerAddress?
+
+> `optional` **referrerAddress**: `string`
+
+#### Description
+
+Referrer address
+
 ### signature
 
 > **signature**: `string`

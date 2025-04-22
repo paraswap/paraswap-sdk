@@ -6,7 +6,7 @@
 
 # Type Alias: GetLimitOrdersRate()
 
-> **GetLimitOrdersRate**: (`options`, `orders`, `signal`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
+> **GetLimitOrdersRate**: (`options`, `orders`, `requestParams`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 • **orders**: [`CheckableOrderData`](CheckableOrderData.md)[]
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/transaction.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L52)
+[src/methods/limitOrders/transaction.ts:53](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L53)

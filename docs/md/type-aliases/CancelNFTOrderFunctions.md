@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:14](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L14)
+[src/methods/nftOrders/cancelOrder.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L8)

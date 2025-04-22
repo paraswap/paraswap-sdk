@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/postDeltaOrder.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/postDeltaOrder.ts#L25)
+[src/methods/delta/postDeltaOrder.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/postDeltaOrder.ts#L27)

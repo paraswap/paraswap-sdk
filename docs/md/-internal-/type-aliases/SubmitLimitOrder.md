@@ -6,7 +6,7 @@
 
 # Type Alias: SubmitLimitOrder()
 
-> **SubmitLimitOrder**: (`buildLimitOrderParams`, `extra`?, `signal`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
+> **SubmitLimitOrder**: (`buildLimitOrderParams`, `extra`?, `requestParams`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
 
 ## Parameters
 
@@ -16,7 +16,7 @@
 
 • **extra.permitMakerAsset?**: `string`
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L33)
+[src/methods/limitOrders/index.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L36)

@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:217](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L217)
+[src/methods/swap/swapTx.ts:225](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L225)

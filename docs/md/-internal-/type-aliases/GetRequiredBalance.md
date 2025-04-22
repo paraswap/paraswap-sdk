@@ -6,13 +6,13 @@
 
 # Type Alias: GetRequiredBalance()
 
-> **GetRequiredBalance**: (`userParams`, `singal`?) => `Promise`\<[`Record`](Record.md)\<`string`, `string`\>\>
+> **GetRequiredBalance**: (`userParams`, `requestParams`?) => `Promise`\<[`Record`](Record.md)\<`string`, `string`\>\>
 
 ## Parameters
 
 • **userParams**: [`GetRequiredAllowanceParams`](GetRequiredAllowanceParams.md)
 
-• **singal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L46)
+[src/methods/limitOrders/getOrders.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L50)

@@ -24,4 +24,4 @@ List of tokens (addresses or symbols from `/tokens`) to comprise the price route
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:197](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L197)
+[src/methods/swap/swapTx.ts:205](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L205)

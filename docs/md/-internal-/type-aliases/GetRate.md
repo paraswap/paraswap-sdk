@@ -6,13 +6,13 @@
 
 # Type Alias: GetRate()
 
-> **GetRate**: (`options`, `signal`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
+> **GetRate**: (`options`, `requestParams`?) => `Promise`\<[`OptimalRate`](../../type-aliases/OptimalRate.md)\>
 
 ## Parameters
 
 • **options**: [`GetRateInput`](GetRateInput.md)
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/rates.ts:189](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L189)
+[src/methods/swap/rates.ts:197](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L197)

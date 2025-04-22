@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/transaction.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L46)
+[src/methods/limitOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L47)

@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L56)
+[src/methods/quote/getQuote.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L57)

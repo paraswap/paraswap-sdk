@@ -6,7 +6,7 @@
 
 # Type Alias: SubmitP2POrder()
 
-> **SubmitP2POrder**: (`buildLimitOrderParams`, `extra`?, `signal`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
+> **SubmitP2POrder**: (`buildLimitOrderParams`, `extra`?, `requestParams`?) => `Promise`\<[`LimitOrderFromApi`](../../type-aliases/LimitOrderFromApi.md)\>
 
 ## Parameters
 
@@ -16,7 +16,7 @@
 
 • **extra.permitMakerAsset?**: `string`
 
-• **signal?**: `AbortSignal`
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
 
 ## Returns
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L39)
+[src/methods/limitOrders/index.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L42)

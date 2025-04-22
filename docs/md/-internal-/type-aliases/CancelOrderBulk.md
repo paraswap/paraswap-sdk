@@ -6,7 +6,7 @@
 
 # Type Alias: CancelOrderBulk()\<T\>
 
-> **CancelOrderBulk**\<`T`\>: (`orderHashes`, `overrides`?) => `Promise`\<`T`\>
+> **CancelOrderBulk**\<`T`\>: (`orderHashes`, `overrides`?, `requestParams`?) => `Promise`\<`T`\>
 
 ## Type Parameters
 
@@ -18,10 +18,12 @@
 
 • **overrides?**: [`TxSendOverrides`](../../interfaces/TxSendOverrides.md)
 
+• **requestParams?**: [`RequestParameters`](RequestParameters.md)
+
 ## Returns
 
 `Promise`\<`T`\>
 
 ## Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L9)
+[src/methods/limitOrders/cancelOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L15)
