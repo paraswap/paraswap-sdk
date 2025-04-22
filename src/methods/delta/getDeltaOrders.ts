@@ -12,12 +12,12 @@ type OrderFromAPI = Omit<ParaswapDeltaAuction, 'signature'>;
 type GetDeltaOrderById = (
   orderId: string,
   requestParams?: RequestParameters
-) => Promise<OrderFromAPI | null>;
+) => Promise<OrderFromAPI>;
 
 type GetDeltaOrderByHash = (
   orderHash: string,
   requestParams?: RequestParameters
-) => Promise<OrderFromAPI | null>;
+) => Promise<OrderFromAPI>;
 
 type OrdersFilter = {
   /** @description Order.owner to fetch Delta Order for */
@@ -52,7 +52,7 @@ export const constructGetDeltaOrders = ({
   ) => {
     const fetchURL = `${baseUrl}/${orderId}` as const;
 
-    const order = await fetcher<OrderFromAPI | null>({
+    const order = await fetcher<OrderFromAPI>({
       url: fetchURL,
       method: 'GET',
       requestParams,
@@ -67,7 +67,7 @@ export const constructGetDeltaOrders = ({
   ) => {
     const fetchURL = `${baseUrl}/hash/${orderHash}` as const;
 
-    const order = await fetcher<OrderFromAPI | null>({
+    const order = await fetcher<OrderFromAPI>({
       url: fetchURL,
       method: 'GET',
       requestParams,
