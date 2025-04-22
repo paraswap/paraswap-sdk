@@ -189,10 +189,20 @@ describe('Delta:methods', () => {
     expect(staticSliceOfPastOrders).toMatchSnapshot();
   });
 
-  test('Get Delta Order by Id', async () => {
-    const orderId = '50950528-d362-4359-a89e-ed6e49be1a20';
+  test('Get Delta Order by Id and Hash', async () => {
+    const orderId = '7ec0dc82-98ad-4501-9f46-03e31e51098f';
     const deltaOrder = await deltaSDK.getDeltaOrderById(orderId);
     expect(deltaOrder).toMatchSnapshot();
+    expect(deltaOrder).toBeDefined();
+    assert(
+      deltaOrder?.orderHash,
+      "Delta order not found or doesn't have orderHash"
+    );
+
+    const orderByHash = await deltaSDK.getDeltaOrderByHash(
+      deltaOrder.orderHash
+    );
+    expect(orderByHash).toEqual(deltaOrder);
   });
 
   test('Get PartnerFee', async () => {

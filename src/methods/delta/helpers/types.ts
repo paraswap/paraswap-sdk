@@ -80,7 +80,7 @@ export type ParaswapDeltaAuction = {
   signature: string;
   status: DeltaAuctionStatus;
   order: DeltaAuctionOrder;
-  orderHash: string;
+  orderHash: string | null; // not available on old Orders only
   transactions: DeltaAuctionTransaction[];
   chainId: number;
   partner: string;
