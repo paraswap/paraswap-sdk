@@ -1,4 +1,4 @@
-import { deriveCompactSignature } from '../../helpers/misc';
+// import { deriveCompactSignature } from '../../helpers/misc';
 import type { ConstructProviderFetchInput } from '../../types';
 import { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 import { sanitizeDeltaOrderData } from './helpers/misc';
@@ -35,19 +35,24 @@ export const constructSignDeltaOrder = (
       typedDataOnly
     );
 
-    if (signature.length > 132) {
-      // signature more than 65 bytes, likely a multisig
-      // not compatible with EIP-2098 Compact Signatures
-      return signature;
-    }
+    // Safe signature with only one signer has length 132
+    // but if it is compacted, the recovered address doesn't match the signer
 
-    // both full and compact signatures work in the ParaswapDelta contract;
-    // compact signature can be marginally more gas efficient
-    try {
-      return deriveCompactSignature(signature);
-    } catch {
-      return signature;
-    }
+    return signature;
+
+    // if (signature.length > 132) {
+    //   // signature more than 65 bytes, likely a multisig
+    //   // not compatible with EIP-2098 Compact Signatures
+    //   return signature;
+    // }
+
+    // // both full and compact signatures work in the ParaswapDelta contract;
+    // // compact signature can be marginally more gas efficient
+    // try {
+    //   return deriveCompactSignature(signature);
+    // } catch {
+    //   return signature;
+    // }
   };
 
   return { signDeltaOrder };
