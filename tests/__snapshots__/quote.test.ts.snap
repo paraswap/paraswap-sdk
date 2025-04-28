@@ -27,7 +27,7 @@ exports[`Quote:methods Get Fallback Market Quote for all 2`] = `
   ],
   "blockNumber": "dynamic_number",
   "contractAddress": "0x6a000f20005980200259b80c5102003040001068",
-  "contractMethod": "swapOnAugustusRFQTryBatchFill",
+  "contractMethod": "swapExactAmountIn",
   "destAmount": "dynamic_number",
   "destDecimals": 18,
   "destToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
