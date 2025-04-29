@@ -33,7 +33,7 @@ const contractCaller = constructEthersContractCaller(
 // & SignLimitOrderFunctions
 // & PostLimitOrderFunctions
 
-const paraSwapLimitOrderSDK = constructPartialSDK(
+const limitOrderSDK = constructPartialSDK(
   {
     chainId: 1,
     fetcher,
@@ -59,9 +59,9 @@ const orderInput = {
 
 async function run() {
   const signableOrderData: SignableOrderData =
-    await paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
+    await limitOrderSDK.buildLimitOrder(orderInput);
 
-  const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
+  const signature: string = await limitOrderSDK.signLimitOrder(
     signableOrderData
   );
 
@@ -70,7 +70,7 @@ async function run() {
     signature,
   };
 
-  const newOrder = await paraSwapLimitOrderSDK.postLimitOrder(orderToPostToApi);
+  const newOrder = await limitOrderSDK.postLimitOrder(orderToPostToApi);
   console.log(newOrder);
 }
 

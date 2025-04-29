@@ -11,7 +11,7 @@ const fetcher = constructAxiosFetcher(axios);
 const web3 = new Web3(Web3.givenProvider);
 const contractCaller = constructWeb3ContractCaller(web3);
 
-const paraswap = constructFullSDK({
+const sdk = constructFullSDK({
   chainId: 1,
   fetcher,
   contractCaller,
@@ -19,7 +19,7 @@ const paraswap = constructFullSDK({
 
 async function main() {
   // type Web3UnpromiEvent
-  const eventfulTxResponse = await paraswap.swap.approveToken(
+  const eventfulTxResponse = await sdk.swap.approveToken(
     '1000000000000000000',
     '0xcafe001067cDEF266AfB7Eb5A286dCFD277f3dE5'
   );

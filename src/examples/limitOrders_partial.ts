@@ -40,7 +40,7 @@ const contractCaller = constructEthersContractCaller(
 // & SignLimitOrderFunctions
 // & CancelLimitOrderFunctions<ethers.ContractTransaction>
 // & ApproveTokenFunctions<ethers.ContractTransaction>
-const paraSwapLimitOrderSDK = constructPartialSDK(
+const limitOrderSDK = constructPartialSDK(
   {
     chainId: 1,
     fetcher,
@@ -69,14 +69,14 @@ const orderInput = {
 
 async function run() {
   /// cancelling current orders
-  const { orders: currentOrders } = await paraSwapLimitOrderSDK.getLimitOrders({
+  const { orders: currentOrders } = await limitOrderSDK.getLimitOrders({
     maker: account,
     type: 'LIMIT',
   });
 
   if (currentOrders[0]?.orderHash) {
     const tx1: ethers.ContractTransaction =
-      await paraSwapLimitOrderSDK.cancelLimitOrder(currentOrders[0].orderHash);
+      await limitOrderSDK.cancelLimitOrder(currentOrders[0].orderHash);
   }
 
   const moreOrderHashes = currentOrders
@@ -84,20 +84,20 @@ async function run() {
     .map((order) => order.orderHash);
 
   const tx2: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.cancelLimitOrderBulk(moreOrderHashes);
+    await limitOrderSDK.cancelLimitOrderBulk(moreOrderHashes);
 
   /// creating a new order
 
   const tx3: ethers.ContractTransaction =
-    await paraSwapLimitOrderSDK.approveMakerTokenForLimitOrder(
+    await limitOrderSDK.approveMakerTokenForLimitOrder(
       orderInput.makerAmount,
       orderInput.makerAsset
     );
 
   const signableOrderData: SignableOrderData =
-    await paraSwapLimitOrderSDK.buildLimitOrder(orderInput);
+    await limitOrderSDK.buildLimitOrder(orderInput);
 
-  const signature: string = await paraSwapLimitOrderSDK.signLimitOrder(
+  const signature: string = await limitOrderSDK.signLimitOrder(
     signableOrderData
   );
 
@@ -106,14 +106,14 @@ async function run() {
     signature,
   };
 
-  const newOrder = await paraSwapLimitOrderSDK.postLimitOrder(orderToPostToApi);
+  const newOrder = await limitOrderSDK.postLimitOrder(orderToPostToApi);
 
   /// filling an order
 
   // to act as order taker
   const anotherAccount = '0x5678...';
 
-  const paraswapLimitOrdersSDKForTaker = constructPartialSDK(
+  const limitOrderSDKForTaker = constructPartialSDK(
     {
       chainId: 1,
       fetcher,
@@ -130,13 +130,13 @@ async function run() {
   );
 
   const tx4: ethers.ContractTransaction =
-    await paraswapLimitOrdersSDKForTaker.approveTakerTokenForLimitOrder(
+    await limitOrderSDKForTaker.approveTakerTokenForLimitOrder(
       orderInput.takerAmount,
       orderInput.takerAsset
     );
 
   const { gas: payloadGas, ...LOPayloadTxParams } =
-    await paraswapLimitOrdersSDKForTaker.buildLimitOrderTx({
+    await limitOrderSDKForTaker.buildLimitOrderTx({
       srcDecimals: 18,
       destDecimals: 18,
       userAddress: anotherAccount, // taker

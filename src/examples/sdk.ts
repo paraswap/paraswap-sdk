@@ -17,19 +17,19 @@ const contractCaller = constructEthersV5ContractCaller({
   EthersContract: ethers.Contract,
 });
 
-const paraswap = constructFullSDK({
+const sdk = constructFullSDK({
   apiURL: '',
   chainId: 1,
   fetcher,
   contractCaller,
 });
 
-const res = paraswap.swap.getAdapters();
+const res = sdk.swap.getAdapters();
 
 // type Promise<ContractTransaction>
-const txResponse = paraswap.swap.approveToken('1', '0x...');
+const txResponse = sdk.swap.approveToken('1', '0x...');
 // type Promise<ContractTransaction[]>
-const txResponses = paraswap.swap.approveTokenBulk('1', ['0x...']);
+const txResponses = sdk.swap.approveTokenBulk('1', ['0x...']);
 
 const partial = constructPartialSDK(
   { apiURL: '', chainId: 1, fetcher },
