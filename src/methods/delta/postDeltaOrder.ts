@@ -1,6 +1,6 @@
 import { API_URL } from '../../constants';
 import type { ConstructFetchInput, RequestParameters } from '../../types';
-import { DeltaAuctionOrder, ParaswapDeltaAuction } from './helpers/types';
+import { DeltaAuctionOrder, VeloraDeltaAuction } from './helpers/types';
 
 export type DeltaOrderToPost = {
   /** @description Partner string */
@@ -17,7 +17,7 @@ export type DeltaOrderToPost = {
 
 export type PostDeltaOrderParams = Omit<DeltaOrderToPost, 'chainId'>;
 
-type DeltaOrderApiResponse = ParaswapDeltaAuction;
+type DeltaOrderApiResponse = VeloraDeltaAuction;
 
 type PostDeltaOrder = (
   postData: PostDeltaOrderParams,

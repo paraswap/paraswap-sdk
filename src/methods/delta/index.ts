@@ -1,5 +1,5 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { ParaswapDeltaAuction } from './helpers/types';
+import type { VeloraDeltaAuction } from './helpers/types';
 import {
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
@@ -53,7 +53,7 @@ export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
 
 type SubmitDeltaOrder = (
   orderParams: SubmitDeltaOrderParams
-) => Promise<ParaswapDeltaAuction>;
+) => Promise<VeloraDeltaAuction>;
 
 export type SubmitDeltaOrderFuncs = {
   submitDeltaOrder: SubmitDeltaOrder;

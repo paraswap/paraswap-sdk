@@ -73,7 +73,7 @@ type DeltaAuctionTransaction = {
   auctionId: string;
 };
 
-export type ParaswapDeltaAuction = {
+export type VeloraDeltaAuction = {
   id: string;
   deltaVersion: string; // 1.0 or 2.0 currently
   user: string;

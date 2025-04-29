@@ -1,6 +1,6 @@
 import type {
   ConstructFetchInput,
-  ParaSwapVersionUnion,
+  APIVersionUnion,
   RequestParameters,
 } from '../../types';
 import { constructSearchString } from '../../helpers/misc';
@@ -16,7 +16,7 @@ export type GetAdaptersFunctions = {
 
 type SearchStringParams = {
   network: number;
-  version?: ParaSwapVersionUnion;
+  version?: APIVersionUnion;
 };
 
 export const constructGetAdapters = ({

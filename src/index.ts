@@ -128,12 +128,12 @@ import type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
-  ParaSwapVersionUnion as ParaSwapVersion,
+  APIVersionUnion,
 } from './types';
 
 import type {
   DeltaAuctionOrder,
-  ParaswapDeltaAuction,
+  VeloraDeltaAuction,
   BridgeMetadata,
   BridgeStatus,
   BridgeInput,
@@ -353,7 +353,7 @@ export type {
   BridgePrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
-  ParaswapDeltaAuction,
+  VeloraDeltaAuction,
   // bridge part of DeltaOrder
   BridgeMetadata,
   BridgeStatus,
@@ -396,7 +396,7 @@ export type {
   OptimalRate,
   OptionalRate,
   FetcherErrorInterface,
-  ParaSwapVersion,
+  APIVersionUnion,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';

@@ -1,7 +1,7 @@
 import type {
   OptimalRate,
   OptionalRate,
-  ParaSwapVersion,
+  ParaSwapVersion as APIVersion,
 } from '@paraswap/core';
 import type {
   Address,
@@ -31,11 +31,11 @@ export type EnumerateLiteral<T extends Record<string, any>> = {
 // allowing enum only forces users to import and pass that enum
 
 /** @description Passed to version API enpoints as ?version: to /prices and /adapters */
-export type ParaSwapVersionUnion = EnumerateLiteral<typeof ParaSwapVersion>;
+export type APIVersionUnion = EnumerateLiteral<typeof APIVersion>;
 
 export interface ConstructBaseInput {
   apiURL?: string;
-  version?: ParaSwapVersionUnion;
+  version?: APIVersionUnion;
   chainId: number;
 }
 

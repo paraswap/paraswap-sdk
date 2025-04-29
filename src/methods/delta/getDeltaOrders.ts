@@ -5,9 +5,9 @@ import type {
   ConstructFetchInput,
   RequestParameters,
 } from '../../types';
-import type { ParaswapDeltaAuction } from './helpers/types';
+import type { VeloraDeltaAuction } from './helpers/types';
 
-type OrderFromAPI = Omit<ParaswapDeltaAuction, 'signature'>;
+type OrderFromAPI = Omit<VeloraDeltaAuction, 'signature'>;
 
 type GetDeltaOrderById = (
   orderId: string,
