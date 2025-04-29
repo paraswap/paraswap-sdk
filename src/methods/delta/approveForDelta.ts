@@ -6,7 +6,7 @@ import { ApproveToken, approveTokenMethodFactory } from '../../helpers/approve';
 import { constructGetDeltaContract } from './getDeltaContract';
 
 export type ApproveTokenForDeltaFunctions<T> = {
-  /** @description approving ParaswapDelta as spender for Token */
+  /** @description approving ParaswapDelta contract as spender for Token */
   approveTokenForDelta: ApproveToken<T>;
 };
 
@@ -15,11 +15,11 @@ export type ApproveTokenForDeltaFunctions<T> = {
 export const constructApproveTokenForDelta = <T>(
   options: ConstructProviderFetchInput<T, 'transactCall'>
 ): ApproveTokenForDeltaFunctions<T> => {
-  // getAugustusRFQ is cached internally for the same instance of SDK
+  // getDeltaContract is cached internally for the same instance of SDK
   // so should persist across same apiUrl & network
   const { getDeltaContract } = constructGetDeltaContract(options);
 
-  const getParaswapDelta = async (requestParams?: RequestParameters) => {
+  const getParaswapDeltaAddress = async (requestParams?: RequestParameters) => {
     const deltaContract = await getDeltaContract(requestParams);
     if (!deltaContract) {
       throw new Error(`Delta is not available on chain ${options.chainId}`);
@@ -29,7 +29,7 @@ export const constructApproveTokenForDelta = <T>(
 
   const approveTokenForDelta: ApproveToken<T> = approveTokenMethodFactory<T>(
     options.contractCaller,
-    getParaswapDelta
+    getParaswapDeltaAddress
   );
 
   return {

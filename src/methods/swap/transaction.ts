@@ -60,12 +60,12 @@ export type TxInputAmountsPartBuyOrSell = {
   destAmount: PriceString;
 };
 
-// more details in the docs https://developers.paraswap.network/api/build-parameters-for-transaction#request-body
+// more details in the docs https://developers.velora.xyz/api/velora-api/velora-market-api/build-parameters-for-transaction#request-body
 export type BuildTxInputBase = {
   srcToken: Address;
   destToken: Address;
   userAddress: Address;
-  /** @description Whenever msg.sender (`userAddress`) i.e. address calling the ParaSwap contract is different than the address sending the transaction, `txOrigin` must be passed along with `userAddress` */
+  /** @description Whenever msg.sender (`userAddress`) i.e. address calling the Velora contract is different than the address sending the transaction, `txOrigin` must be passed along with `userAddress` */
   txOrigin?: string;
   /** @description used with referral link */
   referrer?: string;

@@ -28,7 +28,7 @@ export type BuildDeltaOrderDataParams = {
   deadline?: number; // seconds
   /** @description The nonce of the order */
   nonce?: number | string; // can be random, can even be Date.now()
-  /** @description Optional permit signature for the src token https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits */
+  /** @description Optional permit signature for the src token https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#supported-permits-order#supported-permits */
   permit?: string; //can be "0x"
   /** @description Partner string. */
   partner?: string;
