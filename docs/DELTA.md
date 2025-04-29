@@ -1,4 +1,4 @@
-**ParaSwap Delta** is an intent-based protocol that enables a ParaSwap user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
+**Velora Delta** is an intent-based protocol that enables a Velora user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
 This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
 The easiest way to make use of the Delta Order is to use the SDK following these steps:
 
@@ -6,7 +6,7 @@ The easiest way to make use of the Delta Order is to use the SDK following these
 
 ```ts
 const account = userAddress;
-const paraSwap = constructSimpleSDK(
+const deltaSDK = constructSimpleSDK(
   {chainId: 1, axios},
   {
     ethersProviderOrSigner: provider, // JsonRpcProvider
@@ -51,7 +51,7 @@ const DeltaContract = await deltaSDK.getDeltaContract();
 const signature = await signer._signTypedData(domain, types, message);
 ```
 
-See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits)
+See more on accepted Permit variants in [Velora documentation](https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#supported-permits)
 
 
 ### 4. Sign and submit a Delta Order

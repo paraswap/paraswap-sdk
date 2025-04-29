@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://paraswap.io">
-    <img src="https://cdn.paraswap.io/brand/paraswap.png" width="400px" >
+  <a href="https://www.velora.xyz/">
+    <img src="./docs/velora_banner.svg" width=350 />
   </a>
 </p>
 
-# SDK for the ParaSwap API
+# SDK for the Velora API
 
-Refer to the documentation of the ParaSwap API: https://developers.paraswap.network
+Refer to the documentation of the Velora API: https://developers.velora.xyz/
 
 ## Features
 **Versatility**: works with [web3](https://www.npmjs.com/package/web3), [ethers](https://www.npmjs.com/package/ethers) or [viem](https://viem.sh/) without direct dependency
@@ -15,15 +15,15 @@ Refer to the documentation of the ParaSwap API: https://developers.paraswap.netw
 
 **Lightweight**: 10KB Gzipped for the minimal variant
 
-## Installing ParaSwap SDK
+## Installing Velora SDK
 
 ```bash
 yarn add @paraswap/sdk
 ```
 
-## Using ParaSwap SDK
+## Using Velora SDK
 
-There are multiple ways to use ParaSwap SDK, ranging from a simple construct-and-use approach to a fully composable _bring what you need_ approach which allows for advanced tree-shaking and minimizes bundle size.
+There are multiple ways to use Velora SDK, ranging from a simple construct-and-use approach to a fully composable _bring what you need_ approach which allows for advanced tree-shaking and minimizes bundle size.
 
 You can see some examples in [/src/examples](src/examples) directory.
 
@@ -36,9 +36,9 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
   import axios from 'axios';
 
   // construct minimal SDK with fetcher only
-  const paraSwapMin = constructSimpleSDK({chainId: 1, axios});
+  const minSDK = constructSimpleSDK({chainId: 1, axios});
   // or
-  const paraSwapMin = constructSimpleSDK({chainId: 1, fetch: window.fetch, version: '5'});
+  const minSDK = constructSimpleSDK({chainId: 1, fetch: window.fetch, version: '5'});
 
   const ETH = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
@@ -48,7 +48,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
     const signer: JsonRpcSigner = ethers.Wallet.fromMnmemonic('__your_mnemonic__');
     const senderAddress = signer.address;
 
-    const priceRoute = await paraSwapMin.swap.getRate({
+    const priceRoute = await minSDK.swap.getRate({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -56,7 +56,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
       side: SwapSide.SELL,
     });
 
-    const txParams = await paraSwapMin.swap.buildTx(
+    const txParams = await minSDK.swap.buildTx(
       {
         srcToken,
         destToken,
@@ -108,10 +108,10 @@ If optional `providerOptions` is provided as the second parameter, then the resu
     account: senderAddress,
   };
 
-  const paraSwap = constructSimpleSDK({chainId: 1, axios}, providerOptionsEtherV5);
+  const sdk = constructSimpleSDK({chainId: 1, axios}, providerOptionsEtherV5);
 
   // approve token through sdk
-  const txHash = await paraSwap.approveToken(amountInWei, DAI);
+  const txHash = await sdk.approveToken(amountInWei, DAI);
 
   // await tx somehow
   await provider.waitForTransaction(txHash);
@@ -130,7 +130,7 @@ const contractCaller = constructEthersContractCaller({
 }, account); // alternatively constructViemContractCaller or constructWeb3ContractCaller
 const fetcher = constructAxiosFetcher(axios); // alternatively constructFetchFetcher
 
-const paraswap = constructFullSDK({
+const sdk = constructFullSDK({
   chainId: 1,
   fetcher,
   contractCaller,
@@ -147,19 +147,19 @@ import { constructPartialSDK, constructFetchFetcher, constructGetRate, construct
 
 const fetcher = constructFetchFetcher(window.fetch);
 
-const minParaSwap = constructPartialSDK({
+const sdk = constructPartialSDK({
   chainId: 1,
   fetcher,
 }, constructGetRate, constructGetBalances);
 
-const priceRoute = await minParaSwap.getRate(params);
-const allowance = await minParaSwap.getAllowance(userAddress, tokenAddress);
+const priceRoute = await sdk.getRate(params);
+const allowance = await sdk.getAllowance(userAddress, tokenAddress);
 ```
 --------------
 
 ### Basic usage
 
-The easiest way to make a trade is to rely on Quote method that communicates with [/quote API endpoint](https://developers.paraswap.network/api/paraswap-delta/retrieve-delta-price-with-fallback-to-market-quote)
+The easiest way to make a trade is to rely on Quote method that communicates with [/quote API endpoint](https://developers.velora.xyz/api/velora-api/velora-delta-api/retrieve-delta-price-with-fallback-to-market)
 
 ```typescript
 import axios from 'axios';
@@ -258,7 +258,7 @@ if ('delta' in quote) {
 
 #### A more detailed overview of the Trade Flow, Delta Order variant.
 
-**ParaSwap Delta** is an intent-based protocol that enables a ParaSwap user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
+**Velora Delta** is an intent-based protocol that enables a Velora user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
 This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
 
 After getting **deltaPrice** from **/quote** endpoint, there are additional steps to sign the Order and wait for its execution.
@@ -306,7 +306,7 @@ const DeltaContract = await simpleSDK.delta.getDeltaContract();
 const signature = await signer._signTypedData(domain, types, message);
 ```
 
-See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/paraswap-delta/build-and-sign-a-delta-order#supported-permits)
+See more on accepted Permit variants in [Velora documentation](https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#supported-permits)
 
 
 ### 3. Sign and submit a Delta Order
@@ -454,7 +454,7 @@ const TokenTransferProxy = await simpleSDK.swap.getSpender();
 const signature = await signer._signTypedData(domain, types, message);
 ```
 
-See more on accepted Permit variants in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+See more on accepted Permit variants in [Velora documentation](https://developers.velora.xyz/api/velora-api/velora-market-api/build-parameters-for-transaction)
 
 
 ### 3. Send Swap transaction
@@ -475,7 +475,7 @@ const txParams = await simpleSDK.swap.buildTx({
 const swapTxHash = await signer.sendTransaction(txParams);
 ```
 
-#### See more details on `buildTx` parameters in [ParaSwap documentation](https://developers.paraswap.network/api/build-parameters-for-transaction)
+#### See more details on `buildTx` parameters in [Velora documentation](https://developers.velora.xyz/api/velora-api/velora-market-api/build-parameters-for-transaction)
 
 ------------------------
 
