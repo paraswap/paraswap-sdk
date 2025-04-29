@@ -17,7 +17,7 @@ import type {
 
 export interface EthersV6ProviderDeps {
   ethersV6ProviderOrSigner: ContractRunner | Signer;
-  EthersV6Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+  EthersV6Contract: typeof EthersContract; // passing Contract in allows not to include ethers as dependency
 }
 
 export const constructContractCaller = (

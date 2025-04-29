@@ -479,54 +479,6 @@ const swapTxHash = await signer.sendTransaction(txParams);
 
 ------------------------
 
-### Legacy
-The `ParaSwap` class is exposed for backwards compatibility with previous versions of the SDK.
-
-```typescript
-import { ParaSwap } from '@paraswap/sdk';
-import axios from 'axios';
-import Web3 from 'web3';
-
-const web3Provider = new Web3(window.ethereum);
-const account = '__user_address__';
-
-const paraswap = new ParaSwap({chainId: 1, web3Provider, account, axios});
-
-```
-
-
-Or you can use `ethers` in place of `web3`
-
-```typescript
-import { ParaSwap } from '@paraswap/sdk';
-import { ethers } from "ethers";
-
-const ethersProvider = new ethers.providers.Web3Provider(window.ethereum)
-const account = '__user_address__';
-
-const paraswap = new ParaSwap({
-  chainId: 1,
-  account,
-  ethersDeps: {
-    ethersProviderOrSigner: ethersProvider;
-    EthersContract: ethers.Contract;
-  },
-  fetch: window.fetch,
- });
-
-```
-
-By analogy to ```constructPartialSDK```, you can leverage a lightweight version of the sdk for fetching only.
-
-```typescript
-import { ParaSwap } from '@paraswap/sdk';
-
-const paraswap = new ParaSwap({chainId: 1, fetch: window.fetch});
-
-```
-
-Refer to [this README for depecreated documentation](https://github.com/paraswap/paraswap-sdk/blob/c4c70c674fb2be4ec528064649d992d4b38c654b/README.md) for functions usage.
-
 
 Refer to [SDK API documentation](docs/md/modules.md) for detailed documentation on the methods provided in this SDK.
 

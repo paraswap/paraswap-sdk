@@ -12,18 +12,8 @@ import type {
   PriceString,
   OptimalRate,
   RequestParameters,
-  EnumerateLiteral,
 } from '../../types';
 import { normalizeRateOptions } from './helpers/normalizeRateOptions';
-
-// TODO: This is legacy and can be removed
-export enum PricingMethod {
-  megapath = 'megapath',
-  multipath = 'multipath',
-  simplepath = 'simplepath',
-}
-
-type PricingMethodByName = EnumerateLiteral<typeof PricingMethod>;
 
 type RateQueryParams = {
   /**
@@ -156,7 +146,6 @@ export type RateOptions = {
   excludeDEXS?: string[];
   includeDEXS?: string[];
   excludePools?: string[];
-  excludePricingMethods?: PricingMethodByName[];
   excludeContractMethods?: ContractMethodByName[];
   includeContractMethods?: ContractMethodByName[];
   partner?: string;

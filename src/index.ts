@@ -408,8 +408,6 @@ export {
   ProviderOptions as SimpleSDKProviderOptions,
 } from './sdk/simple';
 
-export { ParaSwap } from './legacy';
-
 // bundled methods for limitOrders
 export * from './methods/limitOrders';
 export * from './methods/limitOrders/helpers/types';
