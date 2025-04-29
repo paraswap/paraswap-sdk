@@ -62,12 +62,12 @@ type RateQueryParams = {
   excludeDEXS?: string;
 
   /**
-   * @description Comma Separated List of Contract Methods to include in pricing (without spaces). View the list of the supported methods for [V5](https://developers.paraswap.network/api/master/api-v5#supported-methods) and [V6](https://developers.paraswap.network/api/master/api-v6.2#supported-methods) eg: `swapExactAmountIn,swapExactAmountInOnUniswapV2`.
+   * @description Comma Separated List of Contract Methods to include in pricing (without spaces). View the list of the supported methods for [V5](https://developers.velora.xyz/api/velora-api/velora-market-api/master/api-v5#supported-methods) and [V6](https://developers.velora.xyz/api/velora-api/velora-market-api/master/api-v6.2#supported-methods) eg: `swapExactAmountIn,swapExactAmountInOnUniswapV2`.
    */
   includeContractMethods?: string;
 
   /**
-   * @description Comma Separated List of Contract Methods to exclude from pricing (without spaces). View the list of the supported methods for [V5](https://developers.paraswap.network/api/master/api-v5#supported-methods) and [V6](https://developers.paraswap.network/api/master/api-v6.2#supported-methods).
+   * @description Comma Separated List of Contract Methods to exclude from pricing (without spaces). View the list of the supported methods for [V5](https://developers.velora.xyz/api/velora-api/velora-market-api/master/api-v5#supported-methods) and [V6](https://developers.velora.xyz/api/velora-api/velora-market-api/master/api-v6.2#supported-methods).
    */
   excludeContractMethods?: string;
 
@@ -141,7 +141,7 @@ type RateQueryParams = {
   excludeRFQ?: boolean;
 };
 
-// more details in the docs https://developers.paraswap.network/api/get-rate-for-a-token-pair#query-parameters
+// more details in the docs https://developers.velora.xyz/api/velora-api/velora-market-api/get-rate-for-a-token-pair#query-parameters
 export type RateOptions = {
   excludeDEXS?: string[];
   includeDEXS?: string[];
