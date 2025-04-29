@@ -182,7 +182,7 @@ const expectTxParamsScheme = expect.objectContaining({
 });
 
 describe('NFT Orders', () => {
-  let paraSwap: BuildNFTOrderFunctions &
+  let sdk: BuildNFTOrderFunctions &
     SignNFTOrderFunctions &
     GetNFTOrdersContractFunctions &
     PostNFTOrderFunctions &
@@ -434,7 +434,7 @@ describe('NFT Orders', () => {
     erc721Token4 = await ERC721MintableFactory.deploy();
     await erc721Token4.deployTransaction.wait();
 
-    paraSwap = constructPartialSDK<
+    sdk = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
       [
         typeof constructBuildNFTOrder,
@@ -468,9 +468,7 @@ describe('NFT Orders', () => {
       constructBuildTx
     );
 
-    AugustusRFQ = AugustusRFQFactory.attach(
-      await paraSwap.getNFTOrdersContract()
-    );
+    AugustusRFQ = AugustusRFQFactory.attach(await sdk.getNFTOrdersContract());
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
   });
@@ -482,7 +480,7 @@ describe('NFT Orders', () => {
   // });
 
   test('getNFTOrdersContract', async () => {
-    const augustusRFQAddress = await paraSwap.getNFTOrdersContract();
+    const augustusRFQAddress = await sdk.getNFTOrdersContract();
 
     expect(augustusRFQAddress).toMatchInlineSnapshot(
       `"0xe92b586627ccA7a83dC919cc7127196d70f55a06"`
@@ -533,7 +531,7 @@ describe('NFT Orders', () => {
   });
 
   test('buildNFTOrder', async () => {
-    const signableOrderData = await paraSwap.buildNFTOrder(orderInput);
+    const signableOrderData = await sdk.buildNFTOrder(orderInput);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const metaAddress = deriveTakerFromNonceAndTaker(
@@ -543,7 +541,7 @@ describe('NFT Orders', () => {
     // taker in nonceAndTaker = Zero
     expect(metaAddress).toBe(ZERO_ADDRESS);
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
+    const AugustusAddress = await sdk.getAugustusSwapper();
     // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
       AugustusAddress.toLowerCase()
@@ -560,7 +558,7 @@ describe('NFT Orders', () => {
       ...orderInput,
       taker: takerV5.address,
     };
-    const signableOrderData = await paraSwap.buildNFTOrder({
+    const signableOrderData = await sdk.buildNFTOrder({
       ...orderInput,
       taker: takerV5.address,
     });
@@ -573,7 +571,7 @@ describe('NFT Orders', () => {
     // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(p2pOrderInput.taker.toLowerCase());
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
+    const AugustusAddress = await sdk.getAugustusSwapper();
     // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
       AugustusAddress.toLowerCase()
@@ -595,7 +593,7 @@ describe('NFT Orders', () => {
       maker.address
     );
 
-    const paraSwap = constructPartialSDK(
+    const sdk = constructPartialSDK(
       {
         chainId,
         fetcher: axiosFetcher,
@@ -637,9 +635,9 @@ describe('NFT Orders', () => {
       makerAssetId: afterMintLastId,
     };
 
-    const signableOrderData = await paraSwap.buildNFTOrder(order);
+    const signableOrderData = await sdk.buildNFTOrder(order);
 
-    const signature = await paraSwap.signNFTOrder(signableOrderData);
+    const signature = await sdk.signNFTOrder(signableOrderData);
 
     const orderWithSignature = {
       ...order, // providers makerAssetType & takerAssetType, necessary for encoding makerAsset & takerAsset as uint (if got order by hash from API)
@@ -648,7 +646,7 @@ describe('NFT Orders', () => {
       // extra stuff will be removed before POSTing to /transaction
     };
 
-    const swapAndNFTPayload = await paraSwap.buildNFTOrderTx(
+    const swapAndNFTPayload = await sdk.buildNFTOrderTx(
       {
         srcDecimals: 18,
         userAddress: senderAddress,
@@ -1194,11 +1192,11 @@ describe('NFT Orders', () => {
     // token to swap for destToken prior to filling Order
     const srcToken = DAI;
 
-    const signableOrderData = await paraSwap.buildNFTOrder(order);
+    const signableOrderData = await sdk.buildNFTOrder(order);
 
-    const signature = await paraSwap.signNFTOrder(signableOrderData);
+    const signature = await sdk.signNFTOrder(signableOrderData);
 
-    const priceRoute = await paraSwap.getNFTOrdersRate(
+    const priceRoute = await sdk.getNFTOrdersRate(
       {
         srcToken,
         destToken,
@@ -1224,7 +1222,7 @@ describe('NFT Orders', () => {
             ...exchange,
             data: {
               ...exchange.data,
-              path: '---', // stablilze test because of variable path. Details: https://github.com/paraswap/paraswap-sdk/actions/runs/3218112679/jobs/5261882711#step:6:29
+              path: '---', // stablilze test because of variable path.
               pools: '---',
               factory: '---',
               feeFactor: '---',
@@ -1298,7 +1296,7 @@ describe('NFT Orders', () => {
       }
     `);
 
-    const swapTxPayload = await paraSwap.buildTx(
+    const swapTxPayload = await sdk.buildTx(
       {
         srcToken,
         destToken,
@@ -1334,7 +1332,7 @@ describe('NFT Orders', () => {
       signature, // necessary for execution in the contract
     };
 
-    const swapAndNFTPayload = await paraSwap.buildSwapAndNFTOrderTx(
+    const swapAndNFTPayload = await sdk.buildSwapAndNFTOrderTx(
       {
         priceRoute,
         userAddress: senderAddress,
@@ -1425,7 +1423,7 @@ describe('NFT Orders', () => {
     const orderHash =
       '0x6b3906698abedb72c2954b2ea39006e4be779b12eb9e72a1b8dba8dbd2ba975b';
 
-    const { orders } = await paraSwap.getNFTOrders({
+    const { orders } = await sdk.getNFTOrders({
       maker: account,
       type: 'LIMIT',
     });
@@ -1464,12 +1462,12 @@ describe('NFT Orders', () => {
     // @TODO breaks with 'maker' doesn't have sufficient balance for this NFT order
     // because of API balance check
     // need to use a fixed address through a PK
-    const signableOrderData = await paraSwap.buildNFTOrder({
+    const signableOrderData = await sdk.buildNFTOrder({
       ...orderInput,
       nonce: 2,
     });
 
-    const signature = await paraSwap.signNFTOrder(signableOrderData);
+    const signature = await sdk.signNFTOrder(signableOrderData);
     // expect(signature).toMatchInlineSnapshot(
     //   `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
     // );
@@ -1479,7 +1477,7 @@ describe('NFT Orders', () => {
       signature,
     };
 
-    const newOrder = await paraSwap.postNFTLimitOrder(orderWithSignature);
+    const newOrder = await sdk.postNFTLimitOrder(orderWithSignature);
 
     const recoveredAddress = ethers.utils.recoverAddress(
       newOrder.orderHash,

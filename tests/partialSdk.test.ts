@@ -114,8 +114,8 @@ const customGanacheContractCaller = constructProviderOnlyContractCaller(
 describe.each([
   ['fetchFetcher', fetchFetcher],
   ['axiosFetcher', axiosFetcher],
-])('ParaSwap SDK: fetching methods: %s', (testName, fetcher) => {
-  let paraSwap: GetBalancesFunctions &
+])('Partial SDK: fetching methods: %s', (testName, fetcher) => {
+  let sdk: GetBalancesFunctions &
     GetAdaptersFunctions &
     GetTokensFunctions &
     GetRateFunctions &
@@ -128,7 +128,7 @@ describe.each([
       accounts: [{ address: senderAddress, balance: 8e18 }],
     });
 
-    paraSwap = constructPartialSDK(
+    sdk = constructPartialSDK(
       { chainId, fetcher, version: '5' },
       constructGetBalances,
       constructGetAdapters,
@@ -141,7 +141,7 @@ describe.each([
   });
   test('getBalance', async () => {
     try {
-      const balance = await paraSwap.getBalance(senderAddress, ETH);
+      const balance = await sdk.getBalance(senderAddress, ETH);
       expect(balance).toBeDefined();
     } catch (error: any) {
       // workaround for API sometimes failing on some Tokens(?)
@@ -150,12 +150,12 @@ describe.each([
   });
 
   test('Get_Markets', async () => {
-    const markets = await paraSwap.getAdapters();
+    const markets = await sdk.getAdapters();
     expect(markets.length).toBeGreaterThan(15);
   });
 
   test('Get_Tokens', async () => {
-    const tokens = await paraSwap.getTokens();
+    const tokens = await sdk.getTokens();
 
     expect(Array.isArray(tokens)).toBe(true);
     expect(tokens.length).toBeGreaterThan(0);
@@ -169,7 +169,7 @@ describe.each([
   });
 
   test('Get_Rates', async () => {
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await sdk.getRate({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -220,7 +220,7 @@ describe.each([
   });
 
   test('Get_SwapTxData', async () => {
-    const { priceRoute, txParams } = await paraSwap.getSwapTxData({
+    const { priceRoute, txParams } = await sdk.getSwapTxData({
       srcToken: ETH,
       destToken: DAI,
       amount: srcAmount,
@@ -273,22 +273,22 @@ describe.each([
   });
 
   test('Get_Spender', async () => {
-    const spender = await paraSwap.getSpender();
+    const spender = await sdk.getSpender();
     expect(web3provider.utils.isAddress(spender)).toBe(true);
   });
 
   test('Get_AugustusSwapper', async () => {
-    const Augustus = await paraSwap.getAugustusSwapper();
+    const Augustus = await sdk.getAugustusSwapper();
     expect(web3provider.utils.isAddress(Augustus)).toBe(true);
   });
 
   test('Get_Contracts', async () => {
-    const contracts = await paraSwap.getContracts();
+    const contracts = await sdk.getContracts();
     expect(contracts).toMatchSnapshot(testName);
   });
 
   test('Get_Allowance', async () => {
-    const allowance = await paraSwap.getAllowance(
+    const allowance = await sdk.getAllowance(
       DUMMY_ADDRESS_FOR_TESTING_ALLOWANCES,
       DAI
     );
@@ -299,14 +299,14 @@ describe.each([
   });
 
   test('Get_Adapters', async () => {
-    const adapters = await paraSwap.getAdapters();
+    const adapters = await sdk.getAdapters();
 
     expect(adapters).toMatchSnapshot('Get_Adapters');
   });
 
   test('Build_Tx', async () => {
     const destToken = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await sdk.getRate({
       srcToken,
       destToken,
       amount: srcAmount,
@@ -321,7 +321,7 @@ describe.each([
       .times(0.99)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await sdk.buildTx(
       {
         srcToken,
         destToken,
@@ -337,7 +337,7 @@ describe.each([
     expect(typeof txParams).toBe('object');
   });
   test('Build_and_Send_Tx', async () => {
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await sdk.getRate({
       srcToken,
       destToken,
       amount: srcAmount,
@@ -352,7 +352,7 @@ describe.each([
       .times(0.99)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await sdk.buildTx(
       {
         srcToken,
         destToken,
@@ -392,7 +392,7 @@ describe.each([
   });
   test('Build_and_Send_Tx_BUY', async () => {
     const destAmount = srcAmount;
-    const priceRoute = await paraSwap.getRate({
+    const priceRoute = await sdk.getRate({
       srcToken,
       destToken,
       amount: destAmount,
@@ -404,7 +404,7 @@ describe.each([
       .times(1.1)
       .toFixed(0);
 
-    const txParams = await paraSwap.buildTx(
+    const txParams = await sdk.buildTx(
       {
         srcToken,
         destToken,
@@ -462,7 +462,7 @@ describe.each([
     customGanacheContractCaller,
   ],
 ])(
-  'ParaSwap SDK: contract calling methods: %s',
+  'Partial SDK: contract calling methods: %s',
   (testName, fetcher, contractCaller) => {
     type ApproveTxResult =
       | ethers.ContractTransaction
@@ -474,10 +474,10 @@ describe.each([
       options: ConstructProviderFetchInput<ApproveTxResult, 'transactCall'>
     ) => ApproveTokenFunctions<ApproveTxResult>;
 
-    let paraSwap: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
+    let sdk: ApproveTokenFunctions<ApproveTxResult> & GetSpenderFunctions;
 
     beforeAll(() => {
-      paraSwap = constructPartialSDK<
+      sdk = constructPartialSDK<
         SDKConfig<ApproveTxResult>,
         [ApproveConstructor, typeof constructGetSpender]
       >(
@@ -487,7 +487,7 @@ describe.each([
       );
     });
     test('approveToken', async () => {
-      const tx = await paraSwap.approveToken('12345', DAI);
+      const tx = await sdk.approveToken('12345', DAI);
 
       if (typeof tx === 'string') {
         // tx is sent
@@ -506,7 +506,7 @@ describe.each([
         erc20abi,
         ethersProvider
       );
-      const spender = await paraSwap.getSpender();
+      const spender = await sdk.getSpender();
       const allowance: BigNumberEthers = await toContract.allowance(
         signer.address,
         spender
