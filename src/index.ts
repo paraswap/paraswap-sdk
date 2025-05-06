@@ -136,7 +136,6 @@ import type {
   VeloraDeltaAuction,
   BridgeMetadata,
   BridgeStatus,
-  BridgeInput,
   Bridge,
 } from './methods/delta/helpers/types';
 import {
@@ -357,7 +356,6 @@ export type {
   // bridge part of DeltaOrder
   BridgeMetadata,
   BridgeStatus,
-  BridgeInput,
   Bridge,
   BridgeInfo,
   BuildDeltaOrderDataParams,
