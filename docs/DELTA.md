@@ -20,12 +20,12 @@ const deltaSDK = constructSimpleSDK(
 
 ```ts
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
-const PSP_TOKEN = '0xcafe001067cdef266afb7eb5a286dcfd277f3de5';
+const USDC_TOKEN = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 const amount = '1000000000000'; // in wei
 
 const deltaPrice = await deltaSDK.getDeltaPrice({
   srcToken: DAI_TOKEN,
-  destToken: PSP_TOKEN,
+  destToken: USDC_TOKEN,
   amount,
   userAddress: account,
   srcDecimals: 18,
@@ -70,7 +70,7 @@ const deltaAuction = await deltaSDK.submitDeltaOrder({
   // beneficiary: anotherAccount, // if need to send destToken to another account
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   srcToken: DAI_TOKEN,
-  destToken: PSP_TOKEN,
+  destToken: USDC_TOKEN,
   srcAmount: amount,
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
 });
