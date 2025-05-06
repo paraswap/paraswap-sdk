@@ -95,7 +95,7 @@ function isETHaddress(tokenAddress: string): boolean {
 // Velora API ref
 // https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign
 
-type GetDeltaBridgeAndDestTokenInput = {
+export type GetDeltaBridgeAndDestTokenInput = {
   destTokenDestChain: string;
   destChainId: number;
   destTokenSrcChain: string;
@@ -105,9 +105,11 @@ type GetDeltaBridgeAndDestTokenInput = {
   getMulticallHandler: (chainId: number) => Promise<string>;
 };
 
-type GetDeltaBridgeAndDestTokenOutput = {
+export type GetDeltaBridgeAndDestTokenOutput = {
+  /** @description The bridge object to be used for Order.bridge */
   bridge: Bridge;
-  order: Pick<DeltaAuctionOrder, 'destToken'>;
+  /** @description The changes to be made to the Order */
+  orderChanges: Pick<DeltaAuctionOrder, 'destToken'>;
 };
 
 export async function getDeltaBridgeAndDestToken({
@@ -134,7 +136,7 @@ export async function getDeltaBridgeAndDestToken({
 
     return {
       bridge,
-      order: {
+      orderChanges: {
         destToken: destTokenSrcChain,
       },
     };
@@ -157,7 +159,7 @@ export async function getDeltaBridgeAndDestToken({
 
     return {
       bridge,
-      order: {
+      orderChanges: {
         destToken: ETH_ADDRESS,
       },
     };
@@ -177,7 +179,7 @@ export async function getDeltaBridgeAndDestToken({
     };
     return {
       bridge,
-      order: {
+      orderChanges: {
         destToken: WETH_SRC_CHAIN,
       },
     };
@@ -198,7 +200,7 @@ export async function getDeltaBridgeAndDestToken({
     };
     return {
       bridge,
-      order: {
+      orderChanges: {
         destToken: ETH_ADDRESS,
       },
     };
@@ -219,7 +221,7 @@ export async function getDeltaBridgeAndDestToken({
     };
     return {
       bridge,
-      order: {
+      orderChanges: {
         destToken: WETH_SRC_CHAIN,
       },
     };
@@ -234,7 +236,7 @@ export async function getDeltaBridgeAndDestToken({
 
   return {
     bridge,
-    order: {
+    orderChanges: {
       destToken: ETH_ADDRESS,
     },
   };

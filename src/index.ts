@@ -145,6 +145,12 @@ import {
   SignableDeltaOrderData,
 } from './methods/delta/buildDeltaOrder';
 import {
+  constructBuildCrosschainOrderBridge,
+  BuildCrosschainOrderBridgeFunctions,
+  BuildCrosschainOrderBridgeParams,
+  CrosschainOrderBridgeAndChanges,
+} from './methods/delta/buildCrosschainOrderBridge';
+import {
   constructPostDeltaOrder,
   PostDeltaOrderFunctions,
   PostDeltaOrderParams,
@@ -277,6 +283,7 @@ export {
   constructBuildNFTOrderTx,
   // Delta methods
   constructBuildDeltaOrder,
+  constructBuildCrosschainOrderBridge,
   constructPostDeltaOrder,
   constructSignDeltaOrder,
   constructGetDeltaContract,
@@ -361,6 +368,9 @@ export type {
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
+  BuildCrosschainOrderBridgeFunctions,
+  BuildCrosschainOrderBridgeParams,
+  CrosschainOrderBridgeAndChanges,
   PostDeltaOrderFunctions,
   PostDeltaOrderParams,
   SignDeltaOrderFunctions,

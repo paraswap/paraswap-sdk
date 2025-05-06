@@ -3,15 +3,14 @@ import type { ConstructFetchInput, RequestParameters } from '../../types';
 import { ZERO_ADDRESS } from '../common/orders/buildOrderData';
 import { constructGetDeltaContract } from './getDeltaContract';
 import { BridgePrice, DeltaPrice } from './getDeltaPrice';
-import { constructGetMulticallHandlers } from './getMulticallHandlers';
 import { constructGetPartnerFee } from './getPartnerFee';
-import { getDeltaBridgeAndDestToken } from './helpers/across';
 import {
   buildDeltaSignableOrderData,
   type BuildDeltaOrderDataInput,
   type SignableDeltaOrderData,
 } from './helpers/buildDeltaOrderData';
 import { Bridge, DeltaAuctionOrder } from './helpers/types';
+import { constructBuildCrosschainOrderBridge } from './buildCrosschainOrderBridge';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
@@ -82,8 +81,9 @@ export const constructBuildDeltaOrder = (
   const { getDeltaContract } = constructGetDeltaContract(options);
   // cached internally for `partner`
   const { getPartnerFee } = constructGetPartnerFee(options);
-  // cached internally for `multicall` contracts
-  const { getMulticallHandlers } = constructGetMulticallHandlers(options);
+
+  const { buildCrosschainOrderBridge } =
+    constructBuildCrosschainOrderBridge(options);
 
   const buildDeltaOrder: BuildDeltaOrder = async (options, requestParams) => {
     const ParaswapDelta = await getDeltaContract(requestParams);
@@ -134,31 +134,22 @@ export const constructBuildDeltaOrder = (
           '`bridgeFee` is required in `deltaPrice` for crosschain Delta Orders'
         );
 
-        const getMulticallHandler = async (chainId: number) => {
-          const multicallHandlersMap = await getMulticallHandlers();
-          const multicallHandler = multicallHandlersMap[chainId];
-
-          assert(
-            multicallHandler,
-            `Multicall handler not found for chain ${chainId}`
+        const { bridge: constructedBridge, orderChanges } =
+          await buildCrosschainOrderBridge(
+            {
+              destToken: options.destToken,
+              destChainId: options.destChainId,
+              isBeneficiaryContract: options.isBeneficiaryContract || false,
+              deltaPrice: {
+                bridgeFee: options.deltaPrice.bridgeFee,
+                srcToken: options.srcToken,
+              },
+            },
+            requestParams
           );
 
-          return multicallHandler;
-        };
-
-        const { bridge: constructedBridge, order: partialOrder } =
-          await getDeltaBridgeAndDestToken({
-            destTokenDestChain: options.destToken,
-            destChainId: options.destChainId,
-            destTokenSrcChain: options.srcToken,
-            srcChainId: chainId,
-            bridgeFee: options.deltaPrice.bridgeFee,
-            isBeneficiaryContract: options.isBeneficiaryContract || false,
-            getMulticallHandler,
-          });
-
         bridge = constructedBridge;
-        partialChangedOrder = partialOrder;
+        partialChangedOrder = orderChanges;
       } else {
         // 0-values bridge for same-chain Orders
         bridge = DEFAULT_BRIDGE;
