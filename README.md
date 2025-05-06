@@ -261,6 +261,8 @@ if ('delta' in quote) {
 **Velora Delta** is an intent-based protocol that enables a Velora user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
 This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
 
+(For **Crosschain Delta Orders** refer to a separate documentation page [DELTA.md](./docs/DELTA.md#crosschain-delta-orders) )
+
 After getting **deltaPrice** from **/quote** endpoint, there are additional steps to sign the Order and wait for its execution.
 
 ### 1. Get deltaPrice from /quote
