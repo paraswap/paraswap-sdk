@@ -343,7 +343,7 @@ const deltaAuction = await simpleSDK.delta.postDeltaOrder({
 
 #### 3.a.
 
-As an option the `buildDeltaOrder + signDeltaOrder + signDeltaOrder` can be combined into one SDK call with the following code
+As an option the `buildDeltaOrder + signDeltaOrder + postDeltaOrder` can be combined into one SDK call with the following code
 
 ```ts
 const deltaAuction = await simpleSDK.delta.submitDeltaOrder({
@@ -402,7 +402,8 @@ if (auction?.status === 'EXECUTED') {
 
 #### A more detailed example of Delta Order usage can be found in [examples/delta](./src/examples/delta.ts)
 
-#### For more Delta protocol usage refer to [DELTA.md](./docs/DELTA.md)
+For more Delta protocol usage, and **Corsschain Delta Orders**, refer to [DELTA.md](./docs/DELTA.md)
+
 ------------
 
 ### Market Swap handling
