@@ -1,5 +1,3 @@
-import type { MarkOptional } from 'ts-essentials';
-
 export type DeltaAuctionOrder = {
   /** @description The address of the order owner */
   owner: string;
@@ -35,8 +33,6 @@ export type Bridge = {
   /** @description The address of the multiCallHandler on destination chain, used to unwrap WETH and send to Smart Contract receiver. Must be non-zero when receiver address is a SmartContract wallet and need to send Native ETH */
   multiCallHandler: string;
 };
-
-export type BridgeInput = MarkOptional<Bridge, 'multiCallHandler'>;
 
 type DeltaAuctionStatus =
   | 'NOT_STARTED'

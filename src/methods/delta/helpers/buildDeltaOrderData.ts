@@ -1,6 +1,6 @@
 import { MarkOptional } from 'ts-essentials';
 import { Domain, ZERO_ADDRESS } from '../../common/orders/buildOrderData';
-import { BridgeInput, DeltaAuctionOrder } from './types';
+import { Bridge, DeltaAuctionOrder } from './types';
 import { composeDeltaOrderPermit } from './composePermit';
 
 // Order(address owner,address beneficiary,address srcToken,address destToken,uint256 srcAmount,uint256 destAmount,uint256 deadline,uint256 nonce,bytes permit, bridge Bridge)";
@@ -75,7 +75,7 @@ export type BuildDeltaOrderDataInput = DeltaOrderDataInput & {
   partnerFeeBps: number;
   partnerTakesSurplus?: boolean;
   chainId: number;
-  bridge: BridgeInput;
+  bridge: Bridge;
 };
 
 // default deadline = 1 hour from now (may be changed later)
