@@ -1,4 +1,4 @@
-import { EnumerateLiteral, APIVersionUnion } from './types';
+import { EnumerateLiteral, APIVersion } from './types';
 
 import type { ContractMethod } from '@paraswap/core';
 
@@ -13,4 +13,4 @@ export {
 export type ContractMethodByName = EnumerateLiteral<typeof ContractMethod>;
 
 export const API_URL = 'https://api.paraswap.io';
-export const DEFAULT_VERSION = '6.2' satisfies APIVersionUnion;
+export const DEFAULT_VERSION = '6.2' satisfies APIVersion;

@@ -1,5 +1,5 @@
 import { getRandomInt } from '../../../helpers/misc';
-import type { Address, APIVersionUnion } from '../../../types';
+import type { Address, APIVersion } from '../../../types';
 import {
   Domain,
   name,
@@ -35,7 +35,7 @@ export interface BuildOrderDataInput {
   contractTaker?: Address;
 
   AugustusAddress: Address;
-  AppVersion: APIVersionUnion;
+  AppVersion: APIVersion;
 }
 
 export type SignableOrderData = {

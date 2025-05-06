@@ -128,7 +128,7 @@ import type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
-  APIVersionUnion,
+  APIVersion,
 } from './types';
 
 import type {
@@ -404,7 +404,7 @@ export type {
   OptimalRate,
   OptionalRate,
   FetcherErrorInterface,
-  APIVersionUnion,
+  APIVersion,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
