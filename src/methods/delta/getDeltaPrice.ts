@@ -46,7 +46,6 @@ export type DeltaPrice = {
 };
 
 export type BridgePrice = DeltaPrice & {
-  destTokenSrcChain: string;
   destAmountAfterBridge: string;
   destUSDAfterBridge: string;
   bridgeFee: string;
@@ -56,6 +55,7 @@ export type BridgePrice = DeltaPrice & {
 
 type DeltaPriceResponse = {
   price: DeltaPrice | BridgePrice;
+  deltaAddress: string;
 };
 
 interface GetDeltaPrice {
