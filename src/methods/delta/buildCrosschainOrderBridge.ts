@@ -17,7 +17,7 @@ export type BuildCrosschainOrderBridgeParams = {
   isBeneficiaryContract: boolean;
 
   /** @description price response received from /delta/prices (getDeltaPrice method) */
-  deltaPrice: Pick<BridgePrice, 'bridgeFee' | 'srcToken'>;
+  deltaPrice: Pick<BridgePrice, 'bridgeFee' | 'destToken'>;
 };
 
 type BuildCrosschainOrderBridge = (
@@ -59,7 +59,7 @@ export const constructBuildCrosschainOrderBridge = (
     const { bridge, orderChanges } = await getDeltaBridgeAndDestToken({
       destTokenDestChain: destToken,
       destChainId: destChainId,
-      destTokenSrcChain: deltaPrice.srcToken,
+      destTokenSrcChain: deltaPrice.destToken,
       srcChainId: chainId,
       bridgeFee: deltaPrice.bridgeFee,
       isBeneficiaryContract,

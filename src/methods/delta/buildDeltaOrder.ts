@@ -43,7 +43,10 @@ export type BuildDeltaOrderDataParams = {
   isBeneficiaryContract?: boolean;
 
   /** @description price response received from /delta/prices (getDeltaPrice method) */
-  deltaPrice: Pick<DeltaPrice, 'destAmount' | 'partner' | 'partnerFee'> &
+  deltaPrice: Pick<
+    DeltaPrice,
+    'destAmount' | 'partner' | 'partnerFee' | 'destToken'
+  > &
     Partial<Pick<BridgePrice, 'bridgeFee'>>;
 
   /** @description partner fee in basis points (bps), 50bps=0.5% */
@@ -129,8 +132,9 @@ export const constructBuildDeltaOrder = (
 
       if (options.destChainId && chainId !== options.destChainId) {
         // crosschain Delta Order
+        const deltaPrice = options.deltaPrice;
         assert(
-          options.deltaPrice.bridgeFee,
+          deltaPrice.bridgeFee,
           '`bridgeFee` is required in `deltaPrice` for crosschain Delta Orders'
         );
 
@@ -141,8 +145,8 @@ export const constructBuildDeltaOrder = (
               destChainId: options.destChainId,
               isBeneficiaryContract: options.isBeneficiaryContract || false,
               deltaPrice: {
-                bridgeFee: options.deltaPrice.bridgeFee,
-                srcToken: options.srcToken,
+                bridgeFee: deltaPrice.bridgeFee,
+                destToken: deltaPrice.destToken,
               },
             },
             requestParams
