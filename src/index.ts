@@ -133,7 +133,7 @@ import type {
 
 import type {
   DeltaAuctionOrder,
-  VeloraDeltaAuction,
+  DeltaAuction,
   BridgeMetadata,
   BridgeStatus,
   Bridge,
@@ -359,7 +359,7 @@ export type {
   BridgePrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
-  VeloraDeltaAuction,
+  DeltaAuction,
   // bridge part of DeltaOrder
   BridgeMetadata,
   BridgeStatus,
