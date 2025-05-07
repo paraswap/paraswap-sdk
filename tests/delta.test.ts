@@ -23,6 +23,8 @@ import {
   constructSubmitDeltaOrder,
   PostDeltaOrderParams,
   FetcherFunction,
+  constructBuildCrosschainOrderBridge,
+  BuildCrosschainOrderBridgeParams,
 } from '../src';
 import BigNumber from 'bignumber.js';
 
@@ -34,6 +36,11 @@ import { privateKeyToAccount } from 'viem/accounts';
 import { createWalletClient, custom, Hex } from 'viem';
 import { hardhat } from 'viem/chains';
 import { ZERO_ADDRESS } from '../src/methods/common/orders/buildOrderData';
+import {
+  ACROSS_WETH_ADDRESSES_MAP,
+  isAcrossWETH,
+  isETHaddress,
+} from '../src/methods/delta/helpers/across';
 
 dotenv.config();
 
@@ -113,9 +120,164 @@ describe('Delta:methods', () => {
     constructGetDeltaOrders,
     constructGetDeltaPrice,
     constructBuildDeltaOrder,
+    constructBuildCrosschainOrderBridge,
     constructApproveTokenForDelta,
     constructGetPartnerFee
   );
+
+  describe('Build Crosschain Order Bridge', () => {
+    const destChainId = 10;
+    const ETH = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+    const WETH_ON_OPTIMISM = '0x4200000000000000000000000000000000000006';
+    const RANDOM_TOKEN_ON_ETHEREUM =
+      '0xabcdef7890123456789012345678901234567890';
+    const RANDOM_TOKEN_ON_OPTIMISM =
+      '0x1234567890123456789012345678901234567890';
+    const bridgeFee = '2418696650185';
+
+    test('breaks for same chain', async () => {
+      const getBridge = () =>
+        deltaSDK.buildCrosschainOrderBridge({
+          deltaPrice: {
+            bridgeFee,
+            destToken: RANDOM_TOKEN_ON_ETHEREUM,
+          },
+          destToken: RANDOM_TOKEN_ON_OPTIMISM,
+          destChainId: 1,
+          isBeneficiaryContract: false,
+        });
+
+      expect(getBridge()).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Assertion Error: \`destChainId\` must be different from \`chainId\` for crosschain Order.bridge"`
+      );
+    });
+
+    test('Bridge for random token, receiver=EOA', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: RANDOM_TOKEN_ON_ETHEREUM,
+        },
+        destToken: RANDOM_TOKEN_ON_OPTIMISM,
+        destChainId,
+        isBeneficiaryContract: false,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('Bridge for random token, receiver=contract', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: RANDOM_TOKEN_ON_ETHEREUM,
+        },
+        destToken: RANDOM_TOKEN_ON_OPTIMISM,
+        destChainId,
+        isBeneficiaryContract: true,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('Bridge for ETH on destChain, receiver=EOA', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: RANDOM_TOKEN_ON_ETHEREUM,
+        },
+        destToken: ETH,
+        destChainId,
+        isBeneficiaryContract: false,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('Bridge for ETH on destChain, receiver=contract', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: ETH,
+        },
+        destToken: ETH,
+        destChainId,
+        isBeneficiaryContract: true,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('Bridge for WETH on destChain, receiver=EOA', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: RANDOM_TOKEN_ON_ETHEREUM,
+        },
+        destToken: WETH_ON_OPTIMISM,
+        destChainId,
+        isBeneficiaryContract: false,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('Bridge for WETH on destChain, receiver=contract', async () => {
+      const input = {
+        deltaPrice: {
+          bridgeFee,
+          destToken: RANDOM_TOKEN_ON_ETHEREUM,
+        },
+        destToken: WETH_ON_OPTIMISM,
+        destChainId,
+        isBeneficiaryContract: true,
+      };
+
+      const result = await deltaSDK.buildCrosschainOrderBridge(input);
+
+      const expectedResult = constructBridgeAndOrderChanges({
+        ...input,
+        srcChainId: chainId,
+      });
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
 
   test('Get Delta Price', async () => {
     const deltaPrice = await deltaSDK.getDeltaPrice({
@@ -512,4 +674,132 @@ function decreaseBySlippage(amount: string, slippagePercent: number): string {
   ).toString(10);
 
   return amountAfterSlippage;
+}
+
+function constructBridgeAndOrderChanges({
+  destToken,
+  destChainId,
+  srcChainId,
+  isBeneficiaryContract,
+  deltaPrice,
+}: BuildCrosschainOrderBridgeParams & { srcChainId: number }) {
+  const { outputToken, multiCallHandler, destinationChainId, deltaDestToken } =
+    constructBridge({
+      bridgeDestToken: destToken,
+      srcChainId,
+      destChainId,
+      deltaDestToken: deltaPrice.destToken,
+      isBeneficiaryContract,
+    });
+
+  return {
+    bridge: {
+      maxRelayerFee: deltaPrice.bridgeFee,
+      destinationChainId,
+      outputToken,
+      multiCallHandler,
+    },
+    orderChanges: {
+      destToken: deltaDestToken,
+    },
+  };
+}
+
+const MULTICALL_HANDLER = '0x924a9f036260DdD5808007E1AA95f08eD08aA569';
+const ETH_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+
+type ConstructBridgeInput = {
+  bridgeDestToken: string;
+  srcChainId: number;
+  destChainId: number;
+  deltaDestToken: string;
+  isBeneficiaryContract: boolean;
+};
+
+function constructBridge({
+  bridgeDestToken,
+  srcChainId,
+  destChainId,
+  deltaDestToken,
+  isBeneficiaryContract,
+}: ConstructBridgeInput) {
+  const WETH_SRC_CHAIN = ACROSS_WETH_ADDRESSES_MAP[srcChainId];
+  assert(
+    WETH_SRC_CHAIN,
+    `WETH_SRC_CHAIN is not defined for chainId: ${srcChainId}`
+  );
+
+  const WETH_DEST_CHAIN = ACROSS_WETH_ADDRESSES_MAP[destChainId];
+  assert(
+    WETH_DEST_CHAIN,
+    `WETH_DEST_CHAIN is not defined for chainId: ${destChainId}`
+  );
+
+  const multiCallHandler = MULTICALL_HANDLER;
+
+  if (!isBeneficiaryContract && isETHaddress(bridgeDestToken)) {
+    /*
+      if beneficiary is an EOA and destToken on destChain = ETH
+      order.destToken=ETH
+      order.bridge.outputToken=WETH_DEST_CHAIN
+      order.bridge.mutliCallHandler=NULL_ADDRESS
+      */
+    return {
+      outputToken: WETH_DEST_CHAIN,
+      multiCallHandler: ZERO_ADDRESS,
+      destinationChainId: destChainId,
+      deltaDestToken: ETH_ADDRESS,
+    };
+  }
+  if (!isBeneficiaryContract && isAcrossWETH(bridgeDestToken, destChainId)) {
+    /*
+      if beneficiary is an EOA and destToken on destChain = WETH
+      order.destToken=WETH
+      order.bridge.outputToken=WETH_DEST_CHAIN
+      order.bridge.mutliCallHandler=MULTI_CALL_HANDLER
+      */
+    return {
+      outputToken: WETH_DEST_CHAIN,
+      multiCallHandler,
+      destinationChainId: destChainId,
+      deltaDestToken: WETH_SRC_CHAIN,
+    };
+  }
+
+  if (isBeneficiaryContract && isETHaddress(bridgeDestToken)) {
+    /* 
+        if beneficiary is a contract and destToken on destChain = ETH
+        order.destToken=ETH
+        order.bridge.outputToken=WETH_DEST_CHAIN
+        order.bridge.mutliCallHandler=MULTI_CALL_HANDLER
+        */
+    return {
+      outputToken: WETH_DEST_CHAIN,
+      multiCallHandler,
+      destinationChainId: destChainId,
+      deltaDestToken: ETH_ADDRESS,
+    };
+  }
+
+  if (isBeneficiaryContract && isAcrossWETH(bridgeDestToken, destChainId)) {
+    /*
+        if beneficiary is a contract and destToken on destChain = WETH
+        order.destToken=WETH
+        order.bridge.outputToken=WETH_DEST_CHAIN
+        order.bridge.mutliCallHandler=NULL_ADDRESS
+      */
+    return {
+      outputToken: WETH_DEST_CHAIN,
+      multiCallHandler: ZERO_ADDRESS,
+      destinationChainId: destChainId,
+      deltaDestToken: WETH_SRC_CHAIN,
+    };
+  }
+
+  return {
+    outputToken: bridgeDestToken,
+    multiCallHandler: ZERO_ADDRESS,
+    destinationChainId: destChainId,
+    deltaDestToken,
+  };
 }
