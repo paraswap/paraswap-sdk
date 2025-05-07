@@ -404,7 +404,7 @@ if (auction?.status === 'EXECUTED') {
 
 #### A more detailed example of Delta Order usage can be found in [examples/delta](./src/examples/delta.ts)
 
-For more Delta protocol usage, and **Corsschain Delta Orders**, refer to [DELTA.md](./docs/DELTA.md)
+For more Delta protocol usage, and **Crosschain Delta Orders**, refer to [DELTA.md](./docs/DELTA.md)
 
 ------------
 

@@ -51,7 +51,7 @@ import {
 } from './buildCrosschainOrderBridge';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
-  /** @description designates the Order as being able to be partilly filled, as opposed to fill-or-kill */
+  /** @description designates the Order as being able to be partially filled, as opposed to fill-or-kill */
   partiallyFillable?: boolean;
 };
 
