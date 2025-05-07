@@ -1,7 +1,7 @@
 import { ZERO_ADDRESS } from '../../common/orders/buildOrderData';
 import { Bridge, DeltaAuctionOrder } from './types';
 
-const ACROSS_WETH_ADDRESSES_MAP: Record<number, string> = {
+export const ACROSS_WETH_ADDRESSES_MAP: Record<number, string> = {
   // Mainnet
   1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
   // Sepolia
@@ -72,7 +72,7 @@ const ACROSS_WETH_ADDRESSES_MAP: Record<number, string> = {
   7777777: '0x4200000000000000000000000000000000000006',
 };
 
-function isAcrossWETH(tokenAddress: string, chainId: number) {
+export function isAcrossWETH(tokenAddress: string, chainId: number) {
   return (
     ACROSS_WETH_ADDRESSES_MAP[chainId]?.toLowerCase() ===
     tokenAddress.toLowerCase()
@@ -85,7 +85,7 @@ const ETH_ADDRESS_LOWERCASE = ETH_ADDRESS.toLowerCase() as Lowercase<
   typeof ETH_ADDRESS
 >;
 
-function isETHaddress(tokenAddress: string): boolean {
+export function isETHaddress(tokenAddress: string): boolean {
   return tokenAddress.toLowerCase() === ETH_ADDRESS_LOWERCASE;
 }
 
@@ -230,14 +230,14 @@ export async function getDeltaBridgeAndDestToken({
   const bridge: Bridge = {
     maxRelayerFee: bridgeFee,
     destinationChainId: destChainId,
-    outputToken: WETH_DEST_CHAIN,
+    outputToken: destTokenDestChain,
     multiCallHandler: ZERO_ADDRESS,
   };
 
   return {
     bridge,
     orderChanges: {
-      destToken: ETH_ADDRESS,
+      destToken: destTokenSrcChain,
     },
   };
 }
