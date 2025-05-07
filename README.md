@@ -45,7 +45,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
 
   async function swapExample() {
     //                                     or any other signer/provider 
-    const signer: JsonRpcSigner = ethers.Wallet.fromMnmemonic('__your_mnemonic__');
+    const signer: JsonRpcSigner = ethers.Wallet.fromMnemonic('__your_mnemonic__');
     const senderAddress = signer.address;
 
     const priceRoute = await minSDK.swap.getRate({

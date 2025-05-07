@@ -44,6 +44,11 @@ export const constructBuildCrosschainOrderBridge = (
     { destToken, destChainId, isBeneficiaryContract, deltaPrice },
     requestParams
   ) => {
+    assert(
+      chainId !== destChainId,
+      '`destChainId` must be different from `chainId` for crosschain Order.bridge'
+    );
+
     const getMulticallHandler = async (chainId: number) => {
       const multicallHandlersMap = await getMulticallHandlers(requestParams);
       const multicallHandler = multicallHandlersMap[chainId];

@@ -186,11 +186,11 @@ const deltaAuction = await deltaSDK.submitDeltaOrder({
   destChainId: DEST_CHAIN_ID, // required to get construct a Crosschain Order
   beneficiary: anotherAccount, // if need to send destToken to another account on destChain
   isBeneficiaryContract: false, // whether the beneficiary on destChain is a smart contract
-  // bridge, // user-constrcuted Bridge object for Crosschain Orders
+  // bridge, // user-constructed Bridge object for Crosschain Orders
 });
 ```
 
-To constrcut a Crosschain Delta Order it is required to either:
+To construct a Crosschain Delta Order it is required to either:
 * construct Bridge object. Refer to [documentation](https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#sign-an-order-cross-chain) for how to do that.
 * provide both `beneficiary` address and `isBeneficiaryContract` boolean, so that the `Order.bridge` can be constructed automatically by the SDK.
 

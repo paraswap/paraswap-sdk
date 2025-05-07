@@ -147,7 +147,7 @@ export async function getDeltaBridgeAndDestToken({
     if beneficiary is an EOA and destToken on destChain = ETH
     order.destToken=ETH
     order.bridge.outputToken=WETH_DEST_CHAIN
-    order.bridge.mutliCallHandler=NULL_ADDRESS
+    order.bridge.multiCallHandler=NULL_ADDRESS
     */
 
     const bridge: Bridge = {
@@ -169,7 +169,7 @@ export async function getDeltaBridgeAndDestToken({
     if beneficiary is an EOA and destToken on destChain = WETH
     order.destToken=WETH
     order.bridge.outputToken=WETH_DEST_CHAIN
-    order.bridge.mutliCallHandler=MULTI_CALL_HANDLER
+    order.bridge.multiCallHandler=MULTI_CALL_HANDLER
     */
     const bridge: Bridge = {
       maxRelayerFee: bridgeFee,
@@ -190,7 +190,7 @@ export async function getDeltaBridgeAndDestToken({
       if beneficiary is a contract and destToken on destChain = ETH
       order.destToken=ETH
       order.bridge.outputToken=WETH_DEST_CHAIN
-      order.bridge.mutliCallHandler=MULTI_CALL_HANDLER
+      order.bridge.multiCallHandler=MULTI_CALL_HANDLER
       */
     const bridge: Bridge = {
       maxRelayerFee: bridgeFee,
@@ -211,7 +211,7 @@ export async function getDeltaBridgeAndDestToken({
       if beneficiary is a contract and destToken on destChain = WETH
       order.destToken=WETH
       order.bridge.outputToken=WETH_DEST_CHAIN
-      order.bridge.mutliCallHandler=NULL_ADDRESS
+      order.bridge.multiCallHandler=NULL_ADDRESS
     */
     const bridge: Bridge = {
       maxRelayerFee: bridgeFee,
