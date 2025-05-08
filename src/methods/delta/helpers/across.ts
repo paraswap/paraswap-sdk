@@ -1,3 +1,4 @@
+import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../../common/orders/buildOrderData';
 import { BeneficiaryType } from '../../common/orders/types';
 import { Bridge, DeltaAuctionOrder } from './types';
@@ -122,6 +123,10 @@ export async function getDeltaBridgeAndDestToken({
   beneficiaryType,
   getMulticallHandler,
 }: GetDeltaBridgeAndDestTokenInput): Promise<GetDeltaBridgeAndDestTokenOutput> {
+  assert(
+    beneficiaryType === 'EOA' || beneficiaryType === 'SmartContract',
+    'beneficiaryType must be EOA or SmartContract'
+  );
   const WETH_SRC_CHAIN = ACROSS_WETH_ADDRESSES_MAP[srcChainId];
 
   const WETH_DEST_CHAIN = ACROSS_WETH_ADDRESSES_MAP[destChainId];
@@ -166,7 +171,7 @@ export async function getDeltaBridgeAndDestToken({
     };
   }
   if (
-    beneficiaryType == 'EOA' &&
+    beneficiaryType === 'EOA' &&
     isAcrossWETH(destTokenDestChain, destChainId)
   ) {
     /*
