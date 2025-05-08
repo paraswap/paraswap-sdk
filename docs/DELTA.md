@@ -180,7 +180,7 @@ const deltaAuction = await deltaSDK.submitDeltaOrder({
   owner: account,
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   srcToken: DAI_TOKEN,
-  destToken: USDC_TOKEN,
+  destToken: USDC_TOKEN_ON_DEST_CHAIN,
   srcAmount: amount,
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
   destChainId: DEST_CHAIN_ID, // required to construct a Crosschain Order
