@@ -6,6 +6,7 @@ import {
   getDeltaBridgeAndDestToken,
   GetDeltaBridgeAndDestTokenOutput,
 } from './helpers/across';
+import { BeneficiaryType } from '../common/orders/types';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildCrosschainOrderBridgeParams = {
@@ -14,7 +15,7 @@ export type BuildCrosschainOrderBridgeParams = {
   /** @description Destination Chain ID for Crosschain Orders */
   destChainId: number;
   /** @description Whether the beneficiary is a contract. Needed to automatically fill in crosschain Bridge */
-  isBeneficiaryContract: boolean;
+  beneficiaryType: BeneficiaryType;
 
   /** @description price response received from /delta/prices (getDeltaPrice method) */
   deltaPrice: Pick<BridgePrice, 'bridgeFee' | 'destToken'>;
@@ -41,7 +42,7 @@ export const constructBuildCrosschainOrderBridge = (
   const { getMulticallHandlers } = constructGetMulticallHandlers(options);
 
   const buildCrosschainOrderBridge: BuildCrosschainOrderBridge = async (
-    { destToken, destChainId, isBeneficiaryContract, deltaPrice },
+    { destToken, destChainId, beneficiaryType, deltaPrice },
     requestParams
   ) => {
     assert(
@@ -67,7 +68,7 @@ export const constructBuildCrosschainOrderBridge = (
       destTokenSrcChain: deltaPrice.destToken,
       srcChainId: chainId,
       bridgeFee: deltaPrice.bridgeFee,
-      isBeneficiaryContract,
+      beneficiaryType,
       getMulticallHandler,
     });
 
