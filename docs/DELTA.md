@@ -29,7 +29,7 @@ const deltaPrice = await deltaSDK.getDeltaPrice({
   amount,
   userAddress: account,
   srcDecimals: 18,
-  destDecimals: 18,
+  destDecimals: 6,
   // partner: "..." // if available
 });
 ```
@@ -170,10 +170,10 @@ See more on accepted Permit variants in [Velora documentation](https://developer
 ```ts
 // calculate acceptable destAmount
 const slippagePercent = 0.5;
-  const destAmountAfterSlippage = (
-    +deltaPrice.destAmount *
-    (1 - slippagePercent / 100)
-  ).toString(10);
+const destAmountAfterSlippage = (
+  +deltaPrice.destAmount *
+  (1 - slippagePercent / 100)
+).toString(10);
 
 const deltaAuction = await deltaSDK.submitDeltaOrder({
   deltaPrice,
