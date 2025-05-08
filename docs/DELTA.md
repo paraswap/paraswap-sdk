@@ -183,7 +183,7 @@ const deltaAuction = await deltaSDK.submitDeltaOrder({
   destToken: USDC_TOKEN,
   srcAmount: amount,
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
-  destChainId: DEST_CHAIN_ID, // required to get construct a Crosschain Order
+  destChainId: DEST_CHAIN_ID, // required to construct a Crosschain Order
   beneficiary: anotherAccount, // if need to send destToken to another account on destChain
   isBeneficiaryContract: false, // whether the beneficiary on destChain is a smart contract
   // bridge, // user-constructed Bridge object for Crosschain Orders
