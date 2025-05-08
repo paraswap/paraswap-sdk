@@ -1,5 +1,5 @@
 **Velora Delta** is an intent-based protocol that enables a Velora user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
-This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
+This way the user doesn't need to make a transaction themselves but only to sign a Delta Order.
 The easiest way to make use of the Delta Order is to use the SDK following these steps:
 
 ### 1. Construct an SDK object
