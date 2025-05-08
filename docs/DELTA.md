@@ -185,14 +185,14 @@ const deltaAuction = await deltaSDK.submitDeltaOrder({
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
   destChainId: DEST_CHAIN_ID, // required to construct a Crosschain Order
   beneficiary: anotherAccount, // if need to send destToken to another account on destChain
-  isBeneficiaryContract: false, // whether the beneficiary on destChain is a smart contract
+  beneficiaryType: 'EOA', // whether the beneficiary on destChain is a smart contract
   // bridge, // user-constructed Bridge object for Crosschain Orders
 });
 ```
 
 To construct a Crosschain Delta Order it is required to either:
+* provide both `beneficiary` address and `beneficiaryType` value, so that the `Order.bridge` can be constructed automatically by the SDK.
 * construct Bridge object. Refer to [documentation](https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#sign-an-order-cross-chain) for how to do that.
-* provide both `beneficiary` address and `isBeneficiaryContract` boolean, so that the `Order.bridge` can be constructed automatically by the SDK.
 
 This is necessary because Across, the service facilitating crosschain bridging, has [special logic when it comes to transferring ETH and WETH](https://docs.across.to/introduction/technical-faq#what-is-the-behavior-of-eth-weth-in-transfers).
 

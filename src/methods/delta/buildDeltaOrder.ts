@@ -11,6 +11,7 @@ import {
 } from './helpers/buildDeltaOrderData';
 import { Bridge, DeltaAuctionOrder } from './helpers/types';
 import { constructBuildCrosschainOrderBridge } from './buildCrosschainOrderBridge';
+import { BeneficiaryType } from '../common/orders/types';
 export type { SignableDeltaOrderData } from './helpers/buildDeltaOrderData';
 
 export type BuildDeltaOrderDataParams = {
@@ -40,7 +41,7 @@ export type BuildDeltaOrderDataParams = {
   /** @description Destination Chain ID for Crosschain Orders */
   destChainId?: number;
   /** @description Whether the beneficiary is a contract. Needed to automatically fill in crosschain Bridge */
-  isBeneficiaryContract?: boolean;
+  beneficiaryType?: BeneficiaryType;
 
   /** @description price response received from /delta/prices (getDeltaPrice method) */
   deltaPrice: Pick<
@@ -143,7 +144,7 @@ export const constructBuildDeltaOrder = (
             {
               destToken: options.destToken,
               destChainId: options.destChainId,
-              isBeneficiaryContract: options.isBeneficiaryContract || false,
+              beneficiaryType: options.beneficiaryType ?? 'EOA',
               deltaPrice: {
                 bridgeFee: deltaPrice.bridgeFee,
                 destToken: deltaPrice.destToken,
