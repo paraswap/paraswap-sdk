@@ -140,7 +140,7 @@ const deltaPrice = await deltaSDK.getDeltaPrice({
   amount,
   userAddress: account,
   srcDecimals: 18,
-  destDecimals: 18,
+  destDecimals: 6,
   // partner: "..." // if available
 });
 ```
