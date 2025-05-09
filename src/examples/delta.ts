@@ -152,8 +152,39 @@ async function manualDeltaFlow() {
   });
 
   // poll if necessary
-  const auction = await deltaSDK.getDeltaOrderById(deltaAuction.id);
-  if (auction?.status === 'EXECUTED') {
-    console.log('Auction was executed');
+  function isExecutedDeltaAuction(
+    auction: Omit<DeltaAuction, 'signature'>,
+    waitForCrosschain = true // only consider executed when destChain work is done
+  ) {
+    if (auction.status !== 'EXECUTED') return false;
+
+    // crosschain Order is executed on destChain if bridgeStatus is filled
+    if (waitForCrosschain && auction.order.bridge.destinationChainId !== 0) {
+      return auction.bridgeStatus === 'filled';
+    }
+
+    return true;
   }
+
+  async function fetchOrderPeriodically(auctionId: string) {
+    const intervalId = setInterval(async () => {
+      const auction = await deltaSDK.getDeltaOrderById(auctionId);
+      console.log('checks: ', auction); // Handle or log the fetched auction as needed
+
+      if (isExecutedDeltaAuction(auction)) {
+        clearInterval(intervalId); // Stop interval if completed
+        console.log('Order completed');
+      }
+    }, 3000);
+    console.log('Order Pending');
+    // Return intervalId to enable clearing the interval if needed externally
+    return intervalId;
+  }
+
+  async function startStatusCheck(auctionId: string) {
+    const intervalId = await fetchOrderPeriodically(auctionId);
+    setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+  }
+
+  startStatusCheck(deltaAuction.id);
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { ethers } from 'ethersV5';
-import { constructSimpleSDK } from '..';
+import { constructSimpleSDK, DeltaAuction } from '..';
 
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
 const USDC_TOKEN = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
@@ -68,10 +68,41 @@ async function allQuote() {
     });
 
     // poll if necessary
-    const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
-    if (auction?.status === 'EXECUTED') {
-      console.log('Auction was executed');
+    function isExecutedDeltaAuction(
+      auction: Omit<DeltaAuction, 'signature'>,
+      waitForCrosschain = true // only consider executed when destChain work is done
+    ) {
+      if (auction.status !== 'EXECUTED') return false;
+
+      // crosschain Order is executed on destChain if bridgeStatus is filled
+      if (waitForCrosschain && auction.order.bridge.destinationChainId !== 0) {
+        return auction.bridgeStatus === 'filled';
+      }
+
+      return true;
     }
+
+    async function fetchOrderPeriodically(auctionId: string) {
+      const intervalId = setInterval(async () => {
+        const auction = await simpleSDK.delta.getDeltaOrderById(auctionId);
+        console.log('checks: ', auction); // Handle or log the fetched auction as needed
+
+        if (isExecutedDeltaAuction(auction)) {
+          clearInterval(intervalId); // Stop interval if completed
+          console.log('Order completed');
+        }
+      }, 3000);
+      console.log('Order Pending');
+      // Return intervalId to enable clearing the interval if needed externally
+      return intervalId;
+    }
+
+    async function startStatusCheck(auctionId: string) {
+      const intervalId = await fetchOrderPeriodically(auctionId);
+      setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+    }
+
+    startStatusCheck(deltaAuction.id);
   } else {
     console.log(
       `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
