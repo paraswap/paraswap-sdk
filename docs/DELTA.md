@@ -1,5 +1,5 @@
 **Velora Delta** is an intent-based protocol that enables a Velora user to make gasless swaps where multiple agents compete to execute the trade at the best price possible.
-This way the user doesn't need to make a transaction themselve but only to sign a Delta Order.
+This way the user doesn't need to make a transaction themselves but only to sign a Delta Order.
 The easiest way to make use of the Delta Order is to use the SDK following these steps:
 
 ### 1. Construct an SDK object
@@ -29,7 +29,7 @@ const deltaPrice = await deltaSDK.getDeltaPrice({
   amount,
   userAddress: account,
   srcDecimals: 18,
-  destDecimals: 18,
+  destDecimals: 6,
   // partner: "..." // if available
 });
 ```
@@ -140,7 +140,7 @@ const deltaPrice = await deltaSDK.getDeltaPrice({
   amount,
   userAddress: account,
   srcDecimals: 18,
-  destDecimals: 18,
+  destDecimals: 6,
   // partner: "..." // if available
 });
 ```
@@ -170,29 +170,29 @@ See more on accepted Permit variants in [Velora documentation](https://developer
 ```ts
 // calculate acceptable destAmount
 const slippagePercent = 0.5;
-  const destAmountAfterSlippage = (
-    +deltaPrice.destAmount *
-    (1 - slippagePercent / 100)
-  ).toString(10);
+const destAmountAfterSlippage = (
+  +deltaPrice.destAmount *
+  (1 - slippagePercent / 100)
+).toString(10);
 
 const deltaAuction = await deltaSDK.submitDeltaOrder({
   deltaPrice,
   owner: account,
   // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
   srcToken: DAI_TOKEN,
-  destToken: USDC_TOKEN,
+  destToken: USDC_TOKEN_ON_DEST_CHAIN,
   srcAmount: amount,
   destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
-  destChainId: DEST_CHAIN_ID, // required to get construct a Crosschain Order
+  destChainId: DEST_CHAIN_ID, // required to construct a Crosschain Order
   beneficiary: anotherAccount, // if need to send destToken to another account on destChain
-  isBeneficiaryContract: false, // whether the beneficiary on destChain is a smart contract
+  beneficiaryType: 'EOA', // whether the beneficiary on destChain is a smart contract
   // bridge, // user-constructed Bridge object for Crosschain Orders
 });
 ```
 
 To construct a Crosschain Delta Order it is required to either:
+* provide both `beneficiary` address and `beneficiaryType` value, so that the `Order.bridge` can be constructed automatically by the SDK.
 * construct Bridge object. Refer to [documentation](https://developers.velora.xyz/api/velora-api/velora-delta-api/build-a-delta-order-to-sign#sign-an-order-cross-chain) for how to do that.
-* provide both `beneficiary` address and `isBeneficiaryContract` boolean, so that the `Order.bridge` can be constructed automatically by the SDK.
 
 This is necessary because Across, the service facilitating crosschain bridging, has [special logic when it comes to transferring ETH and WETH](https://docs.across.to/introduction/technical-faq#what-is-the-behavior-of-eth-weth-in-transfers).
 

@@ -1,4 +1,6 @@
+import { assert } from 'ts-essentials';
 import { ZERO_ADDRESS } from '../../common/orders/buildOrderData';
+import { BeneficiaryType } from '../../common/orders/types';
 import { Bridge, DeltaAuctionOrder } from './types';
 
 export const ACROSS_WETH_ADDRESSES_MAP: Record<number, string> = {
@@ -101,7 +103,7 @@ export type GetDeltaBridgeAndDestTokenInput = {
   destTokenSrcChain: string;
   srcChainId: number;
   bridgeFee: string;
-  isBeneficiaryContract: boolean;
+  beneficiaryType: BeneficiaryType;
   getMulticallHandler: (chainId: number) => Promise<string>;
 };
 
@@ -118,9 +120,13 @@ export async function getDeltaBridgeAndDestToken({
   destTokenSrcChain,
   srcChainId,
   bridgeFee,
-  isBeneficiaryContract,
+  beneficiaryType,
   getMulticallHandler,
 }: GetDeltaBridgeAndDestTokenInput): Promise<GetDeltaBridgeAndDestTokenOutput> {
+  assert(
+    beneficiaryType === 'EOA' || beneficiaryType === 'SmartContract',
+    'beneficiaryType must be EOA or SmartContract'
+  );
   const WETH_SRC_CHAIN = ACROSS_WETH_ADDRESSES_MAP[srcChainId];
 
   const WETH_DEST_CHAIN = ACROSS_WETH_ADDRESSES_MAP[destChainId];
@@ -142,7 +148,7 @@ export async function getDeltaBridgeAndDestToken({
     };
   }
 
-  if (!isBeneficiaryContract && isETHaddress(destTokenDestChain)) {
+  if (beneficiaryType === 'EOA' && isETHaddress(destTokenDestChain)) {
     /*
     if beneficiary is an EOA and destToken on destChain = ETH
     order.destToken=ETH
@@ -164,7 +170,10 @@ export async function getDeltaBridgeAndDestToken({
       },
     };
   }
-  if (!isBeneficiaryContract && isAcrossWETH(destTokenDestChain, destChainId)) {
+  if (
+    beneficiaryType === 'EOA' &&
+    isAcrossWETH(destTokenDestChain, destChainId)
+  ) {
     /*
     if beneficiary is an EOA and destToken on destChain = WETH
     order.destToken=WETH
@@ -185,7 +194,7 @@ export async function getDeltaBridgeAndDestToken({
     };
   }
 
-  if (isBeneficiaryContract && isETHaddress(destTokenDestChain)) {
+  if (beneficiaryType === 'SmartContract' && isETHaddress(destTokenDestChain)) {
     /* 
       if beneficiary is a contract and destToken on destChain = ETH
       order.destToken=ETH
@@ -206,7 +215,10 @@ export async function getDeltaBridgeAndDestToken({
     };
   }
 
-  if (isBeneficiaryContract && isAcrossWETH(destTokenDestChain, destChainId)) {
+  if (
+    beneficiaryType === 'SmartContract' &&
+    isAcrossWETH(destTokenDestChain, destChainId)
+  ) {
     /*
       if beneficiary is a contract and destToken on destChain = WETH
       order.destToken=WETH

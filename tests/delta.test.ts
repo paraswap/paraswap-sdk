@@ -41,6 +41,7 @@ import {
   isAcrossWETH,
   isETHaddress,
 } from '../src/methods/delta/helpers/across';
+import { BeneficiaryType } from '../src/methods/common/orders/types';
 
 dotenv.config();
 
@@ -144,7 +145,7 @@ describe('Delta:methods', () => {
           },
           destToken: RANDOM_TOKEN_ON_OPTIMISM,
           destChainId: 1,
-          isBeneficiaryContract: false,
+          beneficiaryType: 'EOA',
         });
 
       expect(getBridge()).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -160,7 +161,7 @@ describe('Delta:methods', () => {
         },
         destToken: RANDOM_TOKEN_ON_OPTIMISM,
         destChainId,
-        isBeneficiaryContract: false,
+        beneficiaryType: 'EOA' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -181,7 +182,7 @@ describe('Delta:methods', () => {
         },
         destToken: RANDOM_TOKEN_ON_OPTIMISM,
         destChainId,
-        isBeneficiaryContract: true,
+        beneficiaryType: 'SmartContract' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -202,7 +203,7 @@ describe('Delta:methods', () => {
         },
         destToken: ETH,
         destChainId,
-        isBeneficiaryContract: false,
+        beneficiaryType: 'EOA' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -223,7 +224,7 @@ describe('Delta:methods', () => {
         },
         destToken: ETH,
         destChainId,
-        isBeneficiaryContract: true,
+        beneficiaryType: 'SmartContract' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -244,7 +245,7 @@ describe('Delta:methods', () => {
         },
         destToken: WETH_ON_OPTIMISM,
         destChainId,
-        isBeneficiaryContract: false,
+        beneficiaryType: 'EOA' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -265,7 +266,7 @@ describe('Delta:methods', () => {
         },
         destToken: WETH_ON_OPTIMISM,
         destChainId,
-        isBeneficiaryContract: true,
+        beneficiaryType: 'SmartContract' as const,
       };
 
       const result = await deltaSDK.buildCrosschainOrderBridge(input);
@@ -680,7 +681,7 @@ function constructBridgeAndOrderChanges({
   destToken,
   destChainId,
   srcChainId,
-  isBeneficiaryContract,
+  beneficiaryType,
   deltaPrice,
 }: BuildCrosschainOrderBridgeParams & { srcChainId: number }) {
   const { outputToken, multiCallHandler, destinationChainId, deltaDestToken } =
@@ -689,7 +690,7 @@ function constructBridgeAndOrderChanges({
       srcChainId,
       destChainId,
       deltaDestToken: deltaPrice.destToken,
-      isBeneficiaryContract,
+      beneficiaryType,
     });
 
   return {
@@ -713,7 +714,7 @@ type ConstructBridgeInput = {
   srcChainId: number;
   destChainId: number;
   deltaDestToken: string;
-  isBeneficiaryContract: boolean;
+  beneficiaryType: BeneficiaryType;
 };
 
 function constructBridge({
@@ -721,7 +722,7 @@ function constructBridge({
   srcChainId,
   destChainId,
   deltaDestToken,
-  isBeneficiaryContract,
+  beneficiaryType,
 }: ConstructBridgeInput) {
   const WETH_SRC_CHAIN = ACROSS_WETH_ADDRESSES_MAP[srcChainId];
   assert(
@@ -737,7 +738,7 @@ function constructBridge({
 
   const multiCallHandler = MULTICALL_HANDLER;
 
-  if (!isBeneficiaryContract && isETHaddress(bridgeDestToken)) {
+  if (beneficiaryType === 'EOA' && isETHaddress(bridgeDestToken)) {
     /*
       if beneficiary is an EOA and destToken on destChain = ETH
       order.destToken=ETH
@@ -751,7 +752,7 @@ function constructBridge({
       deltaDestToken: ETH_ADDRESS,
     };
   }
-  if (!isBeneficiaryContract && isAcrossWETH(bridgeDestToken, destChainId)) {
+  if (beneficiaryType === 'EOA' && isAcrossWETH(bridgeDestToken, destChainId)) {
     /*
       if beneficiary is an EOA and destToken on destChain = WETH
       order.destToken=WETH
@@ -766,7 +767,7 @@ function constructBridge({
     };
   }
 
-  if (isBeneficiaryContract && isETHaddress(bridgeDestToken)) {
+  if (beneficiaryType === 'SmartContract' && isETHaddress(bridgeDestToken)) {
     /* 
         if beneficiary is a contract and destToken on destChain = ETH
         order.destToken=ETH
@@ -781,7 +782,10 @@ function constructBridge({
     };
   }
 
-  if (isBeneficiaryContract && isAcrossWETH(bridgeDestToken, destChainId)) {
+  if (
+    beneficiaryType === 'SmartContract' &&
+    isAcrossWETH(bridgeDestToken, destChainId)
+  ) {
     /*
         if beneficiary is a contract and destToken on destChain = WETH
         order.destToken=WETH
