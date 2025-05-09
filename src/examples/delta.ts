@@ -100,8 +100,12 @@ async function simpleDeltaFlow() {
     return intervalId;
   }
 
-  const intervalId = await fetchOrderPeriodically(deltaAuction.id);
-  setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+  async function startStatusCheck(auctionId: string) {
+    const intervalId = await fetchOrderPeriodically(auctionId);
+    setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+  }
+
+  startStatusCheck(deltaAuction.id);
 }
 async function manualDeltaFlow() {
   const amount = '1000000000000'; // wei
