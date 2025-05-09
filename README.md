@@ -47,7 +47,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
   const DAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 
   async function swapExample() {
-    //                                     or any other signer/provider 
+    //                                     or any other signer/provider
     const signer: JsonRpcSigner = ethers.Wallet.fromMnemonic('__your_mnemonic__');
     const senderAddress = signer.address;
 
@@ -68,7 +68,7 @@ Can be created by providing `chainId` and either `axios` or `window.fetch` (or a
         priceRoute,
         userAddress: senderAddress,
         partner: referrer,
-      }     
+      }
     );
 
     const transaction = {
@@ -120,11 +120,11 @@ If optional `providerOptions` is provided as the second parameter, then the resu
   await provider.waitForTransaction(txHash);
 ```
 
-### Full SDK 
+### Full SDK
 ```typescript
 import { constructFullSDK, constructAxiosFetcher, constructEthersContractCaller } from '@velora-dex/sdk';
 
-const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider 
+const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider
 const account = '__signer_address__';
 
 const contractCaller = constructEthersContractCaller({
@@ -228,10 +228,41 @@ if ('delta' in quote) {
   });
 
   // poll if necessary
-  const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
-  if (auction?.status === 'EXECUTED') {
-    console.log('Auction was executed');
+  function isExecutedDeltaAuction(
+      auction: Omit<DeltaAuction, 'signature'>,
+      waitForCrosschain = true // only consider executed when destChain work is done
+    ) {
+      if (auction.status !== 'EXECUTED') return false;
+
+      // crosschain Order is executed on destChain if bridgeStatus is filled
+      if (waitForCrosschain && auction.order.bridge.destinationChainId !== 0) {
+        return auction.bridgeStatus === 'filled';
+      }
+
+      return true;
+    }
+
+  async function fetchOrderPeriodically(auctionId: string) {
+    const intervalId = setInterval(async () => {
+      const auction = await simpleSDK.delta.getDeltaOrderById(auctionId);
+      console.log('checks: ', auction); // Handle or log the fetched auction as needed
+
+      if (isExecutedDeltaAuction(auction)) {
+        clearInterval(intervalId); // Stop interval if completed
+        console.log('Order completed');
+      }
+    }, 3000);
+    console.log('Order Pending');
+    // Return intervalId to enable clearing the interval if needed externally
+    return intervalId;
   }
+
+  async function startStatusCheck(auctionId: string) {
+    const intervalId = await fetchOrderPeriodically(auctionId);
+    setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+  }
+
+  startStatusCheck(deltaAuction.id);
 } else {
   console.log(
     `Delta Quote failed: ${quote.fallbackReason.errorType} - ${quote.fallbackReason.details}`
@@ -399,10 +430,41 @@ const signableOrderData = await simpleSDK.delta.buildDeltaOrder({
 
 ```ts
 // poll if necessary
-const auction = await simpleSDK.delta.getDeltaOrderById(deltaAuction.id);
-if (auction?.status === 'EXECUTED') {
-  console.log('Auction was executed');
+function isExecutedDeltaAuction(
+  auction: Omit<DeltaAuction, 'signature'>,
+  waitForCrosschain = true // only consider executed when destChain work is done
+) {
+  if (auction.status !== 'EXECUTED') return false;
+
+  // crosschain Order is executed on destChain if bridgeStatus is filled
+  if (waitForCrosschain && auction.order.bridge.destinationChainId !== 0) {
+    return auction.bridgeStatus === 'filled';
+  }
+
+  return true;
 }
+
+async function fetchOrderPeriodically(auctionId: string) {
+  const intervalId = setInterval(async () => {
+    const auction = await simpleSDK.delta.getDeltaOrderById(auctionId);
+    console.log('checks: ', auction); // Handle or log the fetched auction as needed
+
+    if (isExecutedDeltaAuction(auction)) {
+      clearInterval(intervalId); // Stop interval if completed
+      console.log('Order completed');
+    }
+  }, 3000);
+  console.log('Order Pending');
+  // Return intervalId to enable clearing the interval if needed externally
+  return intervalId;
+}
+
+async function startStatusCheck(auctionId: string) {
+  const intervalId = await fetchOrderPeriodically(auctionId);
+  setTimeout(() => clearInterval(intervalId), 60000); // Stop after 60 seconds
+}
+
+startStatusCheck(deltaAuction.id);
 ```
 
 #### A more detailed example of Delta Order usage can be found in [examples/delta](./src/examples/delta.ts)
