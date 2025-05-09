@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3ProviderEventCallback
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3ProviderEventCallback
 
 # Type Alias: Web3ProviderEventCallback()\<T\>
 

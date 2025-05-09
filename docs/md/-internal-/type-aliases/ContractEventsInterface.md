@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractEventsInterface
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractEventsInterface
 
 # Type Alias: ContractEventsInterface\<Abi, Events\>
 
@@ -12,7 +12,7 @@
 
 • **Abi** *extends* [`ContractAbi`](ContractAbi.md)
 
-• **Events** *extends* [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> = [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>
+• **Events** *extends* [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> = [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>
 
 ## Defined in
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / LimitOrderState
+[@velora-dex/sdk](../globals.md) / LimitOrderState
 
 # Type Alias: LimitOrderState
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/types.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L29)
+[src/methods/limitOrders/helpers/types.ts:29](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/types.ts#L29)

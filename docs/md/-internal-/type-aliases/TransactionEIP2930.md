@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionEIP2930
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionEIP2930
 
 # Type Alias: TransactionEIP2930\<quantity, index, isPending, type\>
 

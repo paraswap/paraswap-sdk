@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Net
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Net
 
 # Class: Net
 
@@ -27,7 +27,7 @@ import {Net} from 'web3-net';
 
 ## Extends
 
-- [`Web3Context`](Web3Context.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+- [`Web3Context`](Web3Context.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 ## Constructors
 
@@ -37,7 +37,7 @@ import {Net} from 'web3-net';
 
 #### Parameters
 
-• **providerOrContext?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\> \| [`Web3ContextInitOptions`](../type-aliases/Web3ContextInitOptions.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+• **providerOrContext?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\> \| [`Web3ContextInitOptions`](../type-aliases/Web3ContextInitOptions.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Returns
 
@@ -69,7 +69,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:51
 
 ### \_requestManager
 
-> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 #### Inherited from
 
@@ -83,7 +83,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:49
 
 ### \_subscriptionManager
 
-> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Inherited from
 
@@ -1448,11 +1448,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:165
 
 ### getContextObject()
 
-> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Returns
 
-[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Inherited from
 
@@ -1768,11 +1768,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:73
 
 ### removeAllListeners()
 
-> **removeAllListeners**(): [`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+> **removeAllListeners**(): [`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Returns
 
-[`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+[`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Inherited from
 
@@ -1836,7 +1836,7 @@ Will set the provider.
 
 #### Parameters
 
-• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 [SupportedProviders](../type-aliases/SupportedProviders.md) The provider to set
 
@@ -1862,7 +1862,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:155
 
 #### Parameters
 
-• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 #### Returns
 

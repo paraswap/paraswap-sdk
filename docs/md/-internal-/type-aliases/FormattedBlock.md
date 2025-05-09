@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FormattedBlock
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FormattedBlock
 
 # Type Alias: FormattedBlock\<chain, includeTransactions, blockTag, _FormatterReturnType, _ExcludedPendingDependencies, _Formatted, _Transactions\>
 

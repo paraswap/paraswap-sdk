@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../../../../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../../../../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../../../../../globals.md) / [\<internal\>](../../../../../README.md) / [internal](../../../README.md) / [pipeline](../README.md) / \_\_promisify\_\_
+[@velora-dex/sdk](../../../../../../globals.md) / [\<internal\>](../../../../../README.md) / [internal](../../../README.md) / [pipeline](../README.md) / \_\_promisify\_\_
 
 # Function: \_\_promisify\_\_()
 

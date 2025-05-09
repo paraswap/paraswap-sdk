@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / FetcherErrorInterface
+[@velora-dex/sdk](../globals.md) / FetcherErrorInterface
 
 # Interface: FetcherErrorInterface
 
@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:49](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L49)
+[src/helpers/misc.ts:49](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L49)
 
 ***
 
@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L31)
+[src/helpers/misc.ts:31](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L31)
 
 ***
 
@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L32)
+[src/helpers/misc.ts:32](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L32)
 
 ***
 
@@ -64,7 +64,7 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L30)
+[src/helpers/misc.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L30)
 
 ***
 
@@ -78,7 +78,7 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L44)
+[src/helpers/misc.ts:44](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L44)
 
 ***
 
@@ -88,4 +88,4 @@
 
 #### Defined in
 
-[src/helpers/misc.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L48)
+[src/helpers/misc.ts:48](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L48)

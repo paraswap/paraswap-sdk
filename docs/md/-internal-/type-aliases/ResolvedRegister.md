@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ResolvedRegister
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ResolvedRegister
 
 # Type Alias: ResolvedRegister
 
@@ -155,7 +155,7 @@ Use `intType` instead
 
 > **strictAbiType**: [`Register`](../interfaces/Register.md) *extends* `object` ? `type` : [`Register`](../interfaces/Register.md) *extends* `object` ? `type` : [`DefaultRegister`](DefaultRegister.md)\[`"strictAbiType"`\]
 
-When set, validates [AbiParameter](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)'s `type` against [AbiType](AbiType.md)
+When set, validates [AbiParameter](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)'s `type` against [AbiType](AbiType.md)
 
 Note: You probably only want to set this to `true` if parsed types are returning as `unknown`
 and you want to figure out why.

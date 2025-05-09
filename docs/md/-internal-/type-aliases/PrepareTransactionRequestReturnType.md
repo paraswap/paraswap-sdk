@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / PrepareTransactionRequestReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / PrepareTransactionRequestReturnType
 
 # Type Alias: PrepareTransactionRequestReturnType\<chain, account, chainOverride, accountOverride, request, _derivedAccount, _derivedChain, _transactionType, _transactionRequest\>
 

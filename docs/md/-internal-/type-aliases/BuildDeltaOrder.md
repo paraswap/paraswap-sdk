@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildDeltaOrder
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildDeltaOrder
 
 # Type Alias: BuildDeltaOrder()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/delta/buildDeltaOrder.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/buildDeltaOrder.ts#L50)
+[src/methods/delta/buildDeltaOrder.ts:61](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/buildDeltaOrder.ts#L61)

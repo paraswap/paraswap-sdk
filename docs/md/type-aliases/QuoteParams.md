@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / QuoteParams
+[@velora-dex/sdk](../globals.md) / QuoteParams
 
 # Type Alias: QuoteParams\<M\>
 
@@ -88,4 +88,4 @@ User's Wallet Address
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L15)
+[src/methods/quote/getQuote.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/quote/getQuote.ts#L15)

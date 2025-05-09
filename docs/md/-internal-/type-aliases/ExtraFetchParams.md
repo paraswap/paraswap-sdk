@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ExtraFetchParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ExtraFetchParams
 
 # Type Alias: ExtraFetchParams
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/types.ts:65](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L65)
+[src/types.ts:65](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L65)

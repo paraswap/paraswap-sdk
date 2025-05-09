@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructEthersContractCaller
+[@velora-dex/sdk](../globals.md) / constructEthersContractCaller
 
 # Function: constructEthersContractCaller()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/helpers/providers/ethers.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/ethers.ts#L33)
+[src/helpers/providers/ethers.ts:33](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/ethers.ts#L33)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetDeltaPriceFunctions
+[@velora-dex/sdk](../globals.md) / GetDeltaPriceFunctions
 
 # Type Alias: GetDeltaPriceFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaPrice.ts:75](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L75)
+[src/methods/delta/getDeltaPrice.ts:75](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaPrice.ts#L75)

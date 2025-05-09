@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / LimitOrderApiResponse
+[@velora-dex/sdk](../globals.md) / LimitOrderApiResponse
 
 # Type Alias: LimitOrderApiResponse
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/types.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L19)
+[src/methods/limitOrders/helpers/types.ts:19](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/types.ts#L19)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / EthersV6ProviderDeps
+[@velora-dex/sdk](../globals.md) / EthersV6ProviderDeps
 
 # Interface: EthersV6ProviderDeps
 
@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/helpers/providers/ethersV6.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/ethersV6.ts#L20)
+[src/helpers/providers/ethersV6.ts:20](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/ethersV6.ts#L20)
 
 ***
 
@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[src/helpers/providers/ethersV6.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/ethersV6.ts#L19)
+[src/helpers/providers/ethersV6.ts:19](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/ethersV6.ts#L19)

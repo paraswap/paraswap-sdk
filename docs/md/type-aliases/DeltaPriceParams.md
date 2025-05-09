@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / DeltaPriceParams
+[@velora-dex/sdk](../globals.md) / DeltaPriceParams
 
 # Type Alias: DeltaPriceParams
 
@@ -76,4 +76,4 @@ User's Wallet Address
 
 ## Defined in
 
-[src/methods/delta/getDeltaPrice.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L5)
+[src/methods/delta/getDeltaPrice.ts:5](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaPrice.ts#L5)

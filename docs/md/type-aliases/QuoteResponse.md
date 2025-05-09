@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / QuoteResponse
+[@velora-dex/sdk](../globals.md) / QuoteResponse
 
 # Type Alias: QuoteResponse
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L57)
+[src/methods/quote/getQuote.ts:57](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/quote/getQuote.ts#L57)

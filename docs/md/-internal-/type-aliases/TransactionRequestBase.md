@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestBase
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestBase
 
 # Type Alias: TransactionRequestBase\<quantity, index, type\>
 

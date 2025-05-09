@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildTxInputBase
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildTxInputBase
 
 # Type Alias: BuildTxInputBase
 
@@ -104,7 +104,7 @@ Set to true to take positive slippage. Works with partnerAddress. Default: false
 
 #### Description
 
-Whenever msg.sender (`userAddress`) i.e. address calling the ParaSwap contract is different than the address sending the transaction, `txOrigin` must be passed along with `userAddress`
+Whenever msg.sender (`userAddress`) i.e. address calling the Velora contract is different than the address sending the transaction, `txOrigin` must be passed along with `userAddress`
 
 ### userAddress
 
@@ -112,4 +112,4 @@ Whenever msg.sender (`userAddress`) i.e. address calling the ParaSwap contract i
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:64](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L64)
+[src/methods/swap/transaction.ts:64](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/transaction.ts#L64)

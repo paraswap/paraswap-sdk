@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ContractMethodV6
+[@velora-dex/sdk](../globals.md) / ContractMethodV6
 
 # Enumeration: ContractMethodV6
 

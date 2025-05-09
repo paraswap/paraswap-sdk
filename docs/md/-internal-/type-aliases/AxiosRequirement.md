@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / AxiosRequirement
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / AxiosRequirement
 
 # Type Alias: AxiosRequirement
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/helpers/fetchers/axios.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/fetchers/axios.ts#L5)
+[src/helpers/fetchers/axios.ts:5](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/fetchers/axios.ts#L5)

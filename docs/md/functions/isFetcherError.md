@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / isFetcherError
+[@velora-dex/sdk](../globals.md) / isFetcherError
 
 # Function: isFetcherError()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/helpers/misc.ts:52](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L52)
+[src/helpers/misc.ts:52](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L52)

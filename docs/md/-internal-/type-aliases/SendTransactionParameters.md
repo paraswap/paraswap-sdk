@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SendTransactionParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SendTransactionParameters
 
 # Type Alias: SendTransactionParameters\<chain, account, chainOverride, request\>
 

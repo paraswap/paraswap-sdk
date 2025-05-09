@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructGetSpender
+[@velora-dex/sdk](../globals.md) / constructGetSpender
 
 # Function: constructGetSpender()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/spender.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L33)
+[src/methods/swap/spender.ts:33](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/spender.ts#L33)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / MessageDefinition
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / MessageDefinition
 
 # Type Alias: MessageDefinition\<typedData, primaryType, primaryTypes, schema, message\>
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SimpleOptions
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SimpleOptions
 
 # Type Alias: SimpleOptions
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:201](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L201)
+[src/sdk/simple.ts:206](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L206)

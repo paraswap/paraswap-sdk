@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionSerializedEIP1559
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionSerializedEIP1559
 
 # Type Alias: TransactionSerializedEIP1559
 

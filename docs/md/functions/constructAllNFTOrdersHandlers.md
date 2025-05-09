@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructAllNFTOrdersHandlers
+[@velora-dex/sdk](../globals.md) / constructAllNFTOrdersHandlers
 
 # Function: constructAllNFTOrdersHandlers()
 
@@ -26,4 +26,4 @@ construct SDK with every NFTOrders-related method, fetching from API and contrac
 
 ## Defined in
 
-[src/methods/nftOrders/index.ts:109](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L109)
+[src/methods/nftOrders/index.ts:109](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/index.ts#L109)

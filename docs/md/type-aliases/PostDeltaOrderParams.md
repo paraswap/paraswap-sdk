@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / PostDeltaOrderParams
+[@velora-dex/sdk](../globals.md) / PostDeltaOrderParams
 
 # Type Alias: PostDeltaOrderParams
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/delta/postDeltaOrder.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/postDeltaOrder.ts#L18)
+[src/methods/delta/postDeltaOrder.ts:18](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/postDeltaOrder.ts#L18)

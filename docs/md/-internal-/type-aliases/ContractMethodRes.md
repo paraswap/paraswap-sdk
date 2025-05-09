@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractMethodRes
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractMethodRes
 
 # Type Alias: ContractMethodRes
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/helpers/providers/web3.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/web3.ts#L15)
+[src/helpers/providers/web3.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/web3.ts#L15)

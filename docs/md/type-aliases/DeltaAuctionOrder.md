@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / DeltaAuctionOrder
+[@velora-dex/sdk](../globals.md) / DeltaAuctionOrder
 
 # Type Alias: DeltaAuctionOrder
 
@@ -108,4 +108,4 @@ The address of the src token
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:3](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L3)
+[src/methods/delta/helpers/types.ts:1](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/helpers/types.ts#L1)

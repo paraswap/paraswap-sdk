@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SimpleSDK
+[@velora-dex/sdk](../globals.md) / SimpleSDK
 
 # Type Alias: SimpleSDK
 
@@ -32,4 +32,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:184](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L184)
+[src/sdk/simple.ts:189](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L189)

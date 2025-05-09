@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Domain
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Domain
 
 # Type Alias: Domain
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/common/orders/buildOrderData.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/common/orders/buildOrderData.ts#L24)
+[src/methods/common/orders/buildOrderData.ts:24](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/common/orders/buildOrderData.ts#L24)

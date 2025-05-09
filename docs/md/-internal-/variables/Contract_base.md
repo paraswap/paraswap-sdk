@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Contract\_base
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Contract\_base
 
 # Variable: Contract\_base()
 

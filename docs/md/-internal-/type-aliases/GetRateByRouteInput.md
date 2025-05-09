@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRateByRouteInput
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRateByRouteInput
 
 # Type Alias: GetRateByRouteInput
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/rates.ts:202](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L202)
+[src/methods/swap/rates.ts:191](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/rates.ts#L191)

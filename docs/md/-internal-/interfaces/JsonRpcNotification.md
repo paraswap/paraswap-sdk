@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonRpcNotification
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonRpcNotification
 
 # Interface: JsonRpcNotification\<T\>
 
@@ -44,7 +44,7 @@ node\_modules/web3-types/lib/commonjs/json\_rpc\_types.d.ts:32
 
 ### jsonrpc
 
-> `readonly` **jsonrpc**: [`JsonRpcIdentifier`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/JsonRpcIdentifier.md)
+> `readonly` **jsonrpc**: [`JsonRpcIdentifier`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/JsonRpcIdentifier.md)
 
 #### Defined in
 
@@ -64,7 +64,7 @@ node\_modules/web3-types/lib/commonjs/json\_rpc\_types.d.ts:34
 
 ### params
 
-> `readonly` **params**: [`SubscriptionParams`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/SubscriptionParams.md)\<`T`\>
+> `readonly` **params**: [`SubscriptionParams`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/SubscriptionParams.md)\<`T`\>
 
 #### Defined in
 

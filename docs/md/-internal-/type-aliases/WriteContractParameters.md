@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / WriteContractParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / WriteContractParameters
 
 # Type Alias: WriteContractParameters\<abi, functionName, args, chain, account, chainOverride, allFunctionNames, derivedChain\>
 

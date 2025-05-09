@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Client\_Base
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Client\_Base
 
 # Type Alias: Client\_Base\<transport, chain, account, rpcSchema\>
 

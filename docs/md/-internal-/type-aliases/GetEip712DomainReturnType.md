@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetEip712DomainReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetEip712DomainReturnType
 
 # Type Alias: GetEip712DomainReturnType
 

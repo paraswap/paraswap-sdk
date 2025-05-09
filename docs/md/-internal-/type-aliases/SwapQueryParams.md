@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapQueryParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapQueryParams
 
 # Type Alias: SwapQueryParams
 
@@ -246,4 +246,4 @@ To specify the protocol version. **Values:** 5 or 6.2 **Default**: 5.
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L17)
+[src/methods/swap/swapTx.ts:17](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L17)

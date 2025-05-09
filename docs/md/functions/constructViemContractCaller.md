@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructViemContractCaller
+[@velora-dex/sdk](../globals.md) / constructViemContractCaller
 
 # Function: constructViemContractCaller()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/helpers/providers/viem.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/viem.ts#L29)
+[src/helpers/providers/viem.ts:29](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/viem.ts#L29)

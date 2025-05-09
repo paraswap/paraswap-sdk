@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetAdaptersFunctions
+[@velora-dex/sdk](../globals.md) / GetAdaptersFunctions
 
 # Type Alias: GetAdaptersFunctions
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/swap/adapters.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/adapters.ts#L11)
+[src/methods/swap/adapters.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/adapters.ts#L11)

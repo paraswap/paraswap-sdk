@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TypedObjectAbbreviated
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TypedObjectAbbreviated
 
 # Type Alias: TypedObjectAbbreviated
 
@@ -16,7 +16,7 @@
 
 ### v
 
-> **v**: [`EncodingTypes`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EncodingTypes.md)
+> **v**: [`EncodingTypes`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EncodingTypes.md)
 
 ## Defined in
 

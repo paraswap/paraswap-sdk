@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DeriveChain
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DeriveChain
 
 # Type Alias: DeriveChain\<chain, chainOverride\>
 

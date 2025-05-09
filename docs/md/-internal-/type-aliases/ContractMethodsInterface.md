@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractMethodsInterface
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractMethodsInterface
 
 # Type Alias: ContractMethodsInterface\<Abi\>
 

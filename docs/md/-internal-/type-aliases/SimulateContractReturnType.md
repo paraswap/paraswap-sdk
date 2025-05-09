@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SimulateContractReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SimulateContractReturnType
 
 # Type Alias: SimulateContractReturnType\<abi, functionName, args, chain, account, chainOverride, accountOverride, minimizedAbi, resolvedAccount\>
 

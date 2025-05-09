@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ApproveTokenForNFTOrderFunctions
+[@velora-dex/sdk](../globals.md) / ApproveTokenForNFTOrderFunctions
 
 # Type Alias: ApproveTokenForNFTOrderFunctions\<T\>
 
@@ -32,4 +32,4 @@ approving AugustusRFQ as spender for makerAsset (NFT)
 
 ## Defined in
 
-[src/methods/nftOrders/approveForOrder.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/approveForOrder.ts#L18)
+[src/methods/nftOrders/approveForOrder.ts:18](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/approveForOrder.ts#L18)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapTxInputListFields
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapTxInputListFields
 
 # Type Alias: SwapTxInputListFields
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:173](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L173)
+[src/methods/swap/swapTx.ts:173](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L173)

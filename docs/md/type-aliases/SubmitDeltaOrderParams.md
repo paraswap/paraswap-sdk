@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SubmitDeltaOrderParams
+[@velora-dex/sdk](../globals.md) / SubmitDeltaOrderParams
 
 # Type Alias: SubmitDeltaOrderParams
 
@@ -16,8 +16,8 @@
 
 #### Description
 
-designates the Order as being able to be partilly filled, as opposed to fill-or-kill
+designates the Order as being able to be partially filled, as opposed to fill-or-kill
 
 ## Defined in
 
-[src/methods/delta/index.ts:49](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/index.ts#L49)
+[src/methods/delta/index.ts:53](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/index.ts#L53)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3EthExecutionAPI
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3EthExecutionAPI
 
 # Type Alias: Web3EthExecutionAPI
 
@@ -20,7 +20,7 @@
 
 ### eth\_getProof()
 
-> **eth\_getProof**: (`address`, `storageKeys`, `blockNumber`) => [`AccountObject`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/AccountObject.md)
+> **eth\_getProof**: (`address`, `storageKeys`, `blockNumber`) => [`AccountObject`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/AccountObject.md)
 
 #### Parameters
 
@@ -32,15 +32,15 @@
 
 #### Returns
 
-[`AccountObject`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/AccountObject.md)
+[`AccountObject`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/AccountObject.md)
 
 ### eth\_pendingTransactions()
 
-> **eth\_pendingTransactions**: () => [`TransactionInfo`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionInfo.md)[]
+> **eth\_pendingTransactions**: () => [`TransactionInfo`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionInfo.md)[]
 
 #### Returns
 
-[`TransactionInfo`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionInfo.md)[]
+[`TransactionInfo`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionInfo.md)[]
 
 ### eth\_requestAccounts()
 
@@ -58,7 +58,7 @@
 
 • **address**: [`Address`](Address.md)
 
-• **typedData**: [`Eip712TypedData`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
+• **typedData**: [`Eip712TypedData`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
 
 • **useLegacy**: `true`
 
@@ -74,7 +74,7 @@
 
 • **address**: [`Address`](Address.md)
 
-• **typedData**: [`Eip712TypedData`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
+• **typedData**: [`Eip712TypedData`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
 
 • **useLegacy**: `false` \| `undefined`
 

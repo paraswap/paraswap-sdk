@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructSubmitDeltaOrder
+[@velora-dex/sdk](../globals.md) / constructSubmitDeltaOrder
 
 # Function: constructSubmitDeltaOrder()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/index.ts:62](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/index.ts#L62)
+[src/methods/delta/index.ts:66](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/index.ts#L66)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / AnyFunction
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / AnyFunction
 
 # Type Alias: AnyFunction()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/types.ts:165](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L165)
+[src/types.ts:165](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L165)

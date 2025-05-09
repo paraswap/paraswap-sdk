@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / CancelNFTOrderFunctions
+[@velora-dex/sdk](../globals.md) / CancelNFTOrderFunctions
 
 # Type Alias: CancelNFTOrderFunctions\<T\>
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/cancelOrder.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/cancelOrder.ts#L8)
+[src/methods/nftOrders/cancelOrder.ts:8](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/cancelOrder.ts#L8)

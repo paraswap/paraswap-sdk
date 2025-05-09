@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TxInputAmountsPartBuyOrSell
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TxInputAmountsPartBuyOrSell
 
 # Type Alias: TxInputAmountsPartBuyOrSell
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:57](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L57)
+[src/methods/swap/transaction.ts:57](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/transaction.ts#L57)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetBridgeInfoFunctions
+[@velora-dex/sdk](../globals.md) / GetBridgeInfoFunctions
 
 # Type Alias: GetBridgeInfoFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/getBridgeInfo.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getBridgeInfo.ts#L15)
+[src/methods/delta/getBridgeInfo.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getBridgeInfo.ts#L15)

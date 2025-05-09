@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / NFTOrderHandlers
+[@velora-dex/sdk](../globals.md) / NFTOrderHandlers
 
 # Type Alias: NFTOrderHandlers\<T\>
 
@@ -14,4 +14,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/index.ts:98](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L98)
+[src/methods/nftOrders/index.ts:98](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/index.ts#L98)

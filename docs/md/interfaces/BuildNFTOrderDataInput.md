@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildNFTOrderDataInput
+[@velora-dex/sdk](../globals.md) / BuildNFTOrderDataInput
 
 # Interface: BuildNFTOrderDataInput
 
@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L45)
+[src/methods/nftOrders/helpers/buildOrderData.ts:45](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L45)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L25)
+[src/methods/nftOrders/helpers/buildOrderData.ts:25](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L25)
 
 ***
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L28)
+[src/methods/nftOrders/helpers/buildOrderData.ts:28](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L28)
 
 ***
 
@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L41)
+[src/methods/nftOrders/helpers/buildOrderData.ts:41](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L41)
 
 ***
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L31)
+[src/methods/nftOrders/helpers/buildOrderData.ts:31](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L31)
 
 ***
 
@@ -64,7 +64,7 @@
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L29)
+[src/methods/nftOrders/helpers/buildOrderData.ts:29](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L29)
 
 ***
 
@@ -78,7 +78,7 @@ NFT Token id, will default to 0 (ERC20), provide for NFT
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L34)
+[src/methods/nftOrders/helpers/buildOrderData.ts:34](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L34)
 
 ***
 
@@ -92,7 +92,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L38)
+[src/methods/nftOrders/helpers/buildOrderData.ts:38](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L38)
 
 ***
 
@@ -102,7 +102,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L27)
+[src/methods/nftOrders/helpers/buildOrderData.ts:27](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L27)
 
 ***
 
@@ -112,7 +112,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L44)
+[src/methods/nftOrders/helpers/buildOrderData.ts:44](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L44)
 
 ***
 
@@ -122,7 +122,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:32](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L32)
+[src/methods/nftOrders/helpers/buildOrderData.ts:32](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L32)
 
 ***
 
@@ -132,7 +132,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L30)
+[src/methods/nftOrders/helpers/buildOrderData.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L30)
 
 ***
 
@@ -146,7 +146,7 @@ NFT Token id, will default to 0 (ERC20), provide for NFT
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L36)
+[src/methods/nftOrders/helpers/buildOrderData.ts:36](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L36)
 
 ***
 
@@ -160,7 +160,7 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:40](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L40)
+[src/methods/nftOrders/helpers/buildOrderData.ts:40](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L40)
 
 ***
 
@@ -170,4 +170,4 @@ Token type: ERC20 = 0, ERC1155 = 1, ERC721 = 2
 
 #### Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L26)
+[src/methods/nftOrders/helpers/buildOrderData.ts:26](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L26)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildOptionsWitWithMaxFee
+[@velora-dex/sdk](../globals.md) / BuildOptionsWitWithMaxFee
 
 # Type Alias: BuildOptionsWitWithMaxFee
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:174](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L174)
+[src/methods/swap/transaction.ts:174](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/transaction.ts#L174)

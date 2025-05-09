@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionBuilder
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionBuilder
 
 # Type Alias: TransactionBuilder()\<API\>
 
@@ -14,7 +14,7 @@
 
 ## Type Parameters
 
-• **ReturnType** = [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **ReturnType** = [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 ## Parameters
 
@@ -24,7 +24,7 @@
 
 • **options.privateKey?**: [`HexString`](HexString.md) \| `Uint8Array`
 
-• **options.transaction**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **options.transaction**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 • **options.web3Context**: [`Web3Context`](../classes/Web3Context.md)\<`API`\>
 

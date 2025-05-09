@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TypedDataField
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TypedDataField
 
 # Type Alias: TypedDataField
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/common/orders/buildOrderData.ts:13](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/common/orders/buildOrderData.ts#L13)
+[src/methods/common/orders/buildOrderData.ts:13](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/common/orders/buildOrderData.ts#L13)

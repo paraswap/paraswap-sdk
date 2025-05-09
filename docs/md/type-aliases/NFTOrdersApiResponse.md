@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / NFTOrdersApiResponse
+[@velora-dex/sdk](../globals.md) / NFTOrdersApiResponse
 
 # Type Alias: NFTOrdersApiResponse
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/helpers/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L43)
+[src/methods/nftOrders/helpers/types.ts:43](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/types.ts#L43)

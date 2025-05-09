@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / OrderData
+[@velora-dex/sdk](../globals.md) / OrderData
 
 # Type Alias: OrderData
 
@@ -44,4 +44,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L47)
+[src/methods/limitOrders/helpers/buildOrderData.ts:47](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L47)

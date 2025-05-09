@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / RequestParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / RequestParameters
 
 # Type Alias: RequestParameters
 
@@ -24,4 +24,4 @@ Any params that can be passed to fetcher. E.g. Axios fetcher can accept signal a
 
 ## Defined in
 
-[src/types.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L43)
+[src/types.ts:43](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L43)

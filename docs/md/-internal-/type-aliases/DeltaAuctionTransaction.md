@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DeltaAuctionTransaction
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DeltaAuctionTransaction
 
 # Type Alias: DeltaAuctionTransaction
 
@@ -104,4 +104,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:50](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L50)
+[src/methods/delta/helpers/types.ts:46](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/helpers/types.ts#L46)

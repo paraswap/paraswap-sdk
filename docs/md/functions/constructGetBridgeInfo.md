@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructGetBridgeInfo
+[@velora-dex/sdk](../globals.md) / constructGetBridgeInfo
 
 # Function: constructGetBridgeInfo()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/getBridgeInfo.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getBridgeInfo.ts#L19)
+[src/methods/delta/getBridgeInfo.ts:19](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getBridgeInfo.ts#L19)

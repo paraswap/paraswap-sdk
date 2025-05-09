@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FormatType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FormatType
 
 # Type Alias: FormatType
 

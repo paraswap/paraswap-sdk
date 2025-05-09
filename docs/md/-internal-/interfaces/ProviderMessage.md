@@ -1,14 +1,14 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ProviderMessage
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ProviderMessage
 
 # Interface: ProviderMessage
 
 ## Extended by
 
-- [`EthSubscription`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EthSubscription.md)
+- [`EthSubscription`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EthSubscription.md)
 
 ## Properties
 

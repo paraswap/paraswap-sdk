@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildLimitOrderFunctions
+[@velora-dex/sdk](../globals.md) / BuildLimitOrderFunctions
 
 # Type Alias: BuildLimitOrderFunctions
 
@@ -20,4 +20,4 @@ Build Orders that will be excuted through AugustusSwapper
 
 ## Defined in
 
-[src/methods/limitOrders/buildOrder.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L21)
+[src/methods/limitOrders/buildOrder.ts:21](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/buildOrder.ts#L21)

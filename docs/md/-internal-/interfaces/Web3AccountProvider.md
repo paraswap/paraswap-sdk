@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3AccountProvider
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3AccountProvider
 
 # Interface: Web3AccountProvider\<T\>
 
@@ -32,7 +32,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_wallet.d.ts:66
 
 #### Parameters
 
-• **keystore**: `string` \| [`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)
+• **keystore**: `string` \| [`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)
 
 • **password**: `string`
 

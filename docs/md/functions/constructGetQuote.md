@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructGetQuote
+[@velora-dex/sdk](../globals.md) / constructGetQuote
 
 # Function: constructGetQuote()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:84](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L84)
+[src/methods/quote/getQuote.ts:84](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/quote/getQuote.ts#L84)

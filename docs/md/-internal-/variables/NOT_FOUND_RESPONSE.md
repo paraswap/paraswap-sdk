@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / NOT\_FOUND\_RESPONSE
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / NOT\_FOUND\_RESPONSE
 
 # Variable: NOT\_FOUND\_RESPONSE
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L54)
+[src/methods/swap/balance.ts:54](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/balance.ts#L54)

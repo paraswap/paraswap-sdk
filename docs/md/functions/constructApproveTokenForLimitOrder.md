@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructApproveTokenForLimitOrder
+[@velora-dex/sdk](../globals.md) / constructApproveTokenForLimitOrder
 
 # Function: constructApproveTokenForLimitOrder()
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/approveForOrder.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/approveForOrder.ts#L17)
+[src/methods/limitOrders/approveForOrder.ts:17](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/approveForOrder.ts#L17)

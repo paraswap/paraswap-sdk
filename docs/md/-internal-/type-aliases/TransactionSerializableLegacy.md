@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionSerializableLegacy
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionSerializableLegacy
 
 # Type Alias: TransactionSerializableLegacy\<quantity, index\>
 

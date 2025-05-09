@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / EIP1474Methods
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / EIP1474Methods
 
 # Type Alias: EIP1474Methods
 
