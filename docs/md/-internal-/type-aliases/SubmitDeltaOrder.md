@@ -1,12 +1,12 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SubmitDeltaOrder
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SubmitDeltaOrder
 
 # Type Alias: SubmitDeltaOrder()
 
-> **SubmitDeltaOrder**: (`orderParams`) => `Promise`\<[`ParaswapDeltaAuction`](../../type-aliases/ParaswapDeltaAuction.md)\>
+> **SubmitDeltaOrder**: (`orderParams`) => `Promise`\<[`DeltaAuction`](../../type-aliases/DeltaAuction.md)\>
 
 ## Parameters
 
@@ -14,8 +14,8 @@
 
 ## Returns
 
-`Promise`\<[`ParaswapDeltaAuction`](../../type-aliases/ParaswapDeltaAuction.md)\>
+`Promise`\<[`DeltaAuction`](../../type-aliases/DeltaAuction.md)\>
 
 ## Defined in
 
-[src/methods/delta/index.ts:54](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/index.ts#L54)
+[src/methods/delta/index.ts:58](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/index.ts#L58)

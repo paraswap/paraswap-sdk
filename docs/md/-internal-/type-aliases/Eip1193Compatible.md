@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Eip1193Compatible
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Eip1193Compatible
 
 # Type Alias: Eip1193Compatible\<API\>
 

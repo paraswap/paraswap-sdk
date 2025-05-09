@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / MulticallReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / MulticallReturnType
 
 # Type Alias: MulticallReturnType\<contracts, allowFailure, options\>
 

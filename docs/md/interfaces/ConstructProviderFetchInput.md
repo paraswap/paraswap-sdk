@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ConstructProviderFetchInput
+[@velora-dex/sdk](../globals.md) / ConstructProviderFetchInput
 
 # Interface: ConstructProviderFetchInput\<T, D\>
 
@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
+[src/types.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L37)
 
 ***
 
@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
+[src/types.ts:39](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L39)
 
 ***
 
@@ -52,7 +52,7 @@
 
 #### Defined in
 
-[src/types.ts:127](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L127)
+[src/types.ts:127](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L127)
 
 ***
 
@@ -66,13 +66,13 @@
 
 #### Defined in
 
-[src/types.ts:68](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L68)
+[src/types.ts:68](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L68)
 
 ***
 
 ### version?
 
-> `optional` **version**: [`ParaSwapVersion`](../type-aliases/ParaSwapVersion.md)
+> `optional` **version**: [`APIVersion`](../type-aliases/APIVersion.md)
 
 #### Inherited from
 
@@ -80,4 +80,4 @@
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
+[src/types.ts:38](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L38)

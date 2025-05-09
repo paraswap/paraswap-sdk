@@ -128,15 +128,14 @@ import type {
   TxSendOverrides,
   OptimalRate,
   OptionalRate,
-  ParaSwapVersionUnion as ParaSwapVersion,
+  APIVersion,
 } from './types';
 
 import type {
   DeltaAuctionOrder,
-  ParaswapDeltaAuction,
+  DeltaAuction,
   BridgeMetadata,
   BridgeStatus,
-  BridgeInput,
   Bridge,
 } from './methods/delta/helpers/types';
 import {
@@ -145,6 +144,12 @@ import {
   constructBuildDeltaOrder,
   SignableDeltaOrderData,
 } from './methods/delta/buildDeltaOrder';
+import {
+  constructBuildCrosschainOrderBridge,
+  BuildCrosschainOrderBridgeFunctions,
+  BuildCrosschainOrderBridgeParams,
+  CrosschainOrderBridgeAndChanges,
+} from './methods/delta/buildCrosschainOrderBridge';
 import {
   constructPostDeltaOrder,
   PostDeltaOrderFunctions,
@@ -278,6 +283,7 @@ export {
   constructBuildNFTOrderTx,
   // Delta methods
   constructBuildDeltaOrder,
+  constructBuildCrosschainOrderBridge,
   constructPostDeltaOrder,
   constructSignDeltaOrder,
   constructGetDeltaContract,
@@ -353,16 +359,18 @@ export type {
   BridgePrice,
   DeltaPriceParams,
   DeltaAuctionOrder,
-  ParaswapDeltaAuction,
+  DeltaAuction,
   // bridge part of DeltaOrder
   BridgeMetadata,
   BridgeStatus,
-  BridgeInput,
   Bridge,
   BridgeInfo,
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
   SignableDeltaOrderData,
+  BuildCrosschainOrderBridgeFunctions,
+  BuildCrosschainOrderBridgeParams,
+  CrosschainOrderBridgeAndChanges,
   PostDeltaOrderFunctions,
   PostDeltaOrderParams,
   SignDeltaOrderFunctions,
@@ -396,7 +404,7 @@ export type {
   OptimalRate,
   OptionalRate,
   FetcherErrorInterface,
-  ParaSwapVersion,
+  APIVersion,
 };
 
 export { SDKConfig, constructPartialSDK } from './sdk/partial';
@@ -407,8 +415,6 @@ export {
   constructSimpleSDK,
   ProviderOptions as SimpleSDKProviderOptions,
 } from './sdk/simple';
-
-export { ParaSwap } from './legacy';
 
 // bundled methods for limitOrders
 export * from './methods/limitOrders';

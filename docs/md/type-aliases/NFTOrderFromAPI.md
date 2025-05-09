@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / NFTOrderFromAPI
+[@velora-dex/sdk](../globals.md) / NFTOrderFromAPI
 
 # Type Alias: NFTOrderFromAPI
 
@@ -76,4 +76,4 @@ transaction with the last event pertaining to the order: OrderFilled or OrderCan
 
 ## Defined in
 
-[src/methods/nftOrders/helpers/types.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L22)
+[src/methods/nftOrders/helpers/types.ts:22](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/types.ts#L22)

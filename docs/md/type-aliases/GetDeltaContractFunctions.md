@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetDeltaContractFunctions
+[@velora-dex/sdk](../globals.md) / GetDeltaContractFunctions
 
 # Type Alias: GetDeltaContractFunctions
 
@@ -20,4 +20,4 @@ returns ParaswapDelta contract address when Delta is available on current chain
 
 ## Defined in
 
-[src/methods/delta/getDeltaContract.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L11)
+[src/methods/delta/getDeltaContract.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaContract.ts#L11)

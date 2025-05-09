@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / MinAxiosResponse
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / MinAxiosResponse
 
 # Type Alias: MinAxiosResponse
 
@@ -40,4 +40,4 @@
 
 ## Defined in
 
-[src/helpers/misc.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L35)
+[src/helpers/misc.ts:35](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L35)

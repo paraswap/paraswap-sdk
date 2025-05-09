@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructFetchFetcher
+[@velora-dex/sdk](../globals.md) / constructFetchFetcher
 
 # Function: constructFetchFetcher()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/helpers/fetchers/fetch.ts:8](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/fetchers/fetch.ts#L8)
+[src/helpers/fetchers/fetch.ts:8](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/fetchers/fetch.ts#L8)

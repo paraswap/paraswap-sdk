@@ -170,7 +170,7 @@ const expectTxParamsScheme = expect.objectContaining({
 });
 
 describe('Limit Orders', () => {
-  let paraSwap: BuildLimitOrderFunctions &
+  let sdk: BuildLimitOrderFunctions &
     SignLimitOrderFunctions &
     GetLimitOrdersContractFunctions &
     PostLimitOrderFunctions &
@@ -383,7 +383,7 @@ describe('Limit Orders', () => {
       maker: senderAddress,
     };
 
-    paraSwap = constructPartialSDK<
+    sdk = constructPartialSDK<
       SDKConfig<ethers.ContractTransaction>,
       [
         typeof constructBuildLimitOrder,
@@ -417,9 +417,7 @@ describe('Limit Orders', () => {
       constructBuildTx
     );
 
-    AugustusRFQ = AugustusRFQFactory.attach(
-      await paraSwap.getLimitOrdersContract()
-    );
+    AugustusRFQ = AugustusRFQFactory.attach(await sdk.getLimitOrdersContract());
     // AugustusRFQ = await AugustusRFQFactory.deploy();
     // await AugustusRFQ.deployTransaction.wait();
   });
@@ -431,7 +429,7 @@ describe('Limit Orders', () => {
   // });
 
   test('getLimitOrdersContract', async () => {
-    const augustusRFQAddress = await paraSwap.getLimitOrdersContract();
+    const augustusRFQAddress = await sdk.getLimitOrdersContract();
 
     expect(augustusRFQAddress).toMatchInlineSnapshot(
       `"0xe92b586627ccA7a83dC919cc7127196d70f55a06"`
@@ -439,7 +437,7 @@ describe('Limit Orders', () => {
   });
 
   test('buildLimitOrder', async () => {
-    const signableOrderData = await paraSwap.buildLimitOrder(orderInput);
+    const signableOrderData = await sdk.buildLimitOrder(orderInput);
 
     // taker address that would be checked as part of nonceAndMeta in Augustus
     const takerFromMeta = deriveTakerFromNonceAndTaker(
@@ -463,7 +461,7 @@ describe('Limit Orders', () => {
       ...orderInput,
       taker: takerV5.address,
     };
-    const signableOrderData = await paraSwap.buildLimitOrder({
+    const signableOrderData = await sdk.buildLimitOrder({
       ...orderInput,
       taker: takerV5.address,
     });
@@ -476,7 +474,7 @@ describe('Limit Orders', () => {
     // taker in nonceAndTaker = p2pOrderInput.taker
     expect(metaAddress.toLowerCase()).toBe(p2pOrderInput.taker.toLowerCase());
 
-    const AugustusAddress = await paraSwap.getAugustusSwapper();
+    const AugustusAddress = await sdk.getAugustusSwapper();
     // taker in AugustusRFQ = Augustus
     expect(signableOrderData.data.taker.toLowerCase()).toBe(
       AugustusAddress.toLowerCase()
@@ -505,13 +503,13 @@ describe('Limit Orders', () => {
       takerAmount,
     };
 
-    const signableOrderData = await paraSwap.buildLimitOrder(order);
+    const signableOrderData = await sdk.buildLimitOrder(order);
 
-    const signature = await paraSwap.signLimitOrder(signableOrderData);
+    const signature = await sdk.signLimitOrder(signableOrderData);
 
     const orderWithSignature = { ...signableOrderData.data, signature };
 
-    const swapAndLOPayload = await paraSwap.buildLimitOrderTx(
+    const swapAndLOPayload = await sdk.buildLimitOrderTx(
       {
         srcDecimals: 18,
         destDecimals: 18,
@@ -1041,11 +1039,11 @@ describe('Limit Orders', () => {
     // token to swap for destToken prior to filling Order
     const srcToken = DAI;
 
-    const signableOrderData = await paraSwap.buildLimitOrder(order);
+    const signableOrderData = await sdk.buildLimitOrder(order);
 
-    const signature = await paraSwap.signLimitOrder(signableOrderData);
+    const signature = await sdk.signLimitOrder(signableOrderData);
 
-    const priceRoute = await paraSwap.getLimitOrdersRate(
+    const priceRoute = await sdk.getLimitOrdersRate(
       {
         srcToken,
         destToken,
@@ -1083,7 +1081,7 @@ describe('Limit Orders', () => {
     // @CONSIDER this may change
     expect(stablePriceRouteMatch).toMatchSnapshot();
 
-    const swapTxPayload = await paraSwap.buildTx(
+    const swapTxPayload = await sdk.buildTx(
       {
         srcToken,
         destToken,
@@ -1115,7 +1113,7 @@ describe('Limit Orders', () => {
 
     const swappableOrder = { ...signableOrderData.data, signature };
 
-    const swapAndLOPayload = await paraSwap.buildSwapAndLimitOrderTx(
+    const swapAndLOPayload = await sdk.buildSwapAndLimitOrderTx(
       {
         priceRoute,
         userAddress: senderAddress,
@@ -1202,7 +1200,7 @@ describe('Limit Orders', () => {
   );
 
   test('getLimitOrders', async () => {
-    const paraSwap = constructPartialSDK(
+    const sdk = constructPartialSDK(
       {
         chainId: 137,
         fetcher: axiosFetcher,
@@ -1218,7 +1216,7 @@ describe('Limit Orders', () => {
       '0x005c10e295af191364c7b47df72c0ca71b75b8f827231b352c4199ae109d4234',
     ];
 
-    const { orders } = await paraSwap.getLimitOrders({
+    const { orders } = await sdk.getLimitOrders({
       maker: account,
       type: 'LIMIT',
     });
@@ -1240,12 +1238,12 @@ describe('Limit Orders', () => {
     // @TODO breaks with 'maker' doesn't have sufficient balance for this limit order
     // because of API balance check
     // need to use a fixed address through a PK
-    const signableOrderData = await paraSwap.buildLimitOrder({
+    const signableOrderData = await sdk.buildLimitOrder({
       ...orderInput,
       nonce: 2,
     });
 
-    const signature = await paraSwap.signLimitOrder(signableOrderData);
+    const signature = await sdk.signLimitOrder(signableOrderData);
     // expect(signature).toMatchInlineSnapshot(
     //   `"0x3aa58967f07b7752c8220191ebd80e9e00f95212b2e9f3ee61f9e92ebbeeffab397833627056ade28ae2726d59534a30ee3099731aa1b41176e7e7bb0f8b28e71b"`
     // );
@@ -1255,7 +1253,7 @@ describe('Limit Orders', () => {
       signature,
     };
 
-    const newOrder = await paraSwap.postLimitOrder(orderWithSignature);
+    const newOrder = await sdk.postLimitOrder(orderWithSignature);
 
     const recoveredAddress = ethers.utils.recoverAddress(
       newOrder.orderHash,
@@ -1625,7 +1623,7 @@ describe('Limit Orders', () => {
       taker.address.toLowerCase()
     );
 
-    const AugustusRFQAddress = await paraSwap.getLimitOrdersContract();
+    const AugustusRFQAddress = await sdk.getLimitOrdersContract();
 
     const permitDeadline = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
 
@@ -1844,7 +1842,7 @@ describe('Limit Orders', () => {
       taker.address.toLowerCase()
     );
 
-    const AugustusRFQAddress = await paraSwap.getLimitOrdersContract();
+    const AugustusRFQAddress = await sdk.getLimitOrdersContract();
 
     const permitExpiry = Math.ceil((Date.now() + 1000 * 60 * 60) / 1000);
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildOrderDataInput
+[@velora-dex/sdk](../globals.md) / BuildOrderDataInput
 
 # Interface: BuildOrderDataInput
 
@@ -10,11 +10,11 @@
 
 ### AppVersion
 
-> **AppVersion**: [`ParaSwapVersion`](../type-aliases/ParaSwapVersion.md)
+> **AppVersion**: [`APIVersion`](../type-aliases/APIVersion.md)
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L38)
+[src/methods/limitOrders/helpers/buildOrderData.ts:38](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L38)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
+[src/methods/limitOrders/helpers/buildOrderData.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L37)
 
 ***
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L22)
+[src/methods/limitOrders/helpers/buildOrderData.ts:22](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L22)
 
 ***
 
@@ -48,7 +48,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:35](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L35)
+[src/methods/limitOrders/helpers/buildOrderData.ts:35](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L35)
 
 ***
 
@@ -58,7 +58,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L25)
+[src/methods/limitOrders/helpers/buildOrderData.ts:25](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L25)
 
 ***
 
@@ -68,7 +68,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L30)
+[src/methods/limitOrders/helpers/buildOrderData.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L30)
 
 ***
 
@@ -78,7 +78,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L28)
+[src/methods/limitOrders/helpers/buildOrderData.ts:28](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L28)
 
 ***
 
@@ -88,7 +88,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L26)
+[src/methods/limitOrders/helpers/buildOrderData.ts:26](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L26)
 
 ***
 
@@ -98,7 +98,7 @@ contract executor (Augustus or similar) that is allowed to execute the order, go
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L24)
+[src/methods/limitOrders/helpers/buildOrderData.ts:24](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L24)
 
 ***
 
@@ -112,7 +112,7 @@ actual user taker which will go into nonceAndMeta
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:33](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L33)
+[src/methods/limitOrders/helpers/buildOrderData.ts:33](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L33)
 
 ***
 
@@ -122,7 +122,7 @@ actual user taker which will go into nonceAndMeta
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:29](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L29)
+[src/methods/limitOrders/helpers/buildOrderData.ts:29](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L29)
 
 ***
 
@@ -132,7 +132,7 @@ actual user taker which will go into nonceAndMeta
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L27)
+[src/methods/limitOrders/helpers/buildOrderData.ts:27](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L27)
 
 ***
 
@@ -142,4 +142,4 @@ actual user taker which will go into nonceAndMeta
 
 #### Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L23)
+[src/methods/limitOrders/helpers/buildOrderData.ts:23](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L23)

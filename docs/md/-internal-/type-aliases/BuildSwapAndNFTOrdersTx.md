@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildSwapAndNFTOrdersTx
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildSwapAndNFTOrdersTx
 
 # Type Alias: BuildSwapAndNFTOrdersTx()
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/transaction.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/transaction.ts#L27)
+[src/methods/nftOrders/transaction.ts:27](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/transaction.ts#L27)

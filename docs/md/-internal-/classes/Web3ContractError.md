@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3ContractError
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3ContractError
 
 # Class: Web3ContractError
 
@@ -27,7 +27,7 @@ Base class for Web3 errors.
 
 • **message**: `string`
 
-• **receipt?**: [`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
+• **receipt?**: [`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
 
 #### Returns
 
@@ -101,7 +101,7 @@ node\_modules/web3-errors/lib/commonjs/web3\_error\_base.d.ts:6
 
 ### receipt?
 
-> `optional` **receipt**: [`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
+> `optional` **receipt**: [`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
 
 #### Defined in
 

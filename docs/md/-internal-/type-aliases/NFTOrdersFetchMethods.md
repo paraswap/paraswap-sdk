@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / NFTOrdersFetchMethods
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / NFTOrdersFetchMethods
 
 # Type Alias: NFTOrdersFetchMethods
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:158](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L158)
+[src/sdk/simple.ts:162](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L162)

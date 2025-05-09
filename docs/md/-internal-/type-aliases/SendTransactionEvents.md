@@ -1,12 +1,12 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SendTransactionEvents
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SendTransactionEvents
 
 # Type Alias: SendTransactionEvents\<ReturnFormat\>
 
-> **SendTransactionEvents**\<`ReturnFormat`\>: [`SendTransactionEventsBase`](SendTransactionEventsBase.md)\<`ReturnFormat`, [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)\>
+> **SendTransactionEvents**\<`ReturnFormat`\>: [`SendTransactionEventsBase`](SendTransactionEventsBase.md)\<`ReturnFormat`, [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)\>
 
 ## Type Parameters
 

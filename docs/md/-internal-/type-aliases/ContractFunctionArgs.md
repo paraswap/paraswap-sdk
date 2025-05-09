@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractFunctionArgs
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ContractFunctionArgs
 
 # Type Alias: ContractFunctionArgs\<abi, mutability, functionName\>
 

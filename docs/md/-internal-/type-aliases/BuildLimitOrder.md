@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildLimitOrder
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BuildLimitOrder
 
 # Type Alias: BuildLimitOrder()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/buildOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L16)
+[src/methods/limitOrders/buildOrder.ts:16](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/buildOrder.ts#L16)

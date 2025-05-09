@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestLegacy
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestLegacy
 
 # Type Alias: TransactionRequestLegacy\<quantity, index, type\>
 

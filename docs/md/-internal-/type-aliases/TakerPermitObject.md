@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TakerPermitObject
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TakerPermitObject
 
 # Type Alias: TakerPermitObject
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/fillOrderDirectly.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L37)
+[src/methods/limitOrders/fillOrderDirectly.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/fillOrderDirectly.ts#L37)

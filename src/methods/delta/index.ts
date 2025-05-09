@@ -1,5 +1,5 @@
 import type { ConstructProviderFetchInput } from '../../types';
-import type { ParaswapDeltaAuction } from './helpers/types';
+import type { DeltaAuction } from './helpers/types';
 import {
   BuildDeltaOrderDataParams,
   BuildDeltaOrderFunctions,
@@ -45,15 +45,19 @@ import {
   constructIsTokenSupportedInDelta,
   IsTokenSupportedInDeltaFunctions,
 } from './isTokenSupportedInDelta';
+import {
+  BuildCrosschainOrderBridgeFunctions,
+  constructBuildCrosschainOrderBridge,
+} from './buildCrosschainOrderBridge';
 
 export type SubmitDeltaOrderParams = BuildDeltaOrderDataParams & {
-  /** @description designates the Order as being able to be partilly filled, as opposed to fill-or-kill */
+  /** @description designates the Order as being able to be partially filled, as opposed to fill-or-kill */
   partiallyFillable?: boolean;
 };
 
 type SubmitDeltaOrder = (
   orderParams: SubmitDeltaOrderParams
-) => Promise<ParaswapDeltaAuction>;
+) => Promise<DeltaAuction>;
 
 export type SubmitDeltaOrderFuncs = {
   submitDeltaOrder: SubmitDeltaOrder;
@@ -86,6 +90,7 @@ export const constructSubmitDeltaOrder = (
 export type DeltaOrderHandlers<T> = SubmitDeltaOrderFuncs &
   ApproveTokenForDeltaFunctions<T> &
   BuildDeltaOrderFunctions &
+  BuildCrosschainOrderBridgeFunctions &
   GetDeltaOrdersFunctions &
   GetDeltaPriceFunctions &
   GetDeltaContractFunctions &
@@ -116,6 +121,9 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
 
   const deltaOrdersSubmit = constructSubmitDeltaOrder(options);
 
+  const buildCrosschainOrderBridge =
+    constructBuildCrosschainOrderBridge(options);
+
   const deltaOrdersBuild = constructBuildDeltaOrder(options);
   const deltaOrdersSign = constructSignDeltaOrder(options);
   const deltaOrdersPost = constructPostDeltaOrder(options);
@@ -133,5 +141,6 @@ export const constructAllDeltaOrdersHandlers = <TxResponse>(
     ...deltaOrdersBuild,
     ...deltaOrdersSign,
     ...deltaOrdersPost,
+    ...buildCrosschainOrderBridge,
   };
 };

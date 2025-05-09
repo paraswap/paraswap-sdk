@@ -27,7 +27,7 @@ import { assert } from 'ts-essentials';
 
 export interface EthersV5ProviderDeps {
   ethersProviderOrSigner: BaseProvider | Signer;
-  EthersContract: typeof EthersV5Contract; // passing Contract in allows not to include ethers as dependency even when using legacy ParaSwap class
+  EthersContract: typeof EthersV5Contract; // passing Contract in allows not to include ethers as dependency
 }
 
 export const constructEthersV5ContractCaller = (

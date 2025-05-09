@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructAllLimitOrdersHandlers
+[@velora-dex/sdk](../globals.md) / constructAllLimitOrdersHandlers
 
 # Function: constructAllLimitOrdersHandlers()
 
@@ -26,4 +26,4 @@ construct SDK with every LimitOrders-related method, fetching from API and contr
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:121](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L121)
+[src/methods/limitOrders/index.ts:121](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/index.ts#L121)

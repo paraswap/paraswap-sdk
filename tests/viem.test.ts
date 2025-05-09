@@ -49,7 +49,7 @@ const viemWalletClient = createWalletClient({
   transport: custom(HardhatProvider),
 });
 
-describe('ParaSwap SDK: contract calling methods', () => {
+describe('SDK with viem: contract calling methods', () => {
   let SDKwithEthers: SimpleSDK;
   let SDKwithViem: SimpleSDK;
 

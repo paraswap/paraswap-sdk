@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherOptions
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherOptions
 
 # Type Alias: FetcherOptions
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L192)
+[src/sdk/simple.ts:197](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L197)

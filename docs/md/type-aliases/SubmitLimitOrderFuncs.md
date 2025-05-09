@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SubmitLimitOrderFuncs
+[@velora-dex/sdk](../globals.md) / SubmitLimitOrderFuncs
 
 # Type Alias: SubmitLimitOrderFuncs
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/index.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/index.ts#L48)
+[src/methods/limitOrders/index.ts:48](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/index.ts#L48)

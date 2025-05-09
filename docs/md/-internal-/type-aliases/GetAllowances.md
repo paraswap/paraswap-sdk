@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetAllowances
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetAllowances
 
 # Type Alias: GetAllowances()
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/swap/balance.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L30)
+[src/methods/swap/balance.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/balance.ts#L30)

@@ -1,5 +1,3 @@
-import type { MarkOptional } from 'ts-essentials';
-
 export type DeltaAuctionOrder = {
   /** @description The address of the order owner */
   owner: string;
@@ -36,8 +34,6 @@ export type Bridge = {
   multiCallHandler: string;
 };
 
-export type BridgeInput = MarkOptional<Bridge, 'multiCallHandler'>;
-
 type DeltaAuctionStatus =
   | 'NOT_STARTED'
   | 'POSTED'
@@ -73,7 +69,7 @@ type DeltaAuctionTransaction = {
   auctionId: string;
 };
 
-export type ParaswapDeltaAuction = {
+export type DeltaAuction = {
   id: string;
   deltaVersion: string; // 1.0 or 2.0 currently
   user: string;

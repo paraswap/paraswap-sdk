@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / LimitOrderToSend
+[@velora-dex/sdk](../globals.md) / LimitOrderToSend
 
 # Type Alias: LimitOrderToSend
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/types.ts:7](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L7)
+[src/methods/limitOrders/helpers/types.ts:7](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/types.ts#L7)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / MinBuildLimitOrderTxInput
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / MinBuildLimitOrderTxInput
 
 # Type Alias: MinBuildLimitOrderTxInput
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/transaction.ts:34](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L34)
+[src/methods/limitOrders/transaction.ts:34](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/transaction.ts#L34)

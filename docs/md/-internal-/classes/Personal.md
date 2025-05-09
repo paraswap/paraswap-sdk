@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Personal
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Personal
 
 # Class: Personal
 
@@ -27,7 +27,7 @@ console.log(await personal.getAccounts());
 
 ## Extends
 
-- [`Web3Context`](Web3Context.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
+- [`Web3Context`](Web3Context.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
 
 ## Constructors
 
@@ -37,7 +37,7 @@ console.log(await personal.getAccounts());
 
 #### Parameters
 
-• **providerOrContext?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\> \| [`Web3ContextInitOptions`](../type-aliases/Web3ContextInitOptions.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
+• **providerOrContext?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\> \| [`Web3ContextInitOptions`](../type-aliases/Web3ContextInitOptions.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
 
 #### Returns
 
@@ -69,7 +69,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:51
 
 ### \_requestManager
 
-> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
+> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
 
 #### Inherited from
 
@@ -83,7 +83,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:49
 
 ### \_subscriptionManager
 
-> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
+> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
 
 #### Inherited from
 
@@ -1525,11 +1525,11 @@ node\_modules/web3-eth-personal/lib/commonjs/personal.d.ts:46
 
 ### getContextObject()
 
-> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
+> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
 
 #### Returns
 
-[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
+[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md), `any`\>
 
 #### Inherited from
 
@@ -1852,11 +1852,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:73
 
 ### removeAllListeners()
 
-> **removeAllListeners**(): [`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+> **removeAllListeners**(): [`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Returns
 
-[`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+[`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Inherited from
 
@@ -1877,7 +1877,7 @@ This method sends a transaction over the management API.
 
 #### Parameters
 
-• **tx**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **tx**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 The transaction options
 
@@ -1968,7 +1968,7 @@ Will set the provider.
 
 #### Parameters
 
-• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
+• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
 
 [SupportedProviders](../type-aliases/SupportedProviders.md) The provider to set
 
@@ -1994,7 +1994,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:155
 
 #### Parameters
 
-• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`EthPersonalAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
+• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`EthPersonalAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/EthPersonalAPI.md)\>
 
 #### Returns
 
@@ -2064,7 +2064,7 @@ Signs a transaction. This account needs to be unlocked.
 
 #### Parameters
 
-• **tx**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **tx**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 The transaction data to sign. See sendTransaction  for more information.
 

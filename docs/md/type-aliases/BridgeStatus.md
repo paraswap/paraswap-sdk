@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BridgeStatus
+[@velora-dex/sdk](../globals.md) / BridgeStatus
 
 # Type Alias: BridgeStatus
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:114](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L114)
+[src/methods/delta/helpers/types.ts:110](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/helpers/types.ts#L110)

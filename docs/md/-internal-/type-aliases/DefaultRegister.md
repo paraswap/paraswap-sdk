@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DefaultRegister
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DefaultRegister
 
 # Type Alias: DefaultRegister
 
@@ -132,7 +132,7 @@ Use `intType` instead
 
 > **strictAbiType**: `false`
 
-When set, validates [AbiParameter](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)'s `type` against [AbiType](AbiType.md)
+When set, validates [AbiParameter](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)'s `type` against [AbiType](AbiType.md)
 
 ### ~~StrictAbiType~~
 

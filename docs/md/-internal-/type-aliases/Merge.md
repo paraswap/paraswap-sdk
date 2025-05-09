@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Merge
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Merge
 
 # Type Alias: Merge\<object1, object2\>
 

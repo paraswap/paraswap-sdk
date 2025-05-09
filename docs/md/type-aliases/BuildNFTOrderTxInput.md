@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildNFTOrderTxInput
+[@velora-dex/sdk](../globals.md) / BuildNFTOrderTxInput
 
 # Type Alias: BuildNFTOrderTxInput
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:121](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L121)
+[src/methods/swap/transaction.ts:121](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/transaction.ts#L121)

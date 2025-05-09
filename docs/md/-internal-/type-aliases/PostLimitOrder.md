@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / PostLimitOrder
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / PostLimitOrder
 
 # Type Alias: PostLimitOrder()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/postOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/postOrder.ts#L11)
+[src/methods/limitOrders/postOrder.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/postOrder.ts#L11)

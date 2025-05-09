@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FeeHistory
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FeeHistory
 
 # Type Alias: FeeHistory\<quantity\>
 

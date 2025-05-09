@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherErrorConstructorInput
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherErrorConstructorInput
 
 # Type Alias: FetcherErrorConstructorInput
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/helpers/misc.ts:43](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L43)
+[src/helpers/misc.ts:43](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L43)

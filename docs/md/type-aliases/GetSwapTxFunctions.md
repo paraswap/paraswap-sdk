@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetSwapTxFunctions
+[@velora-dex/sdk](../globals.md) / GetSwapTxFunctions
 
 # Type Alias: GetSwapTxFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:221](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L221)
+[src/methods/swap/swapTx.ts:221](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L221)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SimpleSDKProviderOptions
+[@velora-dex/sdk](../globals.md) / SimpleSDKProviderOptions
 
 # Type Alias: SimpleSDKProviderOptions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:203](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L203)
+[src/sdk/simple.ts:208](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L208)

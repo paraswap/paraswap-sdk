@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRate
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRate
 
 # Type Alias: GetRate()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/swap/rates.ts:197](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L197)
+[src/methods/swap/rates.ts:186](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/rates.ts#L186)

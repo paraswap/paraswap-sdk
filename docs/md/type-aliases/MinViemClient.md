@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / MinViemClient
+[@velora-dex/sdk](../globals.md) / MinViemClient
 
 # Type Alias: MinViemClient
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/helpers/providers/viem.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/viem.ts#L24)
+[src/helpers/providers/viem.ts:24](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/viem.ts#L24)

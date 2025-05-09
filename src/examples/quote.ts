@@ -36,7 +36,7 @@ const quoteSDK = constructPartialSDK(
 );
 
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
-const PSP_TOKEN = '0xcafe001067cdef266afb7eb5a286dcfd277f3de5';
+const USDC_TOKEN = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 
 /**
  * mode='delta' example
@@ -46,7 +46,7 @@ async function deltaQuote() {
 
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     amount,
     userAddress: account,
     srcDecimals: 18,
@@ -75,7 +75,7 @@ async function marketQuote() {
 
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     amount,
     userAddress: account,
     srcDecimals: 18,
@@ -92,7 +92,7 @@ async function marketQuote() {
 
   const txParams = await quoteSDK.buildTx({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     srcAmount: amount,
     slippage: 250, // 2.5%
     priceRoute: quote.market,
@@ -111,7 +111,7 @@ async function allQuote() {
 
   const quote = await quoteSDK.getQuote({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     amount,
     userAddress: account,
     srcDecimals: 18,
@@ -164,7 +164,7 @@ async function handleDeltaQuote({
     // beneficiary: anotherAccount, // if need to send destToken to another account
     // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     srcAmount: amount,
     destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
   });
@@ -192,7 +192,7 @@ async function handleMarketQuote({
 
   const txParams = await quoteSDK.buildTx({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     srcAmount: amount,
     slippage: 250, // 2.5%
     priceRoute,

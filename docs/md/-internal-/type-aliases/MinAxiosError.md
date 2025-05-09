@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / MinAxiosError
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / MinAxiosError
 
 # Type Alias: MinAxiosError
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/helpers/misc.ts:28](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/misc.ts#L28)
+[src/helpers/misc.ts:28](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/misc.ts#L28)

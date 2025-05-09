@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRequiredAllowanceParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetRequiredAllowanceParams
 
 # Type Alias: GetRequiredAllowanceParams
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:36](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L36)
+[src/methods/limitOrders/getOrders.ts:36](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/getOrders.ts#L36)

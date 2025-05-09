@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Wallet
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Wallet
 
 # Class: Wallet\<T\>
 
@@ -551,7 +551,7 @@ Decrypts keystore v3 objects.
 
 #### Parameters
 
-• **encryptedWallets**: [`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]
+• **encryptedWallets**: [`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]
 
 An array of encrypted keystore v3 objects to decrypt
 
@@ -647,7 +647,7 @@ node\_modules/web3-eth-accounts/lib/commonjs/wallet.d.ts:246
 
 ### encrypt()
 
-> **encrypt**(`password`, `options`?): `Promise`\<[`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]\>
+> **encrypt**(`password`, `options`?): `Promise`\<[`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]\>
 
 Encrypts all wallet accounts to an array of encrypted keystore v3 objects.
 
@@ -663,7 +663,7 @@ encryption options
 
 #### Returns
 
-`Promise`\<[`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]\>
+`Promise`\<[`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)[]\>
 
 An array of the encrypted keystore v3.
 

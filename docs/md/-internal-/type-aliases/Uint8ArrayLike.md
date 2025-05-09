@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Uint8ArrayLike
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Uint8ArrayLike
 
 # Type Alias: Uint8ArrayLike
 

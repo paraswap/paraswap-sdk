@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildLimitOrderInput
+[@velora-dex/sdk](../globals.md) / BuildLimitOrderInput
 
 # Type Alias: BuildLimitOrderInput
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/buildOrder.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/buildOrder.ts#L11)
+[src/methods/limitOrders/buildOrder.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/buildOrder.ts#L11)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ViemTxParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ViemTxParams
 
 # Type Alias: ViemTxParams
 
@@ -32,4 +32,4 @@
 
 ## Defined in
 
-[src/helpers/providers/viem.ts:150](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/viem.ts#L150)
+[src/helpers/providers/viem.ts:150](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/viem.ts#L150)

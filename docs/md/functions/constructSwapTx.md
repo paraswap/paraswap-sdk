@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructSwapTx
+[@velora-dex/sdk](../globals.md) / constructSwapTx
 
 # Function: constructSwapTx()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:225](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L225)
+[src/methods/swap/swapTx.ts:225](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L225)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherInputBase
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FetcherInputBase
 
 # Interface: FetcherInputBase\<URL\>
 
@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L47)
+[src/types.ts:47](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L47)
 
 ***
 
@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/types.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L48)
+[src/types.ts:48](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L48)
 
 ***
 
@@ -43,4 +43,4 @@
 
 #### Defined in
 
-[src/types.ts:46](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L46)
+[src/types.ts:46](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L46)

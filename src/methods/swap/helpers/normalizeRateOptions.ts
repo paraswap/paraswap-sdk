@@ -18,7 +18,6 @@ export function normalizeRateOptions<
   T extends { options?: Partial<O> }
 >({ options = {}, ...restInput }: T): NormalizedRateOptions<O, T> {
   const {
-    excludePricingMethods,
     excludeContractMethods,
     includeContractMethods,
     partner,
@@ -32,21 +31,18 @@ export function normalizeRateOptions<
     _includeDEXS,
     _excludeDEXS,
     _excludePools,
-    _excludePricingMethods,
     _excludeContractMethods,
     _includeContractMethods,
   ] = [
     includeDEXS,
     excludeDEXS,
     excludePools,
-    excludePricingMethods,
     excludeContractMethods,
     includeContractMethods,
     //                                                                                              no "" empty string
   ].map((array) => array?.join(',') || undefined);
 
   const transformed: Partial<Record<StringArrKeys | 'partner', string>> = {
-    excludePricingMethods: _excludePricingMethods,
     excludeContractMethods: _excludeContractMethods,
     includeContractMethods: _includeContractMethods,
     partner,

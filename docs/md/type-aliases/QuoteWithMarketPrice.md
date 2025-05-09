@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / QuoteWithMarketPrice
+[@velora-dex/sdk](../globals.md) / QuoteWithMarketPrice
 
 # Type Alias: QuoteWithMarketPrice
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:45](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L45)
+[src/methods/quote/getQuote.ts:45](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/quote/getQuote.ts#L45)

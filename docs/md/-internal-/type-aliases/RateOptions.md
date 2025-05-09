@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / RateOptions
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / RateOptions
 
 # Type Alias: RateOptions
 
@@ -45,10 +45,6 @@ Specify that methods without fee support should be excluded from the price route
 ### excludePools?
 
 > `optional` **excludePools**: `string`[]
-
-### excludePricingMethods?
-
-> `optional` **excludePricingMethods**: [`PricingMethodByName`](PricingMethodByName.md)[]
 
 ### excludeRFQ?
 
@@ -112,4 +108,4 @@ If the source token is a tax token, you should specify the tax amount in BPS.
 
 ## Defined in
 
-[src/methods/swap/rates.ts:155](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/rates.ts#L155)
+[src/methods/swap/rates.ts:145](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/rates.ts#L145)

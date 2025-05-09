@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Contract
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Contract
 
 # Class: Contract\<Abi\>
 
@@ -414,7 +414,7 @@ node\_modules/web3-core/lib/commonjs/web3\_config.d.ts:46
 
 ### options
 
-> `readonly` **options**: [`ContractOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
+> `readonly` **options**: [`ContractOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
 
 The options `object` for the contract instance. `from`, `gas` and `gasPrice` are used as fallback values when sending transactions.
 
@@ -1125,7 +1125,7 @@ node\_modules/web3-core/lib/commonjs/web3\_config.d.ts:178
 
 #### Get Signature
 
-> **get** **events**(): [`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<`Abi`, [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>\>
+> **get** **events**(): [`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<`Abi`, [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>\>
 
 Subscribe to an event.
 
@@ -1141,7 +1141,7 @@ await myContract.events.allEvents([options])
 
 ##### Returns
 
-[`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<`Abi`, [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>\>
+[`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<`Abi`, [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\>\>
 
 - When individual event is accessed will returns ContractBoundEvent object
 
@@ -1820,7 +1820,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:384
 
 #### Type Parameters
 
-• **Options** *extends* [`PayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md) \| [`NonPayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/NonPayableCallOptions.md)
+• **Options** *extends* [`PayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md) \| [`NonPayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/NonPayableCallOptions.md)
 
 • **ReturnFormat** *extends* [`DataFormat`](../type-aliases/DataFormat.md)
 
@@ -1828,9 +1828,9 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:384
 
 • **\_\_namedParameters**
 
-• **\_\_namedParameters.abi**: [`AbiFunctionFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
+• **\_\_namedParameters.abi**: [`AbiFunctionFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
 
-• **\_\_namedParameters.contractOptions?**: [`ContractOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
+• **\_\_namedParameters.contractOptions?**: [`ContractOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
 
 • **\_\_namedParameters.options?**: `Options`
 
@@ -1850,7 +1850,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:525
 
 ### decodeMethodData()
 
-> **decodeMethodData**(`data`): [`DecodedParams`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md) & `object`
+> **decodeMethodData**(`data`): [`DecodedParams`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md) & `object`
 
 #### Parameters
 
@@ -1858,7 +1858,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:525
 
 #### Returns
 
-[`DecodedParams`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md) & `object`
+[`DecodedParams`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md) & `object`
 
 #### Defined in
 
@@ -1944,7 +1944,7 @@ myContract.deploy({
 
 • **deployOptions?**
 
-• **deployOptions.arguments?**: [`ContractConstructorArgs`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`Abi`\>
+• **deployOptions.arguments?**: [`ContractConstructorArgs`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`Abi`\>
 
 The arguments which get passed to the constructor on deployment.
 
@@ -2089,7 +2089,7 @@ node\_modules/web3-core/lib/commonjs/web3\_event\_emitter.d.ts:22
 
 #### getPastEvents(returnFormat)
 
-> **getPastEvents**\<`ReturnFormat`\>(`returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+> **getPastEvents**\<`ReturnFormat`\>(`returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 Gets past events for this contract.
 
@@ -2135,7 +2135,7 @@ Return format
 
 ##### Returns
 
-`Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+`Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 - An array with the past event `Objects`, matching the given event name and filter.
 
@@ -2145,7 +2145,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:511
 
 #### getPastEvents(eventName, returnFormat)
 
-> **getPastEvents**\<`ReturnFormat`\>(`eventName`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+> **getPastEvents**\<`ReturnFormat`\>(`eventName`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Type Parameters
 
@@ -2153,13 +2153,13 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:511
 
 ##### Parameters
 
-• **eventName**: `"allEvents"` \| keyof [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> \| `"ALLEVENTS"`
+• **eventName**: `"allEvents"` \| keyof [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> \| `"ALLEVENTS"`
 
 • **returnFormat?**: `ReturnFormat`
 
 ##### Returns
 
-`Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+`Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Defined in
 
@@ -2167,7 +2167,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:512
 
 #### getPastEvents(filter, returnFormat)
 
-> **getPastEvents**\<`ReturnFormat`\>(`filter`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+> **getPastEvents**\<`ReturnFormat`\>(`filter`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Type Parameters
 
@@ -2181,7 +2181,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:512
 
 ##### Returns
 
-`Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+`Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Defined in
 
@@ -2189,7 +2189,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:513
 
 #### getPastEvents(eventName, filter, returnFormat)
 
-> **getPastEvents**\<`ReturnFormat`\>(`eventName`, `filter`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+> **getPastEvents**\<`ReturnFormat`\>(`eventName`, `filter`, `returnFormat`?): `Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Type Parameters
 
@@ -2197,7 +2197,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:513
 
 ##### Parameters
 
-• **eventName**: `"allEvents"` \| keyof [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> \| `"ALLEVENTS"`
+• **eventName**: `"allEvents"` \| keyof [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<`Abi`\> \| `"ALLEVENTS"`
 
 • **filter**: [`Omit`](../type-aliases/Omit.md)\<[`Filter`](../interfaces/Filter.md), `"address"`\>
 
@@ -2205,7 +2205,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract.d.ts:513
 
 ##### Returns
 
-`Promise`\<(`string` \| [`EventLog`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
+`Promise`\<(`string` \| [`EventLog`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EventLog.md))[]\>
 
 ##### Defined in
 
@@ -2435,11 +2435,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:73
 
 ### removeAllListeners()
 
-> **removeAllListeners**(): [`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+> **removeAllListeners**(): [`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Returns
 
-[`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+[`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Implementation of
 

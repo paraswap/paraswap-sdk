@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignableOrderData
+[@velora-dex/sdk](../globals.md) / SignableOrderData
 
 # Type Alias: SignableOrderData
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/buildOrderData.ts:41](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/buildOrderData.ts#L41)
+[src/methods/limitOrders/helpers/buildOrderData.ts:41](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/buildOrderData.ts#L41)

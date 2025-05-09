@@ -4,7 +4,7 @@ import { ethers } from 'ethersV5';
 import { constructSimpleSDK } from '..';
 
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
-const PSP_TOKEN = '0xcafe001067cdef266afb7eb5a286dcfd277f3de5';
+const USDC_TOKEN = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 
 async function allQuote() {
   // @ts-expect-error assume window.ethereum is available
@@ -27,7 +27,7 @@ async function allQuote() {
 
   const quote = await simpleSDK.quote.getQuote({
     srcToken: DAI_TOKEN,
-    destToken: PSP_TOKEN,
+    destToken: USDC_TOKEN,
     amount,
     userAddress: account,
     srcDecimals: 18,
@@ -62,7 +62,7 @@ async function allQuote() {
       // beneficiary: anotherAccount, // if need to send destToken to another account
       // permit: "0x1234...", // if signed a Permit1 or Permit2 TransferFrom for DeltaContract
       srcToken: DAI_TOKEN,
-      destToken: PSP_TOKEN,
+      destToken: USDC_TOKEN,
       srcAmount: amount,
       destAmount: destAmountAfterSlippage, // minimum acceptable destAmount
     });
@@ -85,7 +85,7 @@ async function allQuote() {
 
     const txParams = await simpleSDK.swap.buildTx({
       srcToken: DAI_TOKEN,
-      destToken: PSP_TOKEN,
+      destToken: USDC_TOKEN,
       srcAmount: amount,
       slippage: 250, // 2.5%
       priceRoute,

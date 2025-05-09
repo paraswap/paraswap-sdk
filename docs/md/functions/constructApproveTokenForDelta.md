@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructApproveTokenForDelta
+[@velora-dex/sdk](../globals.md) / constructApproveTokenForDelta
 
 # Function: constructApproveTokenForDelta()
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/methods/delta/approveForDelta.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/approveForDelta.ts#L15)
+[src/methods/delta/approveForDelta.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/approveForDelta.ts#L15)

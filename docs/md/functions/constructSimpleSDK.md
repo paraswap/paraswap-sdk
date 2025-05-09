@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructSimpleSDK
+[@velora-dex/sdk](../globals.md) / constructSimpleSDK
 
 # Function: constructSimpleSDK()
 
@@ -24,7 +24,7 @@ construct SDK with methods that fetch from API and optionally with blockchain pr
 
 ### Defined in
 
-[src/sdk/simple.ts:233](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L233)
+[src/sdk/simple.ts:238](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L238)
 
 ## constructSimpleSDK(options, providerOptions)
 
@@ -42,4 +42,4 @@ construct SDK with methods that fetch from API and optionally with blockchain pr
 
 ### Defined in
 
-[src/sdk/simple.ts:235](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L235)
+[src/sdk/simple.ts:240](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L240)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SyncingStatusAPI
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SyncingStatusAPI
 
 # Type Alias: SyncingStatusAPI
 

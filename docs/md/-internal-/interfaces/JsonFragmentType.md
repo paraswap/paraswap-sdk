@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonFragmentType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonFragmentType
 
 # Interface: JsonFragmentType
 
@@ -16,7 +16,7 @@ The components for a tuple.
 
 #### Defined in
 
-[src/types.ts:192](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L192)
+[src/types.ts:192](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L192)
 
 ***
 
@@ -28,7 +28,7 @@ If the parameter is indexed.
 
 #### Defined in
 
-[src/types.ts:177](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L177)
+[src/types.ts:177](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L177)
 
 ***
 
@@ -40,7 +40,7 @@ The internal Solidity type.
 
 #### Defined in
 
-[src/types.ts:187](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L187)
+[src/types.ts:187](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L187)
 
 ***
 
@@ -52,7 +52,7 @@ The parameter name.
 
 #### Defined in
 
-[src/types.ts:172](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L172)
+[src/types.ts:172](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L172)
 
 ***
 
@@ -64,4 +64,4 @@ The type of the parameter.
 
 #### Defined in
 
-[src/types.ts:182](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L182)
+[src/types.ts:182](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L182)

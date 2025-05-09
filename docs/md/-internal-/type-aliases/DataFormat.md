@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DataFormat
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DataFormat
 
 # Type Alias: DataFormat
 
@@ -16,11 +16,11 @@ strings.
 
 ### bytes
 
-> `readonly` **bytes**: [`FMT_BYTES`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/enumerations/FMT_BYTES.md)
+> `readonly` **bytes**: [`FMT_BYTES`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/enumerations/FMT_BYTES.md)
 
 ### number
 
-> `readonly` **number**: [`FMT_NUMBER`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/enumerations/FMT_NUMBER.md)
+> `readonly` **number**: [`FMT_NUMBER`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/enumerations/FMT_NUMBER.md)
 
 ## Defined in
 

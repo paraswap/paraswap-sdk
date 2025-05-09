@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionContractCallerFn
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionContractCallerFn
 
 # Type Alias: TransactionContractCallerFn()\<T\>
 
@@ -26,4 +26,4 @@
 
 ## Defined in
 
-[src/types.ts:110](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L110)
+[src/types.ts:110](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L110)

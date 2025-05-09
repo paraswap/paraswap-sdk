@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ContractMethodByName
+[@velora-dex/sdk](../globals.md) / ContractMethodByName
 
 # Type Alias: ContractMethodByName
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/constants.ts:13](https://github.com/paraswap/paraswap-sdk/blob/master/src/constants.ts#L13)
+[src/constants.ts:13](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/constants.ts#L13)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / QuoteFetchMethods
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / QuoteFetchMethods
 
 # Type Alias: QuoteFetchMethods
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:182](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L182)
+[src/sdk/simple.ts:187](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L187)

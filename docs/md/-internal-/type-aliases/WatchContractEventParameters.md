@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchContractEventParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchContractEventParameters
 
 # Type Alias: WatchContractEventParameters\<abi, eventName, strict, transport\>
 

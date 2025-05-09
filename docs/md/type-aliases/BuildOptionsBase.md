@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildOptionsBase
+[@velora-dex/sdk](../globals.md) / BuildOptionsBase
 
 # Type Alias: BuildOptionsBase
 
@@ -44,4 +44,4 @@ Allows the API to return the contract parameters only.
 
 ## Defined in
 
-[src/methods/swap/transaction.ts:162](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/transaction.ts#L162)
+[src/methods/swap/transaction.ts:162](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/transaction.ts#L162)

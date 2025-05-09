@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ReturnType
 
 # Type Alias: ReturnType\<T\>
 

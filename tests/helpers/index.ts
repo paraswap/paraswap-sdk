@@ -37,12 +37,12 @@ export async function buyErc20TokenForEth({
   srcDecimals = 18,
   destDecimals = 18,
 }: BuyErc20TokenForEthInput): Promise<BuyErc20TokenForEthReturn> {
-  const _paraSwap = constructSimpleSDK(
+  const _sdk = constructSimpleSDK(
     { chainId, ...fetcherOptions },
     providerOptions
   );
 
-  const priceRoute = await _paraSwap.swap.getRate({
+  const priceRoute = await _sdk.swap.getRate({
     srcDecimals,
     destDecimals,
     srcToken: ETH,
@@ -54,7 +54,7 @@ export async function buyErc20TokenForEth({
 
   const srcAmount = new BigNumber(priceRoute.srcAmount).times(1.1).toFixed(0);
 
-  const txParams = await _paraSwap.swap.buildTx(
+  const txParams = await _sdk.swap.buildTx(
     {
       srcDecimals,
       destDecimals,

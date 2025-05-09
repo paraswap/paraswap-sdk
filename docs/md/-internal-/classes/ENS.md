@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ENS
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ENS
 
 # Class: ENS
 
@@ -28,7 +28,7 @@ console.log(await ens.getAddress('vitalik.eth'));
 
 ## Extends
 
-- [`Web3Context`](Web3Context.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+- [`Web3Context`](Web3Context.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 ## Constructors
 
@@ -44,7 +44,7 @@ Use to create an instance of ENS
 
 (Optional) The address of the ENS registry (default: mainnet registry address)
 
-• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\> \| [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\> \| [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 (Optional) The provider to use for the ENS instance
 
@@ -90,7 +90,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:51
 
 ### \_requestManager
 
-> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+> `protected` **\_requestManager**: [`Web3RequestManager`](Web3RequestManager.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 #### Inherited from
 
@@ -104,7 +104,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:49
 
 ### \_subscriptionManager
 
-> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+> `protected` **\_subscriptionManager**: [`Web3SubscriptionManager`](Web3SubscriptionManager.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Inherited from
 
@@ -830,11 +830,11 @@ node\_modules/web3-core/lib/commonjs/web3\_config.d.ts:178
 
 #### Get Signature
 
-> **get** **events**(): [`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`], [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`]\>\>
+> **get** **events**(): [`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`], [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`]\>\>
 
 ##### Returns
 
-[`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`], [`ContractEvents`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`]\>\>
+[`ContractEventsInterface`](../type-aliases/ContractEventsInterface.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`], [`ContractEvents`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractEvents.md)\<readonly [`object`, `object`, `object`, `object`, `object`, `object`, `object`, `object`]\>\>
 
 - Returns all events that can be emitted by the ENS registry.
 
@@ -1525,7 +1525,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:165
 
 ### getAddress()
 
-> **getAddress**(`ENSName`, `coinType`?): `Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
+> **getAddress**(`ENSName`, `coinType`?): `Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
 
 Resolves an ENS name to an Ethereum address.
 
@@ -1541,7 +1541,7 @@ The ENS name to resolve
 
 #### Returns
 
-`Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
+`Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
 
 - The Ethereum address of the given name
 ```ts
@@ -1558,7 +1558,7 @@ node\_modules/web3-eth-ens/lib/commonjs/ens.d.ts:107
 
 ### getContenthash()
 
-> **getContenthash**(`ENSName`): `Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
+> **getContenthash**(`ENSName`): `Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
 
 Returns the content hash object associated with an ENS node.
 
@@ -1570,7 +1570,7 @@ The ENS name
 
 #### Returns
 
-`Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
+`Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes"`, `unknown`\>\>
 
 - The content hash object associated with an ENS node
 
@@ -1590,11 +1590,11 @@ node\_modules/web3-eth-ens/lib/commonjs/ens.d.ts:149
 
 ### getContextObject()
 
-> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+> **getContextObject**(): [`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Returns
 
-[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
+[`Web3ContextObject`](../type-aliases/Web3ContextObject.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md), `any`\>
 
 #### Inherited from
 
@@ -1682,7 +1682,7 @@ node\_modules/web3-eth-ens/lib/commonjs/ens.d.ts:95
 
 ### getPubkey()
 
-> **getPubkey**(`ENSName`): `Promise`\<`unknown`[] & [`Record`](../type-aliases/Record.md)\<`1`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`0`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [] & [`Record`](../type-aliases/Record.md)\<`"x"`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`"y"`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\>\>
+> **getPubkey**(`ENSName`): `Promise`\<`unknown`[] & [`Record`](../type-aliases/Record.md)\<`1`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`0`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [] & [`Record`](../type-aliases/Record.md)\<`"x"`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`"y"`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\>\>
 
 Returns the X and Y coordinates of the curve point for the public key.
 
@@ -1694,7 +1694,7 @@ The ENS name
 
 #### Returns
 
-`Promise`\<`unknown`[] & [`Record`](../type-aliases/Record.md)\<`1`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`0`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [] & [`Record`](../type-aliases/Record.md)\<`"x"`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`"y"`, [`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\>\>
+`Promise`\<`unknown`[] & [`Record`](../type-aliases/Record.md)\<`1`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`0`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [] & [`Record`](../type-aliases/Record.md)\<`"x"`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\> & [`Record`](../type-aliases/Record.md)\<`"y"`, [`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bytes32"`, `unknown`\>\>\>
 
 - The X and Y coordinates of the curve point for the public key
 
@@ -2024,11 +2024,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:73
 
 ### removeAllListeners()
 
-> **removeAllListeners**(): [`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+> **removeAllListeners**(): [`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Returns
 
-[`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+[`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Inherited from
 
@@ -2042,7 +2042,7 @@ node\_modules/web3-core/lib/commonjs/web3\_event\_emitter.d.ts:20
 
 ### setAddress()
 
-> **setAddress**(`name`, `address`, `txConfig`): `Promise`\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) \| [`RevertInstructionError`](RevertInstructionError.md)\>
+> **setAddress**(`name`, `address`, `txConfig`): `Promise`\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) \| [`RevertInstructionError`](RevertInstructionError.md)\>
 
 Sets the address of an ENS name in his resolver.
 
@@ -2056,13 +2056,13 @@ The ENS name
 
 The address to set
 
-• **txConfig**: [`PayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
+• **txConfig**: [`PayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
 
 (Optional) The transaction config
 
 #### Returns
 
-`Promise`\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) \| [`RevertInstructionError`](RevertInstructionError.md)\>
+`Promise`\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) \| [`RevertInstructionError`](RevertInstructionError.md)\>
 
 - The transaction receipt
 ```ts
@@ -2127,7 +2127,7 @@ Will set the provider.
 
 #### Parameters
 
-• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+• **provider?**: `string` \| [`SupportedProviders`](../type-aliases/SupportedProviders.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 [SupportedProviders](../type-aliases/SupportedProviders.md) The provider to set
 
@@ -2153,7 +2153,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:155
 
 #### Parameters
 
-• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
+• **requestManagerMiddleware**: [`RequestManagerMiddleware`](../interfaces/RequestManagerMiddleware.md)\<[`EthExecutionAPI`](../type-aliases/EthExecutionAPI.md) & [`Web3NetAPI`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3NetAPI.md)\>
 
 #### Returns
 
@@ -2171,7 +2171,7 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:156
 
 ### supportsInterface()
 
-> **supportsInterface**(`ENSName`, `interfaceId`): `Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bool"`, `unknown`\>\>
+> **supportsInterface**(`ENSName`, `interfaceId`): `Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bool"`, `unknown`\>\>
 
 Returns true if the related Resolver does support the given signature or interfaceId.
 
@@ -2187,7 +2187,7 @@ The signature of the function or the interfaceId as described in the ENS documen
 
 #### Returns
 
-`Promise`\<[`MatchPrimitiveType`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bool"`, `unknown`\>\>
+`Promise`\<[`MatchPrimitiveType`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/MatchPrimitiveType.md)\<`"bool"`, `unknown`\>\>
 
 - `true` if the related Resolver does support the given signature or interfaceId.
 

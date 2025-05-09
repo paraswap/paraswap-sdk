@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TokenType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TokenType
 
 # Type Alias: TokenType
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/helpers/token.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L30)
+[src/helpers/token.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/token.ts#L30)

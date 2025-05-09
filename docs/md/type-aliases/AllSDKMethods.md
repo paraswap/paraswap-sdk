@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / AllSDKMethods
+[@velora-dex/sdk](../globals.md) / AllSDKMethods
 
 # Type Alias: AllSDKMethods\<TxResponse\>
 
@@ -36,4 +36,4 @@
 
 ## Defined in
 
-[src/sdk/full.ts:22](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L22)
+[src/sdk/full.ts:22](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/full.ts#L22)

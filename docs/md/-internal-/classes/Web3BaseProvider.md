@@ -1,14 +1,14 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3BaseProvider
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3BaseProvider
 
 # Class: `abstract` Web3BaseProvider\<API\>
 
 ## Extended by
 
-- [`Eip1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Eip1193Provider.md)
+- [`Eip1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Eip1193Provider.md)
 
 ## Type Parameters
 
@@ -16,9 +16,9 @@
 
 ## Implements
 
-- [`LegacySendProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md)
-- [`LegacySendAsyncProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md)
-- [`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md)\<`API`\>
+- [`LegacySendProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md)
+- [`LegacySendAsyncProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md)
+- [`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md)\<`API`\>
 
 ## Constructors
 
@@ -144,7 +144,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:68
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
 
 ##### Defined in
 
@@ -170,7 +170,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:99
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
 
 ##### Defined in
 
@@ -196,7 +196,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:100
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
 
 ##### Defined in
 
@@ -218,7 +218,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:101
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
 
 ##### Defined in
 
@@ -240,7 +240,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:102
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`on`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#on)
 
 ##### Defined in
 
@@ -404,7 +404,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:115
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
 
 ##### Defined in
 
@@ -430,7 +430,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:105
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
 
 ##### Defined in
 
@@ -452,7 +452,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:106
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
 
 ##### Defined in
 
@@ -474,7 +474,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:107
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
 
 ##### Defined in
 
@@ -496,7 +496,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:108
 
 ##### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`removeListener`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#removelistener)
 
 ##### Defined in
 
@@ -524,7 +524,7 @@ node\_modules/web3-types/lib/commonjs/web3\_base\_provider.d.ts:109
 
 #### Implementation of
 
-[`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`request`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#request)
+[`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md).[`request`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md#request)
 
 #### Defined in
 
@@ -576,7 +576,7 @@ Please use `.request` instead.
 
 #### Implementation of
 
-[`LegacySendProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md).[`send`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md#send)
+[`LegacySendProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md).[`send`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md#send)
 
 #### Defined in
 
@@ -610,7 +610,7 @@ Please use `.request` instead.
 
 #### Implementation of
 
-[`LegacySendAsyncProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md).[`sendAsync`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md#sendasync)
+[`LegacySendAsyncProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md).[`sendAsync`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md#sendasync)
 
 #### Defined in
 

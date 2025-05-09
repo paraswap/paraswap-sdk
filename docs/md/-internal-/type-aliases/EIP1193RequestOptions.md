@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / EIP1193RequestOptions
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / EIP1193RequestOptions
 
 # Type Alias: EIP1193RequestOptions
 

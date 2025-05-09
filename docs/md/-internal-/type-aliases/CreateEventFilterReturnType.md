@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / CreateEventFilterReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / CreateEventFilterReturnType
 
 # Type Alias: CreateEventFilterReturnType\<abiEvent, abiEvents, strict, fromBlock, toBlock, _eventName, _args\>
 

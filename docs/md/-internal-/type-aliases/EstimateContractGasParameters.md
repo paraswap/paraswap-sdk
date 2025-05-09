@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / EstimateContractGasParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / EstimateContractGasParameters
 
 # Type Alias: EstimateContractGasParameters\<abi, functionName, args, chain\>
 

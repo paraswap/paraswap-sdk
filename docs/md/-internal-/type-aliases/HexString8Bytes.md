@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / HexString8Bytes
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / HexString8Bytes
 
 # Type Alias: HexString8Bytes
 

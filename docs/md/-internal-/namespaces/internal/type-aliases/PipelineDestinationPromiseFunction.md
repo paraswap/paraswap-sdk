@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../../../globals.md) / [\<internal\>](../../../README.md) / [internal](../README.md) / PipelineDestinationPromiseFunction
+[@velora-dex/sdk](../../../../globals.md) / [\<internal\>](../../../README.md) / [internal](../README.md) / PipelineDestinationPromiseFunction
 
 # Type Alias: PipelineDestinationPromiseFunction()\<T, P\>
 

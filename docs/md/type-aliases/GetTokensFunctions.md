@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetTokensFunctions
+[@velora-dex/sdk](../globals.md) / GetTokensFunctions
 
 # Type Alias: GetTokensFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/swap/token.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/token.ts#L12)
+[src/methods/swap/token.ts:12](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/token.ts#L12)

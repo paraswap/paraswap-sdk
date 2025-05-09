@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / LessThanOrEqualTo48Bits
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / LessThanOrEqualTo48Bits
 
 # Type Alias: LessThanOrEqualTo48Bits
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / txParamsToViemTxParams
+[@velora-dex/sdk](../globals.md) / txParamsToViemTxParams
 
 # Function: txParamsToViemTxParams()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/helpers/providers/viem.ts:161](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/viem.ts#L161)
+[src/helpers/providers/viem.ts:161](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/viem.ts#L161)

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ParaSwap SDK: fetcher made with: axios Get_Adapters: Get_Adapters 1`] = `
+exports[`Simple SDK: fetcher made with: axios Get_Adapters: Get_Adapters 1`] = `
 [
   "Bancor",
   "Compound",
@@ -52,7 +52,7 @@ exports[`ParaSwap SDK: fetcher made with: axios Get_Adapters: Get_Adapters 1`] =
 ]
 `;
 
-exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
+exports[`Simple SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
 {
   "bestRoute": [
     {
@@ -120,7 +120,7 @@ exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::
 }
 `;
 
-exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
+exports[`Simple SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
 {
   "chainId": 1,
   "data": "dynamic_string",
@@ -131,7 +131,7 @@ exports[`ParaSwap SDK: fetcher made with: axios Get_SwapTxData: Get_SwapTxData::
 }
 `;
 
-exports[`ParaSwap SDK: fetcher made with: fetch Get_Adapters: Get_Adapters 1`] = `
+exports[`Simple SDK: fetcher made with: fetch Get_Adapters: Get_Adapters 1`] = `
 [
   "Bancor",
   "Compound",
@@ -183,7 +183,7 @@ exports[`ParaSwap SDK: fetcher made with: fetch Get_Adapters: Get_Adapters 1`] =
 ]
 `;
 
-exports[`ParaSwap SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
+exports[`Simple SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::priceRoute 1`] = `
 {
   "bestRoute": [
     {
@@ -251,7 +251,7 @@ exports[`ParaSwap SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::
 }
 `;
 
-exports[`ParaSwap SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
+exports[`Simple SDK: fetcher made with: fetch Get_SwapTxData: Get_SwapTxData::txParams 1`] = `
 {
   "chainId": 1,
   "data": "dynamic_string",

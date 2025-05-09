@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ContractCallerFunctions
+[@velora-dex/sdk](../globals.md) / ContractCallerFunctions
 
 # Interface: ContractCallerFunctions\<T\>
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[src/types.ts:120](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L120)
+[src/types.ts:120](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L120)
 
 ***
 
@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[src/types.ts:118](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L118)
+[src/types.ts:118](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L118)
 
 ***
 
@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[src/types.ts:119](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L119)
+[src/types.ts:119](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L119)

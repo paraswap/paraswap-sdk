@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ParaSwap SDK: contract calling methods signOrder: LimitOrder to sign 1`] = `
+exports[`SDK with viem: contract calling methods signOrder: LimitOrder to sign 1`] = `
 {
   "data": {
     "expiry": 1766188800,

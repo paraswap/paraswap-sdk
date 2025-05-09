@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignDeltaOrderFunctions
+[@velora-dex/sdk](../globals.md) / SignDeltaOrderFunctions
 
 # Type Alias: SignDeltaOrderFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/signDeltaOrder.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/signDeltaOrder.ts#L16)
+[src/methods/delta/signDeltaOrder.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/signDeltaOrder.ts#L15)

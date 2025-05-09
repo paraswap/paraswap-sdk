@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructToken
+[@velora-dex/sdk](../globals.md) / constructToken
 
 # Function: constructToken()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/helpers/token.ts:56](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/token.ts#L56)
+[src/helpers/token.ts:56](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/token.ts#L56)

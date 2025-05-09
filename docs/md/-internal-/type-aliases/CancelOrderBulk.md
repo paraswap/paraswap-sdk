@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / CancelOrderBulk
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / CancelOrderBulk
 
 # Type Alias: CancelOrderBulk()\<T\>
 
@@ -26,4 +26,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L15)
+[src/methods/limitOrders/cancelOrder.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/cancelOrder.ts#L15)

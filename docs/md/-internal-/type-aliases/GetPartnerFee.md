@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetPartnerFee
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetPartnerFee
 
 # Type Alias: GetPartnerFee()
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/delta/getPartnerFee.ts:15](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getPartnerFee.ts#L15)
+[src/methods/delta/getPartnerFee.ts:15](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getPartnerFee.ts#L15)

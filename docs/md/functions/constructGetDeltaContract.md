@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructGetDeltaContract
+[@velora-dex/sdk](../globals.md) / constructGetDeltaContract
 
 # Function: constructGetDeltaContract()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaContract.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaContract.ts#L16)
+[src/methods/delta/getDeltaContract.ts:16](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaContract.ts#L16)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructBuildNFTOrder
+[@velora-dex/sdk](../globals.md) / constructBuildNFTOrder
 
 # Function: constructBuildNFTOrder()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/buildOrder.ts:25](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L25)
+[src/methods/nftOrders/buildOrder.ts:25](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/buildOrder.ts#L25)

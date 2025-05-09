@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapTxInput
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapTxInput
 
 # Type Alias: SwapTxInput
 
@@ -24,4 +24,4 @@ List of tokens (addresses or symbols from `/tokens`) to comprise the price route
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:205](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L205)
+[src/methods/swap/swapTx.ts:205](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L205)

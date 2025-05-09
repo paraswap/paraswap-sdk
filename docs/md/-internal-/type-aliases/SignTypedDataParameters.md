@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SignTypedDataParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SignTypedDataParameters
 
 # Type Alias: SignTypedDataParameters\<typedData, primaryType, account, primaryTypes\>
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonFragment
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonFragment
 
 # Interface: JsonFragment
 
@@ -16,7 +16,7 @@ If the event is anonymous.
 
 #### Defined in
 
-[src/types.ts:209](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L209)
+[src/types.ts:209](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L209)
 
 ***
 
@@ -28,7 +28,7 @@ If the function is constant.
 
 #### Defined in
 
-[src/types.ts:219](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L219)
+[src/types.ts:219](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L219)
 
 ***
 
@@ -40,7 +40,7 @@ The gas limit to use when sending a transaction for this function.
 
 #### Defined in
 
-[src/types.ts:239](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L239)
+[src/types.ts:239](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L239)
 
 ***
 
@@ -52,7 +52,7 @@ The input parameters.
 
 #### Defined in
 
-[src/types.ts:229](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L229)
+[src/types.ts:229](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L229)
 
 ***
 
@@ -64,7 +64,7 @@ The name of the error, event, function, etc.
 
 #### Defined in
 
-[src/types.ts:199](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L199)
+[src/types.ts:199](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L199)
 
 ***
 
@@ -76,7 +76,7 @@ The output parameters.
 
 #### Defined in
 
-[src/types.ts:234](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L234)
+[src/types.ts:234](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L234)
 
 ***
 
@@ -88,7 +88,7 @@ If the function is payable.
 
 #### Defined in
 
-[src/types.ts:214](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L214)
+[src/types.ts:214](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L214)
 
 ***
 
@@ -100,7 +100,7 @@ The mutability state of the function.
 
 #### Defined in
 
-[src/types.ts:224](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L224)
+[src/types.ts:224](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L224)
 
 ***
 
@@ -112,4 +112,4 @@ The type of the fragment (e.g. ``event``, ``"function"``, etc.)
 
 #### Defined in
 
-[src/types.ts:204](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L204)
+[src/types.ts:204](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L204)

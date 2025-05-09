@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetDeltaOrdersFunctions
+[@velora-dex/sdk](../globals.md) / GetDeltaOrdersFunctions
 
 # Type Alias: GetDeltaOrdersFunctions
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaOrders.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaOrders.ts#L37)
+[src/methods/delta/getDeltaOrders.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaOrders.ts#L37)
