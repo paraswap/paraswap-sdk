@@ -18,7 +18,7 @@ Refer to the documentation of the Velora API: https://developers.velora.xyz/
 ## Installing Velora SDK
 
 ```bash
-yarn add @paraswap/sdk
+yarn add @velora-dex/sdk
 ```
 
 ## Using Velora SDK
@@ -32,7 +32,7 @@ You can see some examples in [/src/examples](src/examples) directory.
 Can be created by providing `chainId` and either `axios` or `window.fetch` (or alternative `fetch` implementation), and an optional `version` (`'5'` or `'6.2'`) parameter that corresponds to the API version SDK will be making requests to. The resulting SDK will be able to use all methods that query the API.
 
 ```ts
-  import { constructSimpleSDK } from '@paraswap/sdk';
+  import { constructSimpleSDK } from '@velora-dex/sdk';
   import axios from 'axios';
 
   // construct minimal SDK with fetcher only
@@ -119,7 +119,7 @@ If optional `providerOptions` is provided as the second parameter, then the resu
 
 ### Full SDK 
 ```typescript
-import { constructFullSDK, constructAxiosFetcher, constructEthersContractCaller } from '@paraswap/sdk';
+import { constructFullSDK, constructAxiosFetcher, constructEthersContractCaller } from '@velora-dex/sdk';
 
 const signer = ethers.Wallet.fromMnmemonic('__your_mnemonic__'); // or any other signer/provider 
 const account = '__signer_address__';
@@ -143,7 +143,7 @@ For bundle-size savvy developers, you can construct a lightweight version of the
 e.g. for only getting rates and allowances:
 
 ```typescript
-import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetBalances } from '@paraswap/sdk';
+import { constructPartialSDK, constructFetchFetcher, constructGetRate, constructGetBalances } from '@velora-dex/sdk';
 
 const fetcher = constructFetchFetcher(window.fetch);
 
@@ -164,7 +164,7 @@ The easiest way to make a trade is to rely on Quote method that communicates wit
 ```typescript
 import axios from 'axios';
 import { ethers } from 'ethersV5';
-import { constructSimpleSDK } from '@paraswap/sdk';
+import { constructSimpleSDK } from '@velora-dex/sdk';
 
 const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
