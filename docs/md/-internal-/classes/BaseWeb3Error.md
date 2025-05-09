@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BaseWeb3Error
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BaseWeb3Error
 
 # Class: `abstract` BaseWeb3Error
 
@@ -23,7 +23,7 @@ Base class for Web3 errors.
 
 ## Implements
 
-- [`Web3Error`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md)
+- [`Web3Error`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md)
 
 ## Constructors
 
@@ -67,7 +67,7 @@ node\_modules/web3-errors/lib/commonjs/web3\_error\_base.d.ts:9
 
 #### Implementation of
 
-[`Web3Error`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`code`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#code)
+[`Web3Error`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`code`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#code)
 
 #### Defined in
 
@@ -81,7 +81,7 @@ node\_modules/web3-errors/lib/commonjs/web3\_error\_base.d.ts:7
 
 #### Implementation of
 
-[`Web3Error`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`message`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#message)
+[`Web3Error`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`message`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#message)
 
 #### Inherited from
 
@@ -99,7 +99,7 @@ node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 #### Implementation of
 
-[`Web3Error`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`name`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#name)
+[`Web3Error`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`name`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#name)
 
 #### Overrides
 
@@ -117,7 +117,7 @@ node\_modules/web3-errors/lib/commonjs/web3\_error\_base.d.ts:6
 
 #### Implementation of
 
-[`Web3Error`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`stack`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#stack)
+[`Web3Error`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md).[`stack`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Web3Error.md#stack)
 
 #### Overrides
 

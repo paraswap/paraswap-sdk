@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetLogsReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetLogsReturnType
 
 # Type Alias: GetLogsReturnType\<abiEvent, abiEvents, strict, fromBlock, toBlock, _eventName, _pending\>
 

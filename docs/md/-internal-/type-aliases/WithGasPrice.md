@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / WithGasPrice
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / WithGasPrice
 
 # Type Alias: WithGasPrice
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/gas.ts:1](https://github.com/paraswap/paraswap-sdk/blob/master/src/gas.ts#L1)
+[src/gas.ts:1](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/gas.ts#L1)

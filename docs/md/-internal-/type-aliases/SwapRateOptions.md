@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapRateOptions
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapRateOptions
 
 # Type Alias: SwapRateOptions
 
@@ -44,4 +44,4 @@ List of DEXs to include. **Supported DEXs:** Uniswap, Kyber, Bancor, AugustusRFQ
 
 ## Defined in
 
-[src/methods/swap/swapTx.ts:180](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/swapTx.ts#L180)
+[src/methods/swap/swapTx.ts:180](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/swapTx.ts#L180)

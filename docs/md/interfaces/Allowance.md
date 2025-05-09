@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / Allowance
+[@velora-dex/sdk](../globals.md) / Allowance
 
 # Interface: Allowance
 
@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:27](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L27)
+[src/methods/swap/balance.ts:27](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/balance.ts#L27)
 
 ***
 
@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[src/methods/swap/balance.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/balance.ts#L26)
+[src/methods/swap/balance.ts:26](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/balance.ts#L26)

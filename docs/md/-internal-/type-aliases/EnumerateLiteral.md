@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / EnumerateLiteral
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / EnumerateLiteral
 
 # Type Alias: EnumerateLiteral\<T\>
 
@@ -14,4 +14,4 @@
 
 ## Defined in
 
-[src/types.ts:26](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L26)
+[src/types.ts:26](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L26)

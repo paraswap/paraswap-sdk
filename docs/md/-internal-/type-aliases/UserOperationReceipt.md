@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / UserOperationReceipt
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / UserOperationReceipt
 
 # Type Alias: UserOperationReceipt\<_entryPointVersion, uint256, int32, status\>
 

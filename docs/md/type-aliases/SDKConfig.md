@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SDKConfig
+[@velora-dex/sdk](../globals.md) / SDKConfig
 
 # Type Alias: SDKConfig\<TxResponse\>
 
@@ -14,4 +14,4 @@
 
 ## Defined in
 
-[src/sdk/partial.ts:17](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L17)
+[src/sdk/partial.ts:17](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/partial.ts#L17)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignableDeltaOrderData
+[@velora-dex/sdk](../globals.md) / SignableDeltaOrderData
 
 # Type Alias: SignableDeltaOrderData
 
@@ -32,4 +32,4 @@
 
 ## Defined in
 
-[src/methods/delta/helpers/buildDeltaOrderData.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/buildDeltaOrderData.ts#L30)
+[src/methods/delta/helpers/buildDeltaOrderData.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/helpers/buildDeltaOrderData.ts#L30)

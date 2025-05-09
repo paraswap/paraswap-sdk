@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapSideUnion
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapSideUnion
 
 # Type Alias: SwapSideUnion
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/quote/getQuote.ts:13](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/quote/getQuote.ts#L13)
+[src/methods/quote/getQuote.ts:13](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/quote/getQuote.ts#L13)

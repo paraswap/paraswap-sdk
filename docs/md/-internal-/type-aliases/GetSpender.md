@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetSpender
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetSpender
 
 # Type Alias: GetSpender()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/swap/spender.ts:9](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/spender.ts#L9)
+[src/methods/swap/spender.ts:9](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/spender.ts#L9)

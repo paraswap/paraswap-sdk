@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / CancelLimitOrderFunctions
+[@velora-dex/sdk](../globals.md) / CancelLimitOrderFunctions
 
 # Type Alias: CancelLimitOrderFunctions\<T\>
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/cancelOrder.ts:21](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/cancelOrder.ts#L21)
+[src/methods/limitOrders/cancelOrder.ts:21](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/cancelOrder.ts#L21)

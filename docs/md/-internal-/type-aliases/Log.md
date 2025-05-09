@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Log
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Log
 
 # Type Alias: Log\<quantity, index, pending, abiEvent, strict, abi, eventName\>
 

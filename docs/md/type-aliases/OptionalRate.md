@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / OptionalRate
+[@velora-dex/sdk](../globals.md) / OptionalRate
 
 # Type Alias: OptionalRate
 

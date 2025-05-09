@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchBlocksParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchBlocksParameters
 
 # Type Alias: WatchBlocksParameters\<transport, chain, includeTransactions, blockTag\>
 

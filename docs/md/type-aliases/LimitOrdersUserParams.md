@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / LimitOrdersUserParams
+[@velora-dex/sdk](../globals.md) / LimitOrdersUserParams
 
 # Type Alias: LimitOrdersUserParams
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L30)
+[src/methods/limitOrders/getOrders.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/getOrders.ts#L30)

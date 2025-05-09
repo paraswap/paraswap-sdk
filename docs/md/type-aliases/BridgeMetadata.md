@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BridgeMetadata
+[@velora-dex/sdk](../globals.md) / BridgeMetadata
 
 # Type Alias: BridgeMetadata
 
@@ -52,4 +52,4 @@ The amount that user should expect to get
 
 ## Defined in
 
-[src/methods/delta/helpers/types.ts:100](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/helpers/types.ts#L100)
+[src/methods/delta/helpers/types.ts:96](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/helpers/types.ts#L96)

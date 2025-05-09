@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRevertInstructionError
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRevertInstructionError
 
 # Class: TransactionRevertInstructionError\<ReceiptType\>
 
@@ -18,7 +18,7 @@ Base class for Web3 errors.
 
 ## Type Parameters
 
-• **ReceiptType** = [`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
+• **ReceiptType** = [`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)
 
 ## Constructors
 

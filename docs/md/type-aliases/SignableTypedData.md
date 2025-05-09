@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignableTypedData
+[@velora-dex/sdk](../globals.md) / SignableTypedData
 
 # Type Alias: SignableTypedData
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/common/orders/buildOrderData.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/common/orders/buildOrderData.ts#L18)
+[src/methods/common/orders/buildOrderData.ts:18](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/common/orders/buildOrderData.ts#L18)

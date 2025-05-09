@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetLimitOrdersContractFunctions
+[@velora-dex/sdk](../globals.md) / GetLimitOrdersContractFunctions
 
 # Type Alias: GetLimitOrdersContractFunctions
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrdersContract.ts#L4)
+[src/methods/limitOrders/getOrdersContract.ts:4](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/getOrdersContract.ts#L4)

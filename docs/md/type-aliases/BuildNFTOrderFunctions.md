@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildNFTOrderFunctions
+[@velora-dex/sdk](../globals.md) / BuildNFTOrderFunctions
 
 # Type Alias: BuildNFTOrderFunctions
 
@@ -20,4 +20,4 @@ Build Orders that will be excuted through AugustusSwapper
 
 ## Defined in
 
-[src/methods/nftOrders/buildOrder.ts:20](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/buildOrder.ts#L20)
+[src/methods/nftOrders/buildOrder.ts:20](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/buildOrder.ts#L20)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../../../globals.md) / [\<internal\>](../../../README.md) / ["node:stream/consumers"](../README.md) / json
+[@velora-dex/sdk](../../../../globals.md) / [\<internal\>](../../../README.md) / ["node:stream/consumers"](../README.md) / json
 
 # Function: json()
 

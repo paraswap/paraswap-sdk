@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignableNFTOrderData
+[@velora-dex/sdk](../globals.md) / SignableNFTOrderData
 
 # Type Alias: SignableNFTOrderData
 
@@ -28,4 +28,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L48)
+[src/methods/nftOrders/helpers/buildOrderData.ts:48](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L48)

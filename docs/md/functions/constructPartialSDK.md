@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructPartialSDK
+[@velora-dex/sdk](../globals.md) / constructPartialSDK
 
 # Function: constructPartialSDK()
 
@@ -30,4 +30,4 @@ construct composable SDK with methods you choose yourself
 
 ## Defined in
 
-[src/sdk/partial.ts:84](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L84)
+[src/sdk/partial.ts:84](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/partial.ts#L84)

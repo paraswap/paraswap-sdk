@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DeltaOrderToPost
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DeltaOrderToPost
 
 # Type Alias: DeltaOrderToPost
 
@@ -24,7 +24,7 @@
 
 #### Description
 
-designates the Order as being able to partilly filled, as opposed to fill-or-kill
+designates the Order as being able to partially filled, as opposed to fill-or-kill
 
 ### partner?
 
@@ -52,4 +52,4 @@ Signature of the order from order.owner address. EOA signatures must be submitte
 
 ## Defined in
 
-[src/methods/delta/postDeltaOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/postDeltaOrder.ts#L5)
+[src/methods/delta/postDeltaOrder.ts:5](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/postDeltaOrder.ts#L5)

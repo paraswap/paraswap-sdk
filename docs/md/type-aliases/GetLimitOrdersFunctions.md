@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetLimitOrdersFunctions
+[@velora-dex/sdk](../globals.md) / GetLimitOrdersFunctions
 
 # Type Alias: GetLimitOrdersFunctions
 
@@ -47,4 +47,4 @@ requestParams passed to fetcher, can include {signal: AbortSignal, timeout: for 
 
 ## Defined in
 
-[src/methods/limitOrders/getOrders.ts:55](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/getOrders.ts#L55)
+[src/methods/limitOrders/getOrders.ts:55](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/getOrders.ts#L55)

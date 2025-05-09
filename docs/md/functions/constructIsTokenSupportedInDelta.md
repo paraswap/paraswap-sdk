@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructIsTokenSupportedInDelta
+[@velora-dex/sdk](../globals.md) / constructIsTokenSupportedInDelta
 
 # Function: constructIsTokenSupportedInDelta()
 
@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[src/methods/delta/isTokenSupportedInDelta.ts:24](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/isTokenSupportedInDelta.ts#L24)
+[src/methods/delta/isTokenSupportedInDelta.ts:24](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/isTokenSupportedInDelta.ts#L24)

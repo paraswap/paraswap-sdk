@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / \_SolidityIndexRange
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / \_SolidityIndexRange
 
 # Type Alias: \_SolidityIndexRange
 

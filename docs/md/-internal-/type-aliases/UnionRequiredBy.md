@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / UnionRequiredBy
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / UnionRequiredBy
 
 # Type Alias: UnionRequiredBy\<T, K\>
 

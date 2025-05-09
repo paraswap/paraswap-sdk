@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3BatchRequest
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3BatchRequest
 
 # Class: Web3BatchRequest
 
@@ -44,7 +44,7 @@ node\_modules/web3-core/lib/commonjs/web3\_batch\_request.d.ts:9
 
 ### add()
 
-> **add**\<`ResponseType`\>(`request`): [`Web3DeferredPromise`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Web3DeferredPromise.md)\<`ResponseType`\>
+> **add**\<`ResponseType`\>(`request`): [`Web3DeferredPromise`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Web3DeferredPromise.md)\<`ResponseType`\>
 
 #### Type Parameters
 
@@ -56,7 +56,7 @@ node\_modules/web3-core/lib/commonjs/web3\_batch\_request.d.ts:9
 
 #### Returns
 
-[`Web3DeferredPromise`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Web3DeferredPromise.md)\<`ResponseType`\>
+[`Web3DeferredPromise`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/Web3DeferredPromise.md)\<`ResponseType`\>
 
 #### Defined in
 

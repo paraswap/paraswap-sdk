@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetMutabilityAwareValue
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetMutabilityAwareValue
 
 # Type Alias: GetMutabilityAwareValue\<abi, mutability, functionName, valueType, args, abiFunction, _Narrowable\>
 

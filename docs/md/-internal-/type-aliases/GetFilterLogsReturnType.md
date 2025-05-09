@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetFilterLogsReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetFilterLogsReturnType
 
 # Type Alias: GetFilterLogsReturnType\<abi, eventName, strict, fromBlock, toBlock, _AbiEvent, _Pending\>
 

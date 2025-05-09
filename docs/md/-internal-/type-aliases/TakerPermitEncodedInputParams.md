@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TakerPermitEncodedInputParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TakerPermitEncodedInputParams
 
 # Type Alias: TakerPermitEncodedInputParams
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/fillOrderDirectly.ts:19](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L19)
+[src/methods/limitOrders/fillOrderDirectly.ts:19](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/fillOrderDirectly.ts#L19)

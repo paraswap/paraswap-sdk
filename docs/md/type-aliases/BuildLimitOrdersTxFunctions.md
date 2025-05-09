@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BuildLimitOrdersTxFunctions
+[@velora-dex/sdk](../globals.md) / BuildLimitOrdersTxFunctions
 
 # Type Alias: BuildLimitOrdersTxFunctions
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/limitOrders/transaction.ts:47](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/transaction.ts#L47)
+[src/methods/limitOrders/transaction.ts:47](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/transaction.ts#L47)

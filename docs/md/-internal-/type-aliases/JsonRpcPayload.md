@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonRpcPayload
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / JsonRpcPayload
 
 # Type Alias: JsonRpcPayload\<Param\>
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / DeltaPrice
+[@velora-dex/sdk](../globals.md) / DeltaPrice
 
 # Type Alias: DeltaPrice
 
@@ -72,4 +72,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaPrice.ts:30](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L30)
+[src/methods/delta/getDeltaPrice.ts:30](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaPrice.ts#L30)

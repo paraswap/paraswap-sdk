@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](README.md) • **Docs**
+[**@velora-dex/sdk**](README.md) • **Docs**
 
 ***
 
-# @paraswap/sdk
+# @velora-dex/sdk
 
 ## References
 
@@ -23,7 +23,6 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 ## Classes
 
 - [FetcherError](classes/FetcherError.md)
-- [ParaSwap](classes/ParaSwap.md)
 
 ## Interfaces
 
@@ -44,6 +43,7 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 - [Address](type-aliases/Address.md)
 - [AddressOrSymbol](type-aliases/AddressOrSymbol.md)
 - [AllSDKMethods](type-aliases/AllSDKMethods.md)
+- [APIVersion](type-aliases/APIVersion.md)
 - [ApproveTokenForDeltaFunctions](type-aliases/ApproveTokenForDeltaFunctions.md)
 - [ApproveTokenForLimitOrderFunctions](type-aliases/ApproveTokenForLimitOrderFunctions.md)
 - [ApproveTokenForNFTOrderFunctions](type-aliases/ApproveTokenForNFTOrderFunctions.md)
@@ -51,10 +51,11 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 - [AssetTypeVariant](type-aliases/AssetTypeVariant.md)
 - [Bridge](type-aliases/Bridge.md)
 - [BridgeInfo](type-aliases/BridgeInfo.md)
-- [BridgeInput](type-aliases/BridgeInput.md)
 - [BridgeMetadata](type-aliases/BridgeMetadata.md)
 - [BridgePrice](type-aliases/BridgePrice.md)
 - [BridgeStatus](type-aliases/BridgeStatus.md)
+- [BuildCrosschainOrderBridgeFunctions](type-aliases/BuildCrosschainOrderBridgeFunctions.md)
+- [BuildCrosschainOrderBridgeParams](type-aliases/BuildCrosschainOrderBridgeParams.md)
 - [BuildDeltaOrderDataParams](type-aliases/BuildDeltaOrderDataParams.md)
 - [BuildDeltaOrderFunctions](type-aliases/BuildDeltaOrderFunctions.md)
 - [BuildLimitOrderFunctions](type-aliases/BuildLimitOrderFunctions.md)
@@ -78,6 +79,8 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 - [CancelNFTOrderFunctions](type-aliases/CancelNFTOrderFunctions.md)
 - [ContractMethod](type-aliases/ContractMethod.md)
 - [ContractMethodByName](type-aliases/ContractMethodByName.md)
+- [CrosschainOrderBridgeAndChanges](type-aliases/CrosschainOrderBridgeAndChanges.md)
+- [DeltaAuction](type-aliases/DeltaAuction.md)
 - [DeltaAuctionOrder](type-aliases/DeltaAuctionOrder.md)
 - [DeltaOrderHandlers](type-aliases/DeltaOrderHandlers.md)
 - [DeltaPrice](type-aliases/DeltaPrice.md)
@@ -129,8 +132,6 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 - [OptimalRate](type-aliases/OptimalRate.md)
 - [OptionalRate](type-aliases/OptionalRate.md)
 - [OrderData](type-aliases/OrderData.md)
-- [ParaswapDeltaAuction](type-aliases/ParaswapDeltaAuction.md)
-- [ParaSwapVersion](type-aliases/ParaSwapVersion.md)
 - [PostDeltaOrderFunctions](type-aliases/PostDeltaOrderFunctions.md)
 - [PostDeltaOrderParams](type-aliases/PostDeltaOrderParams.md)
 - [PostLimitOrderFunctions](type-aliases/PostLimitOrderFunctions.md)
@@ -179,6 +180,7 @@ Renames and re-exports [constructEthersContractCaller](functions/constructEthers
 - [constructApproveTokenForLimitOrder](functions/constructApproveTokenForLimitOrder.md)
 - [constructApproveTokenForNFTOrder](functions/constructApproveTokenForNFTOrder.md)
 - [constructAxiosFetcher](functions/constructAxiosFetcher.md)
+- [constructBuildCrosschainOrderBridge](functions/constructBuildCrosschainOrderBridge.md)
 - [constructBuildDeltaOrder](functions/constructBuildDeltaOrder.md)
 - [constructBuildLimitOrder](functions/constructBuildLimitOrder.md)
 - [constructBuildLimitOrderTx](functions/constructBuildLimitOrderTx.md)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / LocalAccount
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / LocalAccount
 
 # Type Alias: LocalAccount\<source, address\>
 

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Error
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Error
 
 # Type Alias: Error\<messages\>
 

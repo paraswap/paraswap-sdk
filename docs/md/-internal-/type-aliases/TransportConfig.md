@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransportConfig
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransportConfig
 
 # Type Alias: TransportConfig\<type, eip1193RequestFn\>
 

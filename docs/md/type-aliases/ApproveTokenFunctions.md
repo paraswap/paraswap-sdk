@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / ApproveTokenFunctions
+[@velora-dex/sdk](../globals.md) / ApproveTokenFunctions
 
 # Type Alias: ApproveTokenFunctions\<T\>
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/swap/approve.ts:18](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/swap/approve.ts#L18)
+[src/methods/swap/approve.ts:18](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/swap/approve.ts#L18)

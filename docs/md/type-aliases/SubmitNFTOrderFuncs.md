@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SubmitNFTOrderFuncs
+[@velora-dex/sdk](../globals.md) / SubmitNFTOrderFuncs
 
 # Type Alias: SubmitNFTOrderFuncs
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/index.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/index.ts#L37)
+[src/methods/nftOrders/index.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/index.ts#L37)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / GetMulticallHandlersFunctions
+[@velora-dex/sdk](../globals.md) / GetMulticallHandlersFunctions
 
 # Type Alias: GetMulticallHandlersFunctions
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/getMulticallHandlers.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getMulticallHandlers.ts#L16)
+[src/methods/delta/getMulticallHandlers.ts:16](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getMulticallHandlers.ts#L16)

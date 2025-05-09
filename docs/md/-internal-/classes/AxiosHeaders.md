@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / AxiosHeaders
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / AxiosHeaders
 
 # Class: AxiosHeaders
 

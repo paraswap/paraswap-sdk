@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchEventOnLogsFn
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / WatchEventOnLogsFn
 
 # Type Alias: WatchEventOnLogsFn()\<abiEvent, abiEvents, strict, _eventName\>
 

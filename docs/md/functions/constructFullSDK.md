@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / constructFullSDK
+[@velora-dex/sdk](../globals.md) / constructFullSDK
 
 # Function: constructFullSDK()
 
@@ -26,4 +26,4 @@ construct SDK with every method, for swap and limitOrders
 
 ## Defined in
 
-[src/sdk/full.ts:31](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/full.ts#L31)
+[src/sdk/full.ts:31](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/full.ts#L31)

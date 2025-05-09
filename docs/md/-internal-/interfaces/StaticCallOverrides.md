@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / StaticCallOverrides
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / StaticCallOverrides
 
 # Interface: StaticCallOverrides
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[src/types.ts:83](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L83)
+[src/types.ts:83](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L83)
 
 ***
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[src/types.ts:72](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L72)
+[src/types.ts:72](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L72)
 
 ***
 
@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[src/types.ts:76](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L76)
+[src/types.ts:76](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L76)
 
 ***
 
@@ -60,7 +60,7 @@
 
 #### Defined in
 
-[src/types.ts:73](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L73)
+[src/types.ts:73](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L73)
 
 ***
 
@@ -74,7 +74,7 @@
 
 #### Defined in
 
-[src/types.ts:74](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L74)
+[src/types.ts:74](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L74)
 
 ***
 
@@ -88,7 +88,7 @@
 
 #### Defined in
 
-[src/types.ts:75](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L75)
+[src/types.ts:75](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L75)
 
 ***
 
@@ -102,4 +102,4 @@
 
 #### Defined in
 
-[src/types.ts:77](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L77)
+[src/types.ts:77](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L77)

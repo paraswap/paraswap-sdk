@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / LimitOrderFromApi
+[@velora-dex/sdk](../globals.md) / LimitOrderFromApi
 
 # Type Alias: LimitOrderFromApi
 
@@ -104,4 +104,4 @@ transaction with the last event pertaining to the order: OrderFilled or OrderCan
 
 ## Defined in
 
-[src/methods/limitOrders/helpers/types.ts:44](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/helpers/types.ts#L44)
+[src/methods/limitOrders/helpers/types.ts:44](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/helpers/types.ts#L44)

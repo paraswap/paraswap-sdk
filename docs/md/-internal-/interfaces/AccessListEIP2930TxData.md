@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / AccessListEIP2930TxData
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / AccessListEIP2930TxData
 
 # Interface: AccessListEIP2930TxData
 

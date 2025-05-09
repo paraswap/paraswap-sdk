@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3EthInterface
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3EthInterface
 
 # Interface: Web3EthInterface
 
@@ -84,13 +84,13 @@ Decodes ABI-encoded log data and indexed topic data.
 
 ##### Type Parameters
 
-• **ReturnType_1** *extends* [`DecodedParams`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md)
+• **ReturnType_1** *extends* [`DecodedParams`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/DecodedParams.md)
 
 ##### Parameters
 
-• **inputs**: readonly [`AbiParameter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)[] \| [`AbiParameter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)[]
+• **inputs**: readonly [`AbiParameter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)[] \| [`AbiParameter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md)[]
 
-A [AbiParameter](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md) input array. See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
+A [AbiParameter](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiParameter.md) input array. See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
 
 • **data**: `string`
 
@@ -151,7 +151,7 @@ Decodes an ABI encoded parameter to its JavaScript type.
 
 ##### Parameters
 
-• **abi**: [`AbiInput`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)
+• **abi**: [`AbiInput`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)
 
 The type of the parameter. See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
 
@@ -229,9 +229,9 @@ Decodes ABI encoded parameters to its JavaScript types.
 
 ##### Parameters
 
-• **abi**: readonly [`AbiInput`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[] \| [`AbiInput`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[]
+• **abi**: readonly [`AbiInput`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[] \| [`AbiInput`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[]
 
-An array of [AbiInput](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md). See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
+An array of [AbiInput](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md). See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
 
 • **bytes**: `string`
 
@@ -353,7 +353,7 @@ The JSON interface spec documentation https://docs.soliditylang.org/en/latest/ab
 
 ##### Parameters
 
-• **functionName**: `string` \| [`AbiFunctionFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
+• **functionName**: `string` \| [`AbiFunctionFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
 
 The function name to encode or the `JSON interface` object of the function.
 If the passed parameter is a string, it has to be in the form of `functionName(param1Type,param2Type,...)`. eg: myFunction(uint256,uint32[],bytes10,bytes)
@@ -402,7 +402,7 @@ The JSON interface spec documentation https://docs.soliditylang.org/en/latest/ab
 
 ##### Parameters
 
-• **jsonInterface**: [`AbiFunctionFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
+• **jsonInterface**: [`AbiFunctionFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
 
 The `JSON interface` object of the function.
 
@@ -473,7 +473,7 @@ The JSON interface spec documentation https://docs.soliditylang.org/en/latest/ab
 
 ##### Parameters
 
-• **functionName**: `string` \| [`AbiFunctionFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
+• **functionName**: `string` \| [`AbiFunctionFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiFunctionFragment.md)
 
 The function name to encode or the `JSON interface` object of the function.
 If the passed parameter is a string, it has to be in the form of `functionName(param1Type,param2Type,...)`. eg: myFunction(uint256,uint32[],bytes10,bytes)
@@ -521,7 +521,7 @@ Encodes a parameter based on its type to its ABI representation.
 
 ##### Parameters
 
-• **abi**: [`AbiInput`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)
+• **abi**: [`AbiInput`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)
 
 The type of the parameter. See the [Solidity documentation](https://docs.soliditylang.org/en/develop/types.html) for a list of types.
 
@@ -595,9 +595,9 @@ Encodes a parameter based on its type to its ABI representation.
 
 ##### Parameters
 
-• **abi**: readonly [`AbiInput`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[]
+• **abi**: readonly [`AbiInput`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md)[]
 
-An array of [AbiInput](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md). See [Solidity's documentation](https://solidity.readthedocs.io/en/v0.5.3/abi-spec.html#json) for more details.
+An array of [AbiInput](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiInput.md). See [Solidity's documentation](https://solidity.readthedocs.io/en/v0.5.3/abi-spec.html#json) for more details.
 
 • **params**: `unknown`[]
 
@@ -657,7 +657,7 @@ node\_modules/web3/lib/commonjs/types.d.ts:30
 
 #### encrypt()
 
-> **encrypt**: (`privateKey`, `password`, `options`?) => `Promise`\<[`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)\>
+> **encrypt**: (`privateKey`, `password`, `options`?) => `Promise`\<[`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)\>
 
 encrypt a private key with a password, returns a V3 JSON Keystore
 
@@ -673,13 +673,13 @@ The private key to encrypt, 32 bytes.
 
 The password used for encryption.
 
-• **options?**: [`CipherOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/CipherOptions.md)
+• **options?**: [`CipherOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/CipherOptions.md)
 
 Options to configure to encrypt the keystore either scrypt or pbkdf2
 
 ##### Returns
 
-`Promise`\<[`KeyStore`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)\>
+`Promise`\<[`KeyStore`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/KeyStore.md)\>
 
 Returns a V3 JSON Keystore
 
@@ -947,7 +947,7 @@ signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd60
 
 ##### Parameters
 
-• **transaction**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **transaction**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 • **privateKey**: [`Bytes`](../type-aliases/Bytes.md)
 
@@ -2352,7 +2352,7 @@ It does not publish anything to the blockchain and does not consume any gas.
 
 #### Parameters
 
-• **transaction**: [`TransactionCall`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
+• **transaction**: [`TransactionCall`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
 
 A transaction object where all properties are optional except `to`, however it's recommended to include the `from` property or it may default to `0x0000000000000000000000000000000000000000` depending on your node or provider.
 
@@ -2362,7 +2362,7 @@ A transaction object where all properties are optional except `to`, however it's
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
@@ -2425,7 +2425,7 @@ This method generates an access list for a transaction.
 
 #### Parameters
 
-• **transaction**: [`TransactionForAccessList`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionForAccessList.md)
+• **transaction**: [`TransactionForAccessList`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionForAccessList.md)
 
 A transaction object where all properties are optional except `from`, however it's recommended to include the `to` property.
 
@@ -2435,7 +2435,7 @@ A transaction object where all properties are optional except `from`, however it
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the createAccessList should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the createAccessList should be formatted.
 
 #### Returns
 
@@ -2528,9 +2528,9 @@ with a contract as a result of updating the contract's state.
 
 #### Parameters
 
-• **transaction**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **transaction**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
-The [Transaction](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md) object to estimate the gas for.
+The [Transaction](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md) object to estimate the gas for.
 
 • **blockNumber?**: [`BlockNumberOrTag`](../type-aliases/BlockNumberOrTag.md)
 
@@ -2538,7 +2538,7 @@ The [Transaction](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-s
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
@@ -2662,7 +2662,7 @@ The address to get the balance of.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -2710,7 +2710,7 @@ If specified `true`, the returned block will contain all transactions as objects
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted (does not format transaction objects or hashes).
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted (does not format transaction objects or hashes).
 
 #### Returns
 
@@ -2880,7 +2880,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:346
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -2922,7 +2922,7 @@ The [BlockNumberOrTag](../type-aliases/BlockNumberOrTag.md) (defaults to [Web3Et
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -2967,7 +2967,7 @@ The [BlockNumberOrTag](../type-aliases/BlockNumberOrTag.md) (defaults to [Web3Et
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3008,7 +3008,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:440
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
@@ -3056,7 +3056,7 @@ The address to get the code from.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3159,7 +3159,7 @@ A monotonically increasing list of percentile values to sample from each block�
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
@@ -3257,7 +3257,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1625
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3295,7 +3295,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:136
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3337,7 +3337,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:110
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3393,7 +3393,7 @@ node\_modules/web3-core/lib/commonjs/web3\_event\_emitter.d.ts:22
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3462,13 +3462,13 @@ A [Filter](Filter.md) object containing the properties for the desired logs.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
 `Promise`\<(`string` \| `object`)[]\>
 
-[FilterResultsAPI](../type-aliases/FilterResultsAPI.md), an array of [Log](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Log.md) objects.
+[FilterResultsAPI](../type-aliases/FilterResultsAPI.md), an array of [Log](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Log.md) objects.
 
 ```ts
 web3.eth.getPastLogs({
@@ -3529,7 +3529,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1397
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3649,7 +3649,7 @@ Array of storage-keys which should be proofed and included. See web3.getStorageA
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the return data from the call should be formatted.
 
 #### Returns
 
@@ -3807,7 +3807,7 @@ The index position of the storage.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3859,7 +3859,7 @@ The hash of the desired transaction.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3940,7 +3940,7 @@ The address to get the number of transactions for.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -3990,7 +3990,7 @@ The index position of the transaction.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -4086,13 +4086,13 @@ Hash of the transaction to retrieve the receipt for.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
 `Promise`\<`object`\>
 
-The desired [TransactionReceipt](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) object.
+The desired [TransactionReceipt](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md) object.
 
 ```ts
 web3.eth.getTransactionReceipt("0xdf7756865c2056ce34c4eabe4eff42ad251a9f920a1c620c00b4ea0988731d3f").then(console.log);
@@ -4231,7 +4231,7 @@ The index position of the uncle.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -4672,11 +4672,11 @@ node\_modules/web3-core/lib/commonjs/web3\_context.d.ts:73
 
 ### removeAllListeners()
 
-> **removeAllListeners**(): [`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+> **removeAllListeners**(): [`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Returns
 
-[`EventEmitter`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
+[`EventEmitter`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-utils_lib_commonjs_index/classes/EventEmitter.md)
 
 #### Inherited from
 
@@ -4720,7 +4720,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1459
 
 ### sendSignedTransaction()
 
-> **sendSignedTransaction**\<`ReturnFormat`\>(`transaction`, `returnFormat`?, `options`?): [`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendSignedTransactionEvents`](../type-aliases/SendSignedTransactionEvents.md)\<`ReturnFormat`\>\>
+> **sendSignedTransaction**\<`ReturnFormat`\>(`transaction`, `returnFormat`?, `options`?): [`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendSignedTransactionEvents`](../type-aliases/SendSignedTransactionEvents.md)\<`ReturnFormat`\>\>
 
 #### Type Parameters
 
@@ -4734,15 +4734,15 @@ Signed transaction in one of the valid [Bytes](../type-aliases/Bytes.md) format.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
-• **options?**: [`SendTransactionOptions`](SendTransactionOptions.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)\>
+• **options?**: [`SendTransactionOptions`](SendTransactionOptions.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)\>
 
 A configuration object used to change the behavior of the method
 
 #### Returns
 
-[`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendSignedTransactionEvents`](../type-aliases/SendSignedTransactionEvents.md)\<`ReturnFormat`\>\>
+[`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendSignedTransactionEvents`](../type-aliases/SendSignedTransactionEvents.md)\<`ReturnFormat`\>\>
 
 If `await`ed or `.then`d (i.e. the promise resolves), the transaction hash is returned.
 ```ts
@@ -4835,7 +4835,7 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1228
 
 ### sendTransaction()
 
-> **sendTransaction**\<`ReturnFormat`\>(`transaction`, `returnFormat`?, `options`?): [`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendTransactionEvents`](../type-aliases/SendTransactionEvents.md)\<`ReturnFormat`\>\>
+> **sendTransaction**\<`ReturnFormat`\>(`transaction`, `returnFormat`?, `options`?): [`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendTransactionEvents`](../type-aliases/SendTransactionEvents.md)\<`ReturnFormat`\>\>
 
 #### Type Parameters
 
@@ -4843,21 +4843,21 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1228
 
 #### Parameters
 
-• **transaction**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md) \| [`TransactionWithFromLocalWalletIndex`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromLocalWalletIndex.md) \| [`TransactionWithToLocalWalletIndex`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithToLocalWalletIndex.md) \| [`TransactionWithFromAndToLocalWalletIndex`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromAndToLocalWalletIndex.md)
+• **transaction**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md) \| [`TransactionWithFromLocalWalletIndex`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromLocalWalletIndex.md) \| [`TransactionWithToLocalWalletIndex`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithToLocalWalletIndex.md) \| [`TransactionWithFromAndToLocalWalletIndex`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromAndToLocalWalletIndex.md)
 
-The [Transaction](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md), [TransactionWithFromLocalWalletIndex](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromLocalWalletIndex.md), [TransactionWithToLocalWalletIndex](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithToLocalWalletIndex.md) or [TransactionWithFromAndToLocalWalletIndex](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromAndToLocalWalletIndex.md) to send. __Note:__ In the `to` and `from` fields when hex strings are used, it is assumed they are addresses, for any other form (number, string number, etc.) it is assumed they are wallet indexes.
+The [Transaction](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md), [TransactionWithFromLocalWalletIndex](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromLocalWalletIndex.md), [TransactionWithToLocalWalletIndex](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithToLocalWalletIndex.md) or [TransactionWithFromAndToLocalWalletIndex](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionWithFromAndToLocalWalletIndex.md) to send. __Note:__ In the `to` and `from` fields when hex strings are used, it is assumed they are addresses, for any other form (number, string number, etc.) it is assumed they are wallet indexes.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
-• **options?**: [`SendTransactionOptions`](SendTransactionOptions.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)\>
+• **options?**: [`SendTransactionOptions`](SendTransactionOptions.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md)\>
 
 A configuration object used to change the behavior of the `sendTransaction` method.
 
 #### Returns
 
-[`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendTransactionEvents`](../type-aliases/SendTransactionEvents.md)\<`ReturnFormat`\>\>
+[`Web3PromiEvent`](../classes/Web3PromiEvent.md)\<[`TransactionReceipt`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/TransactionReceipt.md), [`SendTransactionEvents`](../type-aliases/SendTransactionEvents.md)\<`ReturnFormat`\>\>
 
 If `await`ed or `.then`d (i.e. the promise resolves), the transaction hash is returned.
 ```ts
@@ -5104,7 +5104,7 @@ Data to sign in one of the valid [Bytes](../type-aliases/Bytes.md) format.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -5153,13 +5153,13 @@ node\_modules/web3-eth/lib/commonjs/web3\_eth.d.ts:1256
 
 #### Parameters
 
-• **transaction**: [`Transaction`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
+• **transaction**: [`Transaction`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md)
 
 The transaction object to sign.
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) Specifies how the return data should be formatted.
 
 #### Returns
 
@@ -5239,7 +5239,7 @@ This method sends EIP-712 typed data to the RPC provider to be signed.
 
 The address that corresponds with the private key used to sign the typed data.
 
-• **typedData**: [`Eip712TypedData`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
+• **typedData**: [`Eip712TypedData`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Eip712TypedData.md)
 
 The EIP-712 typed data object.
 
@@ -5249,7 +5249,7 @@ A boolean flag determining whether the RPC call uses the legacy method `eth_sign
 
 • **returnFormat?**: `ReturnFormat`
 
-([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the signed typed data should be formatted.
+([DataFormat](../type-aliases/DataFormat.md) defaults to [DEFAULT_RETURN_FORMAT](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/variables/DEFAULT_RETURN_FORMAT.md)) - Specifies how the signed typed data should be formatted.
 
 #### Returns
 
@@ -5395,7 +5395,7 @@ You can subscribe to pending transactions by calling web3.eth.subscribe('pending
 ( same as subscribe('newBlockHeaders'))
 Subscribes to incoming block headers. This can be used as timer to check for changes on the blockchain.
 
-The structure of a returned block header is [BlockHeaderOutput](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/BlockHeaderOutput.md):
+The structure of a returned block header is [BlockHeaderOutput](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/BlockHeaderOutput.md):
 
 ```ts
 (await web3.eth.subscribe('newHeads')).on( // 'newBlockHeaders' would work as well

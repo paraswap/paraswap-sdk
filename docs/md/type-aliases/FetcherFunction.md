@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / FetcherFunction
+[@velora-dex/sdk](../globals.md) / FetcherFunction
 
 # Type Alias: FetcherFunction()
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/types.ts:60](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L60)
+[src/types.ts:60](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L60)

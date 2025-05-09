@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SDKFunction
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SDKFunction
 
 # Type Alias: SDKFunction()\<T\>
 
@@ -22,4 +22,4 @@
 
 ## Defined in
 
-[src/sdk/partial.ts:23](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/partial.ts#L23)
+[src/sdk/partial.ts:23](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/partial.ts#L23)

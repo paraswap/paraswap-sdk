@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FillOrderDirectly
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FillOrderDirectly
 
 # Type Alias: FillOrderDirectly()\<T\>
 
@@ -36,4 +36,4 @@ Permit1 data or DAI Permit data or Token.parmit() input params encoded; Permit b
 
 ## Defined in
 
-[src/methods/limitOrders/fillOrderDirectly.ts:42](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/limitOrders/fillOrderDirectly.ts#L42)
+[src/methods/limitOrders/fillOrderDirectly.ts:42](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/limitOrders/fillOrderDirectly.ts#L42)

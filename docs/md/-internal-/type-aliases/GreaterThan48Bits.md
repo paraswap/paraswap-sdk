@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GreaterThan48Bits
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GreaterThan48Bits
 
 # Type Alias: GreaterThan48Bits
 

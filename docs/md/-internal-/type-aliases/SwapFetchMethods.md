@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapFetchMethods
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SwapFetchMethods
 
 # Type Alias: SwapFetchMethods
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/sdk/simple.ts:144](https://github.com/paraswap/paraswap-sdk/blob/master/src/sdk/simple.ts#L144)
+[src/sdk/simple.ts:148](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/sdk/simple.ts#L148)

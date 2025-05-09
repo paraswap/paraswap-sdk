@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / Web3UnpromiEvent
+[@velora-dex/sdk](../globals.md) / Web3UnpromiEvent
 
 # Type Alias: Web3UnpromiEvent
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/helpers/providers/web3.ts:16](https://github.com/paraswap/paraswap-sdk/blob/master/src/helpers/providers/web3.ts#L16)
+[src/helpers/providers/web3.ts:16](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/helpers/providers/web3.ts#L16)

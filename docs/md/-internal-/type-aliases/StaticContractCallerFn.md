@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / StaticContractCallerFn
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / StaticContractCallerFn
 
 # Type Alias: StaticContractCallerFn()
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/types.ts:107](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L107)
+[src/types.ts:107](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L107)

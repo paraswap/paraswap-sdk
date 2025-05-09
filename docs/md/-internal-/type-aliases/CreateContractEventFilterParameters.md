@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / CreateContractEventFilterParameters
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / CreateContractEventFilterParameters
 
 # Type Alias: CreateContractEventFilterParameters\<abi, eventName, args, strict, fromBlock, toBlock\>
 

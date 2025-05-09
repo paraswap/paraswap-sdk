@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestEIP7702
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / TransactionRequestEIP7702
 
 # Type Alias: TransactionRequestEIP7702\<quantity, index, type\>
 

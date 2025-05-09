@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / NFTOrderToSend
+[@velora-dex/sdk](../globals.md) / NFTOrderToSend
 
 # Type Alias: NFTOrderToSend
 
@@ -20,4 +20,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/helpers/types.ts:12](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/types.ts#L12)
+[src/methods/nftOrders/helpers/types.ts:12](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/types.ts#L12)

@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / GetTopics
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / GetTopics
 
 # Type Alias: GetTopics\<abiEvent, abi, eventName, _AbiEvent, _Args, _FailedToParseArgs\>
 

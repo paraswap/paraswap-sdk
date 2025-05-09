@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / BridgePrice
+[@velora-dex/sdk](../globals.md) / BridgePrice
 
 # Type Alias: BridgePrice
 
@@ -22,10 +22,6 @@
 
 > **destAmountAfterBridge**: `string`
 
-### destTokenSrcChain
-
-> **destTokenSrcChain**: `string`
-
 ### destUSDAfterBridge
 
 > **destUSDAfterBridge**: `string`
@@ -36,4 +32,4 @@
 
 ## Defined in
 
-[src/methods/delta/getDeltaPrice.ts:48](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getDeltaPrice.ts#L48)
+[src/methods/delta/getDeltaPrice.ts:48](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getDeltaPrice.ts#L48)

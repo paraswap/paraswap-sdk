@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / IsUnion
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / IsUnion
 
 # Type Alias: IsUnion\<union, union2\>
 

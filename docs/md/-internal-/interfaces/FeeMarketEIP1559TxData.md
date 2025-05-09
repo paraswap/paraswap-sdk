@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / FeeMarketEIP1559TxData
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / FeeMarketEIP1559TxData
 
 # Interface: FeeMarketEIP1559TxData
 
@@ -82,7 +82,7 @@ node\_modules/web3-eth-accounts/lib/commonjs/tx/types.d.ts:93
 
 > `optional` **gasPrice**: `null`
 
-The transaction's gas price, inherited from [Transaction](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md).  This property is not used for EIP1559
+The transaction's gas price, inherited from [Transaction](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/Transaction.md).  This property is not used for EIP1559
 transactions and should always be undefined for this specific transaction type.
 
 #### Overrides

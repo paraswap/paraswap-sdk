@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / SignNFTOrderFunctions
+[@velora-dex/sdk](../globals.md) / SignNFTOrderFunctions
 
 # Type Alias: SignNFTOrderFunctions
 
@@ -24,4 +24,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/signOrder.ts:5](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/signOrder.ts#L5)
+[src/methods/nftOrders/signOrder.ts:5](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/signOrder.ts#L5)

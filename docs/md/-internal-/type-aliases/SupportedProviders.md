@@ -1,12 +1,12 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / SupportedProviders
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / SupportedProviders
 
 # Type Alias: SupportedProviders\<API\>
 
-> **SupportedProviders**\<`API`\>: [`EIP1193Provider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md)\<`API`\> \| [`Web3BaseProvider`](../classes/Web3BaseProvider.md)\<`API`\> \| [`LegacyRequestProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacyRequestProvider.md) \| [`LegacySendProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md) \| [`LegacySendAsyncProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md) \| [`SimpleProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/SimpleProvider.md)\<`API`\> \| [`MetaMaskProvider`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/MetaMaskProvider.md)\<`API`\>
+> **SupportedProviders**\<`API`\>: [`EIP1193Provider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/EIP1193Provider.md)\<`API`\> \| [`Web3BaseProvider`](../classes/Web3BaseProvider.md)\<`API`\> \| [`LegacyRequestProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacyRequestProvider.md) \| [`LegacySendProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendProvider.md) \| [`LegacySendAsyncProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/LegacySendAsyncProvider.md) \| [`SimpleProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/SimpleProvider.md)\<`API`\> \| [`MetaMaskProvider`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/MetaMaskProvider.md)\<`API`\>
 
 ## Type Parameters
 

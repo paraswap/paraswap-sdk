@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3APIReturnType
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / Web3APIReturnType
 
 # Type Alias: Web3APIReturnType\<API, Method\>
 
@@ -12,7 +12,7 @@
 
 • **API** *extends* [`Web3APISpec`](Web3APISpec.md)
 
-• **Method** *extends* [`Web3APIMethod`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3APIMethod.md)\<`API`\>
+• **Method** *extends* [`Web3APIMethod`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/Web3APIMethod.md)\<`API`\>
 
 ## Defined in
 

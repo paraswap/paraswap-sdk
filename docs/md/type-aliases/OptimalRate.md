@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../README.md) • **Docs**
+[**@velora-dex/sdk**](../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../globals.md) / OptimalRate
+[@velora-dex/sdk](../globals.md) / OptimalRate
 
 # Type Alias: OptimalRate
 

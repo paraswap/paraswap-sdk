@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / EthBaseTypes
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / EthBaseTypes
 
 # Type Alias: EthBaseTypes
 

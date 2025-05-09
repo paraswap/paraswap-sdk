@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / DeployerMethodClass
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / DeployerMethodClass
 
 # Class: DeployerMethodClass\<FullContractAbi\>
 
@@ -34,7 +34,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 ### args
 
-> `protected` `readonly` **args**: `never`[] \| [`ContractConstructorArgs`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`FullContractAbi`\>
+> `protected` `readonly` **args**: `never`[] \| [`ContractConstructorArgs`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`FullContractAbi`\>
 
 #### Defined in
 
@@ -44,7 +44,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 ### constructorAbi
 
-> `protected` `readonly` **constructorAbi**: [`AbiConstructorFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiConstructorFragment.md)
+> `protected` `readonly` **constructorAbi**: [`AbiConstructorFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiConstructorFragment.md)
 
 #### Defined in
 
@@ -54,7 +54,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 ### contractOptions
 
-> `protected` `readonly` **contractOptions**: [`ContractOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
+> `protected` `readonly` **contractOptions**: [`ContractOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
 
 #### Defined in
 
@@ -98,7 +98,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 #### Parameters
 
-• **tx**: [`TransactionCall`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
+• **tx**: [`TransactionCall`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
 
 #### Returns
 
@@ -120,15 +120,15 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 ##### abi
 
-> **abi**: [`AbiConstructorFragment`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiConstructorFragment.md)
+> **abi**: [`AbiConstructorFragment`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/AbiConstructorFragment.md)
 
 ##### args
 
-> **args**: `never`[] \| [`NonNullable`](../type-aliases/NonNullable.md)\<[`ContractConstructorArgs`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`FullContractAbi`\>\>
+> **args**: `never`[] \| [`NonNullable`](../type-aliases/NonNullable.md)\<[`ContractConstructorArgs`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/type-aliases/ContractConstructorArgs.md)\<`FullContractAbi`\>\>
 
 ##### contractOptions
 
-> **contractOptions**: [`ContractOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
+> **contractOptions**: [`ContractOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/ContractOptions.md)
 
 ##### deployData
 
@@ -190,7 +190,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 #### Parameters
 
-• **options?**: [`PayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
+• **options?**: [`PayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
 
 • **returnFormat?**: `ReturnFormat`
 
@@ -206,15 +206,15 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 ### populateTransaction()
 
-> **populateTransaction**(`txOptions`?): [`TransactionCall`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
+> **populateTransaction**(`txOptions`?): [`TransactionCall`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
 
 #### Parameters
 
-• **txOptions?**: [`PayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md) \| [`NonPayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/NonPayableCallOptions.md)
+• **txOptions?**: [`PayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md) \| [`NonPayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/NonPayableCallOptions.md)
 
 #### Returns
 
-[`TransactionCall`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
+[`TransactionCall`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/TransactionCall.md)
 
 #### Defined in
 
@@ -228,7 +228,7 @@ node\_modules/web3-eth-contract/lib/commonjs/contract-deployer-method-class.d.ts
 
 #### Parameters
 
-• **options?**: [`PayableCallOptions`](../namespaces/home_velenir-gnx570_Projects_Paraswap_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
+• **options?**: [`PayableCallOptions`](../namespaces/Users_alexeyshchur_Desktop_Repos_paraswap-sdk_node_modules_web3-types_lib_commonjs_index/interfaces/PayableCallOptions.md)
 
 #### Returns
 

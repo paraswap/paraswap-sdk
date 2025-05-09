@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / OrderNFT
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / OrderNFT
 
 # Variable: OrderNFT
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/methods/nftOrders/helpers/buildOrderData.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/nftOrders/helpers/buildOrderData.ts#L11)
+[src/methods/nftOrders/helpers/buildOrderData.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/nftOrders/helpers/buildOrderData.ts#L11)

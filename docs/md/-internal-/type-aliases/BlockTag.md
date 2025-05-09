@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / BlockTag
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / BlockTag
 
 # Type Alias: BlockTag
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[src/types.ts:80](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L80)
+[src/types.ts:80](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L80)

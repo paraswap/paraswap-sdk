@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / PartnerFeeQueryParams
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / PartnerFeeQueryParams
 
 # Type Alias: PartnerFeeQueryParams
 
@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[src/methods/delta/getPartnerFee.ts:11](https://github.com/paraswap/paraswap-sdk/blob/master/src/methods/delta/getPartnerFee.ts#L11)
+[src/methods/delta/getPartnerFee.ts:11](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/methods/delta/getPartnerFee.ts#L11)

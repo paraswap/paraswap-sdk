@@ -1,8 +1,8 @@
-[**@paraswap/sdk**](../../README.md) • **Docs**
+[**@velora-dex/sdk**](../../README.md) • **Docs**
 
 ***
 
-[@paraswap/sdk](../../globals.md) / [\<internal\>](../README.md) / ConstructBaseInput
+[@velora-dex/sdk](../../globals.md) / [\<internal\>](../README.md) / ConstructBaseInput
 
 # Interface: ConstructBaseInput
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[src/types.ts:37](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L37)
+[src/types.ts:37](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L37)
 
 ***
 
@@ -28,14 +28,14 @@
 
 #### Defined in
 
-[src/types.ts:39](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L39)
+[src/types.ts:39](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L39)
 
 ***
 
 ### version?
 
-> `optional` **version**: [`ParaSwapVersion`](../../type-aliases/ParaSwapVersion.md)
+> `optional` **version**: [`APIVersion`](../../type-aliases/APIVersion.md)
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/paraswap/paraswap-sdk/blob/master/src/types.ts#L38)
+[src/types.ts:38](https://github.com/VeloraDEX/paraswap-sdk/blob/feat/velora/src/types.ts#L38)
