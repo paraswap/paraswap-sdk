@@ -41,7 +41,7 @@ async function simpleDeltaFlow() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     // partner: "..." // if available
   });
 
@@ -116,7 +116,7 @@ async function manualDeltaFlow() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     // partner: "..." // if available
   });
 
