@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.velora.xyz/">
-    <img src="./docs/velora_banner.svg" width=350 />
+    <img src="https://cdn.paraswap.io/brand/velora_banner.svg" width=350 />
   </a>
 </p>
 
