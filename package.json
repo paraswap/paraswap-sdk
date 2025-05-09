@@ -7,8 +7,7 @@
   "files": [
     "dist",
     "src",
-    "docs/DELTA.md",
-    "docs/passed_tests.png"
+    "docs/DELTA.md"
   ],
   "scripts": {
     "analyze": "size-limit --why",
@@ -97,8 +96,8 @@
     "@paraswap/core": "2.4.0",
     "ts-essentials": "^10.0.3"
   },
-  "author": "ParaSwap",
-  "description": "ParaSwap SDK",
+  "author": "Velora",
+  "description": "Velora SDK",
   "license": "MIT",
   "keywords": [
     "web3",
@@ -107,7 +106,7 @@
     "crypto",
     "blockchain",
     "DEX",
-    "paraswap",
+    "velora",
     "ether",
     "eth",
     "dai",
@@ -118,10 +117,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/paraswap/paraswap-sdk"
+    "url": "https://github.com/VeloraDEX/paraswap-sdk"
   },
   "publishConfig": {
     "access": "public"
   },
-  "bugs": "https://github.com/paraswap/paraswap-sdk/issues"
+  "bugs": "https://github.com/VeloraDEX/paraswap-sdk/issues"
 }
