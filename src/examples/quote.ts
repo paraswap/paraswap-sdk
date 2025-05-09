@@ -51,7 +51,7 @@ async function deltaQuote() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     mode: 'delta',
     side: 'SELL',
     // partner: "..." // if available
@@ -80,7 +80,7 @@ async function marketQuote() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     mode: 'market',
     side: 'SELL',
     // partner: "..." // if available
@@ -116,7 +116,7 @@ async function allQuote() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     mode: 'all',
     side: 'SELL',
     // partner: "..." // if available

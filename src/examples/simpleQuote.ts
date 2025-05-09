@@ -31,7 +31,7 @@ async function allQuote() {
     amount,
     userAddress: account,
     srcDecimals: 18,
-    destDecimals: 18,
+    destDecimals: 6,
     mode: 'all', // Delta quote if possible, with fallback to Market price
     side: 'SELL',
     // partner: "..." // if available
