@@ -1,10 +1,25 @@
-<p align="center">
+<!-- <p align="center">
   <a href="https://www.velora.xyz/">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://cdn.paraswap.io/brand/velora_banner_dark.svg"/>
-    <img width="350" src="https://cdn.paraswap.io/brand/velora_banner_light.svg"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://cdn.paraswap.io/brand/velora_banner_dark.svg">
+    <img width=350 src="https://cdn.paraswap.io/brand/velora_banner_light.svg">
   </picture>
   </a>
+</p> -->
+<p align="center">
+<a href="https://www.velora.xyz/" target="_blank">
+import ThemedImage from '@theme/ThemedImage';
+
+<ThemedImage
+  alt="Velora Banner"
+  width="300"
+  style={{ maxWidth: '100%' }}
+  sources={{
+    light: 'https://cdn.paraswap.io/brand/velora_banner_light.svg',
+    dark: 'https://cdn.paraswap.io/brand/velora_banner_dark.svg',
+  }}
+/>
+</a>
 </p>
 
 # SDK for the Velora API
