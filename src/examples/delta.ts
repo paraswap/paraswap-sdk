@@ -151,6 +151,7 @@ async function manualDeltaFlow() {
     signature,
   });
 
+  // start_polling_example
   // poll if necessary
   function isExecutedDeltaAuction(
     auction: Omit<DeltaAuction, 'signature'>,
@@ -187,4 +188,5 @@ async function manualDeltaFlow() {
   }
 
   startStatusCheck(deltaAuction.id);
+  // end_polling_example
 }
