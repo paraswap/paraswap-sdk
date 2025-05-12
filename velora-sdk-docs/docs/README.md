@@ -1,5 +1,5 @@
 ---
-title: SDK
+title: Velora SDK
 position: 0
 ---
 <!-- <p align="center">
