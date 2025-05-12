@@ -37,6 +37,7 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: '/', // This makes /docs the homepage
           sidebarPath: './sidebars.ts',
           remarkPlugins: [
             [require('remark-code-snippets'), { baseDir: '../src' }], // Adjust baseDir to your source code folder
@@ -47,21 +48,23 @@ const config: Config = {
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           docItemComponent: '@theme/ApiItem', // Derived from docusaurus-theme-openapi
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        pages: false,
+        blog: false,
+        // blog: {
+        //   showReadingTime: true,
+        //   feedOptions: {
+        //     type: ['rss', 'atom'],
+        //     xslt: true,
+        //   },
+        //   // Please change this to your repo.
+        //   // Remove this to remove the "edit this page" links.
+        //   editUrl:
+        //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+        //   // Useful options to enforce blogging best practices
+        //   onInlineTags: 'warn',
+        //   onInlineAuthors: 'warn',
+        //   onUntruncatedBlogPosts: 'warn',
+        // },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -78,9 +81,10 @@ const config: Config = {
           myApi: {
             specPath: 'static/openapi.yaml', // Path to your OpenAPI spec file
             outputDir: 'docs/api', // Directory to output generated docs
+
             sidebarOptions: {
               groupPathsBy: 'tag', // Group endpoints by tag
-              // categoryLinkSource: 'tag', // Use tag as category link
+              categoryLinkSource: 'tag', // Use tag as category link
             },
             // hideSendButton: false,
             // baseUrl: 'https://api.example.com', // Base URL for API requests
@@ -94,12 +98,11 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    // image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      // title: 'Velora SDK',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'https://cdn.paraswap.io/brand/velora_banner_light.svg',
       },
       items: [
         {
