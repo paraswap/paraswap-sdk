@@ -106,14 +106,7 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial',
-        },
-        { to: '/blog', label: 'Blog', position: 'left' },
-        {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/VeloraDEX/paraswap-sdk',
           label: 'GitHub',
           position: 'right',
         },
