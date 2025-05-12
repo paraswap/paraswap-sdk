@@ -5,7 +5,7 @@ description: "Returns info on supported source destination chains and destinatio
 sidebar_label: "GET delta/prices/bridge-info"
 hide_title: true
 hide_table_of_contents: true
-api: eJztU8Fu1EAM/RXL5zRbrrkhqKreKihctivVm/E2o2ZnprazZRXl35EToF1KOXPg6vF7fvOePWJgbSUWizlhg5/YBkkKMe0y5AQ6lJLFOIDmQVqGwGoxkbdD21FMCpTCSdnyAyeFXRZoJauezX2QJbBofZtuOoZARqAmQ2uDMEQFgsTqg0JsnYbkCE8dC4N1DEXi3isPfFQgYbhb9Hxw6qtwBwfqB9ZqFuMA5TancAp5IfI3XA0X1HbQ5v325y/y7tUM5/4jyZ6KgmUg6KOaQ599m90ACkFYldVNfeXhK69MKCnNPrhjWOGercsBG7xnwwoLWYcNrgL3RqsisWVdbSWGez7z7LBCZTmwKDbrEQfpscHOrGizWlGJdSEhfaJSR+89XYKv3GcheH99hdOmwpmvGdGi9fz8/NFHz00V+qAF+64+r8/fYvwFWQJ3hbH1gMmgSD7EwOpRtzHdz24vP4LHIRsvG7XY6coVBvW+axL6/ERlYa8BAG4TThWWrLan5NIT7V355cUN/MWxE80jtjkZJ/t/Ff/uVdixeK7G32xVeopz7vOyjz9OZI1z4H4yc+RY4cvQNxV2Wc37xnFLyl+knyYvPw4sR2zWmwoPJJG2vvvrzfTiFC8vbnCavgP+/eSI
+api: eJztVU1v2zgQ/SsEz6pNivogfZNluegt2Gb3kgToiBzFamxJJek0geH/viCdpnGTXTS3PSwPtjF+M/M4w3lzoAadtv3k+3GgC/oH+r0dHOmHbiTjQNx+mkbr0RA37q1GYtD5foAAJ3oD/eAIDObM7Mc7HBzpRku0HZ37EHFktAatm10P18PlBokBD8R5u9d+b5H0jgAZ0IVUptchENhH8n2DFonfIJlsvwuWO3x0BCySLydGdQj+yXwh97Ddo0sineDgUI+DOXd5QfMXvxlpQG+IHnftj3uM3ascIfabQXYwOeJHAmTbOx9cf1Yu1oOAMRadQxfKGvi9quSrinkLg4NYi1A3mlCLbhoHh44uDjRlLHydN/DzedrXbXDfYXI0oXocPA4+RIBp2vY6Mpl/dSHMgTq9wR2EX/5xQrqgY/sVtacJnew4ofX9icTzNS9jurccwJg+9nN7ceb6ThxYC480ob3H3Uu787YfbmlC8QF20zaY2EOWst85BT3G88L5zSvx+MHo4uo9sRPKHvA3TwSzNq0LoXQuhOSiyypQq1KKsq66Ii1yYZgq153MI7hc57osMr3UPOtUUaillFKUGnimmK6Bl1rwgpURXMiOS9bpGgspikJKVExmHRO5YKpJ1bJjVcpUTm8SykV5umipcZmKblW0NQOzylVTpKDTPC9lWjK97niruoKrmEHoTCmdZ6lu1nkjJOfIuUo1lsxIXTNhci1EfgKnpeJLDbxLDWZFwZuVlJVgtVJVCSrLVAUy42UW6Ig0O9HJqwbyssxVrrplHWjUWpZStTVvO8WqVKiVAsXfX3ch8tx0xSrTqhZM5GWarQ1DoXhmGlVUOUgB0GX05pjEZxBfROBUsxSgEqpNU7Fu5IpVDPM6W6clVivFpKjLvKh1+n5OFWtloRTXRcplKwrNDVerDFJUTct0IwpW4DKT9Ob44w3v0G9GQxf0FuOggt/QBZ0b3HqYT7bX6Oat7c0tfgj6ThPq0N6jdXRxdaB7u6ULuvF+cov5HKZ+NoGFIBezPmDPdeYv3I4WSHXxiR5vEhrjhZnsfZzAp79XIXUEJTQkOvnyGZuxf4r47HJaCYFhr8MKAE8mO973Bl1YBrofbqMen25Evu1Hjye5OwluFDqydwF3ARY+f4fpFH1GCCHXAz0mdBqd30FUvAF2gfnH5pL8S8XOOB9+quj/m/O/vTmfloXHBz+fttDH7scnf3galCsa2x43XGg8TejL1t8kdDM6H3CHQwsO/7Tb4zGYv+3RPtLF1U1C78H20IYJuApSsUEwaON03eEjXdBKa5zCbMbShaX26+oNw/Q8xx+bS3o8/g0w4jOp
 sidebar_class_name: "get api-method"
 info_path: delta-api/velora-delta-api
 custom_edit_url: null
@@ -37,7 +37,8 @@ import Heading from "@theme/Heading";
 
 
 Returns info on supported source destination chains and destination tokens for cross-chain orders.
-The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on destination chain for cross-chain transactions.
+
+The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on the destination chain for cross-chain transactions.
 
 
 <ParamsDetails
@@ -56,7 +57,7 @@ The data structure is a nested dictionary where the primary keys are `sourceChai
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={undefined}
+  responses={{"200":{"description":"Supported tokens for cross-chain swaps","content":{"application/json":{"schema":{"type":"object","properties":{"supportedTokens":{"type":"object","additionalProperties":{"type":"object","additionalProperties":{"type":"array","items":{"type":"string","example":"0x4200000000000000000000000000000000000006"}}}}}},"example":{"supportedTokens":{"1":{"10":["0x4200000000000000000000000000000000000006","0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85","0x7F5c764cBc14f9669B88837ca1490cCa17c31607","0x68f180fcCe6836688e9084f035309E29Bf0A2095"],"137":["0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619","0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359","0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"],"324":["0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91","0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"]},"10":{"1":["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]}}}}}}}}
 >
   
 </StatusCodes>

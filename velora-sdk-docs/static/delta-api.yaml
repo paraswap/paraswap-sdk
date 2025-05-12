@@ -79,7 +79,7 @@ paths:
           description: |
             The ID of the destination chain for cross-chain swaps. 
             To check if the destination token is allowed by our bridge, visit:
-            [https://api.paraswap.io/bridge/tokens](https://api.paraswap.io/bridge/tokens)
+            [GET /delta/prices/bridge-info](/delta-api/get-delta-prices-bridge-info)
       responses:
         '200':
           description: Price quote
@@ -159,5 +159,44 @@ paths:
       summary: GET delta/prices/bridge-info
       description: |
         Returns info on supported source destination chains and destination tokens for cross-chain orders.
-        The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on destination chain for cross-chain transactions.
-      
+        
+        The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on the destination chain for cross-chain transactions.
+      responses:
+        '200':
+          description: Supported tokens for cross-chain swaps
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  supportedTokens:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: array
+                        items:
+                          type: string
+                          example: "0x4200000000000000000000000000000000000006"
+              example:
+                supportedTokens:
+                  "1":
+                    "10":
+                      - "0x4200000000000000000000000000000000000006"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
+                      - "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+                      - "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+                    "137":
+                      - "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+                      - "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+                      - "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+                    "324":
+                      - "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"
+                  "10":
+                    "1":
+                      - "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
