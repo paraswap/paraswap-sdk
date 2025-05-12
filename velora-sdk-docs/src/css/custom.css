@@ -33,3 +33,7 @@
 .openapi-params__list-item {
   padding-bottom: 15px;
 }
+
+.tabs.openapi-tabs__code-list-container {
+  display: none
+}
