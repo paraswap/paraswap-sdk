@@ -16,6 +16,12 @@ const sidebar: SidebarsConfig = {
           label: "GET delta/prices",
           className: "api-method get",
         },
+        {
+          type: "doc",
+          id: "delta-api/get-delta-prices-bridge-info",
+          label: "GET delta/prices/bridge-info",
+          className: "api-method get",
+        },
       ],
     },
   ],

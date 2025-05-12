@@ -13,7 +13,7 @@ paths:
     get:
       summary: GET delta/prices
       description: |
-        Returns pricing and bridge quote for a token swap using ParaSwap Delta.
+        Returns pricing and bridge quote for a token swap using Velora Delta.
       parameters:
         - name: srcToken
           in: query
@@ -76,6 +76,10 @@ paths:
           example: 10
           schema:
             type: integer
+          description: |
+            The ID of the destination chain for cross-chain swaps. 
+            To check if the destination token is allowed by our bridge, visit:
+            [https://api.paraswap.io/bridge/tokens](https://api.paraswap.io/bridge/tokens)
       responses:
         '200':
           description: Price quote
@@ -150,3 +154,10 @@ paths:
                   deltaAddress:
                     type: string
                     example: "0x0000000000bbf5c5fd284e657f01bd000933c96d"
+  /delta/prices/bridge-info:
+    get:
+      summary: GET delta/prices/bridge-info
+      description: |
+        Returns info on supported source destination chains and destination tokens for cross-chain orders.
+        The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on destination chain for cross-chain transactions.
+      
