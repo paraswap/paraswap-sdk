@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "gen-api-docs": "docusaurus gen-api-docs all",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -19,6 +20,7 @@
     "@docusaurus/preset-classic": "3.7.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "docusaurus-theme-openapi-docs": "^4.4.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -27,6 +29,8 @@
     "@docusaurus/module-type-aliases": "3.7.0",
     "@docusaurus/tsconfig": "3.7.0",
     "@docusaurus/types": "3.7.0",
+    "@docusaurus/utils": "^3.7.0",
+    "docusaurus-plugin-openapi-docs": "4.4.0",
     "remark-code-snippets": "^1.1.0",
     "typescript": "~5.6.2"
   },

@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: Velora Delta Prices API
+  version: 1.0.0
+
+servers:
+  - url: https://api.paraswap.io
+
+paths:
+  /delta/prices:
+    get:
+      summary: Get swap price and bridge quote
+      description: |
+        Returns pricing and bridge quote for a token swap using ParaSwap Delta.
+      parameters:
+        - name: srcToken
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: destToken
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: srcDecimals
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: destDecimals
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: partner
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: userAddress
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: side
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [BUY, SELL]
+        - name: destChainId
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Price quote
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: object
+                    properties:
+                      srcToken:
+                        type: string
+                      destToken:
+                        type: string
+                      srcAmount:
+                        type: string
+                      destAmount:
+                        type: string
+                      destAmountBeforeFee:
+                        type: string
+                      gasCostUSD:
+                        type: string
+                      gasCost:
+                        type: string
+                      srcUSD:
+                        type: string
+                      destUSD:
+                        type: string
+                      destUSDBeforeFee:
+                        type: string
+                      gasCostBeforeFee:
+                        type: string
+                      gasCostUSDBeforeFee:
+                        type: string
+                      partner:
+                        type: string
+                      partnerFee:
+                        type: number
+                      destAmountAfterBridge:
+                        type: string
+                      destUSDAfterBridge:
+                        type: string
+                      bridgeFee:
+                        type: string
+                      bridgeFeeUSD:
+                        type: string
+                      poolAddress:
+                        type: string
+                      hmac:
+                        type: string
+                  deltaAddress:
+                    type: string

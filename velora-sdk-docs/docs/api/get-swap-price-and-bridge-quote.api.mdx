@@ -1,0 +1,72 @@
+---
+id: get-swap-price-and-bridge-quote
+title: "Get swap price and bridge quote"
+description: "Returns pricing and bridge quote for a token swap using ParaSwap Delta."
+sidebar_label: "Get swap price and bridge quote"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9Vk1v2zAM/SsGTxsgNNmOvqUfKwr0UDTtYchyYGQmUWtLCiV3K4z890FymsRLnLhDWl8Ch4+PFK1HsoKMnGRlvTIaUrgnX7J2iWUllZ4lqLNkwiqbUbIojadkajjBxJtn0on7jTYpXcDdIeMwvF5S7vHslwYBFhkL8sQO0lEFGguCFBzLh+ANAlSIuCiJX0EA06JUTBmknksS4OScCoS0Av9qo6NnpWewXIo1V0bOn4wMC1Nqfwomx/KSpCowd++mU9rTjHjnmCcllHNU+iY7CZdF9pq4nWuKuetYuNIRD7KMyR045zv4nMrov4kEkC4LSEdw/vgTBAyvbm9h/O93uThWyrYom1qOA9xZox25APje74efpjDvWMmVBkGANNqT9gGG1uZKYoD1nlzAVrvBzOSJZLjblo0l9qqOFFROx2Frye4WW2xpcJ/VsRzUumrz7WQ+p6lh+kG0FzdDd2GcfxxeHjK35dfmFqIfsXVKq2vuh3FvMjtga7rqspiE67VdxsHUE5/Hdn7oWMdg9UBoy3RtbSueNSZ/U/k++7xAuU/XMcHcY7tv/QgoyM9NBinMKN5m9HNIoRe9e/HS1/1laiKJ8nlgac6wJCrOJYO7GxDwQuxqIX4765/162M4X2C89qt+cE2+nokxxM7sBNHUdLWR8Unn7qoonv74ns1R6ZBtyXlUfCzFqC5kFHosxljAPEpkBFU1QUePnC+X4e+6oYX5nSmHk3yrpbUe5sv9qvt9TdrSeabX5i7wgnkZYBD66weE2l4VPjrWepP46EDNReMzSviJ4TZLyuFINXqzhnRBNxeNLh6rVaILtLkWbDzG4YVVcIF0NA6djjALPX1UrVwHUpLdvjk70z2wrNvb9dUDLJd/AdsjAGQ=
+sidebar_class_name: "get api-method"
+info_path: docs/api/paraswap-delta-prices-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get swap price and bridge quote"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/delta/prices"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Returns pricing and bridge quote for a token swap using ParaSwap Delta.
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"srcToken","in":"query","required":true,"schema":{"type":"string"}},{"name":"destToken","in":"query","required":true,"schema":{"type":"string"}},{"name":"amount","in":"query","required":true,"schema":{"type":"string"}},{"name":"srcDecimals","in":"query","required":true,"schema":{"type":"integer"}},{"name":"destDecimals","in":"query","required":true,"schema":{"type":"integer"}},{"name":"chainId","in":"query","required":true,"schema":{"type":"integer"}},{"name":"partner","in":"query","required":false,"schema":{"type":"string"}},{"name":"userAddress","in":"query","required":false,"schema":{"type":"string"}},{"name":"side","in":"query","required":false,"schema":{"type":"string","enum":["BUY","SELL"]}},{"name":"destChainId","in":"query","required":false,"schema":{"type":"integer"}}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Price quote","content":{"application/json":{"schema":{"type":"object","properties":{"price":{"type":"object","properties":{"srcToken":{"type":"string"},"destToken":{"type":"string"},"srcAmount":{"type":"string"},"destAmount":{"type":"string"},"destAmountBeforeFee":{"type":"string"},"gasCostUSD":{"type":"string"},"gasCost":{"type":"string"},"srcUSD":{"type":"string"},"destUSD":{"type":"string"},"destUSDBeforeFee":{"type":"string"},"gasCostBeforeFee":{"type":"string"},"gasCostUSDBeforeFee":{"type":"string"},"partner":{"type":"string"},"partnerFee":{"type":"number"},"destAmountAfterBridge":{"type":"string"},"destUSDAfterBridge":{"type":"string"},"bridgeFee":{"type":"string"},"bridgeFeeUSD":{"type":"string"},"poolAddress":{"type":"string"},"hmac":{"type":"string"}}},"deltaAddress":{"type":"string"}}}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

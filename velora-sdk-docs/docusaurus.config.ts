@@ -44,6 +44,7 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          docItemComponent: '@theme/ApiItem', // Derived from docusaurus-theme-openapi
         },
         blog: {
           showReadingTime: true,
@@ -66,6 +67,27 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  plugins: [
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: 'openapi', // Unique ID for the OpenAPI docs
+        docsPluginId: 'classic', // Use the same ID as the classic preset
+        config: {
+          myApi: {
+            specPath: 'static/openapi.yaml', // Path to your OpenAPI spec file
+            outputDir: 'docs/api', // Directory to output generated docs
+            sidebarOptions: {
+              groupPathsBy: 'tag', // Group endpoints by tag
+              // categoryLinkSource: 'tag', // Use tag as category link
+            },
+            hideSendButton: false,
+          },
+        },
+      },
+    ],
+  ],
+  themes: ['docusaurus-theme-openapi-docs'], // export theme components
 
   themeConfig: {
     // Replace with your project's social card
@@ -140,6 +162,11 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
+    languageTabs: [
+      {
+        language: 'curl',
+      },
+    ],
   } satisfies Preset.ThemeConfig,
 };
 
