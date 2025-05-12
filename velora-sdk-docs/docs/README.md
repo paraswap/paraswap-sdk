@@ -1,3 +1,6 @@
+---
+title: SDK
+---
 <!-- <p align="center">
   <a href="https://www.velora.xyz/">
   <picture>
