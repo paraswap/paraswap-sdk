@@ -82,7 +82,7 @@ const config: Config = {
               groupPathsBy: 'tag', // Group endpoints by tag
               // categoryLinkSource: 'tag', // Use tag as category link
             },
-            hideSendButton: false,
+            // hideSendButton: false,
             // baseUrl: 'https://api.example.com', // Base URL for API requests
             // proxy: 'https://api.example.com', // Proxy URL for API requests
           } satisfies OpenApiPlugin.Options,
