@@ -80,7 +80,7 @@ const config: Config = {
         config: {
           myApi: {
             specPath: 'static/openapi.yaml', // Path to your OpenAPI spec file
-            outputDir: 'docs/api', // Directory to output generated docs
+            outputDir: 'docs/delta-api', // Directory to output generated docs
 
             sidebarOptions: {
               groupPathsBy: 'tag', // Group endpoints by tag

@@ -4,7 +4,7 @@ const sidebar: SidebarsConfig = {
   apisidebar: [
     {
       type: "doc",
-      id: "api/velora-delta-api",
+      id: "delta-api/velora-delta-api",
     },
     {
       type: "category",
@@ -12,7 +12,7 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/get-delta-prices",
+          id: "delta-api/get-delta-prices",
           label: "GET delta/prices",
           className: "api-method get",
         },
