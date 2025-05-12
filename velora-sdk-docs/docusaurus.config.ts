@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type * as OpenApiPlugin from 'docusaurus-plugin-openapi-docs';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -82,7 +83,9 @@ const config: Config = {
               // categoryLinkSource: 'tag', // Use tag as category link
             },
             hideSendButton: false,
-          },
+            // baseUrl: 'https://api.example.com', // Base URL for API requests
+            // proxy: 'https://api.example.com', // Proxy URL for API requests
+          } satisfies OpenApiPlugin.Options,
         },
       },
     ],

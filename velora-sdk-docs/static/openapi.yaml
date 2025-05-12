@@ -1,10 +1,11 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
-  title: Velora Delta Prices API
+  title: ParaSwap Delta Prices API
   version: 1.0.0
 
 servers:
   - url: https://api.paraswap.io
+    description: Velora API  
 
 paths:
   /delta/prices:
@@ -16,52 +17,62 @@ paths:
         - name: srcToken
           in: query
           required: true
+          example: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
           schema:
             type: string
         - name: destToken
           in: query
           required: true
+          example: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
           schema:
             type: string
         - name: amount
           in: query
           required: true
+          example: "100000000"
           schema:
             type: string
         - name: srcDecimals
           in: query
           required: true
+          example: 6
           schema:
             type: integer
         - name: destDecimals
           in: query
           required: true
+          example: 18
           schema:
             type: integer
         - name: chainId
           in: query
           required: true
+          example: 1
           schema:
             type: integer
+        - name: side
+          in: query
+          required: true
+          example: "SELL"
+          schema:
+            type: string
+            enum: [BUY, SELL]
         - name: partner
           in: query
           required: false
+          example: "paraswap.io"
           schema:
             type: string
         - name: userAddress
           in: query
           required: false
+          example: "0xb0326588271F2531FBfc9A13D52d3DA45bE1D956"
           schema:
             type: string
-        - name: side
-          in: query
-          required: false
-          schema:
-            type: string
-            enum: [BUY, SELL]
         - name: destChainId
           in: query
           required: false
+          example: 10
           schema:
             type: integer
       responses:

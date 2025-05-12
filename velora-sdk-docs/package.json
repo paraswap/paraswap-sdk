@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "gen-api-docs": "docusaurus gen-api-docs all",
+    "gen-api-docs": "yarn clean-api-docs; docusaurus gen-api-docs all",
+    "clean-api-docs": "docusaurus clean-api-docs all",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
