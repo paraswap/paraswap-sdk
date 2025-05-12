@@ -6,9 +6,10 @@ import type * as OpenApiPlugin from 'docusaurus-plugin-openapi-docs';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'Velora SDK',
+  tagline:
+    'The Velora SDK is a powerful tool for developers looking to integrate with the Velora platform.',
+  favicon: 'img/favicon.svg',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -18,8 +19,8 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Velora', // Usually your GitHub org/user name.
+  projectName: 'SDK', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
