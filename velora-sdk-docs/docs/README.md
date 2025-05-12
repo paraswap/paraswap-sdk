@@ -10,7 +10,7 @@ position: 0
   </picture>
   </a>
 </p> -->
-<p align="center">
+<!-- <p align="center">
 <a href="https://www.velora.xyz/" target="_blank">
 import ThemedImage from '@theme/ThemedImage';
 
@@ -24,7 +24,7 @@ import ThemedImage from '@theme/ThemedImage';
   }}
 />
 </a>
-</p>
+</p> -->
 
 # SDK for the Velora API
 
