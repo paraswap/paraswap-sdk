@@ -1,8 +1,9 @@
 openapi: 3.1.0
 info:
-  title: ParaSwap Delta Prices API
+  title: Velora Delta API
   version: 1.0.0
-
+  description: |
+    Velora Delta API is a service that provides pricing and bridge quotes for token swaps using ParaSwap Delta.    
 servers:
   - url: https://api.paraswap.io
     description: Velora API  

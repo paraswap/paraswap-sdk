@@ -4,7 +4,7 @@ const sidebar: SidebarsConfig = {
   apisidebar: [
     {
       type: "doc",
-      id: "api/paraswap-delta-prices-api",
+      id: "api/velora-delta-api",
     },
     {
       type: "category",
