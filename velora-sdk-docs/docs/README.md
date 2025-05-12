@@ -1,5 +1,6 @@
 ---
 title: Velora SDK
+sidebar_position: 10
 ---
 <!-- <p align="center">
   <a href="https://www.velora.xyz/">
