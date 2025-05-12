@@ -11,7 +11,7 @@ servers:
 paths:
   /delta/prices:
     get:
-      summary: Get swap price and bridge quote
+      summary: GET delta/prices
       description: |
         Returns pricing and bridge quote for a token swap using ParaSwap Delta.
       parameters:

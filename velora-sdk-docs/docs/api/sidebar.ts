@@ -12,8 +12,8 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/get-swap-price-and-bridge-quote",
-          label: "Get swap price and bridge quote",
+          id: "api/get-delta-prices",
+          label: "GET delta/prices",
           className: "api-method get",
         },
       ],
