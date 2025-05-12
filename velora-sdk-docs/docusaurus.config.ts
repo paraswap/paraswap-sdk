@@ -75,11 +75,11 @@ const config: Config = {
     [
       'docusaurus-plugin-openapi-docs',
       {
-        id: 'openapi', // Unique ID for the OpenAPI docs
+        id: 'delta-api', // Unique ID for the OpenAPI docs
         docsPluginId: 'classic', // Use the same ID as the classic preset
         config: {
           myApi: {
-            specPath: 'static/openapi.yaml', // Path to your OpenAPI spec file
+            specPath: 'static/delta-api.yaml', // Path to your OpenAPI spec file
             outputDir: 'docs/delta-api', // Directory to output generated docs
 
             sidebarOptions: {
