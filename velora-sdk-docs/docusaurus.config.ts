@@ -103,6 +103,7 @@ const config: Config = {
       // title: 'Velora SDK',
       logo: {
         src: 'https://cdn.paraswap.io/brand/velora_banner_light.svg',
+        srcDark: 'https://cdn.paraswap.io/brand/velora_banner_dark.svg',
       },
       items: [
         {
