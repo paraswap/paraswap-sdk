@@ -89,43 +89,64 @@ paths:
                     properties:
                       srcToken:
                         type: string
+                        example: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
                       destToken:
                         type: string
+                        example: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
                       srcAmount:
                         type: string
+                        example: "100000000"
                       destAmount:
                         type: string
+                        example: "37591850998965865"
                       destAmountBeforeFee:
                         type: string
+                        example: "38997869046172601"
                       gasCostUSD:
                         type: string
+                        example: "3.601698"
                       gasCost:
                         type: string
+                        example: "311705"
                       srcUSD:
                         type: string
+                        example: "99.9992"
                       destUSD:
                         type: string
+                        example: "96.2964132847"
                       destUSDBeforeFee:
                         type: string
+                        example: "99.89811128474712"
                       gasCostBeforeFee:
                         type: string
+                        example: "107278"
                       gasCostUSDBeforeFee:
                         type: string
+                        example: "1.2395794798762825"
                       partner:
                         type: string
+                        example: "paraswap.io"
                       partnerFee:
                         type: number
+                        example: 0
                       destAmountAfterBridge:
                         type: string
+                        example: "37587921614310165"
                       destUSDAfterBridge:
                         type: string
+                        example: "96.28634764486536"
                       bridgeFee:
                         type: string
+                        example: "3929384655698"
                       bridgeFeeUSD:
                         type: string
+                        example: "0.010065629615575668"
                       poolAddress:
                         type: string
+                        example: "0x5c7bcd6e7de5423a257d81b442095a1a6ced35c5"
                       hmac:
                         type: string
+                        example: "b272d324ca67de2b0ee55618bda7a14322dda1de"
                   deltaAddress:
                     type: string
+                    example: "0x0000000000bbf5c5fd284e657f01bd000933c96d"
