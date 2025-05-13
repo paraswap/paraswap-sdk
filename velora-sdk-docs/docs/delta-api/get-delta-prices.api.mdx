@@ -1,0 +1,72 @@
+---
+id: get-delta-prices
+title: "GET delta/prices"
+description: "Returns pricing and bridge quote for a token swap using Velora Delta."
+sidebar_label: "GET delta/prices"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdV99v2zgM/lcEPW1AmkiyJVt5S5dsGLCHYWsPOLR9kCWm8ebYnqR0LYL87wfJaZqsP+Idrnu4AK3hhPxIkdRHco0NOG3L1pdNjcf4C/iVrR1qbanL+hqp2qDCluYa0I9V4wHNG4sU8s13qJH7qVq0ckHuL6gaq9AUKq+GlzUe4FZZtQQP1uHxxRrXagl4jJ3VZ0EXD3AZ7P1Ygb3DA2zhx6q0YPDY2xUMMNyqZVsFDXI7IUUupKRaMJoXidDUUDlNFQM5K4ieJYIIOE1zPMBOL2Cp8HiN/V0b7Xlb1td4sxnsXDDg/G/7MAMAmMW/WfcvPGa7r+NzBrOePqhls6p9fwco2X564jurp6DLpapcbyPiCeiy9nAN9lH8fhuc5j3R9UKV9UfTH7gnrisN9I/319mnTy+EeoChXi3x+AKfnv+NB5341b65Vllfg33e4lxV7sBkuC/hQg3LpmeSVw7sxBgL7oU8PLJDbguSMMHznGX0PeMJfX8613JCkylnJplOUl7M6FRy8Rv36d2xrP3qBiUv5W3wCyudLQB9nKJmjvwCUDBY1ir8hmK5RFLStnHupHsPcXRDdFmfNUgvQH9H5WPVjsNKh1RVNT/BoOIONSu7pbsBuild6ceX9cWH2RkamcBso0CL4EadyElZz5urN91PJ6otR9fgT7q3TvBkT/DtZY03VyEmrm1qBy4cnBESHoen/Rx0O7rFA6yb2kPtg5hq26rU0fvRNxdk14+D2BTfQAdqaW3TgvVlZyk6dFxsx89P1fxeDamnONlEToaCaIicXKT5Npe+F6gmTCmVyIKxZA65IYoA1+mcZaCMJHmiMy60ZgHUWT3pSPRF0Afi3DrSRynJuKQ5J1LmUvBc8EPlU5g3Ft4DHEHJpcxyIUkqaMYEoQHlWrl3jfPnX6dHlIeCUCHzPZ0jCpRmhG8jcxReyqGUkt2f67i8GDIpUpqwPM32tHqGQsphLnNKaVBPM8r2jtUTgpKMZflhCPuqDlkieSbTTOaZYDmLYbpn6BdV90n5QefQYr1aFpHpd2rkoFwmcw/2NBLB0bLLM8mooGlCCX0ou/Ov094gIVO5SNJMpGkueCICSEdDxytWMpnkqeB8W3k7vaMFQoaEEiK4YFJQzjMuRERom6a671FHbj/XWaGNgMwAT1miGM9MTos0ZURyRZXQYBKuY1QWS6VfxitYxkzCUq1EZoAVBIBzQfPCqEzRNGHMGEUN4M0mRrnyqqefZPcpijnXfG5YnoLg2ZzQwhBCZJJoKUxA3kT0JfhFY/AYX0NkXOUXeIwPWkrotWBv7qflla3wGC+8b914NFJtOTwcDw4bxnb4nnz+GDtM6DbxEKWPLu/P5lFogIOhTpcOyZA8h7hTiW0SBQ9Da/IL5VFrm5vSwPOrgott+WFTcNtV4bOy6mvYHLplASGEQmsMteL8UsUusR0tQuf9JUoHfq4fuuN/uLlsk+/h1o/aSpXRuZiR9TZ3F13BxO4Z/boa4EWk6Au8XhfKwbmtNpvwdTcKhZya0qmi2huGnj3Kmy/buektes6d73B3uE3dqGoVxHCYzF7B1P7W9Nq2dtvRaxs6XJP+RAj/oLmHTerVw9jtVi+b6UQf9qI+0ocbzr88xv9leThaW++eSPhVeLFlCBUeX1yF1gnKhLHnYr1VnWgN7f5te7RmBJRdD/swO8ObzT8rOv1H
+sidebar_class_name: "get api-method"
+info_path: delta-api/velora-delta-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"GET delta/prices"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/delta/prices"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Returns pricing and bridge quote for a token swap using Velora Delta.
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"srcToken","in":"query","required":true,"example":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","schema":{"type":"string"}},{"name":"destToken","in":"query","required":true,"example":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","schema":{"type":"string"}},{"name":"amount","in":"query","required":true,"example":"100000000","schema":{"type":"string"}},{"name":"srcDecimals","in":"query","required":true,"example":6,"schema":{"type":"integer"}},{"name":"destDecimals","in":"query","required":true,"example":18,"schema":{"type":"integer"}},{"name":"chainId","in":"query","required":true,"example":1,"schema":{"type":"integer"}},{"name":"side","in":"query","required":true,"example":"SELL","schema":{"type":"string","enum":["BUY","SELL"]}},{"name":"partner","in":"query","required":false,"example":"paraswap.io","schema":{"type":"string"}},{"name":"userAddress","in":"query","required":false,"example":"0xb0326588271F2531FBfc9A13D52d3DA45bE1D956","schema":{"type":"string"}},{"name":"destChainId","in":"query","required":false,"example":10,"schema":{"type":"integer"},"description":"The ID of the destination chain for cross-chain swaps. \nTo check if the destination token is allowed by our bridge, visit:\n[GET /delta/prices/bridge-info](/delta-api/get-delta-prices-bridge-info)\n"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Price quote","content":{"application/json":{"schema":{"type":"object","properties":{"price":{"type":"object","properties":{"srcToken":{"type":"string","example":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"},"destToken":{"type":"string","example":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"},"srcAmount":{"type":"string","example":"100000000"},"destAmount":{"type":"string","example":"37591850998965865"},"destAmountBeforeFee":{"type":"string","example":"38997869046172601"},"gasCostUSD":{"type":"string","example":"3.601698"},"gasCost":{"type":"string","example":"311705"},"srcUSD":{"type":"string","example":"99.9992"},"destUSD":{"type":"string","example":"96.2964132847"},"destUSDBeforeFee":{"type":"string","example":"99.89811128474712"},"gasCostBeforeFee":{"type":"string","example":"107278"},"gasCostUSDBeforeFee":{"type":"string","example":"1.2395794798762825"},"partner":{"type":"string","example":"paraswap.io"},"partnerFee":{"type":"number","example":0},"destAmountAfterBridge":{"type":"string","example":"37587921614310165"},"destUSDAfterBridge":{"type":"string","example":"96.28634764486536"},"bridgeFee":{"type":"string","example":"3929384655698"},"bridgeFeeUSD":{"type":"string","example":"0.010065629615575668"},"poolAddress":{"type":"string","example":"0x5c7bcd6e7de5423a257d81b442095a1a6ced35c5"},"hmac":{"type":"string","example":"b272d324ca67de2b0ee55618bda7a14322dda1de"}}},"deltaAddress":{"type":"string","example":"0x0000000000bbf5c5fd284e657f01bd000933c96d"}}}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

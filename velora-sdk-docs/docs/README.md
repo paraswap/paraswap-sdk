@@ -1,3 +1,7 @@
+---
+title: Velora SDK
+sidebar_position: 10
+---
 <!-- <p align="center">
   <a href="https://www.velora.xyz/">
   <picture>
@@ -6,7 +10,7 @@
   </picture>
   </a>
 </p> -->
-<p align="center">
+<!-- <p align="center">
 <a href="https://www.velora.xyz/" target="_blank">
 import ThemedImage from '@theme/ThemedImage';
 
@@ -20,7 +24,7 @@ import ThemedImage from '@theme/ThemedImage';
   }}
 />
 </a>
-</p>
+</p> -->
 
 # SDK for the Velora API
 

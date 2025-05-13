@@ -1,0 +1,202 @@
+openapi: 3.1.0
+info:
+  title: Velora Delta API
+  version: 1.0.0
+  description: |
+    Velora Delta API is a service that provides pricing and bridge quotes for token swaps using ParaSwap Delta.    
+servers:
+  - url: https://api.paraswap.io
+    description: Velora API  
+
+paths:
+  /delta/prices:
+    get:
+      summary: GET delta/prices
+      description: |
+        Returns pricing and bridge quote for a token swap using Velora Delta.
+      parameters:
+        - name: srcToken
+          in: query
+          required: true
+          example: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+          schema:
+            type: string
+        - name: destToken
+          in: query
+          required: true
+          example: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: true
+          example: "100000000"
+          schema:
+            type: string
+        - name: srcDecimals
+          in: query
+          required: true
+          example: 6
+          schema:
+            type: integer
+        - name: destDecimals
+          in: query
+          required: true
+          example: 18
+          schema:
+            type: integer
+        - name: chainId
+          in: query
+          required: true
+          example: 1
+          schema:
+            type: integer
+        - name: side
+          in: query
+          required: true
+          example: "SELL"
+          schema:
+            type: string
+            enum: [BUY, SELL]
+        - name: partner
+          in: query
+          required: false
+          example: "paraswap.io"
+          schema:
+            type: string
+        - name: userAddress
+          in: query
+          required: false
+          example: "0xb0326588271F2531FBfc9A13D52d3DA45bE1D956"
+          schema:
+            type: string
+        - name: destChainId
+          in: query
+          required: false
+          example: 10
+          schema:
+            type: integer
+          description: |
+            The ID of the destination chain for cross-chain swaps. 
+            To check if the destination token is allowed by our bridge, visit:
+            [GET /delta/prices/bridge-info](/delta-api/get-delta-prices-bridge-info)
+      responses:
+        '200':
+          description: Price quote
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: object
+                    properties:
+                      srcToken:
+                        type: string
+                        example: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                      destToken:
+                        type: string
+                        example: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                      srcAmount:
+                        type: string
+                        example: "100000000"
+                      destAmount:
+                        type: string
+                        example: "37591850998965865"
+                      destAmountBeforeFee:
+                        type: string
+                        example: "38997869046172601"
+                      gasCostUSD:
+                        type: string
+                        example: "3.601698"
+                      gasCost:
+                        type: string
+                        example: "311705"
+                      srcUSD:
+                        type: string
+                        example: "99.9992"
+                      destUSD:
+                        type: string
+                        example: "96.2964132847"
+                      destUSDBeforeFee:
+                        type: string
+                        example: "99.89811128474712"
+                      gasCostBeforeFee:
+                        type: string
+                        example: "107278"
+                      gasCostUSDBeforeFee:
+                        type: string
+                        example: "1.2395794798762825"
+                      partner:
+                        type: string
+                        example: "paraswap.io"
+                      partnerFee:
+                        type: number
+                        example: 0
+                      destAmountAfterBridge:
+                        type: string
+                        example: "37587921614310165"
+                      destUSDAfterBridge:
+                        type: string
+                        example: "96.28634764486536"
+                      bridgeFee:
+                        type: string
+                        example: "3929384655698"
+                      bridgeFeeUSD:
+                        type: string
+                        example: "0.010065629615575668"
+                      poolAddress:
+                        type: string
+                        example: "0x5c7bcd6e7de5423a257d81b442095a1a6ced35c5"
+                      hmac:
+                        type: string
+                        example: "b272d324ca67de2b0ee55618bda7a14322dda1de"
+                  deltaAddress:
+                    type: string
+                    example: "0x0000000000bbf5c5fd284e657f01bd000933c96d"
+  /delta/prices/bridge-info:
+    get:
+      summary: GET delta/prices/bridge-info
+      description: |
+        Returns info on supported source destination chains and destination tokens for cross-chain orders.
+        
+        The data structure is a nested dictionary where the primary keys are `sourceChainId` values, and the secondary keys are `destinationChainId` values. Each combination of `sourceChainId` and `destinationChainId` maps to a list of supported token addresses on the destination chain for cross-chain transactions.
+      responses:
+        '200':
+          description: Supported tokens for cross-chain swaps
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  supportedTokens:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: array
+                        items:
+                          type: string
+                          example: "0x4200000000000000000000000000000000000006"
+              example:
+                supportedTokens:
+                  "1":
+                    "10":
+                      - "0x4200000000000000000000000000000000000006"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
+                      - "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+                      - "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+                    "137":
+                      - "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+                      - "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+                      - "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+                    "324":
+                      - "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"
+                  "10":
+                    "1":
+                      - "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                      - "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                      - "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"

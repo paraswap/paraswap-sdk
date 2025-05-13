@@ -28,3 +28,12 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+
+.openapi-params__list-item {
+  padding-bottom: 15px;
+}
+
+.tabs.openapi-tabs__code-list-container {
+  display: none
+}
